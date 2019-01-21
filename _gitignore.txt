@@ -1,0 +1,5 @@
+﻿################################################################################
+# Il file gitignore è stato creato automaticamente da Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/VideoSystemWeb/v15/Server/sqlite3/db.lock

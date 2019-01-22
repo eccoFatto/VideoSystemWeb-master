@@ -7,11 +7,11 @@ namespace VideoSystemWeb.Entity
 {
     public class Tipologica
     {
-        public int id;
-        public string nome;
-        public string descrizione;
-        public string sottotipo;
-        public string parametri;
+        public int id { get; set; }
+        public string nome { get; set; }
+        public string descrizione { get; set; }
+        public string sottotipo { get; set; }
+        public string parametri { get; set; }
 
         public Tipologica(int id, string nome, string descrizione, string sottotipo, string parametri)
         {

@@ -8,9 +8,9 @@ using System.Web.UI.WebControls;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
 
-namespace VideoSystemWeb
+namespace VideoSystemWeb.Agenda
 {
-    public partial class grigliaNicola : System.Web.UI.Page
+    public partial class prova : System.Web.UI.Page
     {
         List<DatiAgenda> listaDatiAgenda = Tipologie.getListaDatiAgenda();
         List<Tipologica> listaRisorse = Tipologie.getListaRisorse();
@@ -21,11 +21,6 @@ namespace VideoSystemWeb
                 DateTime dataPartenza = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
-
-                ddlRisorse.DataSource = listaRisorse;
-                ddlRisorse.DataTextField = "nome";
-                ddlRisorse.DataValueField = "id";
-                ddlRisorse.DataBind();
             }
         }
 
@@ -38,7 +33,7 @@ namespace VideoSystemWeb
             column = new DataColumn();
             column.DataType = typeof(string);
             column.ColumnName = " ";
-            
+
             table.Columns.Add(column);
 
             foreach (Tipologica risorsa in listaRisorse)
@@ -65,7 +60,7 @@ namespace VideoSystemWeb
                     if (datiAgendaFiltrati.Count == 1)
                     {
                         DatiAgenda datoCorrente = datiAgendaFiltrati.FirstOrDefault();
-                       
+
                         row[indiceColonna++] = datoCorrente.id.ToString(); // inserisco id datoAgenda per poi formattare la cella in RowDataBound 
                     }
                     else
@@ -79,19 +74,18 @@ namespace VideoSystemWeb
                 table.Rows.Add(row);
             }
             #endregion
-            
+
             return table;
         }
 
         protected void gv_scheduler_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            e.Row.Cells[0].Attributes.Add("class", "first");
             if (e.Row.RowType == DataControlRowType.Header)
             {
                 for (int indiceColonna = 1; indiceColonna <= listaRisorse.Count; indiceColonna++)
                 {
                     string idRisorsa = (e.Row.Cells[indiceColonna].Text.Trim());
-                    
+
                     Tipologica risorsaCorrente = Tipologie.getRisorsaById(int.Parse(idRisorsa));
                     string colore = Utility.getParametroDaTipologica(risorsaCorrente, "color");
                     e.Row.Cells[indiceColonna].Attributes.Add("style", "background-color:" + colore + ";font-size:10pt;text-align:center;width:100px;");
@@ -102,7 +96,6 @@ namespace VideoSystemWeb
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 e.Row.Cells[0].Attributes.Add("style", "font-weight:bold;background-color:#FDEDB5;width:100px;");
-                e.Row.Cells[0].Attributes.Add("class", "first");
 
                 for (int indiceColonna = 1; indiceColonna <= listaRisorse.Count; indiceColonna++)
                 {
@@ -124,11 +117,11 @@ namespace VideoSystemWeb
                     int rigaCorrente = e.Row.RowIndex;
                     int colonnaCorrente = indiceColonna;
                     string data = e.Row.Cells[0].Text;
-                    string risorsa = ((Tipologica)listaRisorse.ElementAt(indiceColonna-1)).nome;
+                    string risorsa = ((Tipologica)listaRisorse.ElementAt(indiceColonna - 1)).nome;
 
-                    e.Row.Cells[indiceColonna].Attributes["onclick"] ="mostracella('" +data +"', '" + risorsa +"');";
+                    e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + risorsa + "');";
                 }
-                
+
                 e.Row.Attributes.Add("style", "text-align:center;");
             }
         }
@@ -137,8 +130,6 @@ namespace VideoSystemWeb
         {
             gv_scheduler.DataSource = CreateDataTable(DateTime.Parse(hf_valoreData.Value));
             gv_scheduler.DataBind();
-
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "passaggioMouse", "registraPassaggioMouse();", true);
         }
 
         protected void btnEditEvent_Click(object sender, EventArgs e)

@@ -7,10 +7,10 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb {
+namespace VideoSystemWeb.Agenda {
     
     
-    public partial class grigliaNicola {
+    public partial class prova {
         
         /// <summary>
         /// Controllo ScriptManager1.
@@ -110,15 +110,6 @@ namespace VideoSystemWeb {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDurata;
-        
-        /// <summary>
-        /// Controllo ddlRisorse.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlRisorse;
         
         /// <summary>
         /// Controllo OkButton.

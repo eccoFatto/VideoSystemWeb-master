@@ -1,90 +1,94 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="grigliaNicola.aspx.cs" Inherits="VideoSystemWeb.grigliaNicola" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="prova.aspx.cs" Inherits="VideoSystemWeb.Agenda.prova" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
     
+</head>
+<body>
+
     <link rel='stylesheet' href='../Css/bootstrap-datepicker3.min.css' />
-   
+
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
     <script src='../Scripts/moment.min.js'></script>
     <script src="../Scripts/tether.js" type="text/javascript"></script>
     <script src='../Scripts/bootstrap.min.js'></script>
-   <%-- <script src='../Scripts/bootstrap-datepicker.min.js'></script>
-    <script src='../Scripts/bootstrap-datepicker.it.min.js'></script>--%>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>
-    <script>
+    <script src='../Scripts/bootstrap-datepicker.min.js'></script>
+    <script src='../Scripts/bootstrap-datepicker.it.min.js'></script>
+-    <script>
         $(document).ready(function () {
-             $input = $(".calendarPresentazione");
-             $input.datepicker({
-                 format: "dd/mm/yyyy",
-                 todayBtn: true,
-                 language: "it",
-                 autoclose: true,
-                 todayHighlight: true
-             });
-             $input.data('datepicker').hide = function () { };
-             $input.datepicker('show');
-             $input.on('changeDate', function (e) {
-                 $("#<%=hf_valoreData.ClientID%>").val(e.format());
-                 $("#<%=btnsearch.ClientID%>").click();
-             });
-
-             $(".calendar").datepicker({
+            $input = $(".calendarPresentazione");
+            $input.datepicker({
                 format: "dd/mm/yyyy",
                 todayBtn: true,
                 language: "it",
                 autoclose: true,
                 todayHighlight: true
             });
-
-             registraPassaggioMouse();
+            $input.data('datepicker').hide = function () {};
+            $input.datepicker('show');
+            $input.on('changeDate', function (e) {
+                $("#<%=hf_valoreData.ClientID%>").val(e.format());
+                $("#<%=btnsearch.ClientID%>").click();
+            });
         });
 
-        function registraPassaggioMouse() {
-            $("[id*=gv_scheduler] tr").mouseover(function () {
-                $(this).addClass("highlight");
-            });
-            $("[id*=gv_scheduler] tr").mouseout(function () {
-                $(this).removeClass("highlight");
-            });
-
-            var rows = $("[id*=gv_scheduler] tr");
-
-            rows.children().hover(function () {
-                rows.children().removeClass('highlight');
-                var index = $(this).prevAll().length;
-                rows.find(':nth-child(' + (index + 1) + ')').addClass('highlight');
-            });
-
-            rows.children().mouseout(function () {
-                rows.children().removeClass('highlight');
-            });
-        }
-    
         function mostracella(row, column) {
             alert("row:" + row + " column:" + column);
             $("#<%=btnEditEvent.ClientID%>").click();
         }
+
+        $('.calendar').datepicker({
+                format: "dd/mm/yyyy",
+                todayBtn: true,
+                language: "it",
+                autoclose: true,
+                todayHighlight: true
+         });
+
+         function onlyNumbers(a) { var b = event || a, c = b.which || b.keyCode; return 44 == c || (45 == c || (46 == c || c >= 48 && c <= 57)) }
     </script>
 
     <style>
-        .highlight { background-color: #DDEEFF; }
+        .round
+        {
+          -webkit-border-radius: 8px;
+          -moz-border-radius: 8px;
+          border-radius: 8px;
+          overflow: hidden;
+         
+          border: solid 2px #5377A9;
+        }
 
-        .grid td { border-top:dotted 1px #5377A9; }
-        .grid td { border-right:dotted 1px #5377A9; }
-        .grid th { border-bottom:solid 2px #5377A9 !important; }  
-        .grid td.first { border-right:solid 2px #5377A9 !important; }
+        .roundSmall
+        {
+         border: 1px solid #AEAEAE;
+          -webkit-border-radius: 4px;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          overflow: hidden;
+        }
+
+        .modalBackground {
+	        background-color:Gray;
+	        filter:alpha(opacity=70);
+	        opacity:0.7;
+        }
     </style>
-
+    <form runat="server">
     <table style="width:100%">
         <tr>
             <td style="width:70%;vertical-align:top;">
                 <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server" />
-                <asp:Button ID="btnsearch" runat="server" OnClick="btnsearch_Click" style="display:none" />
+                <asp:Button ID="btnsearch" runat="server" OnClick="btnsearch_Click" style="display:none"/>
                 
                 <asp:UpdatePanel ID="UpdatePanelCal" runat="server">
                     <ContentTemplate>      
                         <div class="round">
-                            <asp:GridView ID="gv_scheduler" runat="server" OnRowDataBound="gv_scheduler_RowDataBound" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid"></asp:GridView>
+                            <asp:GridView ID="gv_scheduler" runat="server" OnRowDataBound="gv_scheduler_RowDataBound" style="font-size:10pt; width:100%;position:relative"></asp:GridView>
                         </div>
                     </ContentTemplate>
                     <Triggers>
@@ -105,7 +109,7 @@
     PopupControlID="PopupEditEvent" BackgroundCssClass="modalBackground" DropShadow="False" OkControlID="OkButton">
     </ajaxToolkit:ModalPopupExtender>
     
-    <asp:Panel ID="PopupEditEvent" runat="server" CssClass="containerPopup round" Style="display: none; border: solid 3px #5377A9;background-color:#EEF1F7;height:50%;width:80%;">
+    <asp:Panel ID="PopupEditEvent" runat="server" CssClass="containerPopup round" Style="display: none; border: solid 3px #5377A9;background-color:#fff;height:50%;width:80%;">
         <asp:UpdatePanel ID="upEvento" runat="server">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlContainer">
@@ -125,9 +129,7 @@
                             </td>
                             <td style="width:30%">
                                 Risorsa
-                                <td>
-                                    <asp:DropDownList ID="ddlRisorse" runat="server"></asp:DropDownList>
-                                </td>
+                                <td><input type="text" id="txtRisorsa" class="roundSmall" style="width:70px;"/></td>
                             </td>
                         </tr>
 
@@ -141,4 +143,6 @@
             </p>
         </div>
     </asp:Panel>
-</asp:Content>
+    </form>
+</body>
+</html>

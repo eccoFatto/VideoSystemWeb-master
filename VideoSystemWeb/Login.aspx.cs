@@ -117,7 +117,7 @@ namespace VideoSystemWeb
                 else
                 {
                     Tipologica tipoUtente = UtilityTipologiche.getElementByID(listaTipiUtente, 2, ref esito);
-                    Session[SessionManager.UTENTE] = new Anag_Utente() { id = 1, Nome = "Sandro", Cognome = "Chiappa", id_tipoUtente = tipoUtente.id };
+                    Session[SessionManager.UTENTE] = new Anag_Utente() { id = 1, Nome = "Nicola", Cognome = "Foti", id_tipoUtente = tipoUtente.id };
                 }
 
             }

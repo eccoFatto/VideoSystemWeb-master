@@ -10,18 +10,34 @@ namespace VideoSystemWeb.Entity
         public int id;
         public int id_risorsa;
         public int id_stato;
-        public DateTime data_inizio;
-        public DateTime data_fine;
-        public string descrizione;
+        public DateTime data_inizio_lavorazione;
+        public DateTime data_fine_lavorazione;
+        public int durata_lavorazione;
+        public int id_tipologia;
+        public int id_cliente;
+        public int durata_viaggio_andata;
+        public int durata_viaggio_ritorno;
+        public DateTime data_inizio_impegno;
+        public DateTime data_fine_impegno;
+        public bool isImpegnoOrario;
+        public DateTime impegnoOrario_da;
+        public DateTime impegnoOrario_a;
+        public string produzione;
+        public string lavorazione;
+        public string via;
+        public string luogo;
+        public string codice_lavoro;
+        public string nota;
 
-        public DatiAgenda(int id, int id_risorsa, int id_stato, DateTime data_inizio, DateTime data_fine, string descrizione)
+        public DatiAgenda(int id, int id_risorsa, int id_stato, DateTime data_inizio_lavorazione, DateTime data_fine_lavorazione, string produzione)
         {
             this.id = id;
             this.id_risorsa = id_risorsa;
             this.id_stato = id_stato;
-            this.data_inizio = data_inizio;
-            this.data_fine = data_fine;
-            this.descrizione = descrizione;
+            this.data_inizio_lavorazione = data_inizio_lavorazione;
+            this.data_fine_lavorazione = data_fine_lavorazione;
+
+            this.produzione = produzione;
         }
     }
 }

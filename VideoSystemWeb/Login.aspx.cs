@@ -12,10 +12,13 @@ using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb
 {
-    public partial class Login : System.Web.UI.Page
+    public partial class Login : BasePage
     {
+        Esito esito = new Esito();
         protected void Page_Load(object sender, EventArgs e)
         {
+            caricaListeTipologiche();
+
             if (!this.IsPostBack)
             {
                 //string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
@@ -113,9 +116,8 @@ namespace VideoSystemWeb
 
                 else
                 {
-                    Session[SessionManager.UTENTE] = new Anag_Utente() { id = 1, Nome = "Sandro", Cognome = "Chiappa", tipo = Tipologie.TIPO_OPERATORE };
-                    //Response.Redirect("~/grigliaNicola.aspx");
-                    //Server.Execute("~/grigliaNicola.aspx",true);
+                    Tipologica tipoUtente = UtilityTipologiche.getElementByID(listaTipiUtente, 2, ref esito);
+                    Session[SessionManager.UTENTE] = new Anag_Utente() { id = 1, Nome = "Sandro", Cognome = "Chiappa", id_tipoUtente = tipoUtente.id };
                 }
 
             }
@@ -126,7 +128,7 @@ namespace VideoSystemWeb
                 string url = String.Format("~/pageError.aspx");
                 Response.Redirect(url, true);
             }
-            if (Session[SessionManager.UTENTE]!=null) Response.Redirect("~/Agenda/grigliaNicola.aspx");
+            if (Session[SessionManager.UTENTE]!=null) Response.Redirect("~/Agenda/Agenda.aspx");
         }
     }
 }

@@ -12,15 +12,23 @@ namespace VideoSystemWeb.Agenda
 {
     public partial class prova : System.Web.UI.Page
     {
-        List<DatiAgenda> listaDatiAgenda = Tipologie.getListaDatiAgenda();
-        List<Tipologica> listaRisorse = Tipologie.getListaRisorse();
+        List<Tipologica> listaRisorse;
+        List<Tipologica> listaStati;
+        List<DatiAgenda> listaDatiAgenda;
         protected void Page_Load(object sender, EventArgs e)
         {
+            listaDatiAgenda = Tipologie.getListaDatiAgenda();
+            Esito esito = new Esito();
+            listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA, ref esito); //Tipologie.getListaRisorse();
+            listaStati = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_STATO, ref esito);
+
             if (!IsPostBack)
             {
                 DateTime dataPartenza = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
+
+                
             }
         }
 
@@ -56,7 +64,7 @@ namespace VideoSystemWeb.Agenda
                 int indiceColonna = 1;
                 foreach (Tipologica risorsa in listaRisorse)
                 {
-                    List<DatiAgenda> datiAgendaFiltrati = listaDatiAgenda.Where(x => x.data_inizio <= dataRiga && x.data_fine >= dataRiga && x.id_risorsa == risorsa.id).ToList<DatiAgenda>();
+                    List<DatiAgenda> datiAgendaFiltrati = listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_risorsa == risorsa.id).ToList<DatiAgenda>();
                     if (datiAgendaFiltrati.Count == 1)
                     {
                         DatiAgenda datoCorrente = datiAgendaFiltrati.FirstOrDefault();
@@ -87,7 +95,10 @@ namespace VideoSystemWeb.Agenda
                     string idRisorsa = (e.Row.Cells[indiceColonna].Text.Trim());
 
                     Tipologica risorsaCorrente = Tipologie.getRisorsaById(int.Parse(idRisorsa));
-                    string colore = Utility.getParametroDaTipologica(risorsaCorrente, "color");
+
+                    Esito esito = new Esito();
+                    string colore = UtilityTipologiche.getParametroDaTipologica(risorsaCorrente, "color", ref esito);
+
                     e.Row.Cells[indiceColonna].Attributes.Add("style", "background-color:" + colore + ";font-size:10pt;text-align:center;width:100px;");
                     e.Row.Cells[indiceColonna].Text = risorsaCorrente.nome;
                 }
@@ -102,8 +113,12 @@ namespace VideoSystemWeb.Agenda
                     if (!string.IsNullOrEmpty(e.Row.Cells[indiceColonna].Text.Trim()))
                     {
                         DatiAgenda datoAgendaCorrente = Tipologie.getDatiAgendaById(int.Parse(e.Row.Cells[indiceColonna].Text.Trim()));
-                        string colore = Utility.getParametroDaTipologica(Tipologie.getStatoById(datoAgendaCorrente.id_stato), "color");
-                        string descrizione = datoAgendaCorrente.descrizione;
+
+                        Esito esito = new Esito();
+                        Tipologica statoCorrente = UtilityTipologiche.getElementByID(listaStati, datoAgendaCorrente.id_stato, ref esito);
+                        string colore = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "color", ref esito);
+
+                        string descrizione = datoAgendaCorrente.produzione;
 
                         e.Row.Cells[indiceColonna].Text = descrizione;
                         e.Row.Cells[indiceColonna].Attributes.Add("style", "font-weight:bold;background-color:" + colore);

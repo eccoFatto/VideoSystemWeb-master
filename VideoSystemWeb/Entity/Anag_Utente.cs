@@ -13,6 +13,6 @@ namespace VideoSystemWeb.Entity
         public string Descrizione;
         public string username;
         public string password;
-        public Tipo_Utente tipo;
+        public int id_tipoUtente;
     }
 }

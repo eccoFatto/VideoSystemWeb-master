@@ -13,6 +13,7 @@ namespace VideoSystemWeb.Entity
         public string sottotipo { get; set; }
         public string parametri { get; set; }
 
+        public Tipologica() { }
         public Tipologica(int id, string nome, string descrizione, string sottotipo, string parametri)
         {
             this.id = id;

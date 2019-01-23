@@ -2,11 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using VideoSystemWeb.BLL;
 
 namespace VideoSystemWeb.Entity
 {
     public static class Tipologie
     {
+        public static List<Tipologica> caricaTipologica(EnumTipologiche tipologica)
+        {
+            switch (tipologica)
+            {
+                case EnumTipologiche.TIPO_COLONNE_AGENDA:
+                    return getListaRisorse();
+                case EnumTipologiche.TIPO_QUALIFICHE:
+                    return null;
+                case EnumTipologiche.TIPO_UTENTE:
+                    return getListaTipiUtente();
+                case EnumTipologiche.TIPO_STATO:
+                    return getListaStati();
+                default:
+                    return null;
+            }
+        }
+
         #region TIPI EVENTO
         //public static Tipo_Evento EVENTO_VIAGGIO = new Tipo_Evento() { id = 1, titolo = "Viaggio/installazione", descrizione = "Tipologia di evento n.1", colore = "#FFCC00" };
         //public static Tipo_Evento EVENTO_PREVISIONE = new Tipo_Evento() { id = 2, titolo = "Previsione impegni", descrizione = "Tipologia di evento n.2", colore = "grey" };
@@ -16,14 +34,15 @@ namespace VideoSystemWeb.Entity
         #endregion
 
         #region STATI EVENTO
-        public static List<Tipologica> getListaStati()
+        private static List<Tipologica> getListaStati()
         {
             List<Tipologica> listaStati = new List<Tipologica>();
 
             listaStati.Add(new Tipologica(1, "Previsione impegno", "Previsione impegno", "", "COLOR=#C7C7C7"));
             listaStati.Add(new Tipologica(2, "Offerta", "Offerta", "", "COLOR=#FFCC00"));
             listaStati.Add(new Tipologica(3, "Lavorazione", "Lavorazione", "", "COLOR=#339966"));
-            listaStati.Add(new Tipologica(4, "Fattura", "Daniele Verdi", "dipendenti", "COLOR=#3F3FBE"));
+            listaStati.Add(new Tipologica(4, "Fattura", "Fattura", "", "COLOR=#3F3FBE"));
+            listaStati.Add(new Tipologica(5, "Riposo", "Riposo", "", "COLOR=#FF6600"));
 
             return listaStati;
         }
@@ -35,13 +54,24 @@ namespace VideoSystemWeb.Entity
         #endregion
 
         #region TIPI UTENTE
-        public static Tipo_Utente TIPO_AMMINISTRATORE = new Tipo_Utente() { id = 1, tipoUtente= "Amministartore", descrizione = "Amministratore" };
-        public static Tipo_Utente TIPO_OPERATORE = new Tipo_Utente() { id = 2, tipoUtente = "Operatore", descrizione = "Operatore" };
-        public static Tipo_Utente TIPO_VISUALIZZATORE = new Tipo_Utente() { id = 2, tipoUtente = "Visualizzatore", descrizione = "Visualizzatore" };
+        //public static Tipo_Utente TIPO_AMMINISTRATORE = new Tipo_Utente() { id = 1, tipoUtente= "Amministartore", descrizione = "Amministratore" };
+        //public static Tipo_Utente TIPO_OPERATORE = new Tipo_Utente() { id = 2, tipoUtente = "Operatore", descrizione = "Operatore" };
+        //public static Tipo_Utente TIPO_VISUALIZZATORE = new Tipo_Utente() { id = 2, tipoUtente = "Visualizzatore", descrizione = "Visualizzatore" };
+
+        private static List<Tipologica> getListaTipiUtente()
+        {
+            List<Tipologica> listaTipiUtente = new List<Tipologica>();
+
+            listaTipiUtente.Add(new Tipologica(1, "Amministratore", "Amministratore (lettura/scrittura/gestione applicazione)", "", ""));
+            listaTipiUtente.Add(new Tipologica(2, "Operatore", "Operatore (lettura/scrittura)", "", ""));
+            listaTipiUtente.Add(new Tipologica(3, "Visualizzatore", "Visualizzatore (lettura)", "", ""));
+
+            return listaTipiUtente;
+        }
         #endregion
 
         #region COLONNE_AGENDA (Risorse)
-        public static List<Tipologica> getListaRisorse()
+        private static List<Tipologica> getListaRisorse()
         {
             List<Tipologica> listaRisorse = new List<Tipologica>();
 

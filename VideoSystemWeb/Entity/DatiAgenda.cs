@@ -24,7 +24,7 @@ namespace VideoSystemWeb.Entity
         public DateTime impegnoOrario_a;
         public string produzione;
         public string lavorazione;
-        public string via;
+        public string indirizzo;
         public string luogo;
         public string codice_lavoro;
         public string nota;

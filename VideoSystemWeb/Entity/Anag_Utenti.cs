@@ -5,7 +5,7 @@ using System.Web;
 
 namespace VideoSystemWeb.Entity
 {
-    public class Anag_Utente
+    public class Anag_Utenti
     {
         public int id;
         public string Nome;
@@ -14,5 +14,6 @@ namespace VideoSystemWeb.Entity
         public string username;
         public string password;
         public int id_tipoUtente;
+        public bool attivo;
     }
 }

@@ -67,7 +67,7 @@ namespace VideoSystemWeb
                 int indiceColonna = 1;
                 foreach (Tipologica risorsa in listaRisorse)
                 {
-                    List<DatiAgenda> datiAgendaFiltrati = listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_risorsa == risorsa.id).ToList<DatiAgenda>();
+                    List<DatiAgenda> datiAgendaFiltrati = listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_colonne_agenda == risorsa.id).ToList<DatiAgenda>();
                     if (datiAgendaFiltrati.Count == 1)
                     {
                         DatiAgenda datoCorrente = datiAgendaFiltrati.FirstOrDefault();

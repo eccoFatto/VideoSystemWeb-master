@@ -328,10 +328,12 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BLL\Agenda_BLL.cs" />
     <Compile Include="BLL\BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="BLL\Esito.cs" />
+    <Compile Include="BLL\Login_BLL.cs" />
     <Compile Include="BLL\SessionManager.cs" />
     <Compile Include="BLL\UtilityTipologiche.cs" />
     <Compile Include="Contact.aspx.cs">
@@ -341,6 +343,9 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Agenda_DAL.cs" />
+    <Compile Include="DAL\Base_DAL.cs" />
+    <Compile Include="DAL\Login_DAL.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -355,7 +360,7 @@
     <Compile Include="Entity\Tipo_Evento.cs" />
     <Compile Include="Entity\Tipologie.cs" />
     <Compile Include="Entity\Tipo_Utente.cs" />
-    <Compile Include="Entity\Anag_Utente.cs" />
+    <Compile Include="Entity\Anag_Utenti.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -412,7 +417,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DAL\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

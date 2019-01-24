@@ -16,9 +16,9 @@ namespace VideoSystemWeb.BLL
         public Esito caricaListeTipologiche()
         {
             Esito esito = new Esito();
-
-            listaDatiAgenda = Tipologie.getListaDatiAgenda();
-            listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA, ref esito); //Tipologie.getListaRisorse();
+           
+            listaRisorse = Agenda_BLL.Instance.CaricaColonne(ref esito);
+                //UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA, ref esito); //Tipologie.getListaRisorse();
 
             if (esito.codice != Esito.ESITO_OK)
             {

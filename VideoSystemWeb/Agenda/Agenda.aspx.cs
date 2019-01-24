@@ -15,6 +15,8 @@ namespace VideoSystemWeb.Agenda
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            Esito esito = new Esito();
+            listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);//Tipologie.getListaDatiAgenda();
             caricaListeTipologiche();
 
             if (!IsPostBack)
@@ -62,7 +64,7 @@ namespace VideoSystemWeb.Agenda
                 int indiceColonna = 1;
                 foreach (Tipologica risorsa in listaRisorse)
                 {
-                    List<DatiAgenda> datiAgendaFiltrati = listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_risorsa == risorsa.id).ToList<DatiAgenda>();
+                    List<DatiAgenda> datiAgendaFiltrati = listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_colonne_agenda == risorsa.id).ToList<DatiAgenda>();
                     if (datiAgendaFiltrati.Count == 1)
                     {
                         DatiAgenda datoCorrente = datiAgendaFiltrati.FirstOrDefault();
@@ -113,7 +115,7 @@ namespace VideoSystemWeb.Agenda
                 {
                     if (!string.IsNullOrEmpty(e.Row.Cells[indiceColonna].Text.Trim()))
                     {
-                        DatiAgenda datoAgendaCorrente = Tipologie.getDatiAgendaById(int.Parse(e.Row.Cells[indiceColonna].Text.Trim()));
+                        DatiAgenda datoAgendaCorrente = Agenda_BLL.Instance.getDatiAgendaById(listaDatiAgenda, int.Parse(e.Row.Cells[indiceColonna].Text.Trim())); //Tipologie.getDatiAgendaById(int.Parse(e.Row.Cells[indiceColonna].Text.Trim()));
 
                         Esito esito = new Esito();
                         Tipologica statoCorrente = UtilityTipologiche.getElementByID(listaStati, datoAgendaCorrente.id_stato, ref esito);

@@ -38,11 +38,11 @@ namespace VideoSystemWeb.Entity
         {
             List<Tipologica> listaStati = new List<Tipologica>();
 
-            listaStati.Add(new Tipologica(1, "Previsione impegno", "Previsione impegno", "", "COLOR=#C7C7C7"));
-            listaStati.Add(new Tipologica(2, "Offerta", "Offerta", "", "COLOR=#FFCC00"));
-            listaStati.Add(new Tipologica(3, "Lavorazione", "Lavorazione", "", "COLOR=#339966"));
-            listaStati.Add(new Tipologica(4, "Fattura", "Fattura", "", "COLOR=#3F3FBE"));
-            listaStati.Add(new Tipologica(5, "Riposo", "Riposo", "", "COLOR=#FF6600"));
+            listaStati.Add(new Tipologica(1, "Previsione impegno", "Previsione impegno", "", "COLOR=#C7C7C7", true));
+            listaStati.Add(new Tipologica(2, "Offerta", "Offerta", "", "COLOR=#FFCC00", true));
+            listaStati.Add(new Tipologica(3, "Lavorazione", "Lavorazione", "", "COLOR=#339966", true));
+            listaStati.Add(new Tipologica(4, "Fattura", "Fattura", "", "COLOR=#3F3FBE", true));
+            listaStati.Add(new Tipologica(5, "Riposo", "Riposo", "", "COLOR=#FF6600", true));
 
             return listaStati;
         }
@@ -62,9 +62,9 @@ namespace VideoSystemWeb.Entity
         {
             List<Tipologica> listaTipiUtente = new List<Tipologica>();
 
-            listaTipiUtente.Add(new Tipologica(1, "Amministratore", "Amministratore (lettura/scrittura/gestione applicazione)", "", ""));
-            listaTipiUtente.Add(new Tipologica(2, "Operatore", "Operatore (lettura/scrittura)", "", ""));
-            listaTipiUtente.Add(new Tipologica(3, "Visualizzatore", "Visualizzatore (lettura)", "", ""));
+            listaTipiUtente.Add(new Tipologica(1, "Amministratore", "Amministratore (lettura/scrittura/gestione applicazione)", "", "",true));
+            listaTipiUtente.Add(new Tipologica(2, "Operatore", "Operatore (lettura/scrittura)", "", "", true));
+            listaTipiUtente.Add(new Tipologica(3, "Visualizzatore", "Visualizzatore (lettura)", "", "", true));
 
             return listaTipiUtente;
         }
@@ -75,20 +75,20 @@ namespace VideoSystemWeb.Entity
         {
             List<Tipologica> listaRisorse = new List<Tipologica>();
 
-            listaRisorse.Add(new Tipologica(1, "Mirco", "Mirco Rossi", "dipendenti", "COLOR=#D7868E"));
-            listaRisorse.Add(new Tipologica(2, "Toti", "Enrico Toti", "dipendenti", "COLOR=#D7868E"));
-            listaRisorse.Add(new Tipologica(3, "Costa", "Costantino Marroni", "dipendenti", "COLOR=#D7868E"));
-            listaRisorse.Add(new Tipologica(4, "Daniele", "Daniele Verdi", "dipendenti", "COLOR=#D7868E"));
-            listaRisorse.Add(new Tipologica(6, "Nicola", "Nicola Rossi", "dipendenti", "COLOR=#D7868E"));
-            listaRisorse.Add(new Tipologica(7, "Regia 1", "Regia 1", "regie", "COLOR=#89D38D"));
-            listaRisorse.Add(new Tipologica(8, "Regia 2", "Regia 2", "regie", "COLOR=#89D38D"));
-            listaRisorse.Add(new Tipologica(9, "Regia 3", "Regia 3", "regie", "COLOR=#89D38D"));
-            listaRisorse.Add(new Tipologica(10, "Extra 1", "Extra 1", "extra", "COLOR=#9991CC"));
-            listaRisorse.Add(new Tipologica(11, "Extra 2", "Extra 2", "extra", "COLOR=#9991CC"));
-            listaRisorse.Add(new Tipologica(12, "Extra 3", "Extra 3", "extra", "COLOR=#9991CC"));
-            listaRisorse.Add(new Tipologica(13, "Extra 4", "Extra 4", "extra", "COLOR=#9991CC"));
-            listaRisorse.Add(new Tipologica(14, "Extra 5", "Extra 5", "extra", "COLOR=#9991CC"));
-            listaRisorse.Add(new Tipologica(15, "Extra 6", "Extra 6", "extra", "COLOR=#9991CC"));
+            listaRisorse.Add(new Tipologica(1, "Mirco", "Mirco Rossi", "dipendenti", "COLOR=#D7868E", true));
+            listaRisorse.Add(new Tipologica(2, "Toti", "Enrico Toti", "dipendenti", "COLOR=#D7868E", true));
+            listaRisorse.Add(new Tipologica(3, "Costa", "Costantino Marroni", "dipendenti", "COLOR=#D7868E", true));
+            listaRisorse.Add(new Tipologica(4, "Daniele", "Daniele Verdi", "dipendenti", "COLOR=#D7868E", true));
+            listaRisorse.Add(new Tipologica(6, "Nicola", "Nicola Rossi", "dipendenti", "COLOR=#D7868E", true));
+            listaRisorse.Add(new Tipologica(7, "Regia 1", "Regia 1", "regie", "COLOR=#89D38D", true));
+            listaRisorse.Add(new Tipologica(8, "Regia 2", "Regia 2", "regie", "COLOR=#89D38D", true));
+            listaRisorse.Add(new Tipologica(9, "Regia 3", "Regia 3", "regie", "COLOR=#89D38D", true));
+            listaRisorse.Add(new Tipologica(10, "Extra 1", "Extra 1", "extra", "COLOR=#9991CC", true));
+            listaRisorse.Add(new Tipologica(11, "Extra 2", "Extra 2", "extra", "COLOR=#9991CC", true));
+            listaRisorse.Add(new Tipologica(12, "Extra 3", "Extra 3", "extra", "COLOR=#9991CC", true));
+            listaRisorse.Add(new Tipologica(13, "Extra 4", "Extra 4", "extra", "COLOR=#9991CC", true));
+            listaRisorse.Add(new Tipologica(14, "Extra 5", "Extra 5", "extra", "COLOR=#9991CC", true));
+            listaRisorse.Add(new Tipologica(15, "Extra 6", "Extra 6", "extra", "COLOR=#9991CC", true));
 
             return listaRisorse;
         }

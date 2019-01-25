@@ -18,7 +18,7 @@
     <script src='/Scripts/bootstrap-datepicker.min.js'></script>
     <script src='/Scripts/bootstrap-datepicker.it.min.js'></script>
     <script src='/Scripts/Utility.js'></script>
-    <%--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>--%>
+
 
     <link rel='stylesheet' href='/Css/bootstrap-datepicker3.min.css' />
     <link rel='stylesheet' href='/Css/Style.css' />
@@ -37,13 +37,15 @@
                     <td style="width:10%;align-content:center;text-align:center;">
                         <asp:Image ID="imgLogo" runat="server" Height="100px" ImageAlign="AbsMiddle" ImageUrl="~/Images/logoVSP.png" />
                     </td>
-                    <td colspan="8" style="align-content:center;text-align:left;"><div class="w3-panel w3-yellow w3-border w3-round">GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp; <asp:Label ID="lbl_benvenuto" runat="server" ></asp:Label></div></td>
-                    <td colspan="1" style="align-content:center;text-align:center;"></td>
+                    <td colspan="9" style="width:10%;align-content:center;text-align:left;">
+                        <div class="w3-panel w3-yellow w3-border w3-round">GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp; <asp:Label ID="lbl_benvenuto" runat="server" ></asp:Label></div>
+                    </td>
+                    
                 </tr>
                 <tr>
-                    <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="/Agenda/grigliaNicola.aspx" title="Gestione Agenda">Agenda</a></div></td>
+                    <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="/Agenda/Agenda.aspx" title="Gestione Agenda">Agenda</a></div></td>
                     <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="#" title="Report">Report</a></div></td>
-                    <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="#" title="Gestione Anagrafiche Clienti - Fornitori - Collaboratori">Anagrafiche</a></div></td>
+                    <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="/Anagrafiche/AnagCollaboratori.aspx" title="Gestione Anagrafiche Clienti - Fornitori - Collaboratori">Anagrafiche</a></div></td>
                     <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="#" title="Gestione Magazzino">Magazzino</a></div></td>
                     <td style="width:10%;align-content:center;text-align:center;"></td>
                     <td style="width:10%;align-content:center;text-align:center;"></td>

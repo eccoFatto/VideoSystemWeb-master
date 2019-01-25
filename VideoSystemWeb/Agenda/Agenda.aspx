@@ -94,7 +94,7 @@
         PopupControlID="PopupEditEvent" BackgroundCssClass="modalBackground" DropShadow="False" OkControlID="OkButton">
     </ajaxToolkit:ModalPopupExtender>
     
-    <asp:Panel ID="PopupEditEvent" runat="server" CssClass="containerPopup round" Style="display: none; border: solid 3px #5377A9;background-color:#EEF1F7;height:50%;width:80%;">
+    <asp:Panel ID="PopupEditEvent" runat="server" CssClass="containerPopup round" Style="display: none; border: solid 3px #5377A9;background-color:#EEF1F7;width:80%;">
         <asp:UpdatePanel ID="upEvento" runat="server">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlContainer">
@@ -105,21 +105,105 @@
                     <table>
                         <tr>
                             <td style="width:40%">
-                                Data Inizio
-                                <input type="text" class="roundSmall calendar" id="txtDataInizio" placeholder="DD/MM/YYYY" />
+                                <asp:Label ID="lbl_DataInizioLavorazione" runat="server" Text="Data inizio lavorazione"></asp:Label>
+                                <asp:TextBox ID="txt_DataInizioLavorazione" runat="server" CssClass="roundSmall calendar" placeholder="DD/MM/YYYY"></asp:TextBox>
                             </td>
                             <td style="width:30%">
-                                Durata (giorni)
-                                <asp:TextBox ID="txtDurata" class="roundSmall" runat="server" MaxLength="2" style="width:30px;" onkeypress="return onlyNumbers()"></asp:TextBox>
+                                <asp:Label ID="lbl_DataFineLavorazione" runat="server" Text="Data fine lavorazione"></asp:Label>
+                                <asp:TextBox class="roundSmall calendar" ID="txt_FineLavorazione" runat="server" placeholder="DD/MM/YYYY"/>
                             </td>
                             <td style="width:30%">
-                                Risorsa
-                                <td>
-                                    <asp:DropDownList ID="ddlRisorse" runat="server"></asp:DropDownList>
-                                </td>
+                                <asp:Label ID="lbl_DurataLavorazione" runat="server" Text="Durata lavorazione"></asp:Label>
+                                <asp:TextBox ID="txt_DurataLavorazione" class="roundSmall" runat="server" MaxLength="2" style="width:30px;" onkeypress="return onlyNumbers()"></asp:TextBox>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td style="width:30%">
+                                <asp:Label ID="lbl_Risorsa" runat="server" Text="Risorsa"></asp:Label>      
+                                <asp:DropDownList ID="ddl_Risorse" runat="server"></asp:DropDownList>
+                            </td>
+                            <td style="width:30%">
+                                <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente"></asp:Label>
+                                <asp:DropDownList ID="ddl_cliente" runat="server"></asp:DropDownList>
+                            </td>
+                            <td style="width:30%">
+                                &nbsp;
                             </td>
                         </tr>
-
+                        <tr>
+                            <td style="width:40%">
+                                <asp:Label ID="lbl_DurataViaggioAndata" runat="server" Text="Durata viaggio andata"></asp:Label>
+                                <asp:TextBox ID="txt_DurataViaggioAndata" runat="server" CssClass="roundSmall"></asp:TextBox>
+                            </td>
+                            <td style="width:30%">
+                                <asp:Label ID="lbl_DurataViaggioRitorno" runat="server" Text="Durata viaggio ritorno"></asp:Label>
+                                <input type="text" class="roundSmall" id="txt_DurataViaggioRitorno" placeholder="DD/MM/YYYY" />
+                            </td>
+                            <td style="width:30%">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                <asp:Label ID="lbl_DataInizioImpegno" runat="server" Text="Data inizio impegno"></asp:Label>                              
+                                <asp:TextBox ID="txt_DataInizioImpegno" runat="server" CssClass="roundSmall calendar"></asp:TextBox>
+                            </td>
+                            <td style="width:30%">
+                                <asp:Label ID="lbl_DataFineImpegno" runat="server" Text="Data fine impegno"></asp:Label>                       
+                                <asp:TextBox ID="txt_DataFineImpegno" runat="server" CssClass="roundSmall calendar"></asp:TextBox>
+                            </td>
+                            <td style="width:30%">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                <asp:Label ID="lbl_ImpegnoOrario" runat="server" Text="Impegno orario"></asp:Label>
+                                <asp:CheckBox ID="chk_ImpegnoOrario" runat="server" />
+                            </td>
+                            <td style="width:30%">
+                                <asp:Label ID="lbl_ImpegnoOrarioDa" runat="server" Text="Impegno orario da"></asp:Label>                               
+                                <asp:TextBox ID="txt_ImpegnoOrarioDa" runat="server" CssClass="roundSmall calendar"></asp:TextBox>
+                            </td>
+                            <td style="width:30%">
+                                <asp:Label ID="lbl_ImpegnoOrarioA" runat="server" Text="Impegno orario a"></asp:Label>
+                                <asp:TextBox ID="txt_ImpegnoOrarioA" runat="server" CssClass="roundSmall calendar"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                <asp:Label ID="lbl_Produzione" runat="server" Text="Produzione"></asp:Label>
+                                <asp:TextBox ID="txt_Produzione" runat="server" CssClass="roundSmall"></asp:TextBox>
+                            </td>
+                            <td style="width:30%">
+                                <asp:Label ID="lbl_lavorazione" runat="server" Text="Lavorazione"></asp:Label>
+                                <asp:TextBox ID="txt_Lavorazione" runat="server" CssClass="roundSmall"></asp:TextBox>
+                            </td>
+                            <td style="width:30%">
+                                &nbsp;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%">
+                                <asp:Label ID="lbl_indirizzo" runat="server" Text="Indirizzo"></asp:Label>
+                                <asp:TextBox ID="txt_Indirizzo" runat="server" CssClass="roundSmall"></asp:TextBox>
+                            </td>
+                            <td style="width:30%">
+                                <asp:Label ID="lbl_luogo" runat="server" Text="Luogo"></asp:Label>
+                                <asp:TextBox ID="txt_Luogo" runat="server" CssClass="roundSmall"></asp:TextBox>
+                            </td>
+                            <td style="width:30%">
+                                <asp:Label ID="lbl_CodiceLavoro" runat="server" Text="Codice lavoro"></asp:Label>
+                                <asp:TextBox ID="txt_CodiceLavoro" runat="server" CssClass="roundSmall"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <asp:Label ID="lbl_nota" runat="server" Text="Nota"></asp:Label>
+                                <asp:TextBox ID="tb_Nota" style="width:90%" Rows="5" TextMode="MultiLine" runat="server"></asp:TextBox>
+                            </td>
+                        </tr>
                     </table>
                   </asp:Panel>
               </ContentTemplate>

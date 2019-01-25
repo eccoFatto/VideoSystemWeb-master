@@ -58,27 +58,27 @@ namespace VideoSystemWeb.DAL
                                     foreach (DataRow riga in dt.Rows)
                                     {
                                         DatiAgenda datoAgenda = new DatiAgenda();
-                                        datoAgenda.id = int.Parse(riga["id"].ToString());
-                                        datoAgenda.id_colonne_agenda = int.Parse(riga["id_colonne_agenda"].ToString());
-                                        datoAgenda.id_stato = int.Parse(riga["id_stato"].ToString());
-                                        datoAgenda.data_inizio_lavorazione = DateTime.Parse(riga["data_inizio_lavorazione"].ToString());
-                                        datoAgenda.data_fine_lavorazione = DateTime.Parse(riga["data_fine_lavorazione"].ToString());
-                                        datoAgenda.durata_lavorazione = int.Parse(riga["durata_lavorazione"].ToString());
+                                        datoAgenda.id = riga.Field<int>("id");
+                                        datoAgenda.id_colonne_agenda = riga.Field<int>("id_colonne_agenda"); 
+                                        datoAgenda.id_stato = riga.Field<int>("id_stato");
+                                        datoAgenda.data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione"); 
+                                        datoAgenda.data_fine_lavorazione = riga.Field<DateTime>("data_fine_lavorazione"); 
+                                        datoAgenda.durata_lavorazione = riga.Field<int>("durata_lavorazione"); 
                                         datoAgenda.id_tipologia = riga["id_tipologia"] != DBNull.Value ? riga.Field<int>("id_tipologia") : 0 ;
                                         datoAgenda.id_cliente = riga["id_cliente"] != DBNull.Value ? riga.Field<int>("id_cliente") : 0; 
-                                        datoAgenda.durata_viaggio_andata = int.Parse(riga["durata_viaggio_andata"].ToString());
-                                        datoAgenda.durata_viaggio_ritorno = int.Parse(riga["durata_viaggio_ritorno"].ToString());
+                                        datoAgenda.durata_viaggio_andata = riga.Field<int>("durata_viaggio_andata"); 
+                                        datoAgenda.durata_viaggio_ritorno = riga.Field<int>("durata_viaggio_ritorno"); 
                                         datoAgenda.data_inizio_impegno = riga["data_inizio_impegno"] != DBNull.Value ? riga.Field<DateTime>("data_inizio_impegno") : DateTime.MinValue;
                                         datoAgenda.data_fine_impegno = riga["data_fine_impegno"] != DBNull.Value ? riga.Field<DateTime>("data_fine_impegno") : DateTime.MaxValue; 
-                                        datoAgenda.impegnoOrario = bool.Parse(riga["impegnoOrario"].ToString());
+                                        datoAgenda.impegnoOrario = riga.Field <bool>("impegnoOrario");
                                         datoAgenda.impegnoOrario_da = riga["impegnoOrario_da"] != DBNull.Value ? riga.Field<DateTime>("impegnoOrario_da") : DateTime.MinValue;
                                         datoAgenda.impegnoOrario_a = riga["impegnoOrario_a"] != DBNull.Value ? riga.Field<DateTime>("impegnoOrario_a") : DateTime.MaxValue; 
-                                        datoAgenda.produzione = riga["produzione"].ToString();
-                                        datoAgenda.lavorazione = riga["lavorazione"].ToString();
-                                        datoAgenda.indirizzo = riga["indirizzo"].ToString();
-                                        datoAgenda.luogo = riga["luogo"].ToString();
-                                        datoAgenda.codice_lavoro = riga["codice_lavoro"].ToString();
-                                        datoAgenda.nota = riga["nota"].ToString();
+                                        datoAgenda.produzione = riga.Field <string>("produzione");
+                                        datoAgenda.lavorazione = riga.Field<string>("lavorazione");
+                                        datoAgenda.indirizzo = riga.Field<string>("indirizzo");
+                                        datoAgenda.luogo = riga.Field<string>("luogo");
+                                        datoAgenda.codice_lavoro = riga.Field<string>("codice_lavoro");
+                                        datoAgenda.nota = riga.Field<string>("nota");
 
                                         listaDatiAgenda.Add(datoAgenda);
                                     }

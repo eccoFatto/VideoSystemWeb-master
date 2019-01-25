@@ -11,11 +11,11 @@ namespace VideoSystemWeb.DAL
 {
     public class Base_DAL
     {
-        public string constr = ConfigurationManager.ConnectionStrings["constrMSSQL_NIC"].ConnectionString;
-        //string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-        //string constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
+        public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL_NIC"].ConnectionString;
+        //string static constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+        //string static constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
 
-        public List<Tipologica> CaricaTipologica(EnumTipologiche tipologica, bool soloElemAttivi, ref Esito esito)
+        public static List<Tipologica> CaricaTipologica(EnumTipologiche tipologica, bool soloElemAttivi, ref Esito esito)
         {
             List<Tipologica> listaTipologiche = new List<Tipologica>();
             string nomeTipologica = UtilityTipologiche.getNomeTipologica(tipologica);

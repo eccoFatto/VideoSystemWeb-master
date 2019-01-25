@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
+using VideoSystemWeb.DAL;
 using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.BLL
@@ -15,9 +17,14 @@ namespace VideoSystemWeb.BLL
 
             if (HttpContext.Current.Session[tipologica.ToString()] == null)
             {
-                // sostituire logica 
-                // es. "SELECT * FROM " + getNomeTipologica(tipologica)
-                listaTipologiche = Tipologie.caricaTipologica(tipologica);
+                if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
+                {
+                    listaTipologiche = Base_DAL.CaricaTipologica(EnumTipologiche.TIPO_STATO, true, ref esito);
+                }
+                else
+                {
+                    listaTipologiche = Tipologie.caricaTipologica(EnumTipologiche.TIPO_STATO);
+                }
 
                 HttpContext.Current.Session[tipologica.ToString()] = listaTipologiche;
             }

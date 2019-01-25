@@ -151,8 +151,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Agenda\griglia.aspx" />
-    <Content Include="Agenda\grigliaNicola.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Images\logoVSP.png" />
     <Content Include="pageError.aspx" />
@@ -363,20 +361,6 @@
     <Compile Include="Entity\Anag_Utenti.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Agenda\griglia.aspx.cs">
-      <DependentUpon>griglia.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Agenda\griglia.aspx.designer.cs">
-      <DependentUpon>griglia.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Agenda\grigliaNicola.aspx.cs">
-      <DependentUpon>grigliaNicola.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Agenda\grigliaNicola.aspx.designer.cs">
-      <DependentUpon>grigliaNicola.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

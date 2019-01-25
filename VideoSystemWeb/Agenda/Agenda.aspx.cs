@@ -25,11 +25,16 @@ namespace VideoSystemWeb.Agenda
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
 
-                ddlRisorse.DataSource = listaRisorse;
-                ddlRisorse.DataTextField = "nome";
-                ddlRisorse.DataValueField = "id";
-                ddlRisorse.DataBind();
+                popolaListaRisorse();
             }
+        }
+
+        private void popolaListaRisorse()
+        {
+            ddlRisorse.DataSource = listaRisorse;
+            ddlRisorse.DataTextField = "nome";
+            ddlRisorse.DataValueField = "id";
+            ddlRisorse.DataBind();
         }
 
         private DataTable CreateDataTable(DateTime data)

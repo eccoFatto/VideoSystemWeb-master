@@ -31,10 +31,10 @@ namespace VideoSystemWeb.Agenda
 
         private void popolaListaRisorse()
         {
-            ddlRisorse.DataSource = listaRisorse;
-            ddlRisorse.DataTextField = "nome";
-            ddlRisorse.DataValueField = "id";
-            ddlRisorse.DataBind();
+            ddl_Risorse.DataSource = listaRisorse;
+            ddl_Risorse.DataTextField = "nome";
+            ddl_Risorse.DataValueField = "id";
+            ddl_Risorse.DataBind();
         }
 
         private DataTable CreateDataTable(DateTime data)

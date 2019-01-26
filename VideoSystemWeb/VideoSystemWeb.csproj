@@ -130,6 +130,8 @@
     <Content Include="About.aspx" />
     <Content Include="Agenda\Agenda.aspx" />
     <Content Include="Agenda\prova.aspx" />
+    <Content Include="Anagrafiche\AnagCollaboratori.aspx" />
+    <Content Include="Anagrafiche\userControl\AnagCollaboratori.ascx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -317,6 +319,20 @@
     <Compile Include="Agenda\prova.aspx.designer.cs">
       <DependentUpon>prova.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Anagrafiche\AnagCollaboratori.aspx.cs">
+      <DependentUpon>AnagCollaboratori.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Anagrafiche\AnagCollaboratori.aspx.designer.cs">
+      <DependentUpon>AnagCollaboratori.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Anagrafiche\userControl\AnagCollaboratori.ascx.cs">
+      <DependentUpon>AnagCollaboratori.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Anagrafiche\userControl\AnagCollaboratori.ascx.designer.cs">
+      <DependentUpon>AnagCollaboratori.ascx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -400,6 +416,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Agenda\userControl\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

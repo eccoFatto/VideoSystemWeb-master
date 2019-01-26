@@ -1,38 +1,12 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AnagCollaboratori.ascx.cs" Inherits="VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-
-<ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server" />    
-    <style>
-        .highlight {
-            background-color: #DDEEFF;
-        }
-
-        .grid td {
-            border-top: dotted 1px #5377A9;
-        }
-
-        .grid td {
-            border-right: dotted 1px #5377A9;
-        }
-
-        .grid th {
-            border-bottom: solid 2px #5377A9 !important;
-        }
-
-        .grid td.first {
-            border-right: solid 2px #5377A9 !important;
-        }
-    </style>
-
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
         <table style="width:600px;align-content:center;">
             <tr>
                 <td style="width:50px;"><div class="w3-panel w3-yellow w3-border w3-round">Cognome</div></td>
                 <td style="width:100px;">
-                    <div class="w3-panel w3-white w3-border w3-hover-orange w3-round">
-                        <asp:TextBox ID="tbCognome" runat="server" ></asp:TextBox>
-                    </div>
+                    <asp:TextBox ID="tbCognome" runat="server" class="w3-panel w3-white w3-border w3-hover-orange w3-round"></asp:TextBox>
                 </td>
                 <td style="width:50px;"><div class="w3-panel w3-yellow w3-border w3-round">Nome</div></td>
                 <td style="width:100px;">

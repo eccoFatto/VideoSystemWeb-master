@@ -1,5 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="VideoSystemWeb.SiteMaster" %>
-
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -30,7 +30,9 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"/>
 </head>
 <body>
+    
     <form runat="server">
+        <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server" />   
         <div id="MENU" class="w3-container w3-0 mydiv" style="align-content:center;">
             <table id="tblmenu" style="width:100%;">
                 <tr>

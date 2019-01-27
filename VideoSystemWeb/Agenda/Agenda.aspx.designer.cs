@@ -202,6 +202,33 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.DropDownList ddl_Risorse;
         
         /// <summary>
+        /// Controllo lbl_Tipologia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Tipologia;
+        
+        /// <summary>
+        /// Controllo val_Tipologia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox val_Tipologia;
+        
+        /// <summary>
+        /// Controllo ddl_Tipologia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Tipologia;
+        
+        /// <summary>
         /// Controllo lbl_Cliente.
         /// </summary>
         /// <remarks>

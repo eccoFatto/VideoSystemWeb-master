@@ -12,7 +12,7 @@ namespace VideoSystemWeb.Agenda
 {
     public partial class Agenda : BasePage
     {
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Esito esito = new Esito();
@@ -21,7 +21,7 @@ namespace VideoSystemWeb.Agenda
 
             if (!IsPostBack)
             {
-                DateTime dataPartenza = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                DateTime dataPartenza = DateTime.Now;
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
 
@@ -154,9 +154,101 @@ namespace VideoSystemWeb.Agenda
             ScriptManager.RegisterStartupScript(this, typeof(Page), "passaggioMouse", "registraPassaggioMouse();", true);
         }
 
-        protected void btnEditEvent_Click(object sender, EventArgs e)
+        protected void btnModifica_Click(object sender, EventArgs e)
         {
+            AttivaDisattivaModifica(true);
+        }
 
+        protected void btnSalva_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+            //DateTime data = validaCampo(txt_DataInizioLavorazione, DateTime.Now, ref esito);
+            //int intero = validaCampo(txt_DurataLavorazione, 0, ref esito);
+            //string stringa = validaCampo(txt_Produzione, "", ref esito);
+
+            //string stringaErroriValidazione;
+            //if (esitoValidazione.codice == Esito.ESITO_OK)
+            //{
+
+            DatiAgenda datiAgenda = new DatiAgenda();
+            datiAgenda.data_inizio_lavorazione = validaCampo(txt_DataInizioLavorazione, DateTime.Now, true, ref esito);// DateTime.Parse(txt_DataInizioLavorazione.Text);
+            datiAgenda.data_fine_lavorazione = validaCampo(txt_FineLavorazione, DateTime.Now, true, ref esito); //DateTime.Parse(txt_FineLavorazione.Text);
+            datiAgenda.durata_lavorazione = validaCampo(txt_DurataLavorazione, 0, true, ref esito); //int.Parse(txt_DurataLavorazione.Text);
+            datiAgenda.id_colonne_agenda = validaCampo(ddl_Risorse, 0, true, ref esito); //int.Parse(ddl_Risorse.SelectedValue);
+            datiAgenda.id_cliente = validaCampo(ddl_cliente, 0, true, ref esito); //int.Parse(ddl_cliente.SelectedValue);
+            datiAgenda.durata_viaggio_andata = validaCampo(txt_DurataViaggioAndata, 0, false, ref esito); //int.Parse(txt_DurataViaggioAndata.Text);
+            datiAgenda.durata_viaggio_ritorno = validaCampo(txt_DurataViaggioRitorno, 0, false, ref esito); //int.Parse(txt_DurataViaggioRitorno.Text);
+            datiAgenda.data_inizio_impegno = validaCampo(txt_DataInizioImpegno, DateTime.Now, false, ref esito); //DateTime.Parse(txt_DataInizioImpegno.Text);
+            datiAgenda.data_fine_impegno = validaCampo(txt_DataFineImpegno, DateTime.Now, false, ref esito); //DateTime.Parse(txt_DataFineImpegno.Text);
+            datiAgenda.impegnoOrario = chk_ImpegnoOrario.Checked;
+            datiAgenda.impegnoOrario_da = validaCampo(txt_ImpegnoOrarioDa, DateTime.Now, false, ref esito); //DateTime.Parse(txt_ImpegnoOrarioDa.Text);
+            datiAgenda.impegnoOrario_a = validaCampo(txt_ImpegnoOrarioA, DateTime.Now, false, ref esito); //DateTime.Parse(txt_ImpegnoOrarioA.Text);
+            datiAgenda.produzione = validaCampo(txt_Produzione, "", true, ref esito); //txt_Produzione.Text;
+            datiAgenda.lavorazione = validaCampo(txt_Lavorazione, "", true, ref esito); //txt_Lavorazione.Text;
+            datiAgenda.indirizzo = validaCampo(txt_Indirizzo, "", false, ref esito); //txt_Indirizzo.Text;
+            datiAgenda.luogo = validaCampo(txt_Luogo, "", false, ref esito); //txt_Luogo.Text;
+            datiAgenda.codice_lavoro = validaCampo(txt_CodiceLavoro, "", true, ref esito); //txt_CodiceLavoro.Text;
+            datiAgenda.nota = validaCampo(tb_Nota, "", false, ref esito); //tb_Nota.Text;
+            //}
+            //else
+            //{
+            upEvento.Update();
+            //}
+        }
+
+        
+
+        protected void btnAnnulla_Click(object sender, EventArgs e)
+        {
+            AttivaDisattivaModifica(false);
+        }
+
+        
+        private void AttivaDisattivaModifica(bool attivaModifica)
+        {
+            val_DataInizioLavorazione.Visible = !attivaModifica;
+            txt_DataInizioLavorazione.Visible = attivaModifica;
+            val_FineLavorazione.Visible = !attivaModifica;
+            txt_FineLavorazione.Visible = attivaModifica;
+            val_DurataLavorazione.Visible = !attivaModifica;
+            txt_DurataLavorazione.Visible = attivaModifica;
+            val_Risorse.Visible = !attivaModifica;
+            ddl_Risorse.Visible = attivaModifica;
+            val_Tipologia.Visible = !attivaModifica;
+            ddl_Tipologia.Visible = attivaModifica;
+            val_cliente.Visible = !attivaModifica;
+            ddl_cliente.Visible = attivaModifica;
+            val_DurataViaggioAndata.Visible = !attivaModifica;
+            txt_DurataViaggioAndata.Visible = attivaModifica;
+            val_DurataViaggioRitorno.Visible = !attivaModifica;
+            txt_DurataViaggioRitorno.Visible = attivaModifica;
+            val_DataInizioImpegno.Visible = !attivaModifica;
+            txt_DataInizioImpegno.Visible = attivaModifica;
+            val_DataFineImpegno.Visible = !attivaModifica;
+            txt_DataFineImpegno.Visible = attivaModifica;
+            val_ImpegnoOrario.Visible = !attivaModifica;
+            chk_ImpegnoOrario.Visible = attivaModifica;
+            val_ImpegnoOrarioDa.Visible = !attivaModifica;
+            txt_ImpegnoOrarioDa.Visible = attivaModifica;
+            val_ImpegnoOrarioA.Visible = !attivaModifica;
+            txt_ImpegnoOrarioA.Visible = attivaModifica;
+            val_Produzione.Visible = !attivaModifica;
+            txt_Produzione.Visible = attivaModifica;
+            val_Lavorazione.Visible = !attivaModifica;
+            txt_Lavorazione.Visible = attivaModifica;
+            val_Indirizzo.Visible = !attivaModifica;
+            txt_Indirizzo.Visible = attivaModifica;
+            val_Luogo.Visible = !attivaModifica;
+            txt_Luogo.Visible = attivaModifica;
+            val_CodiceLavoro.Visible = !attivaModifica;
+            txt_CodiceLavoro.Visible = attivaModifica;
+            val_Nota.Visible = !attivaModifica;
+            tb_Nota.Visible = attivaModifica;
+
+            btnModifica.Visible = !attivaModifica;
+            btnSalva.Visible = btnAnnulla.Visible = attivaModifica;
+
+            upEvento.Update();
         }
     }
 }

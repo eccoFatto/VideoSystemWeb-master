@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.BLL
@@ -34,7 +36,48 @@ namespace VideoSystemWeb.BLL
 
             return esito;
         }
-    }
 
-    
+        public static T validaCampo<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito) 
+        {
+            T result = defaultValue;
+
+            string valore = "";
+
+            if (campo is TextBox)
+            {
+                valore = ((TextBox)campo).Text;
+            }
+            else if (campo is DropDownList)
+            {
+                valore = ((DropDownList)campo).SelectedValue;
+            }
+
+            string tipoCampo = campo.CssClass.IndexOf("field") != -1 ? campo.CssClass.Substring(campo.CssClass.IndexOf("field")) : "";
+            string classeCampo = tipoCampo + " erroreValidazione";
+            
+            if (isRequired && string.IsNullOrEmpty(valore))
+            {
+                campo.CssClass = classeCampo;
+                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.descrizione = "Campo obbligatorio";
+            }
+            else
+            {
+                try
+                {
+                    result = (T)Convert.ChangeType(valore, typeof(T));
+                }
+                catch
+                {
+                    campo.CssClass = classeCampo;
+                    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.descrizione = "Controllare il campo";
+                }
+            }
+
+           
+
+            return result;
+        }
+    }
 }

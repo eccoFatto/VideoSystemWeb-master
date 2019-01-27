@@ -416,6 +416,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Agenda\userControl\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

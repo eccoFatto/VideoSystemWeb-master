@@ -8,13 +8,15 @@ namespace VideoSystemWeb.Entity
     public class DatiAgenda
     {
         public int id;
-        public int id_colonne_agenda;
-        public int id_stato;
+
         public DateTime data_inizio_lavorazione;
         public DateTime data_fine_lavorazione;
         public int durata_lavorazione;
+
+        public int id_colonne_agenda;
         public int id_tipologia;
         public int id_cliente;
+
         public int durata_viaggio_andata;
         public int durata_viaggio_ritorno;
         public DateTime data_inizio_impegno;
@@ -22,12 +24,16 @@ namespace VideoSystemWeb.Entity
         public bool impegnoOrario;
         public DateTime impegnoOrario_da;
         public DateTime impegnoOrario_a;
+        
         public string produzione;
         public string lavorazione;
         public string indirizzo;
         public string luogo;
         public string codice_lavoro;
+
         public string nota;
+
+        public int id_stato;
 
         public DatiAgenda() { }
 

@@ -26,7 +26,31 @@
                 todayHighlight: true
             });
 
-             registraPassaggioMouse();
+            registraPassaggioMouse();
+        });
+
+        $("body").on("click", "#<%=chk_ImpegnoOrario.ClientID%>", function () {
+            if ($("#<%=chk_ImpegnoOrario.ClientID%>").prop('checked')){
+                $("#<%=txt_ImpegnoOrarioDa.ClientID%>").prop('disabled', false);
+                $("#<%=txt_ImpegnoOrarioDa.ClientID%>").removeClass("w3-light-grey");
+                $("#<%=txt_ImpegnoOrarioDa.ClientID%>").addClass("w3-hover-orange");
+                $("#<%=txt_ImpegnoOrarioDa.ClientID%>").addClass("w3-white");
+
+                $("#<%=txt_ImpegnoOrarioA.ClientID%>").prop('disabled', false);
+                $("#<%=txt_ImpegnoOrarioA.ClientID%>").removeClass("w3-light-grey");
+                $("#<%=txt_ImpegnoOrarioA.ClientID%>").addClass("w3-hover-orange");
+                $("#<%=txt_ImpegnoOrarioA.ClientID%>").addClass("w3-white");
+            } else {
+                $("#<%=txt_ImpegnoOrarioDa.ClientID%>").prop('disabled', true);
+                $("#<%=txt_ImpegnoOrarioDa.ClientID%>").removeClass("w3-white");
+                $("#<%=txt_ImpegnoOrarioDa.ClientID%>").removeClass("w3-hover-orange");
+                $("#<%=txt_ImpegnoOrarioDa.ClientID%>").addClass("w3-light-grey");
+
+                $("#<%=txt_ImpegnoOrarioA.ClientID%>").prop('disabled', true);
+                $("#<%=txt_ImpegnoOrarioA.ClientID%>").removeClass("w3-white");
+                $("#<%=txt_ImpegnoOrarioA.ClientID%>").removeClass("w3-hover-orange");
+                $("#<%=txt_ImpegnoOrarioA.ClientID%>").addClass("w3-light-grey");
+            }
         });
 
         function registraPassaggioMouse() {
@@ -52,23 +76,38 @@
     
         function mostracella(row, column) {
             alert("row:" + row + " column:" + column);
+            
             $("#<%=btnEditEvent.ClientID%>").click();
         }
+        
     </script>
 
     <style>
-        .highlight { background-color: #DDEEFF; }
+        .fieldMedium {
+            width: 140px;
+            margin-bottom:10px;
+            margin-top:10px;
+            padding:0;
+        }
 
-        .grid td { border-top:dotted 1px #5377A9; }
-        .grid td { border-right:dotted 1px #5377A9; }
-        .grid th { border-bottom:solid 2px #5377A9 !important; }  
-        .grid td.first { border-right:solid 2px #5377A9 !important; }
+        .fieldSmall {
+            width: 30px;
+            margin-bottom:10px;
+            margin-top:10px;
+            padding:0;
+        }
+
+        .column {
+            width:33%;           
+        }
+
+        
     </style>
 
     <table style="width:100%">
         <tr>
             <td style="width:70%;vertical-align:top;">
-                <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server" />
+                
                 <asp:Button ID="btnsearch" runat="server" OnClick="btnsearch_Click" style="display:none" />
                 
                 <asp:UpdatePanel ID="UpdatePanelCal" runat="server">
@@ -91,127 +130,151 @@
 
     <asp:Button runat="server" ID="btnEditEvent" Style="display: none" />
     <ajaxToolkit:ModalPopupExtender runat="server" ID="modalPopupEditEvent" TargetControlID="btnEditEvent"
-        PopupControlID="PopupEditEvent" BackgroundCssClass="modalBackground" DropShadow="False" OkControlID="OkButton">
+        PopupControlID="PopupEditEvent" BackgroundCssClass="modalBackground" DropShadow="False" OkControlID="btn_chiudi">
     </ajaxToolkit:ModalPopupExtender>
     
     <asp:Panel ID="PopupEditEvent" runat="server" CssClass="containerPopup round" Style="display: none; border: solid 3px #5377A9;background-color:#EEF1F7;width:80%;">
-        <asp:UpdatePanel ID="upEvento" runat="server">
+        <asp:UpdatePanel ID="upEvento" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlContainer">
                     <center>
-                        NUOVO EVENTO
+                        GESTIONE APPUNTAMENTI
                     </center>
                     <br />
                     <table>
                         <tr>
-                            <td style="width:40%">
-                                <asp:Label ID="lbl_DataInizioLavorazione" runat="server" Text="Data inizio lavorazione"></asp:Label>
-                                <asp:TextBox ID="txt_DataInizioLavorazione" runat="server" CssClass="roundSmall calendar" placeholder="DD/MM/YYYY"></asp:TextBox>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_DataInizioLavorazione" runat="server" Text="Data inizio lavorazione" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_DataInizioLavorazione" runat="server" CssClass="w3-panel w3-light-grey w3-border w3-round fieldMedium" placeholder="DD/MM/YYYY" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_DataInizioLavorazione" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" placeholder="DD/MM/YYYY" Visible="false"></asp:TextBox>
                             </td>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_DataFineLavorazione" runat="server" Text="Data fine lavorazione"></asp:Label>
-                                <asp:TextBox class="roundSmall calendar" ID="txt_FineLavorazione" runat="server" placeholder="DD/MM/YYYY"/>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_DataFineLavorazione" runat="server" Text="Data fine lavorazione" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox CssClass="w3-panel w3-light-grey w3-border w3-round fieldMedium" ID="val_FineLavorazione" runat="server" placeholder="DD/MM/YYYY" Enabled="false"/>
+                                <asp:TextBox CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" ID="txt_FineLavorazione" runat="server" placeholder="DD/MM/YYYY" Visible="false"/>
                             </td>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_DurataLavorazione" runat="server" Text="Durata lavorazione"></asp:Label>
-                                <asp:TextBox ID="txt_DurataLavorazione" class="roundSmall" runat="server" MaxLength="2" style="width:30px;" onkeypress="return onlyNumbers()"></asp:TextBox>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_DurataLavorazione" runat="server" Text="Durata lavorazione" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_DurataLavorazione" CssClass="w3-panelw3-light-grey w3-border w3-round fieldSmall" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_DurataLavorazione" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldSmall" runat="server" MaxLength="2" onkeypress="return onlyNumbers()" Visible="false"></asp:TextBox>
                             </td>
                             
                         </tr>
                         <tr>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_Risorsa" runat="server" Text="Risorsa"></asp:Label>      
-                                <asp:DropDownList ID="ddl_Risorse" runat="server"></asp:DropDownList>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_Risorsa" runat="server" Text="Pianificazione evento" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label> 
+                                <asp:TextBox ID="val_Risorse" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:DropDownList ID="ddl_Risorse" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:DropDownList>
                             </td>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente"></asp:Label>
-                                <asp:DropDownList ID="ddl_cliente" runat="server"></asp:DropDownList>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_Tipologia" runat="server" Text="Tipologia" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_Tipologia" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:DropDownList ID="ddl_Tipologia" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:DropDownList>
                             </td>
-                            <td style="width:30%">
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_cliente" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:DropDownList ID="ddl_cliente" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:DropDownList>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_DurataViaggioAndata" runat="server" Text="Durata viaggio andata" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_DurataViaggioAndata" CssClass="w3-panelw3-light-grey w3-border w3-round fieldSmall" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_DurataViaggioAndata" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldSmall" MaxLength="2" style="width:30px;" Visible="false"></asp:TextBox>
+                            </td>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_DurataViaggioRitorno" runat="server" Text="Durata viaggio ritorno" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_DurataViaggioRitorno" CssClass="w3-panelw3-light-grey w3-border w3-round fieldSmall" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_DurataViaggioRitorno" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldSmall" MaxLength="2" style="width:30px;" Visible="false"></asp:TextBox>
+                            </td>
+                            <td class=".column" runat="server">
                                 &nbsp;
                             </td>
                         </tr>
                         <tr>
-                            <td style="width:40%">
-                                <asp:Label ID="lbl_DurataViaggioAndata" runat="server" Text="Durata viaggio andata"></asp:Label>
-                                <asp:TextBox ID="txt_DurataViaggioAndata" runat="server" CssClass="roundSmall"></asp:TextBox>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_DataInizioImpegno" runat="server" Text="Data inizio impegno" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>  
+                                <asp:TextBox ID="val_DataInizioImpegno" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_DataInizioImpegno" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" placeholder="DD/MM/YYYY" Visible="false"></asp:TextBox>
                             </td>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_DurataViaggioRitorno" runat="server" Text="Durata viaggio ritorno"></asp:Label>
-                                <input type="text" class="roundSmall" id="txt_DurataViaggioRitorno" placeholder="DD/MM/YYYY" />
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_DataFineImpegno" runat="server" Text="Data fine impegno" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label> 
+                                <asp:TextBox ID="val_DataFineImpegno" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_DataFineImpegno" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" placeholder="DD/MM/YYYY" Visible="false"></asp:TextBox>
                             </td>
-                            <td style="width:30%">
+                            <td class=".column" runat="server">
                                 &nbsp;
                             </td>
                         </tr>
                         <tr>
-                            <td style="width:40%">
-                                <asp:Label ID="lbl_DataInizioImpegno" runat="server" Text="Data inizio impegno"></asp:Label>                              
-                                <asp:TextBox ID="txt_DataInizioImpegno" runat="server" CssClass="roundSmall calendar"></asp:TextBox>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_ImpegnoOrario" runat="server" Text="Impegno orario" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_ImpegnoOrario" CssClass="w3-panelw3-light-grey w3-border w3-round fieldSmall" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:CheckBox ID="chk_ImpegnoOrario" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldSmall" style="width:30px;" Visible="false" ClientIDMode="Static"/>
                             </td>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_DataFineImpegno" runat="server" Text="Data fine impegno"></asp:Label>                       
-                                <asp:TextBox ID="txt_DataFineImpegno" runat="server" CssClass="roundSmall calendar"></asp:TextBox>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_ImpegnoOrarioDa" runat="server" Text="Impegno orario da" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label> 
+                                <asp:TextBox ID="val_ImpegnoOrarioDa" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_ImpegnoOrarioDa" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:TextBox>
                             </td>
-                            <td style="width:30%">
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_ImpegnoOrarioA" runat="server" Text="Impegno orario a" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_ImpegnoOrarioA" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_ImpegnoOrarioA" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:TextBox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_Produzione" runat="server" Text="Produzione" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_Produzione" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_Produzione" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:TextBox>
+                            </td>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_lavorazione" runat="server" Text="Lavorazione" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_Lavorazione" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_Lavorazione" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:TextBox>
+                            </td>
+                            <td class=".column">
                                 &nbsp;
                             </td>
                         </tr>
                         <tr>
-                            <td style="width:40%">
-                                <asp:Label ID="lbl_ImpegnoOrario" runat="server" Text="Impegno orario"></asp:Label>
-                                <asp:CheckBox ID="chk_ImpegnoOrario" runat="server" />
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_indirizzo" runat="server" Text="Via" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_Indirizzo" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_Indirizzo" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:TextBox>
                             </td>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_ImpegnoOrarioDa" runat="server" Text="Impegno orario da"></asp:Label>                               
-                                <asp:TextBox ID="txt_ImpegnoOrarioDa" runat="server" CssClass="roundSmall calendar"></asp:TextBox>
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_luogo" runat="server" Text="Luogo" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_Luogo" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_Luogo" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:TextBox>
                             </td>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_ImpegnoOrarioA" runat="server" Text="Impegno orario a"></asp:Label>
-                                <asp:TextBox ID="txt_ImpegnoOrarioA" runat="server" CssClass="roundSmall calendar"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width:40%">
-                                <asp:Label ID="lbl_Produzione" runat="server" Text="Produzione"></asp:Label>
-                                <asp:TextBox ID="txt_Produzione" runat="server" CssClass="roundSmall"></asp:TextBox>
-                            </td>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_lavorazione" runat="server" Text="Lavorazione"></asp:Label>
-                                <asp:TextBox ID="txt_Lavorazione" runat="server" CssClass="roundSmall"></asp:TextBox>
-                            </td>
-                            <td style="width:30%">
-                                &nbsp;
+                            <td class=".column" runat="server">
+                                <asp:Label ID="lbl_CodiceLavoro" runat="server" Text="Codice lavoro" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
+                                <asp:TextBox ID="val_CodiceLavoro" CssClass="w3-panelw3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_CodiceLavoro" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:TextBox>
                             </td>
                         </tr>
                         <tr>
-                            <td style="width:40%">
-                                <asp:Label ID="lbl_indirizzo" runat="server" Text="Indirizzo"></asp:Label>
-                                <asp:TextBox ID="txt_Indirizzo" runat="server" CssClass="roundSmall"></asp:TextBox>
-                            </td>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_luogo" runat="server" Text="Luogo"></asp:Label>
-                                <asp:TextBox ID="txt_Luogo" runat="server" CssClass="roundSmall"></asp:TextBox>
-                            </td>
-                            <td style="width:30%">
-                                <asp:Label ID="lbl_CodiceLavoro" runat="server" Text="Codice lavoro"></asp:Label>
-                                <asp:TextBox ID="txt_CodiceLavoro" runat="server" CssClass="roundSmall"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">
-                                <asp:Label ID="lbl_nota" runat="server" Text="Nota"></asp:Label>
-                                <asp:TextBox ID="tb_Nota" style="width:90%" Rows="5" TextMode="MultiLine" runat="server"></asp:TextBox>
+                            <td colspan="3" runat="server">
+                                <asp:Label ID="lbl_nota" runat="server" Text="Nota" CssClass="w3-panel w3-yellow w3-border w3-round" style="vertical-align: top; position:relative; top:16px;"></asp:Label>
+                                <asp:TextBox ID="val_Nota" CssClass="w3-panelw3-light-grey w3-border w3-round" runat="server" Enabled="false" style="width:90%;margin-top:16px;"></asp:TextBox>
+                                <asp:TextBox ID="tb_Nota" style="width:90%" Rows="5" TextMode="MultiLine" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round" Visible="false"></asp:TextBox>
                             </td>
                         </tr>
                     </table>
                   </asp:Panel>
+                  <div style="text-align: center;">
+                        <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnModifica_Click" />
+                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class="w3-panel w3-green w3-border w3-round" OnClick="btnSalva_Click" Visible="false"/>
+                        <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false"/>
+                </div>
               </ContentTemplate>
         </asp:UpdatePanel>
-        <div >
-            <p style="text-align: center;">
-                <asp:Button ID="OkButton" runat="server" Text="Chiudi" CssClass="roundSmall"/>
-            </p>
-        </div>
+        <p style="text-align: center;">
+            <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-panel w3-green w3-border w3-round"/>
+        </p>
     </asp:Panel>
 </asp:Content>

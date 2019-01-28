@@ -15,6 +15,37 @@ namespace VideoSystemWeb.DAL
         //string static constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
         //string static constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
 
+        public static DataTable getDatiBySql(string querySql, ref Esito esito)
+        {
+            DataTable dtReturn = new DataTable();
+            try
+            {
+                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                {
+                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(querySql))
+                    {
+                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            sda.Fill(dtReturn);
+                            if (dtReturn == null || dtReturn.Rows == null || dtReturn.Rows.Count == 0)
+                            {
+                                esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                esito.descrizione = "Nessun dato trovato nella ricerca generica " + querySql;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return dtReturn;
+        }
         public static List<Tipologica> CaricaTipologica(EnumTipologiche tipologica, bool soloElemAttivi, ref Esito esito)
         {
             List<Tipologica> listaTipologiche = new List<Tipologica>();

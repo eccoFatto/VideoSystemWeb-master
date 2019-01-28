@@ -19,11 +19,13 @@ namespace VideoSystemWeb.BLL
             {
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
                 {
-                    listaTipologiche = Base_DAL.CaricaTipologica(EnumTipologiche.TIPO_STATO, true, ref esito);
+                    //listaTipologiche = Base_DAL.CaricaTipologica(EnumTipologiche.TIPO_STATO, true, ref esito);
+                    listaTipologiche = Base_DAL.CaricaTipologica(tipologica, true, ref esito);
                 }
                 else
                 {
-                    listaTipologiche = Tipologie.caricaTipologica(EnumTipologiche.TIPO_STATO);
+                    //listaTipologiche = Tipologie.caricaTipologica(EnumTipologiche.TIPO_STATO);
+                    listaTipologiche = Tipologie.caricaTipologica(tipologica);
                 }
 
                 HttpContext.Current.Session[tipologica.ToString()] = listaTipologiche;

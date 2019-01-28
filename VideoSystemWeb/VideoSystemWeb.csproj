@@ -343,6 +343,7 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\Agenda_BLL.cs" />
+    <Compile Include="BLL\AnagCollaboratori_BLL.cs" />
     <Compile Include="BLL\BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -358,6 +359,7 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\Agenda_DAL.cs" />
+    <Compile Include="DAL\AnagCollaboratori_DAL.cs" />
     <Compile Include="DAL\Base_DAL.cs" />
     <Compile Include="DAL\Login_DAL.cs" />
     <Compile Include="Default.aspx.cs">
@@ -367,6 +369,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\AnagCollaboratori.cs" />
     <Compile Include="Entity\DatiAgenda.cs" />
     <Compile Include="Entity\Evento.cs" />
     <Compile Include="Entity\Json\Evento_Json.cs" />

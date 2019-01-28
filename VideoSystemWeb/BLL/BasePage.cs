@@ -14,6 +14,7 @@ namespace VideoSystemWeb.BLL
         public List<Tipologica> listaStati;
         public List<DatiAgenda> listaDatiAgenda;
         public List<Tipologica> listaTipiUtente;
+        public List<Tipologica> listaQualifiche;
 
         public Esito caricaListeTipologiche()
         {
@@ -27,12 +28,20 @@ namespace VideoSystemWeb.BLL
                 return esito;
             }
             listaStati = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_STATO, ref esito);
-
             if (esito.codice != Esito.ESITO_OK)
             {
                 return esito;
             }
             listaTipiUtente = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_UTENTE, ref esito);
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                return esito;
+            }
+            listaQualifiche = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_QUALIFICHE, ref esito);
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                return esito;
+            }
 
             return esito;
         }

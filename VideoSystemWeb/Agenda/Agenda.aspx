@@ -140,7 +140,7 @@
         PopupControlID="PopupEditEvent" BackgroundCssClass="modalBackground" DropShadow="False" OkControlID="btn_chiudi">
     </ajaxToolkit:ModalPopupExtender>
     
-    <asp:Panel ID="PopupEditEvent" runat="server" CssClass="containerPopup round" Style="display: none; border: solid 3px #5377A9;background-color:#EEF1F7;width:80%;">
+    <asp:Panel ID="PopupEditEvent" runat="server" CssClass="containerPopup round" Style="display: none; border: solid 3px #5377A9;background-color:#EEF1F7;width:80%;height:80%" ScrollBars="Auto">
         <asp:UpdatePanel ID="upEvento" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
             <ContentTemplate>
                 <asp:Panel runat="server" ID="pnlContainer">
@@ -155,13 +155,13 @@
                         <tr>
                             <td class=".column" runat="server">
                                 <asp:Label ID="lbl_DataInizioLavorazione" runat="server" Text="Data inizio lavorazione" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
-                                <asp:TextBox ID="val_DataInizioLavorazione" runat="server" CssClass="w3-panel w3-light-grey w3-border w3-round fieldMedium" placeholder="DD/MM/YYYY" Enabled="false"></asp:TextBox>
-                                <asp:TextBox ID="txt_DataInizioLavorazione" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" placeholder="DD/MM/YYYY" Visible="false"></asp:TextBox>
+                                <asp:TextBox ID="val_DataInizioLavorazione" runat="server" CssClass="w3-panel w3-light-grey w3-border w3-round fieldMedium"  Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_DataInizioLavorazione" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" Visible="false"></asp:TextBox>
                             </td>
                             <td class=".column" runat="server">
                                 <asp:Label ID="lbl_DataFineLavorazione" runat="server" Text="Data fine lavorazione" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>
-                                <asp:TextBox CssClass="w3-panel w3-light-grey w3-border w3-round fieldMedium" ID="val_FineLavorazione" runat="server" placeholder="DD/MM/YYYY" Enabled="false"/>
-                                <asp:TextBox CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" ID="txt_FineLavorazione" runat="server" placeholder="DD/MM/YYYY" Visible="false"/>
+                                <asp:TextBox CssClass="w3-panel w3-light-grey w3-border w3-round fieldMedium" ID="val_FineLavorazione" runat="server" Enabled="false"/>
+                                <asp:TextBox CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" ID="txt_FineLavorazione" runat="server" Visible="false"/>
                             </td>
                             <td class=".column" runat="server">
                                 <asp:Label ID="lbl_DurataLavorazione" runat="server" Text="Durata lavorazione" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>

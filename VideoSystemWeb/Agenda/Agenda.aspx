@@ -79,6 +79,13 @@
             
             $("#<%=btnEditEvent.ClientID%>").click();
         }
+
+        function chiudiPopup() {
+           
+           $("#<%=btn_chiudi.ClientID%>").click();
+            //$("#<%=btnsearch.ClientID%>").click();
+
+        }
         
     </script>
 
@@ -141,6 +148,9 @@
                         GESTIONE APPUNTAMENTI
                     </center>
                     <br />
+                    <center>
+                        <asp:Label ID="lbl_MessaggioErrore" runat="server" Text="Controllare i campi evidenziati" Visible="false" style="color:red; font-weight:bold;"></asp:Label>
+                    </center>
                     <table>
                         <tr>
                             <td class=".column" runat="server">

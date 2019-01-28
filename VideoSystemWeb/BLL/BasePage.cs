@@ -14,6 +14,7 @@ namespace VideoSystemWeb.BLL
         public List<Tipologica> listaStati;
         public List<DatiAgenda> listaDatiAgenda;
         public List<Tipologica> listaTipiUtente;
+        public List<Tipologica> listaTipiTipologie;
 
         public Esito caricaListeTipologiche()
         {
@@ -34,6 +35,12 @@ namespace VideoSystemWeb.BLL
             }
             listaTipiUtente = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_UTENTE, ref esito);
 
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                return esito;
+            }
+            listaTipiTipologie = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, ref esito);
+
             return esito;
         }
 
@@ -45,6 +52,7 @@ namespace VideoSystemWeb.BLL
 
             if (campo is TextBox)
             {
+
                 valore = ((TextBox)campo).Text;
             }
             else if (campo is DropDownList)
@@ -52,12 +60,9 @@ namespace VideoSystemWeb.BLL
                 valore = ((DropDownList)campo).SelectedValue;
             }
 
-            string tipoCampo = campo.CssClass.IndexOf("field") != -1 ? campo.CssClass.Substring(campo.CssClass.IndexOf("field")) : "";
-            string classeCampo = tipoCampo + " erroreValidazione";
-            
             if (isRequired && string.IsNullOrEmpty(valore))
             {
-                campo.CssClass = classeCampo;
+                campo.CssClass += " erroreValidazione";
                 esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
                 esito.descrizione = "Campo obbligatorio";
             }
@@ -65,17 +70,22 @@ namespace VideoSystemWeb.BLL
             {
                 try
                 {
+                    if (!isRequired && string.IsNullOrEmpty(valore))
+                    {
+                        valore = defaultValue.ToString();
+                    }
+
+
+                    campo.CssClass = campo.CssClass.Replace("erroreValidazione", "");
                     result = (T)Convert.ChangeType(valore, typeof(T));
                 }
                 catch
                 {
-                    campo.CssClass = classeCampo;
+                    campo.CssClass += " erroreValidazione";
                     esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
                     esito.descrizione = "Controllare il campo";
                 }
             }
-
-           
 
             return result;
         }

@@ -20,6 +20,8 @@ namespace VideoSystemWeb.Entity
                     return getListaTipiUtente();
                 case EnumTipologiche.TIPO_STATO:
                     return getListaStati();
+                case EnumTipologiche.TIPO_TIPOLOGIE:
+                    return getListaTipiTipologie();
                 default:
                     return null;
             }
@@ -65,6 +67,19 @@ namespace VideoSystemWeb.Entity
             listaTipiUtente.Add(new Tipologica(1, "Amministratore", "Amministratore (lettura/scrittura/gestione applicazione)", "", "",true));
             listaTipiUtente.Add(new Tipologica(2, "Operatore", "Operatore (lettura/scrittura)", "", "", true));
             listaTipiUtente.Add(new Tipologica(3, "Visualizzatore", "Visualizzatore (lettura)", "", "", true));
+
+            return listaTipiUtente;
+        }
+        #endregion
+
+        #region TIPI TIPOLOGIE     
+        private static List<Tipologica> getListaTipiTipologie()
+        {
+            List<Tipologica> listaTipiUtente = new List<Tipologica>();
+
+            listaTipiUtente.Add(new Tipologica(1, "Monocamera", "", "", "", true));
+            listaTipiUtente.Add(new Tipologica(2, "Bicamere", "", "", "", true));
+            listaTipiUtente.Add(new Tipologica(3, "Tricamere", "", "", "", true));
 
             return listaTipiUtente;
         }

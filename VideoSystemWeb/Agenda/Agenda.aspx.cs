@@ -25,16 +25,17 @@ namespace VideoSystemWeb.Agenda
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
 
-                popolaListaRisorse();
+                popolaDDLTipologiche(ddl_Risorse, listaRisorse);
+                popolaDDLTipologiche(ddl_Tipologia, listaTipiTipologie);
             }
         }
 
-        private void popolaListaRisorse()
+        private void popolaDDLTipologiche(DropDownList ddl, List<Tipologica> listaTipologica)
         {
-            ddl_Risorse.DataSource = listaRisorse;
-            ddl_Risorse.DataTextField = "nome";
-            ddl_Risorse.DataValueField = "id";
-            ddl_Risorse.DataBind();
+            ddl.DataSource = listaTipologica;
+            ddl.DataTextField = "nome";
+            ddl.DataValueField = "id";
+            ddl.DataBind();
         }
 
         private DataTable CreateDataTable(DateTime data)
@@ -156,6 +157,28 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnModifica_Click(object sender, EventArgs e)
         {
+            lbl_MessaggioErrore.Visible = false;
+
+            txt_DataInizioLavorazione.Text = val_DataInizioLavorazione.Text;
+            txt_FineLavorazione.Text = val_FineLavorazione.Text;
+            txt_DurataLavorazione.Text = val_DurataLavorazione.Text;
+            //ddl_Risorse.SelectedValue = val_Risorse.Text;
+            //ddl_Tipologia.SelectedValue = val_Tipologia.Text;
+            //ddl_cliente.SelectedValue = val_cliente.Text;
+            txt_DurataViaggioAndata.Text = val_DurataViaggioAndata.Text;
+            txt_DurataViaggioRitorno.Text = val_DurataViaggioRitorno.Text;
+            txt_DataInizioImpegno.Text = val_DataInizioImpegno.Text;
+            txt_DataFineImpegno.Text = val_DataFineImpegno.Text;
+            txt_ImpegnoOrarioDa.Text = val_ImpegnoOrarioDa.Text;
+            txt_ImpegnoOrarioA.Text = val_ImpegnoOrarioA.Text;
+            txt_Produzione.Text = val_Produzione.Text;
+            txt_Lavorazione.Text = val_Lavorazione.Text;
+            txt_Indirizzo.Text = val_Indirizzo.Text;
+            txt_Luogo.Text = val_Luogo.Text;
+            txt_CodiceLavoro.Text = val_CodiceLavoro.Text;
+
+            tb_Nota.Text = val_Nota.Text;
+
             AttivaDisattivaModifica(true);
         }
 
@@ -175,32 +198,66 @@ namespace VideoSystemWeb.Agenda
             datiAgenda.data_fine_lavorazione = validaCampo(txt_FineLavorazione, DateTime.Now, true, ref esito); //DateTime.Parse(txt_FineLavorazione.Text);
             datiAgenda.durata_lavorazione = validaCampo(txt_DurataLavorazione, 0, true, ref esito); //int.Parse(txt_DurataLavorazione.Text);
             datiAgenda.id_colonne_agenda = validaCampo(ddl_Risorse, 0, true, ref esito); //int.Parse(ddl_Risorse.SelectedValue);
-            datiAgenda.id_cliente = validaCampo(ddl_cliente, 0, true, ref esito); //int.Parse(ddl_cliente.SelectedValue);
+            datiAgenda.id_tipologia = validaCampo(ddl_Tipologia, 0, false, ref esito);
+            datiAgenda.id_cliente = validaCampo(ddl_cliente, 0, false, ref esito); //int.Parse(ddl_cliente.SelectedValue);
             datiAgenda.durata_viaggio_andata = validaCampo(txt_DurataViaggioAndata, 0, false, ref esito); //int.Parse(txt_DurataViaggioAndata.Text);
             datiAgenda.durata_viaggio_ritorno = validaCampo(txt_DurataViaggioRitorno, 0, false, ref esito); //int.Parse(txt_DurataViaggioRitorno.Text);
             datiAgenda.data_inizio_impegno = validaCampo(txt_DataInizioImpegno, DateTime.Now, false, ref esito); //DateTime.Parse(txt_DataInizioImpegno.Text);
             datiAgenda.data_fine_impegno = validaCampo(txt_DataFineImpegno, DateTime.Now, false, ref esito); //DateTime.Parse(txt_DataFineImpegno.Text);
             datiAgenda.impegnoOrario = chk_ImpegnoOrario.Checked;
-            datiAgenda.impegnoOrario_da = validaCampo(txt_ImpegnoOrarioDa, DateTime.Now, false, ref esito); //DateTime.Parse(txt_ImpegnoOrarioDa.Text);
-            datiAgenda.impegnoOrario_a = validaCampo(txt_ImpegnoOrarioA, DateTime.Now, false, ref esito); //DateTime.Parse(txt_ImpegnoOrarioA.Text);
+            datiAgenda.impegnoOrario_da = validaCampo(txt_ImpegnoOrarioDa, DateTime.Now, chk_ImpegnoOrario.Checked, ref esito); //DateTime.Parse(txt_ImpegnoOrarioDa.Text);
+            datiAgenda.impegnoOrario_a = validaCampo(txt_ImpegnoOrarioA, DateTime.Now, chk_ImpegnoOrario.Checked, ref esito); //DateTime.Parse(txt_ImpegnoOrarioA.Text);
             datiAgenda.produzione = validaCampo(txt_Produzione, "", true, ref esito); //txt_Produzione.Text;
             datiAgenda.lavorazione = validaCampo(txt_Lavorazione, "", true, ref esito); //txt_Lavorazione.Text;
             datiAgenda.indirizzo = validaCampo(txt_Indirizzo, "", false, ref esito); //txt_Indirizzo.Text;
             datiAgenda.luogo = validaCampo(txt_Luogo, "", false, ref esito); //txt_Luogo.Text;
             datiAgenda.codice_lavoro = validaCampo(txt_CodiceLavoro, "", true, ref esito); //txt_CodiceLavoro.Text;
             datiAgenda.nota = validaCampo(tb_Nota, "", false, ref esito); //tb_Nota.Text;
-            //}
-            //else
-            //{
-            upEvento.Update();
-            //}
+
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                lbl_MessaggioErrore.Visible = true;
+                upEvento.Update();
+            }
+            else
+            {
+                nascondiErroriValidazione();
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "closePopup", "chiudiPopup();", true);
+            }
+            
         }
 
         
 
         protected void btnAnnulla_Click(object sender, EventArgs e)
         {
+
+            nascondiErroriValidazione();
             AttivaDisattivaModifica(false);
+        }
+
+        private void nascondiErroriValidazione()
+        {
+            lbl_MessaggioErrore.Visible = false;
+
+            txt_DataInizioLavorazione.CssClass = txt_DataInizioLavorazione.CssClass.Replace("erroreValidazione", "");
+            txt_FineLavorazione.CssClass = txt_FineLavorazione.CssClass.Replace("erroreValidazione", "");
+            txt_DurataLavorazione.CssClass = txt_DurataLavorazione.CssClass.Replace("erroreValidazione", "");
+            ddl_Risorse.CssClass = ddl_Risorse.CssClass.Replace("erroreValidazione", "");
+            ddl_Tipologia.CssClass = ddl_Tipologia.CssClass.Replace("erroreValidazione", "");
+            ddl_cliente.CssClass = ddl_cliente.CssClass.Replace("erroreValidazione", "");
+            txt_DurataViaggioAndata.CssClass = txt_DurataViaggioAndata.CssClass.Replace("erroreValidazione", "");
+            txt_DurataViaggioRitorno.CssClass = txt_DurataViaggioRitorno.CssClass.Replace("erroreValidazione", "");
+            txt_DataInizioImpegno.CssClass = txt_DataInizioImpegno.CssClass.Replace("erroreValidazione", "");
+            txt_DataFineImpegno.CssClass = txt_DataFineImpegno.CssClass.Replace("erroreValidazione", "");
+            txt_ImpegnoOrarioDa.CssClass = txt_ImpegnoOrarioDa.CssClass.Replace("erroreValidazione", "");
+            txt_ImpegnoOrarioA.CssClass = txt_ImpegnoOrarioA.CssClass.Replace("erroreValidazione", "");
+            txt_Produzione.CssClass = txt_Produzione.CssClass.Replace("erroreValidazione", "");
+            txt_Lavorazione.CssClass = txt_Lavorazione.CssClass.Replace("erroreValidazione", "");
+            txt_Indirizzo.CssClass = txt_Indirizzo.CssClass.Replace("erroreValidazione", "");
+            txt_Luogo.CssClass = txt_Luogo.CssClass.Replace("erroreValidazione", "");
+            txt_CodiceLavoro.CssClass = txt_CodiceLavoro.CssClass.Replace("erroreValidazione", "");
+            tb_Nota.CssClass = tb_Nota.CssClass.Replace("erroreValidazione", "");
         }
 
         

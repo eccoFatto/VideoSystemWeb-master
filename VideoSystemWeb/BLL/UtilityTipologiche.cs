@@ -19,11 +19,11 @@ namespace VideoSystemWeb.BLL
             {
                 if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
                 {
-                    listaTipologiche = Base_DAL.CaricaTipologica(EnumTipologiche.TIPO_STATO, true, ref esito);
+                    listaTipologiche = Base_DAL.CaricaTipologica(tipologica, true, ref esito);
                 }
                 else
                 {
-                    listaTipologiche = Tipologie.caricaTipologica(EnumTipologiche.TIPO_STATO);
+                    listaTipologiche = Tipologie.caricaTipologica(tipologica);
                 }
 
                 HttpContext.Current.Session[tipologica.ToString()] = listaTipologiche;
@@ -48,6 +48,8 @@ namespace VideoSystemWeb.BLL
                     return "tipo_utente";
                 case EnumTipologiche.TIPO_STATO:
                     return "tipo_stato";
+                case EnumTipologiche.TIPO_TIPOLOGIE:
+                    return "tipo_tipologie";
                 default:
                     return string.Empty;
             }
@@ -95,5 +97,5 @@ namespace VideoSystemWeb.BLL
 
     }
 
-    public enum EnumTipologiche { TIPO_COLONNE_AGENDA, TIPO_QUALIFICHE, TIPO_UTENTE, TIPO_STATO }
+    public enum EnumTipologiche { TIPO_COLONNE_AGENDA, TIPO_QUALIFICHE, TIPO_UTENTE, TIPO_STATO, TIPO_TIPOLOGIE }
 }

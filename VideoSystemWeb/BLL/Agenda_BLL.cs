@@ -68,5 +68,18 @@ namespace VideoSystemWeb.BLL
         {
             return listaDatiAgenda.Where(x => x.id == id).FirstOrDefault();
         }
+
+        public DatiAgenda getDatiAgendaByDataRisorsa(List<DatiAgenda> listaDatiAgenda, DateTime data, int id_risorsa)
+        {
+            return listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= data && x.data_fine_lavorazione >= data && x.id_colonne_agenda == id_risorsa).FirstOrDefault();
+        }
+
+        public Esito scriviEvento(DatiAgenda evento)
+        {
+            Esito esito = new Esito();
+
+
+            return esito;
+        }
     }
 }

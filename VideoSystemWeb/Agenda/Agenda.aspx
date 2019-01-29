@@ -76,7 +76,7 @@
         }
     
         function mostracella(row, column) {
-            //alert("row:" + row + " column:" + column);
+            alert("row:" + row + " column:" + column);
             $("#<%=hf_data.ClientID%>").val(row);
             $("#<%=hf_risorsa.ClientID%>").val(column);
             $("#<%=btnEditEvent.ClientID%>").click();

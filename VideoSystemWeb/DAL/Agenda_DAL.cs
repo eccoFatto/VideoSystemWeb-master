@@ -101,5 +101,14 @@ namespace VideoSystemWeb.DAL
 
             return listaDatiAgenda;
         }
+
+        public Esito scriviEvento(DatiAgenda evento)
+        {
+            Esito esito = new Esito();
+
+
+
+            return esito;
+        }
     }
 }

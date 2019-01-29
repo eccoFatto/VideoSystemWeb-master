@@ -70,12 +70,12 @@ namespace VideoSystemWeb.Agenda
                 int indiceColonna = 1;
                 foreach (Tipologica risorsa in listaRisorse)
                 {
-                    List<DatiAgenda> datiAgendaFiltrati = listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_colonne_agenda == risorsa.id).ToList<DatiAgenda>();
-                    if (datiAgendaFiltrati.Count == 1)
+                    DatiAgenda datiAgendaFiltrati = Agenda_BLL.Instance.getDatiAgendaByDataRisorsa(listaDatiAgenda, dataRiga, risorsa.id); listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_colonne_agenda == risorsa.id).ToList<DatiAgenda>();
+                    if (datiAgendaFiltrati != null)
                     {
-                        DatiAgenda datoCorrente = datiAgendaFiltrati.FirstOrDefault();
+                        //DatiAgenda datoCorrente = datiAgendaFiltrati.FirstOrDefault();
 
-                        row[indiceColonna++] = datoCorrente.id.ToString(); // inserisco id datoAgenda per poi formattare la cella in RowDataBound 
+                        row[indiceColonna++] = datiAgendaFiltrati.id.ToString(); // inserisco id datoAgenda per poi formattare la cella in RowDataBound 
                     }
                     else
                     {
@@ -137,7 +137,7 @@ namespace VideoSystemWeb.Agenda
                     }
 
                     string data = e.Row.Cells[0].Text;
-                    string risorsa = ((Tipologica)listaRisorse.ElementAt(indiceColonna - 1)).nome;
+                    int risorsa = ((Tipologica)listaRisorse.ElementAt(indiceColonna - 1)).id;
 
                     e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + risorsa + "');";
                 }
@@ -159,25 +159,25 @@ namespace VideoSystemWeb.Agenda
         {
             lbl_MessaggioErrore.Visible = false;
 
-            txt_DataInizioLavorazione.Text = val_DataInizioLavorazione.Text;
-            txt_FineLavorazione.Text = val_FineLavorazione.Text;
-            txt_DurataLavorazione.Text = val_DurataLavorazione.Text;
-            //ddl_Risorse.SelectedValue = val_Risorse.Text;
-            //ddl_Tipologia.SelectedValue = val_Tipologia.Text;
-            //ddl_cliente.SelectedValue = val_cliente.Text;
-            txt_DurataViaggioAndata.Text = val_DurataViaggioAndata.Text;
-            txt_DurataViaggioRitorno.Text = val_DurataViaggioRitorno.Text;
-            txt_DataInizioImpegno.Text = val_DataInizioImpegno.Text;
-            txt_DataFineImpegno.Text = val_DataFineImpegno.Text;
-            txt_ImpegnoOrarioDa.Text = val_ImpegnoOrarioDa.Text;
-            txt_ImpegnoOrarioA.Text = val_ImpegnoOrarioA.Text;
-            txt_Produzione.Text = val_Produzione.Text;
-            txt_Lavorazione.Text = val_Lavorazione.Text;
-            txt_Indirizzo.Text = val_Indirizzo.Text;
-            txt_Luogo.Text = val_Luogo.Text;
-            txt_CodiceLavoro.Text = val_CodiceLavoro.Text;
+            //txt_DataInizioLavorazione.Text = val_DataInizioLavorazione.Text;
+            //txt_FineLavorazione.Text = val_FineLavorazione.Text;
+            //txt_DurataLavorazione.Text = val_DurataLavorazione.Text;
+            ////ddl_Risorse.SelectedValue = val_Risorse.Text;
+            ////ddl_Tipologia.SelectedValue = val_Tipologia.Text;
+            ////ddl_cliente.SelectedValue = val_cliente.Text;
+            //txt_DurataViaggioAndata.Text = val_DurataViaggioAndata.Text;
+            //txt_DurataViaggioRitorno.Text = val_DurataViaggioRitorno.Text;
+            //txt_DataInizioImpegno.Text = val_DataInizioImpegno.Text;
+            //txt_DataFineImpegno.Text = val_DataFineImpegno.Text;
+            //txt_ImpegnoOrarioDa.Text = val_ImpegnoOrarioDa.Text;
+            //txt_ImpegnoOrarioA.Text = val_ImpegnoOrarioA.Text;
+            //txt_Produzione.Text = val_Produzione.Text;
+            //txt_Lavorazione.Text = val_Lavorazione.Text;
+            //txt_Indirizzo.Text = val_Indirizzo.Text;
+            //txt_Luogo.Text = val_Luogo.Text;
+            //txt_CodiceLavoro.Text = val_CodiceLavoro.Text;
 
-            tb_Nota.Text = val_Nota.Text;
+            //tb_Nota.Text = val_Nota.Text;
 
             AttivaDisattivaModifica(true);
         }
@@ -187,25 +187,25 @@ namespace VideoSystemWeb.Agenda
             Esito esito = new Esito();
 
             DatiAgenda datiAgenda = new DatiAgenda();
-            datiAgenda.data_inizio_lavorazione = validaCampo(txt_DataInizioLavorazione, DateTime.Now, true, ref esito);// DateTime.Parse(txt_DataInizioLavorazione.Text);
-            datiAgenda.data_fine_lavorazione = validaCampo(txt_FineLavorazione, DateTime.Now, true, ref esito); //DateTime.Parse(txt_FineLavorazione.Text);
-            datiAgenda.durata_lavorazione = validaCampo(txt_DurataLavorazione, 0, true, ref esito); //int.Parse(txt_DurataLavorazione.Text);
-            datiAgenda.id_colonne_agenda = validaCampo(ddl_Risorse, 0, true, ref esito); //int.Parse(ddl_Risorse.SelectedValue);
+            datiAgenda.data_inizio_lavorazione = validaCampo(txt_DataInizioLavorazione, DateTime.Now, true, ref esito);
+            datiAgenda.data_fine_lavorazione = validaCampo(txt_FineLavorazione, DateTime.Now, true, ref esito);
+            datiAgenda.durata_lavorazione = validaCampo(txt_DurataLavorazione, 0, true, ref esito);
+            datiAgenda.id_colonne_agenda = validaCampo(ddl_Risorse, 0, true, ref esito);
             datiAgenda.id_tipologia = validaCampo(ddl_Tipologia, 0, false, ref esito);
-            datiAgenda.id_cliente = validaCampo(ddl_cliente, 0, false, ref esito); //int.Parse(ddl_cliente.SelectedValue);
-            datiAgenda.durata_viaggio_andata = validaCampo(txt_DurataViaggioAndata, 0, false, ref esito); //int.Parse(txt_DurataViaggioAndata.Text);
-            datiAgenda.durata_viaggio_ritorno = validaCampo(txt_DurataViaggioRitorno, 0, false, ref esito); //int.Parse(txt_DurataViaggioRitorno.Text);
-            datiAgenda.data_inizio_impegno = validaCampo(txt_DataInizioImpegno, DateTime.Now, false, ref esito); //DateTime.Parse(txt_DataInizioImpegno.Text);
-            datiAgenda.data_fine_impegno = validaCampo(txt_DataFineImpegno, DateTime.Now, false, ref esito); //DateTime.Parse(txt_DataFineImpegno.Text);
+            datiAgenda.id_cliente = validaCampo(ddl_cliente, 0, false, ref esito); 
+            datiAgenda.durata_viaggio_andata = validaCampo(txt_DurataViaggioAndata, 0, false, ref esito); 
+            datiAgenda.durata_viaggio_ritorno = validaCampo(txt_DurataViaggioRitorno, 0, false, ref esito); 
+            datiAgenda.data_inizio_impegno = validaCampo(txt_DataInizioImpegno, DateTime.Now, false, ref esito); 
+            datiAgenda.data_fine_impegno = validaCampo(txt_DataFineImpegno, DateTime.Now, false, ref esito); 
             datiAgenda.impegnoOrario = chk_ImpegnoOrario.Checked;
-            datiAgenda.impegnoOrario_da = validaCampo(txt_ImpegnoOrarioDa, DateTime.Now, chk_ImpegnoOrario.Checked, ref esito); //DateTime.Parse(txt_ImpegnoOrarioDa.Text);
-            datiAgenda.impegnoOrario_a = validaCampo(txt_ImpegnoOrarioA, DateTime.Now, chk_ImpegnoOrario.Checked, ref esito); //DateTime.Parse(txt_ImpegnoOrarioA.Text);
-            datiAgenda.produzione = validaCampo(txt_Produzione, "", true, ref esito); //txt_Produzione.Text;
-            datiAgenda.lavorazione = validaCampo(txt_Lavorazione, "", true, ref esito); //txt_Lavorazione.Text;
-            datiAgenda.indirizzo = validaCampo(txt_Indirizzo, "", false, ref esito); //txt_Indirizzo.Text;
-            datiAgenda.luogo = validaCampo(txt_Luogo, "", false, ref esito); //txt_Luogo.Text;
-            datiAgenda.codice_lavoro = validaCampo(txt_CodiceLavoro, "", true, ref esito); //txt_CodiceLavoro.Text;
-            datiAgenda.nota = validaCampo(tb_Nota, "", false, ref esito); //tb_Nota.Text;
+            datiAgenda.impegnoOrario_da = validaCampo(txt_ImpegnoOrarioDa, DateTime.Now, chk_ImpegnoOrario.Checked, ref esito); 
+            datiAgenda.impegnoOrario_a = validaCampo(txt_ImpegnoOrarioA, DateTime.Now, chk_ImpegnoOrario.Checked, ref esito); 
+            datiAgenda.produzione = validaCampo(txt_Produzione, "", true, ref esito); 
+            datiAgenda.lavorazione = validaCampo(txt_Lavorazione, "", true, ref esito); 
+            datiAgenda.indirizzo = validaCampo(txt_Indirizzo, "", false, ref esito); 
+            datiAgenda.luogo = validaCampo(txt_Luogo, "", false, ref esito); 
+            datiAgenda.codice_lavoro = validaCampo(txt_CodiceLavoro, "", true, ref esito);
+            datiAgenda.nota = validaCampo(tb_Nota, "", false, ref esito); 
 
             if (esito.codice != Esito.ESITO_OK)
             {
@@ -215,6 +215,9 @@ namespace VideoSystemWeb.Agenda
             else
             {
                 nascondiErroriValidazione();
+
+
+
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "closePopup", "chiudiPopup();", true);
             }
 
@@ -303,16 +306,91 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnEditEvent_Click(object sender, EventArgs e)
         {
-            string dataEvento = hf_data.Value;
-            string risorsaEvento = hf_risorsa.Value;
+            DateTime dataEvento = DateTime.Parse(hf_data.Value);
+            int risorsaEvento = int.Parse(hf_risorsa.Value);
 
-            val_DataInizioLavorazione.Text = dataEvento;
-            val_Risorse.Text = risorsaEvento;
+            DatiAgenda eventoSelezionato = Agenda_BLL.Instance.getDatiAgendaByDataRisorsa(listaDatiAgenda, dataEvento, risorsaEvento);
+
+            popolaPopupEventi(eventoSelezionato);
+
             pnlContainer.Visible = true;
+        }
+
+        private void popolaPopupEventi(DatiAgenda evento)
+        {
+            if (evento != null)
+            {
+
+                Esito esito = new Esito();
+
+                val_DataInizioLavorazione.Text = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
+                val_FineLavorazione.Text = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
+                val_DurataLavorazione.Text = evento.durata_lavorazione.ToString();
+                val_Risorse.Text = UtilityTipologiche.getElementByID(listaRisorse, evento.id_colonne_agenda, ref esito).nome;
+                val_Tipologia.Text = UtilityTipologiche.getElementByID(listaTipiTipologie, evento.id_tipologia, ref esito).nome;
+                val_cliente.Text = evento.id_cliente.ToString();
+                val_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
+                val_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
+                val_DataInizioImpegno.Text = evento.data_inizio_impegno.ToString("dd/MM/yyyy");
+                val_DataFineImpegno.Text = evento.data_fine_impegno.ToString("dd/MM/yyyy");
+                val_ImpegnoOrarioDa.Text = evento.impegnoOrario_da.ToString("hh:mm");
+                val_ImpegnoOrarioA.Text = evento.impegnoOrario_a.ToString("hh:mm");
+                val_Produzione.Text = evento.produzione;
+                val_Lavorazione.Text = evento.lavorazione;
+                val_Indirizzo.Text = evento.indirizzo;
+                val_Luogo.Text = evento.luogo;
+                val_CodiceLavoro.Text = evento.codice_lavoro;
+                val_Nota.Text = evento.nota;
+
+                txt_DataInizioLavorazione.Text = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
+                txt_FineLavorazione.Text = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
+                txt_DurataLavorazione.Text = evento.durata_lavorazione.ToString();
+                ddl_Risorse.SelectedValue = evento.id_colonne_agenda.ToString();
+                ddl_Tipologia.SelectedValue = evento.id_tipologia.ToString();
+                ddl_cliente.SelectedValue = evento.id_cliente.ToString();
+                txt_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
+                txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
+                txt_DataInizioImpegno.Text = evento.data_inizio_impegno.ToString("dd/MM/yyyy");
+                txt_DataFineImpegno.Text = evento.data_fine_impegno.ToString("dd/MM/yyyy");
+                txt_ImpegnoOrarioDa.Text = evento.impegnoOrario_da.ToString("hh:mm");
+                txt_ImpegnoOrarioA.Text = evento.impegnoOrario_a.ToString("hh:mm");
+                txt_Produzione.Text = evento.produzione;
+                txt_Lavorazione.Text = evento.lavorazione;
+                txt_Indirizzo.Text = evento.indirizzo;
+                txt_Luogo.Text = evento.luogo;
+                txt_CodiceLavoro.Text = evento.codice_lavoro;
+                tb_Nota.Text = evento.nota;
+            }
+        }
+
+        private DatiAgenda costruisciEvento()
+        {
+            DatiAgenda evento = new DatiAgenda();
+            evento.data_inizio_lavorazione = DateTime.Parse(txt_DataInizioLavorazione.Text);
+            evento.data_fine_lavorazione = DateTime.Parse(txt_FineLavorazione.Text);
+            evento.durata_lavorazione= int.Parse(txt_DurataLavorazione.Text);
+            evento.id_colonne_agenda = int.Parse(ddl_Risorse.SelectedValue);
+            evento.id_tipologia = int.Parse(ddl_Tipologia.SelectedValue);
+            evento.id_cliente = int.Parse(ddl_cliente.SelectedValue);
+            evento.durata_viaggio_andata = int.Parse(txt_DurataViaggioAndata.Text);
+            evento.durata_viaggio_ritorno = int.Parse(txt_DurataViaggioRitorno.Text);
+            evento.data_inizio_impegno = DateTime.Parse(txt_DataInizioImpegno.Text);
+            evento.data_fine_impegno = DateTime.Parse(txt_DataFineImpegno.Text);
+            evento.impegnoOrario_da = DateTime.Parse(txt_ImpegnoOrarioDa.Text);
+            evento.impegnoOrario_a = DateTime.Parse(txt_ImpegnoOrarioA.Text);
+            evento.produzione = txt_Produzione.Text;
+            evento.lavorazione = txt_Lavorazione.Text;
+            evento.indirizzo = txt_Indirizzo.Text;
+            evento.luogo = txt_Luogo.Text;
+            evento.codice_lavoro = txt_CodiceLavoro.Text;
+            evento.nota = tb_Nota.Text;
+
+            return evento;
         }
 
         protected void btn_chiudi_Click(object sender, EventArgs e)
         {
+
 
             pnlContainer.Visible = false;
         }

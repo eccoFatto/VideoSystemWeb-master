@@ -96,6 +96,7 @@ namespace VideoSystemWeb.DAL
                     using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(query))
                     {
                         using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;

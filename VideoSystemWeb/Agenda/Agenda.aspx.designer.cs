@@ -58,22 +58,22 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Button btnEditEvent;
         
         /// <summary>
-        /// Controllo modalPopupEditEvent.
+        /// Controllo hf_data.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::AjaxControlToolkit.ModalPopupExtender modalPopupEditEvent;
+        protected global::System.Web.UI.WebControls.HiddenField hf_data;
         
         /// <summary>
-        /// Controllo PopupEditEvent.
+        /// Controllo hf_risorsa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PopupEditEvent;
+        protected global::System.Web.UI.WebControls.HiddenField hf_risorsa;
         
         /// <summary>
         /// Controllo upEvento.
@@ -92,6 +92,15 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlContainer;
+        
+        /// <summary>
+        /// Controllo innerContainer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel innerContainer;
         
         /// <summary>
         /// Controllo lbl_MessaggioErrore.

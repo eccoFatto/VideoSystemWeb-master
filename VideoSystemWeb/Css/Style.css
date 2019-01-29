@@ -23,11 +23,6 @@
     border-radius: 4px;
 }
 
-.modalBackground {
-    background-color: Gray;
-    filter: alpha(opacity=70);
-    opacity: 0.7;
-}
 
 .highlight {
     background-color: #DDEEFF;
@@ -47,4 +42,56 @@
 
 .grid td.first {
     border-right: solid 2px #5377A9 !important;
+}
+
+.fieldMedium {
+    width: 140px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 0;
+}
+
+.fieldSmall {
+    width: 30px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 0;
+}
+
+.column {
+    width: 33%;
+}
+
+.modalBackground {
+    background-color: Gray;
+    filter: alpha(opacity=70);
+    opacity: 0.7;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0%;
+    right: 0%
+}
+
+.containerPopup {
+    background-color: #EEF1F7;
+    border: solid 3px #5377A9;
+    width: 80%;
+    height: 80%;
+    position: fixed;
+    top: 10%;
+    right: 10%;
+}
+
+.errorMessage {
+    color: white;
+    font-weight: bold;
+    background-color: darkred;
+    margin: 10px;
+}
+
+.intestazionePopup {
+    color: #5377A9;
+    font-weight: bold;
+    font-size: 16px;
 }

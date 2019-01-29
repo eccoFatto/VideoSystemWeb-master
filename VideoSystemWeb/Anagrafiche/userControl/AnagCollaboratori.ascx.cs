@@ -77,5 +77,85 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             TbSocieta.Text = "";
             ddlQualifiche.SelectedIndex = 0;
         }
+
+        protected void gv_collaboratori_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // PRENDO L'ID DEL COLLABORATORE SELEZIONATO
+
+                string idCollaboratoreSelezionato = e.Row.Cells[0].Text;
+
+                foreach (TableCell item in e.Row.Cells)
+                {
+                    item.Attributes["onclick"] = "mostraCollaboratore('" + idCollaboratoreSelezionato + "');";
+                }
+
+                
+            }
+        }
+
+        protected void EditCollaboratore_Click(object sender, EventArgs e)
+        {
+            string idCollaboratore = hf_idColl.Value;
+            Esito esito = new Esito();
+            Entity.AnagCollaboratori collaboratore = AnagCollaboratori_DAL.getCollaboratoreById(Convert.ToInt16(idCollaboratore),ref esito);
+            if (esito.codice == 0) {
+                // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
+                tbMod_CF.Text = collaboratore.CodiceFiscale;
+                tbMod_Cognome.Text = collaboratore.Cognome;
+                tbMod_Nome.Text = collaboratore.Nome;
+                tbMod_Nazione.Text = collaboratore.Nazione;
+                tbMod_ComuneNascita.Text = collaboratore.ComuneNascita;
+                tbMod_ProvinciaNascita.Text = collaboratore.ProvinciaNascita;
+                tbMod_ComuneRiferimento.Text = collaboratore.ComuneRiferimento;
+                tbMod_DataNascita.Text = collaboratore.DataNascita.ToShortDateString();
+                tbMod_NomeSocieta.Text = collaboratore.NomeSocieta;
+                tbMod_PartitaIva.Text = collaboratore.PartitaIva;
+                cbMod_Assunto.Checked = collaboratore.Assunto;
+                cbMod_Attivo.Checked = collaboratore.Attivo;
+                tbMod_Note.Text = collaboratore.Note;
+                if (string.IsNullOrEmpty(collaboratore.PathFoto))
+                {
+                    imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + ConfigurationManager.AppSettings["IMMAGINE_DUMMY_COLLABORATORE"];
+                }
+                else
+                { 
+                    imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + collaboratore.PathFoto;
+                }
+                pnlContainer.Visible = true;
+            }
+            else
+            {
+                Session["ErrorPageText"] = esito.descrizione;
+                string url = String.Format("~/pageError.aspx");
+                Response.Redirect(url, true);
+            }
+        }
+
+        protected void btnModifica_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnSalva_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnAnnulla_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btn_chiudi_Click(object sender, EventArgs e)
+        {
+            pnlContainer.Visible = false;
+        }
+
+        protected void lbInserisciCollaboratori_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

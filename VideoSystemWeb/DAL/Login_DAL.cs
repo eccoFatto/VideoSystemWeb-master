@@ -39,7 +39,11 @@ namespace VideoSystemWeb.DAL
             {
                 using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
                 {
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand("SELECT * FROM anag_utenti where username = '" + tbUser.Trim() + "' and password = '" + tbPassword.Trim() + "' and attivo = 1 "))
+                    string queryRicercaUtente = "select * from anag_utenti u" +
+                    " left join tipo_utente tu" +
+                    " on u.id_tipoUtente = tu.id"+
+                    " where username = '" + tbUser.Trim() + "' and password = '" + tbPassword.Trim() + "' and u.attivo = 1";
+                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(queryRicercaUtente))
                     {
                         using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
                         {
@@ -55,6 +59,8 @@ namespace VideoSystemWeb.DAL
                                     utente.Cognome = dt.Rows[0]["Cognome"].ToString();
                                     utente.Nome = dt.Rows[0]["Nome"].ToString();
                                     utente.username = dt.Rows[0]["Username"].ToString();
+                                    utente.id_tipoUtente = Convert.ToInt16(dt.Rows[0]["id1"].ToString());
+                                    utente.tipoUtente = dt.Rows[0]["Nome1"].ToString();
                                     HttpContext.Current.Session[SessionManager.UTENTE] = utente;
                                 }
                                 else

@@ -13,12 +13,12 @@ namespace VideoSystemWeb.Anagrafiche {
     public partial class AnagCollaboratori {
         
         /// <summary>
-        /// Controllo mioLogin.
+        /// Controllo controlCollab.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori mioLogin;
+        protected global::VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori controlCollab;
     }
 }

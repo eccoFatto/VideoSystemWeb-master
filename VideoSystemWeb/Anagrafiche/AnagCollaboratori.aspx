@@ -3,5 +3,5 @@
 <%@ Register TagPrefix="coll" TagName="Anagcollaboratori" Src="~/Anagrafiche/userControl/AnagCollaboratori.ascx" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-<coll:Anagcollaboratori id="mioLogin" runat="server"></coll:Anagcollaboratori>
+<coll:Anagcollaboratori id="controlCollab" runat="server"></coll:Anagcollaboratori>
 </asp:Content>

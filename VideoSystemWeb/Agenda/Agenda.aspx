@@ -274,7 +274,7 @@
                 </p>
                     </asp:Panel>
                 </asp:Panel>
-                  
+                  </div>
             </ContentTemplate>
             <Triggers>
                 <asp:AsyncPostBackTrigger ControlID="btnEditEvent" EventName="Click" />

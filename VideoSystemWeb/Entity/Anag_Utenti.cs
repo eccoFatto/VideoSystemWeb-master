@@ -14,6 +14,7 @@ namespace VideoSystemWeb.Entity
         public string username;
         public string password;
         public int id_tipoUtente;
+        public string tipoUtente;
         public bool attivo;
     }
 }

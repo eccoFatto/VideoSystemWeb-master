@@ -185,13 +185,6 @@ namespace VideoSystemWeb.Agenda
         protected void btnSalva_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
-            //DateTime data = validaCampo(txt_DataInizioLavorazione, DateTime.Now, ref esito);
-            //int intero = validaCampo(txt_DurataLavorazione, 0, ref esito);
-            //string stringa = validaCampo(txt_Produzione, "", ref esito);
-
-            //string stringaErroriValidazione;
-            //if (esitoValidazione.codice == Esito.ESITO_OK)
-            //{
 
             DatiAgenda datiAgenda = new DatiAgenda();
             datiAgenda.data_inizio_lavorazione = validaCampo(txt_DataInizioLavorazione, DateTime.Now, true, ref esito);// DateTime.Parse(txt_DataInizioLavorazione.Text);
@@ -224,10 +217,10 @@ namespace VideoSystemWeb.Agenda
                 nascondiErroriValidazione();
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "closePopup", "chiudiPopup();", true);
             }
-            
+
         }
 
-        
+
 
         protected void btnAnnulla_Click(object sender, EventArgs e)
         {
@@ -260,7 +253,7 @@ namespace VideoSystemWeb.Agenda
             tb_Nota.CssClass = tb_Nota.CssClass.Replace("erroreValidazione", "");
         }
 
-        
+
         private void AttivaDisattivaModifica(bool attivaModifica)
         {
             val_DataInizioLavorazione.Visible = !attivaModifica;
@@ -306,6 +299,22 @@ namespace VideoSystemWeb.Agenda
             btnSalva.Visible = btnAnnulla.Visible = attivaModifica;
 
             upEvento.Update();
+        }
+
+        protected void btnEditEvent_Click(object sender, EventArgs e)
+        {
+            string dataEvento = hf_data.Value;
+            string risorsaEvento = hf_risorsa.Value;
+
+            val_DataInizioLavorazione.Text = dataEvento;
+            val_Risorse.Text = risorsaEvento;
+            pnlContainer.Visible = true;
+        }
+
+        protected void btn_chiudi_Click(object sender, EventArgs e)
+        {
+
+            pnlContainer.Visible = false;
         }
     }
 }

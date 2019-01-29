@@ -153,6 +153,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Images\COLLABORATORI\dummy.jpg" />
+    <Content Include="Images\COLLABORATORI\WIN_20190129_12_57_33_Pro.jpg" />
     <Content Include="Login.aspx" />
     <Content Include="Images\logoVSP.png" />
     <Content Include="pageError.aspx" />

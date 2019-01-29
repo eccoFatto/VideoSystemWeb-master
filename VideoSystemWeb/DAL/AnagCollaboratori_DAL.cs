@@ -31,7 +31,7 @@ namespace VideoSystemWeb.DAL
             }
         }
 
-        public AnagCollaboratori getCollaboratoreById(int idCollaboratore, ref Esito esito)
+        public static AnagCollaboratori getCollaboratoreById(int idCollaboratore, ref Esito esito)
         {
             AnagCollaboratori collaboratore = new AnagCollaboratori();
             try

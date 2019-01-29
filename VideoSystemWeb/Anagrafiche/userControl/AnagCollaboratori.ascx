@@ -3,6 +3,7 @@
 
 <%--<ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server" />    --%>
 
+
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
         <table style="width:600px;align-content:center;">

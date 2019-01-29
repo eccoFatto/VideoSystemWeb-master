@@ -99,8 +99,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         {
             string idCollaboratore = hf_idColl.Value;
             Esito esito = new Esito();
-            Entity.AnagCollaboratori collaboratore = AnagCollaboratori_DAL.getCollaboratoreById(Convert.ToInt16(idCollaboratore),ref esito);
+            Entity.Anag_Collaboratori collaboratore = Anag_Collaboratori_DAL.getCollaboratoreById(Convert.ToInt16(idCollaboratore),ref esito);
             if (esito.codice == 0) {
+                pulisciCampiDettaglio();
+                
                 // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
                 tbMod_CF.Text = collaboratore.CodiceFiscale;
                 tbMod_Cognome.Text = collaboratore.Cognome;
@@ -115,6 +117,22 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 cbMod_Assunto.Checked = collaboratore.Assunto;
                 cbMod_Attivo.Checked = collaboratore.Attivo;
                 tbMod_Note.Text = collaboratore.Note;
+                
+                foreach (Anag_Qualifiche_Collaboratori qualifica in collaboratore.Qualifiche)
+                {
+                    ListItem itemQualifica = new ListItem(qualifica.Qualifica, qualifica.Id.ToString());
+                    lbMod_Qualifiche.Items.Add(itemQualifica);
+                    
+                }
+                if (collaboratore.Qualifiche.Count > 0)
+                {
+                    lbMod_Qualifiche.Rows = collaboratore.Qualifiche.Count;
+                }
+                else
+                {
+                    lbMod_Qualifiche.Rows = 1;
+                }
+
                 if (string.IsNullOrEmpty(collaboratore.PathFoto))
                 {
                     imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + ConfigurationManager.AppSettings["IMMAGINE_DUMMY_COLLABORATORE"];
@@ -156,6 +174,26 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void lbInserisciCollaboratori_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void pulisciCampiDettaglio()
+        {
+            tbMod_CF.Text = "";
+            tbMod_Cognome.Text = "";
+            tbMod_Nome.Text = "";
+            tbMod_Nazione.Text = "";
+            tbMod_ComuneNascita.Text = "";
+            tbMod_ProvinciaNascita.Text = "";
+            tbMod_ComuneRiferimento.Text = "";
+            tbMod_DataNascita.Text = "";
+            tbMod_NomeSocieta.Text = "";
+            tbMod_PartitaIva.Text = "";
+            cbMod_Assunto.Checked = false;
+            cbMod_Attivo.Checked = false;
+            tbMod_Note.Text = "";
+
+            lbMod_Qualifiche.Items.Clear();
+            lbMod_Qualifiche.Rows = 1;
         }
     }
 }

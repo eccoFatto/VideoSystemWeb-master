@@ -23,7 +23,7 @@ namespace VideoSystemWeb.Entity
 //  [note] [varchar](max) NULL,
 //  [attivo] [bit] NOT NULL,
 
-    public class AnagCollaboratori
+    public class Anag_Collaboratori
     {
         private int id;
         private string cognome;
@@ -40,6 +40,7 @@ namespace VideoSystemWeb.Entity
         private bool assunto;
         private string note;
         private bool attivo;
+        private List<Anag_Qualifiche_Collaboratori> qualifiche;
 
         public bool Attivo { get => attivo; set => attivo = value; }
         public string Note { get => note; set => note = value; }
@@ -56,5 +57,6 @@ namespace VideoSystemWeb.Entity
         public string Nome { get => nome; set => nome = value; }
         public string Cognome { get => cognome; set => cognome = value; }
         public int Id { get => id; set => id = value; }
+        public List<Anag_Qualifiche_Collaboratori> Qualifiche { get => qualifiche; set => qualifiche = value; }
     }
 }

@@ -166,6 +166,12 @@
                                         <asp:TextBox ID="tbMod_Note" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round" ReadOnly="true" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="2" class=".column" runat="server">
+                                        <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Qualifiche" runat="server" Text="Qualifiche"></asp:Label></div>
+                                        <asp:ListBox ID="lbMod_Qualifiche" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                                    </td>
+                                </tr>
 
                             </table>
                             

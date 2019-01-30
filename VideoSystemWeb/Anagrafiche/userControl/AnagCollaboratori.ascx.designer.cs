@@ -400,6 +400,24 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Image imgCollaboratore;
         
         /// <summary>
+        /// Controllo lbl_Note.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Note;
+        
+        /// <summary>
+        /// Controllo tbMod_Note.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Note;
+        
+        /// <summary>
         /// Controllo lbl_Qualifiche.
         /// </summary>
         /// <remarks>
@@ -470,24 +488,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lbMod_Telefoni;
-        
-        /// <summary>
-        /// Controllo lbl_Note.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Note;
-        
-        /// <summary>
-        /// Controllo tbMod_Note.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Note;
         
         /// <summary>
         /// Controllo btnModifica.

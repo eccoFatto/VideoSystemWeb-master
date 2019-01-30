@@ -49,7 +49,8 @@
                                 </tr>
                                 <tr>
                                     <td style="width:50%;text-align:right;"></td>
-                                    <td style="width:50%;text-align:right;padding-right:10px" class="tooltip" data-tooltip="Conferma dati"><asp:Button ID="btnLogIn" runat="server" Text="Conferma" OnClick="btnLogIn_Click" /></td>
+                                    <td style="width:50%;text-align:right;padding-right:10px" class="w3-panel w3-orange w3-border w3-round w3-center"><asp:LinkButton ID="lbLogin" runat="server" OnClick="btnLogIn_Click" class="tooltip" data-tooltip="Conferma dati">Conferma</asp:LinkButton>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="width:100%;">

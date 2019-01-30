@@ -50,14 +50,14 @@
                 <td colspan="2" style="width:150px;">
                     <table style="width:100%;">
                         <tr>
-                            <td style="width:40%;" class="w3-panel w3-green w3-border w3-round">                    
+                            <td style="width:40%;" class="w3-panel w3-green w3-border w3-round w3-center">                    
                                 <asp:LinkButton ID="lbRicercaCollaboratori" runat="server" OnClick="lbRicercaCollaboratori_Click" class="tooltip" data-tooltip="Ricerca Collaboratore">Ricerca</asp:LinkButton>
                             </td>
-                            <td style="width:40%;" class="w3-panel w3-grey w3-border w3-round">                    
+                            <td style="width:40%;" class="w3-panel w3-grey w3-border w3-round w3-center">                    
                                 <asp:LinkButton ID="lbInserisciCollaboratori" runat="server" OnClick="lbInserisciCollaboratori_Click" class="tooltip" data-tooltip="Inserisci Collaboratore">Inserisci</asp:LinkButton>
                             </td>
-                            <td style="width:20%;" class="w3-panel w3-red w3-border w3-round">
-                                <asp:LinkButton ID="lbPulisciCampiRicerca" runat="server" OnClick="lbPulisciCampiRicerca_Click" class="tooltip" data-tooltip="Pulisci campi ricerca">X</asp:LinkButton>
+                            <td style="width:20%;" class="w3-panel w3-red w3-border w3-round w3-center">
+                                <asp:LinkButton ID="lbPulisciCampiRicerca" runat="server" OnClick="lbPulisciCampiRicerca_Click" class="tooltip" data-tooltip="Pulisci campi ricerca">&times;</asp:LinkButton>
                             </td>
                         </tr>
                     </table>
@@ -156,8 +156,14 @@
                                     </td>
                                     <td style="width:25%; vertical-align:top">
 
-                                        <asp:Image ID="imgCollaboratore" runat="server" Width="90%" />
+                                        <asp:Image ID="imgCollaboratore" runat="server" Width="90%" class="w3-round" />
 
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class=".column" runat="server">
+                                        <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Note" runat="server" Text="Note"></asp:Label></div>
+                                        <asp:TextBox ID="tbMod_Note" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round" ReadOnly="true" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
                                     </td>
                                 </tr>
                                 <tr>
@@ -182,12 +188,6 @@
                                     <td colspan="2" class=".column" runat="server">
                                         <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Telefoni" runat="server" Text="Telefoni"></asp:Label></div>
                                         <asp:ListBox ID="lbMod_Telefoni" runat="server" CssClass="w3-panel w3-white w3-border w3-round" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class=".column" runat="server">
-                                        <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Note" runat="server" Text="Note"></asp:Label></div>
-                                        <asp:TextBox ID="tbMod_Note" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round" ReadOnly="true" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
                                     </td>
                                 </tr>
                             </table>

@@ -99,7 +99,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         {
             string idCollaboratore = hf_idColl.Value;
             Esito esito = new Esito();
-            Entity.Anag_Collaboratori collaboratore = Anag_Collaboratori_DAL.getCollaboratoreById(Convert.ToInt16(idCollaboratore),ref esito);
+            Entity.Anag_Collaboratori collaboratore = Anag_Collaboratori_DAL.Instance.getCollaboratoreById(Convert.ToInt16(idCollaboratore),ref esito);
             if (esito.codice == 0) {
                 pulisciCampiDettaglio();
                 

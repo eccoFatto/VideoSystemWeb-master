@@ -400,24 +400,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Image imgCollaboratore;
         
         /// <summary>
-        /// Controllo lbl_Note.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Note;
-        
-        /// <summary>
-        /// Controllo tbMod_Note.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Note;
-        
-        /// <summary>
         /// Controllo lbl_Qualifiche.
         /// </summary>
         /// <remarks>
@@ -434,6 +416,78 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lbMod_Qualifiche;
+        
+        /// <summary>
+        /// Controllo lbl_Indirizzi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Indirizzi;
+        
+        /// <summary>
+        /// Controllo lbMod_Indirizzi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lbMod_Indirizzi;
+        
+        /// <summary>
+        /// Controllo lbl_Email.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Email;
+        
+        /// <summary>
+        /// Controllo lbMod_Email.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lbMod_Email;
+        
+        /// <summary>
+        /// Controllo lbl_Telefoni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Telefoni;
+        
+        /// <summary>
+        /// Controllo lbMod_Telefoni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lbMod_Telefoni;
+        
+        /// <summary>
+        /// Controllo lbl_Note.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Note;
+        
+        /// <summary>
+        /// Controllo tbMod_Note.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Note;
         
         /// <summary>
         /// Controllo btnModifica.

@@ -7,15 +7,15 @@ using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
 namespace VideoSystemWeb.DAL
 {
-    public class Anag_Qualifiche_Collaboratori_DAL : Base_DAL
+    public class Anag_Telefoni_Collaboratori_DAL : Base_DAL
     {
         //singleton
-        private static volatile Anag_Qualifiche_Collaboratori_DAL instance;
+        private static volatile Anag_Telefoni_Collaboratori_DAL instance;
         private static object objForLock = new Object();
 
-        private Anag_Qualifiche_Collaboratori_DAL() { }
+        private Anag_Telefoni_Collaboratori_DAL() { }
 
-        public static Anag_Qualifiche_Collaboratori_DAL Instance
+        public static Anag_Telefoni_Collaboratori_DAL Instance
         {
             get
             {
@@ -24,23 +24,22 @@ namespace VideoSystemWeb.DAL
                     lock (objForLock)
                     {
                         if (instance == null)
-                            instance = new Anag_Qualifiche_Collaboratori_DAL();
+                            instance = new Anag_Telefoni_Collaboratori_DAL();
                     }
                 }
                 return instance;
             }
         }
-
-        public List<Anag_Qualifiche_Collaboratori> getQualificheByIdCollaboratore(ref Esito esito, int idCollaboratore, bool soloAttivi = true)
+        public List<Anag_Telefoni_Collaboratori> getTelefoniByIdCollaboratore(ref Esito esito, int idCollaboratore, bool soloAttivi = true)
         {
-            List<Anag_Qualifiche_Collaboratori> listaQUalifiche = new List<Anag_Qualifiche_Collaboratori>();
+            List<Anag_Telefoni_Collaboratori> listaTelefoni = new List<Anag_Telefoni_Collaboratori>();
             try
             {
                 using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
                 {
-                    string query = "SELECT * FROM anag_qualifiche_collaboratori WHERE id_Collaboratore = " + idCollaboratore.ToString();
+                    string query = "SELECT * FROM anag_telefoni_collaboratori WHERE id_Collaboratore = " + idCollaboratore.ToString();
                     if (soloAttivi) query += " AND ATTIVO = 1";
-                    query += " ORDER BY priorita,qualifica";
+                    query += " ORDER BY priorita,tipo";
                     using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(query))
                     {
                         using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
@@ -55,21 +54,27 @@ namespace VideoSystemWeb.DAL
                                     foreach (DataRow riga in dt.Rows)
                                     {
 
-                                        Anag_Qualifiche_Collaboratori qualifica = new Anag_Qualifiche_Collaboratori();
-                                        qualifica.Id = riga.Field<int>("id");
-                                        qualifica.Descrizione = riga.Field<string>("Descrizione");
-                                        qualifica.Id_collaboratore = riga.Field<int>("id_Collaboratore");
-                                        qualifica.Qualifica = riga.Field<string>("Qualifica");
-                                        qualifica.Priorita = riga.Field<int>("priorita");
-                                        qualifica.Attivo = riga.Field<bool>("attivo");
+                                        Anag_Telefoni_Collaboratori telefono = new Anag_Telefoni_Collaboratori();
+                                        telefono.Id = riga.Field<int>("id");
+                                        telefono.Id_collaboratore = riga.Field<int>("id_collaboratore");
 
-                                        listaQUalifiche.Add(qualifica);
+                                        telefono.Numero = riga.Field<string>("numero");
+                                        telefono.Pref_int = riga.Field<string>("int_pref");
+                                        telefono.Pref_naz = riga.Field<string>("naz_pref");
+                                        telefono.Tipo = riga.Field<string>("tipo");
+                                        telefono.Whatsapp = riga.Field<bool>("whatsapp");
+
+                                        telefono.Descrizione = riga.Field<string>("descrizione");
+                                        telefono.Priorita = riga.Field<int>("priorita");
+                                        telefono.Attivo = riga.Field<bool>("attivo");
+
+                                        listaTelefoni.Add(telefono);
                                     }
                                 }
                                 else
                                 {
                                     esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella anag_qualifiche_collaboratori ";
+                                    esito.descrizione = "Nessun dato trovato nella tabella anag_telefoni_collaboratori ";
                                 }
                             }
                         }
@@ -82,7 +87,7 @@ namespace VideoSystemWeb.DAL
                 esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
-            return listaQUalifiche;
+            return listaTelefoni;
         }
 
     }

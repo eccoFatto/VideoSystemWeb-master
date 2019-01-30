@@ -162,22 +162,35 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" class=".column" runat="server">
-                                        <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Note" runat="server" Text="Note"></asp:Label></div>
-                                        <asp:TextBox ID="tbMod_Note" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round" ReadOnly="true" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                                        <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Qualifiche" runat="server" Text="Qualifiche"></asp:Label></div>
+                                        <asp:ListBox ID="lbMod_Qualifiche" runat="server" CssClass="w3-panel w3-white w3-border w3-round" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" class=".column" runat="server">
-                                        <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Qualifiche" runat="server" Text="Qualifiche"></asp:Label></div>
-                                        <asp:ListBox ID="lbMod_Qualifiche" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                                        <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Indirizzi" runat="server" Text="Indirizzi"></asp:Label></div>
+                                        <asp:ListBox ID="lbMod_Indirizzi" runat="server" CssClass="w3-panel w3-white w3-border w3-round" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
                                     </td>
                                 </tr>
-
+                                <tr>
+                                    <td colspan="2" class=".column" runat="server">
+                                        <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Email" runat="server" Text="Email"></asp:Label></div>
+                                        <asp:ListBox ID="lbMod_Email" runat="server" CssClass="w3-panel w3-white w3-border w3-round" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class=".column" runat="server">
+                                        <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Telefoni" runat="server" Text="Telefoni"></asp:Label></div>
+                                        <asp:ListBox ID="lbMod_Telefoni" runat="server" CssClass="w3-panel w3-white w3-border w3-round" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class=".column" runat="server">
+                                        <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_Note" runat="server" Text="Note"></asp:Label></div>
+                                        <asp:TextBox ID="tbMod_Note" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round" ReadOnly="true" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                                    </td>
+                                </tr>
                             </table>
-                            
-                            
-                            
-                            
 
                             <div style="text-align: center;">
                                 <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnModifica_Click" />

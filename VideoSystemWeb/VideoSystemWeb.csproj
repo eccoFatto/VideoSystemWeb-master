@@ -140,6 +140,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Css\bootstrap-datepicker3.min.css" />
     <Content Include="Css\Style.css" />
+    <Content Include="Css\w3-colors-win8.css" />
+    <Content Include="Css\w3.css" />
     <Content Include="Default.aspx" />
     <Content Include="dll_esterne\AjaxControlToolkit.dll" />
     <Content Include="favicon.ico" />

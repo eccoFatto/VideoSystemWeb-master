@@ -6,13 +6,13 @@ using VideoSystemWeb.DAL;
 using VideoSystemWeb.Entity;
 namespace VideoSystemWeb.BLL
 {
-    public class AnagCollaboratori_BLL
+    public class Anag_Telefoni_Collaboratori_BLL
     {
         //singleton
-        private static volatile AnagCollaboratori_BLL instance;
+        private static volatile Anag_Telefoni_Collaboratori_BLL instance;
         private static object objForLock = new Object();
-        private AnagCollaboratori_BLL() { }
-        public static AnagCollaboratori_BLL Instance
+        private Anag_Telefoni_Collaboratori_BLL() { }
+        public static Anag_Telefoni_Collaboratori_BLL Instance
         {
             get
             {
@@ -21,12 +21,11 @@ namespace VideoSystemWeb.BLL
                     lock (objForLock)
                     {
                         if (instance == null)
-                            instance = new AnagCollaboratori_BLL();
+                            instance = new Anag_Telefoni_Collaboratori_BLL();
                     }
                 }
                 return instance;
             }
         }
-
     }
 }

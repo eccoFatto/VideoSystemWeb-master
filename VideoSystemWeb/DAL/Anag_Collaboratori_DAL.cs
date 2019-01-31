@@ -7,15 +7,15 @@ using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
 namespace VideoSystemWeb.DAL
 {
-    public class AnagCollaboratori_DAL : Base_DAL
+    public class Anag_Collaboratori_DAL : Base_DAL
     {
         //singleton
-        private static volatile AnagCollaboratori_DAL instance;
+        private static volatile Anag_Collaboratori_DAL instance;
         private static object objForLock = new Object();
 
-        private AnagCollaboratori_DAL() { }
+        private Anag_Collaboratori_DAL() { }
 
-        public static AnagCollaboratori_DAL Instance
+        public static Anag_Collaboratori_DAL Instance
         {
             get
             {
@@ -24,16 +24,16 @@ namespace VideoSystemWeb.DAL
                     lock (objForLock)
                     {
                         if (instance == null)
-                            instance = new AnagCollaboratori_DAL();
+                            instance = new Anag_Collaboratori_DAL();
                     }
                 }
                 return instance;
             }
         }
 
-        public static AnagCollaboratori getCollaboratoreById(int idCollaboratore, ref Esito esito)
+        public Anag_Collaboratori getCollaboratoreById(int idCollaboratore, ref Esito esito)
         {
-            AnagCollaboratori collaboratore = new AnagCollaboratori();
+            Anag_Collaboratori collaboratore = new Anag_Collaboratori();
             try
             {
                 using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
@@ -65,6 +65,10 @@ namespace VideoSystemWeb.DAL
                                     collaboratore.Assunto = dt.Rows[0].Field<bool>("assunto");
                                     collaboratore.Note = dt.Rows[0].Field<string>("note");
                                     collaboratore.Attivo = dt.Rows[0].Field<bool>("attivo");
+                                    collaboratore.Qualifiche = Anag_Qualifiche_Collaboratori_DAL.Instance.getQualificheByIdCollaboratore(ref esito, collaboratore.Id);
+                                    collaboratore.Indirizzi = Anag_Indirizzi_Collaboratori_DAL.Instance.getIndirizziByIdCollaboratore(ref esito, collaboratore.Id);
+                                    collaboratore.Email = Anag_Email_Collaboratori_DAL.Instance.getEmailByIdCollaboratore(ref esito, collaboratore.Id);
+                                    collaboratore.Telefoni = Anag_Telefoni_Collaboratori_DAL.Instance.getTelefoniByIdCollaboratore(ref esito, collaboratore.Id);
                                 }
                                 else
                                 {
@@ -84,9 +88,9 @@ namespace VideoSystemWeb.DAL
             return collaboratore;
         }
 
-        public List<AnagCollaboratori> CaricaListaCollaboratori(ref Esito esito, bool soloAttivi = true)
+        public List<Anag_Collaboratori> CaricaListaCollaboratori(ref Esito esito, bool soloAttivi = true)
         {
-            List<AnagCollaboratori> listaCollaboratori = new List<AnagCollaboratori>();
+            List<Anag_Collaboratori> listaCollaboratori = new List<Anag_Collaboratori>();
             try
             {
                 using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
@@ -124,7 +128,7 @@ namespace VideoSystemWeb.DAL
                                         //private string note;
                                         //private bool attivo;
 
-                                        AnagCollaboratori collaboratore = new AnagCollaboratori();
+                                        Anag_Collaboratori collaboratore = new Anag_Collaboratori();
                                         collaboratore.Id = riga.Field<int>("id");
                                         collaboratore.Cognome = riga.Field<string>("cognome");
                                         collaboratore.Nome = riga.Field<string>("nome");
@@ -140,6 +144,10 @@ namespace VideoSystemWeb.DAL
                                         collaboratore.Assunto = riga.Field<bool>("assunto");
                                         collaboratore.Note = riga.Field<string>("note");
                                         collaboratore.Attivo = riga.Field<bool>("attivo");
+                                        collaboratore.Qualifiche = Anag_Qualifiche_Collaboratori_DAL.Instance.getQualificheByIdCollaboratore(ref esito, collaboratore.Id);
+                                        collaboratore.Indirizzi = Anag_Indirizzi_Collaboratori_DAL.Instance.getIndirizziByIdCollaboratore(ref esito, collaboratore.Id);
+                                        collaboratore.Email = Anag_Email_Collaboratori_DAL.Instance.getEmailByIdCollaboratore(ref esito, collaboratore.Id);
+                                        collaboratore.Telefoni = Anag_Telefoni_Collaboratori_DAL.Instance.getTelefoniByIdCollaboratore(ref esito, collaboratore.Id);
 
                                         listaCollaboratori.Add(collaboratore);
                                     }

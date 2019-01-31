@@ -19,8 +19,10 @@
     <script src='/Scripts/bootstrap-datepicker.it.min.js'></script>
     <script src='/Scripts/Utility.js'></script>
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css"/>
+<%--    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css"/>--%>
+    <link rel="stylesheet" href="/Css/w3.css"/>
+    <link rel="stylesheet" href="/Css/w3-colors-win8.css"/>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"/>
@@ -38,24 +40,25 @@
                     <td style="width:10%;align-content:center;text-align:center;">
                         <asp:Image ID="imgLogo" runat="server" Height="100px" ImageAlign="AbsMiddle" ImageUrl="~/Images/logoVSP.png" />
                     </td>
-                    <td colspan="9" style="width:10%;align-content:center;text-align:left;">
+                    <td style="width:90%;align-content:center;text-align:left;">
                         <div class="w3-panel w3-yellow w3-border w3-round">GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp; <asp:Label ID="lbl_benvenuto" runat="server" ></asp:Label></div>
                     </td>
-                    
-                </tr>
-                <tr>
-                    <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="/Agenda/Agenda.aspx" title="Gestione Agenda">Agenda</a></div></td>
-                    <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="#" title="Report">Report</a></div></td>
-                    <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="/Anagrafiche/AnagCollaboratori.aspx" title="Gestione Anagrafiche Clienti - Fornitori - Collaboratori">Anagrafiche</a></div></td>
-                    <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="#" title="Gestione Magazzino">Magazzino</a></div></td>
-                    <td style="width:10%;align-content:center;text-align:center;"></td>
-                    <td style="width:10%;align-content:center;text-align:center;"></td>
-                    <td style="width:10%;align-content:center;text-align:center;"></td>
-                    <td style="width:10%;align-content:center;text-align:center;"></td>
-                    <td style="width:10%;align-content:center;text-align:center;"></td>
-                    <td style="width:10%;align-content:center;text-align:center;"><div class="w3-panel w3-yellow w3-border w3-hover-orange w3-round"><a href="/Login.aspx" title="Uscita Applicazione">ESCI</a></div></td>
                 </tr>
             </table>
+            <div class="w3-bar w3-yellow w3-round">
+              <a href="/Agenda/Agenda.aspx" class="w3-bar-item w3-button">Agenda</a>
+              <a href="#" class="w3-bar-item w3-button">Report</a>
+              <div class="w3-dropdown-hover">
+                <button class="w3-button w3-yellow">Anagrafiche</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
+                  <a href="/Anagrafiche/AnagCollaboratori.aspx" class="w3-bar-item w3-button">Collaboratori</a>
+                  <a href="#" class="w3-bar-item w3-button">Clienti</a>
+                  <a href="#" class="w3-bar-item w3-button">Fornitori</a>
+                </div>
+              </div>
+              <a href="/Login.aspx" class="w3-bar-item w3-button w3-right">Esci</a>
+            </div>            
+
         </div>
         <div class="container body-content" style="height:90%;">
         

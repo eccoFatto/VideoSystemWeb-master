@@ -140,6 +140,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Css\bootstrap-datepicker3.min.css" />
     <Content Include="Css\Style.css" />
+    <Content Include="Css\w3-colors-win8.css" />
+    <Content Include="Css\w3.css" />
     <Content Include="Default.aspx" />
     <Content Include="dll_esterne\AjaxControlToolkit.dll" />
     <Content Include="favicon.ico" />
@@ -346,7 +348,11 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\Agenda_BLL.cs" />
-    <Compile Include="BLL\AnagCollaboratori_BLL.cs" />
+    <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
+    <Compile Include="BLL\Anag_Email_Collaboratori_BLL.cs" />
+    <Compile Include="BLL\Anag_Indirizzi_Collaboratori_BLL.cs" />
+    <Compile Include="BLL\Anag_Qualifiche_Collaboratori_BLL.cs" />
+    <Compile Include="BLL\Anag_Telefoni_Collaboratori_BLL.cs" />
     <Compile Include="BLL\BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -362,7 +368,11 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\Agenda_DAL.cs" />
-    <Compile Include="DAL\AnagCollaboratori_DAL.cs" />
+    <Compile Include="DAL\Anag_Telefoni_Collaboratori_DAL.cs" />
+    <Compile Include="DAL\Anag_Collaboratori_DAL.cs" />
+    <Compile Include="DAL\Anag_Email_Collaboratori_DAL.cs" />
+    <Compile Include="DAL\Anag_Indirizzi_Collaboratori_DAL.cs" />
+    <Compile Include="DAL\Anag_Qualifiche_Collaboratori_DAL.cs" />
     <Compile Include="DAL\Base_DAL.cs" />
     <Compile Include="DAL\Login_DAL.cs" />
     <Compile Include="Default.aspx.cs">
@@ -372,7 +382,11 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Entity\AnagCollaboratori.cs" />
+    <Compile Include="Entity\Anag_Collaboratori.cs" />
+    <Compile Include="Entity\Anag_Email_Collaboratori.cs" />
+    <Compile Include="Entity\Anag_Indirizzi_Collaboratori.cs" />
+    <Compile Include="Entity\Anag_Qualifiche_Collaboratori.cs" />
+    <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />
     <Compile Include="Entity\DatiAgenda.cs" />
     <Compile Include="Entity\Evento.cs" />
     <Compile Include="Entity\Json\Evento_Json.cs" />

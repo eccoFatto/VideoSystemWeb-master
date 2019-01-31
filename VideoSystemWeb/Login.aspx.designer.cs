@@ -40,13 +40,13 @@ namespace VideoSystemWeb {
         protected global::System.Web.UI.WebControls.TextBox tbPassword;
         
         /// <summary>
-        /// Controllo btnLogIn.
+        /// Controllo lbLogin.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLogIn;
+        protected global::System.Web.UI.WebControls.LinkButton lbLogin;
         
         /// <summary>
         /// Controllo GridView1.

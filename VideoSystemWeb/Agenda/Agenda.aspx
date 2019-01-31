@@ -76,24 +76,25 @@
         }
     
         function mostracella(row, column) {
-            alert("row:" + row + " column:" + column);
+            //alert("row:" + row + " column:" + column);
+            //alert( $("#< %=hf_valoreData.ClientID%>").val());
             $("#<%=hf_data.ClientID%>").val(row);
             $("#<%=hf_risorsa.ClientID%>").val(column);
             $("#<%=btnEditEvent.ClientID%>").click();
         }
 
         function chiudiPopup() {
+           //alert( $("#< %=hf_valoreData.ClientID%>").val());
            
+          // $("#< %=btnsearch.ClientID%>").click();
            $("#<%=btn_chiudi.ClientID%>").click();
-            //$("#<%=btnsearch.ClientID%>").click();
-
         }
         
     </script>
 
     <table style="width:100%">
         <tr>
-            <td style="width:70%;vertical-align:top;">
+            <td style="width:80%;vertical-align:top;">
                 
                 <asp:Button ID="btnsearch" runat="server" OnClick="btnsearch_Click" style="display:none" />
                 
@@ -108,7 +109,7 @@
                     </Triggers>
                 </asp:UpdatePanel>
             </td>
-            <td style="width:30%;vertical-align:top; padding-left:50px;">
+            <td style="width:20%;vertical-align:top; padding-left:50px;">
                 <div class="calendarPresentazione"></div>
                 <asp:HiddenField ID="hf_valoreData" runat="server" />
             </td>
@@ -131,6 +132,7 @@
         <ContentTemplate>
             <div>
             <asp:Panel  runat="server" ID="pnlContainer" visible="false">
+                <asp:HiddenField ID="hf_idEvento" runat="server" />
                 <div class="modalBackground"></div>
                 <asp:Panel  runat="server" ID="innerContainer" CssClass="containerPopup round" ScrollBars="Auto">
                 <div class="intestazionePopup" style="width:100%; text-align:center">
@@ -140,7 +142,7 @@
                 <div class="errorMessage" style="width:100%; text-align:center">
                     <asp:Label ID="lbl_MessaggioErrore" runat="server" Text="Controllare i campi evidenziati" Visible="false" ></asp:Label>
                 </div>
-                <table>
+                <table style="font-size:10pt;">
                     <tr>
                         <td class=".column" runat="server">
                             <asp:Label ID="lbl_DataInizioLavorazione" runat="server" Text="Data inizio lavorazione" CssClass="w3-panel w3-yellow w3-border w3-round"></asp:Label>

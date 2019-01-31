@@ -7,33 +7,96 @@ namespace VideoSystemWeb.Entity
 {
     public class DatiAgenda
     {
-        public int id;
+        private DateTime? _data_inizio_impegno;
+        private DateTime? _data_fine_impegno;
+        private DateTime? _impegnoOrario_da;
+        private DateTime? _impegnoOrario_a;
 
-        public DateTime data_inizio_lavorazione;
-        public DateTime data_fine_lavorazione;
-        public int durata_lavorazione;
 
-        public int id_colonne_agenda;
-        public int id_tipologia;
-        public int id_cliente;
 
-        public int durata_viaggio_andata;
-        public int durata_viaggio_ritorno;
-        public DateTime data_inizio_impegno;
-        public DateTime data_fine_impegno;
-        public bool impegnoOrario;
-        public DateTime impegnoOrario_da;
-        public DateTime impegnoOrario_a;
-        
-        public string produzione;
-        public string lavorazione;
-        public string indirizzo;
-        public string luogo;
-        public string codice_lavoro;
+        public int id { get; set; }
+        public DateTime data_inizio_lavorazione { get; set; }
+        public DateTime data_fine_lavorazione { get; set; }
+        public int durata_lavorazione { get; set; }
+        public int id_colonne_agenda { get; set; }
+        public int id_tipologia { get; set; }
+        public int? id_cliente { get; set; }
+        public int durata_viaggio_andata { get; set; }
+        public int durata_viaggio_ritorno { get; set; }
+        public DateTime? data_inizio_impegno
+        {
+            get { return _data_inizio_impegno; }
+            set
+            {
+                if (value == DateTime.MinValue)
+                {
+                    _data_inizio_impegno = null;
+                }
+                else
+                {          
+                    _data_inizio_impegno = value;                   
+                }
+            }
+        }
+        public DateTime? data_fine_impegno
+        {
+            get { return _data_fine_impegno; }
+            set
+            {
+                if (value == DateTime.MinValue)
+                {
+                    _data_fine_impegno = null;
+                }
+                else
+                {
+                    if (value != null)
+                    {
+                        _data_fine_impegno = value;
+                    }
+                }
+            }
+        }
+        public bool impegnoOrario { get; set; }
+        public DateTime? impegnoOrario_da
+        {
+            get { return _impegnoOrario_da; }
+            set
+            {
+                if (value == DateTime.MinValue)
+                {
+                    _impegnoOrario_da = null;
+                }
+                else
+                {
+                    _impegnoOrario_da = value;
+                }
+            }
+        }
+        public DateTime? impegnoOrario_a
+        {
+            get { return _impegnoOrario_a; }
+            set
+            {
+                if (value == DateTime.MinValue)
+                {
+                    _impegnoOrario_a = null;
+                }
+                else
+                {
+                    _impegnoOrario_a = value;
+                }
+            }
+        }
 
-        public string nota;
+        public string produzione { get; set; }
+        public string lavorazione { get; set; }
+        public string indirizzo { get; set; }
+        public string luogo { get; set; }
+        public string codice_lavoro { get; set; }
 
-        public int id_stato;
+        public string nota { get; set; }
+
+        public int id_stato { get; set; }
 
         public DatiAgenda() { }
 

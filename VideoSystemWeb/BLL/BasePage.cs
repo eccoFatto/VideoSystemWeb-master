@@ -82,7 +82,6 @@ namespace VideoSystemWeb.BLL
                         valore = defaultValue.ToString();
                     }
 
-
                     campo.CssClass = campo.CssClass.Replace("erroreValidazione", "");
                     result = (T)Convert.ChangeType(valore, typeof(T));
                 }

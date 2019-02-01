@@ -6,30 +6,17 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>LOGIN</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css"/>
+<%--    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css"/>--%>
+    <link rel="stylesheet" href="/Css/w3.css"/>
+    <link rel="stylesheet" href="/Css/w3-colors-win8.css"/>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"/>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div id="MENU" class="w3-container w3-0 mydiv" style="align-content:center;">
-    <table id="tblmenu" style="width:100%;">
-        <tr>
-            <td style="width:10%;align-content:center;text-align:center;"></td>
-            <td style="width:10%;align-content:center;text-align:center;"></td>
-            <td style="width:10%;align-content:center;text-align:center;"></td>
-            <td style="width:10%;align-content:center;text-align:center;"></td>
-            <td style="width:10%;align-content:center;text-align:center;"></td>
-            <td style="width:10%;align-content:center;text-align:center;"></td>
-            <td style="width:10%;align-content:center;text-align:center;"></td>
-            <td style="width:10%;align-content:center;text-align:center;"></td>
-            <td style="width:10%;align-content:center;text-align:center;"></td>
-            <td style="width:10%;align-content:center;text-align:center;"></td>
-        </tr>
-    </table>
-</div>
+      
         <!-- CON SPECTRE SI PUO' DIVIDERE LA PAGINA IN 12 COLONNE CON I DIV -->
         <div class="container">
             <div class="columns">
@@ -49,7 +36,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width:50%;text-align:right;"></td>
-                                    <td style="width:50%;text-align:right;padding-right:10px" class="w3-panel w3-orange w3-border w3-round w3-center"><asp:LinkButton ID="lbLogin" runat="server" OnClick="btnLogIn_Click" class="tooltip" data-tooltip="Conferma dati">Conferma</asp:LinkButton>
+                                    <td style="width:50%;text-align:right;padding-right:10px" ><asp:Button ID="btnLogin" runat="server" OnClick="btnLogIn_Click" class="w3-panel w3-orange w3-border w3-round w3-center" data-tooltip="Conferma dati" Text="Conferma"></asp:Button>
                                     </td>
                                 </tr>
                                 <tr>

@@ -38,8 +38,6 @@
 
     <script src='/Scripts/Utility.js'></script>
 
-<%--    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css"/>--%>
     <link rel="stylesheet" href="/Css/w3.css"/>
     <link rel="stylesheet" href="/Css/w3-colors-win8.css"/>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css"/>

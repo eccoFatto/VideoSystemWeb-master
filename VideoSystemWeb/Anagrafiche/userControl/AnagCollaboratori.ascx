@@ -140,7 +140,7 @@
                                                 <tr>
                                                     <td class=".column" runat="server">
                                                         <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_DataNascita" runat="server" Text="Data Nasc."></asp:Label></div>
-                                                        <asp:TextBox ID="tbMod_DataNascita" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" ReadOnly="true"></asp:TextBox>
+                                                        <asp:TextBox ID="tbMod_DataNascita" runat="server" CssClass="w3-panel w3-white w3-border w3-hover-orange w3-round fieldMedium" ReadOnly="true" TextMode="Date"></asp:TextBox>
                                                     </td>
                                                     <td class=".column" runat="server">
                                                         <div class="w3-panel w3-yellow w3-border w3-round"><asp:Label ID="lbl_ComuneRiferimento" runat="server" Text="Comune Rif." ></asp:Label></div>

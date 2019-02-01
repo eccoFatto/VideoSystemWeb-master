@@ -43,5 +43,6 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session[SessionManager.UTENTE] = new Anag_Utenti() { id = 1, Nome = "Nicola", Cognome = "Foti", id_tipoUtente = 2 };
             }
         }
+
     }
 }

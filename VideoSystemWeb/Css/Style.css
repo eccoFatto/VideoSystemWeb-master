@@ -44,6 +44,13 @@
     border-right: solid 2px #5377A9 !important;
 }
 
+.fieldLarge {
+    width: 240px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 0;
+}
+
 .fieldMedium {
     width: 140px;
     margin-bottom: 10px;

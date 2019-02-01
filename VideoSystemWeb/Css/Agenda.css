@@ -1,0 +1,27 @@
+﻿.containerPopup .datepicker table {
+    position: relative;
+    top: -600px;
+    left: 40%;
+    background-color: white;
+    border: solid 2px #5377A9;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.calendar {
+    min-width: 140px;
+    float: right;
+    margin-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border: 1px solid #AEAEAE;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+ul {
+    list-style: none;
+    font-size: 10pt;
+}

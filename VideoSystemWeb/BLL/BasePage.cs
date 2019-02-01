@@ -95,5 +95,27 @@ namespace VideoSystemWeb.BLL
 
             return result;
         }
+
+        public bool AbilitazioneInScrittura()
+        {
+            Esito esito = new Esito();
+
+            bool abilitazioneScrittura = false;
+
+            int idUtente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]).id_tipoUtente;
+            Tipologica tipoUtenteLoggato = UtilityTipologiche.getElementByID(listaTipiUtente, idUtente, ref esito);
+            abilitazioneScrittura = UtilityTipologiche.getParametroDaTipologica(tipoUtenteLoggato, "SCRITTURA", ref esito) == "1";
+
+            return abilitazioneScrittura;
+        }
+
+        protected void popolaDDLTipologica(DropDownList ddl, List<Tipologica> listaTipologica)
+        {
+            ddl.Items.Add(new ListItem("<seleziona>", "", true));
+            foreach (Tipologica tipologica in listaTipologica)
+            {
+                ddl.Items.Add(new ListItem(tipologica.nome, tipologica.id.ToString(), true));
+            }
+        }
     }
 }

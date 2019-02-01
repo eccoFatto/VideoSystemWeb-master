@@ -76,8 +76,8 @@ namespace VideoSystemWeb.DAL
                                         datoAgenda.data_inizio_impegno = riga.Field<DateTime?>("data_inizio_impegno");
                                         datoAgenda.data_fine_impegno = riga.Field<DateTime?>("data_fine_impegno"); 
                                         datoAgenda.impegnoOrario = riga.Field <bool>("impegnoOrario");
-                                        datoAgenda.impegnoOrario_da = riga.Field<DateTime?>("impegnoOrario_da");
-                                        datoAgenda.impegnoOrario_a = riga.Field<DateTime?>("impegnoOrario_a"); 
+                                        datoAgenda.impegnoOrario_da = riga.Field<string>("impegnoOrario_da");
+                                        datoAgenda.impegnoOrario_a = riga.Field<string>("impegnoOrario_a"); 
                                         datoAgenda.produzione = riga.Field <string>("produzione");
                                         datoAgenda.lavorazione = riga.Field<string>("lavorazione");
                                         datoAgenda.indirizzo = riga.Field<string>("indirizzo");
@@ -182,12 +182,12 @@ namespace VideoSystemWeb.DAL
                             impegnoOrario.Value = evento.impegnoOrario;
                             StoreProc.Parameters.Add(impegnoOrario);
 
-                            OleDbParameter impegnoOrario_da = new OleDbParameter("@impegnoOrario_da", OleDbType.Date);
+                            OleDbParameter impegnoOrario_da = new OleDbParameter("@impegnoOrario_da", OleDbType.VarChar);
                             impegnoOrario_da.Direction = ParameterDirection.Input;
                             impegnoOrario_da.Value = evento.impegnoOrario_da;
                             StoreProc.Parameters.Add(impegnoOrario_da);
 
-                            OleDbParameter impegnoOrario_a = new OleDbParameter("@impegnoOrario_a", OleDbType.Date);
+                            OleDbParameter impegnoOrario_a = new OleDbParameter("@impegnoOrario_a", OleDbType.VarChar);
                             impegnoOrario_a.Direction = ParameterDirection.Input;
                             impegnoOrario_a.Value = evento.impegnoOrario_a;
                             StoreProc.Parameters.Add(impegnoOrario_a);
@@ -319,12 +319,12 @@ namespace VideoSystemWeb.DAL
                             impegnoOrario.Value = evento.impegnoOrario;
                             StoreProc.Parameters.Add(impegnoOrario);
 
-                            OleDbParameter impegnoOrario_da = new OleDbParameter("@impegnoOrario_da", OleDbType.Date);
+                            OleDbParameter impegnoOrario_da = new OleDbParameter("@impegnoOrario_da", OleDbType.VarChar);
                             impegnoOrario_da.Direction = ParameterDirection.Input;
                             impegnoOrario_da.Value = evento.impegnoOrario_da;
                             StoreProc.Parameters.Add(impegnoOrario_da);
 
-                            OleDbParameter impegnoOrario_a = new OleDbParameter("@impegnoOrario_a", OleDbType.Date);
+                            OleDbParameter impegnoOrario_a = new OleDbParameter("@impegnoOrario_a", OleDbType.VarChar);
                             impegnoOrario_a.Direction = ParameterDirection.Input;
                             impegnoOrario_a.Value = evento.impegnoOrario_a;
                             StoreProc.Parameters.Add(impegnoOrario_a);

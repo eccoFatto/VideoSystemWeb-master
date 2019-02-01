@@ -9,10 +9,6 @@ namespace VideoSystemWeb.Entity
     {
         private DateTime? _data_inizio_impegno;
         private DateTime? _data_fine_impegno;
-        private DateTime? _impegnoOrario_da;
-        private DateTime? _impegnoOrario_a;
-
-
 
         public int id { get; set; }
         public DateTime data_inizio_lavorazione { get; set; }
@@ -57,36 +53,9 @@ namespace VideoSystemWeb.Entity
             }
         }
         public bool impegnoOrario { get; set; }
-        public DateTime? impegnoOrario_da
-        {
-            get { return _impegnoOrario_da; }
-            set
-            {
-                if (value == DateTime.MinValue)
-                {
-                    _impegnoOrario_da = null;
-                }
-                else
-                {
-                    _impegnoOrario_da = value;
-                }
-            }
-        }
-        public DateTime? impegnoOrario_a
-        {
-            get { return _impegnoOrario_a; }
-            set
-            {
-                if (value == DateTime.MinValue)
-                {
-                    _impegnoOrario_a = null;
-                }
-                else
-                {
-                    _impegnoOrario_a = value;
-                }
-            }
-        }
+        public string impegnoOrario_da { get; set; }
+
+        public string impegnoOrario_a { get; set; }
 
         public string produzione { get; set; }
         public string lavorazione { get; set; }

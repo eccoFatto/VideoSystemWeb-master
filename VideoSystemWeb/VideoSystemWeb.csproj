@@ -129,6 +129,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Agenda\Agenda.aspx" />
+    <Content Include="Agenda\calendar.aspx" />
     <Content Include="Agenda\prova.aspx" />
     <Content Include="Anagrafiche\AnagCollaboratori.aspx" />
     <Content Include="Anagrafiche\userControl\AnagCollaboratori.ascx" />
@@ -138,6 +139,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Css\Agenda.css" />
     <Content Include="Css\bootstrap-datepicker3.min.css" />
     <Content Include="Css\Style.css" />
     <Content Include="Css\w3-colors-win8.css" />
@@ -316,6 +318,13 @@
     </Compile>
     <Compile Include="Agenda\Agenda.aspx.designer.cs">
       <DependentUpon>Agenda.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\calendar.aspx.cs">
+      <DependentUpon>calendar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\calendar.aspx.designer.cs">
+      <DependentUpon>calendar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Agenda\prova.aspx.cs">
       <DependentUpon>prova.aspx</DependentUpon>

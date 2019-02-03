@@ -310,33 +310,6 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.TextBox txt_DurataViaggioAndata;
         
         /// <summary>
-        /// Controllo lbl_DurataViaggioRitorno.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DurataViaggioRitorno;
-        
-        /// <summary>
-        /// Controllo val_DurataViaggioRitorno.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox val_DurataViaggioRitorno;
-        
-        /// <summary>
-        /// Controllo txt_DurataViaggioRitorno.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_DurataViaggioRitorno;
-        
-        /// <summary>
         /// Controllo lbl_DataInizioImpegno.
         /// </summary>
         /// <remarks>
@@ -362,6 +335,33 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_DataInizioImpegno;
+        
+        /// <summary>
+        /// Controllo lbl_DurataViaggioRitorno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DurataViaggioRitorno;
+        
+        /// <summary>
+        /// Controllo val_DurataViaggioRitorno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox val_DurataViaggioRitorno;
+        
+        /// <summary>
+        /// Controllo txt_DurataViaggioRitorno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_DurataViaggioRitorno;
         
         /// <summary>
         /// Controllo lbl_DataFineImpegno.
@@ -406,7 +406,7 @@ namespace VideoSystemWeb.Agenda {
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox val_ImpegnoOrario;
+        protected global::System.Web.UI.WebControls.CheckBox val_ImpegnoOrario;
         
         /// <summary>
         /// Controllo chk_ImpegnoOrario.
@@ -605,15 +605,6 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_CodiceLavoro;
-        
-        /// <summary>
-        /// Controllo lbl_nota.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_nota;
         
         /// <summary>
         /// Controllo val_Nota.

@@ -117,6 +117,9 @@ namespace VideoSystemWeb.Agenda
             pnlContainer.Visible = true;
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "abilitazioneImpegnoOrario", "checkImpegnoOrario();", true);
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataInizioLavorazione.ClientID + "', '" + txt_DataFineLavorazione.ClientID + "');", true);
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataInizioImpegno.ClientID + "', '" + txt_DataFineImpegno.ClientID + "');", true);
+            
         }
 
         protected void btn_chiudi_Click(object sender, EventArgs e)
@@ -229,10 +232,13 @@ namespace VideoSystemWeb.Agenda
                             colore = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "color", ref esito);
                         }
 
+                        e.Row.Cells[indiceColonna].CssClass = "evento";
+
                         if (isPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
                         {
                             e.Row.Cells[indiceColonna].Text = datoAgendaCorrente.produzione;
-                            e.Row.Cells[indiceColonna].Attributes.Add("style", "font-weight: bold; font-style: italic; font-size:8pt;border:0px; border-top: solid 2px #5377A9;border-right: solid 2px #5377A9; border-left: solid 2px #5377A9;background-color:" + colore);
+                            
+                            e.Row.Cells[indiceColonna].Attributes.Add("style", "border: 0px;border-right: solid 2px #5377A9;border-left: solid 2px #5377A9;border-top: solid 2px #5377A9;background-color:" + colore);
                         }
 
                         if (isUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
@@ -240,18 +246,18 @@ namespace VideoSystemWeb.Agenda
                             if (datoAgendaCorrente.data_inizio_lavorazione != datoAgendaCorrente.data_fine_lavorazione)
                             {
                                 e.Row.Cells[indiceColonna].Text = "";
-                                e.Row.Cells[indiceColonna].Attributes.Add("style", "font-weight: bold; font-style: italic;font-size:8pt;border:0px; border-bottom: solid 2px #5377A9;border-right: solid 2px #5377A9; border-left: solid 2px #5377A9;background-color:" + colore);
+                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border: 0px;border-right: solid 2px #5377A9;border-left: solid 2px #5377A9;border-bottom: solid 2px #5377A9;background-color:" + colore);
                             }
                             else
                             {
-                                e.Row.Cells[indiceColonna].Attributes.Add("style", "font-weight: bold; font-style: italic;font-size:8pt;border-top: solid 2px #5377A9; border-bottom: solid 2px #5377A9;border-right: solid 2px #5377A9; border-left: solid 2px #5377A9;background-color:" + colore);
+                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border: 0px;border-right: solid 2px #5377A9;border-left: solid 2px #5377A9;border-top: solid 2px #5377A9; border-bottom: solid 2px #5377A9;background-color:" + colore);
                             }
                            
                         }
                         if (!isPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && !isUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
                         {
                             e.Row.Cells[indiceColonna].Text = "";
-                            e.Row.Cells[indiceColonna].Attributes.Add("style", "font-size:8pt;font-weight:normal;border:0px; border-right: solid 2px #5377A9; border-left: solid 2px #5377A9;background-color:" + colore);
+                            e.Row.Cells[indiceColonna].Attributes.Add("style", "border: 0px;border-right: solid 2px #5377A9;border-left: solid 2px #5377A9;background-color:" + colore);
 
                         }
                         
@@ -277,7 +283,7 @@ namespace VideoSystemWeb.Agenda
             DatiAgenda datiAgenda = new DatiAgenda();
             datiAgenda.id = int.Parse(hf_idEvento.Value);
             datiAgenda.data_inizio_lavorazione = validaCampo(txt_DataInizioLavorazione, DateTime.Now, true, ref esito);
-            datiAgenda.data_fine_lavorazione = validaCampo(txt_FineLavorazione, DateTime.Now, true, ref esito);
+            datiAgenda.data_fine_lavorazione = validaCampo(txt_DataFineLavorazione, DateTime.Now, true, ref esito);
             datiAgenda.durata_lavorazione = validaCampo(txt_DurataLavorazione, 0, false, ref esito);
             datiAgenda.id_colonne_agenda = validaCampo(ddl_Risorse, 0, true, ref esito);
             datiAgenda.id_tipologia = validaCampo(ddl_Tipologia, 0, true, ref esito);
@@ -305,7 +311,7 @@ namespace VideoSystemWeb.Agenda
             lbl_MessaggioErrore.Visible = false;
 
             txt_DataInizioLavorazione.CssClass = txt_DataInizioLavorazione.CssClass.Replace("erroreValidazione", "");
-            txt_FineLavorazione.CssClass = txt_FineLavorazione.CssClass.Replace("erroreValidazione", "");
+            txt_DataFineLavorazione.CssClass = txt_DataFineLavorazione.CssClass.Replace("erroreValidazione", "");
             txt_DurataLavorazione.CssClass = txt_DurataLavorazione.CssClass.Replace("erroreValidazione", "");
             ddl_Risorse.CssClass = ddl_Risorse.CssClass.Replace("erroreValidazione", "");
             ddl_Tipologia.CssClass = ddl_Tipologia.CssClass.Replace("erroreValidazione", "");
@@ -329,8 +335,8 @@ namespace VideoSystemWeb.Agenda
         {
             val_DataInizioLavorazione.Visible = !attivaModifica;
             txt_DataInizioLavorazione.Visible = attivaModifica;
-            val_FineLavorazione.Visible = !attivaModifica;
-            txt_FineLavorazione.Visible = attivaModifica;
+            val_DataFineLavorazione.Visible = !attivaModifica;
+            txt_DataFineLavorazione.Visible = attivaModifica;
             val_DurataLavorazione.Visible = !attivaModifica;
             txt_DurataLavorazione.Visible = attivaModifica;
             val_Risorse.Visible = !attivaModifica;
@@ -379,7 +385,7 @@ namespace VideoSystemWeb.Agenda
             hf_idEvento.Value = evento.id.ToString();
 
             val_DataInizioLavorazione.Text = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
-            val_FineLavorazione.Text = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
+            val_DataFineLavorazione.Text = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
             val_DurataLavorazione.Text = evento.durata_lavorazione.ToString();
             val_Risorse.Text = UtilityTipologiche.getElementByID(listaRisorse, evento.id_colonne_agenda, ref esito).nome;
             val_Tipologia.Text = UtilityTipologiche.getElementByID(listaTipiTipologie, evento.id_tipologia, ref esito).nome;
@@ -399,7 +405,7 @@ namespace VideoSystemWeb.Agenda
             val_Nota.Text = evento.nota;
 
             txt_DataInizioLavorazione.Text = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
-            txt_FineLavorazione.Text = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
+            txt_DataFineLavorazione.Text = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
             txt_DurataLavorazione.Text = evento.durata_lavorazione.ToString();
             ddl_Risorse.SelectedValue = evento.id_colonne_agenda.ToString();
             ddl_Tipologia.SelectedValue = evento.id_tipologia.ToString();
@@ -427,7 +433,7 @@ namespace VideoSystemWeb.Agenda
             lbl_MessaggioErrore.Visible = false;
 
             val_DataInizioLavorazione.Text = string.Empty;
-            val_FineLavorazione.Text = string.Empty;
+            val_DataFineLavorazione.Text = string.Empty;
             val_DurataLavorazione.Text = string.Empty;
             val_Risorse.Text = string.Empty;
             val_Tipologia.Text = string.Empty;
@@ -447,7 +453,7 @@ namespace VideoSystemWeb.Agenda
             val_Nota.Text = string.Empty;
 
             txt_DataInizioLavorazione.Text = string.Empty;
-            txt_FineLavorazione.Text = string.Empty;
+            txt_DataFineLavorazione.Text = string.Empty;
             txt_DurataLavorazione.Text = string.Empty;
             //ddl_Risorse.SelectedValue = "";
             //ddl_Tipologia.SelectedValue = "";
@@ -522,7 +528,7 @@ namespace VideoSystemWeb.Agenda
         {
             upEvento.Update();
             ScriptManager.RegisterStartupScript(this, typeof(Page), "abilitazioneImpegnoOrario", "checkImpegnoOrario();", true);
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "datepicker", "SetDatePicker();", true);
+            //ScriptManager.RegisterStartupScript(this, typeof(Page), "datepicker", "SetDatePicker();", true);
         }
     }
 }

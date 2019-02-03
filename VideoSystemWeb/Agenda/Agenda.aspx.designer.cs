@@ -157,22 +157,22 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Label lbl_DataFineLavorazione;
         
         /// <summary>
-        /// Controllo val_FineLavorazione.
+        /// Controllo val_DataFineLavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox val_FineLavorazione;
+        protected global::System.Web.UI.WebControls.TextBox val_DataFineLavorazione;
         
         /// <summary>
-        /// Controllo txt_FineLavorazione.
+        /// Controllo txt_DataFineLavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_FineLavorazione;
+        protected global::System.Web.UI.WebControls.TextBox txt_DataFineLavorazione;
         
         /// <summary>
         /// Controllo lbl_DurataLavorazione.

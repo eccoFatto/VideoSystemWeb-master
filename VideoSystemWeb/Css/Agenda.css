@@ -10,9 +10,8 @@
 }*/
 
 .calendar {
-    min-width: 140px;
-    float: right;
-    left:-45px;
+    min-width: 90px;
+ 
     margin-left: 5px;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -24,9 +23,8 @@
 }
 
 .time {
-    min-width: 140px;
-    float: right;
-    left: -45px;
+    min-width: 40px;
+
     margin-left: 5px;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -37,4 +35,14 @@
     position: relative;
 }
 
+
+.containerPopup {
+    background-color: #EEF1F7;
+    border: solid 3px #5377A9;
+    width: 90%;
+    height: 80%;
+    position: fixed;
+    top: 10%;
+    right: 5%;
+}
 

@@ -115,6 +115,7 @@ namespace VideoSystemWeb.Agenda
                 btnModifica.Visible = isUtenteAbilitatoInScrittura;
             }
             pnlContainer.Visible = true;
+            
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "abilitazioneImpegnoOrario", "checkImpegnoOrario();", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataInizioLavorazione.ClientID + "', '" + txt_DataFineLavorazione.ClientID + "');", true);
@@ -394,7 +395,7 @@ namespace VideoSystemWeb.Agenda
             val_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
             val_DataInizioImpegno.Text = evento.data_inizio_impegno.ToString();
             val_DataFineImpegno.Text = evento.data_fine_impegno.ToString();
-            val_ImpegnoOrario.Text = evento.impegnoOrario ? "1" : "0";
+            val_ImpegnoOrario.Checked = evento.impegnoOrario;
             val_ImpegnoOrarioDa.Text = evento.impegnoOrario_da;
             val_ImpegnoOrarioA.Text = evento.impegnoOrario_a;
             val_Produzione.Text = evento.produzione;
@@ -442,7 +443,7 @@ namespace VideoSystemWeb.Agenda
             val_DurataViaggioRitorno.Text = string.Empty;
             val_DataInizioImpegno.Text = string.Empty;
             val_DataFineImpegno.Text = string.Empty;
-            val_ImpegnoOrario.Text = string.Empty;
+            val_ImpegnoOrario.Checked = false;
             val_ImpegnoOrarioDa.Text = string.Empty;
             val_ImpegnoOrarioA.Text = string.Empty;
             val_Produzione.Text = string.Empty;
@@ -471,6 +472,8 @@ namespace VideoSystemWeb.Agenda
             txt_Luogo.Text = string.Empty;
             txt_CodiceLavoro.Text = string.Empty;
             tb_Nota.Text = string.Empty;
+
+            nascondiErroriValidazione();
         }
 
         private void aggiornaAgenda()

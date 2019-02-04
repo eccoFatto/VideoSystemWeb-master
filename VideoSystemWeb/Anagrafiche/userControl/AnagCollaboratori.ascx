@@ -60,13 +60,13 @@
                     <table style="width:100%;">
                         <tr>
                             <td style="width:40%;" class="w3-panel w3-green w3-border w3-round w3-center">                    
-                                <asp:LinkButton ID="lbRicercaCollaboratori" runat="server" OnClick="lbRicercaCollaboratori_Click" class="tooltip" data-tooltip="Ricerca Collaboratore">Ricerca</asp:LinkButton>
+                                <asp:LinkButton ID="lbRicercaCollaboratori" runat="server" OnClick="lbRicercaCollaboratori_Click" >Ricerca</asp:LinkButton>
                             </td>
                             <td style="width:40%;" class="w3-panel w3-grey w3-border w3-round w3-center">                    
-                                <asp:LinkButton ID="lbInserisciCollaboratori" runat="server" OnClick="lbInserisciCollaboratori_Click" class="tooltip" data-tooltip="Inserisci Collaboratore">Inserisci</asp:LinkButton>
+                                <asp:LinkButton ID="lbInserisciCollaboratori" runat="server" OnClick="lbInserisciCollaboratori_Click" >Inserisci</asp:LinkButton>
                             </td>
                             <td style="width:20%;" class="w3-panel w3-red w3-border w3-round w3-center">
-                                <asp:LinkButton ID="lbPulisciCampiRicerca" runat="server" OnClick="lbPulisciCampiRicerca_Click" class="tooltip" data-tooltip="Pulisci campi ricerca">&times;</asp:LinkButton>
+                                <asp:LinkButton ID="lbPulisciCampiRicerca" runat="server" OnClick="lbPulisciCampiRicerca_Click" >&times;</asp:LinkButton>
                             </td>
                         </tr>
                     </table>
@@ -173,7 +173,15 @@
                                             </table>
                                         </td>
                                         <td style="width:25%; vertical-align:top">
-                                            <asp:Image ID="imgCollaboratore" runat="server" Width="90%" class="w3-round" />
+                                            <div class="w3-container">
+                                              <h2></h2>
+                                              <div class="w3-card-4" style="width:90%">
+                                                <asp:Image ID="imgCollaboratore" runat="server" Width="100%" />
+                                                <div class="w3-container w3-center">
+                                                  <p></p>
+                                                </div>
+                                              </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>

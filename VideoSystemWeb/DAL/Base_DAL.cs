@@ -11,9 +11,9 @@ namespace VideoSystemWeb.DAL
 {
     public class Base_DAL
     {
-        public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL_NIC"].ConnectionString;
+        //public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL_NIC"].ConnectionString;
         //string static constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-        //string static constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
+        public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
 
         public static DataTable getDatiBySql(string querySql, ref Esito esito)
         {

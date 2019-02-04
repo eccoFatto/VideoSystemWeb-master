@@ -13,7 +13,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 {
     public partial class AnagCollaboratori : System.Web.UI.UserControl
     {
-        //public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL_NIC"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -204,6 +203,41 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         protected void btnSalva_Click(object sender, EventArgs e)
         {
+            //Esito esito = new Esito();
+            //Anag_Collaboratori collaboratore = Anag_Collaboratori(ref esito);
+
+
+            //if (esito.codice != Esito.ESITO_OK)
+            //{
+            //    lbl_MessaggioErrore.Visible = true;
+            //    lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+            //    UpdatePopup();
+            //}
+            //else
+            //{
+
+            //    nascondiErroriValidazione();
+            //    if (isDisponibileDataRisorsa(datiAgenda.data_inizio_lavorazione, datiAgenda.data_fine_lavorazione, datiAgenda))
+            //    {
+            //        if (datiAgenda.id == 0)
+            //        {
+            //            Agenda_BLL.Instance.creaEvento(datiAgenda);
+
+            //        }
+            //        else
+            //        {
+            //            Agenda_BLL.Instance.aggiornaEvento(datiAgenda);
+
+            //        }
+            //        ScriptManager.RegisterStartupScript(this, typeof(Page), "closePopup", "chiudiPopup();", true);
+            //    }
+            //    else
+            //    {
+            //        lbl_MessaggioErrore.Visible = true;
+            //        lbl_MessaggioErrore.Text = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
+            //        UpdatePopup();
+            //    }
+            //}
 
         }
 

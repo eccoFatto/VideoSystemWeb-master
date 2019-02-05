@@ -11,8 +11,9 @@ namespace VideoSystemWeb.BLL
     public static class UtilityTipologiche
     {
 
-        public static List<Tipologica> caricaTipologica(EnumTipologiche tipologica, ref Esito esito)
+        public static List<Tipologica> caricaTipologica(EnumTipologiche tipologica)
         {
+            Esito esito = new Esito();
             List<Tipologica> listaTipologiche = new List<Tipologica>();
 
             if (HttpContext.Current.Session[tipologica.ToString()] == null)
@@ -95,7 +96,13 @@ namespace VideoSystemWeb.BLL
             return valoreParametro;
         }
 
+        //public static List<Tipologica> getListaTipologiche(EnumTipologiche tipologica)
+        //{
+        //    return (List<Tipologica>)HttpContext.Current.Session[tipologica.ToString()];
+        //}
     }
+
+    
 
     public enum EnumTipologiche { TIPO_COLONNE_AGENDA, TIPO_QUALIFICHE, TIPO_UTENTE, TIPO_STATO, TIPO_TIPOLOGIE }
 }

@@ -5,6 +5,7 @@ using System.Web;
 
 namespace VideoSystemWeb.Entity
 {
+    [Serializable]
     public class DatiAgenda
     {
         private DateTime? _data_inizio_impegno;

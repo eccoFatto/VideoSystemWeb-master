@@ -210,10 +210,10 @@
                                 <asp:Button ID="btnSalva" runat="server" Text="Salva" class="w3-panel w3-green w3-border w3-round" OnClick="btnSalva_Click" Visible="false"/>
                                 <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false"/>
                             </div>
-                            <p style="text-align: center;">
-                                <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-panel w3-green w3-border w3-round" OnClick="btn_chiudi_Click" OnClientClick="return confirm('Confermi chiusura pagina?')"/>
-                            </p>
                         </asp:Panel>
+                        <p style="text-align: center;">
+                            <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-panel w3-green w3-border w3-round" OnClick="btn_chiudi_Click" OnClientClick="return confirm('Confermi chiusura pagina?')"/>
+                        </p>
                     </asp:Panel>
                 </div>
             </ContentTemplate>

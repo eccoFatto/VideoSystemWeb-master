@@ -18,29 +18,38 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         {
             if (!Page.IsPostBack)
             {
-
-                
                 BasePage p = new BasePage();
-                Esito esito = p.caricaListeTipologiche();
 
-                if (string.IsNullOrEmpty(esito.descrizione)) {
-                    ddlQualifiche.Items.Clear();
-                    ddlQualifiche.Items.Add("");
-                    foreach (Tipologica qualifica in p.listaQualifiche)
-                    {
-                        ListItem item = new ListItem();
-                        item.Text = qualifica.nome;
-                        // metto comunque il nome e non l'id perchè la ricerca sulla tabella anag_qualifiche_collaboratori la faccio sul nome
-                        item.Value = qualifica.nome;
-                        ddlQualifiche.Items.Add(item);
-                    }
-                }
-                else
+                ddlQualifiche.Items.Clear();
+                ddlQualifiche.Items.Add("");
+                foreach (Tipologica qualifica in p.listaQualifiche)
                 {
-                    Session["ErrorPageText"] = esito.descrizione;
-                    string url = String.Format("~/pageError.aspx");
-                    Response.Redirect(url, true);
+                    ListItem item = new ListItem();
+                    item.Text = qualifica.nome;
+                    // metto comunque il nome e non l'id perchè la ricerca sulla tabella anag_qualifiche_collaboratori la faccio sul nome
+                    item.Value = qualifica.nome;
+                    ddlQualifiche.Items.Add(item);
                 }
+
+                //Esito esito = p.caricaListeTipologiche();
+                //if (string.IsNullOrEmpty(esito.descrizione)) {
+                //    ddlQualifiche.Items.Clear();
+                //    ddlQualifiche.Items.Add("");
+                //    foreach (Tipologica qualifica in p.listaQualifiche)
+                //    {
+                //        ListItem item = new ListItem();
+                //        item.Text = qualifica.nome;
+                //        // metto comunque il nome e non l'id perchè la ricerca sulla tabella anag_qualifiche_collaboratori la faccio sul nome
+                //        item.Value = qualifica.nome;
+                //        ddlQualifiche.Items.Add(item);
+                //    }
+                //}
+                //else
+                //{
+                //    Session["ErrorPageText"] = esito.descrizione;
+                //    string url = String.Format("~/pageError.aspx");
+                //    Response.Redirect(url, true);
+                //}
             }
         }
 

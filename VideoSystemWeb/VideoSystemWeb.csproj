@@ -131,6 +131,7 @@
     <Content Include="Agenda\Agenda.aspx" />
     <Content Include="Agenda\calendar.aspx" />
     <Content Include="Agenda\prova.aspx" />
+    <Content Include="Agenda\userControl\Appuntamenti.ascx" />
     <Content Include="Anagrafiche\AnagCollaboratori.aspx" />
     <Content Include="Anagrafiche\userControl\AnagCollaboratori.ascx" />
     <Content Include="Contact.aspx" />
@@ -381,6 +382,13 @@
     <Compile Include="Agenda\prova.aspx.designer.cs">
       <DependentUpon>prova.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Agenda\userControl\Appuntamenti.ascx.cs">
+      <DependentUpon>Appuntamenti.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\userControl\Appuntamenti.ascx.designer.cs">
+      <DependentUpon>Appuntamenti.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Anagrafiche\AnagCollaboratori.aspx.cs">
       <DependentUpon>AnagCollaboratori.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -493,7 +501,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Agenda\userControl\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

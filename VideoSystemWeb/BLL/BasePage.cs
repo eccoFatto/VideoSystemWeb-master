@@ -10,43 +10,59 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage: System.Web.UI.Page
     {
-        public List<Tipologica> listaRisorse;
-        public List<Tipologica> listaStati;
+        public List<Tipologica> listaRisorse
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
+            }
+        }
+        public List<Tipologica> listaStati
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_STATO);
+            }
+        }
+
         public List<DatiAgenda> listaDatiAgenda;
-        public List<Tipologica> listaTipiUtente;
-        public List<Tipologica> listaTipiTipologie;
-        public List<Tipologica> listaQualifiche;
+
+        public List<Tipologica> listaTipiUtente
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_UTENTE);
+            }
+        }
+        public List<Tipologica> listaTipiTipologie
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE);
+            }
+        }
+        public List<Tipologica> listaQualifiche
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_QUALIFICHE);
+            }
+        }
 
         public Esito caricaListeTipologiche()
         {
             Esito esito = new Esito();
-           
-            listaRisorse = Agenda_BLL.Instance.CaricaColonne(ref esito);
-                //UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA, ref esito); //Tipologie.getListaRisorse();
 
-            if (esito.codice != Esito.ESITO_OK)
-            {
-                return esito;
-            }
-            listaStati = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_STATO, ref esito);
+            List<Tipologica> listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA); //Agenda_BLL.Instance.CaricaColonne(ref esito);
+            //UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA, ref esito); //Tipologie.getListaRisorse();
 
-            if (esito.codice != Esito.ESITO_OK)
-            {
-                return esito;
-            }
-            listaTipiUtente = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_UTENTE, ref esito);
+            List<Tipologica> listaStati = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_STATO);
 
-            if (esito.codice != Esito.ESITO_OK)
-            {
-                return esito;
-            }
-            listaTipiTipologie = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, ref esito);
+            List<Tipologica> listaTipiUtente = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_UTENTE);
 
-            if (esito.codice != Esito.ESITO_OK)
-            {
-                return esito;
-            }
-            listaQualifiche = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_QUALIFICHE, ref esito);
+            List<Tipologica> listaTipiTipologie = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE);
+
+            List<Tipologica> listaQualifiche = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_QUALIFICHE);
 
             return esito;
         }
@@ -103,13 +119,13 @@ namespace VideoSystemWeb.BLL
             bool abilitazioneScrittura = false;
 
             int idUtente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]).id_tipoUtente;
-            Tipologica tipoUtenteLoggato = UtilityTipologiche.getElementByID(listaTipiUtente, idUtente, ref esito);
+            Tipologica tipoUtenteLoggato = UtilityTipologiche.getElementByID(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_UTENTE), idUtente, ref esito);
             abilitazioneScrittura = UtilityTipologiche.getParametroDaTipologica(tipoUtenteLoggato, "SCRITTURA", ref esito) == "1";
 
             return abilitazioneScrittura;
         }
 
-        protected void popolaDDLTipologica(DropDownList ddl, List<Tipologica> listaTipologica)
+        public void popolaDDLTipologica(DropDownList ddl, List<Tipologica> listaTipologica)
         {
             ddl.Items.Add(new ListItem("<seleziona>", "", true));
             foreach (Tipologica tipologica in listaTipologica)
@@ -117,5 +133,6 @@ namespace VideoSystemWeb.BLL
                 ddl.Items.Add(new ListItem(tipologica.nome, tipologica.id.ToString(), true));
             }
         }
+
     }
 }

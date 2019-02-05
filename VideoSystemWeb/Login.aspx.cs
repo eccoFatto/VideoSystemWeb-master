@@ -17,10 +17,11 @@ namespace VideoSystemWeb
         Esito esito = new Esito();
         protected void Page_Load(object sender, EventArgs e)
         {
-            caricaListeTipologiche();
+            
 
             if (!this.IsPostBack)
             {
+                //caricaListeTipologiche();
                 //Session["connectionString"] = constr;
                 Session[SessionManager.UTENTE] = null;
             }

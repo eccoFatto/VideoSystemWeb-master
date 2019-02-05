@@ -40,9 +40,10 @@
     background-color: #EEF1F7;
     border: solid 3px #5377A9;
     width: 90%;
-    height: 80%;
+    min-height:600px;
+    height: 65%;
     position: fixed;
-    top: 10%;
+    top: 1%;
     right: 5%;
 }
 

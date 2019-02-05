@@ -49,15 +49,6 @@ namespace VideoSystemWeb {
         protected global::System.Web.UI.WebControls.Button btnLogin;
         
         /// <summary>
-        /// Controllo GridView1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
-        
-        /// <summary>
         /// Controllo lblErrorLogin.
         /// </summary>
         /// <remarks>

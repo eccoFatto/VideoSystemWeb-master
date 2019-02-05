@@ -9,6 +9,8 @@ using System.Configuration;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
 using VideoSystemWeb.DAL;
+using System.IO;
+
 namespace VideoSystemWeb.Anagrafiche.userControl
 {
     public partial class AnagCollaboratori : System.Web.UI.UserControl
@@ -18,7 +20,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             if (!Page.IsPostBack)
             {
 
-                
                 BasePage p = new BasePage();
                 Esito esito = p.caricaListeTipologiche();
 
@@ -40,6 +41,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
+
+
+            }
+            else
+            {
+
             }
         }
 
@@ -285,5 +292,50 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             lbMod_Telefoni.Rows = 1;
 
         }
+
+
+        protected void LoadImage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            if (fuImg.HasFile)
+            {
+                if (".JPEG|.JPG|.BMP|.PNG|.GIF".IndexOf(Path.GetExtension(fuImg.FileName).ToUpper()) >= 0)
+                {
+                    try
+                    {
+                        string nomefileNew = DateTime.Now.Ticks.ToString() + Path.GetExtension(fuImg.FileName);
+                        string fullPath = Server.MapPath(ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"]) + Path.GetFileName(nomefileNew);
+                        fuImg.SaveAs(fullPath);
+                        imgCollaboratore.ImageUrl = fullPath;
+                        lblImage.Text = nomefileNew;
+
+                        string queryUpdateImg = "UPDATE ANAG_COLLABORATORI SET pathFoto = '" + nomefileNew + "' WHERE ID = " + hf_idColl.Value; ;
+
+                        Esito esito = new Esito();
+                        int iRighe = Base_DAL.executeUpdateBySql(queryUpdateImg, ref esito);
+                        upColl.Update();
+                        EditCollaboratore_Click(null, null);
+                    }
+                    catch (Exception ex)
+                    {
+                        lblImage.Text = ex.Message;
+                    }
+                }
+                else
+                {
+                    lblImage.Text = "Caricare un file di tipo immagine";
+                }
+            }
+            else
+            {
+                lblImage.Text = "Caricare un'immagine";
+            }
+
+        }
+
     }
 }

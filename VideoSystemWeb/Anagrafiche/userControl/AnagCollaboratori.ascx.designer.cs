@@ -85,31 +85,31 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox TbPiva;
         
         /// <summary>
-        /// Controllo lbRicercaCollaboratori.
+        /// Controllo btnRicercaCollaboratori.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbRicercaCollaboratori;
+        protected global::System.Web.UI.WebControls.Button btnRicercaCollaboratori;
         
         /// <summary>
-        /// Controllo lbInserisciCollaboratori.
+        /// Controllo btnInserisciCollaboratori.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbInserisciCollaboratori;
+        protected global::System.Web.UI.WebControls.Button btnInserisciCollaboratori;
         
         /// <summary>
-        /// Controllo lbPulisciCampiRicerca.
+        /// Controllo BtnPulisciCampiRicerca.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPulisciCampiRicerca;
+        protected global::System.Web.UI.WebControls.Button BtnPulisciCampiRicerca;
         
         /// <summary>
         /// Controllo gv_collaboratori.

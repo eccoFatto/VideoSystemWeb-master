@@ -73,16 +73,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         }
 
-        protected void lbPulisciCampiRicerca_Click(object sender, EventArgs e)
-        {
-            tbCognome.Text = "";
-            tbNome.Text = "";
-            tbCF.Text = "";
-            tbCitta.Text = "";
-            TbPiva.Text = "";
-            TbSocieta.Text = "";
-            ddlQualifiche.SelectedIndex = 0;
-        }
+
 
         protected void gv_collaboratori_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -337,5 +328,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         }
 
+        protected void PulisciCampiRicerca_Click(object sender, EventArgs e)
+        {
+            tbCognome.Text = "";
+            tbNome.Text = "";
+            tbCF.Text = "";
+            tbCitta.Text = "";
+            TbPiva.Text = "";
+            TbSocieta.Text = "";
+            ddlQualifiche.SelectedIndex = 0;
+        }
     }
 }

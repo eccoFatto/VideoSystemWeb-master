@@ -28,65 +28,65 @@
 
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
-        <table style="width:600px;align-content:center;">
-            <tr>
-                <td style="width:50px;"><div class="w3-panel w3-yellow w3-border w3-round">Cognome</div></td>
-                <td style="width:100px;">
-                    <div >
-                        <asp:TextBox ID="tbCognome" runat="server" class="w3-panel w3-white w3-border w3-hover-orange w3-round"></asp:TextBox>
-                    </div>
-                </td>
-                <td style="width:50px;"><div class="w3-panel w3-yellow w3-border w3-round">Nome</div></td>
-                <td style="width:100px;">
-                    <asp:TextBox ID="tbNome" runat="server" class="w3-panel w3-white w3-border w3-hover-orange w3-round"></asp:TextBox>
-                </td>
-                <td style="width:50px;"><div class="w3-panel w3-yellow w3-border w3-round">CF</div></td>
-                <td style="width:100px;">
-                    <asp:TextBox ID="tbCF" runat="server" MaxLength="16" class="w3-panel w3-white w3-border w3-hover-orange w3-round"></asp:TextBox>
-                </td>
-                <td style="width:50px;"><div class="w3-panel w3-yellow w3-border w3-round">Citta</div></td>
-                <td style="width:100px;">
-                    <asp:TextBox ID="tbCitta" runat="server" class="w3-panel w3-white w3-border w3-hover-orange w3-round"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td style="width:50px;"><div class="w3-panel w3-yellow w3-border w3-round">Qualifica</div></td>
-                <td style="width:100px;">
-                    <asp:DropDownList ID="ddlQualifiche" runat="server" AutoPostBack="True" Width="100%" OnSelectedIndexChanged="ddlQualifiche_SelectedIndexChanged" class="w3-panel w3-white w3-border w3-hover-orange w3-round">
-                    </asp:DropDownList>
-                </td>
-                <td style="width:50px;"><div class="w3-panel w3-yellow w3-border w3-round">Societa</div></td>
-                <td style="width:100px;">
-                    <asp:TextBox ID="TbSocieta" runat="server" class="w3-panel w3-white w3-border w3-hover-orange w3-round"></asp:TextBox>
-                </td>
-                <td style="width:50px;"><div class="w3-panel w3-yellow w3-border w3-round">P.Iva</div></td>
-                <td style="width:100px;">
-                        <asp:TextBox ID="TbPiva" runat="server" MaxLength="11" class="w3-panel w3-white w3-border w3-hover-orange w3-round"></asp:TextBox>
-                </td>
-                <td colspan="2" style="width:150px;">
-                    <table style="width:100%;">
-                        <tr>
-                            <td style="width:40%;" class="w3-panel w3-green w3-border w3-round w3-center">                    
-                                <asp:LinkButton ID="lbRicercaCollaboratori" runat="server" OnClick="lbRicercaCollaboratori_Click" >Ricerca</asp:LinkButton>
-                            </td>
-                            <td style="width:40%;" class="w3-panel w3-grey w3-border w3-round w3-center">                    
-                                <asp:LinkButton ID="lbInserisciCollaboratori" runat="server" OnClick="lbInserisciCollaboratori_Click" >Inserisci</asp:LinkButton>
-                            </td>
-                            <td style="width:20%;" class="w3-panel w3-red w3-border w3-round w3-center">
-                                <asp:LinkButton ID="lbPulisciCampiRicerca" runat="server" OnClick="lbPulisciCampiRicerca_Click" >&times;</asp:LinkButton>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
+        
+        <div class="w3-row-padding">
+            <div class="w3-quarter">
+                <label>Cognome</label>
+                <asp:TextBox ID="tbCognome" runat="server" class="w3-input w3-border" placeholder="Cognome"></asp:TextBox>
+            </div>
+            <div class="w3-quarter">
+                <label>Nome</label>
+                <asp:TextBox ID="tbNome" runat="server" class="w3-input w3-border" placeholder="Nome"></asp:TextBox>
+            </div>
+            <div class="w3-quarter">
+                <label>Codice Fiscale</label>
+                <asp:TextBox ID="tbCF" runat="server" MaxLength="16" class="w3-input w3-border" placeholder="Codice Fiscale"></asp:TextBox>
+            </div>
+            <div class="w3-quarter">
+                <label>Città</label>
+                <asp:TextBox ID="tbCitta" runat="server" class="w3-input w3-border" placeholder="Città"></asp:TextBox>
+            </div>
+        </div>
+        
+          <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-quarter">
+                <label>Qualifica</label>
+                <asp:DropDownList ID="ddlQualifiche" runat="server" AutoPostBack="True" Width="100%" OnSelectedIndexChanged="ddlQualifiche_SelectedIndexChanged" class="w3-input w3-border" placeholder="Qualifica">
+                </asp:DropDownList>
+            </div>
+            <div class="w3-quarter">
+                <label>Società</label>
+                <asp:TextBox ID="TbSocieta" runat="server" class="w3-input w3-border" placeholder="Società" ></asp:TextBox>
+            </div>
+            <div class="w3-quarter">
+                <label>Partita Iva</label>
+                <asp:TextBox ID="TbPiva" runat="server" MaxLength="11" class="w3-input w3-border" placeholder="Partita Iva"></asp:TextBox>
+            </div>
+            <div class="w3-quarter">
+                <label></label>
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:40%;">                    
+                            <asp:Button ID="btnRicercaCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="lbRicercaCollaboratori_Click" Text="Ricerca" />
+                        </td>
+                        <td style="width:40%;">                    
+                            <asp:Button ID="btnInserisciCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="lbInserisciCollaboratori_Click" Text="Inserisci" />
+                        </td>
+                        <td style="width:20%;">
+                            <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;"  OnClick="PulisciCampiRicerca_Click" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>   
+
         <div class="round">
             <asp:GridView ID="gv_collaboratori" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_collaboratori_RowDataBound">
             </asp:GridView>
         </div>
     </ContentTemplate>
     <Triggers>
-        <asp:AsyncPostBackTrigger ControlID="lbRicercaCollaboratori" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnRicercaCollaboratori" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="ddlQualifiche" EventName="SelectedIndexChanged" />
     </Triggers>
 </asp:UpdatePanel>

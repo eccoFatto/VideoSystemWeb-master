@@ -54,8 +54,7 @@
 
         function chiudiPopup() {
             $("#<%=btn_chiudi.ClientID%>").click();
-        }
-        
+        }    
     </script>
 
     <link rel='stylesheet' href='/Css/Agenda.css' />
@@ -63,6 +62,11 @@
     <asp:HiddenField ID="hf_valoreData" runat="server" />
     <asp:HiddenField ID="hf_data" runat="server" />
     <asp:HiddenField ID="hf_risorsa" runat="server" />
+
+    <div class="alert alert-success alert-dismissible fade in" role="alert" id="panelSuccesso" runat="server" style="display: none">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <label id="lbl_Successo" class="form-control-sm">Operazione eseguita correttamente</label>
+    </div>
 
     <table style="width: 98%">
         <tr>
@@ -93,7 +97,7 @@
                 <asp:Panel runat="server" ID="pnlContainer" style="display:none">
                     
                     <div class="modalBackground"></div>
-                    <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopup round" style="font-size:13px;">
+                    <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopup round" ScrollBars="Auto" style="font-size:13px;">
 
                         <popup:Appuntamenti id="popupAppuntamenti" runat="server"></popup:Appuntamenti>
 

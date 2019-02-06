@@ -9,7 +9,7 @@ using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
-    public partial class Appuntamenti : System.Web.UI.UserControl
+    public partial class Appuntamento : System.Web.UI.UserControl
     {
         BasePage basePage = new BasePage();
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
@@ -87,12 +87,12 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnOfferta_Click(object sender, EventArgs e)
         {
-            
+            RichiediOperazionePopup("OFFERTA");
         }
 
         protected void btnLavorazione_Click(object sender, EventArgs e)
         {
-            
+            RichiediOperazionePopup("LAVORAZIONE");
         }
         #endregion
 
@@ -120,6 +120,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 PopolaPopupEventi(eventoSelezionato);
 
                 btnModifica.Visible = isUtenteAbilitatoInScrittura;
+
+                
             }
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "campiImpegnoOrario", "checkImpegnoOrario();", true);
@@ -219,10 +221,20 @@ namespace VideoSystemWeb.Agenda.userControl
             val_Nota.Visible = !attivaModifica;
             tb_Nota.Visible = attivaModifica;
 
-            btnModifica.Visible = btnElimina.Visible = btnOfferta.Visible = btnLavorazione.Visible = !attivaModifica;
+            btnModifica.Visible = btnElimina.Visible = !attivaModifica;
             btnSalva.Visible = btnAnnulla.Visible = attivaModifica;
 
+            
+            GestionePulsantiStato(attivaModifica);
+
             UpdatePopup();
+        }
+
+        private void GestionePulsantiStato(bool attivaModifica)
+        {
+            DatiAgenda eventoCorrente = (DatiAgenda)ViewState["eventoSelezionato"];
+            btnOfferta.Visible = !attivaModifica && eventoCorrente != null && eventoCorrente.id_stato == 1;
+            btnLavorazione.Visible = !attivaModifica && eventoCorrente != null && eventoCorrente.id_stato == 2;
         }
 
         private void PopolaPopupEventi(DatiAgenda evento)

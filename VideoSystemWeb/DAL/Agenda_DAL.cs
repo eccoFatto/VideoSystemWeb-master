@@ -107,6 +107,71 @@ namespace VideoSystemWeb.DAL
             return listaDatiAgenda;
         }
 
+        public List<DatiAgenda> CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        {
+            List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();
+            try
+            {
+                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                {
+                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_lavorazione between '" + dataInizio.ToString("dd/MM/yyyy") + "' and '" + dataFine.ToString("dd/MM/yyyy") + "'"))
+                    {
+                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        DatiAgenda datoAgenda = new DatiAgenda();
+                                        datoAgenda.id = riga.Field<int>("id");
+                                        datoAgenda.id_colonne_agenda = riga.Field<int>("id_colonne_agenda");
+                                        datoAgenda.id_stato = riga.Field<int>("id_stato");
+                                        datoAgenda.data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
+                                        datoAgenda.data_fine_lavorazione = riga.Field<DateTime>("data_fine_lavorazione");
+                                        datoAgenda.durata_lavorazione = riga.Field<int>("durata_lavorazione");
+                                        datoAgenda.id_tipologia = riga.Field<int>("id_tipologia");
+                                        datoAgenda.id_cliente = riga.Field<int?>("id_cliente");
+                                        datoAgenda.durata_viaggio_andata = riga.Field<int>("durata_viaggio_andata");
+                                        datoAgenda.durata_viaggio_ritorno = riga.Field<int>("durata_viaggio_ritorno");
+                                        datoAgenda.data_inizio_impegno = riga.Field<DateTime?>("data_inizio_impegno");
+                                        datoAgenda.data_fine_impegno = riga.Field<DateTime?>("data_fine_impegno");
+                                        datoAgenda.impegnoOrario = riga.Field<bool>("impegnoOrario");
+                                        datoAgenda.impegnoOrario_da = riga.Field<string>("impegnoOrario_da");
+                                        datoAgenda.impegnoOrario_a = riga.Field<string>("impegnoOrario_a");
+                                        datoAgenda.produzione = riga.Field<string>("produzione");
+                                        datoAgenda.lavorazione = riga.Field<string>("lavorazione");
+                                        datoAgenda.indirizzo = riga.Field<string>("indirizzo");
+                                        datoAgenda.luogo = riga.Field<string>("luogo");
+                                        datoAgenda.codice_lavoro = riga.Field<string>("codice_lavoro");
+                                        datoAgenda.nota = riga.Field<string>("nota");
+
+                                        listaDatiAgenda.Add(datoAgenda);
+                                    }
+                                }
+                                else
+                                {
+                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.descrizione = "Nessun dato trovato nella tabella tab_dati_agenda ";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaDatiAgenda;
+        }
+
         public Esito CreaEvento(DatiAgenda evento)
         {
             Esito esito = new Esito();

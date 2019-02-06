@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -132,7 +133,9 @@
     <Content Include="Agenda\Agenda.aspx" />
     <Content Include="Agenda\calendar.aspx" />
     <Content Include="Agenda\prova.aspx" />
-    <Content Include="Agenda\userControl\Appuntamenti.ascx" />
+    <Content Include="Agenda\userControl\Appuntamento.ascx" />
+    <Content Include="Agenda\userControl\Lavorazione.ascx" />
+    <Content Include="Agenda\userControl\Offerta.ascx" />
     <Content Include="Anagrafiche\AnagCollaboratori.aspx" />
     <Content Include="Anagrafiche\userControl\AnagCollaboratori.ascx" />
     <Content Include="Contact.aspx" />
@@ -383,12 +386,26 @@
     <Compile Include="Agenda\prova.aspx.designer.cs">
       <DependentUpon>prova.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Agenda\userControl\Appuntamenti.ascx.cs">
-      <DependentUpon>Appuntamenti.ascx</DependentUpon>
+    <Compile Include="Agenda\userControl\Appuntamento.ascx.cs">
+      <DependentUpon>Appuntamento.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Agenda\userControl\Appuntamenti.ascx.designer.cs">
-      <DependentUpon>Appuntamenti.ascx</DependentUpon>
+    <Compile Include="Agenda\userControl\Appuntamento.ascx.designer.cs">
+      <DependentUpon>Appuntamento.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\userControl\Lavorazione.ascx.cs">
+      <DependentUpon>Lavorazione.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\userControl\Lavorazione.ascx.designer.cs">
+      <DependentUpon>Lavorazione.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\userControl\Offerta.ascx.cs">
+      <DependentUpon>Offerta.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\userControl\Offerta.ascx.designer.cs">
+      <DependentUpon>Offerta.ascx</DependentUpon>
     </Compile>
     <Compile Include="Anagrafiche\AnagCollaboratori.aspx.cs">
       <DependentUpon>AnagCollaboratori.aspx</DependentUpon>

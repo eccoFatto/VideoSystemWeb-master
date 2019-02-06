@@ -64,6 +64,22 @@ namespace VideoSystemWeb.BLL
             return listaDatiAgenda;
         }
 
+        public List<DatiAgenda> CaricaDatiAgenda(DateTime dataInizio, ref Esito esito)
+        {
+            List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();
+
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
+            {
+                listaDatiAgenda = Agenda_DAL.Instance.CaricaDatiAgenda(dataInizio, dataInizio.AddDays(31), ref esito);
+            }
+            else
+            {
+                listaDatiAgenda = Tipologie.getListaDatiAgenda();
+            }
+
+            return listaDatiAgenda;
+        }
+
         public DatiAgenda GetDatiAgendaById(List<DatiAgenda> listaDatiAgenda, int id)
         {
             return listaDatiAgenda.Where(x => x.id == id).FirstOrDefault();

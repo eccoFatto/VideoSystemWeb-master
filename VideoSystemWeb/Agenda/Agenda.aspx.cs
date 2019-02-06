@@ -12,17 +12,16 @@ namespace VideoSystemWeb.Agenda
 {
     public partial class Agenda : BasePage
     {
-        //List<Tipologica> listaRisorse;
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            popupAppuntamenti.RichiediOperazionePopup += OperazioniPopup;
+            popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
 
             Esito esito = new Esito();
-            listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);
+            
             if (!IsPostBack)
             {
                 DateTime dataPartenza = DateTime.Now;
+                listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito);
                 hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
@@ -40,15 +39,17 @@ namespace VideoSystemWeb.Agenda
             DateTime dataEvento = DateTime.Parse(hf_data.Value);
             int risorsaEvento = int.Parse(hf_risorsa.Value);
 
-            popupAppuntamenti.EditEvent(dataEvento, risorsaEvento);
+            popupAppuntamento.EditEvent(dataEvento, risorsaEvento);
             
             pnlContainer.Style.Remove("display");
+            panelAppuntamento.Style.Remove("display");
         }
 
         protected void btn_chiudi_Click(object sender, EventArgs e)
         {
-            ChiudiPopup();
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+            OperazioniPopup("CLOSE");
+            //ChiudiPopup();
+            //ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
         }
         #endregion
 
@@ -220,6 +221,8 @@ namespace VideoSystemWeb.Agenda
 
         private void AggiornaAgenda()
         {
+            Esito esito = new Esito();
+            listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
             gv_scheduler.DataSource = CreateDataTable(DateTime.Parse(hf_valoreData.Value));
             gv_scheduler.DataBind();
 
@@ -269,8 +272,22 @@ namespace VideoSystemWeb.Agenda
                     UpdatePopup();
                     break;
                 case "CLOSE":
+                    panelAppuntamento.Style.Add("display", "none");
+                    panelOfferta.Style.Add("display", "none");
+                    panelLavorazione.Style.Add("display", "none");
+                    UpdatePopup();
                     ChiudiPopup();
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+                    break;
+                case "OFFERTA":
+                    panelAppuntamento.Style.Add("display", "none");
+                    panelOfferta.Style.Remove("display");
+                    UpdatePopup();
+                    break;
+                case "LAVORAZIONE":
+                    panelAppuntamento.Style.Add("display", "none");
+                    panelLavorazione.Style.Remove("display");
+                    UpdatePopup();
                     break;
             }
 

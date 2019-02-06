@@ -1,4 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Appuntamenti.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.Appuntamenti" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Appuntamento.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.Appuntamento" %>
+
 
 <script>
     $(document).ready(function () {
@@ -303,8 +304,8 @@
         <div class="w3-center w3-margin">
             <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnModifica_Click" />
             <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();"/>
-            <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" />
-            <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClick="btnLavorazione_Click" />
+            <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" Visible="false"/>
+            <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClick="btnLavorazione_Click" Visible="false"/>
 
             <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" Visible="false" />
             <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnAnnulla_Click" Visible="false" />

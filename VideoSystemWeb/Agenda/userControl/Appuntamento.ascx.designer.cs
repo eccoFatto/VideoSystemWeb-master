@@ -10,7 +10,7 @@
 namespace VideoSystemWeb.Agenda.userControl {
     
     
-    public partial class Appuntamenti {
+    public partial class Appuntamento {
         
         /// <summary>
         /// Controllo panelAppuntamenti.

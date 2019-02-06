@@ -94,154 +94,23 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         protected void EditCollaboratore_Click(object sender, EventArgs e)
         {
-            string idCollaboratore = hf_idColl.Value;
-            Esito esito = new Esito();
-            Entity.Anag_Collaboratori collaboratore = Anag_Collaboratori_DAL.Instance.getCollaboratoreById(Convert.ToInt16(idCollaboratore),ref esito);
-            if (esito.codice == 0) {
-                pulisciCampiDettaglio();
-                
-                // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
-                tbMod_CF.Text = collaboratore.CodiceFiscale;
-                tbMod_Cognome.Text = collaboratore.Cognome;
-                tbMod_Nome.Text = collaboratore.Nome;
-                tbMod_Nazione.Text = collaboratore.Nazione;
-                tbMod_ComuneNascita.Text = collaboratore.ComuneNascita;
-                tbMod_ProvinciaNascita.Text = collaboratore.ProvinciaNascita;
-                tbMod_ComuneRiferimento.Text = collaboratore.ComuneRiferimento;
-                tbMod_DataNascita.Text = collaboratore.DataNascita.ToShortDateString();
-                tbMod_NomeSocieta.Text = collaboratore.NomeSocieta;
-                tbMod_PartitaIva.Text = collaboratore.PartitaIva;
-                cbMod_Assunto.Checked = collaboratore.Assunto;
-                cbMod_Attivo.Checked = collaboratore.Attivo;
-                tbMod_Note.Text = collaboratore.Note;
-
-                // QUALIFICHE
-                foreach (Anag_Qualifiche_Collaboratori qualifica in collaboratore.Qualifiche)
-                {
-                    ListItem itemQualifica = new ListItem(qualifica.Qualifica, qualifica.Id.ToString());
-                    lbMod_Qualifiche.Items.Add(itemQualifica);
-                }
-                if (collaboratore.Qualifiche.Count > 0)
-                {
-                    lbMod_Qualifiche.Rows = collaboratore.Qualifiche.Count;
-                }
-                else
-                {
-                    lbMod_Qualifiche.Rows = 1;
-                }
-
-                // INDIRIZZI
-                foreach (Anag_Indirizzi_Collaboratori indirizzo in collaboratore.Indirizzi)
-                {
-                    ListItem itemIndirizzi = new ListItem(indirizzo.Descrizione + " - " + indirizzo.Tipo + " " + indirizzo.Indirizzo + " " + indirizzo.NumeroCivico + " " + indirizzo.Cap + " " + indirizzo.Comune + " " + indirizzo.Provincia, indirizzo.Id.ToString());
-                    lbMod_Indirizzi.Items.Add(itemIndirizzi);
-                }
-                if (collaboratore.Indirizzi.Count > 0)
-                {
-                    lbMod_Indirizzi.Rows = collaboratore.Indirizzi.Count;
-                }
-                else
-                {
-                    lbMod_Indirizzi.Rows = 1;
-                }
-
-                // EMAIL
-                foreach (Anag_Email_Collaboratori email in collaboratore.Email)
-                {
-                    ListItem itemEmail = new ListItem(email.Descrizione + " - " + email.IndirizzoEmail, email.Id.ToString());
-                    lbMod_Email.Items.Add(itemEmail);
-                }
-                if (collaboratore.Email.Count > 0)
-                {
-                    lbMod_Email.Rows = collaboratore.Email.Count;
-                }
-                else
-                {
-                    lbMod_Email.Rows = 1;
-                }
-
-                // TELEFONI
-                foreach (Anag_Telefoni_Collaboratori telefono in collaboratore.Telefoni)
-                {
-                    ListItem itemTelefono = new ListItem(telefono.Descrizione + " - " + telefono.Tipo + " - " + telefono.Pref_int + telefono.Pref_naz + telefono.Numero + " - whatsapp: " + Convert.ToString(telefono.Whatsapp)  , telefono.Id.ToString());
-                    lbMod_Telefoni.Items.Add(itemTelefono);
-                }
-                if (collaboratore.Telefoni.Count > 0)
-                {
-                    lbMod_Telefoni.Rows = collaboratore.Telefoni.Count;
-                }
-                else
-                {
-                    lbMod_Telefoni.Rows = 1;
-                }
-
-                // IMMAGINE COLLABORATORE
-                if (string.IsNullOrEmpty(collaboratore.PathFoto))
-                {
-                    imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + ConfigurationManager.AppSettings["IMMAGINE_DUMMY_COLLABORATORE"];
-                }
-                else
-                { 
-                    imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + collaboratore.PathFoto;
-                }
-                pnlContainer.Visible = true;
-            }
-            else
-            {
-                Session["ErrorPageText"] = esito.descrizione;
-                string url = String.Format("~/pageError.aspx");
-                Response.Redirect(url, true);
-            }
+            editCollaboratore();
         }
 
         protected void btnModifica_Click(object sender, EventArgs e)
         {
-
+            AttivaDisattivaModificaAnagrafica(false);
         }
 
         protected void btnSalva_Click(object sender, EventArgs e)
         {
-            //Esito esito = new Esito();
-            //Anag_Collaboratori collaboratore = Anag_Collaboratori(ref esito);
-
-
-            //if (esito.codice != Esito.ESITO_OK)
-            //{
-            //    lbl_MessaggioErrore.Visible = true;
-            //    lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
-            //    UpdatePopup();
-            //}
-            //else
-            //{
-
-            //    nascondiErroriValidazione();
-            //    if (isDisponibileDataRisorsa(datiAgenda.data_inizio_lavorazione, datiAgenda.data_fine_lavorazione, datiAgenda))
-            //    {
-            //        if (datiAgenda.id == 0)
-            //        {
-            //            Agenda_BLL.Instance.creaEvento(datiAgenda);
-
-            //        }
-            //        else
-            //        {
-            //            Agenda_BLL.Instance.aggiornaEvento(datiAgenda);
-
-            //        }
-            //        ScriptManager.RegisterStartupScript(this, typeof(Page), "closePopup", "chiudiPopup();", true);
-            //    }
-            //    else
-            //    {
-            //        lbl_MessaggioErrore.Visible = true;
-            //        lbl_MessaggioErrore.Text = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
-            //        UpdatePopup();
-            //    }
-            //}
 
         }
 
         protected void btnAnnulla_Click(object sender, EventArgs e)
         {
-
+            AttivaDisattivaModificaAnagrafica(true);
+            editCollaboratore();
         }
 
         protected void btn_chiudi_Click(object sender, EventArgs e)
@@ -337,6 +206,132 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             TbPiva.Text = "";
             TbSocieta.Text = "";
             ddlQualifiche.SelectedIndex = 0;
+        }
+
+        private void AttivaDisattivaModificaAnagrafica(bool attivaModifica)
+        {
+            tbMod_CF.ReadOnly = attivaModifica;
+            tbMod_Cognome.ReadOnly = attivaModifica;
+            tbMod_ComuneNascita.ReadOnly = attivaModifica;
+            tbMod_ComuneRiferimento.ReadOnly = attivaModifica;
+            tbMod_DataNascita.ReadOnly = attivaModifica;
+            tbMod_Nazione.ReadOnly = attivaModifica;
+            tbMod_Nome.ReadOnly = attivaModifica;
+            tbMod_NomeSocieta.ReadOnly = attivaModifica;
+            tbMod_Note.ReadOnly = attivaModifica;
+            tbMod_PartitaIva.ReadOnly = attivaModifica;
+            tbMod_ProvinciaNascita.ReadOnly = attivaModifica;
+            cbMod_Assunto.Enabled = !attivaModifica;
+            cbMod_Attivo.Enabled = !attivaModifica;
+
+            btnModifica.Visible = attivaModifica;
+            btnSalva.Visible = btnAnnulla.Visible = !attivaModifica;
+
+            //UpdatePopup();
+        }
+
+        private void editCollaboratore()
+        {
+            string idCollaboratore = hf_idColl.Value;
+            Esito esito = new Esito();
+            Entity.Anag_Collaboratori collaboratore = Anag_Collaboratori_DAL.Instance.getCollaboratoreById(Convert.ToInt16(idCollaboratore), ref esito);
+            if (esito.codice == 0)
+            {
+                pulisciCampiDettaglio();
+
+                // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
+                tbMod_CF.Text = collaboratore.CodiceFiscale;
+                tbMod_Cognome.Text = collaboratore.Cognome;
+                tbMod_Nome.Text = collaboratore.Nome;
+                tbMod_Nazione.Text = collaboratore.Nazione;
+                tbMod_ComuneNascita.Text = collaboratore.ComuneNascita;
+                tbMod_ProvinciaNascita.Text = collaboratore.ProvinciaNascita;
+                tbMod_ComuneRiferimento.Text = collaboratore.ComuneRiferimento;
+                tbMod_DataNascita.Text = collaboratore.DataNascita.ToShortDateString();
+                tbMod_NomeSocieta.Text = collaboratore.NomeSocieta;
+                tbMod_PartitaIva.Text = collaboratore.PartitaIva;
+                cbMod_Assunto.Checked = collaboratore.Assunto;
+                cbMod_Attivo.Checked = collaboratore.Attivo;
+                tbMod_Note.Text = collaboratore.Note;
+
+                // QUALIFICHE
+                foreach (Anag_Qualifiche_Collaboratori qualifica in collaboratore.Qualifiche)
+                {
+                    ListItem itemQualifica = new ListItem(qualifica.Qualifica, qualifica.Id.ToString());
+                    lbMod_Qualifiche.Items.Add(itemQualifica);
+                }
+                if (collaboratore.Qualifiche.Count > 0)
+                {
+                    lbMod_Qualifiche.Rows = collaboratore.Qualifiche.Count;
+                }
+                else
+                {
+                    lbMod_Qualifiche.Rows = 1;
+                }
+
+                // INDIRIZZI
+                foreach (Anag_Indirizzi_Collaboratori indirizzo in collaboratore.Indirizzi)
+                {
+                    ListItem itemIndirizzi = new ListItem(indirizzo.Descrizione + " - " + indirizzo.Tipo + " " + indirizzo.Indirizzo + " " + indirizzo.NumeroCivico + " " + indirizzo.Cap + " " + indirizzo.Comune + " " + indirizzo.Provincia, indirizzo.Id.ToString());
+                    lbMod_Indirizzi.Items.Add(itemIndirizzi);
+                }
+                if (collaboratore.Indirizzi.Count > 0)
+                {
+                    lbMod_Indirizzi.Rows = collaboratore.Indirizzi.Count;
+                }
+                else
+                {
+                    lbMod_Indirizzi.Rows = 1;
+                }
+
+                // EMAIL
+                foreach (Anag_Email_Collaboratori email in collaboratore.Email)
+                {
+                    ListItem itemEmail = new ListItem(email.Descrizione + " - " + email.IndirizzoEmail, email.Id.ToString());
+                    lbMod_Email.Items.Add(itemEmail);
+                }
+                if (collaboratore.Email.Count > 0)
+                {
+                    lbMod_Email.Rows = collaboratore.Email.Count;
+                }
+                else
+                {
+                    lbMod_Email.Rows = 1;
+                }
+
+                // TELEFONI
+                foreach (Anag_Telefoni_Collaboratori telefono in collaboratore.Telefoni)
+                {
+                    ListItem itemTelefono = new ListItem(telefono.Descrizione + " - " + telefono.Tipo + " - " + telefono.Pref_int + telefono.Pref_naz + telefono.Numero + " - whatsapp: " + Convert.ToString(telefono.Whatsapp), telefono.Id.ToString());
+                    lbMod_Telefoni.Items.Add(itemTelefono);
+                }
+                if (collaboratore.Telefoni.Count > 0)
+                {
+                    lbMod_Telefoni.Rows = collaboratore.Telefoni.Count;
+                }
+                else
+                {
+                    lbMod_Telefoni.Rows = 1;
+                }
+
+                // IMMAGINE COLLABORATORE
+                if (string.IsNullOrEmpty(collaboratore.PathFoto))
+                {
+                    imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + ConfigurationManager.AppSettings["IMMAGINE_DUMMY_COLLABORATORE"];
+                }
+                else
+                {
+                    imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + collaboratore.PathFoto;
+                }
+                pnlContainer.Visible = true;
+            }
+            else
+            {
+                Session["ErrorPageText"] = esito.descrizione;
+                string url = String.Format("~/pageError.aspx");
+                Response.Redirect(url, true);
+            }
+
         }
     }
 }

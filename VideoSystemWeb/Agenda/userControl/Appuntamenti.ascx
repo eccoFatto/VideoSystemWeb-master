@@ -123,7 +123,7 @@
         </div>
     </div>
 
-    <!--pianificazione  -->
+    <!--PIANIFICAZIONE  -->
     <div class="w3-col m4">
         <div class="w3-card-4 w3-light-grey w3-text-blue w3-margin w3-padding-16">
             <h4 class="w3-center">Pianificazione</h4>
@@ -300,11 +300,12 @@
     </div>
 
     <div class="w3-col m12">
-        <<div class="w3-center w3-margin">
-            <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-green w3-border w3-round" OnClick="btnModifica_Click" />
-            <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-green w3-border w3-round" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();"/>
-            <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-green w3-border w3-round" OnClick="btnSalva_Click" Visible="false" />
-            <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false" />
+        <div class="w3-center w3-margin">
+            <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnModifica_Click" />
+            <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();"/>
+            
+            <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" Visible="false" />
+            <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnAnnulla_Click" Visible="false" />
         </div>
     </div>
 </asp:Panel>

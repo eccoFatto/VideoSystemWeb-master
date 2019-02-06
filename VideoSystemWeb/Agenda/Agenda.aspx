@@ -102,7 +102,7 @@
                         <popup:Appuntamenti id="popupAppuntamenti" runat="server"></popup:Appuntamenti>
 
                         <p style="text-align: center;">
-                            <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class= "w3-green w3-border w3-round" OnClick="btn_chiudi_Click" />
+                            <asp:Button ID="btn_chiudi" runat="server" Text="&times;" class= "w3-btn w3-circle w3-red" OnClick="btn_chiudi_Click" />
                         </p>
                     </asp:Panel>
                 </asp:Panel>

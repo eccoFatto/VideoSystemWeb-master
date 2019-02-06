@@ -28,7 +28,6 @@
         });
 
         if ($('#' + id_calendarDataInizio).val() != "") {
-
             var dataInizio = $('#' + id_calendarDataInizio).data('DateTimePicker');
             if (dataInizio != null) {
                 $('#' + id_calendarDataFine).data("DateTimePicker").minDate(new Date(dataInizio.date()));
@@ -77,15 +76,20 @@
             $("#<%=txt_ImpegnoOrarioA.ClientID%>").addClass("w3-light-grey");
         }
     }
+
+    
+    function confermaEliminazione() {
+        return confirm("Eliminare l'appuntamento corrente?"); 
+    }
 </script>
 
 
-<asp:Panel runat="server" ID="panelAppuntamenti">
+<asp:Panel runat="server" ID="panelAppuntamenti" >
     <div class="w3-container w3-center w3-xlarge">GESTIONE APPUNTAMENTI</div>
-    <br />
 
-    <div class="errorMessage" style="width: 100%; text-align: center">
-        <asp:Label ID="lbl_MessaggioErrore" runat="server" Visible="false"></asp:Label>
+    <div class="alert alert-danger alert-dismissible fade in" role="alert" runat="server" id="panelErrore" style="display: none">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <asp:Label ID="lbl_MessaggioErrore" runat="server" CssClass="form-control-sm"></asp:Label>
     </div>
 
     <!--LAVORAZIONE-->
@@ -298,6 +302,7 @@
     <div class="w3-col m12">
         <<div class="w3-center w3-margin">
             <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-green w3-border w3-round" OnClick="btnModifica_Click" />
+            <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-green w3-border w3-round" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();"/>
             <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-green w3-border w3-round" OnClick="btnSalva_Click" Visible="false" />
             <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false" />
         </div>

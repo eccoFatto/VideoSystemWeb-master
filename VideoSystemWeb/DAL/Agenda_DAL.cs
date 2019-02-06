@@ -107,7 +107,7 @@ namespace VideoSystemWeb.DAL
             return listaDatiAgenda;
         }
 
-        public Esito creaEvento(DatiAgenda evento)
+        public Esito CreaEvento(DatiAgenda evento)
         {
             Esito esito = new Esito();
             try
@@ -239,7 +239,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito aggiornaEvento(DatiAgenda evento)
+        public Esito AggiornaEvento(DatiAgenda evento)
         {
             Esito esito = new Esito();
             try
@@ -371,6 +371,42 @@ namespace VideoSystemWeb.DAL
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
                 esito.descrizione = "Agenda_DAL.cs - aggiornaEvento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
+        public Esito EliminaEvento(int idEvento)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                {
+                    using (System.Data.OleDb.OleDbCommand StoreProc = new System.Data.OleDb.OleDbCommand("DeleteEvento"))
+                    {
+                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            OleDbParameter id = new OleDbParameter("@id", OleDbType.Integer);
+                            id.Direction = ParameterDirection.Input;
+                            id.Value = idEvento;
+                            StoreProc.Parameters.Add(id);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Agenda_DAL.cs - EliminaEvento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

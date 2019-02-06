@@ -64,26 +64,33 @@ namespace VideoSystemWeb.BLL
             return listaDatiAgenda;
         }
 
-        public DatiAgenda getDatiAgendaById(List<DatiAgenda> listaDatiAgenda, int id)
+        public DatiAgenda GetDatiAgendaById(List<DatiAgenda> listaDatiAgenda, int id)
         {
             return listaDatiAgenda.Where(x => x.id == id).FirstOrDefault();
         }
 
-        public DatiAgenda getDatiAgendaByDataRisorsa(List<DatiAgenda> listaDatiAgenda, DateTime data, int id_risorsa)
+        public DatiAgenda GetDatiAgendaByDataRisorsa(List<DatiAgenda> listaDatiAgenda, DateTime data, int id_risorsa)
         {
             return listaDatiAgenda.Where(x => x.data_inizio_lavorazione.Date <= data.Date && x.data_fine_lavorazione.Date >= data.Date && x.id_colonne_agenda == id_risorsa).FirstOrDefault();
         }
 
-        public Esito creaEvento(DatiAgenda evento)
+        public Esito CreaEvento(DatiAgenda evento)
         {
-            Esito esito = Agenda_DAL.Instance.creaEvento(evento);
+            Esito esito = Agenda_DAL.Instance.CreaEvento(evento);
 
             return esito;
         }
 
-        public Esito aggiornaEvento(DatiAgenda evento)
+        public Esito AggiornaEvento(DatiAgenda evento)
         {
-            Esito esito = Agenda_DAL.Instance.aggiornaEvento(evento);
+            Esito esito = Agenda_DAL.Instance.AggiornaEvento(evento);
+
+            return esito;
+        }
+
+        public Esito EliminaEvento(int idEvento)
+        {
+            Esito esito = Agenda_DAL.Instance.EliminaEvento(idEvento);
 
             return esito;
         }

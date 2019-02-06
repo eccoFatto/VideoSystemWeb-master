@@ -48,6 +48,7 @@ namespace VideoSystemWeb.Agenda
         protected void btn_chiudi_Click(object sender, EventArgs e)
         {
             ChiudiPopup();
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
         }
         #endregion
 
@@ -55,10 +56,6 @@ namespace VideoSystemWeb.Agenda
         {
             pnlContainer.Style.Add("display", "none");
             UpdatePopup();
-
-            AggiornaAgenda();
-            
-            
         }
 
         private DataTable CreateDataTable(DateTime data)
@@ -93,7 +90,7 @@ namespace VideoSystemWeb.Agenda
                 int indiceColonna = 1;
                 foreach (Tipologica risorsa in listaRisorse)
                 {
-                    DatiAgenda datiAgendaFiltrati = Agenda_BLL.Instance.getDatiAgendaByDataRisorsa(listaDatiAgenda, dataRiga, risorsa.id); listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_colonne_agenda == risorsa.id).ToList<DatiAgenda>();
+                    DatiAgenda datiAgendaFiltrati = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(listaDatiAgenda, dataRiga, risorsa.id); listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_colonne_agenda == risorsa.id).ToList<DatiAgenda>();
                     if (datiAgendaFiltrati != null)
                     {
                         row[indiceColonna++] = datiAgendaFiltrati.id.ToString(); // inserisco id datoAgenda per poi formattare la cella in RowDataBound 
@@ -147,7 +144,7 @@ namespace VideoSystemWeb.Agenda
 
                     if (!string.IsNullOrEmpty(e.Row.Cells[indiceColonna].Text.Trim()))
                     {
-                        DatiAgenda datoAgendaCorrente = Agenda_BLL.Instance.getDatiAgendaById(listaDatiAgenda, int.Parse(e.Row.Cells[indiceColonna].Text.Trim())); //Tipologie.getDatiAgendaById(int.Parse(e.Row.Cells[indiceColonna].Text.Trim()));
+                        DatiAgenda datoAgendaCorrente = Agenda_BLL.Instance.GetDatiAgendaById(listaDatiAgenda, int.Parse(e.Row.Cells[indiceColonna].Text.Trim())); //Tipologie.getDatiAgendaById(int.Parse(e.Row.Cells[indiceColonna].Text.Trim()));
 
                         Esito esito = new Esito();
                         Tipologica statoCorrente = UtilityTipologiche.getElementByID(listaStati, datoAgendaCorrente.id_stato, ref esito);
@@ -213,7 +210,6 @@ namespace VideoSystemWeb.Agenda
             gv_scheduler.DataBind();
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "passaggioMouse", "registraPassaggioMouse();", true);
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
         }
 
         private bool IsViaggio(DatiAgenda evento, DateTime data)
@@ -255,6 +251,7 @@ namespace VideoSystemWeb.Agenda
                     break;
                 case "CLOSE":
                     ChiudiPopup();
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
                     break;
             }
 

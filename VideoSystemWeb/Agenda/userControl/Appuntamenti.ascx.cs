@@ -19,7 +19,6 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
             basePage.listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);
-            //basePage.caricaListeTipologiche();
 
             if (!IsPostBack)
             {
@@ -31,7 +30,7 @@ namespace VideoSystemWeb.Agenda.userControl
         #region COMPORTAMENTO ELEMENTI PAGINA
         protected void btnModifica_Click(object sender, EventArgs e)
         {
-            lbl_MessaggioErrore.Visible = false;
+            panelErrore.Style.Add("display", "none");
             PopolaEditPopupEventi((DatiAgenda)ViewState["eventoSelezionato"]);
             AttivaDisattivaModifica(true);
         }
@@ -43,7 +42,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (esito.codice != Esito.ESITO_OK)
             {
-                lbl_MessaggioErrore.Visible = true;
+                panelErrore.Style.Remove("display");
                 lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
                 UpdatePopup();
             }
@@ -54,17 +53,17 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
                     if (datiAgenda.id == 0)
                     {
-                        Agenda_BLL.Instance.creaEvento(datiAgenda);
+                        Agenda_BLL.Instance.CreaEvento(datiAgenda);
                     }
                     else
                     {
-                        Agenda_BLL.Instance.aggiornaEvento(datiAgenda);
+                        Agenda_BLL.Instance.AggiornaEvento(datiAgenda);
                     }
                     RichiediOperazionePopup("CLOSE");
                 }
                 else
                 {
-                    lbl_MessaggioErrore.Visible = true;
+                    panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
                     UpdatePopup();
                 }
@@ -76,6 +75,15 @@ namespace VideoSystemWeb.Agenda.userControl
             NascondiErroriValidazione();
             AttivaDisattivaModifica(false);
         }
+
+        protected void btnElimina_Click(object sender, EventArgs e)
+        {
+            panelErrore.Style.Add("display", "none");
+
+            Agenda_BLL.Instance.EliminaEvento((int)ViewState["idEvento"]);
+
+            RichiediOperazionePopup("CLOSE");
+        }
         #endregion
 
         public void EditEvent(DateTime dataEvento, int risorsaEvento)
@@ -84,7 +92,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             ClearPopupEventi();
 
-            DatiAgenda eventoSelezionato = Agenda_BLL.Instance.getDatiAgendaByDataRisorsa(basePage.listaDatiAgenda, dataEvento, risorsaEvento);
+            DatiAgenda eventoSelezionato = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(basePage.listaDatiAgenda, dataEvento, risorsaEvento);
             ViewState["eventoSelezionato"] = eventoSelezionato;
 
             if (eventoSelezionato == null)
@@ -104,7 +112,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 btnModifica.Visible = isUtenteAbilitatoInScrittura;
             }
 
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "abilitazioneImpegnoOrario", "checkImpegnoOrario();", true);
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "campiImpegnoOrario", "checkImpegnoOrario();", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataInizioLavorazione.ClientID + "', '" + txt_DataFineLavorazione.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataInizioImpegno.ClientID + "', '" + txt_DataFineImpegno.ClientID + "');", true);
         }
@@ -138,7 +146,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void NascondiErroriValidazione()
         {
-            lbl_MessaggioErrore.Visible = false;
+            panelErrore.Style.Add("display", "none");
 
             txt_DataInizioLavorazione.CssClass = txt_DataInizioLavorazione.CssClass.Replace("erroreValidazione", "");
             txt_DataFineLavorazione.CssClass = txt_DataFineLavorazione.CssClass.Replace("erroreValidazione", "");
@@ -201,7 +209,7 @@ namespace VideoSystemWeb.Agenda.userControl
             val_Nota.Visible = !attivaModifica;
             tb_Nota.Visible = attivaModifica;
 
-            btnModifica.Visible = !attivaModifica;
+            btnModifica.Visible = btnElimina.Visible = !attivaModifica;
             btnSalva.Visible = btnAnnulla.Visible = attivaModifica;
 
             UpdatePopup();
@@ -262,7 +270,7 @@ namespace VideoSystemWeb.Agenda.userControl
         private void ClearPopupEventi()
         {
             lbl_MessaggioErrore.Text = string.Empty;
-            lbl_MessaggioErrore.Visible = false;
+            panelErrore.Style.Add("display", "none");
 
             val_DataInizioLavorazione.Text = string.Empty;
             val_DataFineLavorazione.Text = string.Empty;

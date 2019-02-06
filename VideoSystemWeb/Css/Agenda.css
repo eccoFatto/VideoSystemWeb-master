@@ -1,15 +1,4 @@
-﻿/*.containerPopup .datepicker table {
-    position: relative;
-    top: -600px;
-    left: 40%;
-    background-color: white;
-    border: solid 2px #5377A9;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}*/
-
-.calendar {
+﻿.calendar {
     min-width: 90px;
  
     margin-left: 5px;
@@ -45,5 +34,11 @@
     position: fixed;
     top: 1%;
     right: 5%;
+}
+
+.evento {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 8pt;
 }
 

@@ -23,32 +23,29 @@
                 <div class="column col-2"></div>
                 <div class="column col-8">
                     <div class="w3-0 mydiv">
-                        <div class="w3-container w3-margin w3-teal"><h5 style="text-align:center;">Login Utente</h5></div>
-                        <div class="w3-panel w3-yellow w3-border w3-round" style="text-align:center;">
-                            <table style="width:400px;padding-top:40px;padding-bottom:30px;margin:auto;">
-                                <tr>
-                                    <td style="width:50%;text-align:right;" class="w3-container w3-margin w3-teal"><asp:Label runat="server" Text="User Name:"> </asp:Label></td>
-                                    <td style="width:50%;"><asp:TextBox ID="tbUser" runat="server"></asp:TextBox></td>
-                                </tr>
-                                <tr>
-                                    <td style="width:50%;text-align:right;" class="w3-container w3-margin w3-teal"><asp:Label runat="server" Text="Password:"> </asp:Label></td>
-                                    <td style="width:50%;"><asp:TextBox ID="tbPassword" runat="server" TextMode="Password"></asp:TextBox></td>
-                                </tr>
-                                <tr>
-                                    <td style="width:50%;text-align:right;"></td>
-                                    <td style="width:50%;text-align:right;padding-right:10px" ><asp:Button ID="btnLogin" runat="server" OnClick="btnLogIn_Click" class="w3-panel w3-orange w3-border w3-round w3-center" data-tooltip="Conferma dati" Text="Conferma"></asp:Button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" style="width:100%;">
-                                        <asp:GridView ID="GridView1" runat="server" Visible="false">
-                                        </asp:GridView>
-                                        <asp:Label ID="lblErrorLogin" runat="server" ForeColor="Red" Visible="False"></asp:Label>
-                                    </td>
-                                </tr>
-                            </table>
+                        
+                        <div class="w3-container w3-card-4 w3-margin-top  w3-padding-16">
+
+                            <p>
+                                <label>Name</label>
+                                <asp:TextBox ID="tbUser" runat="server" class="w3-input w3-border w3-round"  style="width:99%" required="required" ></asp:TextBox>
+                                </p>
+                            <p>
+                                <label>Password</label>
+                                <asp:TextBox ID="tbPassword" runat="server" TextMode="Password" class="w3-input w3-border w3-round"  style="width:99%" required="required"></asp:TextBox>
+                                </p>
+                            <p>
+                                <input id="cbStayLogged" class="w3-check" type="checkbox" checked="checked"/>
+                                <label>Rimani Connesso</label>
+                            </p>
+                            <p>
+                                <asp:Button ID="btnLogin" runat="server" OnClick="btnLogIn_Click" class="w3-btn w3-section w3-teal w3-ripple" Text="Log in"></asp:Button>
+                            </p>
+                            <p>
+                                <asp:Label ID="lblErrorLogin" runat="server" ForeColor="Red" Visible="False"></asp:Label>
+                            </p>
                         </div>
-                        </div>
+                    </div>
                 </div>
                 <div class="column col-2"></div>
             

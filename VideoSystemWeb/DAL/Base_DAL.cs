@@ -11,10 +11,39 @@ namespace VideoSystemWeb.DAL
 {
     public class Base_DAL
     {
-        public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL_NIC"].ConnectionString;
+        //public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL_NIC"].ConnectionString;
         //string static constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-        //string static constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
+        public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
 
+        public static int executeUpdateBySql(string querySql, ref Esito esito)
+        {
+            int iReturn = 0;
+            try
+            {
+                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                {
+                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(querySql))
+                    {
+                        cmd.Connection = con;
+                        con.Open();
+                        iReturn = cmd.ExecuteNonQuery();
+
+                        if (iReturn == 0) { 
+                            esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                            esito.descrizione = "Nessun dato affetto dalla query " + querySql;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return iReturn;
+
+        }
         public static DataTable getDatiBySql(string querySql, ref Esito esito)
         {
             DataTable dtReturn = new DataTable();

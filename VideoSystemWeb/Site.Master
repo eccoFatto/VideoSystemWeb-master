@@ -70,7 +70,7 @@
                     </td>
                 </tr>
             </table>
-            <div class="w3-bar w3-yellow w3-round">
+            <div class="w3-bar w3-yellow w3-round w3-margin-bottom">
               <a href="/Agenda/Agenda.aspx" class="w3-bar-item w3-button">Agenda</a>
               <a href="#" class="w3-bar-item w3-button">Report</a>
               <div class="w3-dropdown-hover">

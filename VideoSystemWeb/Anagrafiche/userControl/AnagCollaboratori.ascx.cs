@@ -9,47 +9,44 @@ using System.Configuration;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
 using VideoSystemWeb.DAL;
+using System.IO;
+
 namespace VideoSystemWeb.Anagrafiche.userControl
 {
     public partial class AnagCollaboratori : System.Web.UI.UserControl
     {
-        //public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL_NIC"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
-                BasePage p = new BasePage();
 
-                ddlQualifiche.Items.Clear();
-                ddlQualifiche.Items.Add("");
-                foreach (Tipologica qualifica in p.listaQualifiche)
+                BasePage p = new BasePage();
+                Esito esito = p.caricaListeTipologiche();
+
+                if (string.IsNullOrEmpty(esito.descrizione)) {
+                    ddlQualifiche.Items.Clear();
+                    ddlQualifiche.Items.Add("");
+                    foreach (Tipologica qualifica in p.listaQualifiche)
+                    {
+                        ListItem item = new ListItem();
+                        item.Text = qualifica.nome;
+                        // metto comunque il nome e non l'id perchè la ricerca sulla tabella anag_qualifiche_collaboratori la faccio sul nome
+                        item.Value = qualifica.nome;
+                        ddlQualifiche.Items.Add(item);
+                    }
+                }
+                else
                 {
-                    ListItem item = new ListItem();
-                    item.Text = qualifica.nome;
-                    // metto comunque il nome e non l'id perchè la ricerca sulla tabella anag_qualifiche_collaboratori la faccio sul nome
-                    item.Value = qualifica.nome;
-                    ddlQualifiche.Items.Add(item);
+                    Session["ErrorPageText"] = esito.descrizione;
+                    string url = String.Format("~/pageError.aspx");
+                    Response.Redirect(url, true);
                 }
 
-                //Esito esito = p.caricaListeTipologiche();
-                //if (string.IsNullOrEmpty(esito.descrizione)) {
-                //    ddlQualifiche.Items.Clear();
-                //    ddlQualifiche.Items.Add("");
-                //    foreach (Tipologica qualifica in p.listaQualifiche)
-                //    {
-                //        ListItem item = new ListItem();
-                //        item.Text = qualifica.nome;
-                //        // metto comunque il nome e non l'id perchè la ricerca sulla tabella anag_qualifiche_collaboratori la faccio sul nome
-                //        item.Value = qualifica.nome;
-                //        ddlQualifiche.Items.Add(item);
-                //    }
-                //}
-                //else
-                //{
-                //    Session["ErrorPageText"] = esito.descrizione;
-                //    string url = String.Format("~/pageError.aspx");
-                //    Response.Redirect(url, true);
-                //}
+
+            }
+            else
+            {
+
             }
         }
 
@@ -76,16 +73,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         }
 
-        protected void lbPulisciCampiRicerca_Click(object sender, EventArgs e)
-        {
-            tbCognome.Text = "";
-            tbNome.Text = "";
-            tbCF.Text = "";
-            tbCitta.Text = "";
-            TbPiva.Text = "";
-            TbSocieta.Text = "";
-            ddlQualifiche.SelectedIndex = 0;
-        }
+
 
         protected void gv_collaboratori_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -213,6 +201,41 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         protected void btnSalva_Click(object sender, EventArgs e)
         {
+            //Esito esito = new Esito();
+            //Anag_Collaboratori collaboratore = Anag_Collaboratori(ref esito);
+
+
+            //if (esito.codice != Esito.ESITO_OK)
+            //{
+            //    lbl_MessaggioErrore.Visible = true;
+            //    lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+            //    UpdatePopup();
+            //}
+            //else
+            //{
+
+            //    nascondiErroriValidazione();
+            //    if (isDisponibileDataRisorsa(datiAgenda.data_inizio_lavorazione, datiAgenda.data_fine_lavorazione, datiAgenda))
+            //    {
+            //        if (datiAgenda.id == 0)
+            //        {
+            //            Agenda_BLL.Instance.creaEvento(datiAgenda);
+
+            //        }
+            //        else
+            //        {
+            //            Agenda_BLL.Instance.aggiornaEvento(datiAgenda);
+
+            //        }
+            //        ScriptManager.RegisterStartupScript(this, typeof(Page), "closePopup", "chiudiPopup();", true);
+            //    }
+            //    else
+            //    {
+            //        lbl_MessaggioErrore.Visible = true;
+            //        lbl_MessaggioErrore.Text = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
+            //        UpdatePopup();
+            //    }
+            //}
 
         }
 
@@ -259,6 +282,61 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             lbMod_Telefoni.Items.Clear();
             lbMod_Telefoni.Rows = 1;
 
+        }
+
+
+        protected void LoadImage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            if (fuImg.HasFile)
+            {
+                if (".JPEG|.JPG|.BMP|.PNG|.GIF".IndexOf(Path.GetExtension(fuImg.FileName).ToUpper()) >= 0)
+                {
+                    try
+                    {
+                        string nomefileNew = DateTime.Now.Ticks.ToString() + Path.GetExtension(fuImg.FileName);
+                        string fullPath = Server.MapPath(ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"]) + Path.GetFileName(nomefileNew);
+                        fuImg.SaveAs(fullPath);
+                        imgCollaboratore.ImageUrl = fullPath;
+                        lblImage.Text = nomefileNew;
+
+                        string queryUpdateImg = "UPDATE ANAG_COLLABORATORI SET pathFoto = '" + nomefileNew + "' WHERE ID = " + hf_idColl.Value; ;
+
+                        Esito esito = new Esito();
+                        int iRighe = Base_DAL.executeUpdateBySql(queryUpdateImg, ref esito);
+                        upColl.Update();
+                        EditCollaboratore_Click(null, null);
+                    }
+                    catch (Exception ex)
+                    {
+                        lblImage.Text = ex.Message;
+                    }
+                }
+                else
+                {
+                    lblImage.Text = "Caricare un file di tipo immagine";
+                }
+            }
+            else
+            {
+                lblImage.Text = "Caricare un'immagine";
+            }
+
+        }
+
+        protected void PulisciCampiRicerca_Click(object sender, EventArgs e)
+        {
+            tbCognome.Text = "";
+            tbNome.Text = "";
+            tbCF.Text = "";
+            tbCitta.Text = "";
+            TbPiva.Text = "";
+            TbSocieta.Text = "";
+            ddlQualifiche.SelectedIndex = 0;
         }
     }
 }

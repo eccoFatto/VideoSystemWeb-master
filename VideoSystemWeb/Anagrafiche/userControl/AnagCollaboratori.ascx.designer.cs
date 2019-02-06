@@ -85,31 +85,31 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox TbPiva;
         
         /// <summary>
-        /// Controllo lbRicercaCollaboratori.
+        /// Controllo btnRicercaCollaboratori.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbRicercaCollaboratori;
+        protected global::System.Web.UI.WebControls.Button btnRicercaCollaboratori;
         
         /// <summary>
-        /// Controllo lbInserisciCollaboratori.
+        /// Controllo btnInserisciCollaboratori.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbInserisciCollaboratori;
+        protected global::System.Web.UI.WebControls.Button btnInserisciCollaboratori;
         
         /// <summary>
-        /// Controllo lbPulisciCampiRicerca.
+        /// Controllo BtnPulisciCampiRicerca.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lbPulisciCampiRicerca;
+        protected global::System.Web.UI.WebControls.Button BtnPulisciCampiRicerca;
         
         /// <summary>
         /// Controllo gv_collaboratori.
@@ -139,13 +139,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.HiddenField hf_idColl;
         
         /// <summary>
-        /// Controllo upCollaboratore.
+        /// Controllo upColl.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upCollaboratore;
+        protected global::System.Web.UI.UpdatePanel upColl;
         
         /// <summary>
         /// Controllo pnlContainer.
@@ -175,13 +175,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
         
         /// <summary>
-        /// Controllo lbl_Cognome.
+        /// Controllo btn_chiudi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Cognome;
+        protected global::System.Web.UI.WebControls.Button btn_chiudi;
         
         /// <summary>
         /// Controllo tbMod_Cognome.
@@ -193,15 +193,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbMod_Cognome;
         
         /// <summary>
-        /// Controllo lbl_Nome.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Nome;
-        
-        /// <summary>
         /// Controllo tbMod_Nome.
         /// </summary>
         /// <remarks>
@@ -209,15 +200,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Nome;
-        
-        /// <summary>
-        /// Controllo lbl_CF.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_CF;
         
         /// <summary>
         /// Controllo tbMod_CF.
@@ -229,15 +211,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbMod_CF;
         
         /// <summary>
-        /// Controllo lbl_Nazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Nazione;
-        
-        /// <summary>
         /// Controllo tbMod_Nazione.
         /// </summary>
         /// <remarks>
@@ -245,15 +218,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Nazione;
-        
-        /// <summary>
-        /// Controllo lbl_ComuneNascita.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_ComuneNascita;
         
         /// <summary>
         /// Controllo tbMod_ComuneNascita.
@@ -265,15 +229,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbMod_ComuneNascita;
         
         /// <summary>
-        /// Controllo lbl_ProvinciaNascita.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_ProvinciaNascita;
-        
-        /// <summary>
         /// Controllo tbMod_ProvinciaNascita.
         /// </summary>
         /// <remarks>
@@ -281,15 +236,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_ProvinciaNascita;
-        
-        /// <summary>
-        /// Controllo lbl_DataNascita.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DataNascita;
         
         /// <summary>
         /// Controllo tbMod_DataNascita.
@@ -301,15 +247,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbMod_DataNascita;
         
         /// <summary>
-        /// Controllo lbl_ComuneRiferimento.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_ComuneRiferimento;
-        
-        /// <summary>
         /// Controllo tbMod_ComuneRiferimento.
         /// </summary>
         /// <remarks>
@@ -317,15 +254,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_ComuneRiferimento;
-        
-        /// <summary>
-        /// Controllo lbl_PartitaIva.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_PartitaIva;
         
         /// <summary>
         /// Controllo tbMod_PartitaIva.
@@ -337,15 +265,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbMod_PartitaIva;
         
         /// <summary>
-        /// Controllo lbl_Societa.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Societa;
-        
-        /// <summary>
         /// Controllo tbMod_NomeSocieta.
         /// </summary>
         /// <remarks>
@@ -353,15 +272,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_NomeSocieta;
-        
-        /// <summary>
-        /// Controllo lbl_Assunto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Assunto;
         
         /// <summary>
         /// Controllo cbMod_Assunto.
@@ -373,15 +283,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.CheckBox cbMod_Assunto;
         
         /// <summary>
-        /// Controllo lbl_Attivo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Attivo;
-        
-        /// <summary>
         /// Controllo cbMod_Attivo.
         /// </summary>
         /// <remarks>
@@ -389,24 +290,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox cbMod_Attivo;
-        
-        /// <summary>
-        /// Controllo imgCollaboratore.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgCollaboratore;
-        
-        /// <summary>
-        /// Controllo lbl_Note.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Note;
         
         /// <summary>
         /// Controllo tbMod_Note.
@@ -418,13 +301,40 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbMod_Note;
         
         /// <summary>
-        /// Controllo lbl_Qualifiche.
+        /// Controllo imgCollaboratore.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Qualifiche;
+        protected global::System.Web.UI.WebControls.Image imgCollaboratore;
+        
+        /// <summary>
+        /// Controllo fuImg.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuImg;
+        
+        /// <summary>
+        /// Controllo uploadButton.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button uploadButton;
+        
+        /// <summary>
+        /// Controllo lblImage.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblImage;
         
         /// <summary>
         /// Controllo lbMod_Qualifiche.
@@ -436,15 +346,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.ListBox lbMod_Qualifiche;
         
         /// <summary>
-        /// Controllo lbl_Indirizzi.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Indirizzi;
-        
-        /// <summary>
         /// Controllo lbMod_Indirizzi.
         /// </summary>
         /// <remarks>
@@ -454,15 +355,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.ListBox lbMod_Indirizzi;
         
         /// <summary>
-        /// Controllo lbl_Telefoni.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Telefoni;
-        
-        /// <summary>
         /// Controllo lbMod_Telefoni.
         /// </summary>
         /// <remarks>
@@ -470,15 +362,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lbMod_Telefoni;
-        
-        /// <summary>
-        /// Controllo lbl_Email.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Email;
         
         /// <summary>
         /// Controllo lbMod_Email.
@@ -515,14 +398,5 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnulla;
-        
-        /// <summary>
-        /// Controllo btn_chiudi.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_chiudi;
     }
 }

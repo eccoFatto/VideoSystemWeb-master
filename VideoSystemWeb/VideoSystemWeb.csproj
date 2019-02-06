@@ -17,13 +17,14 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetOfficeVersion>15.0</TargetOfficeVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -139,6 +140,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Office.css" />
+    <Content Include="Content\OfficeThemes.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Css\Agenda.css" />
     <Content Include="Css\bootstrap-datepicker3.min.css" />
@@ -185,7 +188,6 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\eliminare\collapse.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\fullcalendar\demos\json\events.json" />
     <Content Include="Css\eliminare\bootstrap-grid.css.map" />
@@ -329,7 +331,6 @@
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\tether.js" />
-    <Content Include="Scripts\eliminare\transition.js" />
     <Content Include="Scripts\Utility.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />

@@ -173,7 +173,7 @@ namespace VideoSystemWeb.DAL
             return listaCollaboratori;
         }
 
-        public Esito CreaCollaboratore(Anag_Collaboratori collaboratore)
+        public int CreaCollaboratore(Anag_Collaboratori collaboratore, ref Esito esito)
         {
             //@cognome varchar(50),
             //@nome varchar(50),
@@ -190,7 +190,7 @@ namespace VideoSystemWeb.DAL
             //@note varchar(max) = null,
             //@attivo bit
 
-            Esito esito = new Esito();
+            //Esito esito = new Esito();
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -261,7 +261,9 @@ namespace VideoSystemWeb.DAL
 
                             StoreProc.Connection.Open();
 
-                            int iReturn = StoreProc.ExecuteNonQuery();
+                            //int iReturn = StoreProc.ExecuteNonQuery();
+                            int iReturn = (int) StoreProc.ExecuteScalar();
+                            return iReturn;
                         }
                     }
                 }
@@ -272,7 +274,7 @@ namespace VideoSystemWeb.DAL
                 esito.descrizione = "Anag_Collaboratori_DAL.cs - CreaCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
-            return esito;
+            return 0;
         }
 
         public Esito AggiornaCollaboratore(Anag_Collaboratori collaboratore)

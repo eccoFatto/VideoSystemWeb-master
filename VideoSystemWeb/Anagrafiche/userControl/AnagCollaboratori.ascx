@@ -2,9 +2,15 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <script>
     function mostraCollaboratore(row) {
-    //alert("id collaboratore:" + row);
-    $("#<%=hf_idColl.ClientID%>").val(row);
-    $("#<%=btnEditCollaboratore.ClientID%>").click();
+        $("#<%=hf_idColl.ClientID%>").val(row);
+        $("#<%=hf_tipoOperazione.ClientID%>").val('MODIFICA');
+        $("#<%=btnEditCollaboratore.ClientID%>").click();
+    }
+
+    function inserisciCollaboratore() {
+        $("#<%=hf_idColl.ClientID%>").val('');
+        $("#<%=hf_tipoOperazione.ClientID%>").val('INSERIMENTO');
+        $("#<%=btnInsCollaboratore.ClientID%>").click();
     }
 
     function openDettaglioAnagrafica(tipoName) {
@@ -67,10 +73,10 @@
                 <table style="width:100%;">
                     <tr>
                         <td style="width:40%;">                    
-                            <asp:Button ID="btnRicercaCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="lbRicercaCollaboratori_Click" Text="Ricerca" />
+                            <asp:Button ID="btnRicercaCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaCollaboratori_Click" Text="Ricerca" />
                         </td>
                         <td style="width:40%;">                    
-                            <asp:Button ID="btnInserisciCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="lbInserisciCollaboratori_Click" Text="Inserisci" />
+                            <asp:Button ID="btnInserisciCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" Text="Inserisci" />
                         </td>
                         <td style="width:20%;">
                             <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;"  OnClick="PulisciCampiRicerca_Click" />
@@ -92,169 +98,166 @@
 </asp:UpdatePanel>
 
 
-        <asp:Button runat="server" ID="btnEditCollaboratore" Style="display: none" onclick="EditCollaboratore_Click"/>
-        <asp:HiddenField ID="hf_idColl" runat="server" />
-        <%--<ajaxToolkit:ToolkitScriptManager runat="server" ID="tksm1" ></ajaxToolkit:ToolkitScriptManager>--%>
-         <%--<asp:UpdatePanel  ID="upCollaboratore" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false" >--%>
-        <asp:UpdatePanel ID="upColl" runat="server" UpdateMode="Conditional">
-            <ContentTemplate>
-                <asp:Panel  runat="server" ID="pnlContainer" visible="false">
-                    <div class="modalBackground"></div>
-                    <asp:Panel  runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto">
-                        <div class="w3-container w3-center w3-xlarge">
-                            GESTIONE COLLABORATORI
-                        </div>
-                        <br />
+<asp:Button runat="server" ID="btnEditCollaboratore" Style="display: none" onclick="EditCollaboratore_Click"/>
+<asp:Button runat="server" ID="btnInsCollaboratore" Style="display: none" onclick="btnInserisciCollaboratori_Click"/>
+<asp:HiddenField ID="hf_idColl" runat="server" />
+<asp:HiddenField ID="hf_tipoOperazione" runat="server" />
+<%--<asp:UpdatePanel  ID="upCollaboratore" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false" >--%>
+<asp:UpdatePanel ID="upColl" runat="server" UpdateMode="Conditional">
+    <ContentTemplate>
+        <asp:Panel  runat="server" ID="pnlContainer" visible="false">
+            <div class="modalBackground"></div>
+            <asp:Panel  runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                <div class="w3-container w3-center w3-xlarge">
+                    GESTIONE COLLABORATORI
+                </div>
+                <br />
                         
-                        <div class="alert alert-danger alert-dismissible fade in" role="alert" runat="server" id="panelErrore" style="display: none">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            <asp:Label ID="lbl_MessaggioErrore" runat="server" CssClass="form-control-sm"></asp:Label>
-                        </div>
-
-                        
-<%--                        <div class="errorMessage" style="width: 100%; text-align: center">
-                            <asp:Label ID="lbl_MessaggioErrore" runat="server" Visible="false"></asp:Label>
-                        </div>--%>
+                <div class="alert alert-danger alert-dismissible fade in" role="alert" runat="server" id="panelErrore" style="display: none">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <asp:Label ID="lbl_MessaggioErrore" runat="server" CssClass="form-control-sm"></asp:Label>
+                </div>
                             
-                        <div class="w3-container">
-                            <div class="w3-bar w3-red w3-round">
-                                <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Anagrafica')">Anagrafica</div>
-                                <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Qualifiche')">Qualifiche</div>
-                                <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Indirizzi')">Indirizzi</div>
-                                <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Telefoni')">Telefoni</div>
-                                <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Email')">Email</div>
-                                <div class="w3-bar-item w3-button w3-red w3-right"><asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-button w3-green w3-small w3-round" OnClick="btn_chiudi_Click" OnClientClick="return confirm('Confermi chiusura pagina?')"/></div>
-                            </div>
-                            <div id="Anagrafica" class="w3-container w3-border collab">
-                            <table style="width:100%">
-                                <tr>
-                                    <td style="width:75%">
-                                        <div class="w3-row-padding">
-                                            <div class="w3-half">
-                                                <label>Cognome</label>
-                                                <asp:TextBox ID="tbMod_Cognome" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" ></asp:TextBox>
-                                            </div>
-                                            <div class="w3-half">
-                                                <label>Nome</label>
-                                                <asp:TextBox ID="tbMod_Nome" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                            </div>
-                                        </div>
+                <div class="w3-container">
+                    <div class="w3-bar w3-red w3-round">
+                        <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Anagrafica')">Anagrafica</div>
+                        <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Qualifiche')">Qualifiche</div>
+                        <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Indirizzi')">Indirizzi</div>
+                        <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Telefoni')">Telefoni</div>
+                        <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Email')">Email</div>
+                        <div class="w3-bar-item w3-button w3-red w3-right"><asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-button w3-green w3-small w3-round" OnClick="btn_chiudi_Click" OnClientClick="return confirm('Confermi chiusura pagina?')"/></div>
+                    </div>
+                    <div id="Anagrafica" class="w3-container w3-border collab">
+                    <table style="width:100%">
+                        <tr>
+                            <td style="width:75%">
+                                <div class="w3-row-padding">
+                                    <div class="w3-half">
+                                        <label>Cognome</label>
+                                        <asp:TextBox ID="tbMod_Cognome" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" ></asp:TextBox>
+                                    </div>
+                                    <div class="w3-half">
+                                        <label>Nome</label>
+                                        <asp:TextBox ID="tbMod_Nome" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                                    </div>
+                                </div>
                                         
-                                        <div class="w3-row-padding">
-                                            <div class="w3-quarter">
-                                                <label>Codice Fiscale</label>
-                                                <asp:TextBox ID="tbMod_CF" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                            </div>
-                                            <div class="w3-quarter">
-                                                <label>Nazione</label>
-                                                <asp:TextBox ID="tbMod_Nazione" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                            </div>
-                                            <div class="w3-quarter">
-                                                <label>Comune Nascita</label>
-                                                <asp:TextBox ID="tbMod_ComuneNascita" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                            </div>
-                                            <div class="w3-quarter">
-                                                <label>Provincia Nascita</label>
-                                                <asp:TextBox ID="tbMod_ProvinciaNascita" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="2"></asp:TextBox>
-                                            </div>
-                                        </div>
+                                <div class="w3-row-padding">
+                                    <div class="w3-quarter">
+                                        <label>Codice Fiscale</label>
+                                        <asp:TextBox ID="tbMod_CF" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Nazione</label>
+                                        <asp:TextBox ID="tbMod_Nazione" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Comune Nascita</label>
+                                        <asp:TextBox ID="tbMod_ComuneNascita" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Provincia Nascita</label>
+                                        <asp:TextBox ID="tbMod_ProvinciaNascita" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="2"></asp:TextBox>
+                                    </div>
+                                </div>
                                         
-                                        <div class="w3-row-padding">
-                                            <div class="w3-quarter">
-                                                <label>Data Nascita</label>
-                                                <asp:TextBox ID="tbMod_DataNascita" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="Date"></asp:TextBox>
-                                            </div>
-                                            <div class="w3-quarter">
-                                                <label>Comune Riferimento</label>
-                                                <asp:TextBox ID="tbMod_ComuneRiferimento" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                            </div>
-                                            <div class="w3-quarter">
-                                                <label>Partita Iva</label>
-                                                <asp:TextBox ID="tbMod_PartitaIva" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                            </div>
-                                            <div class="w3-quarter">
-                                                <label>Società</label>
-                                                <asp:TextBox ID="tbMod_NomeSocieta" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                            </div>
-                                        </div>
+                                <div class="w3-row-padding">
+                                    <div class="w3-quarter">
+                                        <label>Data Nascita</label>
+                                        <asp:TextBox ID="tbMod_DataNascita" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="Date"></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Comune Riferimento</label>
+                                        <asp:TextBox ID="tbMod_ComuneRiferimento" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Partita Iva</label>
+                                        <asp:TextBox ID="tbMod_PartitaIva" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Società</label>
+                                        <asp:TextBox ID="tbMod_NomeSocieta" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                                    </div>
+                                </div>
                                         
-                                        <div class="w3-row-padding">
-                                            <div class="w3-half">
-                                                <label>Assunto</label>
-                                                <asp:CheckBox ID="cbMod_Assunto" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
-                                            </div>
-                                            <div class="w3-half">
-                                                <label>Attivo</label>
-                                                <asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
-                                            </div>
-                                        </div>
+                                <div class="w3-row-padding">
+                                    <div class="w3-half">
+                                        <label>Assunto</label>
+                                        <asp:CheckBox ID="cbMod_Assunto" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
+                                    </div>
+                                    <div class="w3-half">
+                                        <label>Attivo</label>
+                                        <asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
+                                    </div>
+                                </div>
 
-                                        <div class="w3-container">
-                                            <label>Note</label>
-                                            <asp:TextBox ID="tbMod_Note" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
-                                        </div>
+                                <div class="w3-container">
+                                    <label>Note</label>
+                                    <asp:TextBox ID="tbMod_Note" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                                </div>
 
-                                    </td>
-                                    <td style="width:25%; vertical-align:top">
-                                        <div class="w3-container">
-                                            <h2></h2>
-                                            <div class="w3-card-4" style="width:90%">
-                                            <asp:Image ID="imgCollaboratore" runat="server" Width="100%" />
-                                            <div class="w3-container w3-center">
-                                                <p>
-                                                    <div onclick="openUploadImg('divUploadImg')" class="w3-button w3-block w3-center-align">
-                                                     Carica Immagine</div>
-                                                    <div id="divUploadImg" class="w3-container w3-hide">
-                                                        <asp:FileUpload ID="fuImg" runat="server" Font-Size="X-Small" class="w3-button w3-yellow w3-round w3-margin" />
-                                                        <asp:Button ID="uploadButton" runat="server" class="w3-button w3-yellow w3-round w3-margin" OnClick="Button1_Click" Text="Carica Immagine" />
-                                                        <asp:Label ID="lblImage" runat="server" Font-Size="XX-Small"></asp:Label>
-                                                     </div>
-                                                </p>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-                            </div>
-                            <div id="Qualifiche" class="w3-container w3-border collab" style="display:none">
-                                <label>Qualifiche</label>
-                                <asp:ListBox ID="lbMod_Qualifiche" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
-                            </div>
+                            </td>
+                            <td style="width:25%; vertical-align:top">
+                                <div class="w3-container">
+                                    <h2></h2>
+                                    <div class="w3-card-4" style="width:90%">
+                                    <asp:Image ID="imgCollaboratore" runat="server" Width="100%" />
+                                    <div class="w3-container w3-center">
+                                        <p>
+                                            <div onclick="openUploadImg('divUploadImg')" class="w3-button w3-block w3-center-align">
+                                                Carica Immagine</div>
+                                            <div id="divUploadImg" class="w3-container w3-hide">
+                                                <asp:FileUpload ID="fuImg" runat="server" Font-Size="X-Small" class="w3-button w3-yellow w3-round w3-margin" />
+                                                <asp:Button ID="uploadButton" runat="server" class="w3-button w3-yellow w3-round w3-margin" OnClick="Button1_Click" Text="Carica Immagine" />
+                                                </div>
+                                            <p>
+                                                <asp:Label ID="lblImage" runat="server" Font-Size="XX-Small"></asp:Label>
+                                            </p>
+                                        </p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div style="text-align: center;">
+                        <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnModifica_Click" />
+                        <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-panel w3-green w3-border w3-round" OnClick="btnElimina_Click"  OnClientClick="return confirm('Confermi eliminazione Collaboratore?')" Visible="false" />
+                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class="w3-panel w3-green w3-border w3-round" OnClick="btnSalva_Click" OnClientClick="return confirm('Confermi salvataggio modifiche?')" Visible="false"/>
+                        <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false"/>
+                    </div>
+                    </div>
+                    <div id="Qualifiche" class="w3-container w3-border collab" style="display:none">
+                        <label>Qualifiche</label>
+                        <asp:ListBox ID="lbMod_Qualifiche" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                    </div>
 
-                            <div id="Indirizzi" class="w3-container w3-border collab" style="display:none">
-                                <label>Indirizzi</label>
-                                <asp:ListBox ID="lbMod_Indirizzi" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
-                            </div>
+                    <div id="Indirizzi" class="w3-container w3-border collab" style="display:none">
+                        <label>Indirizzi</label>
+                        <asp:ListBox ID="lbMod_Indirizzi" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                    </div>
 
-                            <div id="Telefoni" class="w3-container w3-border collab" style="display:none">
-                                <label>Telefoni</label>
-                                <asp:ListBox ID="lbMod_Telefoni" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
-                            </div>
-                            <div id="Email" class="w3-container  w3-border collab" style="display:none">
-                                <label>E-Mail</label>
-                                <asp:ListBox ID="lbMod_Email" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
-                            </div>
+                    <div id="Telefoni" class="w3-container w3-border collab" style="display:none">
+                        <label>Telefoni</label>
+                        <asp:ListBox ID="lbMod_Telefoni" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                    </div>
+                    <div id="Email" class="w3-container  w3-border collab" style="display:none">
+                        <label>E-Mail</label>
+                        <asp:ListBox ID="lbMod_Email" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                    </div>
 
-                        </div>
+                </div>
 
-                        <div style="text-align: center;">
-                            <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnModifica_Click" />
-                            <asp:Button ID="btnSalva" runat="server" Text="Salva" class="w3-panel w3-green w3-border w3-round" OnClick="btnSalva_Click" OnClientClick="return confirm('Confermi salvataggio modifiche?')" Visible="false"/>
-                            <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false"/>
-                        </div>
-                        <p style="text-align: center;">
-                            
-                        </p>
-                    </asp:Panel>
-                </asp:Panel>
-            </ContentTemplate>
-            <Triggers>
-                <asp:PostBackTrigger ControlID="uploadButton" />
-                <asp:AsyncPostBackTrigger ControlID="btnEditCollaboratore" EventName="Click" />
-                <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />
-                <asp:AsyncPostBackTrigger ControlID="btnSalva" EventName="Click" />
-            </Triggers>
-        </asp:UpdatePanel>
+
+            </asp:Panel>
+        </asp:Panel>
+    </ContentTemplate>
+    <Triggers>
+        <asp:PostBackTrigger ControlID="uploadButton" />
+        <asp:AsyncPostBackTrigger ControlID="btnEditCollaboratore" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnSalva" EventName="Click" />
+    </Triggers>
+</asp:UpdatePanel>
 
 

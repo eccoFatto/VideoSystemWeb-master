@@ -82,6 +82,10 @@ namespace VideoSystemWeb.BLL
             {
                 valore = ((DropDownList)campo).SelectedValue;
             }
+            else if (campo is CheckBox)
+            {
+                valore = Convert.ToString(((CheckBox)campo).Checked);
+            }
 
             if (isRequired && string.IsNullOrEmpty(valore))
             {

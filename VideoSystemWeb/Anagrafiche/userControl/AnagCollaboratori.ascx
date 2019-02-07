@@ -105,9 +105,16 @@
                             GESTIONE COLLABORATORI
                         </div>
                         <br />
-                        <div class="errorMessage" style="width: 100%; text-align: center">
-                            <asp:Label ID="lbl_MessaggioErrore" runat="server" Visible="false"></asp:Label>
+                        
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert" runat="server" id="panelErrore" style="display: none">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <asp:Label ID="lbl_MessaggioErrore" runat="server" CssClass="form-control-sm"></asp:Label>
                         </div>
+
+                        
+<%--                        <div class="errorMessage" style="width: 100%; text-align: center">
+                            <asp:Label ID="lbl_MessaggioErrore" runat="server" Visible="false"></asp:Label>
+                        </div>--%>
                             
                         <div class="w3-container">
                             <div class="w3-bar w3-red w3-round">
@@ -148,7 +155,7 @@
                                             </div>
                                             <div class="w3-quarter">
                                                 <label>Provincia Nascita</label>
-                                                <asp:TextBox ID="tbMod_ProvinciaNascita" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                                                <asp:TextBox ID="tbMod_ProvinciaNascita" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="2"></asp:TextBox>
                                             </div>
                                         </div>
                                         
@@ -233,7 +240,7 @@
 
                         <div style="text-align: center;">
                             <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnModifica_Click" />
-                            <asp:Button ID="btnSalva" runat="server" Text="Salva" class="w3-panel w3-green w3-border w3-round" OnClick="btnSalva_Click" Visible="false"/>
+                            <asp:Button ID="btnSalva" runat="server" Text="Salva" class="w3-panel w3-green w3-border w3-round" OnClick="btnSalva_Click" OnClientClick="return confirm('Confermi salvataggio modifiche?')" Visible="false"/>
                             <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false"/>
                         </div>
                         <p style="text-align: center;">
@@ -246,6 +253,7 @@
                 <asp:PostBackTrigger ControlID="uploadButton" />
                 <asp:AsyncPostBackTrigger ControlID="btnEditCollaboratore" EventName="Click" />
                 <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />
+                <asp:AsyncPostBackTrigger ControlID="btnSalva" EventName="Click" />
             </Triggers>
         </asp:UpdatePanel>
 

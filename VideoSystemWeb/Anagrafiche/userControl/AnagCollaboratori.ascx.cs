@@ -104,10 +104,31 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         protected void btnSalva_Click(object sender, EventArgs e)
         {
-
+            Esito esito = new Esito();
+            Anag_Collaboratori collaboratore = CreaOggettoSalvataggio(ref esito);
+            collaboratore.PathFoto = Path.GetFileName(imgCollaboratore.ImageUrl);
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+                //UpdatePopup();
+                editCollaboratore();
+            }
+            else
+            {
+                esito = Anag_Collaboratori_BLL.Instance.AggiornaCollaboratore(collaboratore);
+                if (esito.codice != Esito.ESITO_OK)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = esito.descrizione;
+                    //UpdatePopup();
+                }
+                AttivaDisattivaModificaAnagrafica(true);
+                editCollaboratore();
+            }
         }
 
-        protected void btnAnnulla_Click(object sender, EventArgs e)
+            protected void btnAnnulla_Click(object sender, EventArgs e)
         {
             AttivaDisattivaModificaAnagrafica(true);
             editCollaboratore();
@@ -333,5 +354,26 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
 
         }
+        private Anag_Collaboratori CreaOggettoSalvataggio(ref Esito esito)
+        {
+            Anag_Collaboratori collaboratore = new Anag_Collaboratori();
+            collaboratore.Id = Convert.ToInt16(hf_idColl.Value);
+            collaboratore.Nazione = BasePage.validaCampo(tbMod_Nazione, "", false, ref esito);
+            collaboratore.Nome = BasePage.validaCampo(tbMod_Nome, "", false, ref esito);
+            collaboratore.Cognome = BasePage.validaCampo(tbMod_Cognome, "", true, ref esito);
+            collaboratore.ComuneNascita = BasePage.validaCampo(tbMod_ComuneNascita, "", false, ref esito);
+            collaboratore.ComuneRiferimento = BasePage.validaCampo(tbMod_ComuneRiferimento, "", false, ref esito);
+            collaboratore.DataNascita = BasePage.validaCampo(tbMod_DataNascita, DateTime.Now, true, ref esito);
+            collaboratore.CodiceFiscale = BasePage.validaCampo(tbMod_CF, "", true, ref esito);
+            collaboratore.Assunto = Convert.ToBoolean(BasePage.validaCampo(cbMod_Assunto, "false", false, ref esito));
+            collaboratore.Attivo = Convert.ToBoolean(BasePage.validaCampo(cbMod_Attivo, "true", false, ref esito));
+            collaboratore.NomeSocieta = BasePage.validaCampo(tbMod_NomeSocieta, "", false, ref esito);
+            collaboratore.Note = BasePage.validaCampo(tbMod_Note, "", false, ref esito);
+            collaboratore.PartitaIva = BasePage.validaCampo(tbMod_PartitaIva, "", false, ref esito);
+            collaboratore.ProvinciaNascita = BasePage.validaCampo(tbMod_ProvinciaNascita, "", false, ref esito);
+
+            return collaboratore;
+        }
+
     }
 }

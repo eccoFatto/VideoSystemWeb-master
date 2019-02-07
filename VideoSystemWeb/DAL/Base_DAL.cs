@@ -13,8 +13,8 @@ namespace VideoSystemWeb.DAL
     {
         //public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL_NIC"].ConnectionString;
         //string static constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-        public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
-        // STRINGA DI CONNESSIONE PER CLASSI SQLCLIENT (NON SERVE SPECIFICARE IL DATA SOURCE)
+        //public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
+        // STRINGA DI CONNESSIONE PER CLASSI SQLCLIENT (NON SERVE SPECIFICARE IL PROVIDER)
         public static string sqlConstr = ConfigurationManager.ConnectionStrings["sqlConstrMSSQL"].ConnectionString;
 
         public static int executeUpdateBySql(string querySql, ref Esito esito)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
+using System.Data.SqlClient;
 using System.Web;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
@@ -36,14 +37,14 @@ namespace VideoSystemWeb.DAL
             List<Anag_Qualifiche_Collaboratori> listaQUalifiche = new List<Anag_Qualifiche_Collaboratori>();
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
                     string query = "SELECT * FROM anag_qualifiche_collaboratori WHERE id_Collaboratore = " + idCollaboratore.ToString();
                     if (soloAttivi) query += " AND ATTIVO = 1";
                     query += " ORDER BY priorita,qualifica";
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(query))
+                    using (SqlCommand cmd = new SqlCommand(query))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;

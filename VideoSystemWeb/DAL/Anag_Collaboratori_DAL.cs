@@ -193,7 +193,7 @@ namespace VideoSystemWeb.DAL
             Esito esito = new Esito();
             try
             {
-                using (SqlConnection con = new SqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
                     using (SqlCommand StoreProc = new SqlCommand("InsertCollaboratore"))
                     {
@@ -207,9 +207,8 @@ namespace VideoSystemWeb.DAL
                             cognome.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(cognome);
 
-                            SqlParameter nome = new SqlParameter("@nome", System.Data.OleDb.OleDbType.VarChar);
+                            SqlParameter nome = new SqlParameter("@nome", collaboratore.Nome);
                             nome.Direction = ParameterDirection.Input;
-                            nome.Value = collaboratore.Nome;
                             StoreProc.Parameters.Add(nome);
 
                             SqlParameter codiceFiscale = new SqlParameter("@codiceFiscale", collaboratore.CodiceFiscale);
@@ -236,9 +235,8 @@ namespace VideoSystemWeb.DAL
                             dataNascita.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(dataNascita);
 
-                            SqlParameter comuneRiferimento = new SqlParameter("@comuneRiferimento", System.Data.OleDb.OleDbType.VarChar);
+                            SqlParameter comuneRiferimento = new SqlParameter("@comuneRiferimento", collaboratore.ComuneRiferimento);
                             comuneRiferimento.Direction = ParameterDirection.Input;
-                            comuneRiferimento.Value = collaboratore.ComuneRiferimento;
                             StoreProc.Parameters.Add(comuneRiferimento);
 
                             SqlParameter partitaIva = new SqlParameter("@partitaIva", collaboratore.PartitaIva);

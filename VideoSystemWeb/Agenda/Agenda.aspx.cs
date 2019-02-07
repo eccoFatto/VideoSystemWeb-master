@@ -12,17 +12,16 @@ namespace VideoSystemWeb.Agenda
 {
     public partial class Agenda : BasePage
     {
-        //List<Tipologica> listaRisorse;
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            popupAppuntamenti.RichiediOperazionePopup += OperazioniPopup;
+            popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
 
             Esito esito = new Esito();
-            listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);
+            
             if (!IsPostBack)
             {
                 DateTime dataPartenza = DateTime.Now;
+                listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito);
                 hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
@@ -40,15 +39,17 @@ namespace VideoSystemWeb.Agenda
             DateTime dataEvento = DateTime.Parse(hf_data.Value);
             int risorsaEvento = int.Parse(hf_risorsa.Value);
 
-            popupAppuntamenti.EditEvent(dataEvento, risorsaEvento);
+            popupAppuntamento.EditEvent(dataEvento, risorsaEvento);
             
             pnlContainer.Style.Remove("display");
+            panelAppuntamento.Style.Remove("display");
         }
 
         protected void btn_chiudi_Click(object sender, EventArgs e)
         {
-            ChiudiPopup();
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+            OperazioniPopup("CLOSE");
+            //ChiudiPopup();
+            //ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
         }
         #endregion
 
@@ -111,7 +112,7 @@ namespace VideoSystemWeb.Agenda
         {
             bool isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
 
-            e.Row.Cells[0].Attributes.Add("class", "first");
+            e.Row.Cells[0].Attributes.Add("class", "first");           
 
             #region intestazione tabella
             if (e.Row.RowType == DataControlRowType.Header)
@@ -134,7 +135,7 @@ namespace VideoSystemWeb.Agenda
             #region dati agenda
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                e.Row.Cells[0].Attributes.Add("style", "font-weight:bold;background-color:#FDEDB5;width:100px;");
+                e.Row.Cells[0].Attributes.Add("style", "font-weight:bold;background-color:#FDEDB5;width:100px;height:40px;");
                 e.Row.Cells[0].Attributes.Add("class", "first");
 
                 for (int indiceColonna = 1; indiceColonna <= listaRisorse.Count; indiceColonna++)
@@ -144,50 +145,66 @@ namespace VideoSystemWeb.Agenda
 
                     if (!string.IsNullOrEmpty(e.Row.Cells[indiceColonna].Text.Trim()))
                     {
-                        DatiAgenda datoAgendaCorrente = Agenda_BLL.Instance.GetDatiAgendaById(listaDatiAgenda, int.Parse(e.Row.Cells[indiceColonna].Text.Trim())); //Tipologie.getDatiAgendaById(int.Parse(e.Row.Cells[indiceColonna].Text.Trim()));
+                        DatiAgenda datoAgendaCorrente = Agenda_BLL.Instance.GetDatiAgendaById(listaDatiAgenda, int.Parse(e.Row.Cells[indiceColonna].Text.Trim())); 
 
                         Esito esito = new Esito();
                         Tipologica statoCorrente = UtilityTipologiche.getElementByID(listaStati, datoAgendaCorrente.id_stato, ref esito);
 
                         string colore;
-                        if (IsViaggio(datoAgendaCorrente, DateTime.Parse(data)))
-                        {
-                            colore = "#FFFF00"; 
-                        }
-                        else
-                        {
-                            colore = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "color", ref esito);
-                        }
+                        
+                        
+
+                        colore = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "color", ref esito);
 
                         e.Row.Cells[indiceColonna].CssClass = "evento";
 
-                        if (IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
+                        // EVENTO GIORNO SINGOLO
+                        if (IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
                         {
-                            e.Row.Cells[indiceColonna].Text = datoAgendaCorrente.produzione;
-                            
-                            e.Row.Cells[indiceColonna].Attributes.Add("style", "border: 0px;border-right: solid 2px #5377A9;border-left: solid 2px #5377A9;border-top: solid 2px #5377A9;background-color:" + colore);
+                            Panel mainPanel = new Panel();
+                            mainPanel.Controls.Add(new LiteralControl(datoAgendaCorrente.produzione));
+                            mainPanel.CssClass = "round-corners-6px";
+                            mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
+                            e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
                         }
-
-                        if (IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
+                        else
                         {
-                            if (datoAgendaCorrente.data_inizio_lavorazione != datoAgendaCorrente.data_fine_lavorazione)
+                            if (IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && !IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
+                            {
+                                if (IsViaggioAndata(datoAgendaCorrente, DateTime.Parse(data)))
+                                {
+                                    colore = "#FFFF00";
+                                }
+
+                                Panel mainPanel = new Panel();
+                                mainPanel.Controls.Add(new LiteralControl(datoAgendaCorrente.produzione));
+                                mainPanel.CssClass = "round-corners-6px unround-bottom-corners";
+                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
+                                e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
+
+                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-bottom: 0px; vertical-align: bottom");
+                            }
+                            else if (!IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
+                            {
+                                if (IsViaggioRitorno(datoAgendaCorrente, DateTime.Parse(data)))
+                                {
+                                    colore = "#FFFF00";
+                                }
+
+                                Panel mainPanel = new Panel();
+                                mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
+                                mainPanel.CssClass = "round-corners-6px unround-top-corners";
+                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
+                                e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
+
+                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; vertical-align: top");
+                            }
+                            else if (!IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && !IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
                             {
                                 e.Row.Cells[indiceColonna].Text = "";
-                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border: 0px;border-right: solid 2px #5377A9;border-left: solid 2px #5377A9;border-bottom: solid 2px #5377A9;background-color:" + colore);
+                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; border-bottom: 0px; background-color:" + colore);
                             }
-                            else
-                            {
-                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border: 0px;border-right: solid 2px #5377A9;border-left: solid 2px #5377A9;border-top: solid 2px #5377A9; border-bottom: solid 2px #5377A9;background-color:" + colore);
-                            }
-                           
                         }
-                        if (!IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && !IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
-                        {
-                            e.Row.Cells[indiceColonna].Text = "";
-                            e.Row.Cells[indiceColonna].Attributes.Add("style", "border: 0px;border-right: solid 2px #5377A9;border-left: solid 2px #5377A9;background-color:" + colore);
-
-                        }
-                        
                         e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + risorsa + "');";
                     }
                     else
@@ -198,27 +215,32 @@ namespace VideoSystemWeb.Agenda
                         }
                     }
                 }
-
-                e.Row.Attributes.Add("style", "text-align:center;");
             }
             #endregion
         }
 
         private void AggiornaAgenda()
         {
+            Esito esito = new Esito();
+            listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
             gv_scheduler.DataSource = CreateDataTable(DateTime.Parse(hf_valoreData.Value));
             gv_scheduler.DataBind();
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "passaggioMouse", "registraPassaggioMouse();", true);
         }
 
-        private bool IsViaggio(DatiAgenda evento, DateTime data)
+        private bool IsViaggioAndata(DatiAgenda evento, DateTime data)
         {
             if (evento.durata_viaggio_andata > 0)
             {
                 return (data.Date >= evento.data_inizio_lavorazione.Date && data.Date < evento.data_inizio_lavorazione.AddDays(evento.durata_viaggio_andata).Date);
             }
+            
+            return false;
+        }
 
+        private bool IsViaggioRitorno(DatiAgenda evento, DateTime data)
+        {
             if (evento.durata_viaggio_ritorno > 0)
             {
                 return (data.Date > evento.data_fine_lavorazione.AddDays(evento.durata_viaggio_ritorno * -1).Date && data <= evento.data_fine_lavorazione.Date);
@@ -250,8 +272,22 @@ namespace VideoSystemWeb.Agenda
                     UpdatePopup();
                     break;
                 case "CLOSE":
+                    panelAppuntamento.Style.Add("display", "none");
+                    panelOfferta.Style.Add("display", "none");
+                    panelLavorazione.Style.Add("display", "none");
+                    UpdatePopup();
                     ChiudiPopup();
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+                    break;
+                case "OFFERTA":
+                    panelAppuntamento.Style.Add("display", "none");
+                    panelOfferta.Style.Remove("display");
+                    UpdatePopup();
+                    break;
+                case "LAVORAZIONE":
+                    panelAppuntamento.Style.Add("display", "none");
+                    panelLavorazione.Style.Remove("display");
+                    UpdatePopup();
                     break;
             }
 

@@ -1,7 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Agenda.aspx.cs" Inherits="VideoSystemWeb.Agenda.Agenda" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-<%@ Register TagPrefix="popup" TagName="Appuntamenti" Src="~/Agenda/userControl/Appuntamenti.ascx" %>
+<%@ Register TagPrefix="popup" TagName="Appuntamento" Src="~/Agenda/userControl/Appuntamento.ascx" %>
+<%@ Register TagPrefix="popup" TagName="Offerta" Src="~/Agenda/userControl/Offerta.ascx" %>
+<%@ Register TagPrefix="popup" TagName="Lavorazione" Src="~/Agenda/userControl/Lavorazione.ascx" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <script>
@@ -99,11 +101,21 @@
                     <div class="modalBackground"></div>
                     <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopup round" ScrollBars="Auto" style="font-size:13px;">
 
-                        <popup:Appuntamenti id="popupAppuntamenti" runat="server"></popup:Appuntamenti>
+                        <asp:Panel runat="server" ID="panelAppuntamento" style="display:none">
+                            <popup:Appuntamento id="popupAppuntamento" runat="server"></popup:Appuntamento>
+                        </asp:Panel>
 
-                        <p style="text-align: center;">
-                            <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class= "w3-green w3-border w3-round" OnClick="btn_chiudi_Click" />
-                        </p>
+                        <asp:Panel runat="server" ID="panelOfferta" style="display:none">
+                            <popup:Offerta id="popupOfferta" runat="server" style="display:none"></popup:Offerta>
+                        </asp:Panel>
+                            
+                        <asp:Panel runat="server" ID="panelLavorazione" style="display:none">
+                            <popup:Lavorazione id="popupLavorazione" runat="server" style="display:none"></popup:Lavorazione>
+                        </asp:Panel>
+
+                        <div style="position:absolute; width:100%; bottom:10px;text-align:center;" >
+                            <asp:Button ID="btn_chiudi" runat="server" Text="&times;" class= "w3-btn w3-circle w3-red" OnClick="btn_chiudi_Click" />
+                        </div>
                     </asp:Panel>
                 </asp:Panel>
         </ContentTemplate>

@@ -203,6 +203,8 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
+                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
                             SqlParameter cognome = new SqlParameter("@cognome", collaboratore.Cognome);
                             cognome.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(cognome);
@@ -262,7 +264,14 @@ namespace VideoSystemWeb.DAL
                             StoreProc.Connection.Open();
 
                             //int iReturn = StoreProc.ExecuteNonQuery();
-                            int iReturn = (int) StoreProc.ExecuteScalar();
+                            //int iReturn = (int) StoreProc.ExecuteScalar();
+
+                            StoreProc.ExecuteNonQuery();
+
+                            // read output value from @NewId
+                            int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+
                             return iReturn;
                         }
                     }

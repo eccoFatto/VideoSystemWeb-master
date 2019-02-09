@@ -100,7 +100,7 @@ namespace VideoSystemWeb.Agenda {
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlContainer;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pnlContainer;
         
         /// <summary>
         /// Controllo innerContainer.
@@ -112,13 +112,22 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Panel innerContainer;
         
         /// <summary>
-        /// Controllo panelAppuntamento.
+        /// Controllo panelErrore.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelAppuntamento;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelErrore;
+        
+        /// <summary>
+        /// Controllo lbl_MessaggioErrore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
         
         /// <summary>
         /// Controllo popupAppuntamento.
@@ -130,15 +139,6 @@ namespace VideoSystemWeb.Agenda {
         protected global::VideoSystemWeb.Agenda.userControl.Appuntamento popupAppuntamento;
         
         /// <summary>
-        /// Controllo panelOfferta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelOfferta;
-        
-        /// <summary>
         /// Controllo popupOfferta.
         /// </summary>
         /// <remarks>
@@ -146,15 +146,6 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.Offerta popupOfferta;
-        
-        /// <summary>
-        /// Controllo panelLavorazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelLavorazione;
         
         /// <summary>
         /// Controllo popupLavorazione.
@@ -166,6 +157,15 @@ namespace VideoSystemWeb.Agenda {
         protected global::VideoSystemWeb.Agenda.userControl.Lavorazione popupLavorazione;
         
         /// <summary>
+        /// Controllo btnSalva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSalva;
+        
+        /// <summary>
         /// Controllo btn_chiudi.
         /// </summary>
         /// <remarks>
@@ -173,5 +173,41 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_chiudi;
+        
+        /// <summary>
+        /// Controllo btnElimina.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnElimina;
+        
+        /// <summary>
+        /// Controllo btnOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOfferta;
+        
+        /// <summary>
+        /// Controllo btnLavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLavorazione;
+        
+        /// <summary>
+        /// Controllo btnRiposo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRiposo;
     }
 }

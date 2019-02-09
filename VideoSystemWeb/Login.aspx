@@ -18,7 +18,7 @@
     <form id="form1" runat="server">
       
         <!-- CON SPECTRE SI PUO' DIVIDERE LA PAGINA IN 12 COLONNE CON I DIV -->
-        <div class="container">
+        <div class="container" style="width:70%; ">
             <div class="columns">
                 <div class="column col-2"></div>
                 <div class="column col-8">

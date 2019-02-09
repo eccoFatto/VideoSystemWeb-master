@@ -47,21 +47,29 @@
 .fieldMax {
     width: 95%;
     padding: 0px;
+    padding-left:3px;
+    height:22px;
 }
 
 .fieldLarge {
     width: 180px;
     padding: 0;
+    padding-left: 3px;
+    height: 22px;
 }
 
 .fieldMedium {
     width: 90px;
     padding: 0;
+    padding-left: 3px;
+    height: 22px;
 }
 
 .fieldSmall {
     width: 40px;
     padding: 0;
+    padding-left: 3px;
+    height: 22px;
 }
 
 .column {

@@ -46,9 +46,9 @@
 
     <link rel="stylesheet" href="/Css/w3.css"/>
     <link rel="stylesheet" href="/Css/w3-colors-win8.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css"/>
+    <%--<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css"/>
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"/>--%>
 
     <%--<link rel='stylesheet' href='/Css/bootstrap-datepicker3.min.css' />--%>
 
@@ -85,7 +85,7 @@
             </div>            
 
         </div>
-        <div class="container body-content" style="height:90%;">
+        <div class="container body-content" style="height:90%; width:100%">
         
             <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
             <hr />

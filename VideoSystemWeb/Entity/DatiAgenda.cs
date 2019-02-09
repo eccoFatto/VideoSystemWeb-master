@@ -8,6 +8,12 @@ namespace VideoSystemWeb.Entity
     [Serializable]
     public class DatiAgenda
     {
+        public const int STATO_PREVISIONE_IMPEGNO = 1;
+        public const int STATO_OFFERTA = 2;
+        public const int STATO_LAVORAZIONE = 3;
+        public const int STATO_FATTURA = 4;
+        public const int STATO_RIPOSO = 5;
+
         private DateTime? _data_inizio_impegno;
         private DateTime? _data_fine_impegno;
 

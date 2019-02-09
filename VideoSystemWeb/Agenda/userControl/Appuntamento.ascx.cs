@@ -25,114 +25,17 @@ namespace VideoSystemWeb.Agenda.userControl
                 basePage.popolaDDLTipologica(ddl_Risorse, basePage.listaRisorse);
                 basePage.popolaDDLTipologica(ddl_Tipologia, basePage.listaTipiTipologie);
             }
-        }
-
-        #region COMPORTAMENTO ELEMENTI PAGINA
-        protected void btnModifica_Click(object sender, EventArgs e)
-        {
-            panelErrore.Style.Add("display", "none");
-            PopolaEditPopupEventi((DatiAgenda)ViewState["eventoSelezionato"]);
-            AttivaDisattivaModifica(true);
-        }
-
-        protected void btnSalva_Click(object sender, EventArgs e)
-        {
-            Esito esito = new Esito();
-            DatiAgenda datiAgenda = CreaOggettoSalvataggio(ref esito);
-
-            if (esito.codice != Esito.ESITO_OK)
-            {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
-                UpdatePopup();
-            }
-            else
-            {
-                NascondiErroriValidazione();
-                if (IsDisponibileDataRisorsa(datiAgenda.data_inizio_lavorazione, datiAgenda.data_fine_lavorazione, datiAgenda))
-                {
-                    if (datiAgenda.id == 0)
-                    {
-                        Agenda_BLL.Instance.CreaEvento(datiAgenda);
-                    }
-                    else
-                    {
-                        Agenda_BLL.Instance.AggiornaEvento(datiAgenda);
-                    }
-                    RichiediOperazionePopup("CLOSE");
-                }
-                else
-                {
-                    panelErrore.Style.Remove("display");
-                    lbl_MessaggioErrore.Text = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
-                    UpdatePopup();
-                }
-            }
-        }
-
-        protected void btnAnnulla_Click(object sender, EventArgs e)
-        {
-            NascondiErroriValidazione();
-            AttivaDisattivaModifica(false);
-        }
-
-        protected void btnElimina_Click(object sender, EventArgs e)
-        {
-            panelErrore.Style.Add("display", "none");
-
-            Agenda_BLL.Instance.EliminaEvento((int)ViewState["idEvento"]);
-
-            RichiediOperazionePopup("CLOSE");
-        }
-
-        protected void btnOfferta_Click(object sender, EventArgs e)
-        {
-            RichiediOperazionePopup("OFFERTA");
-        }
-
-        protected void btnLavorazione_Click(object sender, EventArgs e)
-        {
-            RichiediOperazionePopup("LAVORAZIONE");
-        }
-        #endregion
-
-        public void EditEvent(DateTime dataEvento, int risorsaEvento)
-        {
-            bool isUtenteAbilitatoInScrittura = basePage.AbilitazioneInScrittura();
-
-            ClearPopupEventi();
-
-            DatiAgenda eventoSelezionato = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(basePage.listaDatiAgenda, dataEvento, risorsaEvento);
-            ViewState["eventoSelezionato"] = eventoSelezionato;
-
-            if (eventoSelezionato == null)
-            {
-                ViewState["idEvento"] = 0;
-                AttivaDisattivaModifica(true);
-                btnAnnulla.Visible = false;
-                txt_DataInizioLavorazione.Text = dataEvento.ToString("dd/MM/yyyy");
-                ddl_Risorse.SelectedValue = risorsaEvento.ToString();
-            }
-            else
-            {
-                ViewState["idEvento"] = eventoSelezionato.id;
-                AttivaDisattivaModifica(false);
-                PopolaPopupEventi(eventoSelezionato);
-
-                btnModifica.Visible = isUtenteAbilitatoInScrittura;
-
-                
-            }
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "campiImpegnoOrario", "checkImpegnoOrario();", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataInizioLavorazione.ClientID + "', '" + txt_DataFineLavorazione.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataInizioImpegno.ClientID + "', '" + txt_DataFineImpegno.ClientID + "');", true);
+
         }
 
-        private DatiAgenda CreaOggettoSalvataggio(ref Esito esito)
+        public Esito CreaOggettoSalvataggio(ref DatiAgenda datiAgenda)
         {
-            DatiAgenda datiAgenda = new DatiAgenda();
-            datiAgenda.id = (int)ViewState["idEvento"];
+            Esito esito = new Esito();
+           
             datiAgenda.data_inizio_lavorazione = BasePage.validaCampo(txt_DataInizioLavorazione, DateTime.Now, true, ref esito);
             datiAgenda.data_fine_lavorazione = BasePage.validaCampo(txt_DataFineLavorazione, DateTime.Now, true, ref esito);
             datiAgenda.durata_lavorazione = BasePage.validaCampo(txt_DurataLavorazione, 0, false, ref esito);
@@ -153,13 +56,13 @@ namespace VideoSystemWeb.Agenda.userControl
             datiAgenda.codice_lavoro = BasePage.validaCampo(txt_CodiceLavoro, "", false, ref esito);
             datiAgenda.nota = BasePage.validaCampo(tb_Nota, "", false, ref esito);
 
-            return datiAgenda;
+            datiAgenda.id_stato = int.Parse(hf_IdStato.Value);
+
+            return esito;
         }
 
-        private void NascondiErroriValidazione()
+        public void NascondiErroriValidazione()
         {
-            panelErrore.Style.Add("display", "none");
-
             txt_DataInizioLavorazione.CssClass = txt_DataInizioLavorazione.CssClass.Replace("erroreValidazione", "");
             txt_DataFineLavorazione.CssClass = txt_DataFineLavorazione.CssClass.Replace("erroreValidazione", "");
             txt_DurataLavorazione.CssClass = txt_DurataLavorazione.CssClass.Replace("erroreValidazione", "");
@@ -180,97 +83,13 @@ namespace VideoSystemWeb.Agenda.userControl
             tb_Nota.CssClass = tb_Nota.CssClass.Replace("erroreValidazione", "");
         }
 
-        private void AttivaDisattivaModifica(bool attivaModifica)
-        {
-            val_DataInizioLavorazione.Visible = !attivaModifica;
-            txt_DataInizioLavorazione.Visible = attivaModifica;
-            val_DataFineLavorazione.Visible = !attivaModifica;
-            txt_DataFineLavorazione.Visible = attivaModifica;
-            val_DurataLavorazione.Visible = !attivaModifica;
-            txt_DurataLavorazione.Visible = attivaModifica;
-            val_Risorse.Visible = !attivaModifica;
-            ddl_Risorse.Visible = attivaModifica;
-            val_Tipologia.Visible = !attivaModifica;
-            ddl_Tipologia.Visible = attivaModifica;
-            val_cliente.Visible = !attivaModifica;
-            ddl_cliente.Visible = attivaModifica;
-            val_DurataViaggioAndata.Visible = !attivaModifica;
-            txt_DurataViaggioAndata.Visible = attivaModifica;
-            val_DurataViaggioRitorno.Visible = !attivaModifica;
-            txt_DurataViaggioRitorno.Visible = attivaModifica;
-            val_DataInizioImpegno.Visible = !attivaModifica;
-            txt_DataInizioImpegno.Visible = attivaModifica;
-            val_DataFineImpegno.Visible = !attivaModifica;
-            txt_DataFineImpegno.Visible = attivaModifica;
-            val_ImpegnoOrario.Visible = !attivaModifica;
-            chk_ImpegnoOrario.Visible = attivaModifica;
-            val_ImpegnoOrarioDa.Visible = !attivaModifica;
-            txt_ImpegnoOrarioDa.Visible = attivaModifica;
-            val_ImpegnoOrarioA.Visible = !attivaModifica;
-            txt_ImpegnoOrarioA.Visible = attivaModifica;
-            val_Produzione.Visible = !attivaModifica;
-            txt_Produzione.Visible = attivaModifica;
-            val_Lavorazione.Visible = !attivaModifica;
-            txt_Lavorazione.Visible = attivaModifica;
-            val_Indirizzo.Visible = !attivaModifica;
-            txt_Indirizzo.Visible = attivaModifica;
-            val_Luogo.Visible = !attivaModifica;
-            txt_Luogo.Visible = attivaModifica;
-            val_CodiceLavoro.Visible = !attivaModifica;
-            txt_CodiceLavoro.Visible = attivaModifica;
-            val_Nota.Visible = !attivaModifica;
-            tb_Nota.Visible = attivaModifica;
-
-            btnModifica.Visible = btnElimina.Visible = !attivaModifica;
-            btnSalva.Visible = btnAnnulla.Visible = attivaModifica;
-
-            
-            GestionePulsantiStato(attivaModifica);
-
-            UpdatePopup();
-        }
-
-        private void GestionePulsantiStato(bool attivaModifica)
-        {
-            DatiAgenda eventoCorrente = (DatiAgenda)ViewState["eventoSelezionato"];
-            btnOfferta.Visible = !attivaModifica && eventoCorrente != null && eventoCorrente.id_stato == 1;
-            btnLavorazione.Visible = !attivaModifica && eventoCorrente != null && eventoCorrente.id_stato == 2;
-        }
-
-        private void PopolaPopupEventi(DatiAgenda evento)
-        {
-            Esito esito = new Esito();
-
-            val_DataInizioLavorazione.Text = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
-            val_DataFineLavorazione.Text = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
-            val_DurataLavorazione.Text = evento.durata_lavorazione.ToString();
-            val_Risorse.Text = UtilityTipologiche.getElementByID(basePage.listaRisorse, evento.id_colonne_agenda, ref esito).nome;
-            val_Tipologia.Text = UtilityTipologiche.getElementByID(basePage.listaTipiTipologie, evento.id_tipologia, ref esito).nome;
-            val_cliente.Text = evento.id_cliente.ToString();
-            val_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
-            val_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
-            val_DataInizioImpegno.Text = evento.data_inizio_impegno.ToString();
-            val_DataFineImpegno.Text = evento.data_fine_impegno.ToString();
-            val_ImpegnoOrario.Checked = evento.impegnoOrario;
-            val_ImpegnoOrarioDa.Text = evento.impegnoOrario_da;
-            val_ImpegnoOrarioA.Text = evento.impegnoOrario_a;
-            val_Produzione.Text = evento.produzione;
-            val_Lavorazione.Text = evento.lavorazione;
-            val_Indirizzo.Text = evento.indirizzo;
-            val_Luogo.Text = evento.luogo;
-            val_CodiceLavoro.Text = evento.codice_lavoro;
-            val_Nota.Text = evento.nota;
-
-            PopolaEditPopupEventi(evento);
-        }
-
-        private void PopolaEditPopupEventi(DatiAgenda evento)
+        public void PopolaPopup(DatiAgenda evento)
         {
             txt_DataInizioLavorazione.Text = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
-            txt_DataFineLavorazione.Text = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
+            txt_DataFineLavorazione.Text = evento.data_fine_lavorazione == DateTime.MinValue ? "" : evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
             txt_DurataLavorazione.Text = evento.durata_lavorazione.ToString();
             ddl_Risorse.SelectedValue = evento.id_colonne_agenda.ToString();
-            ddl_Tipologia.SelectedValue = evento.id_tipologia.ToString();
+            ddl_Tipologia.SelectedValue = evento.id_tipologia == 0 ? "": evento.id_tipologia.ToString();
             ddl_cliente.SelectedValue = evento.id_cliente.ToString();
             txt_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
             txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
@@ -286,34 +105,15 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_CodiceLavoro.Text = evento.codice_lavoro;
             tb_Nota.Text = evento.nota;
 
+            hf_IdStato.Value = evento.id_stato.ToString();
+            Esito esito = new Esito();
+            txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, evento.id_stato, ref esito).nome;
+
             txt_ImpegnoOrarioDa.Enabled = txt_ImpegnoOrarioA.Enabled = evento.impegnoOrario;
         }
 
-        private void ClearPopupEventi()
+        public void ClearPopupEventi()
         {
-            lbl_MessaggioErrore.Text = string.Empty;
-            panelErrore.Style.Add("display", "none");
-
-            val_DataInizioLavorazione.Text = string.Empty;
-            val_DataFineLavorazione.Text = string.Empty;
-            val_DurataLavorazione.Text = string.Empty;
-            val_Risorse.Text = string.Empty;
-            val_Tipologia.Text = string.Empty;
-            val_cliente.Text = string.Empty;
-            val_DurataViaggioAndata.Text = string.Empty;
-            val_DurataViaggioRitorno.Text = string.Empty;
-            val_DataInizioImpegno.Text = string.Empty;
-            val_DataFineImpegno.Text = string.Empty;
-            val_ImpegnoOrario.Checked = false;
-            val_ImpegnoOrarioDa.Text = string.Empty;
-            val_ImpegnoOrarioA.Text = string.Empty;
-            val_Produzione.Text = string.Empty;
-            val_Lavorazione.Text = string.Empty;
-            val_Indirizzo.Text = string.Empty;
-            val_Luogo.Text = string.Empty;
-            val_CodiceLavoro.Text = string.Empty;
-            val_Nota.Text = string.Empty;
-
             txt_DataInizioLavorazione.Text = string.Empty;
             txt_DataFineLavorazione.Text = string.Empty;
             txt_DurataLavorazione.Text = string.Empty;
@@ -337,22 +137,22 @@ namespace VideoSystemWeb.Agenda.userControl
             NascondiErroriValidazione();
         }
 
-        private bool IsDisponibileDataRisorsa(DateTime inizioLavorazione, DateTime fineLavorazione, DatiAgenda eventoDaControllare)
+        public void SetStato(int stato)
         {
-            DatiAgenda eventoEsistente = basePage.listaDatiAgenda.Where(x => x.id != eventoDaControllare.id &&
-                                                         x.id_colonne_agenda == eventoDaControllare.id_colonne_agenda &&
-                                                        ((x.data_inizio_lavorazione <= inizioLavorazione && x.data_fine_lavorazione >= inizioLavorazione) ||
-                                                        (x.data_inizio_lavorazione <= fineLavorazione && x.data_fine_lavorazione >= fineLavorazione) ||
-                                                        (x.data_inizio_lavorazione >= inizioLavorazione && x.data_fine_lavorazione <= fineLavorazione)
-                                                        )).FirstOrDefault();
-
-            return eventoEsistente == null;
+            Esito esito = new Esito();
+            hf_IdStato.Value = stato.ToString();
+            txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, stato, ref esito).nome;
         }
 
-        private void UpdatePopup()
+        public void AbilitaComponentiPopup(DatiAgenda evento)
         {
-            RichiediOperazionePopup("UPDATE");
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "abilitazioneImpegnoOrario", "checkImpegnoOrario();", true);
+            txt_DataInizioLavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+            ddl_cliente.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+            txt_Produzione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+            txt_Lavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+            txt_Indirizzo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+            txt_Luogo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+            txt_CodiceLavoro.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
         }
     }
 }

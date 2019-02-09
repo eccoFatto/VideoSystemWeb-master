@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -47,11 +46,11 @@ namespace VideoSystemWeb.DAL
             List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand("SELECT * FROM "+ TABELLA_DATI_AGENDA))
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM "+ TABELLA_DATI_AGENDA))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;
@@ -112,11 +111,11 @@ namespace VideoSystemWeb.DAL
             List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_lavorazione between '" + dataInizio.ToString("dd/MM/yyyy") + "' and '" + dataFine.ToString("dd/MM/yyyy") + "'"))
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_lavorazione between '" + dataInizio.ToString("dd/MM/yyyy") + "' and '" + dataFine.ToString("dd/MM/yyyy") + "'"))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;
@@ -177,112 +176,112 @@ namespace VideoSystemWeb.DAL
             Esito esito = new Esito();
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (System.Data.OleDb.OleDbCommand StoreProc = new System.Data.OleDb.OleDbCommand("InsertEvento"))
+                    using (SqlCommand StoreProc = new SqlCommand("InsertEvento"))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             StoreProc.Connection = con;
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            OleDbParameter data_inizio_lavorazione = new OleDbParameter("@data_inizio_lavorazione", OleDbType.Date);
+                            SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.Date);
                             data_inizio_lavorazione.Direction = ParameterDirection.Input;
                             data_inizio_lavorazione.Value = evento.data_inizio_lavorazione;
                             StoreProc.Parameters.Add(data_inizio_lavorazione);
 
-                            OleDbParameter data_fine_lavorazione = new OleDbParameter("@data_fine_lavorazione", OleDbType.Date);
+                            SqlParameter data_fine_lavorazione = new SqlParameter("@data_fine_lavorazione", SqlDbType.Date);
                             data_fine_lavorazione.Direction = ParameterDirection.Input;
                             data_fine_lavorazione.Value = evento.data_fine_lavorazione;
                             StoreProc.Parameters.Add(data_fine_lavorazione);
 
-                            OleDbParameter durata_lavorazione = new OleDbParameter("@durata_lavorazione", OleDbType.Integer);
+                            SqlParameter durata_lavorazione = new SqlParameter("@durata_lavorazione", SqlDbType.Int);
                             durata_lavorazione.Direction = ParameterDirection.Input;
                             durata_lavorazione.Value = evento.durata_lavorazione;
                             StoreProc.Parameters.Add(durata_lavorazione);
 
-                            OleDbParameter id_colonne_agenda = new OleDbParameter("@id_colonne_agenda", OleDbType.Integer);
+                            SqlParameter id_colonne_agenda = new SqlParameter("@id_colonne_agenda", SqlDbType.Int);
                             id_colonne_agenda.Direction = ParameterDirection.Input;
                             id_colonne_agenda.Value = evento.id_colonne_agenda;
                             StoreProc.Parameters.Add(id_colonne_agenda);
 
-                            OleDbParameter id_tipologia = new OleDbParameter("@id_tipologia", OleDbType.Integer);
+                            SqlParameter id_tipologia = new SqlParameter("@id_tipologia", SqlDbType.Int);
                             id_tipologia.Direction = ParameterDirection.Input;
                             id_tipologia.Value = evento.id_tipologia;
                             StoreProc.Parameters.Add(id_tipologia);
 
-                            OleDbParameter id_stato = new OleDbParameter("@id_stato", OleDbType.Integer);
+                            SqlParameter id_stato = new SqlParameter("@id_stato", SqlDbType.Int);
                             id_stato.Direction = ParameterDirection.Input;
                             id_stato.Value = evento.id_stato;
                             StoreProc.Parameters.Add(id_stato);
 
-                            OleDbParameter id_cliente = new OleDbParameter("@id_cliente", OleDbType.Integer);
+                            SqlParameter id_cliente = new SqlParameter("@id_cliente", SqlDbType.Int);
                             id_cliente.Direction = ParameterDirection.Input;
                             id_cliente.Value = evento.id_cliente;
                             StoreProc.Parameters.Add(id_cliente);
 
-                            OleDbParameter durata_viaggio_andata = new OleDbParameter("@durata_viaggio_andata", OleDbType.Integer);
+                            SqlParameter durata_viaggio_andata = new SqlParameter("@durata_viaggio_andata", SqlDbType.Int);
                             durata_viaggio_andata.Direction = ParameterDirection.Input;
                             durata_viaggio_andata.Value = evento.durata_viaggio_andata;
                             StoreProc.Parameters.Add(durata_viaggio_andata);
 
-                            OleDbParameter durata_viaggio_ritorno = new OleDbParameter("@durata_viaggio_ritorno", OleDbType.Integer);
+                            SqlParameter durata_viaggio_ritorno = new SqlParameter("@durata_viaggio_ritorno", SqlDbType.Int);
                             durata_viaggio_ritorno.Direction = ParameterDirection.Input;
                             durata_viaggio_ritorno.Value = evento.durata_viaggio_ritorno;
                             StoreProc.Parameters.Add(durata_viaggio_ritorno);
 
-                            OleDbParameter data_inizio_impegno = new OleDbParameter("@data_inizio_impegno", OleDbType.Date);
+                            SqlParameter data_inizio_impegno = new SqlParameter("@data_inizio_impegno", SqlDbType.Date);
                             data_inizio_impegno.Direction = ParameterDirection.Input;
                             data_inizio_impegno.Value = evento.data_inizio_impegno;
                             StoreProc.Parameters.Add(data_inizio_impegno);
 
-                            OleDbParameter data_fine_impegno = new OleDbParameter("@data_fine_impegno", OleDbType.Date);
+                            SqlParameter data_fine_impegno = new SqlParameter("@data_fine_impegno", SqlDbType.Date);
                             data_fine_impegno.Direction = ParameterDirection.Input;
                             data_fine_impegno.Value = evento.data_fine_impegno;
                             StoreProc.Parameters.Add(data_fine_impegno);
 
-                            OleDbParameter impegnoOrario = new OleDbParameter("@impegnoOrario", OleDbType.Boolean);
+                            SqlParameter impegnoOrario = new SqlParameter("@impegnoOrario", SqlDbType.Bit);
                             impegnoOrario.Direction = ParameterDirection.Input;
                             impegnoOrario.Value = evento.impegnoOrario;
                             StoreProc.Parameters.Add(impegnoOrario);
 
-                            OleDbParameter impegnoOrario_da = new OleDbParameter("@impegnoOrario_da", OleDbType.VarChar);
+                            SqlParameter impegnoOrario_da = new SqlParameter("@impegnoOrario_da", SqlDbType.VarChar);
                             impegnoOrario_da.Direction = ParameterDirection.Input;
                             impegnoOrario_da.Value = evento.impegnoOrario_da;
                             StoreProc.Parameters.Add(impegnoOrario_da);
 
-                            OleDbParameter impegnoOrario_a = new OleDbParameter("@impegnoOrario_a", OleDbType.VarChar);
+                            SqlParameter impegnoOrario_a = new SqlParameter("@impegnoOrario_a", SqlDbType.VarChar);
                             impegnoOrario_a.Direction = ParameterDirection.Input;
                             impegnoOrario_a.Value = evento.impegnoOrario_a;
                             StoreProc.Parameters.Add(impegnoOrario_a);
 
-                            OleDbParameter produzione = new OleDbParameter("@produzione", OleDbType.VarChar);
+                            SqlParameter produzione = new SqlParameter("@produzione", SqlDbType.VarChar);
                             produzione.Direction = ParameterDirection.Input;
                             produzione.Value = evento.produzione;
                             StoreProc.Parameters.Add(produzione);
 
-                            OleDbParameter lavorazione = new OleDbParameter("@lavorazione", OleDbType.VarChar);
+                            SqlParameter lavorazione = new SqlParameter("@lavorazione", SqlDbType.VarChar);
                             lavorazione.Direction = ParameterDirection.Input;
                             lavorazione.Value = evento.lavorazione;
                             StoreProc.Parameters.Add(lavorazione);
 
-                            OleDbParameter indirizzo = new OleDbParameter("@indirizzo", OleDbType.VarChar);
+                            SqlParameter indirizzo = new SqlParameter("@indirizzo", SqlDbType.VarChar);
                             indirizzo.Direction = ParameterDirection.Input;
                             indirizzo.Value = evento.indirizzo;
                             StoreProc.Parameters.Add(indirizzo);
 
-                            OleDbParameter luogo = new OleDbParameter("@luogo", OleDbType.VarChar);
+                            SqlParameter luogo = new SqlParameter("@luogo", SqlDbType.VarChar);
                             luogo.Direction = ParameterDirection.Input;
                             luogo.Value = evento.luogo;
                             StoreProc.Parameters.Add(luogo);
 
-                            OleDbParameter codice_lavoro = new OleDbParameter("@codice_lavoro", OleDbType.VarChar);
+                            SqlParameter codice_lavoro = new SqlParameter("@codice_lavoro", SqlDbType.VarChar);
                             codice_lavoro.Direction = ParameterDirection.Input;
                             codice_lavoro.Value = evento.codice_lavoro;
                             StoreProc.Parameters.Add(codice_lavoro);
 
-                            OleDbParameter nota = new OleDbParameter("@nota", OleDbType.VarChar);
+                            SqlParameter nota = new SqlParameter("@nota", SqlDbType.VarChar);
                             nota.Direction = ParameterDirection.Input;
                             nota.Value = evento.nota;
                             StoreProc.Parameters.Add(nota);
@@ -309,117 +308,117 @@ namespace VideoSystemWeb.DAL
             Esito esito = new Esito();
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (System.Data.OleDb.OleDbCommand StoreProc = new System.Data.OleDb.OleDbCommand("UpdateEvento"))
+                    using (SqlCommand StoreProc = new SqlCommand("UpdateEvento"))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             StoreProc.Connection = con;
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            OleDbParameter id = new OleDbParameter("@id", OleDbType.Integer);
+                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
                             id.Direction = ParameterDirection.Input;
                             id.Value = evento.id;
                             StoreProc.Parameters.Add(id);
 
-                            OleDbParameter data_inizio_lavorazione = new OleDbParameter("@data_inizio_lavorazione", OleDbType.Date);
+                            SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.Date);
                             data_inizio_lavorazione.Direction = ParameterDirection.Input;
                             data_inizio_lavorazione.Value = evento.data_inizio_lavorazione;
                             StoreProc.Parameters.Add(data_inizio_lavorazione);
 
-                            OleDbParameter data_fine_lavorazione = new OleDbParameter("@data_fine_lavorazione", OleDbType.Date);
+                            SqlParameter data_fine_lavorazione = new SqlParameter("@data_fine_lavorazione", SqlDbType.Date);
                             data_fine_lavorazione.Direction = ParameterDirection.Input;
                             data_fine_lavorazione.Value = evento.data_fine_lavorazione;
                             StoreProc.Parameters.Add(data_fine_lavorazione);
 
-                            OleDbParameter durata_lavorazione = new OleDbParameter("@durata_lavorazione", OleDbType.Integer);
+                            SqlParameter durata_lavorazione = new SqlParameter("@durata_lavorazione", SqlDbType.Int);
                             durata_lavorazione.Direction = ParameterDirection.Input;
                             durata_lavorazione.Value = evento.durata_lavorazione;
                             StoreProc.Parameters.Add(durata_lavorazione);
 
-                            OleDbParameter id_colonne_agenda = new OleDbParameter("@id_colonne_agenda", OleDbType.Integer);
+                            SqlParameter id_colonne_agenda = new SqlParameter("@id_colonne_agenda", SqlDbType.Int);
                             id_colonne_agenda.Direction = ParameterDirection.Input;
                             id_colonne_agenda.Value = evento.id_colonne_agenda;
                             StoreProc.Parameters.Add(id_colonne_agenda);
 
-                            OleDbParameter id_tipologia = new OleDbParameter("@id_tipologia", OleDbType.Integer);
+                            SqlParameter id_tipologia = new SqlParameter("@id_tipologia", SqlDbType.Int);
                             id_tipologia.Direction = ParameterDirection.Input;
                             id_tipologia.Value = evento.id_tipologia;
                             StoreProc.Parameters.Add(id_tipologia);
 
-                            OleDbParameter id_stato = new OleDbParameter("@id_stato", OleDbType.Integer);
+                            SqlParameter id_stato = new SqlParameter("@id_stato", SqlDbType.Int);
                             id_stato.Direction = ParameterDirection.Input;
                             id_stato.Value = evento.id_stato;
                             StoreProc.Parameters.Add(id_stato);
 
-                            OleDbParameter id_cliente = new OleDbParameter("@id_cliente", OleDbType.Integer);
+                            SqlParameter id_cliente = new SqlParameter("@id_cliente", SqlDbType.Int);
                             id_cliente.Direction = ParameterDirection.Input;
                             id_cliente.Value = evento.id_cliente;
                             StoreProc.Parameters.Add(id_cliente);
 
-                            OleDbParameter durata_viaggio_andata = new OleDbParameter("@durata_viaggio_andata", OleDbType.Integer);
+                            SqlParameter durata_viaggio_andata = new SqlParameter("@durata_viaggio_andata", SqlDbType.Int);
                             durata_viaggio_andata.Direction = ParameterDirection.Input;
                             durata_viaggio_andata.Value = evento.durata_viaggio_andata;
                             StoreProc.Parameters.Add(durata_viaggio_andata);
 
-                            OleDbParameter durata_viaggio_ritorno = new OleDbParameter("@durata_viaggio_ritorno", OleDbType.Integer);
+                            SqlParameter durata_viaggio_ritorno = new SqlParameter("@durata_viaggio_ritorno", SqlDbType.Int);
                             durata_viaggio_ritorno.Direction = ParameterDirection.Input;
                             durata_viaggio_ritorno.Value = evento.durata_viaggio_ritorno;
                             StoreProc.Parameters.Add(durata_viaggio_ritorno);
 
-                            OleDbParameter data_inizio_impegno = new OleDbParameter("@data_inizio_impegno", OleDbType.Date);
+                            SqlParameter data_inizio_impegno = new SqlParameter("@data_inizio_impegno", SqlDbType.Date);
                             data_inizio_impegno.Direction = ParameterDirection.Input;
                             data_inizio_impegno.Value = evento.data_inizio_impegno;
                             StoreProc.Parameters.Add(data_inizio_impegno);
 
-                            OleDbParameter data_fine_impegno = new OleDbParameter("@data_fine_impegno", OleDbType.Date);
+                            SqlParameter data_fine_impegno = new SqlParameter("@data_fine_impegno", SqlDbType.Date);
                             data_fine_impegno.Direction = ParameterDirection.Input;
                             data_fine_impegno.Value = evento.data_fine_impegno;
                             StoreProc.Parameters.Add(data_fine_impegno);
 
-                            OleDbParameter impegnoOrario = new OleDbParameter("@impegnoOrario", OleDbType.Boolean);
+                            SqlParameter impegnoOrario = new SqlParameter("@impegnoOrario", SqlDbType.Bit);
                             impegnoOrario.Direction = ParameterDirection.Input;
                             impegnoOrario.Value = evento.impegnoOrario;
                             StoreProc.Parameters.Add(impegnoOrario);
 
-                            OleDbParameter impegnoOrario_da = new OleDbParameter("@impegnoOrario_da", OleDbType.VarChar);
+                            SqlParameter impegnoOrario_da = new SqlParameter("@impegnoOrario_da", SqlDbType.VarChar);
                             impegnoOrario_da.Direction = ParameterDirection.Input;
                             impegnoOrario_da.Value = evento.impegnoOrario_da;
                             StoreProc.Parameters.Add(impegnoOrario_da);
 
-                            OleDbParameter impegnoOrario_a = new OleDbParameter("@impegnoOrario_a", OleDbType.VarChar);
+                            SqlParameter impegnoOrario_a = new SqlParameter("@impegnoOrario_a", SqlDbType.VarChar);
                             impegnoOrario_a.Direction = ParameterDirection.Input;
                             impegnoOrario_a.Value = evento.impegnoOrario_a;
                             StoreProc.Parameters.Add(impegnoOrario_a);
 
-                            OleDbParameter produzione = new OleDbParameter("@produzione", OleDbType.VarChar);
+                            SqlParameter produzione = new SqlParameter("@produzione", SqlDbType.VarChar);
                             produzione.Direction = ParameterDirection.Input;
                             produzione.Value = evento.produzione;
                             StoreProc.Parameters.Add(produzione);
 
-                            OleDbParameter lavorazione = new OleDbParameter("@lavorazione", OleDbType.VarChar);
+                            SqlParameter lavorazione = new SqlParameter("@lavorazione", SqlDbType.VarChar);
                             lavorazione.Direction = ParameterDirection.Input;
                             lavorazione.Value = evento.lavorazione;
                             StoreProc.Parameters.Add(lavorazione);
 
-                            OleDbParameter indirizzo = new OleDbParameter("@indirizzo", OleDbType.VarChar);
+                            SqlParameter indirizzo = new SqlParameter("@indirizzo", SqlDbType.VarChar);
                             indirizzo.Direction = ParameterDirection.Input;
                             indirizzo.Value = evento.indirizzo;
                             StoreProc.Parameters.Add(indirizzo);
 
-                            OleDbParameter luogo = new OleDbParameter("@luogo", OleDbType.VarChar);
+                            SqlParameter luogo = new SqlParameter("@luogo", SqlDbType.VarChar);
                             luogo.Direction = ParameterDirection.Input;
                             luogo.Value = evento.luogo;
                             StoreProc.Parameters.Add(luogo);
 
-                            OleDbParameter codice_lavoro = new OleDbParameter("@codice_lavoro", OleDbType.VarChar);
+                            SqlParameter codice_lavoro = new SqlParameter("@codice_lavoro", SqlDbType.VarChar);
                             codice_lavoro.Direction = ParameterDirection.Input;
                             codice_lavoro.Value = evento.codice_lavoro;
                             StoreProc.Parameters.Add(codice_lavoro);
 
-                            OleDbParameter nota = new OleDbParameter("@nota", OleDbType.VarChar);
+                            SqlParameter nota = new SqlParameter("@nota", SqlDbType.VarChar);
                             nota.Direction = ParameterDirection.Input;
                             nota.Value = evento.nota;
                             StoreProc.Parameters.Add(nota);
@@ -446,17 +445,17 @@ namespace VideoSystemWeb.DAL
             Esito esito = new Esito();
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (System.Data.OleDb.OleDbCommand StoreProc = new System.Data.OleDb.OleDbCommand("DeleteEvento"))
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteEvento"))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             StoreProc.Connection = con;
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            OleDbParameter id = new OleDbParameter("@id", OleDbType.Integer);
+                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
                             id.Direction = ParameterDirection.Input;
                             id.Value = idEvento;
                             StoreProc.Parameters.Add(id);

@@ -130,6 +130,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Button btnEditCollaboratore;
         
         /// <summary>
+        /// Controllo btnInsCollaboratore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnInsCollaboratore;
+        
+        /// <summary>
         /// Controllo hf_idColl.
         /// </summary>
         /// <remarks>
@@ -137,6 +146,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_idColl;
+        
+        /// <summary>
+        /// Controllo hf_tipoOperazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_tipoOperazione;
         
         /// <summary>
         /// Controllo upColl.
@@ -164,6 +182,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel innerContainer;
+        
+        /// <summary>
+        /// Controllo panelErrore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelErrore;
         
         /// <summary>
         /// Controllo lbl_MessaggioErrore.
@@ -337,6 +364,42 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Label lblImage;
         
         /// <summary>
+        /// Controllo btnModifica.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModifica;
+        
+        /// <summary>
+        /// Controllo btnElimina.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnElimina;
+        
+        /// <summary>
+        /// Controllo btnSalva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSalva;
+        
+        /// <summary>
+        /// Controllo btnAnnulla.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAnnulla;
+        
+        /// <summary>
         /// Controllo lbMod_Qualifiche.
         /// </summary>
         /// <remarks>
@@ -371,32 +434,5 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lbMod_Email;
-        
-        /// <summary>
-        /// Controllo btnModifica.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModifica;
-        
-        /// <summary>
-        /// Controllo btnSalva.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSalva;
-        
-        /// <summary>
-        /// Controllo btnAnnulla.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnnulla;
     }
 }

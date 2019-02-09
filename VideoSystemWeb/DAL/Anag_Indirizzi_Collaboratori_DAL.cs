@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
+using System.Data.SqlClient;
 using System.Web;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
@@ -36,14 +37,14 @@ namespace VideoSystemWeb.DAL
             List<Anag_Indirizzi_Collaboratori> listaIndirizzi = new List<Anag_Indirizzi_Collaboratori>();
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
                     string query = "SELECT * FROM anag_indirizzi_collaboratori WHERE id_Collaboratore = " + idCollaboratore.ToString();
                     if (soloAttivi) query += " AND ATTIVO = 1";
                     query += " ORDER BY priorita,indirizzo";
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(query))
+                    using (SqlCommand cmd = new SqlCommand(query))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;
@@ -92,5 +93,215 @@ namespace VideoSystemWeb.DAL
             return listaIndirizzi;
         }
 
+        public int CreaIndirizziCollaboratore(Anag_Indirizzi_Collaboratori indirizzoCollaboratore, ref Esito esito)
+        {
+            //@id_collaboratore int,
+            //@priorita int,
+            //@tipo varchar(10),
+	        //@indirizzo varchar(60),
+	        //@numeroCivico varchar(10) = null,
+	        //@cap varchar(5),
+	        //@comune varchar(50),
+	        //@provincia varchar(2) = null,
+	        //@nazione varchar(20) = null,
+	        //@descrizione varchar(60) = null,
+	        //@attivo bit,
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("InsertIndirizziCollaboratore"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", indirizzoCollaboratore.Id_Collaboratore);
+                            id_collaboratore.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_collaboratore);
+
+                            SqlParameter priorita = new SqlParameter("@priorita", indirizzoCollaboratore.Priorita);
+                            priorita.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(priorita);
+
+                            SqlParameter tipo = new SqlParameter("@tipo", indirizzoCollaboratore.Tipo);
+                            tipo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(tipo);
+
+                            SqlParameter indirizzo = new SqlParameter("@indirizzo", indirizzoCollaboratore.Indirizzo);
+                            indirizzo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(indirizzo);
+
+                            SqlParameter numeroCivico = new SqlParameter("@numeroCivico", indirizzoCollaboratore.NumeroCivico);
+                            numeroCivico.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(numeroCivico);
+
+                            SqlParameter cap = new SqlParameter("@cap", indirizzoCollaboratore.Cap);
+                            cap.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(cap);
+
+                            SqlParameter comune = new SqlParameter("@comune", indirizzoCollaboratore.Comune);
+                            comune.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(comune);
+
+                            SqlParameter provincia = new SqlParameter("@provincia", indirizzoCollaboratore.Provincia);
+                            provincia.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(provincia);
+
+                            SqlParameter nazione = new SqlParameter("@nazione", indirizzoCollaboratore.Nazione);
+                            nazione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nazione);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", indirizzoCollaboratore.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", indirizzoCollaboratore.Attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            StoreProc.Connection.Open();
+
+                            StoreProc.ExecuteNonQuery();
+
+                            int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+
+                            return iReturn;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Anag_Indirizzi_Collaboratori_DAL.cs - CreaIndirizziCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return 0;
+        }
+
+        public Esito AggiornaIndirizziCollaboratore(Anag_Indirizzi_Collaboratori indirizzoCollaboratore)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
+                {
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateIndirizziCollaboratore"))
+                    {
+                        using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", indirizzoCollaboratore.Id);
+                            id.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id);
+
+                            SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", indirizzoCollaboratore.Id_Collaboratore);
+                            id_collaboratore.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_collaboratore);
+
+                            SqlParameter priorita = new SqlParameter("@priorita", indirizzoCollaboratore.Priorita);
+                            priorita.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(priorita);
+
+                            SqlParameter tipo = new SqlParameter("@tipo", indirizzoCollaboratore.Tipo);
+                            tipo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(tipo);
+
+                            SqlParameter indirizzo = new SqlParameter("@indirizzo", indirizzoCollaboratore.Indirizzo);
+                            indirizzo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(indirizzo);
+
+                            SqlParameter numeroCivico = new SqlParameter("@numeroCivico", indirizzoCollaboratore.NumeroCivico);
+                            numeroCivico.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(numeroCivico);
+
+                            SqlParameter cap = new SqlParameter("@cap", indirizzoCollaboratore.Cap);
+                            cap.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(cap);
+
+                            SqlParameter comune = new SqlParameter("@comune", indirizzoCollaboratore.Comune);
+                            comune.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(comune);
+
+                            SqlParameter provincia = new SqlParameter("@provincia", indirizzoCollaboratore.Provincia);
+                            provincia.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(provincia);
+
+                            SqlParameter nazione = new SqlParameter("@nazione", indirizzoCollaboratore.Nazione);
+                            nazione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nazione);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", indirizzoCollaboratore.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", indirizzoCollaboratore.Attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Anag_Indirizzi_Collaboratori_DAL.cs - AggiornaIndirizziCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
+        public Esito EliminaIndirizzoCollaboratore(int idIndirizzoCollaboratore)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteIndirizziCollaboratore"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                            id.Direction = ParameterDirection.Input;
+                            id.Value = idIndirizzoCollaboratore;
+                            StoreProc.Parameters.Add(id);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Anag_Indirizzi_Collaboratori_DAL.cs - EliminaIndirizzoCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
+
     }
+
 }

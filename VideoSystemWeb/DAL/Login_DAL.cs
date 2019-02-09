@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using VideoSystemWeb.BLL;
@@ -37,15 +38,15 @@ namespace VideoSystemWeb.DAL
         {
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
                     string queryRicercaUtente = "select * from anag_utenti u" +
                     " left join tipo_utente tu" +
                     " on u.id_tipoUtente = tu.id"+
                     " where username = '" + tbUser.Trim() + "' and password = '" + tbPassword.Trim() + "' and u.attivo = 1";
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(queryRicercaUtente))
+                    using (SqlCommand cmd = new SqlCommand(queryRicercaUtente))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;

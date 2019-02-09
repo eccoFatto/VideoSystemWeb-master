@@ -27,5 +27,26 @@ namespace VideoSystemWeb.BLL
                 return instance;
             }
         }
+        public int CreaQualificaCollaboratore(Anag_Qualifiche_Collaboratori qualificaCollaboratore, ref Esito esito)
+        {
+            int iREt = Anag_Qualifiche_Collaboratori_DAL.Instance.CreaQualificaCollaboratore(qualificaCollaboratore, ref esito);
+
+            return iREt;
+        }
+
+        public Esito AggiornaQualificaCollaboratore(Anag_Qualifiche_Collaboratori qualificaCollaboratore)
+        {
+            Esito esito = Anag_Qualifiche_Collaboratori_DAL.Instance.AggiornaQualificaCollaboratore(qualificaCollaboratore);
+
+            return esito;
+        }
+
+        public Esito EliminaQualificaCollaboratore(int idQualificaCollaboratore)
+        {
+            Esito esito = Anag_Qualifiche_Collaboratori_DAL.Instance.EliminaQualificaCollaboratore(idQualificaCollaboratore);
+
+            return esito;
+        }
+
     }
 }

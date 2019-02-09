@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
+using System.Data.SqlClient;
 using System.Web;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
@@ -35,14 +36,14 @@ namespace VideoSystemWeb.DAL
             List<Anag_Telefoni_Collaboratori> listaTelefoni = new List<Anag_Telefoni_Collaboratori>();
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
                     string query = "SELECT * FROM anag_telefoni_collaboratori WHERE id_Collaboratore = " + idCollaboratore.ToString();
                     if (soloAttivi) query += " AND ATTIVO = 1";
                     query += " ORDER BY priorita,tipo";
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(query))
+                    using (SqlCommand cmd = new SqlCommand(query))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;
@@ -89,6 +90,193 @@ namespace VideoSystemWeb.DAL
 
             return listaTelefoni;
         }
+
+        public int CreaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore, ref Esito esito)
+        {
+            //@id_collaboratore int,
+            //@priorita int,
+            //@int_pref varchar(5),
+            //@naz_pref varchar(5),
+            //@numero varchar(15),
+            //@tipo varchar(30),
+            //@descrizione varchar(60) = null,
+            //@whatsapp bit,
+            //@attivo bit
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("InsertTelefoniCollaboratore"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", telefonoCollaboratore.Id_collaboratore);
+                            id_collaboratore.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_collaboratore);
+
+                            SqlParameter priorita = new SqlParameter("@priorita", telefonoCollaboratore.Priorita);
+                            priorita.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(priorita);
+
+                            SqlParameter int_pref = new SqlParameter("@int_pref", telefonoCollaboratore.Pref_int);
+                            int_pref.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(int_pref);
+
+                            SqlParameter naz_pref = new SqlParameter("@naz_pref", telefonoCollaboratore.Pref_naz);
+                            naz_pref.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(naz_pref);
+
+                            SqlParameter numero = new SqlParameter("@numero", telefonoCollaboratore.Numero);
+                            numero.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(numero);
+
+                            SqlParameter tipo = new SqlParameter("@tipo", telefonoCollaboratore.Tipo);
+                            tipo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(tipo);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", telefonoCollaboratore.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter whatsapp = new SqlParameter("@whatsapp", telefonoCollaboratore.Whatsapp);
+                            whatsapp.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(whatsapp);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", telefonoCollaboratore.Attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            StoreProc.Connection.Open();
+
+                            StoreProc.ExecuteNonQuery();
+
+                            int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+
+                            return iReturn;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Anag_Telefoni_Collaboratori_DAL.cs - CreaTelefonoCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return 0;
+        }
+
+        public Esito AggiornaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
+                {
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateTelefoniCollaboratore"))
+                    {
+                        using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", telefonoCollaboratore.Id);
+                            id.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id);
+
+                            SqlParameter priorita = new SqlParameter("@priorita", telefonoCollaboratore.Priorita);
+                            priorita.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(priorita);
+
+                            SqlParameter int_pref = new SqlParameter("@int_pref", telefonoCollaboratore.Pref_int);
+                            int_pref.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(int_pref);
+
+                            SqlParameter naz_pref = new SqlParameter("@naz_pref", telefonoCollaboratore.Pref_naz);
+                            naz_pref.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(naz_pref);
+
+                            SqlParameter numero = new SqlParameter("@numero", telefonoCollaboratore.Numero);
+                            numero.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(numero);
+
+                            SqlParameter tipo = new SqlParameter("@tipo", telefonoCollaboratore.Tipo);
+                            tipo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(tipo);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", telefonoCollaboratore.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter whatsapp = new SqlParameter("@whatsapp", telefonoCollaboratore.Whatsapp);
+                            whatsapp.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(whatsapp);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", telefonoCollaboratore.Attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Anag_Telefoni_Collaboratori_DAL.cs - AggiornaTelefonoCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
+        public Esito EliminaTelefonoCollaboratore(int idTelefonoCollaboratore)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteTelefoniCollaboratore"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                            id.Direction = ParameterDirection.Input;
+                            id.Value = idTelefonoCollaboratore;
+                            StoreProc.Parameters.Add(id);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Anag_Telefoni_Collaboratori_DAL.cs - EliminaTelefonoCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
 
     }
 }

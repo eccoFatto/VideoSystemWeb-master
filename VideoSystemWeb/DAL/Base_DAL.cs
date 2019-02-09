@@ -6,23 +6,25 @@ using System.Linq;
 using System.Web;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
-
+using System.Data.SqlClient;
 namespace VideoSystemWeb.DAL
 {
     public class Base_DAL
     {
         //public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL_NIC"].ConnectionString;
         //string static constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-        public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
+        //public static string constr = ConfigurationManager.ConnectionStrings["constrMSSQL"].ConnectionString;
+        // STRINGA DI CONNESSIONE PER CLASSI SQLCLIENT (NON SERVE SPECIFICARE IL PROVIDER)
+        public static string sqlConstr = ConfigurationManager.ConnectionStrings["sqlConstrMSSQL"].ConnectionString;
 
         public static int executeUpdateBySql(string querySql, ref Esito esito)
         {
             int iReturn = 0;
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using ( SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(querySql))
+                    using (SqlCommand cmd = new SqlCommand(querySql))
                     {
                         cmd.Connection = con;
                         con.Open();
@@ -49,11 +51,11 @@ namespace VideoSystemWeb.DAL
             DataTable dtReturn = new DataTable();
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(querySql))
+                    using (SqlCommand cmd = new SqlCommand(querySql))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;
@@ -82,11 +84,11 @@ namespace VideoSystemWeb.DAL
             string soloAttivi = soloElemAttivi ? " WHERE attivo = 1 " : "";
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand("SELECT * FROM " + nomeTipologica + soloAttivi + " ORDER BY id"))
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM " + nomeTipologica + soloAttivi + " ORDER BY id"))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;

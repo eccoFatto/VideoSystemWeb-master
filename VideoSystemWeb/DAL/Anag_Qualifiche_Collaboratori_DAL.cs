@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
+using System.Data.SqlClient;
 using System.Web;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
@@ -36,14 +37,14 @@ namespace VideoSystemWeb.DAL
             List<Anag_Qualifiche_Collaboratori> listaQUalifiche = new List<Anag_Qualifiche_Collaboratori>();
             try
             {
-                using (System.Data.OleDb.OleDbConnection con = new System.Data.OleDb.OleDbConnection(constr))
+                using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
                     string query = "SELECT * FROM anag_qualifiche_collaboratori WHERE id_Collaboratore = " + idCollaboratore.ToString();
                     if (soloAttivi) query += " AND ATTIVO = 1";
                     query += " ORDER BY priorita,qualifica";
-                    using (System.Data.OleDb.OleDbCommand cmd = new System.Data.OleDb.OleDbCommand(query))
+                    using (SqlCommand cmd = new SqlCommand(query))
                     {
-                        using (System.Data.OleDb.OleDbDataAdapter sda = new System.Data.OleDb.OleDbDataAdapter())
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;
@@ -84,6 +85,162 @@ namespace VideoSystemWeb.DAL
 
             return listaQUalifiche;
         }
+
+        public int CreaQualificaCollaboratore(Anag_Qualifiche_Collaboratori qualificaCollaboratore, ref Esito esito)
+        {
+            //@id int,
+            //@id_collaboratore int,
+            //@priorita int,
+            //@qualifica varchar(60),
+	        //@descrizione varchar(60),
+	        //@attivo bit
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("InsertQualificheCollaboratore"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", qualificaCollaboratore.Id_collaboratore);
+                            id_collaboratore.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_collaboratore);
+
+                            SqlParameter priorita = new SqlParameter("@priorita", qualificaCollaboratore.Priorita);
+                            priorita.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(priorita);
+
+                            SqlParameter qualifica = new SqlParameter("@qualifica", qualificaCollaboratore.Qualifica);
+                            qualifica.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(qualifica);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", qualificaCollaboratore.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", qualificaCollaboratore.Attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            StoreProc.Connection.Open();
+
+                            StoreProc.ExecuteNonQuery();
+
+                            int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+
+                            return iReturn;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Anag_Qualifiche_Collaboratori_DAL.cs - CreaQualificaCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return 0;
+        }
+
+        public Esito AggiornaQualificaCollaboratore(Anag_Qualifiche_Collaboratori qualificaCollaboratore)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
+                {
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateQualificheCollaboratore"))
+                    {
+                        using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", qualificaCollaboratore.Id);
+                            id.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id);
+
+                            SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", qualificaCollaboratore.Id_collaboratore);
+                            id_collaboratore.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_collaboratore);
+
+                            SqlParameter priorita = new SqlParameter("@priorita", qualificaCollaboratore.Priorita);
+                            priorita.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(priorita);
+
+                            SqlParameter qualifica = new SqlParameter("@qualifica", qualificaCollaboratore.Qualifica);
+                            qualifica.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(qualifica);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", qualificaCollaboratore.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", qualificaCollaboratore.Attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Anag_Qualifiche_Collaboratori_DAL.cs - AggiornaQualificaCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
+        public Esito EliminaQualificaCollaboratore(int idQualificaCollaboratore)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteQualificheCollaboratore"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                            id.Direction = ParameterDirection.Input;
+                            id.Value = idQualificaCollaboratore;
+                            StoreProc.Parameters.Add(id);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Anag_Qualifiche_Collaboratori_DAL.cs - EliminaQualificaCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
 
     }
 }

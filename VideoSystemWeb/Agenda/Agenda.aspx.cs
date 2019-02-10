@@ -25,6 +25,9 @@ namespace VideoSystemWeb.Agenda
                 hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
+
+                //string legenda = "<ul style='list-style-type: none;'><li><div class='boxLegenda' style='background:red'/>&nbsp;</div>&nbsp;- Colore 1  </li><li><div class='boxLegenda' style='background:green'>&nbsp;</div>&nbsp;- Colore 2 </li><li><div class='boxLegenda' style='background:blue'>&nbsp;</div>&nbsp;- Colore 3 </li></ul>";
+                divLegenda.Controls.Add(new LiteralControl(CreaLegenda()));
             }
         }
 
@@ -296,6 +299,23 @@ namespace VideoSystemWeb.Agenda
                                                         )).FirstOrDefault();
 
             return eventoEsistente == null;
+        }
+
+        private string CreaLegenda()
+        {
+            Esito esito = new Esito();
+
+            string legenda = "<ul style='list-style-type: none;padding-left:0px;'>";
+
+            foreach (Tipologica stato in listaStati)
+            {
+                string colore = UtilityTipologiche.getParametroDaTipologica(stato, "COLOR", ref esito);
+                legenda += "<li><div class='boxLegenda' style='background:" + colore + "'/>&nbsp;</div>&nbsp;- " + stato.nome + "</li>";
+            }
+
+            legenda += "</ul>";
+
+            return legenda;
         }
         #endregion
         

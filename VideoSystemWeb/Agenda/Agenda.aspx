@@ -8,13 +8,13 @@
 
     <script>
         $(document).ready(function () {
-            $('.calendarPresentazione').datetimepicker({
+            $('.calendarAgenda').datetimepicker({
                 inline: true,
                 locale: 'it',
                 format: 'DD/MM/YYYY'
             });
 
-            $('.calendarPresentazione').on('dp.change', function (e) {
+            $('.calendarAgenda').on('dp.change', function (e) {
                 var data = e.date.date() + "/" + (e.date.month()+1) + "/" + e.date.year();
                 $("#<%=hf_valoreData.ClientID%>").val(data);
                  $("#<%=btnsearch.ClientID%>").click();
@@ -103,7 +103,14 @@
                 </asp:UpdatePanel>
             </td>
             <td style="width: 20%; vertical-align: top;">
-                <div class="calendarPresentazione" style="margin-left:20px;"></div>
+                <div class="calendarAgenda" style="margin-left:20px;"></div>
+                <br />
+                <div  class="w3-container"  style="margin-left:20px; text-align:center">
+                    <b>LEGENDA</b>
+                    <div  style="width:100%; text-align:left" runat="server" id="divLegenda" >
+                        
+                    </div>
+                </div>
             </td>
         </tr>
     </table>

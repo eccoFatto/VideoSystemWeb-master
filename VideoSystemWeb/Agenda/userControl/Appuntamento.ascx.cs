@@ -35,28 +35,29 @@ namespace VideoSystemWeb.Agenda.userControl
         public Esito CreaOggettoSalvataggio(ref DatiAgenda datiAgenda)
         {
             Esito esito = new Esito();
-           
-            datiAgenda.data_inizio_lavorazione = BasePage.validaCampo(txt_DataInizioLavorazione, DateTime.Now, true, ref esito);
-            datiAgenda.data_fine_lavorazione = BasePage.validaCampo(txt_DataFineLavorazione, DateTime.Now, true, ref esito);
+
+            bool campoObbligatorio = int.Parse(hf_IdStato.Value) != DatiAgenda.STATO_RIPOSO;
+
+            datiAgenda.data_inizio_lavorazione = BasePage.validaCampo(txt_DataInizioLavorazione, DateTime.MinValue, true, ref esito);
+            datiAgenda.data_fine_lavorazione = BasePage.validaCampo(txt_DataFineLavorazione, DateTime.MinValue, true, ref esito);
             datiAgenda.durata_lavorazione = BasePage.validaCampo(txt_DurataLavorazione, 0, false, ref esito);
             datiAgenda.id_colonne_agenda = BasePage.validaCampo(ddl_Risorse, 0, true, ref esito);
-            datiAgenda.id_tipologia = BasePage.validaCampo(ddl_Tipologia, 0, true, ref esito);
+            datiAgenda.id_tipologia = BasePage.validaCampo(ddl_Tipologia, 0, campoObbligatorio, ref esito);
+            datiAgenda.id_stato = int.Parse(hf_IdStato.Value);
             datiAgenda.id_cliente = BasePage.validaCampo(ddl_cliente, 0, false, ref esito);
             datiAgenda.durata_viaggio_andata = BasePage.validaCampo(txt_DurataViaggioAndata, 0, false, ref esito);
             datiAgenda.durata_viaggio_ritorno = BasePage.validaCampo(txt_DurataViaggioRitorno, 0, false, ref esito);
             datiAgenda.data_inizio_impegno = BasePage.validaCampo(txt_DataInizioImpegno, DateTime.MinValue, false, ref esito);
             datiAgenda.data_fine_impegno = BasePage.validaCampo(txt_DataFineImpegno, DateTime.MinValue, false, ref esito);
             datiAgenda.impegnoOrario = chk_ImpegnoOrario.Checked;
-            datiAgenda.impegnoOrario_da = BasePage.validaCampo(txt_ImpegnoOrarioDa, "", chk_ImpegnoOrario.Checked, ref esito);
-            datiAgenda.impegnoOrario_a = BasePage.validaCampo(txt_ImpegnoOrarioA, "", chk_ImpegnoOrario.Checked, ref esito);
-            datiAgenda.produzione = BasePage.validaCampo(txt_Produzione, "", true, ref esito);
+            datiAgenda.impegnoOrario_da = BasePage.validaCampo(txt_ImpegnoOrarioDa, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
+            datiAgenda.impegnoOrario_a = BasePage.validaCampo(txt_ImpegnoOrarioA, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
+            datiAgenda.produzione = BasePage.validaCampo(txt_Produzione, "", campoObbligatorio, ref esito);
             datiAgenda.lavorazione = BasePage.validaCampo(txt_Lavorazione, "", false, ref esito);
             datiAgenda.indirizzo = BasePage.validaCampo(txt_Indirizzo, "", false, ref esito);
             datiAgenda.luogo = BasePage.validaCampo(txt_Luogo, "", false, ref esito);
             datiAgenda.codice_lavoro = BasePage.validaCampo(txt_CodiceLavoro, "", false, ref esito);
             datiAgenda.nota = BasePage.validaCampo(tb_Nota, "", false, ref esito);
-
-            datiAgenda.id_stato = int.Parse(hf_IdStato.Value);
 
             return esito;
         }
@@ -89,7 +90,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DataFineLavorazione.Text = evento.data_fine_lavorazione == DateTime.MinValue ? "" : evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
             txt_DurataLavorazione.Text = evento.durata_lavorazione.ToString();
             ddl_Risorse.SelectedValue = evento.id_colonne_agenda.ToString();
-            ddl_Tipologia.SelectedValue = evento.id_tipologia == 0 ? "": evento.id_tipologia.ToString();
+            ddl_Tipologia.SelectedValue = evento.id_tipologia == 0 || evento.id_tipologia == null ? "": evento.id_tipologia.ToString();
             ddl_cliente.SelectedValue = evento.id_cliente.ToString();
             txt_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
             txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
@@ -146,13 +147,19 @@ namespace VideoSystemWeb.Agenda.userControl
 
         public void AbilitaComponentiPopup(DatiAgenda evento)
         {
-            txt_DataInizioLavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-            ddl_cliente.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-            txt_Produzione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-            txt_Lavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-            txt_Indirizzo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-            txt_Luogo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-            txt_CodiceLavoro.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+
+            panelAppuntamenti.Enabled = basePage.AbilitazioneInScrittura();
+
+            if (basePage.AbilitazioneInScrittura())
+            {
+                txt_DataInizioLavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato ==  DatiAgenda.STATO_RIPOSO;
+                ddl_cliente.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                txt_Produzione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                txt_Lavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                txt_Indirizzo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                txt_Luogo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                txt_CodiceLavoro.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+            }
         }
     }
 }

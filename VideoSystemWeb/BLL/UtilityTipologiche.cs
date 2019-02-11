@@ -70,6 +70,20 @@ namespace VideoSystemWeb.BLL
             return tipologica;
         }
 
+        public static Tipologica getElementByNome(List<Tipologica> listaTipologiche, string nome, ref Esito esito)
+        {
+            Tipologica tipologica = new Tipologica();
+
+            tipologica = listaTipologiche.Where(x => x.nome.ToUpper().Trim() == nome.ToUpper().Trim()).FirstOrDefault();
+            if (tipologica == null)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                esito.descrizione = "Nessuna Tipologica trovata per nome = '" + nome + "'";
+            }
+
+            return tipologica;
+        }
+
         public static string getParametroDaTipologica(Tipologica tipologica, string nomeParametro, ref Esito esito)
         {
             string valoreParametro = string.Empty;

@@ -68,7 +68,7 @@ namespace VideoSystemWeb.DAL
                                         datoAgenda.data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione"); 
                                         datoAgenda.data_fine_lavorazione = riga.Field<DateTime>("data_fine_lavorazione"); 
                                         datoAgenda.durata_lavorazione = riga.Field<int>("durata_lavorazione"); 
-                                        datoAgenda.id_tipologia = riga.Field<int>("id_tipologia");
+                                        datoAgenda.id_tipologia = riga.Field<int?>("id_tipologia");
                                         datoAgenda.id_cliente = riga.Field<int?>("id_cliente"); 
                                         datoAgenda.durata_viaggio_andata = riga.Field<int>("durata_viaggio_andata"); 
                                         datoAgenda.durata_viaggio_ritorno = riga.Field<int>("durata_viaggio_ritorno"); 
@@ -113,7 +113,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_lavorazione between '" + dataInizio.ToString("dd/MM/yyyy") + "' and '" + dataFine.ToString("dd/MM/yyyy") + "'"))
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_lavorazione between '" + dataInizio.ToString("dd/MM/yyyy") + "' and '" + dataFine.ToString("dd/MM/yyyy") + "' OR data_fine_lavorazione between '" + dataInizio.ToString("dd/MM/yyyy") + "' and '" + dataFine.ToString("dd/MM/yyyy") + "'"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -133,7 +133,7 @@ namespace VideoSystemWeb.DAL
                                         datoAgenda.data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
                                         datoAgenda.data_fine_lavorazione = riga.Field<DateTime>("data_fine_lavorazione");
                                         datoAgenda.durata_lavorazione = riga.Field<int>("durata_lavorazione");
-                                        datoAgenda.id_tipologia = riga.Field<int>("id_tipologia");
+                                        datoAgenda.id_tipologia =  riga.Field<int?>("id_tipologia");
                                         datoAgenda.id_cliente = riga.Field<int?>("id_cliente");
                                         datoAgenda.durata_viaggio_andata = riga.Field<int>("durata_viaggio_andata");
                                         datoAgenda.durata_viaggio_ritorno = riga.Field<int>("durata_viaggio_ritorno");
@@ -186,12 +186,12 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.Date);
+                            SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.DateTime);
                             data_inizio_lavorazione.Direction = ParameterDirection.Input;
                             data_inizio_lavorazione.Value = evento.data_inizio_lavorazione;
                             StoreProc.Parameters.Add(data_inizio_lavorazione);
 
-                            SqlParameter data_fine_lavorazione = new SqlParameter("@data_fine_lavorazione", SqlDbType.Date);
+                            SqlParameter data_fine_lavorazione = new SqlParameter("@data_fine_lavorazione", SqlDbType.DateTime);
                             data_fine_lavorazione.Direction = ParameterDirection.Input;
                             data_fine_lavorazione.Value = evento.data_fine_lavorazione;
                             StoreProc.Parameters.Add(data_fine_lavorazione);
@@ -208,7 +208,15 @@ namespace VideoSystemWeb.DAL
 
                             SqlParameter id_tipologia = new SqlParameter("@id_tipologia", SqlDbType.Int);
                             id_tipologia.Direction = ParameterDirection.Input;
-                            id_tipologia.Value = evento.id_tipologia;
+
+                            if (evento.id_tipologia == 0 )
+                            {
+                                id_tipologia.Value = null;
+                            }
+                            else
+                            {
+                                id_tipologia.Value = evento.id_tipologia;
+                            }
                             StoreProc.Parameters.Add(id_tipologia);
 
                             SqlParameter id_stato = new SqlParameter("@id_stato", SqlDbType.Int);
@@ -231,12 +239,12 @@ namespace VideoSystemWeb.DAL
                             durata_viaggio_ritorno.Value = evento.durata_viaggio_ritorno;
                             StoreProc.Parameters.Add(durata_viaggio_ritorno);
 
-                            SqlParameter data_inizio_impegno = new SqlParameter("@data_inizio_impegno", SqlDbType.Date);
+                            SqlParameter data_inizio_impegno = new SqlParameter("@data_inizio_impegno", SqlDbType.DateTime);
                             data_inizio_impegno.Direction = ParameterDirection.Input;
                             data_inizio_impegno.Value = evento.data_inizio_impegno;
                             StoreProc.Parameters.Add(data_inizio_impegno);
 
-                            SqlParameter data_fine_impegno = new SqlParameter("@data_fine_impegno", SqlDbType.Date);
+                            SqlParameter data_fine_impegno = new SqlParameter("@data_fine_impegno", SqlDbType.DateTime);
                             data_fine_impegno.Direction = ParameterDirection.Input;
                             data_fine_impegno.Value = evento.data_fine_impegno;
                             StoreProc.Parameters.Add(data_fine_impegno);
@@ -323,12 +331,12 @@ namespace VideoSystemWeb.DAL
                             id.Value = evento.id;
                             StoreProc.Parameters.Add(id);
 
-                            SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.Date);
+                            SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.DateTime);
                             data_inizio_lavorazione.Direction = ParameterDirection.Input;
                             data_inizio_lavorazione.Value = evento.data_inizio_lavorazione;
                             StoreProc.Parameters.Add(data_inizio_lavorazione);
 
-                            SqlParameter data_fine_lavorazione = new SqlParameter("@data_fine_lavorazione", SqlDbType.Date);
+                            SqlParameter data_fine_lavorazione = new SqlParameter("@data_fine_lavorazione", SqlDbType.DateTime);
                             data_fine_lavorazione.Direction = ParameterDirection.Input;
                             data_fine_lavorazione.Value = evento.data_fine_lavorazione;
                             StoreProc.Parameters.Add(data_fine_lavorazione);
@@ -345,7 +353,14 @@ namespace VideoSystemWeb.DAL
 
                             SqlParameter id_tipologia = new SqlParameter("@id_tipologia", SqlDbType.Int);
                             id_tipologia.Direction = ParameterDirection.Input;
-                            id_tipologia.Value = evento.id_tipologia;
+                            if (evento.id_tipologia == 0)
+                            {
+                                id_tipologia.Value = null;
+                            }
+                            else
+                            {
+                                id_tipologia.Value = evento.id_tipologia;
+                            }
                             StoreProc.Parameters.Add(id_tipologia);
 
                             SqlParameter id_stato = new SqlParameter("@id_stato", SqlDbType.Int);
@@ -368,12 +383,12 @@ namespace VideoSystemWeb.DAL
                             durata_viaggio_ritorno.Value = evento.durata_viaggio_ritorno;
                             StoreProc.Parameters.Add(durata_viaggio_ritorno);
 
-                            SqlParameter data_inizio_impegno = new SqlParameter("@data_inizio_impegno", SqlDbType.Date);
+                            SqlParameter data_inizio_impegno = new SqlParameter("@data_inizio_impegno", SqlDbType.DateTime);
                             data_inizio_impegno.Direction = ParameterDirection.Input;
                             data_inizio_impegno.Value = evento.data_inizio_impegno;
                             StoreProc.Parameters.Add(data_inizio_impegno);
 
-                            SqlParameter data_fine_impegno = new SqlParameter("@data_fine_impegno", SqlDbType.Date);
+                            SqlParameter data_fine_impegno = new SqlParameter("@data_fine_impegno", SqlDbType.DateTime);
                             data_fine_impegno.Direction = ParameterDirection.Input;
                             data_fine_impegno.Value = evento.data_fine_impegno;
                             StoreProc.Parameters.Add(data_fine_impegno);

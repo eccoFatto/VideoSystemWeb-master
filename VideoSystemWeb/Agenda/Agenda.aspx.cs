@@ -26,7 +26,6 @@ namespace VideoSystemWeb.Agenda
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
 
-                //string legenda = "<ul style='list-style-type: none;'><li><div class='boxLegenda' style='background:red'/>&nbsp;</div>&nbsp;- Colore 1  </li><li><div class='boxLegenda' style='background:green'>&nbsp;</div>&nbsp;- Colore 2 </li><li><div class='boxLegenda' style='background:blue'>&nbsp;</div>&nbsp;- Colore 3 </li></ul>";
                 divLegenda.Controls.Add(new LiteralControl(CreaLegenda()));
             }
         }
@@ -43,7 +42,6 @@ namespace VideoSystemWeb.Agenda
             int risorsaEvento = int.Parse(hf_risorsa.Value);
 
             DatiAgenda eventoSelezionato = CreaEventoDaSelezioneAgenda(dataEvento, risorsaEvento);
-            //ViewState["eventoSelezionato"] = eventoSelezionato;
 
             AbilitaComponentiPopup();
 
@@ -211,11 +209,12 @@ namespace VideoSystemWeb.Agenda
 
                         e.Row.Cells[indiceColonna].CssClass = "evento";
 
+                        string titoloEvento = datoAgendaCorrente.id_stato == DatiAgenda.STATO_RIPOSO ? "Riposo" : datoAgendaCorrente.produzione;
                         // EVENTO GIORNO SINGOLO
                         if (IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
                         {
                             Panel mainPanel = new Panel();
-                            mainPanel.Controls.Add(new LiteralControl(datoAgendaCorrente.produzione));
+                            mainPanel.Controls.Add(new LiteralControl(titoloEvento));
                             mainPanel.CssClass = "round-corners-6px";
                             mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
                             e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
@@ -230,7 +229,7 @@ namespace VideoSystemWeb.Agenda
                                 }
 
                                 Panel mainPanel = new Panel();
-                                mainPanel.Controls.Add(new LiteralControl(datoAgendaCorrente.produzione));
+                                mainPanel.Controls.Add(new LiteralControl(titoloEvento));
                                 mainPanel.CssClass = "round-corners-6px unround-bottom-corners";
                                 mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
@@ -282,6 +281,7 @@ namespace VideoSystemWeb.Agenda
             Esito esito = new Esito();
 
             listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
+            ViewState["listaDatiAgenda"] = listaDatiAgenda;
             gv_scheduler.DataSource = CreateDataTable(DateTime.Parse(hf_valoreData.Value));
             gv_scheduler.DataBind();
 
@@ -342,19 +342,17 @@ namespace VideoSystemWeb.Agenda
 
         private void AbilitaComponentiPopup()
         {
+            bool abilitazioneScrittura = AbilitazioneInScrittura();
+
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            string sottotipoRisorsa = "";
-            if (eventoSelezionato != null)
-            {
-                sottotipoRisorsa = UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo;
-            }
+            string sottotipoRisorsa = eventoSelezionato != null ? UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo : "";
 
-            btnOfferta.Visible = eventoSelezionato != null && sottotipoRisorsa != "dipendenti" && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-            btnLavorazione.Visible = eventoSelezionato != null && sottotipoRisorsa != "dipendenti" && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA;
-            btnElimina.Visible = eventoSelezionato != null && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-
-            btnRiposo.Visible = sottotipoRisorsa == "dipendenti";
+            btnOfferta.Visible = abilitazioneScrittura && eventoSelezionato != null && sottotipoRisorsa != "dipendenti" && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+            btnLavorazione.Visible = abilitazioneScrittura && eventoSelezionato != null && sottotipoRisorsa != "dipendenti" && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA;
+            btnElimina.Visible = abilitazioneScrittura && eventoSelezionato != null && eventoSelezionato.id != 0 && (eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || eventoSelezionato.id_stato == DatiAgenda.STATO_RIPOSO);
+            btnRiposo.Visible = abilitazioneScrittura && sottotipoRisorsa == "dipendenti" && eventoSelezionato.id_stato != DatiAgenda.STATO_RIPOSO;
+            btnSalva.Visible = abilitazioneScrittura;
 
             popupAppuntamento.AbilitaComponentiPopup(eventoSelezionato);
         }
@@ -412,9 +410,6 @@ namespace VideoSystemWeb.Agenda
             if (esito.codice != Esito.ESITO_OK)
             {
                 esito.descrizione = "Controllare i campi evidenziati";
-                //panelErrore.Style.Remove("display");
-                //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
-               // UpdatePopup();
             }
             else
             {
@@ -431,16 +426,12 @@ namespace VideoSystemWeb.Agenda
                         Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato);
                     }
                     ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
-                   // ChiudiPopup();
 
                 }
                 else
                 {
                     esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
                     esito.descrizione = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
-                    //panelErrore.Style.Remove("display");
-                    //lbl_MessaggioErrore.Text = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
-                   // UpdatePopup();
                 }
             }
             #endregion

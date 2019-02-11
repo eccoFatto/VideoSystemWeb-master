@@ -186,7 +186,14 @@ namespace VideoSystemWeb.Agenda
             #region dati agenda
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                e.Row.Cells[0].Attributes.Add("style", "font-weight:bold;background-color:#FDEDB5;width:100px;height:40px;");
+                if ((int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 0 || (int) DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 6)
+                {
+                    e.Row.Cells[0].Attributes.Add("style", "font-weight:bold;background-color:#FFD2D2; border: 3px solid #800000; color: #800000; width:100px;height:40px;");
+                }
+                else
+                {
+                    e.Row.Cells[0].Attributes.Add("style", "font-weight:bold;background-color:#FDEDB5;width:100px;height:40px;");
+                }
                 e.Row.Cells[0].Attributes.Add("class", "first");
 
                 for (int indiceColonna = 1; indiceColonna <= listaRisorse.Count; indiceColonna++)

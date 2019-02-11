@@ -29,6 +29,7 @@ namespace VideoSystemWeb.Agenda.userControl
             ScriptManager.RegisterStartupScript(this, typeof(Page), "campiImpegnoOrario", "checkImpegnoOrario();", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataInizioLavorazione.ClientID + "', '" + txt_DataFineLavorazione.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataInizioImpegno.ClientID + "', '" + txt_DataFineImpegno.ClientID + "');", true);
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaOrari", "controlloCoerenzaOrari('" + txt_ImpegnoOrarioDa.ClientID + "', '" + txt_ImpegnoOrarioA.ClientID + "');", true);
 
         }
 

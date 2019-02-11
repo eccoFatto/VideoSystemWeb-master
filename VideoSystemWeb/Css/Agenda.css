@@ -28,12 +28,12 @@
 .containerPopup {
     background-color: #EEF1F7;
     border: solid 3px #5377A9;
-    width: 90%;
+    width: 94%;
     min-height:600px;
     height: 65%;
     position: fixed;
     top: 1%;
-    right: 5%;
+    right: 3%;
 }
 
 .evento {

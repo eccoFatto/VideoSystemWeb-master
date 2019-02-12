@@ -508,13 +508,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.PlaceHolder phIndirizzi;
         
         /// <summary>
-        /// Controllo tbInsTipoIndirizzo.
+        /// Controllo cmbInsTipoIndirizzo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsTipoIndirizzo;
+        protected global::System.Web.UI.WebControls.DropDownList cmbInsTipoIndirizzo;
         
         /// <summary>
         /// Controllo tbInsIndirizzoIndirizzo.
@@ -616,6 +616,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Button btnEliminaIndirizzo;
         
         /// <summary>
+        /// Controllo btnAnnullaIndirizzo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAnnullaIndirizzo;
+        
+        /// <summary>
         /// Controllo lbMod_Telefoni.
         /// </summary>
         /// <remarks>
@@ -623,6 +632,132 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lbMod_Telefoni;
+        
+        /// <summary>
+        /// Controllo btnApriTelefoni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnApriTelefoni;
+        
+        /// <summary>
+        /// Controllo phTelefoni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phTelefoni;
+        
+        /// <summary>
+        /// Controllo tbInsPrefIntTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInsPrefIntTelefono;
+        
+        /// <summary>
+        /// Controllo tbInsPrefNazTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInsPrefNazTelefono;
+        
+        /// <summary>
+        /// Controllo tbInsNumeroTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInsNumeroTelefono;
+        
+        /// <summary>
+        /// Controllo cmbInsTipoTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cmbInsTipoTelefono;
+        
+        /// <summary>
+        /// Controllo cbInsWhatsappTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbInsWhatsappTelefono;
+        
+        /// <summary>
+        /// Controllo tbInsPrioritaTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInsPrioritaTelefono;
+        
+        /// <summary>
+        /// Controllo tbInsDescrizioneTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInsDescrizioneTelefono;
+        
+        /// <summary>
+        /// Controllo tbIdTelefonoDaModificare.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbIdTelefonoDaModificare;
+        
+        /// <summary>
+        /// Controllo btnInserisciTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnInserisciTelefono;
+        
+        /// <summary>
+        /// Controllo btnModificaTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModificaTelefono;
+        
+        /// <summary>
+        /// Controllo btnEliminaTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminaTelefono;
+        
+        /// <summary>
+        /// Controllo btnAnnullaTelefono.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAnnullaTelefono;
         
         /// <summary>
         /// Controllo lbMod_Email.

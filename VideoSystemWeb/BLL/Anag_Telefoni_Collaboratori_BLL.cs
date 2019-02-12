@@ -27,6 +27,14 @@ namespace VideoSystemWeb.BLL
                 return instance;
             }
         }
+
+        public Anag_Telefoni_Collaboratori getTelefonoById(ref Esito esito, int id)
+        {
+            Anag_Telefoni_Collaboratori telefonoREt = Anag_Telefoni_Collaboratori_DAL.Instance.getTelefonoById(ref esito,id);
+
+            return telefonoREt;
+        }
+
         public int CreaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore, ref Esito esito)
         {
             int iREt = Anag_Telefoni_Collaboratori_DAL.Instance.CreaTelefonoCollaboratore(telefonoCollaboratore, ref esito);

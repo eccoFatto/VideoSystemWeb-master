@@ -18,10 +18,7 @@
     // APRO LE TAB DETTAGLIO COLLABORATORE
     function openDettaglioAnagrafica(tipoName) {
         $("#<%=hf_tabChiamata.ClientID%>").val(tipoName);
-        //alert(tipoName);
         if (document.getElementById(tipoName) != undefined) {
-            //alert(document.getElementById(tipoName).id);
-            //alert(document.getElementById(tipoName).style.display);
             var i;
             var x = document.getElementsByClassName("collab");
             for (i = 0; i < x.length; i++) {
@@ -118,7 +115,6 @@
         <asp:AsyncPostBackTrigger ControlID="ddlQualifiche" EventName="SelectedIndexChanged" />
     </Triggers>
 </asp:UpdatePanel>
-
 
 <asp:Button runat="server" ID="btnEditCollaboratore" Style="display: none" OnClick="EditCollaboratore_Click"/>
 <asp:Button runat="server" ID="btnInsCollaboratore" Style="display: none" OnClick="InserisciCollaboratori_Click"/>
@@ -236,6 +232,7 @@
                                             <div id="divUploadImg" class="w3-container w3-hide">
                                                 <asp:FileUpload ID="fuImg" runat="server" Font-Size="X-Small" class="w3-button w3-yellow w3-round w3-margin" />
                                                 <asp:Button ID="uploadButton" runat="server" class="w3-button w3-yellow w3-round w3-margin" OnClick="CaricaImmagine" Text="Carica Immagine" />
+                                                
                                                 <p>
                                                     <asp:Label ID="lblImage" runat="server" Font-Size="XX-Small"></asp:Label>
                                                 </p>
@@ -291,7 +288,17 @@
                                     <div class="w3-row-padding w3-center w3-text-center">
                                         <div class="w3-quarter">
                                             <label>Tipo</label>
-                                            <asp:TextBox ID="tbInsTipoIndirizzo" runat="server" class="w3-input w3-border" MaxLength="10" ></asp:TextBox>
+                                            <asp:DropDownList ID="cmbInsTipoIndirizzo" runat="server"  class="w3-input w3-border">
+                                                <asp:ListItem Value=""></asp:ListItem>
+                                                <asp:ListItem Value="Via">Via</asp:ListItem>
+                                                <asp:ListItem Value="Viale">Viale</asp:ListItem>
+                                                <asp:ListItem Value="Piazza">Piazza</asp:ListItem>
+                                                <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
+                                                <asp:ListItem Value="Largo">Largo</asp:ListItem>
+                                                <asp:ListItem Value ="Vicolo">Vicolo</asp:ListItem>
+                                                <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
+                                            </asp:DropDownList>
+                                            <%--<asp:TextBox ID="tbInsTipoIndirizzo" runat="server" class="w3-input w3-border" MaxLength="10" ></asp:TextBox>--%>
                                         </div>
                                         <div class="w3-quarter">
                                             <label>Indirizzo</label>
@@ -328,6 +335,7 @@
                                     <asp:Button ID="btnInserisciIndirizzo" runat="server" Text="Inserisci Indirizzo" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoIndirizzo_Click" OnClientClick="return confirm('Confermi inserimento Indirizzo?')" />
                                     <asp:Button ID="btnModificaIndirizzo" runat="server" Text="Modifica Indirizzo" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaIndirizzo_Click" OnClientClick="return confirm('Confermi modifica Indirizzo?')" Visible="false" />
                                     <asp:Button ID="btnEliminaIndirizzo" runat="server" Text="Elimina Indirizzo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaIndirizzo_Click" OnClientClick="confirm('Confermi eliminazione Indirizzo?')" />
+                                    <asp:Button ID="btnAnnullaIndirizzo" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaIndirizzo_Click" />
                                 </asp:PlaceHolder>
                             </p>
                         </div>
@@ -336,6 +344,61 @@
                     <div id="Telefoni" class="w3-container w3-border collab" style="display:none">
                         <label>Telefoni</label>
                         <asp:ListBox ID="lbMod_Telefoni" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                        <div class="w3-container w3-center">
+                            <p>
+                                <asp:Button ID="btnApriTelefoni" runat="server" OnClick="btnApriTelefoni_Click" Text="Gestione Telefoni" class="w3-panel w3-green w3-border w3-round" />
+                                <asp:PlaceHolder ID="phTelefoni" runat="server" Visible="false">                                
+                                    <div class="w3-row-padding w3-center w3-text-center">
+                                        <div class="w3-quarter">
+                                            <label>Prefisso Int.</label>
+                                            <asp:TextBox ID="tbInsPrefIntTelefono" runat="server" class="w3-input w3-border" MaxLength="5" Text="+39" ></asp:TextBox>
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <label>Prefisso Naz.</label>
+                                            <asp:TextBox ID="tbInsPrefNazTelefono" runat="server" MaxLength="5" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <label>Numero</label>
+                                            <asp:TextBox ID="tbInsNumeroTelefono" runat="server" MaxLength="15" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <label>Tipo</label>
+                                            <asp:DropDownList ID="cmbInsTipoTelefono" runat="server" class="w3-input w3-border">
+                                                <asp:ListItem Value=""></asp:ListItem>
+                                                <asp:ListItem Value="Cellulare">Cellulare</asp:ListItem>
+                                                <asp:ListItem Value="Fisso">Fisso</asp:ListItem>
+                                                <asp:ListItem Value="Centralino">Centralino</asp:ListItem>
+                                                <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
+                                            </asp:DropDownList>
+
+                                            <%--<asp:TextBox ID="tbInsTipoTelefono" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>--%>
+                                        </div>
+                                    </div>
+                                    <div class="w3-row-padding w3-center w3-text-center">
+                                        <div class="w3-quarter">
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <label>Whatsapp</label>
+                                            <asp:CheckBox ID="cbInsWhatsappTelefono" runat="server" class="w3-input w3-border"></asp:CheckBox>
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <label>Priorità</label>
+                                            <asp:TextBox ID="tbInsPrioritaTelefono" runat="server" MaxLength="1" class="w3-input w3-border" placeholder="" Text="1" ></asp:TextBox>
+                                        </div>
+                                        <div class="w3-rest">
+                                            <label>Descrizione</label>
+                                            <asp:TextBox ID="tbInsDescrizioneTelefono" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" ></asp:TextBox>
+                                            <asp:TextBox ID="tbIdTelefonoDaModificare" runat="server" Visible="false"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <asp:Button ID="btnInserisciTelefono" runat="server" Text="Inserisci Telefono" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoTelefono_Click" OnClientClick="return confirm('Confermi inserimento Telefono?')" />
+                                    <asp:Button ID="btnModificaTelefono" runat="server" Text="Modifica Telefono" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaTelefono_Click" OnClientClick="return confirm('Confermi modifica Telefono?')" Visible="false" />
+                                    <asp:Button ID="btnEliminaTelefono" runat="server" Text="Elimina Telefono" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaTelefono_Click" OnClientClick="confirm('Confermi eliminazione Telefono?')" />
+                                    <asp:Button ID="btnAnnullaTelefono" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaTelefono_Click" />
+                                </asp:PlaceHolder>
+                            </p>
+                        </div>
+
                     </div>
                     <!-- TAB EMAIL -->
                     <div id="Email" class="w3-container  w3-border collab" style="display:none">

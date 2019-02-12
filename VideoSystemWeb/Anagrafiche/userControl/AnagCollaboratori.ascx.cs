@@ -17,6 +17,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
     {
 
         BasePage basePage = new BasePage();
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -27,9 +28,11 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     lbMod_Email_DoubleClick();
                     lbMod_Indirizzi_DoubleClick();
+                    lbMod_Telefoni_DoubleClick();
                 }
                 lbMod_Email.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Email, "move"));
                 lbMod_Indirizzi.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Indirizzi, "move"));
+                lbMod_Telefoni.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Telefoni, "move"));
             }
 
             if (!Page.IsPostBack)
@@ -76,6 +79,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('" + hf_tabChiamata.Value + "')", addScriptTags: true);
 
         }
+        // ABILITO I BOTTONI DI MODIFICA IN BASE ALLA TIPOLOGIA DI UTENTE
         private void abilitaBottoni(bool utenteAbilitatoInScrittura)
         {
             annullaModifiche();
@@ -90,6 +94,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                 btnApriQualifiche.Visible = false;
                 btnApriEmail.Visible = false;
+                btnApriIndirizzi.Visible = false;
             }
             else
             {
@@ -102,9 +107,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                 btnApriQualifiche.Visible = true;
                 btnApriEmail.Visible = true;
+                btnApriIndirizzi.Visible = true;
             }
         }
-
+        // RICERCA COLLABORATORI
         protected void btnRicercaCollaboratori_Click(object sender, EventArgs e)
         {
 
@@ -123,13 +129,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             gv_collaboratori.DataSource = dtCollaboratori;
             gv_collaboratori.DataBind();
         }
+
         protected void ddlQualifiche_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
-
-
+        // AGGIORNO LE RIGHE DEL DATAGRID CON LA FUNZIONE DI APERTURA DETTAGLIO
         protected void gv_collaboratori_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -146,7 +151,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 
             }
         }
-
+        // APRO POPUP DETTAGLIO COLLABORATORE
         protected void EditCollaboratore_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(hf_idColl.Value) || (!string.IsNullOrEmpty((string)ViewState["idColl"]))) {
@@ -158,13 +163,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 pnlContainer.Visible = true;
             }
         }
-
+        // GESTIONE PULSANTI MODIFICA COLLABORATORE
         protected void btnModifica_Click(object sender, EventArgs e)
         {
             AttivaDisattivaModificaAnagrafica(false);
             gestisciPulsantiAnagrafica("MODIFICA");
         }
-
+        // DETTAGLIO GESTIONE PULSANTI ANAGRAFICA
         private void gestisciPulsantiAnagrafica(string stato)
         {
             switch (stato)
@@ -255,8 +260,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             editCollaboratore();
             gestisciPulsantiAnagrafica("ANNULLAMENTO");
         }
-
-
+        
         protected void btn_chiudi_Click(object sender, EventArgs e)
         {
             //abilitaBottoni(basePage.AbilitazioneInScrittura());
@@ -301,7 +305,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             lbMod_Telefoni.Rows = 1;
 
         }
-
+        // CARICA IMMAGINE COLLABORATORE
         protected void CaricaImmagine(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(ViewState["idColl"].ToString()) && !ViewState["idColl"].ToString().Equals("0")) {
@@ -474,6 +478,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
             }
         }
+
         private Anag_Collaboratori CreaOggettoSalvataggio(ref Esito esito)
         {
             Anag_Collaboratori collaboratore = new Anag_Collaboratori();
@@ -623,6 +628,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
 
         }
+
         protected void btnEliminaEmail_Click(object sender, EventArgs e)
         {
             //ELIMINO L'INDIRIZZO E-MAIL SE SELEZIONATO
@@ -686,13 +692,60 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     {
                         tbInsIndirizzoIndirizzo.Text = "";
                         tbInsPrioritaIndirizzo.Text = "1";
-                        tbInsTipoIndirizzo.Text = "";
+                        //tbInsTipoIndirizzo.Text = "";
+                        cmbInsTipoIndirizzo.Text = "";
                         tbInsComuneIndirizzo.Text = "";
                         tbInsProvinciaIndirizzo.Text = "";
                         tbInsCapIndirizzo.Text = "";
                         tbInsCivicoIndirizzo.Text = "";
                         tbInsDescrizioneIndirizzo.Text = "";
-                        
+                        btnModificaIndirizzo.Visible = false;
+                        btnInserisciIndirizzo.Visible = true;
+
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+
+        }
+
+        protected void btnEliminaTelefono_Click(object sender, EventArgs e) {
+            //ELIMINO IL TELEFONO SE SELEZIONATO
+            if (lbMod_Telefoni.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    ListItem item = lbMod_Telefoni.Items[lbMod_Telefoni.SelectedIndex];
+                    string value = item.Value;
+                    string telefonoSelezionato = item.Text;
+                    Esito esito = Anag_Telefoni_Collaboratori_BLL.Instance.EliminaTelefonoCollaboratore(Convert.ToInt32(item.Value));
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsPrefIntTelefono.Text = "+39";
+                        tbInsPrefNazTelefono.Text = "";
+                        tbInsNumeroTelefono.Text = "";
+                        cmbInsTipoTelefono.Text = "";
+                        cbInsWhatsappTelefono.Checked = false;
+
+                        btnModificaTelefono.Visible = false;
+                        btnInserisciTelefono.Visible = true;
 
                         editCollaboratore();
                     }
@@ -713,7 +766,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         protected void lbMod_Email_DoubleClick()
         {
-            //ELIMINO L'INDIRIZZO E-MAIL SE SELEZIONATO
+            //SCARICO L'INDIRIZZO E-MAIL SE DOPPIO CLICK
             if (lbMod_Email.SelectedIndex >= 0)
             {
                 try
@@ -757,7 +810,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         protected void lbMod_Indirizzi_DoubleClick()
         {
-            //ELIMINO L'INDIRIZZO E-MAIL SE SELEZIONATO
+            //SCARICO L'INDIRIZZO SE DOPPIO CLICK
             if (lbMod_Indirizzi.SelectedIndex >= 0)
             {
                 try
@@ -781,7 +834,17 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     {
                         btnModificaIndirizzo.Visible = true;
                         btnInserisciIndirizzo.Visible = false;
-                        tbInsTipoIndirizzo.Text = indirizzo.Tipo;
+                        //tbInsTipoIndirizzo.Text = indirizzo.Tipo;
+
+                        ListItem trovati = cmbInsTipoIndirizzo.Items.FindByText(indirizzo.Tipo);
+                        if (trovati != null) { 
+                            cmbInsTipoIndirizzo.SelectedValue = trovati.Value;
+                        }
+                        else
+                        {
+                            cmbInsTipoIndirizzo.Text = "";
+                        }
+
                         tbInsIndirizzoIndirizzo.Text = indirizzo.Indirizzo;
                         tbInsCapIndirizzo.Text = indirizzo.Cap;
                         tbInsCivicoIndirizzo.Text = indirizzo.NumeroCivico;
@@ -803,8 +866,63 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
 
         }
+               
+        protected void lbMod_Telefoni_DoubleClick()
+        {
+            //SCARICO IL TELEFONO SE DOPPIO CLICK
+            if (lbMod_Telefoni.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    ListItem item = lbMod_Telefoni.Items[lbMod_Telefoni.SelectedIndex];
+                    string value = item.Value;
+                    string telefonoSelezionato = item.Text;
+                    Esito esito = new Esito();
+                    Anag_Telefoni_Collaboratori telefono = Anag_Telefoni_Collaboratori_BLL.Instance.getTelefonoById(ref esito, Convert.ToInt32(item.Value));
 
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        btnModificaTelefono.Visible = false;
+                        btnInserisciTelefono.Visible = true;
+                        tbIdTelefonoDaModificare.Text = "";
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        btnModificaTelefono.Visible = true;
+                        btnInserisciTelefono.Visible = false;
+                        tbIdTelefonoDaModificare.Text = telefono.Id.ToString();
+                        ListItem trovati = cmbInsTipoTelefono.Items.FindByText(telefono.Tipo);
+                        if (trovati != null)
+                        {
+                            cmbInsTipoTelefono.Text = telefono.Tipo;
+                        }
+                        else
+                        {
+                            cmbInsTipoTelefono.Text = "";
+                        }
+                        
 
+                        tbInsPrefIntTelefono.Text = telefono.Pref_int;
+                        tbInsPrefNazTelefono.Text = telefono.Pref_naz;
+                        tbInsNumeroTelefono.Text = telefono.Numero;
+                        tbInsPrioritaTelefono.Text = telefono.Priorita.ToString();
+                        cbInsWhatsappTelefono.Checked = telefono.Whatsapp;
+                        tbInsDescrizioneTelefono.Text = telefono.Descrizione;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaTelefono.Visible = false;
+                    btnInserisciTelefono.Visible = true;
+                    tbIdTelefonoDaModificare.Text = "";
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+        }
 
         protected void btnConfermaInserimentoQualifica_Click(object sender, EventArgs e)
         {
@@ -911,7 +1029,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovoIndirizzo.Indirizzo = tbInsIndirizzoIndirizzo.Text.Trim();
                     nuovoIndirizzo.Attivo = true;
                     nuovoIndirizzo.Descrizione = tbInsDescrizioneIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Tipo = tbInsTipoIndirizzo.Text.Trim();
+                    //nuovoIndirizzo.Tipo = tbInsTipoIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Tipo = cmbInsTipoIndirizzo.Text.Trim();
                     nuovoIndirizzo.Comune = tbInsComuneIndirizzo.Text.Trim();
                     nuovoIndirizzo.Provincia = tbInsProvinciaIndirizzo.Text.Trim();
                     nuovoIndirizzo.Cap = tbInsCapIndirizzo.Text.Trim();
@@ -932,7 +1051,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         tbInsCivicoIndirizzo.Text = "";
                         tbInsComuneIndirizzo.Text = "";
                         tbInsProvinciaIndirizzo.Text = "";
-                        tbInsTipoIndirizzo.Text = "";
+                        //tbInsTipoIndirizzo.Text = "";
+                        cmbInsTipoIndirizzo.Text = "";
                         editCollaboratore();
                     }
                 }
@@ -949,6 +1069,60 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
 
         }
+
+        protected void btnConfermaInserimentoTelefono_Click(object sender, EventArgs e) {
+            //INSERISCO IL TELEFONO
+            if (!string.IsNullOrEmpty(tbInsNumeroTelefono.Text) && !string.IsNullOrEmpty(tbInsPrefNazTelefono.Text))
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    Esito esito = new Esito();
+                    Anag_Telefoni_Collaboratori nuovoTelefono = new Anag_Telefoni_Collaboratori();
+                    nuovoTelefono.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
+                    nuovoTelefono.Priorita = Convert.ToInt16(tbInsPrioritaIndirizzo.Text.Trim());
+                    nuovoTelefono.Attivo = true;
+                    nuovoTelefono.Descrizione = tbInsDescrizioneTelefono.Text.Trim();
+                    nuovoTelefono.Tipo = cmbInsTipoTelefono.Text.Trim();
+                    nuovoTelefono.Pref_int = tbInsPrefIntTelefono.Text.Trim();
+                    nuovoTelefono.Pref_naz = tbInsPrefNazTelefono.Text.Trim();
+                    nuovoTelefono.Numero = tbInsNumeroTelefono.Text.Trim();
+                    nuovoTelefono.Whatsapp = cbInsWhatsappTelefono.Checked;
+
+                    int iNuovoTelefono = Anag_Telefoni_Collaboratori_BLL.Instance.CreaTelefonoCollaboratore(nuovoTelefono, ref esito);
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsPrioritaTelefono.Text = "";
+                        tbInsDescrizioneTelefono.Text = "";
+                        //tbInsTipoIndirizzo.Text = "";
+                        cmbInsTipoIndirizzo.Text = "";
+                        tbInsPrefIntTelefono.Text = "";
+                        tbInsPrefNazTelefono.Text = "";
+                        tbInsNumeroTelefono.Text = "";
+                        cbInsWhatsappTelefono.Checked=false;
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+        }
+
         protected void btnConfermaModificaEmail_Click(object sender, EventArgs e)
         {
             //MODIFICO L'E-MAIL
@@ -1002,7 +1176,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void btnConfermaModificaIndirizzo_Click(object sender, EventArgs e)
         {
             //MODIFICO L'INDIRIZZO
-            if (!string.IsNullOrEmpty(tbInsIndirizzoIndirizzo.Text) && validaIndirizzoEmail(tbInsEmail.Text) && !string.IsNullOrEmpty(tbIdIndirizzoDaModificare.Text))
+            if (!string.IsNullOrEmpty(tbInsIndirizzoIndirizzo.Text) && !string.IsNullOrEmpty(tbInsComuneIndirizzo.Text) && !string.IsNullOrEmpty(tbIdIndirizzoDaModificare.Text))
             {
                 try
                 {
@@ -1016,8 +1190,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovoIndirizzo.Indirizzo = tbInsIndirizzoIndirizzo.Text.Trim();
                     nuovoIndirizzo.Attivo = true;
                     nuovoIndirizzo.Descrizione = tbInsDescrizioneIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Tipo = tbInsTipoIndirizzo.Text.Trim();
+                    //nuovoIndirizzo.Tipo = tbInsTipoIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Tipo = cmbInsTipoIndirizzo.Text.Trim();
                     nuovoIndirizzo.Nazione = "Italia";
+                    nuovoIndirizzo.NumeroCivico = tbInsCivicoIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Cap = tbInsCapIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Comune = tbInsComuneIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Provincia = tbInsProvinciaIndirizzo.Text.Trim();
 
                     esito = Anag_Indirizzi_Collaboratori_BLL.Instance.AggiornaIndirizziCollaboratore(nuovoIndirizzo);
 
@@ -1031,9 +1210,11 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     }
                     else
                     {
+                        tbIdIndirizzoDaModificare.Text = "";
                         tbInsIndirizzoIndirizzo.Text = "";
                         tbInsPrioritaIndirizzo.Text = "1";
-                        tbInsTipoIndirizzo.Text = "";
+                        //tbInsTipoIndirizzo.Text = "";
+                        cmbInsTipoIndirizzo.Text = "";
                         tbInsDescrizioneIndirizzo.Text = "";
                         tbInsComuneIndirizzo.Text = "";
                         tbInsProvinciaIndirizzo.Text = "";
@@ -1055,6 +1236,94 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 panelErrore.Style.Remove("display");
                 lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
             }
+        }
+
+        protected void btnConfermaModificaTelefono_Click(object sender, EventArgs e) {
+            //MODIFICO L'INDIRIZZO
+            if (!string.IsNullOrEmpty(tbInsNumeroTelefono.Text) && !string.IsNullOrEmpty(tbInsPrefNazTelefono.Text) && !string.IsNullOrEmpty(tbIdTelefonoDaModificare.Text))
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    Esito esito = new Esito();
+                    Anag_Telefoni_Collaboratori nuovoTelefono = new Anag_Telefoni_Collaboratori();
+                    nuovoTelefono.Id = Convert.ToInt32(tbIdTelefonoDaModificare.Text);
+                    nuovoTelefono.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
+                    nuovoTelefono.Priorita = Convert.ToInt16(tbInsPrioritaTelefono.Text.Trim());
+                    nuovoTelefono.Pref_int = tbInsPrefIntTelefono.Text.Trim();
+                    nuovoTelefono.Pref_naz = tbInsPrefNazTelefono.Text.Trim();
+                    nuovoTelefono.Tipo = cmbInsTipoTelefono.Text.Trim();
+                    nuovoTelefono.Numero = tbInsNumeroTelefono.Text.Trim();
+                    nuovoTelefono.Whatsapp = cbInsWhatsappTelefono.Checked;
+                    nuovoTelefono.Attivo = true;
+                    nuovoTelefono.Descrizione = tbInsDescrizioneTelefono.Text.Trim();
+
+                    esito = Anag_Telefoni_Collaboratori_BLL.Instance.AggiornaTelefonoCollaboratore(nuovoTelefono);
+
+                    btnModificaTelefono.Visible = false;
+                    btnInserisciTelefono.Visible = true;
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbIdTelefonoDaModificare.Text = "";
+                        tbInsNumeroTelefono.Text = "";
+                        tbInsPrefIntTelefono.Text = "";
+                        tbInsPrioritaTelefono.Text = "1";
+                        tbInsPrefNazTelefono.Text = "";
+                        cmbInsTipoTelefono.Text = "";
+                        tbInsDescrizioneTelefono.Text = "";
+                        cbInsWhatsappTelefono.Checked = false;
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaTelefono.Visible = false;
+                    btnInserisciTelefono.Visible = true;
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+
+        }
+
+        protected void btnAnnullaIndirizzo_Click(object sender, EventArgs e)
+        {
+            tbIdIndirizzoDaModificare.Text = "";
+            tbInsIndirizzoIndirizzo.Text = "";
+            tbInsPrioritaIndirizzo.Text = "1";
+            cmbInsTipoIndirizzo.Text = "";
+            tbInsDescrizioneIndirizzo.Text = "";
+            tbInsComuneIndirizzo.Text = "";
+            tbInsProvinciaIndirizzo.Text = "";
+            tbInsCapIndirizzo.Text = "";
+            tbInsCivicoIndirizzo.Text = "";
+
+            btnModificaIndirizzo.Visible = false;
+            btnInserisciIndirizzo.Visible = true;
+        }
+
+        protected void btnAnnullaTelefono_Click(object sender, EventArgs e)
+        {
+            tbInsPrefIntTelefono.Text = "+39";
+            tbInsPrefNazTelefono.Text = "";
+            tbInsNumeroTelefono.Text = "";
+            cmbInsTipoTelefono.Text = "";
+            cbInsWhatsappTelefono.Checked = false;
+
+            btnModificaTelefono.Visible = false;
+            btnInserisciTelefono.Visible = true;
         }
 
         protected void btnApriQualifiche_Click(object sender, EventArgs e)
@@ -1093,6 +1362,19 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 phIndirizzi.Visible = true;
             }
         }
+
+        protected void btnApriTelefoni_Click(object sender, EventArgs e)
+        {
+            if (phTelefoni.Visible)
+            {
+                phTelefoni.Visible = false;
+            }
+            else
+            {
+                phTelefoni.Visible = true;
+            }
+        }
+
         private bool validaIndirizzoEmail(string indirizzo)
         {
             Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");

@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -54,21 +53,6 @@
       <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MySql.Data">
-      <HintPath>..\..\..\..\Downloads\VideoSystemWeb\VideoSystemWeb\bin\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data.EntityFramework">
-      <HintPath>..\..\..\..\Downloads\VideoSystemWeb\VideoSystemWeb\bin\MySql.Data.EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="MySQL.Data.EntityFrameworkCore">
-      <HintPath>..\..\..\..\Downloads\VideoSystemWeb\VideoSystemWeb\bin\MySQL.Data.EntityFrameworkCore.dll</HintPath>
-    </Reference>
-    <Reference Include="MySQL.Data.EntityFrameworkCore.Design">
-      <HintPath>..\..\..\..\Downloads\VideoSystemWeb\VideoSystemWeb\bin\MySQL.Data.EntityFrameworkCore.Design.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Web">
-      <HintPath>..\..\..\..\Downloads\VideoSystemWeb\VideoSystemWeb\bin\MySql.Web.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />

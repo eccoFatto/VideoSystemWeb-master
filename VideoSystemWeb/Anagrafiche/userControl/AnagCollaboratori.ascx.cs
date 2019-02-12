@@ -10,35 +10,58 @@ using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
 using VideoSystemWeb.DAL;
 using System.IO;
-
+using System.Text.RegularExpressions;
 namespace VideoSystemWeb.Anagrafiche.userControl
 {
     public partial class AnagCollaboratori : System.Web.UI.UserControl
     {
+
         BasePage basePage = new BasePage();
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (basePage.AbilitazioneInScrittura())
+            {
+                // ASSOCIO L'EVENTO DOUBLECLICK ALLE LISTBOX
+                if (Request["__EVENTARGUMENT"] != null && Request["__EVENTARGUMENT"] == "move")
+                {
+                    lbMod_Email_DoubleClick();
+                    lbMod_Indirizzi_DoubleClick();
+                }
+                lbMod_Email.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Email, "move"));
+                lbMod_Indirizzi.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Indirizzi, "move"));
+            }
+
             if (!Page.IsPostBack)
             {
-                bool isUtenteAbilitatoInScrittura = basePage.AbilitazioneInScrittura();
 
                 BasePage p = new BasePage();
                 Esito esito = p.caricaListeTipologiche();
 
-                if (string.IsNullOrEmpty(esito.descrizione)) {
+                if (string.IsNullOrEmpty(esito.descrizione))
+                {
                     ddlQualifiche.Items.Clear();
                     ddlQualifiche.Items.Add("");
+
+                    ddlQualificheDaAggiungere.Items.Clear();
                     foreach (Tipologica qualifica in p.listaQualifiche)
                     {
                         ListItem item = new ListItem();
+                        ListItem itemDaAggiungere = new ListItem();
                         item.Text = qualifica.nome;
+                        itemDaAggiungere.Text = qualifica.nome;
                         // metto comunque il nome e non l'id perchè la ricerca sulla tabella anag_qualifiche_collaboratori la faccio sul nome
                         item.Value = qualifica.nome;
+                        itemDaAggiungere.Value = qualifica.id.ToString();
                         ddlQualifiche.Items.Add(item);
+
+                        ddlQualificheDaAggiungere.Items.Add(itemDaAggiungere);
                     }
 
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                    abilitaBottoni(isUtenteAbilitatoInScrittura);
+                    abilitaBottoni(basePage.AbilitazioneInScrittura());
+
+
                 }
                 else
                 {
@@ -49,12 +72,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
 
             }
-            else
-            {
+            // SELEZIONO L'ULTIMA TAB SELEZIONATA
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('" + hf_tabChiamata.Value + "')", addScriptTags: true);
 
-            }
         }
-
         private void abilitaBottoni(bool utenteAbilitatoInScrittura)
         {
             annullaModifiche();
@@ -66,6 +87,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 btnSalva.Visible = false;
                 btnElimina.Visible = false;
                 uploadButton.Visible = false;
+
+                btnApriQualifiche.Visible = false;
+                btnApriEmail.Visible = false;
             }
             else
             {
@@ -75,6 +99,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 btnSalva.Visible = false;
                 btnElimina.Visible = false;
                 uploadButton.Visible = true;
+
+                btnApriQualifiche.Visible = true;
+                btnApriEmail.Visible = true;
             }
         }
 
@@ -122,20 +149,69 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         protected void EditCollaboratore_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(hf_idColl.Value)) {
-                ViewState["idColl"] = hf_idColl.Value;
+            if (!string.IsNullOrEmpty(hf_idColl.Value) || (!string.IsNullOrEmpty((string)ViewState["idColl"]))) {
+                if (!string.IsNullOrEmpty(hf_idColl.Value)) ViewState["idColl"] = hf_idColl.Value;
                 editCollaboratore();
+                AttivaDisattivaModificaAnagrafica(true);
+                gestisciPulsantiAnagrafica("VISUALIZZAZIONE");
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('Anagrafica')", addScriptTags: true);
+                pnlContainer.Visible = true;
             }
         }
 
         protected void btnModifica_Click(object sender, EventArgs e)
         {
             AttivaDisattivaModificaAnagrafica(false);
+            gestisciPulsantiAnagrafica("MODIFICA");
+        }
+
+        private void gestisciPulsantiAnagrafica(string stato)
+        {
+            switch (stato)
+            {
+                case "VISUALIZZAZIONE":
+
+                    btnModifica.Visible = basePage.AbilitazioneInScrittura();
+                    btnSalva.Visible = false;
+                    btnAnnulla.Visible = false;
+                    btnElimina.Visible = false;
+                    btnConfermaInserimento.Visible = false;
+                    break;
+                case "INSERIMENTO":
+                    btnModifica.Visible = false;
+                    btnSalva.Visible = false;
+                    btnAnnulla.Visible = false;
+                    btnElimina.Visible = false;
+                    btnConfermaInserimento.Visible = true;
+                    break;
+                case "MODIFICA":
+                    btnModifica.Visible = false;
+                    btnSalva.Visible = true;
+                    btnAnnulla.Visible = true;
+                    btnElimina.Visible = true;
+                    btnConfermaInserimento.Visible = false;
+                    break;
+                case "ANNULLAMENTO":
+                    btnModifica.Visible = true;
+                    btnSalva.Visible = false;
+                    btnAnnulla.Visible = false;
+                    btnElimina.Visible = false;
+                    btnConfermaInserimento.Visible = false;
+                    break;
+                default:
+                    btnModifica.Visible = true;
+                    btnSalva.Visible = false;
+                    btnAnnulla.Visible = false;
+                    btnElimina.Visible = false;
+                    btnConfermaInserimento.Visible = false;
+                    break;
+            }
+
         }
 
         protected void btnSalva_Click(object sender, EventArgs e)
         {
-            // SALVO O INSERISCO COLLABORATORE
+            // SALVO MODIFICHE COLLABORATORE
             Esito esito = new Esito();
             Anag_Collaboratori collaboratore = CreaOggettoSalvataggio(ref esito);
 
@@ -154,29 +230,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             else
             {
                 NascondiErroriValidazione();
-                if (string.IsNullOrEmpty(hf_idColl.Value)) {
-                    int iRet = Anag_Collaboratori_BLL.Instance.CreaCollaboratore(collaboratore, ref esito);
-                    if (iRet > 0)
-                    {
-                        // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO
-                        hf_idColl.Value = iRet.ToString();
-                        ViewState["idColl"] = hf_idColl.Value;
-                        hf_tipoOperazione.Value = "MODIFICA";
-                    }
-                }
-                else
-                {
-                    esito = Anag_Collaboratori_BLL.Instance.AggiornaCollaboratore(collaboratore);
-                }
+
+                esito = Anag_Collaboratori_BLL.Instance.AggiornaCollaboratore(collaboratore);
+
                 
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = esito.descrizione;
-                    //UpdatePopup();
                 }
-                //AttivaDisattivaModificaAnagrafica(true);
-                //editCollaboratore();
                 EditCollaboratore_Click(null, null);
             }
         }
@@ -191,6 +253,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             NascondiErroriValidazione();
             AttivaDisattivaModificaAnagrafica(true);
             editCollaboratore();
+            gestisciPulsantiAnagrafica("ANNULLAMENTO");
         }
 
 
@@ -200,11 +263,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             pnlContainer.Visible = false;
         }
 
-        protected void btnInserisciCollaboratori_Click(object sender, EventArgs e)
+        protected void InserisciCollaboratori_Click(object sender, EventArgs e)
         {
             ViewState["idColl"] = "";
-            AttivaDisattivaModificaAnagrafica(false);
             editCollaboratoreVuoto();
+            AttivaDisattivaModificaAnagrafica(false);
+            gestisciPulsantiAnagrafica("INSERIMENTO");
+            pnlContainer.Visible = true;
         }
 
         private void pulisciCampiDettaglio()
@@ -276,17 +341,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
         }
 
-        protected void PulisciCampiRicerca_Click(object sender, EventArgs e)
-        {
-            tbCognome.Text = "";
-            tbNome.Text = "";
-            tbCF.Text = "";
-            tbCitta.Text = "";
-            TbPiva.Text = "";
-            TbSocieta.Text = "";
-            ddlQualifiche.SelectedIndex = 0;
-        }
-
         private void AttivaDisattivaModificaAnagrafica(bool attivaModifica)
         {
             tbMod_CF.ReadOnly = attivaModifica;
@@ -303,17 +357,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             cbMod_Assunto.Enabled = !attivaModifica;
             cbMod_Attivo.Enabled = !attivaModifica;
 
-            btnModifica.Visible = attivaModifica;
-            btnSalva.Visible = btnAnnulla.Visible = !attivaModifica;
 
-            if (ViewState["idColl"]!=null && !string.IsNullOrEmpty(ViewState["idColl"].ToString()))
-            {
-                btnElimina.Visible = !attivaModifica;
-            }
-            else
-            {
-                btnElimina.Visible = false;
-            }
+
         }
 
         private void editCollaboratore()
@@ -420,7 +465,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     {
                         imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + collaboratore.PathFoto;
                     }
-                    pnlContainer.Visible = true;
                 }
                 else
                 {
@@ -463,7 +507,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             pulisciCampiDettaglio();
             // IMMAGINE COLLABORATORE
             imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + ConfigurationManager.AppSettings["IMMAGINE_DUMMY_COLLABORATORE"];
-            pnlContainer.Visible = true;
+            
         }
 
         protected void btnElimina_Click(object sender, EventArgs e)
@@ -506,5 +550,560 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_ProvinciaNascita.CssClass = tbMod_ProvinciaNascita.CssClass.Replace("erroreValidazione", "");
         }
 
+        protected void btnConfermaInserimento_Click(object sender, EventArgs e)
+        {
+            // INSERISCO COLLABORATORE
+            Esito esito = new Esito();
+            Anag_Collaboratori collaboratore = CreaOggettoSalvataggio(ref esito);
+
+            collaboratore.PathFoto = ConfigurationManager.AppSettings["IMMAGINE_DUMMY_COLLABORATORE"];
+
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+            }
+            else
+            {
+                NascondiErroriValidazione();
+
+                int iRet = Anag_Collaboratori_BLL.Instance.CreaCollaboratore(collaboratore, ref esito);
+                if (iRet > 0)
+                {
+                    // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO
+                    hf_idColl.Value = iRet.ToString();
+                    ViewState["idColl"] = hf_idColl.Value;
+                    hf_tipoOperazione.Value = "VISUALIZZAZIONE";
+                }
+
+                if (esito.codice != Esito.ESITO_OK)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = esito.descrizione;
+                }
+                EditCollaboratore_Click(null, null);
+            }
+
+        }
+
+        protected void btnEliminaQualifica_Click(object sender, EventArgs e)
+        {
+            //ELIMINO LA QUALIFICA SE SELEZIONATA
+            if (lbMod_Qualifiche.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    ListItem item = lbMod_Qualifiche.Items[lbMod_Qualifiche.SelectedIndex];
+                    string value = item.Value;
+                    string qualificaSelezionata = item.Text;
+                    Esito esito = Anag_Qualifiche_Collaboratori_BLL.Instance.EliminaQualificaCollaboratore(Convert.ToInt32(item.Value));
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        //lbMod_Qualifiche.Items.Remove(item);
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+
+        }
+        protected void btnEliminaEmail_Click(object sender, EventArgs e)
+        {
+            //ELIMINO L'INDIRIZZO E-MAIL SE SELEZIONATO
+            if (lbMod_Email.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    ListItem item = lbMod_Email.Items[lbMod_Email.SelectedIndex];
+                    string value = item.Value;
+                    string emailSelezionata = item.Text;
+                    Esito esito = Anag_Email_Collaboratori_BLL.Instance.EliminaEmailCollaboratore(Convert.ToInt32(item.Value));
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsEmail.Text = "";
+                        tbInsPrioritaEmail.Text = "1";
+                        tbInsTipoEmail.Text = "";
+
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+
+        }
+
+        protected void btnEliminaIndirizzo_Click(object sender, EventArgs e)
+        {
+            //ELIMINO L'INDIRIZZO SE SELEZIONATO
+            if (lbMod_Indirizzi.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    ListItem item = lbMod_Indirizzi.Items[lbMod_Indirizzi.SelectedIndex];
+                    string value = item.Value;
+                    string indirizzoSelezionato = item.Text;
+                    Esito esito = Anag_Indirizzi_Collaboratori_BLL.Instance.EliminaIndirizziCollaboratore(Convert.ToInt32(item.Value));
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsIndirizzoIndirizzo.Text = "";
+                        tbInsPrioritaIndirizzo.Text = "1";
+                        tbInsTipoIndirizzo.Text = "";
+                        tbInsComuneIndirizzo.Text = "";
+                        tbInsProvinciaIndirizzo.Text = "";
+                        tbInsCapIndirizzo.Text = "";
+                        tbInsCivicoIndirizzo.Text = "";
+                        tbInsDescrizioneIndirizzo.Text = "";
+                        
+
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+
+        }
+
+        protected void lbMod_Email_DoubleClick()
+        {
+            //ELIMINO L'INDIRIZZO E-MAIL SE SELEZIONATO
+            if (lbMod_Email.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    ListItem item = lbMod_Email.Items[lbMod_Email.SelectedIndex];
+                    string value = item.Value;
+                    string emailSelezionata = item.Text;
+                    Esito esito = new Esito();
+                    Anag_Email_Collaboratori email = Anag_Email_Collaboratori_BLL.Instance.getEmailById(Convert.ToInt32(item.Value),ref esito);
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        btnModificaEmail.Visible = false;
+                        btnInserisciEmail.Visible = true;
+                        tbIdEmailDaModificare.Text = "";
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        btnModificaEmail.Visible = true;
+                        btnInserisciEmail.Visible = false;
+                        tbInsEmail.Text = email.IndirizzoEmail;
+                        tbInsPrioritaEmail.Text = email.Priorita.ToString();
+                        tbInsTipoEmail.Text = email.Descrizione;
+                        tbIdEmailDaModificare.Text = email.Id.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaEmail.Visible = false;
+                    btnInserisciEmail.Visible = true;
+                    tbIdEmailDaModificare.Text = "";
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+
+        }
+
+        protected void lbMod_Indirizzi_DoubleClick()
+        {
+            //ELIMINO L'INDIRIZZO E-MAIL SE SELEZIONATO
+            if (lbMod_Indirizzi.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    ListItem item = lbMod_Indirizzi.Items[lbMod_Indirizzi.SelectedIndex];
+                    string value = item.Value;
+                    string indirizzoSelezionato = item.Text;
+                    Esito esito = new Esito();
+                    Anag_Indirizzi_Collaboratori indirizzo = Anag_Indirizzi_Collaboratori_BLL.Instance.getIndirizzoById(ref esito,Convert.ToInt32(item.Value));
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        btnModificaIndirizzo.Visible = false;
+                        btnInserisciIndirizzo.Visible = true;
+                        tbIdIndirizzoDaModificare.Text = "";
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        btnModificaIndirizzo.Visible = true;
+                        btnInserisciIndirizzo.Visible = false;
+                        tbInsTipoIndirizzo.Text = indirizzo.Tipo;
+                        tbInsIndirizzoIndirizzo.Text = indirizzo.Indirizzo;
+                        tbInsCapIndirizzo.Text = indirizzo.Cap;
+                        tbInsCivicoIndirizzo.Text = indirizzo.NumeroCivico;
+                        tbInsComuneIndirizzo.Text = indirizzo.Comune;
+                        tbInsProvinciaIndirizzo.Text = indirizzo.Provincia;
+                        tbInsPrioritaIndirizzo.Text = indirizzo.Priorita.ToString();
+                        tbInsDescrizioneIndirizzo.Text = indirizzo.Descrizione;
+                        tbIdIndirizzoDaModificare.Text = indirizzo.Id.ToString();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaIndirizzo.Visible = false;
+                    btnInserisciIndirizzo.Visible = true;
+                    tbIdIndirizzoDaModificare.Text = "";
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+
+        }
+
+
+
+        protected void btnConfermaInserimentoQualifica_Click(object sender, EventArgs e)
+        {
+            //INSERISCO LA QUALIFICA SE SELEZIONATA
+            if (ddlQualificheDaAggiungere.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    ListItem item = ddlQualificheDaAggiungere.Items[ddlQualificheDaAggiungere.SelectedIndex];
+                    string value = item.Value;
+                    string qualificaSelezionata = item.Text;
+                    Esito esito = new Esito();
+                    Anag_Qualifiche_Collaboratori nuovaQualifica = new Anag_Qualifiche_Collaboratori();
+                    nuovaQualifica.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
+                    nuovaQualifica.Priorita = Convert.ToInt16(tbInsPrioritaQualifica.Text.Trim());
+                    nuovaQualifica.Qualifica = qualificaSelezionata;
+                    nuovaQualifica.Attivo = true;
+                    nuovaQualifica.Descrizione = "";
+                    int iNuovaQualifica = Anag_Qualifiche_Collaboratori_BLL.Instance.CreaQualificaCollaboratore(nuovaQualifica, ref esito);
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+
+        }
+
+        protected void btnConfermaInserimentoEmail_Click(object sender, EventArgs e)
+        {
+            //INSERISCO L'E-MAIL
+            if (!string.IsNullOrEmpty(tbInsEmail.Text) && validaIndirizzoEmail(tbInsEmail.Text))
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    Esito esito = new Esito();
+                    Anag_Email_Collaboratori nuovaEmail = new Anag_Email_Collaboratori();
+                    nuovaEmail.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
+                    nuovaEmail.Priorita = Convert.ToInt16(tbInsPrioritaEmail.Text.Trim());
+                    nuovaEmail.IndirizzoEmail = tbInsEmail.Text.Trim();
+                    nuovaEmail.Attivo = true;
+                    nuovaEmail.Descrizione = tbInsTipoEmail.Text.Trim();
+                    int iNuovaEmail = Anag_Email_Collaboratori_BLL.Instance.CreaEmailCollaboratore(nuovaEmail, ref esito);
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsEmail.Text = "";
+                        tbInsPrioritaEmail.Text = "1";
+                        tbInsTipoEmail.Text = "";
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+
+        }
+
+        protected void btnConfermaInserimentoIndirizzo_Click(object sender, EventArgs e)
+        {
+            //INSERISCO L'INDIRIZZO
+            if (!string.IsNullOrEmpty(tbInsIndirizzoIndirizzo.Text))
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    Esito esito = new Esito();
+                    Anag_Indirizzi_Collaboratori nuovoIndirizzo = new Anag_Indirizzi_Collaboratori();
+                    nuovoIndirizzo.Id_Collaboratore = Convert.ToInt32(ViewState["idColl"]);
+                    nuovoIndirizzo.Priorita = Convert.ToInt16(tbInsPrioritaIndirizzo.Text.Trim());
+                    nuovoIndirizzo.Indirizzo = tbInsIndirizzoIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Attivo = true;
+                    nuovoIndirizzo.Descrizione = tbInsDescrizioneIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Tipo = tbInsTipoIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Comune = tbInsComuneIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Provincia = tbInsProvinciaIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Cap = tbInsCapIndirizzo.Text.Trim();
+                    nuovoIndirizzo.NumeroCivico = tbInsCivicoIndirizzo.Text.Trim();
+                    int iNuovoIndirizzo = Anag_Indirizzi_Collaboratori_BLL.Instance.CreaIndirizziCollaboratore(nuovoIndirizzo, ref esito);
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsIndirizzoIndirizzo.Text = "";
+                        tbInsPrioritaIndirizzo.Text = "1";
+                        tbInsDescrizioneIndirizzo.Text = "";
+                        tbInsCapIndirizzo.Text = "";
+                        tbInsCivicoIndirizzo.Text = "";
+                        tbInsComuneIndirizzo.Text = "";
+                        tbInsProvinciaIndirizzo.Text = "";
+                        tbInsTipoIndirizzo.Text = "";
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+
+        }
+        protected void btnConfermaModificaEmail_Click(object sender, EventArgs e)
+        {
+            //MODIFICO L'E-MAIL
+            if (!string.IsNullOrEmpty(tbInsEmail.Text) && validaIndirizzoEmail(tbInsEmail.Text) && !string.IsNullOrEmpty(tbIdEmailDaModificare.Text))
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    Esito esito = new Esito();
+                    Anag_Email_Collaboratori nuovaEmail = new Anag_Email_Collaboratori();
+                    nuovaEmail.Id = Convert.ToInt32(tbIdEmailDaModificare.Text);
+                    nuovaEmail.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
+                    nuovaEmail.Priorita = Convert.ToInt16(tbInsPrioritaEmail.Text.Trim());
+                    nuovaEmail.IndirizzoEmail = tbInsEmail.Text.Trim();
+                    nuovaEmail.Attivo = true;
+                    nuovaEmail.Descrizione = tbInsTipoEmail.Text.Trim();
+                    esito = Anag_Email_Collaboratori_BLL.Instance.AggiornaEmailCollaboratore(nuovaEmail);
+
+                    btnModificaEmail.Visible = false;
+                    btnInserisciEmail.Visible = true;
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsEmail.Text = "";
+                        tbInsPrioritaEmail.Text = "1";
+                        tbInsTipoEmail.Text = "";
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaEmail.Visible = false;
+                    btnInserisciEmail.Visible = true;
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+        }
+
+        protected void btnConfermaModificaIndirizzo_Click(object sender, EventArgs e)
+        {
+            //MODIFICO L'INDIRIZZO
+            if (!string.IsNullOrEmpty(tbInsIndirizzoIndirizzo.Text) && validaIndirizzoEmail(tbInsEmail.Text) && !string.IsNullOrEmpty(tbIdIndirizzoDaModificare.Text))
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    Esito esito = new Esito();
+                    Anag_Indirizzi_Collaboratori nuovoIndirizzo = new Anag_Indirizzi_Collaboratori();
+                    nuovoIndirizzo.Id = Convert.ToInt32(tbIdIndirizzoDaModificare.Text);
+                    nuovoIndirizzo.Id_Collaboratore = Convert.ToInt32(ViewState["idColl"]);
+                    nuovoIndirizzo.Priorita = Convert.ToInt16(tbInsPrioritaIndirizzo.Text.Trim());
+                    nuovoIndirizzo.Indirizzo = tbInsIndirizzoIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Attivo = true;
+                    nuovoIndirizzo.Descrizione = tbInsDescrizioneIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Tipo = tbInsTipoIndirizzo.Text.Trim();
+                    nuovoIndirizzo.Nazione = "Italia";
+
+                    esito = Anag_Indirizzi_Collaboratori_BLL.Instance.AggiornaIndirizziCollaboratore(nuovoIndirizzo);
+
+                    btnModificaIndirizzo.Visible = false;
+                    btnInserisciIndirizzo.Visible = true;
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsIndirizzoIndirizzo.Text = "";
+                        tbInsPrioritaIndirizzo.Text = "1";
+                        tbInsTipoIndirizzo.Text = "";
+                        tbInsDescrizioneIndirizzo.Text = "";
+                        tbInsComuneIndirizzo.Text = "";
+                        tbInsProvinciaIndirizzo.Text = "";
+                        tbInsCapIndirizzo.Text = "";
+                        tbInsCivicoIndirizzo.Text = "";
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaIndirizzo.Visible = false;
+                    btnInserisciIndirizzo.Visible = true;
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+        }
+
+        protected void btnApriQualifiche_Click(object sender, EventArgs e)
+        {
+            if (phQualifiche.Visible)
+            {
+                phQualifiche.Visible = false;
+            }
+            else
+            {
+                phQualifiche.Visible = true;
+                
+            }
+        }
+
+        protected void btnApriEmail_Click(object sender, EventArgs e)
+        {
+            if (phEmail.Visible)
+            {
+                phEmail.Visible = false;
+            }
+            else
+            {
+                phEmail.Visible = true;
+            }
+        }
+
+        protected void btnApriIndirizzi_Click(object sender, EventArgs e)
+        {
+            if (phIndirizzi.Visible)
+            {
+                phIndirizzi.Visible = false;
+            }
+            else
+            {
+                phIndirizzi.Visible = true;
+            }
+        }
+        private bool validaIndirizzoEmail(string indirizzo)
+        {
+            Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
+            Match match = regex.Match(indirizzo);
+            if (match.Success) { 
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

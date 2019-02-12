@@ -93,6 +93,58 @@ namespace VideoSystemWeb.DAL
             return listaIndirizzi;
         }
 
+        public Anag_Indirizzi_Collaboratori getIndirizzoById(ref Esito esito, int id)
+        {
+            Anag_Indirizzi_Collaboratori indirizzo = new Anag_Indirizzi_Collaboratori();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM anag_indirizzi_collaboratori WHERE id = " + id.ToString();
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    indirizzo.Id = dt.Rows[0].Field<int>("id");
+                                    indirizzo.Id_Collaboratore = dt.Rows[0].Field<int>("id_collaboratore");
+
+                                    indirizzo.Tipo = dt.Rows[0].Field<string>("tipo");
+                                    indirizzo.Indirizzo = dt.Rows[0].Field<string>("indirizzo");
+                                    indirizzo.Nazione = dt.Rows[0].Field<string>("nazione");
+                                    indirizzo.NumeroCivico = dt.Rows[0].Field<string>("numeroCivico");
+                                    indirizzo.Provincia = dt.Rows[0].Field<string>("provincia");
+                                    indirizzo.Cap = dt.Rows[0].Field<string>("cap");
+                                    indirizzo.Comune = dt.Rows[0].Field<string>("comune");
+                                    indirizzo.Descrizione = dt.Rows[0].Field<string>("descrizione");
+                                    indirizzo.Priorita = dt.Rows[0].Field<int>("priorita");
+                                    indirizzo.Attivo = dt.Rows[0].Field<bool>("attivo");
+
+                                }
+                                else
+                                {
+                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.descrizione = "Nessun dato trovato nella tabella anag_indirizzi_collaboratori ";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return indirizzo;
+        }
         public int CreaIndirizziCollaboratore(Anag_Indirizzi_Collaboratori indirizzoCollaboratore, ref Esito esito)
         {
             //@id_collaboratore int,

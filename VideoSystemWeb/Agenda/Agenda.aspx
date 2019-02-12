@@ -87,7 +87,7 @@
     </div>
 
 
-    <table style="width: 99%">
+    <table style="width: 99%; height:100%;" >
         <tr>
             <td style="width: 80%; vertical-align: top;">
                 <asp:Button ID="btnsearch" runat="server" OnClick="btnsearch_Click" Style="display: none" />
@@ -102,7 +102,7 @@
                     </Triggers>
                 </asp:UpdatePanel>
             </td>
-            <td style="width: 20%; vertical-align: top;">
+            <td style="width: 20%; vertical-align: top; ">
                 <div class="calendarAgenda" style="margin-left:20px;"></div>
                 <br />
                 <div  class="w3-container"  style="margin-left:20px; text-align:center">

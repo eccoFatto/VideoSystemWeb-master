@@ -92,14 +92,26 @@ namespace VideoSystemWeb.BLL
 
         public Esito CreaEvento(DatiAgenda evento)
         {
-            Esito esito = Agenda_DAL.Instance.CreaEvento(evento);
+            Esito esito = new Esito();
+            //if (evento.id_stato == DatiAgenda.STATO_RIPOSO && evento.id_tipologia == 0)
+            //{
+            //    evento.id_tipologia = UtilityTipologiche.getElementByNome(Base_DAL.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE,false, ref esito), "DUMMY", ref esito).id;
+            //}
+
+            esito = Agenda_DAL.Instance.CreaEvento(evento);
 
             return esito;
         }
 
         public Esito AggiornaEvento(DatiAgenda evento)
         {
-            Esito esito = Agenda_DAL.Instance.AggiornaEvento(evento);
+            Esito esito = new Esito();
+            //if (evento.id_stato == DatiAgenda.STATO_RIPOSO && evento.id_tipologia == 0)
+            //{
+            //    evento.id_tipologia = UtilityTipologiche.getElementByNome(Base_DAL.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, false, ref esito), "DUMMY", ref esito).id;
+            //}
+
+            esito = Agenda_DAL.Instance.AggiornaEvento(evento);
 
             return esito;
         }

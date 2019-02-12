@@ -50,6 +50,39 @@
         });
     }
 
+    function controlloCoerenzaOrari(id_oraInizio, id_oraFine) {
+        $('#' + id_oraInizio).datetimepicker({
+            locale: 'it',
+            format: 'LT'
+        });
+        $('#' + id_oraFine).datetimepicker({
+            locale: 'it',
+            format: 'LT',
+            useCurrent: false //Important! See issue #1075
+        });
+
+        if ($('#' + id_oraInizio).val() != "") {
+            var oraInizio = $('#' + id_oraInizio).data('DateTimePicker');
+            if (oraInizio != null) {
+                $('#' + id_oraFine).data("DateTimePicker").minDate(new Date(oraInizio.date()));
+            }
+        }
+
+        if ($('#' + id_oraFine).val() != "") {
+            var oraFine = $('#' + id_oraFine).data('DateTimePicker');
+            if (oraFine != null) {
+                $('#' + id_oraInizio).data("DateTimePicker").maxDate(new Date(oraFine.date()));
+            }
+        }
+
+        $('#' + id_oraInizio).on("dp.change", function (e) {
+            $('#' + id_oraFine).data("DateTimePicker").minDate(e.date);
+        });
+        $('#' + id_oraFine).on("dp.change", function (e) {
+            $('#' + id_oraInizio).data("DateTimePicker").maxDate(e.date);
+        });
+    }
+
     $("body").on("click", "#<%=chk_ImpegnoOrario.ClientID%>", function () {
         checkImpegnoOrario();
     });

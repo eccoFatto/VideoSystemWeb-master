@@ -397,6 +397,8 @@ namespace VideoSystemWeb.Agenda
                 eventoSelezionato = new DatiAgenda
                 {
                     data_inizio_lavorazione = dataEvento,
+                    data_fine_lavorazione = dataEvento,
+                    durata_lavorazione = 1,
                     id_colonne_agenda = risorsaEvento,
                     id_stato = DatiAgenda.STATO_PREVISIONE_IMPEGNO
                 };

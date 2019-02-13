@@ -14,9 +14,27 @@
                 locale: 'it',
                 format: 'LT'
             });
-        });
 
+            $('.calendar').on('dp.change', function (e) {
+                
+                var dataDa = $('#<%=txt_DataInizioLavorazione.ClientID%>');
+                var dataA = $('#<%=txt_DataFineLavorazione.ClientID%>');
+                
+                $('#<%=txt_DurataLavorazione.ClientID%>').val(datediff(parseDate(dataDa.val()), parseDate(dataA.val()))+1);
+            });
+        });
     });
+
+    function parseDate(str) {
+        var mdy = str.split('/');
+        return new Date(mdy[2], mdy[1], mdy[0] - 1);
+    }
+
+    function datediff(first, second) {
+        // Take the difference between the dates and divide by milliseconds per day.
+        // Round to nearest whole number to deal with DST.
+        return Math.round((second - first) / (1000 * 60 * 60 * 24));
+    }
 
     function controlloCoerenzaDate(id_calendarDataInizio, id_calendarDataFine) {
         $('#' + id_calendarDataInizio).datetimepicker({
@@ -51,44 +69,44 @@
         });
     }
 
-    function controlloCoerenzaOrari(id_oraInizio, id_oraFine) {
-        $('#' + id_oraInizio).datetimepicker({
-            locale: 'it',
-            format: 'LT'
-        });
-        $('#' + id_oraFine).datetimepicker({
-            locale: 'it',
-            format: 'LT',
-            useCurrent: false //Important! See issue #1075
-        });
+    //function controlloCoerenzaOrari(id_oraInizio, id_oraFine) {
+    //    $('#' + id_oraInizio).datetimepicker({
+    //        locale: 'it',
+    //        format: 'LT'
+    //    });
+    //    $('#' + id_oraFine).datetimepicker({
+    //        locale: 'it',
+    //        format: 'LT',
+    //        useCurrent: false //Important! See issue #1075
+    //    });
 
-        if ($('#' + id_oraInizio).val() != "") {
-            var oraInizio = $('#' + id_oraInizio).data('DateTimePicker');
-            if (oraInizio != null) {
-                $('#' + id_oraFine).data("DateTimePicker").minDate(new Date(oraInizio.date()));
-            }
-        }
+    //    if ($('#' + id_oraInizio).val() != "") {
+    //        var oraInizio = $('#' + id_oraInizio).data('DateTimePicker');
+    //        if (oraInizio != null) {
+    //            $('#' + id_oraFine).data("DateTimePicker").minDate(new Date(oraInizio.date()));
+    //        }
+    //    }
 
-        if ($('#' + id_oraFine).val() != "") {
-            var oraFine = $('#' + id_oraFine).data('DateTimePicker');
-            if (oraFine != null) {
-                $('#' + id_oraInizio).data("DateTimePicker").maxDate(new Date(oraFine.date()));
-            }
-        }
+    //    if ($('#' + id_oraFine).val() != "") {
+    //        var oraFine = $('#' + id_oraFine).data('DateTimePicker');
+    //        if (oraFine != null) {
+    //            $('#' + id_oraInizio).data("DateTimePicker").maxDate(new Date(oraFine.date()));
+    //        }
+    //    }
 
-        $('#' + id_oraInizio).on("dp.change", function (e) {
-            $('#' + id_oraFine).data("DateTimePicker").minDate(e.date);
-        });
-        $('#' + id_oraFine).on("dp.change", function (e) {
-            $('#' + id_oraInizio).data("DateTimePicker").maxDate(e.date);
-        });
-    }
+    //    $('#' + id_oraInizio).on("dp.change", function (e) {
+    //        $('#' + id_oraFine).data("DateTimePicker").minDate(e.date);
+    //    });
+    //    $('#' + id_oraFine).on("dp.change", function (e) {
+    //        $('#' + id_oraInizio).data("DateTimePicker").maxDate(e.date);
+    //    });
+    //}
 
-    $("body").on("click", "#<%=chk_ImpegnoOrario.ClientID%>", function () {
+    <%--$("body").on("click", "#<%=chk_ImpegnoOrario.ClientID%>", function () {
         checkImpegnoOrario();
-    });
+    });--%>
 
-    function checkImpegnoOrario() {
+    <%--function checkImpegnoOrario() {
         if ($("#<%=chk_ImpegnoOrario.ClientID%>").prop('checked')) {
             $("#<%=txt_ImpegnoOrarioDa.ClientID%>").prop('disabled', false);
             $("#<%=txt_ImpegnoOrarioDa.ClientID%>").removeClass("w3-light-grey");
@@ -110,7 +128,7 @@
             $("#<%=txt_ImpegnoOrarioA.ClientID%>").removeClass("w3-hover-orange");
             $("#<%=txt_ImpegnoOrarioA.ClientID%>").addClass("w3-light-grey");
         }
-    }
+    }--%>
 
     function confermaEliminazione() {
         return confirm("Eliminare l'appuntamento corrente?");
@@ -125,8 +143,6 @@
 <asp:Panel runat="server" ID="panelAppuntamenti">
     <div class="w3-container w3-center w3-xlarge">GESTIONE APPUNTAMENTI</div>
 
-
-
     <!--LAVORAZIONE-->
     <div class="w3-col m4">
         <div class="w3-card-4 w3-light-grey w3-text-blue w3-margin-right">
@@ -136,7 +152,6 @@
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
                         <asp:Label ID="lbl_DataInizioLavorazione" runat="server" Text="Data inizio lavorazione" CssClass=" w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
                     </div>
-                    <%-- <asp:TextBox ID="val_DataInizioLavorazione" runat="server" CssClass="w3-light-grey w3-border w3-round fieldMedium" Enabled="false"></asp:TextBox>--%>
                     <asp:TextBox ID="txt_DataInizioLavorazione" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldMedium calendar" placeholder="gg/mm/aaaa"></asp:TextBox>
                 </div>
 
@@ -144,15 +159,13 @@
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
                         <asp:Label ID="lbl_DataFineLavorazione" runat="server" Text="Data fine lavorazione" CssClass=" w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
                     </div>
-                    <%--<asp:TextBox CssClass=" w3-light-grey w3-border w3-round fieldMedium" ID="val_DataFineLavorazione" runat="server" Enabled="false" />--%>
                     <asp:TextBox CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMedium calendar" ID="txt_DataFineLavorazione" placeholder="gg/mm/aaaa" runat="server" />
                 </div>
                 <div class="w3-rest">
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
                         <asp:Label ID="lbl_DurataLavorazione" runat="server" Text="Durata lavorazione" CssClass=" w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
                     </div>
-                    <%--   <asp:TextBox ID="val_DurataLavorazione" CssClass="w3-light-grey w3-border w3-round fieldSmall" runat="server" Enabled="false"></asp:TextBox>--%>
-                    <asp:TextBox ID="txt_DurataLavorazione" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldSmall" runat="server" MaxLength="2" onkeypress="return onlyNumbers()"></asp:TextBox>
+                    <asp:TextBox ID="txt_DurataLavorazione" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldSmall" runat="server" MaxLength="2" Enabled="false"></asp:TextBox>
                 </div>
             </div>
         </div>
@@ -233,11 +246,10 @@
                     </div>
                 </div>
 
-                <div class="w3-rest">
+                <%--<div class="w3-rest">
                     <div class="w3-col" style="width: 45%; margin-bottom: 5px;">
                         <asp:Label ID="lbl_ImpegnoOrario" runat="server" Text="Impegno orario" CssClass="w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
 
-                        <%--<asp:CheckBox ID="val_ImpegnoOrario" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldSmall" Style="width: 30px;" Enabled="false" Visible="false" ClientIDMode="Static" />--%>
                         <asp:CheckBox ID="chk_ImpegnoOrario" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldSmall" Style="width: 30px;" ClientIDMode="Static" />
 
 
@@ -245,15 +257,13 @@
                     <div class="w3-col" style="width: 55%; margin-bottom: 5px;">
                         <asp:Label ID="lbl_ImpegnoOrarioDa" runat="server" Text="Dalle" CssClass="w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
 
-                        <%--<asp:TextBox ID="val_ImpegnoOrarioDa" CssClass="w3-light-grey w3-border w3-round fieldSmall" runat="server" Enabled="false"></asp:TextBox>--%>
                         <asp:TextBox ID="txt_ImpegnoOrarioDa" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldSmall time" Enabled="false"></asp:TextBox>
 
                         <asp:Label ID="lbl_ImpegnoOrarioA" runat="server" Text="Alle" CssClass=" w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
 
-                        <%--<asp:TextBox ID="val_ImpegnoOrarioA" CssClass="w3-light-grey w3-border w3-round fieldSmall" runat="server" Enabled="false"></asp:TextBox>--%>
                         <asp:TextBox ID="txt_ImpegnoOrarioA" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldSmall time" Enabled="false"></asp:TextBox>
                     </div>
-                </div>
+                </div>--%>
             </div>
         </div>
     </div>

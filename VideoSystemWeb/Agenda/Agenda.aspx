@@ -11,7 +11,8 @@
             $('.calendarAgenda').datetimepicker({
                 inline: true,
                 locale: 'it',
-                format: 'DD/MM/YYYY'
+                format: 'DD/MM/YYYY',
+                showTodayButton: true
             });
 
             $('.calendarAgenda').on('dp.change', function (e) {

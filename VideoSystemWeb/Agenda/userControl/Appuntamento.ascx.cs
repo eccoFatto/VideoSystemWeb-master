@@ -26,10 +26,10 @@ namespace VideoSystemWeb.Agenda.userControl
                 basePage.popolaDDLTipologica(ddl_Tipologia, basePage.listaTipiTipologie);
             }
 
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "campiImpegnoOrario", "checkImpegnoOrario();", true);
+           // ScriptManager.RegisterStartupScript(this, typeof(Page), "campiImpegnoOrario", "checkImpegnoOrario();", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataInizioLavorazione.ClientID + "', '" + txt_DataFineLavorazione.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataInizioImpegno.ClientID + "', '" + txt_DataFineImpegno.ClientID + "');", true);
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaOrari", "controlloCoerenzaOrari('" + txt_ImpegnoOrarioDa.ClientID + "', '" + txt_ImpegnoOrarioA.ClientID + "');", true);
+           // ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaOrari", "controlloCoerenzaOrari('" + txt_ImpegnoOrarioDa.ClientID + "', '" + txt_ImpegnoOrarioA.ClientID + "');", true);
 
         }
 
@@ -50,9 +50,9 @@ namespace VideoSystemWeb.Agenda.userControl
             datiAgenda.durata_viaggio_ritorno = BasePage.validaCampo(txt_DurataViaggioRitorno, 0, false, ref esito);
             datiAgenda.data_inizio_impegno = BasePage.validaCampo(txt_DataInizioImpegno, DateTime.MinValue, false, ref esito);
             datiAgenda.data_fine_impegno = BasePage.validaCampo(txt_DataFineImpegno, DateTime.MinValue, false, ref esito);
-            datiAgenda.impegnoOrario = chk_ImpegnoOrario.Checked;
-            datiAgenda.impegnoOrario_da = BasePage.validaCampo(txt_ImpegnoOrarioDa, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
-            datiAgenda.impegnoOrario_a = BasePage.validaCampo(txt_ImpegnoOrarioA, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
+            //datiAgenda.impegnoOrario = chk_ImpegnoOrario.Checked;
+            //datiAgenda.impegnoOrario_da = BasePage.validaCampo(txt_ImpegnoOrarioDa, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
+            //datiAgenda.impegnoOrario_a = BasePage.validaCampo(txt_ImpegnoOrarioA, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
             datiAgenda.produzione = BasePage.validaCampo(txt_Produzione, "", campoObbligatorio, ref esito);
             datiAgenda.lavorazione = BasePage.validaCampo(txt_Lavorazione, "", false, ref esito);
             datiAgenda.indirizzo = BasePage.validaCampo(txt_Indirizzo, "", false, ref esito);
@@ -75,8 +75,8 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DurataViaggioRitorno.CssClass = txt_DurataViaggioRitorno.CssClass.Replace("erroreValidazione", "");
             txt_DataInizioImpegno.CssClass = txt_DataInizioImpegno.CssClass.Replace("erroreValidazione", "");
             txt_DataFineImpegno.CssClass = txt_DataFineImpegno.CssClass.Replace("erroreValidazione", "");
-            txt_ImpegnoOrarioDa.CssClass = txt_ImpegnoOrarioDa.CssClass.Replace("erroreValidazione", "");
-            txt_ImpegnoOrarioA.CssClass = txt_ImpegnoOrarioA.CssClass.Replace("erroreValidazione", "");
+            //txt_ImpegnoOrarioDa.CssClass = txt_ImpegnoOrarioDa.CssClass.Replace("erroreValidazione", "");
+            //txt_ImpegnoOrarioA.CssClass = txt_ImpegnoOrarioA.CssClass.Replace("erroreValidazione", "");
             txt_Produzione.CssClass = txt_Produzione.CssClass.Replace("erroreValidazione", "");
             txt_Lavorazione.CssClass = txt_Lavorazione.CssClass.Replace("erroreValidazione", "");
             txt_Indirizzo.CssClass = txt_Indirizzo.CssClass.Replace("erroreValidazione", "");
@@ -97,9 +97,9 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
             txt_DataInizioImpegno.Text = evento.data_inizio_impegno.ToString();
             txt_DataFineImpegno.Text = evento.data_fine_impegno.ToString();
-            chk_ImpegnoOrario.Checked = evento.impegnoOrario;
-            txt_ImpegnoOrarioDa.Text = evento.impegnoOrario_da;
-            txt_ImpegnoOrarioA.Text = evento.impegnoOrario_a;
+            //chk_ImpegnoOrario.Checked = evento.impegnoOrario;
+            //txt_ImpegnoOrarioDa.Text = evento.impegnoOrario_da;
+            //txt_ImpegnoOrarioA.Text = evento.impegnoOrario_a;
             txt_Produzione.Text = evento.produzione;
             txt_Lavorazione.Text = evento.lavorazione;
             txt_Indirizzo.Text = evento.indirizzo;
@@ -111,7 +111,7 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
             txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, evento.id_stato, ref esito).nome;
 
-            txt_ImpegnoOrarioDa.Enabled = txt_ImpegnoOrarioA.Enabled = evento.impegnoOrario;
+            //txt_ImpegnoOrarioDa.Enabled = txt_ImpegnoOrarioA.Enabled = evento.impegnoOrario;
         }
 
         public void ClearPopupEventi()
@@ -126,9 +126,9 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DurataViaggioRitorno.Text = string.Empty;
             txt_DataInizioImpegno.Text = string.Empty;
             txt_DataFineImpegno.Text = string.Empty;
-            chk_ImpegnoOrario.Checked = false;
-            txt_ImpegnoOrarioDa.Text = string.Empty;
-            txt_ImpegnoOrarioA.Text = string.Empty;
+            //chk_ImpegnoOrario.Checked = false;
+            //txt_ImpegnoOrarioDa.Text = string.Empty;
+            //txt_ImpegnoOrarioA.Text = string.Empty;
             txt_Produzione.Text = string.Empty;
             txt_Lavorazione.Text = string.Empty;
             txt_Indirizzo.Text = string.Empty;

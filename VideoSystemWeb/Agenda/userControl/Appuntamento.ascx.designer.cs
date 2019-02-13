@@ -202,60 +202,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.TextBox txt_DataFineImpegno;
         
         /// <summary>
-        /// Controllo lbl_ImpegnoOrario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_ImpegnoOrario;
-        
-        /// <summary>
-        /// Controllo chk_ImpegnoOrario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk_ImpegnoOrario;
-        
-        /// <summary>
-        /// Controllo lbl_ImpegnoOrarioDa.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_ImpegnoOrarioDa;
-        
-        /// <summary>
-        /// Controllo txt_ImpegnoOrarioDa.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_ImpegnoOrarioDa;
-        
-        /// <summary>
-        /// Controllo lbl_ImpegnoOrarioA.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_ImpegnoOrarioA;
-        
-        /// <summary>
-        /// Controllo txt_ImpegnoOrarioA.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_ImpegnoOrarioA;
-        
-        /// <summary>
         /// Controllo lbl_Produzione.
         /// </summary>
         /// <remarks>

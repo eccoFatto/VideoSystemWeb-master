@@ -95,6 +95,7 @@
                         </td>
                         <td style="width:40%;">                    
                             <asp:Button ID="btnInserisciCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" Text="Inserisci" OnClientClick="inserisciCollaboratore();" />
+                            <%--<button id="btnInserisciCollaboratori" class="w3-btn w3-white w3-border w3-border-red w3-round-large" value="Inserisci" onclick="inserisciCollaboratore();"></button>--%>
                         </td>
                         <td style="width:20%;">
                             <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;"  OnClientClick="azzeraCampiRicerca();" />
@@ -108,11 +109,13 @@
             <asp:GridView ID="gv_collaboratori" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_collaboratori_RowDataBound">
             </asp:GridView>
         </div>
+        
     </ContentTemplate>
     <Triggers>
         <asp:AsyncPostBackTrigger ControlID="btnRicercaCollaboratori" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="BtnPulisciCampiRicerca" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="ddlQualifiche" EventName="SelectedIndexChanged" />
+        <%--<asp:AsyncPostBackTrigger ControlID="btnInserisciCollaboratori" EventName="Click" />--%>
     </Triggers>
 </asp:UpdatePanel>
 
@@ -272,7 +275,7 @@
                                         </div>
                                     </div>
                                     <asp:Button ID="btnInserisciQualifica" runat="server" Text="Inserisci Qualifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoQualifica_Click" OnClientClick="return confirm('Confermi inserimento Qualifica?')" />
-                                    <asp:Button ID="btnEliminaQualifica" runat="server" Text="Elimina Qualifica" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaQualifica_Click" OnClientClick="confirm('Confermi eliminazione Qualifica?')" />
+                                    <asp:Button ID="btnEliminaQualifica" runat="server" Text="Elimina Qualifica" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaQualifica_Click" OnClientClick="return confirm('Confermi eliminazione Qualifica?')" />
                                 </asp:PlaceHolder>
                             </p>
                         </div>
@@ -334,7 +337,7 @@
                                     </div>
                                     <asp:Button ID="btnInserisciIndirizzo" runat="server" Text="Inserisci Indirizzo" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoIndirizzo_Click" OnClientClick="return confirm('Confermi inserimento Indirizzo?')" />
                                     <asp:Button ID="btnModificaIndirizzo" runat="server" Text="Modifica Indirizzo" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaIndirizzo_Click" OnClientClick="return confirm('Confermi modifica Indirizzo?')" Visible="false" />
-                                    <asp:Button ID="btnEliminaIndirizzo" runat="server" Text="Elimina Indirizzo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaIndirizzo_Click" OnClientClick="confirm('Confermi eliminazione Indirizzo?')" />
+                                    <asp:Button ID="btnEliminaIndirizzo" runat="server" Text="Elimina Indirizzo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaIndirizzo_Click" OnClientClick="return confirm('Confermi eliminazione Indirizzo?')" />
                                     <asp:Button ID="btnAnnullaIndirizzo" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaIndirizzo_Click" />
                                 </asp:PlaceHolder>
                             </p>
@@ -393,7 +396,7 @@
                                     </div>
                                     <asp:Button ID="btnInserisciTelefono" runat="server" Text="Inserisci Telefono" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoTelefono_Click" OnClientClick="return confirm('Confermi inserimento Telefono?')" />
                                     <asp:Button ID="btnModificaTelefono" runat="server" Text="Modifica Telefono" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaTelefono_Click" OnClientClick="return confirm('Confermi modifica Telefono?')" Visible="false" />
-                                    <asp:Button ID="btnEliminaTelefono" runat="server" Text="Elimina Telefono" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaTelefono_Click" OnClientClick="confirm('Confermi eliminazione Telefono?')" />
+                                    <asp:Button ID="btnEliminaTelefono" runat="server" Text="Elimina Telefono" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaTelefono_Click" OnClientClick="return confirm('Confermi eliminazione Telefono?')" />
                                     <asp:Button ID="btnAnnullaTelefono" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaTelefono_Click" />
                                 </asp:PlaceHolder>
                             </p>
@@ -427,7 +430,8 @@
                                     </div>
                                     <asp:Button ID="btnInserisciEmail" runat="server" Text="Inserisci Email" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoEmail_Click" OnClientClick="return confirm('Confermi inserimento Email?')" />
                                     <asp:Button ID="btnModificaEmail" runat="server" Text="Modifica Email" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaEmail_Click" OnClientClick="return confirm('Confermi modifica Email?')" Visible="false" />
-                                    <asp:Button ID="btnEliminaEmail" runat="server" Text="Elimina Email" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaEmail_Click" OnClientClick="confirm('Confermi eliminazione Email?')" />
+                                    <asp:Button ID="btnEliminaEmail" runat="server" Text="Elimina Email" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaEmail_Click" OnClientClick="return confirm('Confermi eliminazione Email?')" />
+                                    <asp:Button ID="btnAnnullaEmail" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaEmail_Click" />
                                 </asp:PlaceHolder>
                             </p>
                         </div>

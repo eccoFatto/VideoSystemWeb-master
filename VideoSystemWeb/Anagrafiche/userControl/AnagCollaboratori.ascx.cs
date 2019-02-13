@@ -181,6 +181,17 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     btnAnnulla.Visible = false;
                     btnElimina.Visible = false;
                     btnConfermaInserimento.Visible = false;
+
+                    if (basePage.AbilitazioneInScrittura())
+                    {
+                        btnAnnullaIndirizzo_Click(null, null);
+                        btnAnnullaTelefono_Click(null, null);
+                        btnAnnullaEmail_Click(null, null);
+                        phEmail.Visible = false;
+                        phTelefoni.Visible = false;
+                        phQualifiche.Visible = false;
+                        phIndirizzi.Visible = false;
+                    }
                     break;
                 case "INSERIMENTO":
                     btnModifica.Visible = false;
@@ -273,6 +284,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             editCollaboratoreVuoto();
             AttivaDisattivaModificaAnagrafica(false);
             gestisciPulsantiAnagrafica("INSERIMENTO");
+
+            // PULISCO I PH DI MODIFICA
+            btnAnnullaIndirizzo_Click(null, null);
+            btnAnnullaTelefono_Click(null, null);
+            btnAnnullaEmail_Click(null, null);
+            phEmail.Visible = false;
+            phTelefoni.Visible = false;
+            phQualifiche.Visible = false;
+            phIndirizzi.Visible = false;
+
             pnlContainer.Visible = true;
         }
 
@@ -1320,10 +1341,22 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbInsPrefNazTelefono.Text = "";
             tbInsNumeroTelefono.Text = "";
             cmbInsTipoTelefono.Text = "";
+            
             cbInsWhatsappTelefono.Checked = false;
 
             btnModificaTelefono.Visible = false;
             btnInserisciTelefono.Visible = true;
+        }
+
+        protected void btnAnnullaEmail_Click(object sender, EventArgs e)
+        {
+            tbInsEmail.Text = "";
+            tbInsPrioritaEmail.Text = "1";
+            tbInsTipoEmail.Text = "";
+            tbIdEmailDaModificare.Text = "";
+
+            btnModificaEmail.Visible = false;
+            btnInserisciEmail.Visible = true;
         }
 
         protected void btnApriQualifiche_Click(object sender, EventArgs e)

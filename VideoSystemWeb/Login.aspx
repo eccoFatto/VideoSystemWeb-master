@@ -23,8 +23,12 @@
                 <div class="column col-2"></div>
                 <div class="column col-8">
                     <div class="w3-0 mydiv">
-                        <div class="w3-panel w3-gray w3-center w3-margin-top w3-text-white w3-card-2 w3-round">LOGIN APPLICATIVO VIDEOSYSTEM</div>
-                        <div class="w3-container w3-card-4 w3-margin w3-padding-32">
+                        <%--<div class="w3-panel w3-gray w3-center w3-margin-top w3-text-white w3-card-2 w3-round">LOGIN APPLICATIVO VIDEOSYSTEM</div>--%>
+                        <div class="w3-container w3-teal w3-center w3-margin-top">
+                            <h2>Login VIDEOSYSTEM</h2>
+                        </div>
+
+                        <div class="w3-container w3-card-4 w3-margin-bottom w3-padding-32">
                             <p>
                                 <label>Name</label>
                                 <asp:TextBox ID="tbUser" runat="server" class="w3-input w3-border w3-round"  style="width:99%" required="required" ></asp:TextBox>

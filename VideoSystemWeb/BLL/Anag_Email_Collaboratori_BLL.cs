@@ -28,6 +28,18 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public List<Anag_Email_Collaboratori> getEmailByIdCollaboratore(int idEmailCollaboratore, ref Esito esito)
+        {
+            List<Anag_Email_Collaboratori> listretEmailCollaboratore = Anag_Email_Collaboratori_DAL.Instance.getEmailByIdCollaboratore(ref esito, idEmailCollaboratore, true);
+            return listretEmailCollaboratore;
+        }
+
+        public Anag_Email_Collaboratori getEmailById(int id, ref Esito esito)
+        {
+            Anag_Email_Collaboratori retEmailCollaboratore = Anag_Email_Collaboratori_DAL.Instance.getEmailById(ref esito, id);
+            return retEmailCollaboratore;
+        }
+
         public int CreaEmailCollaboratore(Anag_Email_Collaboratori emailCollaboratore, ref Esito esito)
         {
             int iREt = Anag_Email_Collaboratori_DAL.Instance.CreaEmailCollaboratore(emailCollaboratore, ref esito);

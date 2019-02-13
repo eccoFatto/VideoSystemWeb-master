@@ -91,6 +91,57 @@ namespace VideoSystemWeb.DAL
             return listaTelefoni;
         }
 
+        public Anag_Telefoni_Collaboratori getTelefonoById(ref Esito esito, int id)
+        {
+            Anag_Telefoni_Collaboratori telefono = new Anag_Telefoni_Collaboratori();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM anag_telefoni_collaboratori WHERE id = " + id.ToString();
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                        telefono.Id = dt.Rows[0].Field<int>("id");
+                                        telefono.Id_collaboratore = dt.Rows[0].Field<int>("id_collaboratore");
+
+                                        telefono.Numero = dt.Rows[0].Field<string>("numero");
+                                        telefono.Pref_int = dt.Rows[0].Field<string>("int_pref");
+                                        telefono.Pref_naz = dt.Rows[0].Field<string>("naz_pref");
+                                        telefono.Tipo = dt.Rows[0].Field<string>("tipo");
+                                        telefono.Whatsapp = dt.Rows[0].Field<bool>("whatsapp");
+
+                                        telefono.Descrizione = dt.Rows[0].Field<string>("descrizione");
+                                        telefono.Priorita = dt.Rows[0].Field<int>("priorita");
+                                        telefono.Attivo = dt.Rows[0].Field<bool>("attivo");
+                                }
+                                else
+                                {
+                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.descrizione = "Nessun dato trovato nella tabella anag_telefoni_collaboratori ";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return telefono;
+
+        }
         public int CreaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore, ref Esito esito)
         {
             //@id_collaboratore int,
@@ -191,6 +242,10 @@ namespace VideoSystemWeb.DAL
                             System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", telefonoCollaboratore.Id);
                             id.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id);
+
+                            SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", telefonoCollaboratore.Id_collaboratore);
+                            id_collaboratore.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_collaboratore);
 
                             SqlParameter priorita = new SqlParameter("@priorita", telefonoCollaboratore.Priorita);
                             priorita.Direction = ParameterDirection.Input;

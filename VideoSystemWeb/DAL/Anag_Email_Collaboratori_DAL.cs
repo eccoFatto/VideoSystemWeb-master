@@ -31,6 +31,53 @@ namespace VideoSystemWeb.DAL
                 return instance;
             }
         }
+
+        public Anag_Email_Collaboratori getEmailById(ref Esito esito, int id)
+        {
+            Anag_Email_Collaboratori anagEmail = new Anag_Email_Collaboratori();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM anag_email_collaboratori WHERE id = " + id.ToString();
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count == 1)
+                                {
+                                    anagEmail.Id = dt.Rows[0].Field<int>("id");
+                                    anagEmail.Id_collaboratore = dt.Rows[0].Field<int>("id_collaboratore");
+
+                                    anagEmail.IndirizzoEmail = dt.Rows[0].Field<string>("indirizzoEmail");
+                                    anagEmail.Descrizione = dt.Rows[0].Field<string>("descrizione");
+                                    anagEmail.Priorita = dt.Rows[0].Field<int>("priorita");
+                                    anagEmail.Attivo = dt.Rows[0].Field<bool>("attivo");
+                                }
+                                else
+                                {
+                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.descrizione = "Nessun dato trovato nella tabella anag_email_collaboratori ";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return anagEmail;
+
+        }
         public List<Anag_Email_Collaboratori> getEmailByIdCollaboratore(ref Esito esito, int idCollaboratore, bool soloAttivi = true)
         {
             List<Anag_Email_Collaboratori> listaEmail = new List<Anag_Email_Collaboratori>();

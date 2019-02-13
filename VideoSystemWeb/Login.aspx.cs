@@ -6,7 +6,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Configuration;
-using MySql.Data.MySqlClient;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
 

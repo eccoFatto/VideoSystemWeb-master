@@ -27,6 +27,12 @@ namespace VideoSystemWeb.BLL
                 return instance;
             }
         }
+
+        public Anag_Indirizzi_Collaboratori getIndirizzoById(ref Esito esito, int id)
+        {
+            Anag_Indirizzi_Collaboratori indirizzo = Anag_Indirizzi_Collaboratori_DAL.Instance.getIndirizzoById(ref esito, id);
+            return indirizzo;
+        }
         public int CreaIndirizziCollaboratore(Anag_Indirizzi_Collaboratori indirizzoCollaboratore, ref Esito esito)
         {
             int iREt = Anag_Indirizzi_Collaboratori_DAL.Instance.CreaIndirizziCollaboratore(indirizzoCollaboratore, ref esito);

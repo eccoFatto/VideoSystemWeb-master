@@ -15,6 +15,7 @@ namespace VideoSystemWeb.Agenda
         protected void Page_Load(object sender, EventArgs e)
         {
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
+            popupOfferta.RichiediOperazionePopup += OperazioniPopup;
             
             if (!IsPostBack)
             {

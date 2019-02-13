@@ -11,8 +11,6 @@
 
     <script type="text/javascript" src="/Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src='/Scripts/moment-with-locales.js'></script>
-    <%--<script type="text/javascript" src="/Scripts/transition.js"></script>
-    <script type="text/javascript" src="/Scripts/collapse.js"></script>--%>
     <script type="text/javascript" src='/Scripts/bootstrap.min.js'></script>
     <script type="text/javascript" src="/Scripts/bootstrap-datetimepicker.min.js"></script>
 
@@ -22,107 +20,36 @@
 
 
 
+    <script src='/Scripts/Utility.js'></script>
 
+    <link rel="stylesheet" href="/Css/w3.css"/>
+    <link rel="stylesheet" href="/Css/w3-colors-win8.css"/>
+
+
+    <link rel='stylesheet' href='/Css/Style.css' />
+
+
+
+
+
+    <link href="/Css/multi-select.css" media="screen" rel="stylesheet" type="text/css"/>
+    <script src="/Scripts/jquery.multi-select.js" type="text/javascript"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#my-select').multiSelect();
+        });
+
+    </script>
 </head>
 <body>
-  <div class="container">
-    <div class="row">
-        <div class='col-sm-6'>
-            <div class="form-group">
-                <div class='input-group date' id='datetimepicker3'>
-                    <input type='text' class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker3').datetimepicker({
-                    format: 'LT'
-                });
-            });
-        </script>
-    </div>
-</div>
-    <br /><br /><br /><br /><br />
-    <div class="container">
-    <div class="row">
-        <div class='col-sm-6'>
-            <input type='text' class="form-control" id='datetimepicker5' />
-        </div>
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker5').datetimepicker({
-                    format: 'LT'
-                });
-            });
-        </script>
-    </div>
-</div>
-     <br /><br /><br /><br /><br />
-   <div class="container">
-    <div class='col-md-5'>
-        <div class="form-group">
-            <div class='input-group date' id='datetimepicker6'>
-                <input type='text' class="form-control" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-    <div class='col-md-5'>
-        <div class="form-group">
-            <div class='input-group date' id='datetimepicker7'>
-                <input type='text' class="form-control" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker6').datetimepicker();
-        $('#datetimepicker7').datetimepicker({
-            useCurrent: false //Important! See issue #1075
-        });
-        $("#datetimepicker6").on("dp.change", function (e) {
-            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-        });
-        $("#datetimepicker7").on("dp.change", function (e) {
-            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-        });
-    });
-</script>
-    <br /><br /><br /><br /><br />
-
-<div style="overflow:hidden;">
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-8">
-                <div id="datetimepicker12"></div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker12').datetimepicker({
-                inline: true,
-                locale: 'it',
-                format: 'DD/MM/YYYY'
-            });
-        });
-    </script>
-</div>
-
-
-
-
-
+   <select multiple="multiple" id="my-select" name="my-select[]">
+      <option value='elem_1'>elem 1</option>
+      <option value='elem_2'>elem 2</option>
+      <option value='elem_3'>elem 3</option>
+      <option value='elem_4'>elem 4</option>
+      <option value='elem_100'>elem 100</option>
+    </select>
 
 
 </body>

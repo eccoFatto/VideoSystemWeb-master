@@ -148,17 +148,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="Css\Agenda.css" />
     <Content Include="Css\bootstrap-datepicker3.min.css" />
-    <Content Include="Css\eliminare\bootstrap-glyphicons.css" />
-    <Content Include="Css\eliminare\bootstrap-glyphicons.min.css" />
-    <Content Include="Css\eliminare\bootstrap-grid.css" />
-    <Content Include="Css\eliminare\bootstrap-grid.min.css" />
-    <Content Include="Css\eliminare\bootstrap-reboot.css" />
-    <Content Include="Css\eliminare\bootstrap-reboot.min.css" />
-    <Content Include="Css\eliminare\bootstrap.css" />
-    <Content Include="Css\eliminare\bootstrap.min.css" />
     <Content Include="Css\bootstrap-datetimepicker-standalone.css" />
     <Content Include="Css\bootstrap-datetimepicker.css" />
     <Content Include="Css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Css\multi-select.css" />
+    <Content Include="Css\multi-select.dev.css" />
+    <Content Include="Css\multi-select.dist.css" />
     <Content Include="Css\Style.css" />
     <Content Include="Css\w3-colors-win8.css" />
     <Content Include="Css\w3.css" />
@@ -181,6 +176,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\COLLABORATORI\dummy.jpg" />
     <Content Include="Images\COLLABORATORI\WIN_20190129_12_57_33_Pro.jpg" />
+    <Content Include="Images\switch.png" />
     <Content Include="index.html" />
     <Content Include="Login.aspx" />
     <Content Include="Images\logoVSP.png" />
@@ -193,12 +189,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\fullcalendar\demos\json\events.json" />
-    <Content Include="Css\eliminare\bootstrap-grid.css.map" />
-    <Content Include="Css\eliminare\bootstrap-grid.min.css.map" />
-    <Content Include="Css\eliminare\bootstrap-reboot.css.map" />
-    <Content Include="Css\eliminare\bootstrap-reboot.min.css.map" />
-    <Content Include="Css\eliminare\bootstrap.css.map" />
-    <Content Include="Css\eliminare\bootstrap.min.css.map" />
     <Content Include="fonts\fontawesome\fa-brands-400.eot" />
     <Content Include="fonts\fontawesome\fa-brands-400.ttf" />
     <Content Include="fonts\fontawesome\fa-brands-400.woff" />
@@ -215,6 +205,7 @@
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.woff2" />
+    <Content Include="Css\multi-select.dev.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -330,6 +321,7 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery.multi-select.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment.min.js" />

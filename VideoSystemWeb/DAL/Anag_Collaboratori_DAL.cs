@@ -71,6 +71,7 @@ namespace VideoSystemWeb.DAL
                                     collaboratore.Indirizzi = Anag_Indirizzi_Collaboratori_DAL.Instance.getIndirizziByIdCollaboratore(ref esito, collaboratore.Id);
                                     collaboratore.Email = Anag_Email_Collaboratori_DAL.Instance.getEmailByIdCollaboratore(ref esito, collaboratore.Id);
                                     collaboratore.Telefoni = Anag_Telefoni_Collaboratori_DAL.Instance.getTelefoniByIdCollaboratore(ref esito, collaboratore.Id);
+                                    collaboratore.Documenti = Anag_Documenti_Collaboratori_DAL.Instance.getDocumentiByIdCollaboratore(ref esito, collaboratore.Id);
                                 }
                                 else
                                 {

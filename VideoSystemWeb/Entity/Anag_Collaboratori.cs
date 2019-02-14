@@ -44,6 +44,7 @@ namespace VideoSystemWeb.Entity
         private List<Anag_Indirizzi_Collaboratori> indirizzi;
         private List<Anag_Email_Collaboratori> email;
         private List<Anag_Telefoni_Collaboratori> telefoni;
+        private List<Anag_Documenti_Collaboratori> documenti;
 
         public bool Attivo { get => attivo; set => attivo = value; }
         public string Note { get => note; set => note = value; }
@@ -64,5 +65,6 @@ namespace VideoSystemWeb.Entity
         public List<Anag_Indirizzi_Collaboratori> Indirizzi { get => indirizzi; set => indirizzi = value; }
         public List<Anag_Email_Collaboratori> Email { get => email; set => email = value; }
         public List<Anag_Telefoni_Collaboratori> Telefoni { get => telefoni; set => telefoni = value; }
+        public List<Anag_Documenti_Collaboratori> Documenti { get => documenti; set => documenti = value; }
     }
 }

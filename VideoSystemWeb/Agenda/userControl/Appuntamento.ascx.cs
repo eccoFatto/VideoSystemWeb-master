@@ -162,5 +162,10 @@ namespace VideoSystemWeb.Agenda.userControl
                 txt_CodiceLavoro.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
             }
         }
+
+        public bool ControlloGiorniViaggio()
+        {
+            return int.Parse(txt_DurataViaggioAndata.Text) + int.Parse(txt_DurataViaggioRitorno.Text) < int.Parse(txt_DurataLavorazione.Text);
+        }
     }
 }

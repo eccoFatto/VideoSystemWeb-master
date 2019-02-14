@@ -16,18 +16,44 @@
             });
 
             $('.calendar').on('dp.change', function (e) {
-                
                 var dataDa = $('#<%=txt_DataInizioLavorazione.ClientID%>');
                 var dataA = $('#<%=txt_DataFineLavorazione.ClientID%>');
                 
                 $('#<%=txt_DurataLavorazione.ClientID%>').val(datediff(parseDate(dataDa.val()), parseDate(dataA.val()))+1);
             });
+
+            $('#<%=txt_DurataViaggioAndata.ClientID%>').on('change keyup paste', function() {
+                var dataDa = $('#<%=txt_DataInizioLavorazione.ClientID%>');
+                var durata = parseInt($('#<%=txt_DurataViaggioAndata.ClientID%>').val());
+
+                $('#<%=txt_DataInizioImpegno.ClientID%>').val(convertDate(parseDate(dataDa.val()).addDays(durata)));
+
+            });
+
+            $('#<%=txt_DurataViaggioRitorno.ClientID%>').on('change keyup paste', function() {
+                var dataA = $('#<%=txt_DataFineLavorazione.ClientID%>');
+                var durata = parseInt($('#<%=txt_DurataViaggioRitorno.ClientID%>').val());
+
+                $('#<%=txt_DataFineImpegno.ClientID%>').val(convertDate(parseDate(dataA.val()).addDays(durata*-1)));
+            });
         });
     });
 
+    Date.prototype.addDays = function(days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    }
+
+    function convertDate(inputFormat) {
+      function pad(s) { return (s < 10) ? '0' + s : s; }
+      var d = new Date(inputFormat);
+      return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+    }
+
     function parseDate(str) {
         var mdy = str.split('/');
-        return new Date(mdy[2], mdy[1], mdy[0] - 1);
+        return new Date(mdy[2], mdy[1]-1, mdy[0]);
     }
 
     function datediff(first, second) {
@@ -214,17 +240,15 @@
             <div class="w3-row w3-section w3-padding-small" <%--style="padding-left: 6px; padding-right: 6px;"--%>>
                 <div class="w3-rest">
                     <div class="w3-col" style="width: 38%; margin-bottom: 5px;">
-                        <asp:Label ID="lbl_DurataViaggioAndata" runat="server" Text="V. andata gg" CssClass="w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
+                        <asp:Label ID="lbl_DurataViaggioAndata" runat="server" Text="V. andata gg" CssClass="w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;" ></asp:Label>
 
-                        <%--<asp:TextBox ID="val_DurataViaggioAndata" CssClass="w3-light-grey w3-border w3-round fieldSmall" Style="width: 30px;" runat="server" Enabled="false"></asp:TextBox>--%>
-                        <asp:TextBox ID="txt_DurataViaggioAndata" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldSmall" MaxLength="2" Style="width: 30px;"></asp:TextBox>
+                        <asp:TextBox ID="txt_DurataViaggioAndata" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldSmall" MaxLength="2" Style="width: 30px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                     </div>
 
                     <div class="w3-col" style="width: 62%; margin-bottom: 5px;">
                         <asp:Label ID="lbl_DataInizioImpegno" runat="server" Text="Inizio impegno" CssClass="w3-yellow w3-border w3-round" Style="margin-left: 10px; padding-left: 5px; padding-right: 5px;"></asp:Label>
 
-                        <%--<asp:TextBox ID="val_DataInizioImpegno" CssClass="w3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>--%>
-                        <asp:TextBox ID="txt_DataInizioImpegno" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldMedium calendar" placeholder="gg/mm/aaaa" Style="float: right;"></asp:TextBox>
+                        <asp:TextBox ID="txt_DataInizioImpegno" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldMedium " Style="float: right;" Enabled="false"></asp:TextBox>
                     </div>
 
                 </div>
@@ -233,16 +257,14 @@
                     <div class="w3-col" style="width: 38%; margin-bottom: 5px;">
                         <asp:Label ID="lbl_DurataViaggioRitorno" runat="server" Text="V. ritorno gg" CssClass="w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
 
-                        <%--<asp:TextBox ID="val_DurataViaggioRitorno" CssClass="w3-light-grey w3-border w3-round fieldSmall" Style="width: 30px;" runat="server" Enabled="false"></asp:TextBox>--%>
-                        <asp:TextBox ID="txt_DurataViaggioRitorno" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldSmall" MaxLength="2" Style="width: 30px;"></asp:TextBox>
+                        <asp:TextBox ID="txt_DurataViaggioRitorno" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldSmall" MaxLength="2" Style="width: 30px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                     </div>
 
 
                     <div class="w3-col" style="width: 62%; margin-bottom: 5px;">
                         <asp:Label ID="lbl_DataFineImpegno" runat="server" Text="Fine impegno" CssClass=" w3-yellow w3-border w3-round" Style="margin-left: 10px; padding-left: 5px; padding-right: 5px;"></asp:Label>
 
-                        <%--<asp:TextBox ID="val_DataFineImpegno" CssClass="w3-light-grey w3-border w3-round fieldMedium" runat="server" Enabled="false"></asp:TextBox>--%>
-                        <asp:TextBox ID="txt_DataFineImpegno" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMedium calendar" placeholder="gg/mm/aaaa" Style="float: right;"></asp:TextBox>
+                        <asp:TextBox ID="txt_DataFineImpegno" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMedium" Style="float: right;" Enabled="false"></asp:TextBox>
                     </div>
                 </div>
 

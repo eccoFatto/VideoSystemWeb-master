@@ -15,6 +15,7 @@ namespace VideoSystemWeb.Agenda
         protected void Page_Load(object sender, EventArgs e)
         {
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
+            popupOfferta.RichiediOperazionePopup += OperazioniPopup;
             
             if (!IsPostBack)
             {
@@ -396,7 +397,13 @@ namespace VideoSystemWeb.Agenda
                 eventoSelezionato = new DatiAgenda
                 {
                     data_inizio_lavorazione = dataEvento,
+                    data_fine_lavorazione = dataEvento,
+                    durata_lavorazione = 1,
                     id_colonne_agenda = risorsaEvento,
+                    data_inizio_impegno = dataEvento,
+                    data_fine_impegno = dataEvento,
+                    durata_viaggio_andata = 0,
+                    durata_viaggio_ritorno = 0,
                     id_stato = DatiAgenda.STATO_PREVISIONE_IMPEGNO
                 };
             }
@@ -422,23 +429,33 @@ namespace VideoSystemWeb.Agenda
             {
                 panelErrore.Style.Add("display", "none");
                 popupAppuntamento.NascondiErroriValidazione();
-                if (IsDisponibileDataRisorsa(eventoSelezionato))
-                {
-                    if (eventoSelezionato.id == 0)
-                    {
-                        Agenda_BLL.Instance.CreaEvento(eventoSelezionato);
-                    }
-                    else
-                    {
-                        Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato);
-                    }
-                    ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
 
+                if (!popupAppuntamento.ControlloGiorniViaggio())
+                {
+                    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.descrizione = "Non è possibile salvare l'evento perché i giorni viaggio eccedono la durata della lavorazione";
                 }
                 else
                 {
-                    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                    esito.descrizione = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
+
+                    if (IsDisponibileDataRisorsa(eventoSelezionato))
+                    {
+                        if (eventoSelezionato.id == 0)
+                        {
+                            Agenda_BLL.Instance.CreaEvento(eventoSelezionato);
+                        }
+                        else
+                        {
+                            Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato);
+                        }
+                        ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
+
+                    }
+                    else
+                    {
+                        esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                        esito.descrizione = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
+                    }
                 }
             }
             #endregion

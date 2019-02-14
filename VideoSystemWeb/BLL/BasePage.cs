@@ -14,7 +14,9 @@ namespace VideoSystemWeb.BLL
         {
             get
             {
-                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
+                List <Tipologica> _listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
+                _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo=="extra").ThenBy(c => c.sottotipo).ToList<Tipologica>();
+                return _listaRisorse;
             }
         }
         public List<Tipologica> listaStati

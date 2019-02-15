@@ -94,6 +94,15 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLegenda;
         
         /// <summary>
+        /// Controllo divFiltroAgenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFiltroAgenda;
+        
+        /// <summary>
         /// Controllo btnEditEvent.
         /// </summary>
         /// <remarks>
@@ -146,6 +155,15 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
+        
+        /// <summary>
+        /// Controllo mostraAgenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image mostraAgenda;
         
         /// <summary>
         /// Controllo popupAppuntamento.

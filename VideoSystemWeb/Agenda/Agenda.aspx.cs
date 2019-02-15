@@ -28,6 +28,7 @@ namespace VideoSystemWeb.Agenda
                 gv_scheduler.DataBind();
 
                 divLegenda.Controls.Add(new LiteralControl(CreaLegenda()));
+                divFiltroAgenda.Controls.Add(new LiteralControl(CreaFiltriColonneAgenda()));
             }
         }
 
@@ -128,7 +129,6 @@ namespace VideoSystemWeb.Agenda
                 column = new DataColumn();
                 column.DataType = typeof(string);
                 column.ColumnName = risorsa.id.ToString(); // inserisco id risorsa per poi formattare la cella in RowDataBound 
-
                 table.Columns.Add(column);
             }
             #endregion
@@ -178,6 +178,7 @@ namespace VideoSystemWeb.Agenda
                     Esito esito = new Esito();
                     string colore = UtilityTipologiche.getParametroDaTipologica(risorsaCorrente, "color", ref esito);
 
+                    e.Row.Cells[indiceColonna].Attributes.Add("class", risorsaCorrente.sottotipo);
                     e.Row.Cells[indiceColonna].Attributes.Add("style", "background-color:" + colore + ";font-size:10pt;text-align:center;width:100px;");
                     e.Row.Cells[indiceColonna].Text = risorsaCorrente.nome;
                 }
@@ -200,24 +201,27 @@ namespace VideoSystemWeb.Agenda
                 for (int indiceColonna = 1; indiceColonna <= listaRisorse.Count; indiceColonna++)
                 {
                     string data = e.Row.Cells[0].Text;
-                    int risorsa = ((Tipologica)listaRisorse.ElementAt(indiceColonna - 1)).id;
+                    Tipologica risorsa = ((Tipologica)listaRisorse.ElementAt(indiceColonna - 1));
+                    int id_risorsa = ((Tipologica)listaRisorse.ElementAt(indiceColonna - 1)).id;
+
+                    e.Row.Cells[indiceColonna].Attributes.Add("class", risorsa.sottotipo);
 
                     if (!string.IsNullOrEmpty(e.Row.Cells[indiceColonna].Text.Trim()))
                     {
                         DatiAgenda datoAgendaCorrente = Agenda_BLL.Instance.GetDatiAgendaById(listaDatiAgenda, int.Parse(e.Row.Cells[indiceColonna].Text.Trim()));
 
+                       
+
                         Esito esito = new Esito();
                         Tipologica statoCorrente = UtilityTipologiche.getElementByID(listaStati, datoAgendaCorrente.id_stato, ref esito);
 
                         string colore;
-
-
-
                         colore = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "color", ref esito);
 
-                        e.Row.Cells[indiceColonna].CssClass = "evento";
+                        e.Row.Cells[indiceColonna].CssClass = "evento " + risorsa.sottotipo;
 
                         string titoloEvento = datoAgendaCorrente.id_stato == DatiAgenda.STATO_RIPOSO ? "Riposo" : datoAgendaCorrente.produzione;
+
                         // EVENTO GIORNO SINGOLO
                         if (IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
                         {
@@ -270,13 +274,13 @@ namespace VideoSystemWeb.Agenda
                                 e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; border-bottom: 0px; background-color:" + colore);
                             }
                         }
-                        e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + risorsa + "');";
+                        e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + id_risorsa + "');";
                     }
                     else
                     {
                         if (isUtenteAbilitatoInScrittura)
                         {
-                            e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + risorsa + "');";
+                            e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + id_risorsa + "');";
                         }
                     }
                 }
@@ -309,22 +313,7 @@ namespace VideoSystemWeb.Agenda
             return eventoEsistente == null;
         }
 
-        private string CreaLegenda()
-        {
-            Esito esito = new Esito();
-
-            string legenda = "<ul style='list-style-type: none;padding-left:0px;'>";
-
-            foreach (Tipologica stato in listaStati)
-            {
-                string colore = UtilityTipologiche.getParametroDaTipologica(stato, "COLOR", ref esito);
-                legenda += "<li><div class='boxLegenda' style='background:" + colore + "'/>&nbsp;</div>&nbsp;- " + stato.nome + "</li>";
-            }
-
-            legenda += "</ul>";
-
-            return legenda;
-        }
+       
         #endregion
         
         #region OPERAZIONI POPUP
@@ -492,6 +481,41 @@ namespace VideoSystemWeb.Agenda
             return false;
         }
 
+
+        #endregion
+
+        #region COSTRUZIONE PAGINA
+        private string CreaLegenda()
+        {
+            Esito esito = new Esito();
+
+            string legenda = "<ul style='list-style-type: none;padding-left:0px;'>";
+
+            foreach (Tipologica stato in listaStati)
+            {
+                string colore = UtilityTipologiche.getParametroDaTipologica(stato, "COLOR", ref esito);
+                legenda += "<li><div class='boxLegenda' style='background:" + colore + "'/>&nbsp;</div>&nbsp;- " + stato.nome + "</li>";
+            }
+
+            legenda += "</ul>";
+
+            return legenda;
+        }
+
+        private string CreaFiltriColonneAgenda()
+        {
+            Esito esito = new Esito();
+
+            List<Tipologica> listaSottotipiColonne = listaRisorse.GroupBy(x => x.sottotipo).Select(x => x.FirstOrDefault()).ToList<Tipologica>();
+
+            string check = "";
+            foreach (Tipologica colonna in listaSottotipiColonne)
+            {
+                check += "<div class='checkbox'><label><input type='checkbox' class='filtroColonna' value='" + colonna.sottotipo + "' checked onchange=\"nascondiColonna(this,'" + colonna.sottotipo + "');\">" + colonna.sottotipo + "</label></div>";
+            }
+
+            return check;
+        }
 
         #endregion
     }

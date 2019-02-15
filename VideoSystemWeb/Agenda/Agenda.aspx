@@ -19,16 +19,29 @@
                 var data = e.date.date() + "/" + (e.date.month() + 1) + "/" + e.date.year();
                 $("#<%=hf_valoreData.ClientID%>").val(data);
                 $("#<%=btnsearch.ClientID%>").click();
+                
             });
 
             registraPassaggioMouse();
 
-            //Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
-            //    mostraUltimaTabSelezionata();
-            //});
+            //FUNZIONI DA ESEGUIRE DOPO IL POSTBACK PARZIALE
+            Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+                //mostraUltimaTabSelezionata();
+                $(".filtroColonna").each(function () {
+                    nascondiColonna(this, this.value);
+                });
+            });
         });
 
-
+        function nascondiColonna(element, sottotipo) {
+            $('#<%=gv_scheduler.ClientID%> tr').each(function () {
+                if ($(element).is(':checked')) {
+                    $(this).find('.' + sottotipo).show();
+                } else {
+                    $(this).find('.' + sottotipo).hide();
+                }
+            });
+        }
 
         function aggiornaAgenda() {
             $("#<%=btnsearch.ClientID%>").click();
@@ -124,6 +137,12 @@
                 <div class="w3-container" style="margin-left: 20px; text-align: center">
                     <b>LEGENDA</b>
                     <div style="width: 100%; text-align: left" runat="server" id="divLegenda">
+                    </div>
+                </div>
+                <br />
+                <div class="w3-container" style="margin-left: 20px; text-align: center">
+                    <b>FILTRO COLONNE AGENDA</b>
+                    <div style="width: 100%; text-align: left" runat="server" id="divFiltroAgenda">
                     </div>
                 </div>
             </td>

@@ -22,6 +22,8 @@ namespace VideoSystemWeb.Entity
                     return getListaStati();
                 case EnumTipologiche.TIPO_TIPOLOGIE:
                     return getListaTipiTipologie();
+                case EnumTipologiche.TIPO_CLIENTI_FORNITORI:
+                    return null;
                 default:
                     return null;
             }

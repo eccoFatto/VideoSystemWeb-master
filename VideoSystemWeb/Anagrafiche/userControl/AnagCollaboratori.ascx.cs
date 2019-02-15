@@ -1077,7 +1077,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     Anag_Qualifiche_Collaboratori nuovaQualifica = new Anag_Qualifiche_Collaboratori();
                     nuovaQualifica.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
                     nuovaQualifica.Priorita = Convert.ToInt16(tbInsPrioritaQualifica.Text.Trim());
-                    nuovaQualifica.Qualifica = qualificaSelezionata;
+                    nuovaQualifica.Qualifica = qualificaSelezionata.Replace("'","''");
                     nuovaQualifica.Attivo = true;
                     nuovaQualifica.Descrizione = "";
                     int iNuovaQualifica = Anag_Qualifiche_Collaboratori_BLL.Instance.CreaQualificaCollaboratore(nuovaQualifica, ref esito);

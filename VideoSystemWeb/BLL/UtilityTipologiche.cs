@@ -51,6 +51,8 @@ namespace VideoSystemWeb.BLL
                     return "tipo_stato";
                 case EnumTipologiche.TIPO_TIPOLOGIE:
                     return "tipo_tipologie";
+                case EnumTipologiche.TIPO_CLIENTI_FORNITORI:
+                    return "tipo_clienti_fornitori";
                 default:
                     return string.Empty;
             }
@@ -118,5 +120,5 @@ namespace VideoSystemWeb.BLL
 
     
 
-    public enum EnumTipologiche { TIPO_COLONNE_AGENDA, TIPO_QUALIFICHE, TIPO_UTENTE, TIPO_STATO, TIPO_TIPOLOGIE }
+    public enum EnumTipologiche { TIPO_COLONNE_AGENDA, TIPO_QUALIFICHE, TIPO_UTENTE, TIPO_STATO, TIPO_TIPOLOGIE, TIPO_CLIENTI_FORNITORI }
 }

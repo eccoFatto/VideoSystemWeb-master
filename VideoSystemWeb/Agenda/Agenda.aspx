@@ -27,8 +27,17 @@
             //FUNZIONI DA ESEGUIRE DOPO IL POSTBACK PARZIALE
             Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
                 //mostraUltimaTabSelezionata();
+
                 $(".filtroColonna").each(function () {
                     nascondiColonna(this, this.value);
+                });
+
+                $("#<%=mostraAgenda.ClientID%>").mouseover(function() {
+                    $("#<%=pnlContainer.ClientID%>").hide();
+                });
+
+                $("#<%=mostraAgenda.ClientID%>").mouseout(function() {
+                    $("#<%=pnlContainer.ClientID%>").show();
                 });
             });
         });
@@ -169,6 +178,9 @@
                             <div class="w3-bar-item w3-button tablink w3-red" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
                             <div class="w3-bar-item w3-button tablink" onclick="openTabEvento(event, 'Offerta')">Offerta</div>
                             <div class="w3-bar-item w3-button tablink" onclick="openTabEvento(event, 'Lavorazione')">Lavorazione</div>
+                            <div >
+                                <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" style="position:absolute;right:25px; top:5px;"/>
+                            </div> 
                         </div>
 
                         <div id="Appuntamento" class="w3-container w3-border tabEvento w3-padding-small">
@@ -192,7 +204,7 @@
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato()" Visible="false" />
                         <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato()" OnClick="btnLavorazione_Click" Visible="false" />
                         <asp:Button ID="btnRiposo" runat="server" Text="Riposo" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRiposo_Click" Visible="false" />
-
+                        
                     </div>
 
                 </asp:Panel>

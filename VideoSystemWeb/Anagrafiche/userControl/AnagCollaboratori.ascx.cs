@@ -29,10 +29,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     lbMod_Email_DoubleClick();
                     lbMod_Indirizzi_DoubleClick();
                     lbMod_Telefoni_DoubleClick();
+                    lbMod_Documenti_DoubleClick();
                 }
                 lbMod_Email.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Email, "move"));
                 lbMod_Indirizzi.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Indirizzi, "move"));
                 lbMod_Telefoni.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Telefoni, "move"));
+                lbMod_Documenti.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Documenti, "move"));
             }
 
             if (!Page.IsPostBack)
@@ -95,6 +97,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 btnApriQualifiche.Visible = false;
                 btnApriEmail.Visible = false;
                 btnApriIndirizzi.Visible = false;
+                btnApriDocumenti.Visible = false;
             }
             else
             {
@@ -108,6 +111,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 btnApriQualifiche.Visible = true;
                 btnApriEmail.Visible = true;
                 btnApriIndirizzi.Visible = true;
+                btnApriDocumenti.Visible = true;
             }
         }
         // RICERCA COLLABORATORI
@@ -293,6 +297,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             phTelefoni.Visible = false;
             phQualifiche.Visible = false;
             phIndirizzi.Visible = false;
+            phDocumenti.Visible = false;
 
             pnlContainer.Visible = true;
         }
@@ -324,6 +329,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             lbMod_Telefoni.Items.Clear();
             lbMod_Telefoni.Rows = 1;
+
+            lbMod_Documenti.Items.Clear();
+            lbMod_Documenti.Rows = 1;
 
         }
         // CARICA IMMAGINE COLLABORATORE
@@ -479,6 +487,24 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     else
                     {
                         lbMod_Telefoni.Rows = 1;
+                    }
+
+                    // DOCUMENTI
+                    if (collaboratore.Documenti != null)
+                    {
+                        foreach (Anag_Documenti_Collaboratori documento in collaboratore.Documenti)
+                        {
+                            ListItem itemDocumento = new ListItem(documento.TipoDocumento + " - " + documento.NumeroDocumento , documento.Id.ToString());
+                            lbMod_Documenti.Items.Add(itemDocumento);
+                        }
+                    }
+                    if (collaboratore.Documenti != null && collaboratore.Documenti.Count > 0)
+                    {
+                        lbMod_Documenti.Rows = collaboratore.Documenti.Count;
+                    }
+                    else
+                    {
+                        lbMod_Documenti.Rows = 1;
                     }
 
                     // IMMAGINE COLLABORATORE
@@ -785,6 +811,47 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         }
 
+        protected void btnEliminaDocumento_Click(object sender, EventArgs e)
+        {
+            //ELIMINO IL DOCUMENTO SE SELEZIONATO
+            if (lbMod_Documenti.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    ListItem item = lbMod_Documenti.Items[lbMod_Documenti.SelectedIndex];
+                    string value = item.Value;
+                    string documentoSelezionato = item.Text;
+                    Esito esito = Anag_Documenti_Collaboratori_BLL.Instance.EliminaDocumentoCollaboratore(Convert.ToInt32(item.Value));
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsNumeroDocumento.Text = "";
+                        cmbInsTipoDocumento.Text = "";
+
+                        btnModificaDocumento.Visible = false;
+                        btnInserisciDocumento.Visible = true;
+
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+        }
         protected void lbMod_Email_DoubleClick()
         {
             //SCARICO L'INDIRIZZO E-MAIL SE DOPPIO CLICK
@@ -945,6 +1012,56 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
         }
 
+        protected void lbMod_Documenti_DoubleClick()
+        {
+            //SCARICO IL DOCUMENTO SE DOPPIO CLICK
+            if (lbMod_Documenti.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    ListItem item = lbMod_Documenti.Items[lbMod_Documenti.SelectedIndex];
+                    string value = item.Value;
+                    string documentoSelezionato = item.Text;
+                    Esito esito = new Esito();
+                    Anag_Documenti_Collaboratori documento = Anag_Documenti_Collaboratori_BLL.Instance.getDocumentoById(ref esito, Convert.ToInt32(item.Value));
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        btnModificaDocumento.Visible = false;
+                        btnInserisciDocumento.Visible = true;
+                        tbIdDocumentoDaModificare.Text = "";
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        btnModificaDocumento.Visible = true;
+                        btnInserisciDocumento.Visible = false;
+                        tbIdDocumentoDaModificare.Text = documento.Id.ToString();
+                        ListItem trovati = cmbInsTipoDocumento.Items.FindByText(documento.TipoDocumento);
+                        if (trovati != null)
+                        {
+                            cmbInsTipoDocumento.Text = documento.TipoDocumento;
+                        }
+                        else
+                        {
+                            cmbInsTipoDocumento.Text = "";
+                        }
+                        tbInsNumeroDocumento.Text = documento.NumeroDocumento;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaDocumento.Visible = false;
+                    btnInserisciDocumento.Visible = true;
+                    tbIdDocumentoDaModificare.Text = "";
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+
+        }
         protected void btnConfermaInserimentoQualifica_Click(object sender, EventArgs e)
         {
             //INSERISCO LA QUALIFICA SE SELEZIONATA
@@ -1144,6 +1261,50 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
         }
 
+        protected void btnConfermaInserimentoDocumento_Click(object sender, EventArgs e)
+        {
+            //INSERISCO IL DOCUMENTO
+            if (!string.IsNullOrEmpty(tbInsNumeroDocumento.Text))
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    Esito esito = new Esito();
+                    Anag_Documenti_Collaboratori nuovoDocumento = new Anag_Documenti_Collaboratori();
+                    nuovoDocumento.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
+                    nuovoDocumento.Attivo = true;
+                    nuovoDocumento.TipoDocumento = cmbInsTipoDocumento.Text.Trim();
+                    nuovoDocumento.NumeroDocumento = tbInsNumeroDocumento.Text.Trim();
+                    nuovoDocumento.PathDocumento = "";
+
+                    int iNuovoDocumento = Anag_Documenti_Collaboratori_BLL.Instance.CreaDocumentoCollaboratore(nuovoDocumento, ref esito);
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsNumeroDocumento.Text = "";
+                        cmbInsTipoDocumento.Text = "";
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+        }
+
         protected void btnConfermaModificaEmail_Click(object sender, EventArgs e)
         {
             //MODIFICO L'E-MAIL
@@ -1319,6 +1480,58 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         }
 
+        protected void btnConfermaModificaDocumento_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(tbInsNumeroDocumento.Text) && !string.IsNullOrEmpty(tbIdDocumentoDaModificare.Text))
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    Esito esito = new Esito();
+                    Anag_Documenti_Collaboratori nuovoDocumento = new Anag_Documenti_Collaboratori();
+                    nuovoDocumento.Id = Convert.ToInt32(tbIdDocumentoDaModificare.Text);
+                    nuovoDocumento.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
+                    nuovoDocumento.TipoDocumento = cmbInsTipoDocumento.Text.Trim();
+                    nuovoDocumento.NumeroDocumento = tbInsNumeroDocumento.Text.Trim();
+                    nuovoDocumento.PathDocumento = "";
+                    nuovoDocumento.Attivo = true;
+
+                    esito = Anag_Documenti_Collaboratori_BLL.Instance.AggiornaDocumentoCollaboratore(nuovoDocumento);
+
+                    btnModificaDocumento.Visible = false;
+                    btnInserisciDocumento.Visible = true;
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbIdDocumentoDaModificare.Text = "";
+                        tbInsNumeroDocumento.Text = "";
+                        cmbInsTipoDocumento.Text = "";
+
+                        editCollaboratore();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaDocumento.Visible = false;
+                    btnInserisciDocumento.Visible = true;
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
+
+        }
+
         protected void btnAnnullaIndirizzo_Click(object sender, EventArgs e)
         {
             tbIdIndirizzoDaModificare.Text = "";
@@ -1357,6 +1570,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             btnModificaEmail.Visible = false;
             btnInserisciEmail.Visible = true;
+        }
+
+        protected void btnAnnullaDocumento_Click(object sender, EventArgs e)
+        {
+            tbInsNumeroDocumento.Text = "";
+            cmbInsTipoDocumento.Text = "";
+
+            btnModificaDocumento.Visible = false;
+            btnInserisciDocumento.Visible = true;
         }
 
         protected void btnApriQualifiche_Click(object sender, EventArgs e)
@@ -1405,6 +1627,18 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             else
             {
                 phTelefoni.Visible = true;
+            }
+        }
+
+        protected void btnApriDocumenti_Click(object sender, EventArgs e)
+        {
+            if (phDocumenti.Visible)
+            {
+                phDocumenti.Visible = false;
+            }
+            else
+            {
+                phDocumenti.Visible = true;
             }
         }
 

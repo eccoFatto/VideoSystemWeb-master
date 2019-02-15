@@ -150,7 +150,8 @@
                         <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Indirizzi')">Indirizzi</div>
                         <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Telefoni')">Telefoni</div>
                         <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Email')">Email</div>
-                        <div class="w3-bar-item w3-button w3-red w3-right"><asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-button w3-green w3-small w3-round" OnClick="btn_chiudi_Click" OnClientClick="return confirm('Confermi chiusura pagina?')"/></div>
+                        <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Documenti')">Documenti</div>
+                        <div class="w3-bar-item w3-button w3-red w3-right"><asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-button w3-green w3-small w3-round" OnClick="btn_chiudi_Click" /></div>
                     </div>
                     <!-- TAB ANAGRAFICA -->
                     <div id="Anagrafica" class="w3-container w3-border collab"  style="display:block">
@@ -436,6 +437,40 @@
                             </p>
                         </div>
                     </div>
+                    <!-- TAB EMAIL -->
+                    <div id="Documenti" class="w3-container  w3-border collab" style="display:none">
+                        <label>Documenti</label>
+                        <asp:ListBox ID="lbMod_Documenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                        <div class="w3-container w3-center">
+                            <p>
+                                <asp:Button ID="btnApriDocumenti" runat="server" OnClick="btnApriDocumenti_Click" Text="Gestione Documenti" class="w3-panel w3-green w3-border w3-round" />
+                                <asp:PlaceHolder ID="phDocumenti" runat="server" Visible="false">                                
+                                    <div class="w3-row-padding w3-center w3-text-center">
+                                        <div class="w3-half">
+                                            <label>TipoDocumento</label>
+                                            <asp:DropDownList ID="cmbInsTipoDocumento" runat="server" class="w3-input w3-border">
+                                                <asp:ListItem Value=""></asp:ListItem>
+                                                <asp:ListItem Value="Carta di Identità">Carta di Identità</asp:ListItem>
+                                                <asp:ListItem Value="Patente">Patente</asp:ListItem>
+                                                <asp:ListItem Value="Passaporto">Passaporto</asp:ListItem>
+                                                <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
+                                            </asp:DropDownList>
+                                        </div>
+                                        <div class="w3-half">
+                                            <label>Numero Documento</label>
+                                            <asp:TextBox ID="tbInsNumeroDocumento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                            <asp:TextBox ID="tbIdDocumentoDaModificare" runat="server" Visible="false"></asp:TextBox>
+                                        </div>
+                                    </div>
+                                    <asp:Button ID="btnInserisciDocumento" runat="server" Text="Inserisci Documento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoDocumento_Click" OnClientClick="return confirm('Confermi inserimento Documento?')" />
+                                    <asp:Button ID="btnModificaDocumento" runat="server" Text="Modifica Documento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaDocumento_Click" OnClientClick="return confirm('Confermi modifica Documento?')" Visible="false" />
+                                    <asp:Button ID="btnEliminaDocumento" runat="server" Text="Elimina Documento" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaDocumento_Click" OnClientClick="return confirm('Confermi eliminazione Documento?')" />
+                                    <asp:Button ID="btnAnnullaDocumento" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaDocumento_Click" />
+                                </asp:PlaceHolder>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </asp:Panel>
         </asp:Panel>

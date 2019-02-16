@@ -5,7 +5,7 @@
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
-    overflow: hidden;
+    
     border: solid 2px #5377A9;
 }
 
@@ -25,7 +25,7 @@
 
 
 .highlight {
-    background-color: #DDEEFF;
+    background-color:white;
 }
 
 .grid td {
@@ -88,7 +88,6 @@
     right:0;
 }
 
-
 .errorMessage {
     color: white;
     font-weight: bold;
@@ -101,7 +100,6 @@
     font-weight: bold;
     font-size: 16px;
 }
-
 
 .containerPopupStandard {
     background-color: #EEF1F7;

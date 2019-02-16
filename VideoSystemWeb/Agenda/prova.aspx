@@ -11,7 +11,7 @@
 
     <script type="text/javascript" src="/Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src='/Scripts/moment-with-locales.js'></script>
-    <script type="text/javascript" src='/Scripts/bootstrap.min.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Scripts/bootstrap-datetimepicker.min.js"></script>
 
 
@@ -32,25 +32,48 @@
 
 
 
-    <link href="/Css/multi-select.css" media="screen" rel="stylesheet" type="text/css"/>
-    <script src="/Scripts/jquery.multi-select.js" type="text/javascript"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#my-select').multiSelect();
-        });
-
-    </script>
+<style>
+  /* Style the input field */
+  #myInput {
+    padding: 20px;
+    margin-top: -6px;
+    border: 0;
+    border-radius: 0;
+    background: #f1f1f1;
+  }
+  </style>
 </head>
 <body>
-   <select multiple="multiple" id="my-select" name="my-select[]">
-      <option value='elem_1'>elem 1</option>
-      <option value='elem_2'>elem 2</option>
-      <option value='elem_3'>elem 3</option>
-      <option value='elem_4'>elem 4</option>
-      <option value='elem_100'>elem 100</option>
-    </select>
 
+<div class="container">
+  <h2>Filterable Dropdown</h2>
+  <p>Open the dropdown menu and type something in the input field to search for dropdown items:</p>
+  <p>Note that we have styled the input field to fit the dropdown items.</p>
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <input class="form-control" id="myInput" type="text" placeholder="Search..">
+      <li><a href="#">HTML</a></li>
+      <li><a href="#">CSS</a></li>
+      <li><a href="#">JavaScript</a></li>
+      <li><a href="#">jQuery</a></li>
+      <li><a href="#">Bootstrap</a></li>
+      <li><a href="#">Angular</a></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $(".dropdown-menu li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 
 </body>
 </html>

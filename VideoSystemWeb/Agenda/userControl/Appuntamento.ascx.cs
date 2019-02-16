@@ -22,8 +22,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (!IsPostBack)
             {
-                basePage.popolaDDLTipologica(ddl_Risorse, basePage.listaRisorse);
-                basePage.popolaDDLTipologica(ddl_Tipologia, basePage.listaTipiTipologie);
+                //basePage.popolaDDLTipologica(ddl_Risorse, basePage.listaRisorse);
+                basePage.popolaDDLTipologicaNEW(elencoRisorse, basePage.listaRisorse);
+                basePage.popolaDDLTipologicaNEW(elencoTipologie, basePage.listaTipiTipologie);
             }
 
            // ScriptManager.RegisterStartupScript(this, typeof(Page), "campiImpegnoOrario", "checkImpegnoOrario();", true);
@@ -42,8 +43,8 @@ namespace VideoSystemWeb.Agenda.userControl
             datiAgenda.data_inizio_lavorazione = BasePage.validaCampo(txt_DataInizioLavorazione, DateTime.MinValue, true, ref esito);
             datiAgenda.data_fine_lavorazione = BasePage.validaCampo(txt_DataFineLavorazione, DateTime.MinValue, true, ref esito);
             datiAgenda.durata_lavorazione = BasePage.validaCampo(txt_DurataLavorazione, 0, true, ref esito);
-            datiAgenda.id_colonne_agenda = BasePage.validaCampo(ddl_Risorse, 0, true, ref esito);
-            datiAgenda.id_tipologia = BasePage.validaCampo(ddl_Tipologia, 0, campoObbligatorio, ref esito);
+            datiAgenda.id_colonne_agenda = BasePage.validaCampo(ddl_Risorse, hf_Risorse, 0, true, ref esito);
+            datiAgenda.id_tipologia = BasePage.validaCampo(ddl_Tipologie, hf_Tipologie, 0, campoObbligatorio, ref esito);
             datiAgenda.id_stato = int.Parse(hf_IdStato.Value);
             datiAgenda.id_cliente = BasePage.validaCampo(ddl_cliente, 0, false, ref esito);
             datiAgenda.durata_viaggio_andata = BasePage.validaCampo(txt_DurataViaggioAndata, 0, true, ref esito);
@@ -69,7 +70,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DataFineLavorazione.CssClass = txt_DataFineLavorazione.CssClass.Replace("erroreValidazione", "");
             txt_DurataLavorazione.CssClass = txt_DurataLavorazione.CssClass.Replace("erroreValidazione", "");
             ddl_Risorse.CssClass = ddl_Risorse.CssClass.Replace("erroreValidazione", "");
-            ddl_Tipologia.CssClass = ddl_Tipologia.CssClass.Replace("erroreValidazione", "");
+            ddl_Tipologie.CssClass = ddl_Tipologie.CssClass.Replace("erroreValidazione", "");
             ddl_cliente.CssClass = ddl_cliente.CssClass.Replace("erroreValidazione", "");
             txt_DurataViaggioAndata.CssClass = txt_DurataViaggioAndata.CssClass.Replace("erroreValidazione", "");
             txt_DurataViaggioRitorno.CssClass = txt_DurataViaggioRitorno.CssClass.Replace("erroreValidazione", "");
@@ -90,8 +91,22 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DataInizioLavorazione.Text = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
             txt_DataFineLavorazione.Text = evento.data_fine_lavorazione == DateTime.MinValue ? "" : evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
             txt_DurataLavorazione.Text = evento.durata_lavorazione.ToString();
-            ddl_Risorse.SelectedValue = evento.id_colonne_agenda.ToString();
-            ddl_Tipologia.SelectedValue = evento.id_tipologia == 0 || evento.id_tipologia == null ? "": evento.id_tipologia.ToString();
+            
+            hf_Risorse.Value = evento.id_colonne_agenda.ToString();
+            ddl_Risorse.Text = basePage.listaRisorse.Where(x=>x.id == evento.id_colonne_agenda).FirstOrDefault().nome;
+
+
+            if (evento.id_tipologia == 0 || evento.id_tipologia == null)
+            {
+                hf_Tipologie.Value = "";
+                ddl_Tipologie.Text = "<Seleziona>";
+            }
+            else
+            {
+                hf_Tipologie.Value = evento.id_tipologia.ToString();
+                ddl_Tipologie.Text = basePage.listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
+            }
+
             ddl_cliente.SelectedValue = evento.id_cliente.ToString();
             txt_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
             txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
@@ -119,8 +134,14 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DataInizioLavorazione.Text = string.Empty;
             txt_DataFineLavorazione.Text = string.Empty;
             txt_DurataLavorazione.Text = string.Empty;
-            ddl_Risorse.SelectedValue = "";
-            ddl_Tipologia.SelectedValue = "";
+
+            //ddl_Risorse.SelectedValue = "";
+            hf_Risorse.Value = "";
+            ddl_Risorse.Text = "";
+
+            hf_Tipologie.Value = "";
+            ddl_Tipologie.Text = "";
+
             ddl_cliente.SelectedValue = "";
             txt_DurataViaggioAndata.Text = string.Empty;
             txt_DurataViaggioRitorno.Text = string.Empty;

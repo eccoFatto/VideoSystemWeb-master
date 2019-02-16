@@ -85,13 +85,31 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Label lbl_Risorsa;
         
         /// <summary>
+        /// Controllo hf_Risorse.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_Risorse;
+        
+        /// <summary>
         /// Controllo ddl_Risorse.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_Risorse;
+        protected global::System.Web.UI.WebControls.Button ddl_Risorse;
+        
+        /// <summary>
+        /// Controllo elencoRisorse.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoRisorse;
         
         /// <summary>
         /// Controllo lbl_Tipologia.
@@ -103,13 +121,31 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Label lbl_Tipologia;
         
         /// <summary>
-        /// Controllo ddl_Tipologia.
+        /// Controllo hf_Tipologie.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_Tipologia;
+        protected global::System.Web.UI.WebControls.HiddenField hf_Tipologie;
+        
+        /// <summary>
+        /// Controllo ddl_Tipologie.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ddl_Tipologie;
+        
+        /// <summary>
+        /// Controllo elencoTipologie.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoTipologie;
         
         /// <summary>
         /// Controllo lbl_Cliente.

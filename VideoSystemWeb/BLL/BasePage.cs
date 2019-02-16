@@ -51,6 +51,14 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public List<Tipologica> listaTipiClientiFornitori
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_CLIENTI_FORNITORI);
+            }
+        }
+
         public Esito caricaListeTipologiche()
         {
             Esito esito = new Esito();
@@ -66,6 +74,8 @@ namespace VideoSystemWeb.BLL
 
             List<Tipologica> listaQualifiche = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_QUALIFICHE);
 
+            List<Tipologica> listaTipiClientiFornitori = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_CLIENTI_FORNITORI);
+
             return esito;
         }
 
@@ -77,7 +87,6 @@ namespace VideoSystemWeb.BLL
 
             if (campo is TextBox)
             {
-
                 valore = ((TextBox)campo).Text;
             }
             else if (campo is DropDownList)

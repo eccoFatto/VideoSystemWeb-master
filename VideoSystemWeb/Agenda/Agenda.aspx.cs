@@ -210,8 +210,6 @@ namespace VideoSystemWeb.Agenda
                     {
                         DatiAgenda datoAgendaCorrente = Agenda_BLL.Instance.GetDatiAgendaById(listaDatiAgenda, int.Parse(e.Row.Cells[indiceColonna].Text.Trim()));
 
-                       
-
                         Esito esito = new Esito();
                         Tipologica statoCorrente = UtilityTipologiche.getElementByID(listaStati, datoAgendaCorrente.id_stato, ref esito);
 
@@ -227,8 +225,10 @@ namespace VideoSystemWeb.Agenda
                         {
                             Panel mainPanel = new Panel();
                             mainPanel.Controls.Add(new LiteralControl(titoloEvento));
-                            mainPanel.CssClass = "round-corners-6px";
+                            mainPanel.CssClass = "round-corners-6px w3-tooltip";
                             mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
+                            mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
+
                             e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
                         }
                         else
@@ -242,10 +242,11 @@ namespace VideoSystemWeb.Agenda
 
                                 Panel mainPanel = new Panel();
                                 mainPanel.Controls.Add(new LiteralControl(titoloEvento));
-                                mainPanel.CssClass = "round-corners-6px unround-bottom-corners";
+                                mainPanel.CssClass = "round-corners-6px unround-bottom-corners w3-tooltip";
                                 mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
-                                e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
+                                mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
+                                e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
                                 e.Row.Cells[indiceColonna].Attributes.Add("style", "border-bottom: 0px; vertical-align: bottom");
                             }
                             else if (!IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
@@ -257,10 +258,11 @@ namespace VideoSystemWeb.Agenda
 
                                 Panel mainPanel = new Panel();
                                 mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
-                                mainPanel.CssClass = "round-corners-6px unround-top-corners";
+                                mainPanel.CssClass = "round-corners-6px unround-top-corners w3-tooltip";
                                 mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
-                                e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
+                                mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
+                                e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
                                 e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; vertical-align: top");
                             }
                             else if (!IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && !IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
@@ -270,18 +272,19 @@ namespace VideoSystemWeb.Agenda
                                     colore = "#FFFF00";
                                 }
 
-                                e.Row.Cells[indiceColonna].Text = "";
+                                Panel mainPanel = new Panel();
+                                mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
+                                mainPanel.CssClass = "w3-tooltip";
+                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
+                                mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
+                                e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
                                 e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; border-bottom: 0px; background-color:" + colore);
                             }
                         }
-                        e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + id_risorsa + "');";
                     }
-                    else
+                    if (isUtenteAbilitatoInScrittura)
                     {
-                        if (isUtenteAbilitatoInScrittura)
-                        {
-                            e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + id_risorsa + "');";
-                        }
+                        e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + id_risorsa + "');";
                     }
                 }
             }
@@ -339,19 +342,14 @@ namespace VideoSystemWeb.Agenda
 
         private void AbilitaComponentiPopup()
         {
-            bool abilitazioneScrittura = AbilitazioneInScrittura();
-
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             string sottotipoRisorsa = eventoSelezionato != null ? UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo : "";
 
-            btnOfferta.Visible = abilitazioneScrittura && eventoSelezionato != null && sottotipoRisorsa != "dipendenti" && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-            btnLavorazione.Visible = abilitazioneScrittura && eventoSelezionato != null && sottotipoRisorsa != "dipendenti" && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA;
-            btnElimina.Visible = abilitazioneScrittura && eventoSelezionato != null && eventoSelezionato.id != 0 && (eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || eventoSelezionato.id_stato == DatiAgenda.STATO_RIPOSO);
-            btnRiposo.Visible = abilitazioneScrittura && sottotipoRisorsa == "dipendenti" && eventoSelezionato.id_stato != DatiAgenda.STATO_RIPOSO;
-            btnSalva.Visible = abilitazioneScrittura;
-
-            popupAppuntamento.AbilitaComponentiPopup(eventoSelezionato);
+            btnOfferta.Visible = eventoSelezionato != null && sottotipoRisorsa != "dipendenti" && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+            btnLavorazione.Visible = eventoSelezionato != null && sottotipoRisorsa != "dipendenti" && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA;
+            btnElimina.Visible = eventoSelezionato != null && eventoSelezionato.id != 0 && (eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || eventoSelezionato.id_stato == DatiAgenda.STATO_RIPOSO);
+            btnRiposo.Visible = sottotipoRisorsa == "dipendenti" && eventoSelezionato.id_stato != DatiAgenda.STATO_RIPOSO;
         }
 
         private void MostraPopup(DatiAgenda eventoSelezionato)
@@ -375,7 +373,7 @@ namespace VideoSystemWeb.Agenda
         #region OPERAZIONI EVENTO
         private DatiAgenda CreaEventoDaSelezioneAgenda(DateTime dataEvento, int risorsaEvento)
         {
-            bool isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
+           // bool isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
 
             listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"];
 
@@ -511,12 +509,34 @@ namespace VideoSystemWeb.Agenda
             string check = "";
             foreach (Tipologica colonna in listaSottotipiColonne)
             {
-                check += "<div class='checkbox'><label><input type='checkbox' class='filtroColonna' value='" + colonna.sottotipo + "' checked onchange=\"nascondiColonna(this,'" + colonna.sottotipo + "');\">" + colonna.sottotipo + "</label></div>";
+                check += "<div class='checkbox'><label><input type='checkbox' class='filtroColonna' value='" + colonna.sottotipo + "' checked onchange=\"filtraColonna(this,'" + colonna.sottotipo + "');\">" + colonna.sottotipo + "</label></div>";
             }
 
             return check;
         }
 
+        private Panel AnteprimaEvento(DatiAgenda evento)
+        {
+            Panel innerPanel = new Panel();
+            if (evento.id_stato != DatiAgenda.STATO_RIPOSO)
+            {
+                string cliente = "Cliente";
+                string stato = listaStati.Where(x => x.id == evento.id_stato).FirstOrDefault().nome;
+                string tipologia = listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
+                string produzione = evento.produzione;
+                string dataInizio = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
+                string datatFine = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
+                string lavorazione = evento.lavorazione;
+                string luogo = evento.luogo;
+
+                string contenuto = "<p style='text-align:center;font-weight:bold; background-color:white'>Anteprima appuntamento</p><p style='text-align:left;font-weight:normal;background-color:white'><b>Tipo impegno:</b> " + stato + "<br/><b>Cliente:</b> " + cliente + "<br/><b>Lavorazione:</b> " + lavorazione + "<br/><b>Produzione:</b> " + produzione + "<br/><b>Tipologia:</b> " + tipologia + "<br/><b>Data inizio:</b> " + dataInizio + "&nbsp;&nbsp;<b>Data fine:</b> " + datatFine + "<br/><b>Luogo:</b> " + luogo + "</p>";
+                LiteralControl anteprima = new LiteralControl(contenuto);
+
+                innerPanel.Controls.Add(anteprima);
+                innerPanel.CssClass = "round-corners-6px w3-text innerPanel";
+            }
+            return innerPanel;
+        }
         #endregion
     }
 }

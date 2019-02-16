@@ -29,7 +29,7 @@
                 //mostraUltimaTabSelezionata();
 
                 $(".filtroColonna").each(function () {
-                    nascondiColonna(this, this.value);
+                    filtraColonna(this, this.value);
                 });
 
                 $("#<%=mostraAgenda.ClientID%>").mouseover(function() {
@@ -42,7 +42,7 @@
             });
         });
 
-        function nascondiColonna(element, sottotipo) {
+        function filtraColonna(element, sottotipo) {
             $('#<%=gv_scheduler.ClientID%> tr').each(function () {
                 if ($(element).is(':checked')) {
                     $(this).find('.' + sottotipo).show();

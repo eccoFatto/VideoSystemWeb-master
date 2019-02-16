@@ -18,11 +18,11 @@
             $('.calendar').on('dp.change', function (e) {
                 var dataDa = $('#<%=txt_DataInizioLavorazione.ClientID%>');
                 var dataA = $('#<%=txt_DataFineLavorazione.ClientID%>');
-                
-                $('#<%=txt_DurataLavorazione.ClientID%>').val(datediff(parseDate(dataDa.val()), parseDate(dataA.val()))+1);
+
+                $('#<%=txt_DurataLavorazione.ClientID%>').val(datediff(parseDate(dataDa.val()), parseDate(dataA.val())) + 1);
             });
 
-            $('#<%=txt_DurataViaggioAndata.ClientID%>').on('change keyup paste', function() {
+            $('#<%=txt_DurataViaggioAndata.ClientID%>').on('change keyup paste', function () {
                 var dataDa = $('#<%=txt_DataInizioLavorazione.ClientID%>');
                 var durata = parseInt($('#<%=txt_DurataViaggioAndata.ClientID%>').val());
 
@@ -30,30 +30,56 @@
 
             });
 
-            $('#<%=txt_DurataViaggioRitorno.ClientID%>').on('change keyup paste', function() {
+            $('#<%=txt_DurataViaggioRitorno.ClientID%>').on('change keyup paste', function () {
                 var dataA = $('#<%=txt_DataFineLavorazione.ClientID%>');
                 var durata = parseInt($('#<%=txt_DurataViaggioRitorno.ClientID%>').val());
 
-                $('#<%=txt_DataFineImpegno.ClientID%>').val(convertDate(parseDate(dataA.val()).addDays(durata*-1)));
+                $('#<%=txt_DataFineImpegno.ClientID%>').val(convertDate(parseDate(dataA.val()).addDays(durata * -1)));
             });
+
+            $("#filtroRisorse").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#divRis .dropdown-menu li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            $("#<%=elencoRisorse.ClientID%> .elemLista").on("click", function (e) {
+                $("#<%=hf_Risorse.ClientID%>").val($(this).attr('val'));
+                $("#<%=ddl_Risorse.ClientID%>").val($(e.target).text());
+            });
+
+
+            $("#filtroTipologie").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#divTip .dropdown-menu li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            $("#<%=elencoTipologie.ClientID%> .elemLista").on("click", function (e) {
+                $("#<%=hf_Tipologie.ClientID%>").val($(this).attr('val'));
+                $("#<%=ddl_Tipologie.ClientID%>").val($(e.target).text());
+            });
+
         });
     });
 
-    Date.prototype.addDays = function(days) {
+    Date.prototype.addDays = function (days) {
         var date = new Date(this.valueOf());
         date.setDate(date.getDate() + days);
         return date;
     }
 
     function convertDate(inputFormat) {
-      function pad(s) { return (s < 10) ? '0' + s : s; }
-      var d = new Date(inputFormat);
-      return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+        function pad(s) { return (s < 10) ? '0' + s : s; }
+        var d = new Date(inputFormat);
+        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/');
     }
 
     function parseDate(str) {
         var mdy = str.split('/');
-        return new Date(mdy[2], mdy[1]-1, mdy[0]);
+        return new Date(mdy[2], mdy[1] - 1, mdy[0]);
     }
 
     function datediff(first, second) {
@@ -207,8 +233,18 @@
                         <asp:Label ID="lbl_Risorsa" runat="server" Text="Pianificazione evento" CssClass="w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
                     </div>
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
-                        <%--<asp:TextBox ID="val_Risorse" CssClass=" w3-light-grey w3-border w3-round fieldMax" runat="server" Enabled="false"></asp:TextBox>--%>
-                        <asp:DropDownList ID="ddl_Risorse" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>
+                        <%--<asp:DropDownList ID="ddl_Risorse" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>--%>
+
+
+                        <div id="divRis" class="dropdown" style="position:absolute; width:190px;">
+                            <asp:HiddenField ID="hf_Risorse" runat="server" Value=""/>
+                            <asp:Button ID="ddl_Risorse" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" />
+                            <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important">
+                                <input class="form-control" id="filtroRisorse" type="text" placeholder="Cerca..">
+                            </ul>
+                        </div>
+
+
                     </div>
                 </div>
                 <div class="w3-rest">
@@ -216,8 +252,14 @@
                         <asp:Label ID="lbl_Tipologia" runat="server" Text="Tipologia" CssClass=" w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
                     </div>
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
-                        <%--<asp:TextBox ID="val_Tipologia" CssClass="w3-light-grey w3-border w3-round fieldMax" runat="server" Enabled="false"></asp:TextBox>--%>
-                        <asp:DropDownList ID="ddl_Tipologia" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>
+                        <%--<asp:DropDownList ID="ddl_Tipologia" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>--%>
+                        <div id="divTip" class="dropdown" style="position:absolute; width:190px;">
+                            <asp:HiddenField ID="hf_Tipologie" runat="server" Value=""/>
+                            <asp:Button ID="ddl_Tipologie" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" />
+                            <ul id="elencoTipologie" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important">
+                                <input class="form-control" id="filtroTipologie" type="text" placeholder="Cerca..">
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="w3-rest">
@@ -225,7 +267,6 @@
                         <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente" CssClass=" w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
                     </div>
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
-                        <%--<asp:TextBox ID="val_cliente" CssClass="w3-light-grey w3-border w3-round fieldMax" runat="server" Enabled="false"></asp:TextBox>--%>
                         <asp:DropDownList ID="ddl_cliente" runat="server" CssClass="l w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>
                     </div>
                 </div>
@@ -240,7 +281,7 @@
             <div class="w3-row w3-section w3-padding-small" <%--style="padding-left: 6px; padding-right: 6px;"--%>>
                 <div class="w3-rest">
                     <div class="w3-col" style="width: 38%; margin-bottom: 5px;">
-                        <asp:Label ID="lbl_DurataViaggioAndata" runat="server" Text="V. andata gg" CssClass="w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;" ></asp:Label>
+                        <asp:Label ID="lbl_DurataViaggioAndata" runat="server" Text="V. andata gg" CssClass="w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
 
                         <asp:TextBox ID="txt_DurataViaggioAndata" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldSmall" MaxLength="2" Style="width: 30px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                     </div>

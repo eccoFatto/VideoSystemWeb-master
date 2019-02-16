@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using VideoSystemWeb.Entity;
 
@@ -127,6 +128,41 @@ namespace VideoSystemWeb.BLL
             return result;
         }
 
+        public static T validaCampo<T>(WebControl campo, HiddenField campoValore, T defaultValue, bool isRequired, ref Esito esito)
+        {
+            T result = defaultValue;
+
+            string valore = campoValore.Value;
+
+            if (isRequired && string.IsNullOrEmpty(valore))
+            {
+                campo.CssClass += " erroreValidazione";
+                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.descrizione = "Campo obbligatorio";
+            }
+            else
+            {
+                try
+                {
+                    if (!isRequired && string.IsNullOrEmpty(valore))
+                    {
+                        valore = defaultValue.ToString();
+                    }
+
+                    campo.CssClass = campo.CssClass.Replace("erroreValidazione", "");
+                    result = (T)Convert.ChangeType(valore, typeof(T));
+                }
+                catch
+                {
+                    campo.CssClass += " erroreValidazione";
+                    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.descrizione = "Controllare il campo";
+                }
+            }
+
+            return result;
+        }
+
         public bool AbilitazioneInScrittura()
         {
             Esito esito = new Esito();
@@ -147,6 +183,16 @@ namespace VideoSystemWeb.BLL
             {
                 ddl.Items.Add(new ListItem(tipologica.nome, tipologica.id.ToString(), true));
             }
+        }
+
+        public void popolaDDLTipologicaNEW(HtmlGenericControl listaDaPopolare, List<Tipologica> listaTipologica)
+        {
+            string elementi = listaDaPopolare.InnerHtml;
+            foreach (Tipologica tipologica in listaTipologica)
+            {
+                elementi += "<li><a class='elemLista' href='#' val='" + tipologica.id.ToString() + "'>" + tipologica.nome + "</a></li>";
+            }
+            listaDaPopolare.InnerHtml = elementi;
         }
 
     }

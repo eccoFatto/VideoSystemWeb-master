@@ -178,9 +178,7 @@
                             <div class="w3-bar-item w3-button tablink w3-red" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
                             <div class="w3-bar-item w3-button tablink" onclick="openTabEvento(event, 'Offerta')">Offerta</div>
                             <div class="w3-bar-item w3-button tablink" onclick="openTabEvento(event, 'Lavorazione')">Lavorazione</div>
-                            <div >
-                                <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" style="position:absolute;right:25px; top:5px;"/>
-                            </div> 
+                            <div style="position:relative;text-align:right; top:5px;"><asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" /></div> 
                         </div>
 
                         <div id="Appuntamento" class="w3-container w3-border tabEvento w3-padding-small">

@@ -147,15 +147,17 @@ namespace VideoSystemWeb.DAL
 
                             SqlParameter email = new SqlParameter("@email", referente.Email);
                             email.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(email); StoreProc.Connection.Open();
+                            StoreProc.Parameters.Add(email); 
 
                             SqlParameter note = new SqlParameter("@note", referente.Note);
                             note.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(note); StoreProc.Connection.Open();
+                            StoreProc.Parameters.Add(note); 
 
                             SqlParameter attivo = new SqlParameter("@attivo", referente.Attivo);
                             attivo.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(attivo); StoreProc.Connection.Open();
+                            StoreProc.Parameters.Add(attivo);
+
+                            StoreProc.Connection.Open();
 
                             StoreProc.ExecuteNonQuery();
 
@@ -225,15 +227,15 @@ namespace VideoSystemWeb.DAL
 
                             SqlParameter email = new SqlParameter("@email", referente.Email);
                             email.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(email); StoreProc.Connection.Open();
+                            StoreProc.Parameters.Add(email); 
 
                             SqlParameter note = new SqlParameter("@note", referente.Note);
                             note.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(note); StoreProc.Connection.Open();
+                            StoreProc.Parameters.Add(note); 
 
                             SqlParameter attivo = new SqlParameter("@attivo", referente.Attivo);
                             attivo.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(attivo); StoreProc.Connection.Open();
+                            StoreProc.Parameters.Add(attivo); 
 
                             StoreProc.Connection.Open();
 

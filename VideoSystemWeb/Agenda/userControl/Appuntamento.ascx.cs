@@ -42,22 +42,22 @@ namespace VideoSystemWeb.Agenda.userControl
 
             datiAgenda.data_inizio_lavorazione = BasePage.validaCampo(txt_DataInizioLavorazione, DateTime.MinValue, true, ref esito);
             datiAgenda.data_fine_lavorazione = BasePage.validaCampo(txt_DataFineLavorazione, DateTime.MinValue, true, ref esito);
-            datiAgenda.durata_lavorazione = BasePage.validaCampo(txt_DurataLavorazione, 0, true, ref esito);
+            datiAgenda.durata_lavorazione = BasePage.validaCampo(txt_DurataLavorazione, 0, campoObbligatorio, ref esito);
             datiAgenda.id_colonne_agenda = BasePage.validaCampo(ddl_Risorse, hf_Risorse, 0, true, ref esito);
             datiAgenda.id_tipologia = BasePage.validaCampo(ddl_Tipologie, hf_Tipologie, 0, campoObbligatorio, ref esito);
             datiAgenda.id_stato = int.Parse(hf_IdStato.Value);
             datiAgenda.id_cliente = BasePage.validaCampo(ddl_cliente, 0, false, ref esito);
-            datiAgenda.durata_viaggio_andata = BasePage.validaCampo(txt_DurataViaggioAndata, 0, true, ref esito);
-            datiAgenda.durata_viaggio_ritorno = BasePage.validaCampo(txt_DurataViaggioRitorno, 0, true, ref esito);
-            datiAgenda.data_inizio_impegno = BasePage.validaCampo(txt_DataInizioImpegno, DateTime.MinValue, true, ref esito);
-            datiAgenda.data_fine_impegno = BasePage.validaCampo(txt_DataFineImpegno, DateTime.MinValue, true, ref esito);
+            datiAgenda.durata_viaggio_andata = BasePage.validaCampo(txt_DurataViaggioAndata, 0, campoObbligatorio, ref esito);
+            datiAgenda.durata_viaggio_ritorno = BasePage.validaCampo(txt_DurataViaggioRitorno, 0, campoObbligatorio, ref esito);
+            datiAgenda.data_inizio_impegno = BasePage.validaCampo(txt_DataInizioImpegno, DateTime.MinValue, campoObbligatorio, ref esito);
+            datiAgenda.data_fine_impegno = BasePage.validaCampo(txt_DataFineImpegno, DateTime.MinValue, campoObbligatorio, ref esito);
             //datiAgenda.impegnoOrario = chk_ImpegnoOrario.Checked;
             //datiAgenda.impegnoOrario_da = BasePage.validaCampo(txt_ImpegnoOrarioDa, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
             //datiAgenda.impegnoOrario_a = BasePage.validaCampo(txt_ImpegnoOrarioA, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
             datiAgenda.produzione = BasePage.validaCampo(txt_Produzione, "", campoObbligatorio, ref esito);
             datiAgenda.lavorazione = BasePage.validaCampo(txt_Lavorazione, "", false, ref esito);
             datiAgenda.indirizzo = BasePage.validaCampo(txt_Indirizzo, "", false, ref esito);
-            datiAgenda.luogo = BasePage.validaCampo(txt_Luogo, "", true, ref esito);
+            datiAgenda.luogo = BasePage.validaCampo(txt_Luogo, "", campoObbligatorio, ref esito);
             datiAgenda.codice_lavoro = BasePage.validaCampo(txt_CodiceLavoro, "", false, ref esito);
             datiAgenda.nota = BasePage.validaCampo(tb_Nota, "", false, ref esito);
 

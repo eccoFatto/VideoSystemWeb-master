@@ -111,14 +111,10 @@ namespace VideoSystemWeb.BLL
 
             return valoreParametro;
         }
-
-        //public static List<Tipologica> getListaTipologiche(EnumTipologiche tipologica)
-        //{
-        //    return (List<Tipologica>)HttpContext.Current.Session[tipologica.ToString()];
-        //}
     }
 
-    
 
     public enum EnumTipologiche { TIPO_COLONNE_AGENDA, TIPO_QUALIFICHE, TIPO_UTENTE, TIPO_STATO, TIPO_TIPOLOGIE, TIPO_CLIENTI_FORNITORI }
+
+    public enum EnumSottotipiRisorse {DIPENDENTI, REGIE, EXTRA}
 }

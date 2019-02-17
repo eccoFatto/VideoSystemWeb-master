@@ -344,12 +344,12 @@ namespace VideoSystemWeb.Agenda
         {
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            string sottotipoRisorsa = eventoSelezionato != null ? UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo : "";
+            string sottotipoRisorsa = eventoSelezionato != null ? UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo.ToUpper() : "";
 
-            btnOfferta.Visible = eventoSelezionato != null && sottotipoRisorsa != "dipendenti" && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-            btnLavorazione.Visible = eventoSelezionato != null && sottotipoRisorsa != "dipendenti" && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA;
+            btnOfferta.Visible = eventoSelezionato != null && sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString() && /*eventoSelezionato.id != 0 &&*/ eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+            btnLavorazione.Visible = eventoSelezionato != null && sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString() && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA;
             btnElimina.Visible = eventoSelezionato != null && eventoSelezionato.id != 0 && (eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || eventoSelezionato.id_stato == DatiAgenda.STATO_RIPOSO);
-            btnRiposo.Visible = sottotipoRisorsa == "dipendenti" && eventoSelezionato.id_stato != DatiAgenda.STATO_RIPOSO;
+            btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString() && eventoSelezionato.id_stato != DatiAgenda.STATO_RIPOSO;
         }
 
         private void MostraPopup(DatiAgenda eventoSelezionato)

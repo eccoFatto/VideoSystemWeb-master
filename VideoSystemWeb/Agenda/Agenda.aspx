@@ -89,8 +89,8 @@
 
 
         function openTabEvento(evt, tipoName) {
-            
-            //document.getElementById('<%=hf_tabSelezionata.ClientID %>').value = tipoName;
+            $("#<%=hf_tabSelezionata.ClientID%>").val(tipoName);
+            //document.getElementById('< %=hf_tabSelezionata.ClientID %>').value = tipoName;
             var i, x, tablinks;
             x = document.getElementsByClassName("tabEvento");
             for (i = 0; i < x.length; i++) {
@@ -117,7 +117,7 @@
     <asp:HiddenField ID="hf_valoreData" runat="server" />
     <asp:HiddenField ID="hf_data" runat="server" />
     <asp:HiddenField ID="hf_risorsa" runat="server" />
-    <asp:HiddenField ID="hf_tabSelezionata" runat="server" />
+    <asp:HiddenField ID="hf_tabSelezionata" runat="server" EnableViewState="true" Value="Appuntamento" />
 
     <div class="alert alert-success alert-dismissible fade in" role="alert" id="panelSuccesso" runat="server" style="display: none">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -178,7 +178,7 @@
                             <div class="w3-bar-item w3-button tablink w3-red" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
                             <div class="w3-bar-item w3-button tablink" onclick="openTabEvento(event, 'Offerta')">Offerta</div>
                             <div class="w3-bar-item w3-button tablink" onclick="openTabEvento(event, 'Lavorazione')">Lavorazione</div>
-                            <div style="position:relative;text-align:right; top:5px;"><asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" /></div> 
+                            <div style="position:relative;text-align:right; top:5px;float:right;width:30px;"><asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" /></div> 
                         </div>
 
                         <div id="Appuntamento" class="w3-container w3-border tabEvento w3-padding-small">

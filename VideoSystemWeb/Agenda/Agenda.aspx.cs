@@ -16,7 +16,7 @@ namespace VideoSystemWeb.Agenda
         {
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
-            
+
             if (!IsPostBack)
             {
                 Esito esito = new Esito();
@@ -29,6 +29,11 @@ namespace VideoSystemWeb.Agenda
 
                 divLegenda.Controls.Add(new LiteralControl(CreaLegenda()));
                 divFiltroAgenda.Controls.Add(new LiteralControl(CreaFiltriColonneAgenda()));
+            }
+            else
+            {
+                // SELEZIONO L'ULTIMA TAB SELEZIONATA
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento(event,'" + hf_tabSelezionata.Value + "')", addScriptTags: true);
             }
         }
 

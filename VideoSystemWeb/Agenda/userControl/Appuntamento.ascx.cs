@@ -20,11 +20,15 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
             basePage.listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);
 
+            basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito);
+            ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
+
             if (!IsPostBack)
             {
                 //basePage.popolaDDLTipologica(ddl_Risorse, basePage.listaRisorse);
-                basePage.popolaDDLTipologicaNEW(elencoRisorse, basePage.listaRisorse);
-                basePage.popolaDDLTipologicaNEW(elencoTipologie, basePage.listaTipiTipologie);
+                basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
+                basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
+                basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
             }
 
            // ScriptManager.RegisterStartupScript(this, typeof(Page), "campiImpegnoOrario", "checkImpegnoOrario();", true);
@@ -40,26 +44,26 @@ namespace VideoSystemWeb.Agenda.userControl
 
             bool campoObbligatorio = int.Parse(hf_IdStato.Value) != DatiAgenda.STATO_RIPOSO;
 
-            datiAgenda.data_inizio_lavorazione = BasePage.validaCampo(txt_DataInizioLavorazione, DateTime.MinValue, true, ref esito);
-            datiAgenda.data_fine_lavorazione = BasePage.validaCampo(txt_DataFineLavorazione, DateTime.MinValue, true, ref esito);
-            datiAgenda.durata_lavorazione = BasePage.validaCampo(txt_DurataLavorazione, 0, campoObbligatorio, ref esito);
-            datiAgenda.id_colonne_agenda = BasePage.validaCampo(ddl_Risorse, hf_Risorse, 0, true, ref esito);
-            datiAgenda.id_tipologia = BasePage.validaCampo(ddl_Tipologie, hf_Tipologie, 0, campoObbligatorio, ref esito);
+            datiAgenda.data_inizio_lavorazione = BasePage.ValidaCampo(txt_DataInizioLavorazione, DateTime.MinValue, true, ref esito);
+            datiAgenda.data_fine_lavorazione = BasePage.ValidaCampo(txt_DataFineLavorazione, DateTime.MinValue, true, ref esito);
+            datiAgenda.durata_lavorazione = BasePage.ValidaCampo(txt_DurataLavorazione, 0, campoObbligatorio, ref esito);
+            datiAgenda.id_colonne_agenda = BasePage.ValidaCampo(ddl_Risorse, hf_Risorse, 0, true, ref esito);
+            datiAgenda.id_tipologia = BasePage.ValidaCampo(ddl_Tipologie, hf_Tipologie, 0, campoObbligatorio, ref esito);
             datiAgenda.id_stato = int.Parse(hf_IdStato.Value);
-            datiAgenda.id_cliente = BasePage.validaCampo(ddl_cliente, 0, false, ref esito);
-            datiAgenda.durata_viaggio_andata = BasePage.validaCampo(txt_DurataViaggioAndata, 0, campoObbligatorio, ref esito);
-            datiAgenda.durata_viaggio_ritorno = BasePage.validaCampo(txt_DurataViaggioRitorno, 0, campoObbligatorio, ref esito);
-            datiAgenda.data_inizio_impegno = BasePage.validaCampo(txt_DataInizioImpegno, DateTime.MinValue, campoObbligatorio, ref esito);
-            datiAgenda.data_fine_impegno = BasePage.validaCampo(txt_DataFineImpegno, DateTime.MinValue, campoObbligatorio, ref esito);
+            datiAgenda.id_cliente = BasePage.ValidaCampo(ddl_Clienti, hf_Clienti, 0, true, ref esito);
+            datiAgenda.durata_viaggio_andata = BasePage.ValidaCampo(txt_DurataViaggioAndata, 0, campoObbligatorio, ref esito);
+            datiAgenda.durata_viaggio_ritorno = BasePage.ValidaCampo(txt_DurataViaggioRitorno, 0, campoObbligatorio, ref esito);
+            datiAgenda.data_inizio_impegno = BasePage.ValidaCampo(txt_DataInizioImpegno, DateTime.MinValue, campoObbligatorio, ref esito);
+            datiAgenda.data_fine_impegno = BasePage.ValidaCampo(txt_DataFineImpegno, DateTime.MinValue, campoObbligatorio, ref esito);
             //datiAgenda.impegnoOrario = chk_ImpegnoOrario.Checked;
             //datiAgenda.impegnoOrario_da = BasePage.validaCampo(txt_ImpegnoOrarioDa, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
             //datiAgenda.impegnoOrario_a = BasePage.validaCampo(txt_ImpegnoOrarioA, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
-            datiAgenda.produzione = BasePage.validaCampo(txt_Produzione, "", campoObbligatorio, ref esito);
-            datiAgenda.lavorazione = BasePage.validaCampo(txt_Lavorazione, "", false, ref esito);
-            datiAgenda.indirizzo = BasePage.validaCampo(txt_Indirizzo, "", false, ref esito);
-            datiAgenda.luogo = BasePage.validaCampo(txt_Luogo, "", campoObbligatorio, ref esito);
-            datiAgenda.codice_lavoro = BasePage.validaCampo(txt_CodiceLavoro, "", false, ref esito);
-            datiAgenda.nota = BasePage.validaCampo(tb_Nota, "", false, ref esito);
+            datiAgenda.produzione = BasePage.ValidaCampo(txt_Produzione, "", campoObbligatorio, ref esito);
+            datiAgenda.lavorazione = BasePage.ValidaCampo(txt_Lavorazione, "", false, ref esito);
+            datiAgenda.indirizzo = BasePage.ValidaCampo(txt_Indirizzo, "", false, ref esito);
+            datiAgenda.luogo = BasePage.ValidaCampo(txt_Luogo, "", campoObbligatorio, ref esito);
+            datiAgenda.codice_lavoro = BasePage.ValidaCampo(txt_CodiceLavoro, "", false, ref esito);
+            datiAgenda.nota = BasePage.ValidaCampo(tb_Nota, "", false, ref esito);
 
             return esito;
         }
@@ -71,7 +75,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DurataLavorazione.CssClass = txt_DurataLavorazione.CssClass.Replace("erroreValidazione", "");
             ddl_Risorse.CssClass = ddl_Risorse.CssClass.Replace("erroreValidazione", "");
             ddl_Tipologie.CssClass = ddl_Tipologie.CssClass.Replace("erroreValidazione", "");
-            ddl_cliente.CssClass = ddl_cliente.CssClass.Replace("erroreValidazione", "");
+            ddl_Clienti.CssClass = ddl_Clienti.CssClass.Replace("erroreValidazione", "");
             txt_DurataViaggioAndata.CssClass = txt_DurataViaggioAndata.CssClass.Replace("erroreValidazione", "");
             txt_DurataViaggioRitorno.CssClass = txt_DurataViaggioRitorno.CssClass.Replace("erroreValidazione", "");
             txt_DataInizioImpegno.CssClass = txt_DataInizioImpegno.CssClass.Replace("erroreValidazione", "");
@@ -95,7 +99,6 @@ namespace VideoSystemWeb.Agenda.userControl
             hf_Risorse.Value = evento.id_colonne_agenda.ToString();
             ddl_Risorse.Text = basePage.listaRisorse.Where(x=>x.id == evento.id_colonne_agenda).FirstOrDefault().nome;
 
-
             if (evento.id_tipologia == 0 || evento.id_tipologia == null)
             {
                 hf_Tipologie.Value = "";
@@ -107,7 +110,19 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_Tipologie.Text = basePage.listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
             }
 
-            ddl_cliente.SelectedValue = evento.id_cliente.ToString();
+            if (evento.id_cliente == 0 || evento.id_cliente == null)
+            {
+                hf_Clienti.Value = "";
+                ddl_Clienti.Text = "<Seleziona>";
+            }
+            else
+            {
+                hf_Clienti.Value = evento.id_cliente.ToString();
+                ddl_Clienti.Text = basePage.listaClientiFornitori.Where(x => x.Id == evento.id_cliente).FirstOrDefault().RagioneSociale;
+            }
+
+            
+
             txt_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
             txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
             txt_DataInizioImpegno.Text = evento.data_inizio_impegno.ToString();
@@ -142,7 +157,9 @@ namespace VideoSystemWeb.Agenda.userControl
             hf_Tipologie.Value = "";
             ddl_Tipologie.Text = "";
 
-            ddl_cliente.SelectedValue = "";
+            hf_Clienti.Value = "";
+            ddl_Clienti.Text = "";
+
             txt_DurataViaggioAndata.Text = string.Empty;
             txt_DurataViaggioRitorno.Text = string.Empty;
             txt_DataInizioImpegno.Text = string.Empty;
@@ -175,7 +192,7 @@ namespace VideoSystemWeb.Agenda.userControl
             if (basePage.AbilitazioneInScrittura())
             {
                 txt_DataInizioLavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato ==  DatiAgenda.STATO_RIPOSO;
-                ddl_cliente.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                ddl_Clienti.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
                 txt_Produzione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
                 txt_Lavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
                 txt_Indirizzo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;

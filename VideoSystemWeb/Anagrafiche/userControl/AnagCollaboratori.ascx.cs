@@ -41,7 +41,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
 
                 BasePage p = new BasePage();
-                Esito esito = p.caricaListeTipologiche();
+                Esito esito = p.CaricaListeTipologiche();
 
                 if (string.IsNullOrEmpty(esito.descrizione))
                 {
@@ -536,19 +536,19 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             collaboratore.Id = Convert.ToInt16(ViewState["idColl"].ToString());
 
-            collaboratore.Nazione = BasePage.validaCampo(tbMod_Nazione, "", false, ref esito);
-            collaboratore.Nome = BasePage.validaCampo(tbMod_Nome, "", false, ref esito);
-            collaboratore.Cognome = BasePage.validaCampo(tbMod_Cognome, "", true, ref esito);
-            collaboratore.ComuneNascita = BasePage.validaCampo(tbMod_ComuneNascita, "", false, ref esito);
-            collaboratore.ComuneRiferimento = BasePage.validaCampo(tbMod_ComuneRiferimento, "", false, ref esito);
-            collaboratore.DataNascita = BasePage.validaCampo(tbMod_DataNascita, DateTime.Now, true, ref esito);
-            collaboratore.CodiceFiscale = BasePage.validaCampo(tbMod_CF, "", true, ref esito);
-            collaboratore.Assunto = Convert.ToBoolean(BasePage.validaCampo(cbMod_Assunto, "false", false, ref esito));
-            collaboratore.Attivo = Convert.ToBoolean(BasePage.validaCampo(cbMod_Attivo, "true", false, ref esito));
-            collaboratore.NomeSocieta = BasePage.validaCampo(tbMod_NomeSocieta, "", false, ref esito);
-            collaboratore.Note = BasePage.validaCampo(tbMod_Note, "", false, ref esito);
-            collaboratore.PartitaIva = BasePage.validaCampo(tbMod_PartitaIva, "", false, ref esito);
-            collaboratore.ProvinciaNascita = BasePage.validaCampo(tbMod_ProvinciaNascita, "", false, ref esito);
+            collaboratore.Nazione = BasePage.ValidaCampo(tbMod_Nazione, "", false, ref esito);
+            collaboratore.Nome = BasePage.ValidaCampo(tbMod_Nome, "", false, ref esito);
+            collaboratore.Cognome = BasePage.ValidaCampo(tbMod_Cognome, "", true, ref esito);
+            collaboratore.ComuneNascita = BasePage.ValidaCampo(tbMod_ComuneNascita, "", false, ref esito);
+            collaboratore.ComuneRiferimento = BasePage.ValidaCampo(tbMod_ComuneRiferimento, "", false, ref esito);
+            collaboratore.DataNascita = BasePage.ValidaCampo(tbMod_DataNascita, DateTime.Now, true, ref esito);
+            collaboratore.CodiceFiscale = BasePage.ValidaCampo(tbMod_CF, "", true, ref esito);
+            collaboratore.Assunto = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Assunto, "false", false, ref esito));
+            collaboratore.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
+            collaboratore.NomeSocieta = BasePage.ValidaCampo(tbMod_NomeSocieta, "", false, ref esito);
+            collaboratore.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
+            collaboratore.PartitaIva = BasePage.ValidaCampo(tbMod_PartitaIva, "", false, ref esito);
+            collaboratore.ProvinciaNascita = BasePage.ValidaCampo(tbMod_ProvinciaNascita, "", false, ref esito);
 
             return collaboratore;
         }

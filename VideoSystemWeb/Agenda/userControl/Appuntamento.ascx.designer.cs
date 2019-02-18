@@ -157,13 +157,31 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Label lbl_Cliente;
         
         /// <summary>
-        /// Controllo ddl_cliente.
+        /// Controllo hf_Clienti.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_cliente;
+        protected global::System.Web.UI.WebControls.HiddenField hf_Clienti;
+        
+        /// <summary>
+        /// Controllo ddl_Clienti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ddl_Clienti;
+        
+        /// <summary>
+        /// Controllo elencoClienti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoClienti;
         
         /// <summary>
         /// Controllo lbl_DurataViaggioAndata.

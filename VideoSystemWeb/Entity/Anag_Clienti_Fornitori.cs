@@ -36,6 +36,8 @@ namespace VideoSystemWeb.Entity
     //[note] [varchar] (200) NOT NULL,
     //[tipo] [varchar] (50) NOT NULL,  
     //[attivo] bit
+
+    [Serializable]
     public class Anag_Clienti_Fornitori
     {
         private int id;

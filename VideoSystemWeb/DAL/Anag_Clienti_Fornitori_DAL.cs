@@ -122,34 +122,33 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-
                                         Anag_Clienti_Fornitori azienda = new Anag_Clienti_Fornitori();
                                         azienda.Id = riga.Field<int>("id");
-                                        azienda.Attivo = dt.Rows[0].Field<bool>("attivo");
-                                        azienda.CapLegale = dt.Rows[0].Field<string>("capLegale");
-                                        azienda.CapOperativo = dt.Rows[0].Field<string>("capOperativo");
-                                        azienda.Cliente = dt.Rows[0].Field<bool>("cliente");
-                                        azienda.CodiceFiscale = dt.Rows[0].Field<string>("codiceFiscale");
-                                        azienda.CodiceIdentificativo = dt.Rows[0].Field<string>("codiceIdentificativo");
-                                        azienda.ComuneLegale = dt.Rows[0].Field<string>("comuneLegale");
-                                        azienda.ComuneOperativo = dt.Rows[0].Field<string>("comuneOperativo");
-                                        azienda.Email = dt.Rows[0].Field<string>("email");
-                                        azienda.Fax = dt.Rows[0].Field<string>("fax");
-                                        azienda.Fornitore = dt.Rows[0].Field<bool>("fornitore");
-                                        azienda.Iban = dt.Rows[0].Field<string>("iban");
-                                        azienda.IndirizzoLegale = dt.Rows[0].Field<string>("indirizzoLegale");
-                                        azienda.IndirizzoOperativo = dt.Rows[0].Field<string>("indirizzoOperativo");
-                                        azienda.NazioneLegale = dt.Rows[0].Field<string>("nazioneLegale");
-                                        azienda.NazioneOperativo = dt.Rows[0].Field<string>("nazioneOperativo");
-                                        azienda.Note = dt.Rows[0].Field<string>("note");
-                                        azienda.NumeroCivicoLegale = dt.Rows[0].Field<string>("numeroCivicoLegale");
-                                        azienda.NumeroCivicoOperativo = dt.Rows[0].Field<string>("numeroCivicoOperativo");
-                                        azienda.Pagamento = dt.Rows[0].Field<int>("pagamento");
-                                        azienda.PartitaIva = dt.Rows[0].Field<string>("partitaIva");
-                                        azienda.Pec = dt.Rows[0].Field<string>("pec");
-                                        azienda.ProvinciaLegale = dt.Rows[0].Field<string>("provinciaLegale");
-                                        azienda.ProvinciaOperativo = dt.Rows[0].Field<string>("provinciaOperativo");
-                                        azienda.RagioneSociale = dt.Rows[0].Field<string>("ragioneSociale");
+                                        azienda.Attivo = riga.Field<bool>("attivo");
+                                        azienda.CapLegale = riga.Field<string>("capLegale");
+                                        azienda.CapOperativo = riga.Field<string>("capOperativo");
+                                        azienda.Cliente = riga.Field<bool>("cliente");
+                                        azienda.CodiceFiscale = riga.Field<string>("codiceFiscale");
+                                        azienda.CodiceIdentificativo = riga.Field<string>("codiceIdentificativo");
+                                        azienda.ComuneLegale = riga.Field<string>("comuneLegale");
+                                        azienda.ComuneOperativo = riga.Field<string>("comuneOperativo");
+                                        azienda.Email = riga.Field<string>("email");
+                                        azienda.Fax = riga.Field<string>("fax");
+                                        azienda.Fornitore = riga.Field<bool>("fornitore");
+                                        azienda.Iban = riga.Field<string>("iban");
+                                        azienda.IndirizzoLegale = riga.Field<string>("indirizzoLegale");
+                                        azienda.IndirizzoOperativo = riga.Field<string>("indirizzoOperativo");
+                                        azienda.NazioneLegale = riga.Field<string>("nazioneLegale");
+                                        azienda.NazioneOperativo = riga.Field<string>("nazioneOperativo");
+                                        azienda.Note = riga.Field<string>("note");
+                                        azienda.NumeroCivicoLegale = riga.Field<string>("numeroCivicoLegale");
+                                        azienda.NumeroCivicoOperativo = riga.Field<string>("numeroCivicoOperativo");
+                                        azienda.Pagamento = riga.Field<int>("pagamento");
+                                        azienda.PartitaIva = riga.Field<string>("partitaIva");
+                                        azienda.Pec = riga.Field<string>("pec");
+                                        azienda.ProvinciaLegale = riga.Field<string>("provinciaLegale");
+                                        azienda.ProvinciaOperativo = riga.Field<string>("provinciaOperativo");
+                                        azienda.RagioneSociale = riga.Field<string>("ragioneSociale");
 
                                         azienda.Referenti = Anag_Referente_Clienti_Fornitori_DAL.Instance.getReferentiByIdAzienda(ref esito, azienda.Id);
 

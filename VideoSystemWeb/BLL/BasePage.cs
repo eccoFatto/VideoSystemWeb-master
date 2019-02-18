@@ -60,7 +60,9 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        public Esito caricaListeTipologiche()
+        public List<Anag_Clienti_Fornitori> listaClientiFornitori;
+
+        public Esito CaricaListeTipologiche()
         {
             Esito esito = new Esito();
 
@@ -80,7 +82,7 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-        public static T validaCampo<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito) 
+        public static T ValidaCampo<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito) 
         {
             T result = defaultValue;
 
@@ -128,7 +130,7 @@ namespace VideoSystemWeb.BLL
             return result;
         }
 
-        public static T validaCampo<T>(WebControl campo, HiddenField campoValore, T defaultValue, bool isRequired, ref Esito esito)
+        public static T ValidaCampo<T>(WebControl campo, HiddenField campoValore, T defaultValue, bool isRequired, ref Esito esito)
         {
             T result = defaultValue;
 
@@ -176,7 +178,7 @@ namespace VideoSystemWeb.BLL
             return abilitazioneScrittura;
         }
 
-        public void popolaDDLTipologica(DropDownList ddl, List<Tipologica> listaTipologica)
+        public void PopolaDDLTipologicaOLD(DropDownList ddl, List<Tipologica> listaTipologica)
         {
             ddl.Items.Add(new ListItem("<seleziona>", "", true));
             foreach (Tipologica tipologica in listaTipologica)
@@ -185,7 +187,7 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        public void popolaDDLTipologicaNEW(HtmlGenericControl listaDaPopolare, List<Tipologica> listaTipologica)
+        public void PopolaDDLTipologica(HtmlGenericControl listaDaPopolare, List<Tipologica> listaTipologica)
         {
             string elementi = listaDaPopolare.InnerHtml;
             foreach (Tipologica tipologica in listaTipologica)
@@ -195,5 +197,24 @@ namespace VideoSystemWeb.BLL
             listaDaPopolare.InnerHtml = elementi;
         }
 
+        public void PopolaDDLGenerico<T>(HtmlGenericControl listaDaPopolare, List<T> lista)
+        {
+            string elementi = listaDaPopolare.InnerHtml;
+
+            if (lista is List<Anag_Clienti_Fornitori>)
+            {
+                foreach (T elem in lista)
+                {
+                    Anag_Clienti_Fornitori cliente = ConvertValue<Anag_Clienti_Fornitori>(elem);
+                    elementi += "<li><a class='elemLista' href='#' val='" + cliente.Id.ToString() + "'>" + cliente.RagioneSociale + "</a></li>";
+                }
+                listaDaPopolare.InnerHtml = elementi;
+            }
+        }
+
+        private static T ConvertValue<T>(object value)
+        {
+            return (T)Convert.ChangeType(value, typeof(T));
+        }
     }
 }

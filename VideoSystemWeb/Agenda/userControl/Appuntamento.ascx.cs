@@ -21,6 +21,7 @@ namespace VideoSystemWeb.Agenda.userControl
             basePage.listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);
 
             basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito);
+            basePage.listaClientiFornitori = basePage.listaClientiFornitori.Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
             ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
 
             if (!IsPostBack)
@@ -97,7 +98,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DurataLavorazione.Text = evento.durata_lavorazione.ToString();
             
             hf_Risorse.Value = evento.id_colonne_agenda.ToString();
-            ddl_Risorse.Text = basePage.listaRisorse.Where(x=>x.id == evento.id_colonne_agenda).FirstOrDefault().nome;
+            ddl_Risorse.Text = ddl_Risorse.ToolTip = basePage.listaRisorse.Where(x=>x.id == evento.id_colonne_agenda).FirstOrDefault().nome;
 
             if (evento.id_tipologia == 0 || evento.id_tipologia == null)
             {
@@ -107,7 +108,7 @@ namespace VideoSystemWeb.Agenda.userControl
             else
             {
                 hf_Tipologie.Value = evento.id_tipologia.ToString();
-                ddl_Tipologie.Text = basePage.listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
+                ddl_Tipologie.Text = ddl_Tipologie.ToolTip = basePage.listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
             }
 
             if (evento.id_cliente == 0 || evento.id_cliente == null)
@@ -118,7 +119,7 @@ namespace VideoSystemWeb.Agenda.userControl
             else
             {
                 hf_Clienti.Value = evento.id_cliente.ToString();
-                ddl_Clienti.Text = basePage.listaClientiFornitori.Where(x => x.Id == evento.id_cliente).FirstOrDefault().RagioneSociale;
+                ddl_Clienti.Text = ddl_Clienti.ToolTip = basePage.listaClientiFornitori.Where(x => x.Id == evento.id_cliente).FirstOrDefault().RagioneSociale;
             }
 
             
@@ -152,13 +153,13 @@ namespace VideoSystemWeb.Agenda.userControl
 
             //ddl_Risorse.SelectedValue = "";
             hf_Risorse.Value = "";
-            ddl_Risorse.Text = "";
+            ddl_Risorse.Text = ddl_Risorse.ToolTip = "";
 
             hf_Tipologie.Value = "";
-            ddl_Tipologie.Text = "";
+            ddl_Tipologie.Text = ddl_Tipologie.ToolTip = "";
 
             hf_Clienti.Value = "";
-            ddl_Clienti.Text = "";
+            ddl_Clienti.Text = ddl_Clienti.ToolTip = "";
 
             txt_DurataViaggioAndata.Text = string.Empty;
             txt_DurataViaggioRitorno.Text = string.Empty;

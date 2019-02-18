@@ -48,6 +48,7 @@
             $("#<%=elencoRisorse.ClientID%> .elemLista").on("click", function (e) {
                 $("#<%=hf_Risorse.ClientID%>").val($(this).attr('val'));
                 $("#<%=ddl_Risorse.ClientID%>").val($(e.target).text());
+                $("#<%=ddl_Risorse.ClientID%>").attr("title", $(e.target).text());
             });
 
             // GESTIONE DROPDOWN TIPOLOGIE
@@ -61,6 +62,7 @@
             $("#<%=elencoTipologie.ClientID%> .elemLista").on("click", function (e) {
                 $("#<%=hf_Tipologie.ClientID%>").val($(this).attr('val'));
                 $("#<%=ddl_Tipologie.ClientID%>").val($(e.target).text());
+                $("#<%=ddl_Tipologie.ClientID%>").attr("title", $(e.target).text());
             });
 
             // GESTIONE DROPDOWN CLIENTI
@@ -74,6 +76,7 @@
             $("#<%=elencoClienti.ClientID%> .elemLista").on("click", function (e) {
                 $("#<%=hf_Clienti.ClientID%>").val($(this).attr('val'));
                 $("#<%=ddl_Clienti.ClientID%>").val($(e.target).text());
+                $("#<%=ddl_Clienti.ClientID%>").attr("title", $(e.target).text());
             });
         });
     });
@@ -251,8 +254,8 @@
 
                         <div id="divRis" class="dropdown" style="position:absolute; width:190px;">
                             <asp:HiddenField ID="hf_Risorse" runat="server" Value=""/>
-                            <asp:Button ID="ddl_Risorse" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" />
-                            <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important">
+                            <asp:Button ID="ddl_Risorse" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" Style="text-overflow: ellipsis;overflow:hidden;"/>
+                            <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important; max-height:350px;overflow:auto">
                                 <input class="form-control" id="filtroRisorse" type="text" placeholder="Cerca..">
                             </ul>
                         </div>
@@ -266,10 +269,11 @@
                     </div>
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
                         <%--<asp:DropDownList ID="ddl_Tipologia" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>--%>
+                        
                         <div id="divTip" class="dropdown" style="position:absolute; width:190px;">
                             <asp:HiddenField ID="hf_Tipologie" runat="server" Value=""/>
-                            <asp:Button ID="ddl_Tipologie" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" />
-                            <ul id="elencoTipologie" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important">
+                            <asp:Button ID="ddl_Tipologie" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" Style="text-overflow: ellipsis;overflow:hidden;"/>
+                            <ul id="elencoTipologie" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important; max-height:350px;overflow:auto">
                                 <input class="form-control" id="filtroTipologie" type="text" placeholder="Cerca..">
                             </ul>
                         </div>
@@ -281,10 +285,11 @@
                     </div>
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
                         <%--<asp:DropDownList ID="ddl_cliente" runat="server" CssClass="l w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>--%>
+                        
                         <div id="divClienti" class="dropdown" style="position:absolute; width:190px;">
                             <asp:HiddenField ID="hf_Clienti" runat="server" Value=""/>
-                            <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" />
-                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important">
+                            <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" Style="text-overflow: ellipsis;overflow:hidden;" />
+                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important; max-height:350px;overflow:auto">
                                 <input class="form-control" id="filtroClienti" type="text" placeholder="Cerca..">
                             </ul>
                         </div>

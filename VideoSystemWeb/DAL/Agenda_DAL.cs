@@ -69,7 +69,7 @@ namespace VideoSystemWeb.DAL
                                         datoAgenda.data_fine_lavorazione = riga.Field<DateTime>("data_fine_lavorazione"); 
                                         datoAgenda.durata_lavorazione = riga.Field<int>("durata_lavorazione"); 
                                         datoAgenda.id_tipologia = riga.Field<int?>("id_tipologia");
-                                        datoAgenda.id_cliente = riga.Field<int?>("id_cliente"); 
+                                        datoAgenda.id_cliente = riga.Field<int>("id_cliente"); 
                                         datoAgenda.durata_viaggio_andata = riga.Field<int>("durata_viaggio_andata"); 
                                         datoAgenda.durata_viaggio_ritorno = riga.Field<int>("durata_viaggio_ritorno"); 
                                         datoAgenda.data_inizio_impegno = riga.Field<DateTime?>("data_inizio_impegno");
@@ -134,7 +134,7 @@ namespace VideoSystemWeb.DAL
                                         datoAgenda.data_fine_lavorazione = riga.Field<DateTime>("data_fine_lavorazione");
                                         datoAgenda.durata_lavorazione = riga.Field<int>("durata_lavorazione");
                                         datoAgenda.id_tipologia =  riga.Field<int?>("id_tipologia");
-                                        datoAgenda.id_cliente = riga.Field<int?>("id_cliente");
+                                        datoAgenda.id_cliente = riga.Field<int>("id_cliente");
                                         datoAgenda.durata_viaggio_andata = riga.Field<int>("durata_viaggio_andata");
                                         datoAgenda.durata_viaggio_ritorno = riga.Field<int>("durata_viaggio_ritorno");
                                         datoAgenda.data_inizio_impegno = riga.Field<DateTime?>("data_inizio_impegno");

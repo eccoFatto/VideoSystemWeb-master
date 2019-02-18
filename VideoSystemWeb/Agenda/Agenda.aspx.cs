@@ -527,7 +527,15 @@ namespace VideoSystemWeb.Agenda
             Panel innerPanel = new Panel();
             if (evento.id_stato != DatiAgenda.STATO_RIPOSO)
             {
-                string cliente = "Cliente";
+                 
+
+                Esito esito = new Esito();
+
+                string cliente = "";
+                if (evento.id_cliente != 0)
+                {
+                    cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
+                }
                 string stato = listaStati.Where(x => x.id == evento.id_stato).FirstOrDefault().nome;
                 string tipologia = listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
                 string produzione = evento.produzione;

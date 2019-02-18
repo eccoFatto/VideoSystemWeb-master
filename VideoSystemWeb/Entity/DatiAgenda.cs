@@ -23,7 +23,7 @@ namespace VideoSystemWeb.Entity
         public int durata_lavorazione { get; set; }
         public int id_colonne_agenda { get; set; }
         public int? id_tipologia { get; set; }
-        public int? id_cliente { get; set; }
+        public int id_cliente { get; set; }
         public int durata_viaggio_andata { get; set; }
         public int durata_viaggio_ritorno { get; set; }
         public DateTime? data_inizio_impegno

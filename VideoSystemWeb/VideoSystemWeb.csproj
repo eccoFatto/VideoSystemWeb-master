@@ -120,7 +120,9 @@
     <Content Include="Agenda\userControl\Appuntamento.ascx" />
     <Content Include="Agenda\userControl\Lavorazione.ascx" />
     <Content Include="Agenda\userControl\Offerta.ascx" />
+    <Content Include="Anagrafiche\AnagClientiFornitori.aspx" />
     <Content Include="Anagrafiche\AnagCollaboratori.aspx" />
+    <Content Include="Anagrafiche\userControl\AnagClientiFornitori.ascx" />
     <Content Include="Anagrafiche\userControl\AnagCollaboratori.ascx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -385,12 +387,26 @@
     <Compile Include="Agenda\userControl\Offerta.ascx.designer.cs">
       <DependentUpon>Offerta.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Anagrafiche\AnagClientiFornitori.aspx.cs">
+      <DependentUpon>AnagClientiFornitori.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Anagrafiche\AnagClientiFornitori.aspx.designer.cs">
+      <DependentUpon>AnagClientiFornitori.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Anagrafiche\AnagCollaboratori.aspx.cs">
       <DependentUpon>AnagCollaboratori.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Anagrafiche\AnagCollaboratori.aspx.designer.cs">
       <DependentUpon>AnagCollaboratori.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Anagrafiche\userControl\AnagClientiFornitori.ascx.cs">
+      <DependentUpon>AnagClientiFornitori.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Anagrafiche\userControl\AnagClientiFornitori.ascx.designer.cs">
+      <DependentUpon>AnagClientiFornitori.ascx</DependentUpon>
     </Compile>
     <Compile Include="Anagrafiche\userControl\AnagCollaboratori.ascx.cs">
       <DependentUpon>AnagCollaboratori.ascx</DependentUpon>

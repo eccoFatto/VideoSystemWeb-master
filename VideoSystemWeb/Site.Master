@@ -59,8 +59,8 @@
                 <button class="w3-button w3-yellow">Anagrafiche</button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                   <a href="/Anagrafiche/AnagCollaboratori.aspx" class="w3-bar-item w3-button">Collaboratori</a>
-                  <a href="#" class="w3-bar-item w3-button">Clienti</a>
-                  <a href="#" class="w3-bar-item w3-button">Fornitori</a>
+                  <a href="/Anagrafiche/AnagClientiFornitori.aspx?TIPO=CLIENTI" class="w3-bar-item w3-button">Clienti</a>
+                  <a href="/Anagrafiche/AnagClientiFornitori.aspx?TIPO=FORNITORI" class="w3-bar-item w3-button">Fornitori</a>
                 </div>
               </div>
               <a href="/Login.aspx" class="w3-bar-item w3-button w3-right">Esci</a>

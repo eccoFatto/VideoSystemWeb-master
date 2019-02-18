@@ -15,6 +15,7 @@ namespace VideoSystemWeb.Entity
     //[cellulare] [varchar] (25) NOT NULL,
     //[email] [varchar] (60) NOT NULL,
     //[note] [varchar] (200) NOT NULL
+    [Serializable]
     public class Anag_Referente_Clienti_Fornitori
     {
         private int id;

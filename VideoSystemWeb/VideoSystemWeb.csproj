@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -409,6 +410,7 @@
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BLL\Agenda_BLL.cs" />
+    <Compile Include="BLL\Anag_Clienti_Fornitori_BLL.cs" />
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Email_Collaboratori_BLL.cs" />

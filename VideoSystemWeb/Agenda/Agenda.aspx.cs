@@ -21,8 +21,10 @@ namespace VideoSystemWeb.Agenda
             {
                 Esito esito = new Esito();
                 DateTime dataPartenza = DateTime.Now;
+
                 listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito);
                 ViewState["listaDatiAgenda"] = listaDatiAgenda;
+
                 hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();

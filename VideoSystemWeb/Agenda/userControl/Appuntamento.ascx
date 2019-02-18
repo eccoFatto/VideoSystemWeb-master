@@ -37,6 +37,7 @@
                 $('#<%=txt_DataFineImpegno.ClientID%>').val(convertDate(parseDate(dataA.val()).addDays(durata * -1)));
             });
 
+            // GESTIONE DROPDOWN RISORSE
             $("#filtroRisorse").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $("#divRis .dropdown-menu li").filter(function () {
@@ -49,7 +50,7 @@
                 $("#<%=ddl_Risorse.ClientID%>").val($(e.target).text());
             });
 
-
+            // GESTIONE DROPDOWN TIPOLOGIE
             $("#filtroTipologie").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $("#divTip .dropdown-menu li").filter(function () {
@@ -62,6 +63,18 @@
                 $("#<%=ddl_Tipologie.ClientID%>").val($(e.target).text());
             });
 
+            // GESTIONE DROPDOWN CLIENTI
+            $("#filtroClienti").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#divClienti .dropdown-menu li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            $("#<%=elencoClienti.ClientID%> .elemLista").on("click", function (e) {
+                $("#<%=hf_Clienti.ClientID%>").val($(this).attr('val'));
+                $("#<%=ddl_Clienti.ClientID%>").val($(e.target).text());
+            });
         });
     });
 
@@ -267,7 +280,14 @@
                         <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente" CssClass=" w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
                     </div>
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
-                        <asp:DropDownList ID="ddl_cliente" runat="server" CssClass="l w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>
+                        <%--<asp:DropDownList ID="ddl_cliente" runat="server" CssClass="l w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>--%>
+                        <div id="divClienti" class="dropdown" style="position:absolute; width:190px;">
+                            <asp:HiddenField ID="hf_Clienti" runat="server" Value=""/>
+                            <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" />
+                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important">
+                                <input class="form-control" id="filtroClienti" type="text" placeholder="Cerca..">
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

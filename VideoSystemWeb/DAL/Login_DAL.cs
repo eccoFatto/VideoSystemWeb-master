@@ -52,6 +52,9 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = cmd;
                             using (DataTable dt = new DataTable())
                             {
+
+                                //System.Data.Common.DataTableMapping dtm = sda.TableMappings[1];
+
                                 sda.Fill(dt);
                                 if (dt != null && dt.Rows != null && dt.Rows.Count == 1)
                                 {

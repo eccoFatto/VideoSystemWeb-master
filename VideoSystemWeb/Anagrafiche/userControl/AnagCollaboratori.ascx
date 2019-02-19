@@ -94,8 +94,9 @@
                             <asp:Button ID="btnRicercaCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaCollaboratori_Click" Text="Ricerca" />
                         </td>
                         <td style="width:40%;">                    
-                            <asp:Button ID="btnInserisciCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" Text="Inserisci" OnClientClick="inserisciCollaboratore();" />
-                            <%--<button id="btnInserisciCollaboratori" class="w3-btn w3-white w3-border w3-border-red w3-round-large" value="Inserisci" onclick="inserisciCollaboratore();"></button>--%>
+                            <div id="divBtnInserisciCollaboratori" runat="server"> 
+                                <button id="clientBtnInserisciCollaboratori" class="w3-btn w3-white w3-border w3-border-red w3-round-large" value="Inserisci" onclick="inserisciCollaboratore();">Inserisci</button>
+                            </div>
                         </td>
                         <td style="width:20%;">
                             <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;"  OnClientClick="azzeraCampiRicerca();" />
@@ -106,7 +107,7 @@
         </div>   
 
         <div class="round">
-            <asp:GridView ID="gv_collaboratori" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_collaboratori_RowDataBound">
+            <asp:GridView ID="gv_collaboratori" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_collaboratori_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_collaboratori_PageIndexChanging" PageSize="20" >
             </asp:GridView>
         </div>
         
@@ -115,7 +116,6 @@
         <asp:AsyncPostBackTrigger ControlID="btnRicercaCollaboratori" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="BtnPulisciCampiRicerca" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="ddlQualifiche" EventName="SelectedIndexChanged" />
-        <%--<asp:AsyncPostBackTrigger ControlID="btnInserisciCollaboratori" EventName="Click" />--%>
     </Triggers>
 </asp:UpdatePanel>
 
@@ -479,6 +479,7 @@
         
         <asp:PostBackTrigger ControlID="uploadButton" />
         <asp:AsyncPostBackTrigger ControlID="btnEditCollaboratore" EventName="Click" />
+
         <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnSalva" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnElimina" EventName="Click" />

@@ -78,6 +78,7 @@ namespace VideoSystemWeb.DAL
                                     azienda.ProvinciaLegale = dt.Rows[0].Field<string>("provinciaLegale");
                                     azienda.ProvinciaOperativo = dt.Rows[0].Field<string>("provinciaOperativo");
                                     azienda.RagioneSociale = dt.Rows[0].Field<string>("ragioneSociale");
+                                    azienda.Tipo = dt.Rows[0].Field<string>("tipo");
 
                                     azienda.Referenti = Anag_Referente_Clienti_Fornitori_DAL.Instance.getReferentiByIdAzienda(ref esito, azienda.Id);
                                 }

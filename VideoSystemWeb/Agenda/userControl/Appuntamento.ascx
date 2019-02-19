@@ -78,125 +78,11 @@
                 $("#<%=ddl_Clienti.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Clienti.ClientID%>").attr("title", $(e.target).text());
             });
+
+            $("#<%=txt_Produzione.ClientID%>").easyAutocomplete(produzioni);
+            $("#<%=txt_Lavorazione.ClientID%>").easyAutocomplete(lavorazioni);
         });
     });
-
-    Date.prototype.addDays = function (days) {
-        var date = new Date(this.valueOf());
-        date.setDate(date.getDate() + days);
-        return date;
-    }
-
-    function convertDate(inputFormat) {
-        function pad(s) { return (s < 10) ? '0' + s : s; }
-        var d = new Date(inputFormat);
-        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/');
-    }
-
-    function parseDate(str) {
-        var mdy = str.split('/');
-        return new Date(mdy[2], mdy[1] - 1, mdy[0]);
-    }
-
-    function datediff(first, second) {
-        // Take the difference between the dates and divide by milliseconds per day.
-        // Round to nearest whole number to deal with DST.
-        return Math.round((second - first) / (1000 * 60 * 60 * 24));
-    }
-
-    function controlloCoerenzaDate(id_calendarDataInizio, id_calendarDataFine) {
-        $('#' + id_calendarDataInizio).datetimepicker({
-            locale: 'it',
-            format: 'DD/MM/YYYY'
-        });
-        $('#' + id_calendarDataFine).datetimepicker({
-            locale: 'it',
-            format: 'DD/MM/YYYY',
-            useCurrent: false //Important! See issue #1075
-        });
-
-        if ($('#' + id_calendarDataInizio).val() != "") {
-            var dataInizio = $('#' + id_calendarDataInizio).data('DateTimePicker');
-            if (dataInizio != null) {
-                $('#' + id_calendarDataFine).data("DateTimePicker").minDate(new Date(dataInizio.date()));
-            }
-        }
-
-        if ($('#' + id_calendarDataFine).val() != "") {
-            var dataFine = $('#' + id_calendarDataFine).data('DateTimePicker');
-            if (dataFine != null) {
-                $('#' + id_calendarDataInizio).data("DateTimePicker").maxDate(new Date(dataFine.date()));
-            }
-        }
-
-        $('#' + id_calendarDataInizio).on("dp.change", function (e) {
-            $('#' + id_calendarDataFine).data("DateTimePicker").minDate(e.date);
-        });
-        $('#' + id_calendarDataFine).on("dp.change", function (e) {
-            $('#' + id_calendarDataInizio).data("DateTimePicker").maxDate(e.date);
-        });
-    }
-
-    //function controlloCoerenzaOrari(id_oraInizio, id_oraFine) {
-    //    $('#' + id_oraInizio).datetimepicker({
-    //        locale: 'it',
-    //        format: 'LT'
-    //    });
-    //    $('#' + id_oraFine).datetimepicker({
-    //        locale: 'it',
-    //        format: 'LT',
-    //        useCurrent: false //Important! See issue #1075
-    //    });
-
-    //    if ($('#' + id_oraInizio).val() != "") {
-    //        var oraInizio = $('#' + id_oraInizio).data('DateTimePicker');
-    //        if (oraInizio != null) {
-    //            $('#' + id_oraFine).data("DateTimePicker").minDate(new Date(oraInizio.date()));
-    //        }
-    //    }
-
-    //    if ($('#' + id_oraFine).val() != "") {
-    //        var oraFine = $('#' + id_oraFine).data('DateTimePicker');
-    //        if (oraFine != null) {
-    //            $('#' + id_oraInizio).data("DateTimePicker").maxDate(new Date(oraFine.date()));
-    //        }
-    //    }
-
-    //    $('#' + id_oraInizio).on("dp.change", function (e) {
-    //        $('#' + id_oraFine).data("DateTimePicker").minDate(e.date);
-    //    });
-    //    $('#' + id_oraFine).on("dp.change", function (e) {
-    //        $('#' + id_oraInizio).data("DateTimePicker").maxDate(e.date);
-    //    });
-    //}
-
-    <%--$("body").on("click", "#<%=chk_ImpegnoOrario.ClientID%>", function () {
-        checkImpegnoOrario();
-    });--%>
-
-    <%--function checkImpegnoOrario() {
-        if ($("#<%=chk_ImpegnoOrario.ClientID%>").prop('checked')) {
-            $("#<%=txt_ImpegnoOrarioDa.ClientID%>").prop('disabled', false);
-            $("#<%=txt_ImpegnoOrarioDa.ClientID%>").removeClass("w3-light-grey");
-            $("#<%=txt_ImpegnoOrarioDa.ClientID%>").addClass("w3-hover-orange");
-            $("#<%=txt_ImpegnoOrarioDa.ClientID%>").addClass("w3-white");
-
-            $("#<%=txt_ImpegnoOrarioA.ClientID%>").prop('disabled', false);
-            $("#<%=txt_ImpegnoOrarioA.ClientID%>").removeClass("w3-light-grey");
-            $("#<%=txt_ImpegnoOrarioA.ClientID%>").addClass("w3-hover-orange");
-            $("#<%=txt_ImpegnoOrarioA.ClientID%>").addClass("w3-white");
-        } else {
-            $("#<%=txt_ImpegnoOrarioDa.ClientID%>").prop('disabled', true);
-            $("#<%=txt_ImpegnoOrarioDa.ClientID%>").removeClass("w3-white");
-            $("#<%=txt_ImpegnoOrarioDa.ClientID%>").removeClass("w3-hover-orange");
-            $("#<%=txt_ImpegnoOrarioDa.ClientID%>").addClass("w3-light-grey");
-
-            $("#<%=txt_ImpegnoOrarioA.ClientID%>").prop('disabled', true);
-            $("#<%=txt_ImpegnoOrarioA.ClientID%>").removeClass("w3-white");
-            $("#<%=txt_ImpegnoOrarioA.ClientID%>").removeClass("w3-hover-orange");
-            $("#<%=txt_ImpegnoOrarioA.ClientID%>").addClass("w3-light-grey");
-        }
-    }--%>
 
     function confermaEliminazione() {
         return confirm("Eliminare l'appuntamento corrente?");
@@ -205,6 +91,25 @@
     function confermaCambioStato() {
         return confirm("Lo stato dell'evento sta per essere modificato.\n Le modifiche andranno perse se non verrà effettuato il salvataggio");
     }
+
+    var produzioni = {
+        data: [<%=elencoProduzioni%>],
+        list: {
+            match: {
+                enabled: true
+            }
+        }
+    };
+
+    var lavorazioni = {
+        data: [<%=elencoLavorazioni%>],
+        list: {
+            match: {
+                enabled: true
+            }
+        }
+    };
+    
 </script>
 
 
@@ -251,11 +156,10 @@
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
                         <%--<asp:DropDownList ID="ddl_Risorse" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>--%>
 
-
-                        <div id="divRis" class="dropdown" style="position:absolute; width:190px;">
-                            <asp:HiddenField ID="hf_Risorse" runat="server" Value=""/>
-                            <asp:Button ID="ddl_Risorse" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" Style="text-overflow: ellipsis;overflow:hidden;"/>
-                            <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important; max-height:350px;overflow:auto">
+                        <div id="divRis" class="dropdown" style="position: absolute; width: 190px;">
+                            <asp:HiddenField ID="hf_Risorse" runat="server" Value="" />
+                            <asp:Button ID="ddl_Risorse" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
+                            <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important; max-height: 350px; overflow: auto">
                                 <input class="form-control" id="filtroRisorse" type="text" placeholder="Cerca..">
                             </ul>
                         </div>
@@ -269,11 +173,11 @@
                     </div>
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
                         <%--<asp:DropDownList ID="ddl_Tipologia" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>--%>
-                        
-                        <div id="divTip" class="dropdown" style="position:absolute; width:190px;">
-                            <asp:HiddenField ID="hf_Tipologie" runat="server" Value=""/>
-                            <asp:Button ID="ddl_Tipologie" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" Style="text-overflow: ellipsis;overflow:hidden;"/>
-                            <ul id="elencoTipologie" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important; max-height:350px;overflow:auto">
+
+                        <div id="divTip" class="dropdown" style="position: absolute; width: 190px;">
+                            <asp:HiddenField ID="hf_Tipologie" runat="server" Value="" />
+                            <asp:Button ID="ddl_Tipologie" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
+                            <ul id="elencoTipologie" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important; max-height: 350px; overflow: auto">
                                 <input class="form-control" id="filtroTipologie" type="text" placeholder="Cerca..">
                             </ul>
                         </div>
@@ -285,11 +189,11 @@
                     </div>
                     <div class="w3-col" style="width: 49%; margin-bottom: 5px;">
                         <%--<asp:DropDownList ID="ddl_cliente" runat="server" CssClass="l w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>--%>
-                        
-                        <div id="divClienti" class="dropdown" style="position:absolute; width:190px;">
-                            <asp:HiddenField ID="hf_Clienti" runat="server" Value=""/>
-                            <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" Style="text-overflow: ellipsis;overflow:hidden;" />
-                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important; max-height:350px;overflow:auto">
+
+                        <div id="divClienti" class="dropdown" style="position: absolute; width: 190px;">
+                            <asp:HiddenField ID="hf_Clienti" runat="server" Value="" />
+                            <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
+                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="transform: translateY(20px) !important; max-height: 350px; overflow: auto">
                                 <input class="form-control" id="filtroClienti" type="text" placeholder="Cerca..">
                             </ul>
                         </div>
@@ -367,18 +271,16 @@
                             <asp:Label ID="lbl_Produzione" runat="server" Text="Produzione" CssClass="w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
                         </div>
 
-                        <div class="w3-col" style="width: 33%; margin-bottom: 5px;">
-                            <%--<asp:TextBox ID="val_Produzione" CssClass="w3-light-grey w3-border w3-round fieldMax" runat="server" Enabled="false"></asp:TextBox>--%>
-                            <asp:TextBox ID="txt_Produzione" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:TextBox>
+                        <div class="w3-col" style="margin-bottom: 5px; position:absolute; left:10.5%; width: 15.5%">
+                            <asp:TextBox ID="txt_Produzione" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax" style="padding:3px;"></asp:TextBox>
                         </div>
 
-                        <div class="w3-col" style="width: 17%; margin-bottom: 5px;">
+                        <div class="w3-col" style=" margin-bottom: 5px; position:absolute; left:25.5%;width:10%;">
                             <asp:Label ID="lbl_lavorazione" runat="server" Text="Lavorazione" CssClass="w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
                         </div>
 
-                        <div class="w3-col" style="width: 33%; margin-bottom: 5px;">
-                            <%--<asp:TextBox ID="val_Lavorazione" CssClass="w3-light-grey w3-border w3-round fieldMax" runat="server" Enabled="false"></asp:TextBox>--%>
-                            <asp:TextBox ID="txt_Lavorazione" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:TextBox>
+                        <div class="w3-col" style=" margin-bottom: 5px; position:absolute; left:34%; width: 14%">
+                            <asp:TextBox ID="txt_Lavorazione" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax" style="padding:3px;"></asp:TextBox>
                         </div>
                     </div>
                 </div>
@@ -388,7 +290,6 @@
                             <asp:Label ID="lbl_indirizzo" runat="server" Text="Via" CssClass=" w3-yellow w3-border w3-round" Style="padding-left: 5px; padding-right: 5px;"></asp:Label>
                         </div>
                         <div class="w3-col" style="width: 83%; margin-bottom: 5px;">
-                            <%--<asp:TextBox ID="val_Indirizzo" CssClass="w3-light-grey w3-border w3-round" Style="width: 98%" runat="server" Enabled="false"></asp:TextBox>--%>
                             <asp:TextBox ID="txt_Indirizzo" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round" Style="width: 98%"></asp:TextBox>
                         </div>
 
@@ -401,9 +302,7 @@
                     </div>
 
                     <div class="w3-col" style="width: 33%; margin-bottom: 5px;">
-                        <%--<asp:TextBox ID="val_Luogo" CssClass="lw3-light-grey w3-border w3-round fieldMax" runat="server" Enabled="false"></asp:TextBox>--%>
                         <asp:TextBox ID="txt_Luogo" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:TextBox>
-
                     </div>
 
                     <div class="w3-col" style="width: 20%; margin-bottom: 5px;">
@@ -411,7 +310,6 @@
                     </div>
 
                     <div class="w3-col" style="width: 30%; margin-bottom: 5px;">
-                        <%--<asp:TextBox ID="val_CodiceLavoro" CssClass="w3-light-grey w3-border w3-round fieldMax" runat="server" Enabled="false"></asp:TextBox>--%>
                         <asp:TextBox ID="txt_CodiceLavoro" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:TextBox>
                     </div>
                 </div>

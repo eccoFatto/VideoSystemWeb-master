@@ -136,6 +136,7 @@
     <Content Include="Css\bootstrap-datetimepicker-standalone.css" />
     <Content Include="Css\bootstrap-datetimepicker.css" />
     <Content Include="Css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Css\easy-autocomplete.min.css" />
     <Content Include="Css\multi-select.css" />
     <Content Include="Css\multi-select.dev.css" />
     <Content Include="Css\multi-select.dist.css" />
@@ -310,6 +311,7 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery.easy-autocomplete.min.js" />
     <Content Include="Scripts\jquery.multi-select.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />

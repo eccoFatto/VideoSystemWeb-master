@@ -26,17 +26,18 @@
 
             //FUNZIONI DA ESEGUIRE DOPO IL POSTBACK PARZIALE
             Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
-                //mostraUltimaTabSelezionata();
 
                 $(".filtroColonna").each(function () {
                     filtraColonna(this, this.value);
                 });
 
-                $("#<%=mostraAgenda.ClientID%>").mouseover(function() {
+                $("#<%=mostraAgenda.ClientID%>").click(function () {
                     $("#<%=pnlContainer.ClientID%>").hide();
+                    $(".showAgendaBackground").show();
                 });
 
-                $("#<%=mostraAgenda.ClientID%>").mouseout(function() {
+                $(".showAgendaBackground").click(function() {
+                    $(".showAgendaBackground").hide();
                     $("#<%=pnlContainer.ClientID%>").show();
                 });
             });
@@ -87,10 +88,8 @@
             $("#<%=btn_chiudi.ClientID%>").click();
         }
 
-
         function openTabEvento(evt, tipoName) {
             $("#<%=hf_tabSelezionata.ClientID%>").val(tipoName);
-            //document.getElementById('< %=hf_tabSelezionata.ClientID %>').value = tipoName;
             var i, x, tablinks;
             x = document.getElementsByClassName("tabEvento");
             for (i = 0; i < x.length; i++) {
@@ -103,13 +102,6 @@
             document.getElementById(tipoName).style.display = "block";
             evt.currentTarget.className += " w3-red";
         }
-
-        <%--function mostraUltimaTabSelezionata() {
-            var tabSelezionata = document.getElementById('<%= hf_tabSelezionata.ClientID%>').value;
-            alert(tabSelezionata);
-            document.getElementById(tabSelezionata).style.display = "block";
-        }--%>
-
     </script>
 
     <link rel='stylesheet' href='/Css/Agenda.css' />
@@ -124,7 +116,6 @@
         <label id="lbl_Successo" class="form-control-sm">Operazione eseguita correttamente</label>
     </div>
 
-
     <table style="width: 99%; height: 100%;">
         <tr>
             <td style="width: 80%; vertical-align: top;">
@@ -132,7 +123,7 @@
                 <asp:UpdatePanel ID="UpdatePanelCal" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <div class="round">
-                            <asp:GridView ID="gv_scheduler" runat="server" OnRowDataBound="gv_scheduler_RowDataBound" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid"></asp:GridView>
+                            <asp:GridView ID="gv_scheduler" runat="server" OnRowDataBound="gv_scheduler_RowDataBound" Style="font-size: 9pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid"></asp:GridView>
                         </div>
                     </ContentTemplate>
                     <Triggers>
@@ -202,7 +193,6 @@
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato()" Visible="false" />
                         <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato()" OnClick="btnLavorazione_Click" Visible="false" />
                         <asp:Button ID="btnRiposo" runat="server" Text="Riposo" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRiposo_Click" Visible="false" />
-                        
                     </div>
 
                 </asp:Panel>
@@ -213,4 +203,5 @@
             <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />
         </Triggers>
     </asp:UpdatePanel>
+    <div class="showAgendaBackground" style="display:none"></div>
 </asp:Content>

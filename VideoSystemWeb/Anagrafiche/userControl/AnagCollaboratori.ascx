@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AnagCollaboratori.ascx.cs" Inherits="VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <script>
 
     // APRO POPUP VISUALIZZAZIONE/MODIFICA COLLABORATORE
@@ -49,6 +50,12 @@
 
     }
 </script>
+<Label class="w3-text-blue"><asp:Label ID="lblTipoAzienda" runat="server" Text="COLLABORATORI"></asp:Label></Label>
+
+
+<div>
+
+</div>
 
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
@@ -236,7 +243,6 @@
                                             <div id="divUploadImg" class="w3-container w3-hide">
                                                 <asp:FileUpload ID="fuImg" runat="server" Font-Size="X-Small" class="w3-button w3-yellow w3-round w3-margin" />
                                                 <asp:Button ID="uploadButton" runat="server" class="w3-button w3-yellow w3-round w3-margin" OnClick="CaricaImmagine" Text="Carica Immagine" />
-                                                
                                                 <p>
                                                     <asp:Label ID="lblImage" runat="server" Font-Size="XX-Small"></asp:Label>
                                                 </p>
@@ -296,6 +302,7 @@
                                                 <asp:ListItem Value=""></asp:ListItem>
                                                 <asp:ListItem Value="Via">Via</asp:ListItem>
                                                 <asp:ListItem Value="Viale">Viale</asp:ListItem>
+                                                <asp:ListItem Value="Corso">Corso</asp:ListItem>
                                                 <asp:ListItem Value="Piazza">Piazza</asp:ListItem>
                                                 <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
                                                 <asp:ListItem Value="Largo">Largo</asp:ListItem>
@@ -441,12 +448,16 @@
                     <div id="Documenti" class="w3-container  w3-border collab" style="display:none">
                         <label>Documenti</label>
                         <asp:ListBox ID="lbMod_Documenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                        <div class="round">
+                            <asp:GridView ID="gvMod_Documenti" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" AutoGenerateSelectButton="True" OnSelectedIndexChanged="gvMod_Documenti_RigaSelezionata">
+                            </asp:GridView>
+                        </div>
                         <div class="w3-container w3-center">
                             <p>
                                 <asp:Button ID="btnApriDocumenti" runat="server" OnClick="btnApriDocumenti_Click" Text="Gestione Documenti" class="w3-panel w3-green w3-border w3-round" />
                                 <asp:PlaceHolder ID="phDocumenti" runat="server" Visible="false">                                
                                     <div class="w3-row-padding w3-center w3-text-center">
-                                        <div class="w3-half">
+                                        <div class="w3-quarter">
                                             <label>TipoDocumento</label>
                                             <asp:DropDownList ID="cmbInsTipoDocumento" runat="server" class="w3-input w3-border">
                                                 <asp:ListItem Value=""></asp:ListItem>
@@ -456,11 +467,23 @@
                                                 <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
                                             </asp:DropDownList>
                                         </div>
-                                        <div class="w3-half">
+                                        <div class="w3-quarter">
                                             <label>Numero Documento</label>
                                             <asp:TextBox ID="tbInsNumeroDocumento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                             <asp:TextBox ID="tbIdDocumentoDaModificare" runat="server" Visible="false"></asp:TextBox>
                                         </div>
+                                        <div class="w3-quarter">
+                                            <label>Sfoglia</label>
+                                            <asp:FileUpload ID="fuDoc" runat="server" Font-Size="X-Small" class="w3-button w3-border w3-white" />&nbsp;
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <asp:Button ID="btnCaricaDocumento" runat="server" class="w3-btn w3-round w3-red" OnClick="CaricaDocumento" Text="Carica Documento" />
+                                        </div>
+                                    </div>
+                                    <div class="w3-panel w3-center w3-text-center">
+                                        <Label>
+                                            <asp:Label ID="lblDoc" runat="server" Font-Size="XX-Small"></asp:Label>
+                                        </Label>
                                     </div>
                                     <asp:Button ID="btnInserisciDocumento" runat="server" Text="Inserisci Documento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoDocumento_Click" OnClientClick="return confirm('Confermi inserimento Documento?')" />
                                     <asp:Button ID="btnModificaDocumento" runat="server" Text="Modifica Documento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaDocumento_Click" OnClientClick="return confirm('Confermi modifica Documento?')" Visible="false" />
@@ -478,6 +501,7 @@
     <Triggers>
         
         <asp:PostBackTrigger ControlID="uploadButton" />
+        <asp:PostBackTrigger ControlID="btnCaricaDocumento" />
         <asp:AsyncPostBackTrigger ControlID="btnEditCollaboratore" EventName="Click" />
 
         <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />

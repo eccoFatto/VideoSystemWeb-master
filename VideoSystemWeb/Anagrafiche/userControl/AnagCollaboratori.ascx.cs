@@ -11,6 +11,7 @@ using VideoSystemWeb.Entity;
 using VideoSystemWeb.DAL;
 using System.IO;
 using System.Text.RegularExpressions;
+using AjaxControlToolkit;
 namespace VideoSystemWeb.Anagrafiche.userControl
 {
     public partial class AnagCollaboratori : System.Web.UI.UserControl
@@ -340,6 +341,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             lbMod_Documenti.Items.Clear();
             lbMod_Documenti.Rows = 1;
 
+            gvMod_Documenti.DataSource = null;
+
         }
         // CARICA IMMAGINE COLLABORATORE
         protected void CaricaImmagine(object sender, EventArgs e)
@@ -379,6 +382,48 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     lblImage.Text = "Caricare un'immagine";
                 }
             }
+        }
+
+        protected void CaricaDocumento(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(tbIdDocumentoDaModificare.Text.Trim()))
+            {
+                // SE L'UTENTE E' IN MODIFICA CARICO L'IMMAGINE
+                if (fuDoc.HasFile)
+                {
+
+                    if (".JPEG|.JPG|.BMP|.PDF".IndexOf(Path.GetExtension(fuDoc.FileName).ToUpper()) >= 0)
+                    {
+                        try
+                        {
+                            string nomefileDoc = DateTime.Now.Ticks.ToString() + Path.GetExtension(fuDoc.FileName);
+                            string fullPath = Server.MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_COLLABORATORI"]) + Path.GetFileName(nomefileDoc);
+                            fuDoc.SaveAs(fullPath);
+                            //imgCollaboratore.ImageUrl = fullPath;
+                            lblDoc.Text = nomefileDoc;
+
+                            string queryUpdateImg = "UPDATE anag_documenti_collaboratori SET pathDocumento = '" + nomefileDoc + "' WHERE ID = " + tbIdDocumentoDaModificare.Text.Trim();
+
+                            Esito esito = new Esito();
+                            int iRighe = Base_DAL.executeUpdateBySql(queryUpdateImg, ref esito);
+                            EditCollaboratore_Click(null, null);
+                        }
+                        catch (Exception ex)
+                        {
+                            lblImage.Text = ex.Message;
+                        }
+                    }
+                    else
+                    {
+                        lblImage.Text = "Caricare un file di tipo Documento";
+                    }
+                }
+                else
+                {
+                    lblImage.Text = "Caricare un documento";
+                }
+            }
+
         }
 
         private void AttivaDisattivaModificaAnagrafica(bool attivaModifica)
@@ -496,13 +541,28 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     }
 
                     // DOCUMENTI
+                    DataTable dtDocumenti = new DataTable();
                     if (collaboratore.Documenti != null)
                     {
+                        dtDocumenti.Columns.Add("id");
+                        dtDocumenti.Columns.Add("TipoDocumento");
+                        dtDocumenti.Columns.Add("NumeroDocumento");
+                        dtDocumenti.Columns.Add("Documento");
+
                         foreach (Anag_Documenti_Collaboratori documento in collaboratore.Documenti)
                         {
                             ListItem itemDocumento = new ListItem(documento.TipoDocumento + " - " + documento.NumeroDocumento , documento.Id.ToString());
                             lbMod_Documenti.Items.Add(itemDocumento);
+                            DataRow dr = dtDocumenti.NewRow();
+                            dr["id"] = documento.Id.ToString();
+                            dr["TipoDocumento"] = documento.TipoDocumento;
+                            dr["NumeroDocumento"] = documento.NumeroDocumento;
+                            dr["Documento"] = documento.PathDocumento;
+
+                            dtDocumenti.Rows.Add(dr);
                         }
+                        gvMod_Documenti.DataSource = dtDocumenti;
+                        gvMod_Documenti.DataBind();
                     }
                     if (collaboratore.Documenti != null && collaboratore.Documenti.Count > 0)
                     {
@@ -511,6 +571,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     else
                     {
                         lbMod_Documenti.Rows = 1;
+                        gvMod_Documenti.DataSource = null;
                     }
 
                     // IMMAGINE COLLABORATORE
@@ -1115,7 +1176,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void btnConfermaInserimentoEmail_Click(object sender, EventArgs e)
         {
             //INSERISCO L'E-MAIL
-            if (!string.IsNullOrEmpty(tbInsEmail.Text) && validaIndirizzoEmail(tbInsEmail.Text))
+            if (!string.IsNullOrEmpty(tbInsEmail.Text) && basePage.validaIndirizzoEmail(tbInsEmail.Text))
             {
                 try
                 {
@@ -1314,7 +1375,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void btnConfermaModificaEmail_Click(object sender, EventArgs e)
         {
             //MODIFICO L'E-MAIL
-            if (!string.IsNullOrEmpty(tbInsEmail.Text) && validaIndirizzoEmail(tbInsEmail.Text) && !string.IsNullOrEmpty(tbIdEmailDaModificare.Text))
+            if (!string.IsNullOrEmpty(tbInsEmail.Text) && basePage.validaIndirizzoEmail(tbInsEmail.Text) && !string.IsNullOrEmpty(tbIdEmailDaModificare.Text))
             {
                 try
                 {
@@ -1648,17 +1709,56 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
         }
 
-        private bool validaIndirizzoEmail(string indirizzo)
+        protected void gvMod_Documenti_RigaSelezionata(object sender, EventArgs e)
         {
-            Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
-            Match match = regex.Match(indirizzo);
-            if (match.Success) { 
-                return true;
-            }
-            else
+            //SCARICO IL REFERENTE SE SELEZIONATO
+            if (gvMod_Documenti.SelectedIndex >= 0)
             {
-                return false;
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    string documentoSelezionato = gvMod_Documenti.Rows[gvMod_Documenti.SelectedIndex].Cells[1].Text;
+                    Esito esito = new Esito();
+                    Anag_Documenti_Collaboratori documento = Anag_Documenti_Collaboratori_BLL.Instance.getDocumentoById(ref esito, Convert.ToInt32(documentoSelezionato));
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        btnModificaDocumento.Visible = false;
+                        btnInserisciDocumento.Visible = true;
+                        tbIdDocumentoDaModificare.Text = "";
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        btnModificaDocumento.Visible = true;
+                        btnInserisciDocumento.Visible = false;
+                        tbIdDocumentoDaModificare.Text = documento.Id.ToString();
+                        ListItem trovati = cmbInsTipoDocumento.Items.FindByText(documento.TipoDocumento);
+                        if (trovati != null)
+                        {
+                            cmbInsTipoDocumento.Text = documento.TipoDocumento;
+                        }
+                        else
+                        {
+                            cmbInsTipoDocumento.Text = "";
+                        }
+                        tbInsNumeroDocumento.Text = documento.NumeroDocumento;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaDocumento.Visible = false;
+                    btnInserisciDocumento.Visible = true;
+                    tbIdDocumentoDaModificare.Text = "";
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
             }
+
+
         }
+
     }
 }

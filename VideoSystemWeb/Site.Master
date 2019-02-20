@@ -11,12 +11,13 @@
 
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
+    <script type="text/javascript" src='/Scripts/Utility.js'></script>
     <script type="text/javascript" src="/Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src='/Scripts/moment-with-locales.js'></script>
     <script type="text/javascript" src='/Scripts/bootstrap.bundle.min.js'></script>
     <script type="text/javascript" src="/Scripts/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="/Scripts/jquery.easy-autocomplete.min.js"></script>
-    <script type="text/javascript" src='/Scripts/Utility.js'></script>
+    
 
     <link rel="stylesheet" href="/Content/bootstrap.css" />
     <link rel="stylesheet" href="/Css/bootstrap-datetimepicker.min.css" />

@@ -5,7 +5,7 @@
 <%@ Register TagPrefix="popup" TagName="Offerta" Src="~/Agenda/userControl/Offerta.ascx" %>
 <%@ Register TagPrefix="popup" TagName="Lavorazione" Src="~/Agenda/userControl/Lavorazione.ascx" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
+    
     <script>
         $(document).ready(function () {
             $('.calendarAgenda').datetimepicker({

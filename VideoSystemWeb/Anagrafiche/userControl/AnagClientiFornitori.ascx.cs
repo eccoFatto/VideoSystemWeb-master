@@ -19,6 +19,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         BasePage basePage = new BasePage();
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!Page.IsPostBack)
             {
                 // GLI ASCX POSSONO LEGGERE LA QUERYSTRING DELLA PAGINA CONTENITRICE
@@ -37,6 +38,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     ViewState["TIPO_AZIENDA"] = "CLIENTI";
                 }
                 lblTipoAzienda.Text = ViewState["TIPO_AZIENDA"].ToString();
+
+                if (ViewState["TIPO_AZIENDA"].ToString().Equals("CLIENTI"))
+                {
+                    lblTipoAzienda.ForeColor = System.Drawing.Color.Red;
+                }
+                else
+                {
+                    lblTipoAzienda.ForeColor = System.Drawing.Color.Green;
+                }
+
 
                 BasePage p = new BasePage();
                 Esito esito = p.CaricaListeTipologiche();
@@ -179,14 +190,71 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         cmbMod_TipoAzienda.Text = "";
                     }
 
+                    // TIPO INDIRIZZO LEGALE
+                    if (azienda.TipoIndirizzoLegale != null)
+                    {
+                        trovati = cmbMod_TipoIndirizzoLegale.Items.FindByValue(azienda.TipoIndirizzoLegale.ToString());
+                        if (trovati != null)
+                        {
+                            cmbMod_TipoIndirizzoLegale.SelectedValue = trovati.Value;
+                        }
+                        else
+                        {
+                            cmbMod_TipoIndirizzoLegale.Text = "";
+                        }
+                    }
+                    else
+                    {
+                        cmbMod_TipoIndirizzoLegale.Text = "";
+                    }
+
+                    // TIPO INDIRIZZO OPERATIVO
+                    if (azienda.TipoIndirizzoOperativo != null)
+                    {
+                        trovati = cmbMod_TipoIndirizzoOperativo.Items.FindByValue(azienda.TipoIndirizzoOperativo.ToString());
+                        if (trovati != null)
+                        {
+                            cmbMod_TipoIndirizzoOperativo.SelectedValue = trovati.Value;
+                        }
+                        else
+                        {
+                            cmbMod_TipoIndirizzoOperativo.Text = "";
+                        }
+                    }
+                    else
+                    {
+                        cmbMod_TipoIndirizzoOperativo.Text = "";
+                    }
+
                     // REFERENTI
+                    DataTable dtReferenti = new DataTable();
                     if (azienda.Referenti != null)
                     {
+                        dtReferenti.Columns.Add("id");
+                        dtReferenti.Columns.Add("Cognome");
+                        dtReferenti.Columns.Add("Nome");
+                        dtReferenti.Columns.Add("Settore");
+                        dtReferenti.Columns.Add("Telefono1");
+                        dtReferenti.Columns.Add("Telefono2");
+                        dtReferenti.Columns.Add("Cellulare");
+                        dtReferenti.Columns.Add("Email");
                         foreach (Anag_Referente_Clienti_Fornitori referente in azienda.Referenti)
                         {
                             ListItem itemReferente = new ListItem(referente.Cognome + " " + referente.Nome + " - " + referente.Settore + " - " + referente.Telefono1, referente.Id.ToString());
                             lbMod_Referenti.Items.Add(itemReferente);
+                            DataRow dr = dtReferenti.NewRow();
+                            dr["id"] = referente.Id.ToString();
+                            dr["Cognome"] = referente.Cognome;
+                            dr["Nome"] = referente.Nome;
+                            dr["Settore"] = referente.Settore;
+                            dr["Telefono1"] = referente.Telefono1;
+                            dr["Telefono2"] = referente.Telefono2;
+                            dr["Cellulare"] = referente.Cellulare;
+                            dr["Email"] = referente.Email;
+                            dtReferenti.Rows.Add(dr);
                         }
+                        gvMod_Referenti.DataSource = dtReferenti;
+                        gvMod_Referenti.DataBind();
                     }
                     if (azienda.Referenti != null && azienda.Referenti.Count > 0)
                     {
@@ -195,6 +263,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     else
                     {
                         lbMod_Referenti.Rows = 1;
+                        gvMod_Referenti.DataSource = null;
                     }
 
                 }
@@ -235,6 +304,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_Telefono.Text = "";
             tbMod_WebSite.Text = "";
 
+            cmbMod_TipoIndirizzoLegale.Text = "";
+            cmbMod_TipoIndirizzoOperativo.Text = "";
             cmbMod_Pagamento.Text = "";
             cmbMod_TipoAzienda.Text = "";
 
@@ -246,13 +317,31 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             lbMod_Referenti.Items.Clear();
             lbMod_Referenti.Rows = 1;
 
+            gvMod_Referenti.DataSource = null;
+
         }
 
         protected void InserisciAzienda_Click(object sendere, EventArgs e)
         {
+            ViewState["idAzienda"] = "";
+            editAziendaVuota();
+            AttivaDisattivaModificaAzienda(false);
+            gestisciPulsantiAzienda("INSERIMENTO");
+
+            // PULISCO I PH DI MODIFICA
+            btnAnnullaReferente_Click(null, null);
+
+            phReferenti.Visible = false;
+
+            pnlContainer.Visible = true;
 
         }
 
+        private void editAziendaVuota()
+        {
+            Esito esito = new Esito();
+            pulisciCampiDettaglio();
+        }
         protected void btnRicercaAziende_Click(object sender, EventArgs e)
         {
             string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_AZIENDE"];
@@ -508,6 +597,35 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         protected void btnConfermaInserimento_Click(object sender, EventArgs e)
         {
+            // INSERISCO AZIENDA
+            Esito esito = new Esito();
+            Anag_Clienti_Fornitori azienda = CreaOggettoSalvataggio(ref esito);
+
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+            }
+            else
+            {
+                NascondiErroriValidazione();
+
+                int iRet = Anag_Clienti_Fornitori_BLL.Instance.CreaAzienda(azienda, ref esito);
+                if (iRet > 0)
+                {
+                    // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO
+                    hf_idAzienda.Value = iRet.ToString();
+                    ViewState["idAzienda"] = hf_idAzienda.Value;
+                    hf_tipoOperazione.Value = "VISUALIZZAZIONE";
+                }
+
+                if (esito.codice != Esito.ESITO_OK)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = esito.descrizione;
+                }
+                EditAzienda_Click(null, null);
+            }
 
         }
         protected void btnAnnulla_Click(object sender, EventArgs e)
@@ -552,24 +670,252 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         }
         protected void btnApriReferenti_Click(object sender, EventArgs e)
         {
-
+            if (phReferenti.Visible)
+            {
+                phReferenti.Visible = false;
+            }
+            else
+            {
+                phReferenti.Visible = true;
+            }
         }
         protected void btnConfermaInserimentoReferente_Click(object sender, EventArgs e)
         {
+            //INSERISCO IL REFERENTE
+            if (!string.IsNullOrEmpty(tbInsCognomeReferente.Text) && (string.IsNullOrEmpty(tbInsEmailReferente.Text)|| basePage.validaIndirizzoEmail(tbInsEmailReferente.Text.Trim())))
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    Esito esito = new Esito();
+                    Anag_Referente_Clienti_Fornitori nuovoReferente = new Anag_Referente_Clienti_Fornitori();
+                    nuovoReferente.Id_azienda = Convert.ToInt32(ViewState["idAzienda"]);
+                    nuovoReferente.Attivo = cbInsAttivoReferente.Checked;
+                    nuovoReferente.Cognome = tbInsCognomeReferente.Text.Trim();
+                    nuovoReferente.Nome = tbInsNomeReferente.Text.Trim();
+                    nuovoReferente.Cellulare = tbInsCellulareReferente.Text.Trim();
+                    nuovoReferente.Email = tbInsEmailReferente.Text.Trim();
+                    nuovoReferente.Note = tbInsNoteReferente.Text.Trim();
+                    nuovoReferente.Settore = tbInsSettoreReferente.Text.Trim();
+                    nuovoReferente.Telefono1 = tbInsTelefono1Referente.Text.Trim();
+                    nuovoReferente.Telefono2 = tbInsTelefono2Referente.Text.Trim();
+
+
+                    int iNuovoReferente = Anag_Referente_Clienti_Fornitori_BLL.Instance.CreaReferente(nuovoReferente, ref esito);
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbInsCognomeReferente.Text = "";
+                        tbInsNomeReferente.Text = "";
+                        tbInsCellulareReferente.Text = "";
+                        tbInsEmailReferente.Text = "";
+                        tbInsNoteReferente.Text = "";
+                        tbInsSettoreReferente.Text = "";
+                        tbInsTelefono1Referente.Text = "";
+                        tbInsTelefono2Referente.Text = "";
+                        cbInsAttivoReferente.Checked = true;
+                        editAzienda();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
 
         }
         protected void btnConfermaModificaReferente_Click(object sender, EventArgs e)
         {
+            //MODIFICO IL REFERENTE
+            if (!string.IsNullOrEmpty(tbIdReferenteDaModificare.Text) && !string.IsNullOrEmpty(tbInsCognomeReferente.Text) && (string.IsNullOrEmpty(tbInsEmailReferente.Text) || basePage.validaIndirizzoEmail(tbInsEmailReferente.Text.Trim())))
+            {
+
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    Esito esito = new Esito();
+                    Anag_Referente_Clienti_Fornitori nuovoReferente = new Anag_Referente_Clienti_Fornitori();
+                    nuovoReferente.Id = Convert.ToInt32(tbIdReferenteDaModificare.Text);
+                    nuovoReferente.Id_azienda = Convert.ToInt32(ViewState["idAzienda"]);
+                    nuovoReferente.Attivo = cbInsAttivoReferente.Checked;
+                    nuovoReferente.Cognome = tbInsCognomeReferente.Text.Trim();
+                    nuovoReferente.Nome = tbInsNomeReferente.Text.Trim();
+                    nuovoReferente.Cellulare = tbInsCellulareReferente.Text.Trim();
+                    nuovoReferente.Email = tbInsEmailReferente.Text.Trim();
+                    nuovoReferente.Note = tbInsNoteReferente.Text.Trim();
+                    nuovoReferente.Settore = tbInsSettoreReferente.Text.Trim();
+                    nuovoReferente.Telefono1 = tbInsTelefono1Referente.Text.Trim();
+                    nuovoReferente.Telefono2 = tbInsTelefono2Referente.Text.Trim();
+
+                    esito = Anag_Referente_Clienti_Fornitori_BLL.Instance.AggiornaReferente(nuovoReferente);
+
+                    btnModificaReferente.Visible = false;
+                    btnInserisciReferente.Visible = true;
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbIdReferenteDaModificare.Text = "";
+                        tbInsCognomeReferente.Text = "";
+                        tbInsNomeReferente.Text = "";
+                        tbInsCellulareReferente.Text = "";
+                        tbInsEmailReferente.Text = "";
+                        tbInsNoteReferente.Text = "";
+                        tbInsSettoreReferente.Text = "";
+                        tbInsTelefono1Referente.Text = "";
+                        tbInsTelefono2Referente.Text = "";
+                        cbInsAttivoReferente.Checked = true;
+                        editAzienda();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaReferente.Visible = false;
+                    btnInserisciReferente.Visible = true;
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
 
         }
         protected void btnEliminaReferente_Click(object sender, EventArgs e)
         {
+            //ELIMINO IL REFERENTE SE SELEZIONATO
+            if (gvMod_Referenti.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+                    string referenteSelezionato = gvMod_Referenti.Rows[gvMod_Referenti.SelectedIndex].Cells[1].Text;
+                    Esito esito = Anag_Referente_Clienti_Fornitori_BLL.Instance.EliminaReferente(Convert.ToInt32(referenteSelezionato.Trim()));
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        tbIdReferenteDaModificare.Text = "";
+                        tbInsCognomeReferente.Text = "";
+                        tbInsNomeReferente.Text = "";
+                        tbInsCellulareReferente.Text = "";
+                        tbInsEmailReferente.Text = "";
+                        tbInsNoteReferente.Text = "";
+                        tbInsSettoreReferente.Text = "";
+                        tbInsTelefono1Referente.Text = "";
+                        tbInsTelefono2Referente.Text = "";
+                        cbInsAttivoReferente.Checked = true;
+
+                        btnModificaReferente.Visible = false;
+                        btnInserisciReferente.Visible = true;
+
+                        editAzienda();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+            else
+            {
+                panelErrore.Style.Remove("display");
+                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            }
 
         }
 
         protected void btnAnnullaReferente_Click(object sender, EventArgs e)
         {
+            tbIdReferenteDaModificare.Text = "";
+            tbInsCognomeReferente.Text = "";
+            tbInsNomeReferente.Text = "";
+            tbInsCellulareReferente.Text = "";
+            tbInsEmailReferente.Text = "";
+            tbInsNoteReferente.Text = "";
+            tbInsSettoreReferente.Text = "";
+            tbInsTelefono1Referente.Text = "";
+            tbInsTelefono2Referente.Text = "";
+            cbInsAttivoReferente.Checked = true;
+
+            btnModificaReferente.Visible = false;
+            btnInserisciReferente.Visible = true;
 
         }
+
+        protected void gvMod_Referenti_RigaSelezionata(object sender, EventArgs e)
+        {
+            //SCARICO IL REFERENTE SE SELEZIONATO
+            if (gvMod_Referenti.SelectedIndex >= 0)
+            {
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    string referenteSelezionato = gvMod_Referenti.Rows[gvMod_Referenti.SelectedIndex].Cells[1].Text;
+                    Esito esito = new Esito();
+                    Anag_Referente_Clienti_Fornitori referente = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferenteById(ref esito, Convert.ToInt32(referenteSelezionato));
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        btnModificaReferente.Visible = false;
+                        btnInserisciReferente.Visible = true;
+                        tbIdReferenteDaModificare.Text = "";
+                        panelErrore.Style.Remove("display");
+                        lbl_MessaggioErrore.Text = esito.descrizione;
+                    }
+                    else
+                    {
+                        btnModificaReferente.Visible = true;
+                        btnInserisciReferente.Visible = false;
+
+                        tbIdReferenteDaModificare.Text = referente.Id.ToString();
+                        tbInsCognomeReferente.Text = referente.Cognome;
+                        tbInsNomeReferente.Text = referente.Nome;
+                        tbInsSettoreReferente.Text = referente.Settore;
+                        tbInsEmailReferente.Text = referente.Email;
+                        tbInsTelefono1Referente.Text = referente.Telefono1;
+                        tbInsTelefono2Referente.Text = referente.Telefono2;
+                        tbInsNoteReferente.Text = referente.Note;
+                        tbInsCellulareReferente.Text = referente.Cellulare;
+                        cbInsAttivoReferente.Checked = referente.Attivo;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    btnModificaReferente.Visible = false;
+                    btnInserisciReferente.Visible = true;
+                    tbIdReferenteDaModificare.Text = "";
+                    panelErrore.Style.Remove("display");
+                    lbl_MessaggioErrore.Text = ex.Message;
+                }
+            }
+
+        }
+
     }
 }

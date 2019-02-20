@@ -13,6 +13,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
     public partial class AnagCollaboratori {
         
         /// <summary>
+        /// Controllo lblTipoAzienda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTipoAzienda;
+        
+        /// <summary>
         /// Controllo UpdatePanelRicerca.
         /// </summary>
         /// <remarks>
@@ -868,6 +877,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.ListBox lbMod_Documenti;
         
         /// <summary>
+        /// Controllo gvMod_Documenti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvMod_Documenti;
+        
+        /// <summary>
         /// Controllo btnApriDocumenti.
         /// </summary>
         /// <remarks>
@@ -911,6 +929,33 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbIdDocumentoDaModificare;
+        
+        /// <summary>
+        /// Controllo fuDoc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuDoc;
+        
+        /// <summary>
+        /// Controllo btnCaricaDocumento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCaricaDocumento;
+        
+        /// <summary>
+        /// Controllo lblDoc.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDoc;
         
         /// <summary>
         /// Controllo btnInserisciDocumento.

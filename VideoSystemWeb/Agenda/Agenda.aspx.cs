@@ -366,7 +366,7 @@ namespace VideoSystemWeb.Agenda
             panelErrore.Style.Add("display", "none");
             lbl_MessaggioErrore.Text = string.Empty;
             popupAppuntamento.ClearPopupEventi();
-            popupAppuntamento.PopolaPopup(eventoSelezionato);
+            popupAppuntamento.PopolaPopup(eventoSelezionato);           
         }
 
         private void ChiudiPopup()

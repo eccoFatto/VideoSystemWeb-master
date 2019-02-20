@@ -14,18 +14,16 @@ namespace VideoSystemWeb.Agenda.userControl
         BasePage basePage = new BasePage();
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
         public event PopupHandler RichiediOperazionePopup; //evento
-        public string elencoProduzioni;
-        public string elencoLavorazioni;
+        //public string[] elencoProduzioni;
+        //public string[] elencoLavorazioni;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             Esito esito = new Esito();
 
-
             basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito);
             basePage.listaClientiFornitori = basePage.listaClientiFornitori.Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
             ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
-
 
             if (!IsPostBack)
             {
@@ -33,40 +31,29 @@ namespace VideoSystemWeb.Agenda.userControl
                 basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
                 basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
                 basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
-
-                List<DatiAgenda> listaCompletaEventi = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);
-                CaricaElencoProduzioni(listaCompletaEventi);
-                CaricaElencoLavorazioni(listaCompletaEventi);
             }
 
            // ScriptManager.RegisterStartupScript(this, typeof(Page), "campiImpegnoOrario", "checkImpegnoOrario();", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataInizioLavorazione.ClientID + "', '" + txt_DataFineLavorazione.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataInizioImpegno.ClientID + "', '" + txt_DataFineImpegno.ClientID + "');", true);
-           // ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaOrari", "controlloCoerenzaOrari('" + txt_ImpegnoOrarioDa.ClientID + "', '" + txt_ImpegnoOrarioA.ClientID + "');", true);
+            // ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaOrari", "controlloCoerenzaOrari('" + txt_ImpegnoOrarioDa.ClientID + "', '" + txt_ImpegnoOrarioA.ClientID + "');", true);
 
+            //CaricaElenchiAutocompletamento();
+            List<DatiAgenda> listaCompletaEventi = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);
+            string[] elencoProduzioni = CaricaElencoProduzioni(listaCompletaEventi);
+            string[] elencoLavorazioni = CaricaElencoLavorazioni(listaCompletaEventi);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "setElenchi", "setElenchi(" + Newtonsoft.Json.JsonConvert.SerializeObject(elencoProduzioni) + ", " + Newtonsoft.Json.JsonConvert.SerializeObject(elencoLavorazioni) + ");", true);
         }
 
-        private void CaricaElencoProduzioni(List<DatiAgenda> lista)
+        private string[] CaricaElencoProduzioni(List<DatiAgenda> lista)
         {
-            elencoProduzioni = "";
-            
-            lista = (lista.GroupBy(x => x.produzione).Select(x => x.FirstOrDefault())).ToList();
-            foreach (DatiAgenda elem in lista)
-            {
-                elencoProduzioni += "'" + elem.produzione + "', ";
-            }
-            elencoProduzioni += "''";
+            List<string> elencoProduzioni = lista.Where(s => !string.IsNullOrWhiteSpace(s.produzione)).Distinct().ToList().Select(o => o.produzione).ToList();
+            return elencoProduzioni.ToArray();
         }
-
-        private void CaricaElencoLavorazioni(List<DatiAgenda> lista)
+        private string[] CaricaElencoLavorazioni(List<DatiAgenda> lista)
         {
-            elencoLavorazioni = "";
-            lista = (lista.GroupBy(x => x.lavorazione).Select(x => x.FirstOrDefault())).ToList();
-            foreach (DatiAgenda elem in lista)
-            {
-                elencoLavorazioni += "'" + elem.lavorazione + "', ";
-            }
-            elencoLavorazioni += "''";
+            List<string> elencoLavorazioni = lista.Where(s => !string.IsNullOrWhiteSpace(s.lavorazione)).Distinct().ToList().Select(o => o.lavorazione).ToList();
+            return elencoLavorazioni.ToArray();
         }
 
         public Esito CreaOggettoSalvataggio(ref DatiAgenda datiAgenda)
@@ -141,7 +128,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_Tipologie.Text = ddl_Tipologie.ToolTip = basePage.listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
             }
 
-            if (evento.id_cliente == 0 || evento.id_cliente == null)
+            if (evento.id_cliente == 0)
             {
                 hf_Clienti.Value = "";
                 ddl_Clienti.Text = "<Seleziona>";
@@ -151,8 +138,6 @@ namespace VideoSystemWeb.Agenda.userControl
                 hf_Clienti.Value = evento.id_cliente.ToString();
                 ddl_Clienti.Text = ddl_Clienti.ToolTip = basePage.listaClientiFornitori.Where(x => x.Id == evento.id_cliente).FirstOrDefault().RagioneSociale;
             }
-
-            
 
             txt_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
             txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
@@ -173,6 +158,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, evento.id_stato, ref esito).nome;
 
             //txt_ImpegnoOrarioDa.Enabled = txt_ImpegnoOrarioA.Enabled = evento.impegnoOrario;
+            
         }
 
         public void ClearPopupEventi()

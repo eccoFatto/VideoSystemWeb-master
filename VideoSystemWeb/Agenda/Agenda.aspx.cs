@@ -234,6 +234,7 @@ namespace VideoSystemWeb.Agenda
                             mainPanel.Controls.Add(new LiteralControl(titoloEvento));
                             mainPanel.CssClass = "round-corners-6px w3-tooltip";
                             mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
+                            
                             mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
                             e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
@@ -270,7 +271,7 @@ namespace VideoSystemWeb.Agenda
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
-                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; vertical-align: top");
+                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; vertical-align: top");                                
                             }
                             else if (!IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && !IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
                             {
@@ -527,8 +528,6 @@ namespace VideoSystemWeb.Agenda
             Panel innerPanel = new Panel();
             if (evento.id_stato != DatiAgenda.STATO_RIPOSO)
             {
-                 
-
                 Esito esito = new Esito();
 
                 string cliente = "";
@@ -549,6 +548,7 @@ namespace VideoSystemWeb.Agenda
 
                 innerPanel.Controls.Add(anteprima);
                 innerPanel.CssClass = "round-corners-6px w3-text innerPanel";
+                
             }
             return innerPanel;
         }

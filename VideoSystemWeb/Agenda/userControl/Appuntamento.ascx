@@ -92,7 +92,18 @@
         return confirm("Lo stato dell'evento sta per essere modificato.\n Le modifiche andranno perse se non verrà effettuato il salvataggio");
     }
 
-    var produzioni = {
+    function setElenchi(elencoProduzioni, elencoLavorazioni) {
+
+        //alert(jQuery.parseJSON(elencoProduzioni));
+        //alert(jQuery.parseJSON(elencoLavorazioni));
+        produzioni = { data: elencoProduzioni, list: { match: { enabled: true } } };
+        lavorazioni = { data: elencoLavorazioni, list: { match: { enabled: true } } };
+    }
+
+    var produzioni;
+    var lavorazioni;
+
+    <%--var produzioni = {
         data: [<%=elencoProduzioni%>],
         list: {
             match: {
@@ -108,7 +119,7 @@
                 enabled: true
             }
         }
-    };
+    };--%>
     
 </script>
 

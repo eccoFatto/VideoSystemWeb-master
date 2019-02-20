@@ -16,12 +16,17 @@
             });
 
             $('.calendarAgenda').on('dp.change', function (e) {
+                $('.loader').show();
+
                 var data = e.date.date() + "/" + (e.date.month() + 1) + "/" + e.date.year();
                 $("#<%=hf_valoreData.ClientID%>").val(data);
                 $("#<%=btnsearch.ClientID%>").click();
-                
+
             });
 
+            $('.loader').hide();
+            
+       
             registraPassaggioMouse();
 
             //FUNZIONI DA ESEGUIRE DOPO IL POSTBACK PARZIALE
@@ -36,10 +41,12 @@
                     $(".showAgendaBackground").show();
                 });
 
-                $(".showAgendaBackground").click(function() {
+                $(".showAgendaBackground").click(function () {
                     $(".showAgendaBackground").hide();
                     $("#<%=pnlContainer.ClientID%>").show();
                 });
+
+                $('.loader').hide();
             });
         });
 
@@ -53,7 +60,7 @@
             });
         }
 
-        function aggiornaAgenda() {
+        function aggiornaAgenda() {           
             $("#<%=btnsearch.ClientID%>").click();
         }
 
@@ -79,6 +86,7 @@
         }
 
         function mostracella(row, column) {
+            $('.loader').show();
             $("#<%=hf_data.ClientID%>").val(row);
             $("#<%=hf_risorsa.ClientID%>").val(column);
             $("#<%=btnEditEvent.ClientID%>").click();
@@ -104,6 +112,8 @@
         }
     </script>
 
+  
+    <div class="loader"></div>
     <link rel='stylesheet' href='/Css/Agenda.css' />
 
     <asp:HiddenField ID="hf_valoreData" runat="server" />
@@ -169,7 +179,9 @@
                             <div class="w3-bar-item w3-button tablink w3-red" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
                             <div class="w3-bar-item w3-button tablink" onclick="openTabEvento(event, 'Offerta')">Offerta</div>
                             <div class="w3-bar-item w3-button tablink" onclick="openTabEvento(event, 'Lavorazione')">Lavorazione</div>
-                            <div style="position:relative;text-align:right; top:5px;float:right;width:30px;"><asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" /></div> 
+                            <div style="position: relative; text-align: right; top: 5px; float: right; width: 30px;">
+                                <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" />
+                            </div>
                         </div>
 
                         <div id="Appuntamento" class="w3-container w3-border tabEvento w3-padding-small">
@@ -203,5 +215,5 @@
             <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />
         </Triggers>
     </asp:UpdatePanel>
-    <div class="showAgendaBackground" style="display:none"></div>
+    <div class="showAgendaBackground" style="display: none"></div>
 </asp:Content>

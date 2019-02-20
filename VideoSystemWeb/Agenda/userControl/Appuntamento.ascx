@@ -81,7 +81,9 @@
 
             $("#<%=txt_Produzione.ClientID%>").easyAutocomplete(produzioni);
             $("#<%=txt_Lavorazione.ClientID%>").easyAutocomplete(lavorazioni);
+
         });
+        
     });
 
     function confermaEliminazione() {
@@ -93,38 +95,17 @@
     }
 
     function setElenchi(elencoProduzioni, elencoLavorazioni) {
-
-        //alert(jQuery.parseJSON(elencoProduzioni));
-        //alert(jQuery.parseJSON(elencoLavorazioni));
         produzioni = { data: elencoProduzioni, list: { match: { enabled: true } } };
         lavorazioni = { data: elencoLavorazioni, list: { match: { enabled: true } } };
     }
 
     var produzioni;
     var lavorazioni;
-
-    <%--var produzioni = {
-        data: [<%=elencoProduzioni%>],
-        list: {
-            match: {
-                enabled: true
-            }
-        }
-    };
-
-    var lavorazioni = {
-        data: [<%=elencoLavorazioni%>],
-        list: {
-            match: {
-                enabled: true
-            }
-        }
-    };--%>
-    
 </script>
 
 
 <asp:Panel runat="server" ID="panelAppuntamenti">
+    
     <div class="w3-container w3-center w3-xlarge">GESTIONE APPUNTAMENTI</div>
 
     <!--LAVORAZIONE-->

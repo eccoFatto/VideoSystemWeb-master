@@ -472,18 +472,16 @@
                                             <asp:TextBox ID="tbInsNumeroDocumento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                             <asp:TextBox ID="tbIdDocumentoDaModificare" runat="server" Visible="false"></asp:TextBox>
                                         </div>
-                                        <div class="w3-quarter">
+                                        <div class="w3-rest">
                                             <label>Sfoglia</label>
-                                            <asp:FileUpload ID="fuDoc" runat="server" Font-Size="X-Small" class="w3-button w3-border w3-white" />&nbsp;
-                                        </div>
-                                        <div class="w3-quarter">
-                                            <asp:Button ID="btnCaricaDocumento" runat="server" class="w3-btn w3-round w3-red" OnClick="CaricaDocumento" Text="Carica Documento" />
+                                            <asp:FileUpload ID="fuDoc" runat="server" Font-Size="X-Small" class="w3-input w3-border" />
                                         </div>
                                     </div>
                                     <div class="w3-panel w3-center w3-text-center">
                                         <Label>
                                             <asp:Label ID="lblDoc" runat="server" Font-Size="XX-Small"></asp:Label>
                                         </Label>
+                                        <asp:Button ID="btnCaricaDocumento" runat="server" class="w3-input w3-round w3-red" OnClick="CaricaDocumento" Text="Carica Documento" />
                                     </div>
                                     <asp:Button ID="btnInserisciDocumento" runat="server" Text="Inserisci Documento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoDocumento_Click" OnClientClick="return confirm('Confermi inserimento Documento?')" />
                                     <asp:Button ID="btnModificaDocumento" runat="server" Text="Modifica Documento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaDocumento_Click" OnClientClick="return confirm('Confermi modifica Documento?')" Visible="false" />

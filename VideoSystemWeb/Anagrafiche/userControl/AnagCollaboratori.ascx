@@ -247,6 +247,8 @@
                                                     <asp:Label ID="lblImage" runat="server" Font-Size="XX-Small"></asp:Label>
                                                 </p>
                                             </div>
+                                            <p>
+                                            </p>
                                         </p>
                                     </div>
                                     </div>
@@ -284,6 +286,8 @@
                                     <asp:Button ID="btnInserisciQualifica" runat="server" Text="Inserisci Qualifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoQualifica_Click" OnClientClick="return confirm('Confermi inserimento Qualifica?')" />
                                     <asp:Button ID="btnEliminaQualifica" runat="server" Text="Elimina Qualifica" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaQualifica_Click" OnClientClick="return confirm('Confermi eliminazione Qualifica?')" />
                                 </asp:PlaceHolder>
+                                <p>
+                                </p>
                             </p>
                         </div>
                     </div>
@@ -348,6 +352,8 @@
                                     <asp:Button ID="btnEliminaIndirizzo" runat="server" Text="Elimina Indirizzo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaIndirizzo_Click" OnClientClick="return confirm('Confermi eliminazione Indirizzo?')" />
                                     <asp:Button ID="btnAnnullaIndirizzo" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaIndirizzo_Click" />
                                 </asp:PlaceHolder>
+                                <p>
+                                </p>
                             </p>
                         </div>
                     </div>
@@ -407,6 +413,8 @@
                                     <asp:Button ID="btnEliminaTelefono" runat="server" Text="Elimina Telefono" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaTelefono_Click" OnClientClick="return confirm('Confermi eliminazione Telefono?')" />
                                     <asp:Button ID="btnAnnullaTelefono" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaTelefono_Click" />
                                 </asp:PlaceHolder>
+                                <p>
+                                </p>
                             </p>
                         </div>
 
@@ -441,6 +449,8 @@
                                     <asp:Button ID="btnEliminaEmail" runat="server" Text="Elimina Email" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaEmail_Click" OnClientClick="return confirm('Confermi eliminazione Email?')" />
                                     <asp:Button ID="btnAnnullaEmail" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaEmail_Click" />
                                 </asp:PlaceHolder>
+                                <p>
+                                </p>
                             </p>
                         </div>
                     </div>
@@ -449,7 +459,14 @@
                         <label>Documenti</label>
                         <asp:ListBox ID="lbMod_Documenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
                         <div class="round">
-                            <asp:GridView ID="gvMod_Documenti" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" AutoGenerateSelectButton="True" OnSelectedIndexChanged="gvMod_Documenti_RigaSelezionata">
+                            <asp:GridView ID="gvMod_Documenti" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" AutoGenerateSelectButton="True" OnSelectedIndexChanged="gvMod_Documenti_RigaSelezionata" OnRowDataBound="gvMod_Documenti_RowDataBound">
+                                <Columns>
+                                    <asp:TemplateField ShowHeader="False">
+                                        <ItemTemplate>
+                                            <asp:Button ID="btnOpenDoc" runat="server" CausesValidation="false"  Text="Vis." />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>                                
+                                </Columns>
                             </asp:GridView>
                         </div>
                         <div class="w3-container w3-center">
@@ -481,13 +498,15 @@
                                         <Label>
                                             <asp:Label ID="lblDoc" runat="server" Font-Size="XX-Small"></asp:Label>
                                         </Label>
-                                        <asp:Button ID="btnCaricaDocumento" runat="server" class="w3-input w3-round w3-red" OnClick="CaricaDocumento" Text="Carica Documento" />
+                                        <asp:Button ID="btnCaricaDocumento" runat="server" class="w3-btn w3-round w3-red" OnClick="CaricaDocumento" Text="Carica Documento" />
                                     </div>
                                     <asp:Button ID="btnInserisciDocumento" runat="server" Text="Inserisci Documento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoDocumento_Click" OnClientClick="return confirm('Confermi inserimento Documento?')" />
                                     <asp:Button ID="btnModificaDocumento" runat="server" Text="Modifica Documento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaDocumento_Click" OnClientClick="return confirm('Confermi modifica Documento?')" Visible="false" />
                                     <asp:Button ID="btnEliminaDocumento" runat="server" Text="Elimina Documento" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaDocumento_Click" OnClientClick="return confirm('Confermi eliminazione Documento?')" />
                                     <asp:Button ID="btnAnnullaDocumento" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaDocumento_Click" />
                                 </asp:PlaceHolder>
+                                <p>
+                                </p>
                             </p>
                         </div>
                     </div>

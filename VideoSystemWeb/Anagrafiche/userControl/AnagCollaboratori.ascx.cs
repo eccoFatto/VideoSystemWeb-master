@@ -1718,7 +1718,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     NascondiErroriValidazione();
 
-                    string documentoSelezionato = gvMod_Documenti.Rows[gvMod_Documenti.SelectedIndex].Cells[1].Text;
+                    string documentoSelezionato = gvMod_Documenti.Rows[gvMod_Documenti.SelectedIndex].Cells[2].Text;
                     Esito esito = new Esito();
                     Anag_Documenti_Collaboratori documento = Anag_Documenti_Collaboratori_BLL.Instance.getDocumentoById(ref esito, Convert.ToInt32(documentoSelezionato));
 
@@ -1758,6 +1758,25 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
 
 
+        }
+
+        protected void gvMod_Documenti_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // PRENDO L'ID DEL DOCUMENTO SELEZIONATO
+                string pathDocumento = e.Row.Cells[5].Text.Trim();
+                Button myButton = e.Row.FindControl("btnOpenDoc") as Button;
+                if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;")) {
+                    //string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_COLLABORATORI"] + pathDocumento;
+                    string pathCompleto = "/Images/DOCUMENTI/" + pathDocumento;
+                    myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
+                }
+                else
+                {
+                    myButton.Attributes.Add("disabled","true");
+                }
+            }
         }
 
     }

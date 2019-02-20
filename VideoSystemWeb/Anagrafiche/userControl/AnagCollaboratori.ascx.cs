@@ -87,7 +87,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             annullaModifiche();
             if (!utenteAbilitatoInScrittura)
             {
-                btnInserisciCollaboratori.Visible = false;
+                //btnInserisciCollaboratori.Visible = false;
+                divBtnInserisciCollaboratori.Visible = false;
                 btnModifica.Visible = false;
                 btnAnnulla.Visible = false;
                 btnSalva.Visible = false;
@@ -101,7 +102,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
             else
             {
-                btnInserisciCollaboratori.Visible = true;
+                //btnInserisciCollaboratori.Visible = true;
+                divBtnInserisciCollaboratori.Visible = true;
                 btnModifica.Visible = true;
                 btnAnnulla.Visible = false;
                 btnSalva.Visible = false;
@@ -151,10 +153,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     item.Attributes["onclick"] = "mostraCollaboratore('" + idCollaboratoreSelezionato + "');";
                 }
-
-                
             }
         }
+        // GESTIONE PAGINAZIONE GRIGLIA
+        protected void gv_collaboratori_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gv_collaboratori.PageIndex = e.NewPageIndex;
+            btnRicercaCollaboratori_Click(null,null);
+        }
+
         // APRO POPUP DETTAGLIO COLLABORATORE
         protected void EditCollaboratore_Click(object sender, EventArgs e)
         {
@@ -389,9 +396,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_ProvinciaNascita.ReadOnly = attivaModifica;
             cbMod_Assunto.Enabled = !attivaModifica;
             cbMod_Attivo.Enabled = !attivaModifica;
-
-
-
         }
 
         private void editCollaboratore()
@@ -476,7 +480,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     if (collaboratore.Telefoni != null) { 
                         foreach (Anag_Telefoni_Collaboratori telefono in collaboratore.Telefoni)
                         {
-                            ListItem itemTelefono = new ListItem(telefono.Descrizione + " - " + telefono.Tipo + " - " + telefono.Pref_int + telefono.Pref_naz + telefono.Numero + " - whatsapp: " + Convert.ToString(telefono.Whatsapp), telefono.Id.ToString());
+                            string whatsapp = "No";
+                            if (telefono.Whatsapp) whatsapp = "Si";
+                            ListItem itemTelefono = new ListItem(telefono.Descrizione + " - " + telefono.Tipo + " - " + telefono.Pref_int + telefono.Pref_naz + telefono.Numero + " - whatsapp: " + whatsapp, telefono.Id.ToString());
                             lbMod_Telefoni.Items.Add(itemTelefono);
                         }
                     }

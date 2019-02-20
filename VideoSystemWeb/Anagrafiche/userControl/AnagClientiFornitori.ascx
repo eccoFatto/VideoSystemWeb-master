@@ -69,7 +69,7 @@
         $("#<%=cmbMod_TipoIndirizzoOperativo.ClientID%>").val(x);
     }
 </script>
-<h3><asp:Label ID="lblTipoAzienda" runat="server" Text=""></asp:Label></h3>
+<Label><asp:Label ID="lblTipoAzienda" runat="server" Text=""></asp:Label></Label>
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
         
@@ -113,7 +113,7 @@
                             <asp:Button ID="btnRicercaAziende" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaAziende_Click" Text="Ricerca" />
                         </td>
                         <td style="width:40%;">                    
-                            <asp:Button ID="btnInserisciAzienda" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" Text="Inserisci" OnClientClick="inserisciFornitore();"/>
+                            <asp:Button ID="btnInserisciAzienda" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" Text="Inserisci" OnClientClick="inserisciAzienda();"/>
                         </td>
                         <td style="width:20%;">
                             <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;"  OnClientClick="azzeraCampiRicerca();" />
@@ -169,197 +169,198 @@
                     </div>
                     <!-- TAB AZIENDA -->
                     <div id="Azienda" class="w3-container w3-border azienda"  style="display:block">
-                    <table style="width:100%">
-                        <tr>
-                            <td style="width:75%">
-                                <div class="w3-row-padding">
-                                    <div class="w3-half">
-                                        <label>Ragione Sociale</label>
-                                        <asp:TextBox ID="tbMod_RagioneSociale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" ></asp:TextBox>
-                                    </div>
-                                    <div class="w3-half">
-                                        <label>Partita Iva</label>
-                                        <asp:TextBox ID="tbMod_PartitaIva" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                </div>
+
+                        <div class="w3-row-padding">
+                            <div class="w3-half">
+                                <label>Ragione Sociale</label>
+                                <asp:TextBox ID="tbMod_RagioneSociale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" ></asp:TextBox>
+                            </div>
+                            <div class="w3-half">
+                                <label>Partita Iva</label>
+                                <asp:TextBox ID="tbMod_PartitaIva" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                        </div>
                                         
-                                <div class="w3-row-padding">
-                                    <div class="w3-quarter">
-                                        <label>Codice Fiscale</label>
-                                        <asp:TextBox ID="tbMod_CF" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="16"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Codice Identificativo</label>
-                                        <asp:TextBox ID="tbMod_CodiceIdentificativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Iban</label>
-                                        <asp:TextBox ID="tbMod_Iban" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Pagamento</label>
-                                        <asp:DropDownList ID="cmbMod_Pagamento" runat="server" class="w3-input w3-border" Enabled="false">
-                                            <asp:ListItem Value=""></asp:ListItem>
-                                            <asp:ListItem Value="30">30 Giorni</asp:ListItem>
-                                            <asp:ListItem Value="60">60 Giorni</asp:ListItem>
-                                            <asp:ListItem Value="90">90 Giorni</asp:ListItem>
-                                        </asp:DropDownList>
-                                    </div>
-                                </div>
-                                <div class="w3-row-padding">
-                                    <div class="w3-quarter">
-                                        <label>Tipo Ind. Legale</label>
-                                        <asp:DropDownList ID="cmbMod_TipoIndirizzoLegale" runat="server" class="w3-input w3-border" Enabled="false">
-                                            <asp:ListItem Value=""></asp:ListItem>
-                                            <asp:ListItem Value="Via">Via</asp:ListItem>
-                                            <asp:ListItem Value="Viale">Viale</asp:ListItem>
-                                            <asp:ListItem Value="Piazza">Piazza</asp:ListItem>
-                                            <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
-                                            <asp:ListItem Value="Largo">Largo</asp:ListItem>
-                                            <asp:ListItem Value ="Vicolo">Vicolo</asp:ListItem>
-                                            <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
-                                        </asp:DropDownList>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Indirizzo Legale</label>
-                                        <asp:TextBox ID="tbMod_IndirizzoLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Civico Legale</label>
-                                        <asp:TextBox ID="tbMod_CivicoLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Cap Legale</label>
-                                        <asp:TextBox ID="tbMod_CapLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                </div>
+                        <div class="w3-row-padding">
+                            <div class="w3-quarter">
+                                <label>Codice Fiscale</label>
+                                <asp:TextBox ID="tbMod_CF" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="16"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Codice Identificativo</label>
+                                <asp:TextBox ID="tbMod_CodiceIdentificativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Iban</label>
+                                <asp:TextBox ID="tbMod_Iban" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Pagamento</label><br />
+                                <asp:DropDownList ID="cmbMod_Pagamento" runat="server" class="w3-input w3-border" Enabled="false">
+                                    <asp:ListItem Value=""></asp:ListItem>
+                                    <asp:ListItem Value="30">30 Giorni</asp:ListItem>
+                                    <asp:ListItem Value="60">60 Giorni</asp:ListItem>
+                                    <asp:ListItem Value="90">90 Giorni</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                        </div>
+                        <div class="w3-row-padding">
+                            <div class="w3-quarter">
+                                <label>Tipo Ind. Legale</label><br />
+                                <asp:DropDownList ID="cmbMod_TipoIndirizzoLegale" runat="server" class="w3-input w3-border" Enabled="false">
+                                    <asp:ListItem Value=""></asp:ListItem>
+                                    <asp:ListItem Value="Via">Via</asp:ListItem>
+                                    <asp:ListItem Value="Viale">Viale</asp:ListItem>
+                                    <asp:ListItem Value="Corso">Corso</asp:ListItem>
+                                    <asp:ListItem Value="Piazza">Piazza</asp:ListItem>
+                                    <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
+                                    <asp:ListItem Value="Largo">Largo</asp:ListItem>
+                                    <asp:ListItem Value ="Vicolo">Vicolo</asp:ListItem>
+                                    <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
+                                </asp:DropDownList>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Indirizzo Legale</label>
+                                <asp:TextBox ID="tbMod_IndirizzoLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Civico Legale</label>
+                                <asp:TextBox ID="tbMod_CivicoLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Cap Legale</label>
+                                <asp:TextBox ID="tbMod_CapLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                        </div>
                                         
-                                <div class="w3-row-padding">
-                                    <div class="w3-quarter">
-                                        <label>Comune Legale</label>
-                                        <asp:TextBox ID="tbMod_ComuneLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Provincia Legale</label>
-                                        <asp:TextBox ID="tbMod_ProvinciaLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Nazione Legale</label>
-                                        <asp:TextBox ID="tbMod_NazioneLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                </div>
+                        <div class="w3-row-padding">
+                            <div class="w3-quarter">
+                                <label>Comune Legale</label>
+                                <asp:TextBox ID="tbMod_ComuneLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Provincia Legale</label>
+                                <asp:TextBox ID="tbMod_ProvinciaLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Nazione Legale</label>
+                                <asp:TextBox ID="tbMod_NazioneLegale" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                        </div>
 
-                                <div class="w3-row-padding">
-                                    <div class="w3-quarter">
-                                        <label>Tipo Ind. Operativo</label>
-                                        <asp:DropDownList ID="cmbMod_TipoIndirizzoOperativo" runat="server" class="w3-input w3-border" Enabled="false">
-                                            <asp:ListItem Value=""></asp:ListItem>
-                                            <asp:ListItem Value="Via">Via</asp:ListItem>
-                                            <asp:ListItem Value="Viale">Viale</asp:ListItem>
-                                            <asp:ListItem Value="Piazza">Piazza</asp:ListItem>
-                                            <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
-                                            <asp:ListItem Value="Largo">Largo</asp:ListItem>
-                                            <asp:ListItem Value ="Vicolo">Vicolo</asp:ListItem>
-                                            <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
-                                        </asp:DropDownList>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Indirizzo Operativo</label>
-                                        <asp:TextBox ID="tbMod_IndirizzoOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Civico Operativo</label>
-                                        <asp:TextBox ID="tbMod_CivicoOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Cap Operativo</label>
-                                        <asp:TextBox ID="tbMod_CapOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>                                    
-                                    </div>
-                                </div>
+                        <div class="w3-row-padding">
+                            <div class="w3-quarter">
+                                <label>Tipo Ind. Operativo</label><br />
+                                <asp:DropDownList ID="cmbMod_TipoIndirizzoOperativo" runat="server" class="w3-input w3-border" Enabled="false">
+                                    <asp:ListItem Value=""></asp:ListItem>
+                                    <asp:ListItem Value="Via">Via</asp:ListItem>
+                                    <asp:ListItem Value="Viale">Viale</asp:ListItem>
+                                    <asp:ListItem Value="Corso">Corso</asp:ListItem>
+                                    <asp:ListItem Value="Piazza">Piazza</asp:ListItem>
+                                    <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
+                                    <asp:ListItem Value="Largo">Largo</asp:ListItem>
+                                    <asp:ListItem Value ="Vicolo">Vicolo</asp:ListItem>
+                                    <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
+                                </asp:DropDownList>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Indirizzo Operativo</label>
+                                <asp:TextBox ID="tbMod_IndirizzoOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Civico Operativo</label>
+                                <asp:TextBox ID="tbMod_CivicoOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Cap Operativo</label>
+                                <asp:TextBox ID="tbMod_CapOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>                                    
+                            </div>
+                        </div>
                                         
-                                <div class="w3-row-padding">
-                                    <div class="w3-quarter">
-                                        <label>Comune Operativo</label>
-                                        <asp:TextBox ID="tbMod_ComuneOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Provincia Operativo</label>
-                                        <asp:TextBox ID="tbMod_ProvinciaOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Nazione Operativo</label>
-                                        <asp:TextBox ID="tbMod_NazioneOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <button id="clientBtnCopiaLegaleSuOperativo" class="w3-btn w3-white w3-border w3-border-red w3-round-large w3-margin" value="Copia" onclick="copiaLegaleSuOperativo();">Copia da Legale</button>
-                                    </div>
-                                </div>
+                        <div class="w3-row-padding">
+                            <div class="w3-quarter">
+                                <label>Comune Operativo</label>
+                                <asp:TextBox ID="tbMod_ComuneOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Provincia Operativo</label>
+                                <asp:TextBox ID="tbMod_ProvinciaOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Nazione Operativo</label>
+                                <asp:TextBox ID="tbMod_NazioneOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter w3-center">
+                                <button id="clientBtnCopiaLegaleSuOperativo" class="w3-btn w3-white w3-border w3-border-red w3-round-large w3-margin-top" value="Copia" onclick="copiaLegaleSuOperativo();">Copia da Legale</button>
+                            </div>
+                        </div>
 
-                                <div class="w3-row-padding">
-                                    <div class="w3-quarter">
-                                        <label>Telefono</label>
-                                        <asp:TextBox ID="tbMod_Telefono" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Fax</label>
-                                        <asp:TextBox ID="tbMod_Fax" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Email</label>
-                                        <asp:TextBox ID="tbMod_Email" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Pec</label>
-                                        <asp:TextBox ID="tbMod_Pec" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                </div>
+                        <div class="w3-row-padding">
+                            <div class="w3-quarter">
+                                <label>Telefono</label>
+                                <asp:TextBox ID="tbMod_Telefono" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Fax</label>
+                                <asp:TextBox ID="tbMod_Fax" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Email</label>
+                                <asp:TextBox ID="tbMod_Email" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Pec</label>
+                                <asp:TextBox ID="tbMod_Pec" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                        </div>
 
-                                <div class="w3-row-padding">
-                                    <div class="w3-half">
-                                        <label>Sito Web</label>
-                                        <asp:TextBox ID="tbMod_WebSite" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                    <div class="w3-half">
-                                        <label>Tipologia</label>
-                                        <asp:DropDownList ID="cmbMod_TipoAzienda" runat="server" class="w3-input w3-border" Enabled="false"></asp:DropDownList>
-                                    </div>
-                                </div>
+                        <div class="w3-row-padding">
+                            <div class="w3-half">
+                                <label>Sito Web</label>
+                                <asp:TextBox ID="tbMod_WebSite" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
+                            </div>
+                            <div class="w3-half">
+                                <label>Tipologia</label><br />
+                                <asp:DropDownList ID="cmbMod_TipoAzienda" runat="server" class="w3-input w3-border" Enabled="false"></asp:DropDownList>
+                            </div>
+                        </div>
 
-                                <div class="w3-row-padding">
-                                    <div class="w3-quarter">
-                                        <label>Cliente</label>
-                                        <asp:CheckBox ID="cbMod_Cliente" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Fornitore</label>
-                                        <asp:CheckBox ID="cbMod_Fornitore" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Attivo</label>
-                                        <asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
-                                    </div>
-                                </div>
+                        <div class="w3-row-padding">
+                            <div class="w3-quarter">
+                                <label>Cliente</label>
+                                <asp:CheckBox ID="cbMod_Cliente" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Fornitore</label>
+                                <asp:CheckBox ID="cbMod_Fornitore" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
+                            </div>
+                            <div class="w3-quarter">
+                                <label>Attivo</label>
+                                <asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
+                            </div>
+                        </div>
 
-                                <div class="w3-container">
-                                    <label>Note</label>
-                                    <asp:TextBox ID="tbMod_Note" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
-                                </div>
+                        <div class="w3-container">
+                            <label>Note</label>
+                            <asp:TextBox ID="tbMod_Note" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                        </div>
 
-                            </td>
-                        </tr>
-                    </table>
-                    <div style="text-align: center;">
-                        <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnModifica_Click" />
-                        <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-panel w3-green w3-border w3-round" OnClick="btnElimina_Click"  OnClientClick="return confirm('Confermi eliminazione Azienda?')" Visible="false" />
-                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class="w3-panel w3-green w3-border w3-round" OnClick="btnSalva_Click" OnClientClick="return confirm('Confermi salvataggio modifiche?')" Visible="false"/>
-                        <asp:Button ID="btnConfermaInserimento" runat="server" Text="Inserisci" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimento_Click" OnClientClick="return confirm('Confermi inserimento Azienda?')" Visible="false"/>
-                        <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false"/>
-                    </div>
+                        <div style="text-align: center;">
+                            <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnModifica_Click" />
+                            <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-panel w3-green w3-border w3-round" OnClick="btnElimina_Click"  OnClientClick="return confirm('Confermi eliminazione Azienda?')" Visible="false" />
+                            <asp:Button ID="btnSalva" runat="server" Text="Salva" class="w3-panel w3-green w3-border w3-round" OnClick="btnSalva_Click" OnClientClick="return confirm('Confermi salvataggio modifiche?')" Visible="false"/>
+                            <asp:Button ID="btnConfermaInserimento" runat="server" Text="Inserisci" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimento_Click" OnClientClick="return confirm('Confermi inserimento Azienda?')" Visible="false"/>
+                            <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false"/>
+                        </div>
                     </div>
                     <!-- TAB REFERENTI -->
                     <div id="Referenti" class="w3-container w3-border azienda" style="display:none">
                         <label>Referenti</label>
-                        <asp:ListBox ID="lbMod_Referenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                        <asp:ListBox ID="lbMod_Referenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3" Visible="false"></asp:ListBox>
+                        <div class="round">
+                            <asp:GridView ID="gvMod_Referenti" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" AutoGenerateSelectButton="True" OnSelectedIndexChanged="gvMod_Referenti_RigaSelezionata">
+                            </asp:GridView>
+                        </div>
                         <div class="w3-container w3-center">
                             <p>
                                 <asp:Button ID="btnApriReferenti" runat="server" OnClick="btnApriReferenti_Click" Text="Gestione Referenti" class="w3-panel w3-green w3-border w3-round" />
@@ -374,15 +375,38 @@
                                             <asp:TextBox ID="tbInsNomeReferente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
                                         </div>
                                         <div class="w3-quarter">
-                                            <label>Civico</label>
-                                            <asp:TextBox ID="tbInsCivicoIndirizzo" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                            <label>Settore</label>
+                                            <asp:TextBox ID="tbInsSettoreReferente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                         </div>
                                         <div class="w3-quarter">
-                                            <label>Cap</label>
-                                            <asp:TextBox ID="tbInsCapIndirizzo" runat="server" MaxLength="5" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                            <label>Email</label>
+                                            <asp:TextBox ID="tbInsEmailReferente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                             <asp:TextBox ID="tbIdReferenteDaModificare" runat="server" Visible="false"></asp:TextBox>
                                         </div>
                                     </div>
+                                    <div class="w3-row-padding">
+                                        <div class="w3-quarter">
+                                            <label>Telefono 1</label>
+                                            <asp:TextBox ID="tbInsTelefono1Referente" runat="server" MaxLength="25" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <label>Telefono 2</label>
+                                            <asp:TextBox ID="tbInsTelefono2Referente" runat="server" MaxLength="25" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <label>Cellulare</label>
+                                            <asp:TextBox ID="tbInsCellulareReferente" runat="server" MaxLength="25" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <label>Attivo</label><br />
+                                            <asp:CheckBox ID="cbInsAttivoReferente" runat="server" class="w3-check" Checked="true"></asp:CheckBox>
+                                        </div>
+                                    </div>
+                                    <div class="w3-container">
+                                        <label>Note</label>
+                                        <asp:TextBox ID="tbInsNoteReferente" runat="server" class="w3-input w3-border" placeholder="" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                                    </div>
+
                                     <asp:Button ID="btnInserisciReferente" runat="server" Text="Inserisci Referente" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoReferente_Click" OnClientClick="return confirm('Confermi inserimento Referente?')" />
                                     <asp:Button ID="btnModificaReferente" runat="server" Text="Modifica Referente" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaReferente_Click" OnClientClick="return confirm('Confermi modifica Referente?')" Visible="false" />
                                     <asp:Button ID="btnEliminaReferente" runat="server" Text="Elimina Referente" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaReferente_Click" OnClientClick="return confirm('Confermi eliminazione Referente?')" />

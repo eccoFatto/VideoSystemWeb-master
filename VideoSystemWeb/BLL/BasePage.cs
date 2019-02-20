@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using VideoSystemWeb.Entity;
+using System.Text.RegularExpressions;
 
 namespace VideoSystemWeb.BLL
 {
@@ -163,6 +164,20 @@ namespace VideoSystemWeb.BLL
             }
 
             return result;
+        }
+
+        public bool validaIndirizzoEmail(string indirizzo)
+        {
+            Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
+            Match match = regex.Match(indirizzo);
+            if (match.Success)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool AbilitazioneInScrittura()

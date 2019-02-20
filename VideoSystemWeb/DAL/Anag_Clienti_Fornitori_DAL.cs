@@ -65,7 +65,9 @@ namespace VideoSystemWeb.DAL
                                     azienda.Fax = dt.Rows[0].Field<string>("fax");
                                     azienda.Fornitore = dt.Rows[0].Field<bool>("fornitore");
                                     azienda.Iban = dt.Rows[0].Field<string>("iban");
+                                    azienda.TipoIndirizzoLegale = dt.Rows[0].Field<string>("tipoIndirizzoLegale");
                                     azienda.IndirizzoLegale = dt.Rows[0].Field<string>("indirizzoLegale");
+                                    azienda.TipoIndirizzoOperativo = dt.Rows[0].Field<string>("tipoIndirizzoOperativo");
                                     azienda.IndirizzoOperativo = dt.Rows[0].Field<string>("indirizzoOperativo");
                                     azienda.NazioneLegale = dt.Rows[0].Field<string>("nazioneLegale");
                                     azienda.NazioneOperativo = dt.Rows[0].Field<string>("nazioneOperativo");
@@ -79,6 +81,7 @@ namespace VideoSystemWeb.DAL
                                     azienda.ProvinciaOperativo = dt.Rows[0].Field<string>("provinciaOperativo");
                                     azienda.RagioneSociale = dt.Rows[0].Field<string>("ragioneSociale");
                                     azienda.Tipo = dt.Rows[0].Field<string>("tipo");
+                                    azienda.WebSite = dt.Rows[0].Field<string>("webSite");
 
                                     azienda.Referenti = Anag_Referente_Clienti_Fornitori_DAL.Instance.getReferentiByIdAzienda(ref esito, azienda.Id);
                                 }
@@ -109,6 +112,7 @@ namespace VideoSystemWeb.DAL
                 {
                     string query = "SELECT * FROM anag_clienti_fornitori";
                     if (soloAttivi) query += " WHERE ATTIVO = 1";
+                    query += " ORDER BY ragioneSociale";
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -137,7 +141,9 @@ namespace VideoSystemWeb.DAL
                                         azienda.Fax = riga.Field<string>("fax");
                                         azienda.Fornitore = riga.Field<bool>("fornitore");
                                         azienda.Iban = riga.Field<string>("iban");
+                                        azienda.TipoIndirizzoLegale = riga.Field<string>("tipoIndirizzoLegale");
                                         azienda.IndirizzoLegale = riga.Field<string>("indirizzoLegale");
+                                        azienda.TipoIndirizzoOperativo = riga.Field<string>("tipoIndirizzoOperativo");
                                         azienda.IndirizzoOperativo = riga.Field<string>("indirizzoOperativo");
                                         azienda.NazioneLegale = riga.Field<string>("nazioneLegale");
                                         azienda.NazioneOperativo = riga.Field<string>("nazioneOperativo");
@@ -150,6 +156,7 @@ namespace VideoSystemWeb.DAL
                                         azienda.ProvinciaLegale = riga.Field<string>("provinciaLegale");
                                         azienda.ProvinciaOperativo = riga.Field<string>("provinciaOperativo");
                                         azienda.RagioneSociale = riga.Field<string>("ragioneSociale");
+                                        azienda.WebSite = riga.Field<string>("webSite");
 
                                         azienda.Referenti = Anag_Referente_Clienti_Fornitori_DAL.Instance.getReferentiByIdAzienda(ref esito, azienda.Id);
 

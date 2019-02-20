@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -48,7 +47,7 @@
   <ItemGroup>
     <Reference Include="AjaxControlToolkit, Version=3.5.40412.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\VideoSystemWeb\VideoSystemWeb\dll_esterne\AjaxControlToolkit.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\AjaxFileUpload\Bin\AjaxControlToolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.TelemetryCorrelation">
       <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
@@ -163,7 +162,6 @@
     <Content Include="Images\add.png" />
     <Content Include="Images\agenda.png" />
     <Content Include="Images\COLLABORATORI\dummy.jpg" />
-    <Content Include="Images\COLLABORATORI\WIN_20190129_12_57_33_Pro.jpg" />
     <Content Include="Images\delete.png" />
     <Content Include="Images\edit.png" />
     <Content Include="Images\switch.png" />
@@ -434,6 +432,7 @@
     <Compile Include="BLL\Anag_Email_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Indirizzi_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Qualifiche_Collaboratori_BLL.cs" />
+    <Compile Include="BLL\Anag_Referente_Clienti_Fornitori_BLL - Copia.cs" />
     <Compile Include="BLL\Anag_Telefoni_Collaboratori_BLL.cs" />
     <Compile Include="BLL\BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -525,6 +524,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\DOCUMENTI\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

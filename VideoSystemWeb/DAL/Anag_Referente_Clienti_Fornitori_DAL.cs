@@ -290,6 +290,58 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
+        public Anag_Referente_Clienti_Fornitori getReferenteById(ref Esito esito, int id)
+        {
+            Anag_Referente_Clienti_Fornitori referente = new Anag_Referente_Clienti_Fornitori();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM anag_referente_clienti_fornitori WHERE id = " + id.ToString();
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+
+                                    referente.Id = dt.Rows[0].Field<int>("id");
+                                    referente.Id_azienda = dt.Rows[0].Field<int>("id_azienda");
+                                    referente.Nome = dt.Rows[0].Field<string>("nome");
+                                    referente.Cognome = dt.Rows[0].Field<string>("cognome");
+                                    referente.Email = dt.Rows[0].Field<string>("email");
+                                    referente.Cellulare = dt.Rows[0].Field<string>("cellulare");
+                                    referente.Settore = dt.Rows[0].Field<string>("settore");
+                                    referente.Telefono1 = dt.Rows[0].Field<string>("telefono1");
+                                    referente.Telefono2 = dt.Rows[0].Field<string>("telefono2");
+                                    referente.Note = dt.Rows[0].Field<string>("note");
+                                    referente.Attivo = dt.Rows[0].Field<bool>("attivo");
+
+                                }
+                                else
+                                {
+                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.descrizione = "Nessun dato trovato nella tabella anag_referente_clienti_fornitori ";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return referente;
+
+        }
 
     }
 }

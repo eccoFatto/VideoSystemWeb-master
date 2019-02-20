@@ -544,6 +544,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.ListBox lbMod_Referenti;
         
         /// <summary>
+        /// Controllo gvMod_Referenti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvMod_Referenti;
+        
+        /// <summary>
         /// Controllo btnApriReferenti.
         /// </summary>
         /// <remarks>
@@ -580,22 +589,22 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbInsNomeReferente;
         
         /// <summary>
-        /// Controllo tbInsCivicoIndirizzo.
+        /// Controllo tbInsSettoreReferente.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsCivicoIndirizzo;
+        protected global::System.Web.UI.WebControls.TextBox tbInsSettoreReferente;
         
         /// <summary>
-        /// Controllo tbInsCapIndirizzo.
+        /// Controllo tbInsEmailReferente.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsCapIndirizzo;
+        protected global::System.Web.UI.WebControls.TextBox tbInsEmailReferente;
         
         /// <summary>
         /// Controllo tbIdReferenteDaModificare.
@@ -605,6 +614,51 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbIdReferenteDaModificare;
+        
+        /// <summary>
+        /// Controllo tbInsTelefono1Referente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInsTelefono1Referente;
+        
+        /// <summary>
+        /// Controllo tbInsTelefono2Referente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInsTelefono2Referente;
+        
+        /// <summary>
+        /// Controllo tbInsCellulareReferente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInsCellulareReferente;
+        
+        /// <summary>
+        /// Controllo cbInsAttivoReferente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbInsAttivoReferente;
+        
+        /// <summary>
+        /// Controllo tbInsNoteReferente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInsNoteReferente;
         
         /// <summary>
         /// Controllo btnInserisciReferente.

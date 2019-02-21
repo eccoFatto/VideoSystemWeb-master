@@ -399,28 +399,29 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                             string nomefileDoc = DateTime.Now.Ticks.ToString() + Path.GetExtension(fuDoc.FileName);
                             string fullPath = Server.MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_COLLABORATORI"]) + Path.GetFileName(nomefileDoc);
                             fuDoc.SaveAs(fullPath);
-                            //imgCollaboratore.ImageUrl = fullPath;
-                            lblDoc.Text = nomefileDoc;
-
                             string queryUpdateImg = "UPDATE anag_documenti_collaboratori SET pathDocumento = '" + nomefileDoc + "' WHERE ID = " + tbIdDocumentoDaModificare.Text.Trim();
-
                             Esito esito = new Esito();
                             int iRighe = Base_DAL.executeUpdateBySql(queryUpdateImg, ref esito);
+                            lblDoc.Text = "Caricato file " + nomefileDoc;
+
+                            btnCaricaDocumento.Visible = false;
+                            fuDoc.Visible = false;
+
                             EditCollaboratore_Click(null, null);
                         }
                         catch (Exception ex)
                         {
-                            lblImage.Text = ex.Message;
+                            lblDoc.Text = ex.Message;
                         }
                     }
                     else
                     {
-                        lblImage.Text = "Caricare un file di tipo Documento";
+                        lblDoc.Text = "Caricare un file di tipo Documento";
                     }
                 }
                 else
                 {
-                    lblImage.Text = "Caricare un documento";
+                    lblDoc.Text = "Caricare un documento";
                 }
             }
 
@@ -881,15 +882,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void btnEliminaDocumento_Click(object sender, EventArgs e)
         {
             //ELIMINO IL DOCUMENTO SE SELEZIONATO
-            if (lbMod_Documenti.SelectedIndex >= 0)
+            if (!string.IsNullOrEmpty(tbIdDocumentoDaModificare.Text.Trim()))
             {
                 try
                 {
                     NascondiErroriValidazione();
-                    ListItem item = lbMod_Documenti.Items[lbMod_Documenti.SelectedIndex];
-                    string value = item.Value;
-                    string documentoSelezionato = item.Text;
-                    Esito esito = Anag_Documenti_Collaboratori_BLL.Instance.EliminaDocumentoCollaboratore(Convert.ToInt32(item.Value));
+                    //ListItem item = lbMod_Documenti.Items[lbMod_Documenti.SelectedIndex];
+                    //string value = item.Value;
+                    //string documentoSelezionato = item.Text;
+                    Esito esito = Anag_Documenti_Collaboratori_BLL.Instance.EliminaDocumentoCollaboratore(Convert.ToInt32(tbIdDocumentoDaModificare.Text.Trim()));
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -900,9 +901,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     {
                         tbInsNumeroDocumento.Text = "";
                         cmbInsTipoDocumento.Text = "";
+                        tbIdDocumentoDaModificare.Text = "";
 
                         btnModificaDocumento.Visible = false;
                         btnInserisciDocumento.Visible = true;
+                        btnCaricaDocumento.Visible = false;
+                        fuDoc.Visible = false;
 
                         editCollaboratore();
                     }
@@ -1646,6 +1650,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             btnModificaDocumento.Visible = false;
             btnInserisciDocumento.Visible = true;
+            btnCaricaDocumento.Visible = false;
+            fuDoc.Visible = false;
+            lblDoc.Text = "";
         }
 
         protected void btnApriQualifiche_Click(object sender, EventArgs e)
@@ -1726,6 +1733,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     {
                         btnModificaDocumento.Visible = false;
                         btnInserisciDocumento.Visible = true;
+                        btnCaricaDocumento.Visible = false;
+                        fuDoc.Visible = false;
                         tbIdDocumentoDaModificare.Text = "";
                         panelErrore.Style.Remove("display");
                         lbl_MessaggioErrore.Text = esito.descrizione;
@@ -1734,6 +1743,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     {
                         btnModificaDocumento.Visible = true;
                         btnInserisciDocumento.Visible = false;
+                        btnCaricaDocumento.Visible = true;
+                        fuDoc.Visible = true;
                         tbIdDocumentoDaModificare.Text = documento.Id.ToString();
                         ListItem trovati = cmbInsTipoDocumento.Items.FindByText(documento.TipoDocumento);
                         if (trovati != null)
@@ -1751,6 +1762,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     btnModificaDocumento.Visible = false;
                     btnInserisciDocumento.Visible = true;
+                    btnCaricaDocumento.Visible = false;
+                    fuDoc.Visible = false;
                     tbIdDocumentoDaModificare.Text = "";
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;

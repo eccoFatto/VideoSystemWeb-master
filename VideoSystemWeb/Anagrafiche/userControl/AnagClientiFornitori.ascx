@@ -196,7 +196,7 @@
                             </div>
                             <div class="w3-quarter">
                                 <label>Pagamento</label><br />
-                                <asp:DropDownList ID="cmbMod_Pagamento" runat="server" class="w3-input w3-border" Enabled="false">
+                                <asp:DropDownList ID="cmbMod_Pagamento" runat="server" class="w3-input w3-border" disabled>
                                     <asp:ListItem Value=""></asp:ListItem>
                                     <asp:ListItem Value="30">30 Giorni</asp:ListItem>
                                     <asp:ListItem Value="60">60 Giorni</asp:ListItem>
@@ -207,7 +207,7 @@
                         <div class="w3-row-padding">
                             <div class="w3-quarter">
                                 <label>Tipo Ind. Legale</label><br />
-                                <asp:DropDownList ID="cmbMod_TipoIndirizzoLegale" runat="server" class="w3-input w3-border" Enabled="false">
+                                <asp:DropDownList ID="cmbMod_TipoIndirizzoLegale" runat="server" class="w3-input w3-border" disabled>
                                     <asp:ListItem Value=""></asp:ListItem>
                                     <asp:ListItem Value="Via">Via</asp:ListItem>
                                     <asp:ListItem Value="Viale">Viale</asp:ListItem>
@@ -251,7 +251,7 @@
                         <div class="w3-row-padding">
                             <div class="w3-quarter">
                                 <label>Tipo Ind. Operativo</label><br />
-                                <asp:DropDownList ID="cmbMod_TipoIndirizzoOperativo" runat="server" class="w3-input w3-border" Enabled="false">
+                                <asp:DropDownList ID="cmbMod_TipoIndirizzoOperativo" runat="server" class="w3-input w3-border" disabled>
                                     <asp:ListItem Value=""></asp:ListItem>
                                     <asp:ListItem Value="Via">Via</asp:ListItem>
                                     <asp:ListItem Value="Viale">Viale</asp:ListItem>
@@ -321,7 +321,7 @@
                             </div>
                             <div class="w3-half">
                                 <label>Tipologia</label><br />
-                                <asp:DropDownList ID="cmbMod_TipoAzienda" runat="server" class="w3-input w3-border" Enabled="false"></asp:DropDownList>
+                                <asp:DropDownList ID="cmbMod_TipoAzienda" runat="server" class="w3-input w3-border" disabled></asp:DropDownList>
                             </div>
                         </div>
 

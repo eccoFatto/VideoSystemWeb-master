@@ -457,7 +457,7 @@
                     <!-- TAB EMAIL -->
                     <div id="Documenti" class="w3-container  w3-border collab" style="display:none">
                         <label>Documenti</label>
-                        <asp:ListBox ID="lbMod_Documenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                        <asp:ListBox ID="lbMod_Documenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3" Visible="false"></asp:ListBox>
                         <div class="round">
                             <asp:GridView ID="gvMod_Documenti" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" AutoGenerateSelectButton="True" OnSelectedIndexChanged="gvMod_Documenti_RigaSelezionata" OnRowDataBound="gvMod_Documenti_RowDataBound">
                                 <Columns>
@@ -473,8 +473,8 @@
                             <p>
                                 <asp:Button ID="btnApriDocumenti" runat="server" OnClick="btnApriDocumenti_Click" Text="Gestione Documenti" class="w3-panel w3-green w3-border w3-round" />
                                 <asp:PlaceHolder ID="phDocumenti" runat="server" Visible="false">                                
-                                    <div class="w3-row-padding w3-center w3-text-center">
-                                        <div class="w3-quarter">
+                                    <div class="w3-row-padding w3-center">
+                                        <div class="w3-half">
                                             <label>TipoDocumento</label>
                                             <asp:DropDownList ID="cmbInsTipoDocumento" runat="server" class="w3-input w3-border">
                                                 <asp:ListItem Value=""></asp:ListItem>
@@ -484,21 +484,28 @@
                                                 <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
                                             </asp:DropDownList>
                                         </div>
-                                        <div class="w3-quarter">
+                                        <div class="w3-half">
                                             <label>Numero Documento</label>
                                             <asp:TextBox ID="tbInsNumeroDocumento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                             <asp:TextBox ID="tbIdDocumentoDaModificare" runat="server" Visible="false"></asp:TextBox>
                                         </div>
                                         <div class="w3-rest">
                                             <label>Sfoglia</label>
-                                            <asp:FileUpload ID="fuDoc" runat="server" Font-Size="X-Small" class="w3-input w3-border" />
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="w3-row-padding w3-center">
+                                        <div class="w3-half">
+                                            <asp:FileUpload ID="fuDoc" runat="server" Font-Size="X-Small" class="w3-input w3-border" Visible="false" />
+                                        </div>
+                                        <div class="w3-half">
+                                            <asp:Button ID="btnCaricaDocumento" runat="server" class="w3-btn w3-circle w3-green w3-left" ToolTip="Upload Documento" OnClick="CaricaDocumento" Text="+" Visible="false" />
                                         </div>
                                     </div>
                                     <div class="w3-panel w3-center w3-text-center">
-                                        <Label>
-                                            <asp:Label ID="lblDoc" runat="server" Font-Size="XX-Small"></asp:Label>
+                                        <Label class="w3-text-green">
+                                            <asp:Label ID="lblDoc" runat="server" ></asp:Label>
                                         </Label>
-                                        <asp:Button ID="btnCaricaDocumento" runat="server" class="w3-btn w3-round w3-red" OnClick="CaricaDocumento" Text="Carica Documento" />
                                     </div>
                                     <asp:Button ID="btnInserisciDocumento" runat="server" Text="Inserisci Documento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoDocumento_Click" OnClientClick="return confirm('Confermi inserimento Documento?')" />
                                     <asp:Button ID="btnModificaDocumento" runat="server" Text="Modifica Documento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaDocumento_Click" OnClientClick="return confirm('Confermi modifica Documento?')" Visible="false" />

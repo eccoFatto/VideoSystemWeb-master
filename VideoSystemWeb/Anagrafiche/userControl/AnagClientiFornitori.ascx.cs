@@ -442,10 +442,25 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             cbMod_Cliente.Enabled = !attivaModifica;
             cbMod_Fornitore.Enabled = !attivaModifica;
 
-            cmbMod_TipoAzienda.Enabled = !attivaModifica;
-            cmbMod_Pagamento.Enabled = !attivaModifica;
-            cmbMod_TipoIndirizzoLegale.Enabled = !attivaModifica;
-            cmbMod_TipoIndirizzoOperativo.Enabled = !attivaModifica;
+            if (attivaModifica)
+            {
+                cmbMod_TipoAzienda.Attributes.Add("disabled", "");
+                cmbMod_Pagamento.Attributes.Add("disabled", "");
+                cmbMod_TipoIndirizzoLegale.Attributes.Add("disabled", "");
+                cmbMod_TipoIndirizzoOperativo.Attributes.Add("disabled", "");
+            }
+            else
+            {
+                cmbMod_TipoAzienda.Attributes.Remove("disabled");
+                cmbMod_Pagamento.Attributes.Remove("disabled");
+                cmbMod_TipoIndirizzoLegale.Attributes.Remove("disabled");
+                cmbMod_TipoIndirizzoOperativo.Attributes.Remove("disabled");
+            }
+
+            //cmbMod_TipoAzienda.Enabled = !attivaModifica;
+            //cmbMod_Pagamento.Enabled = !attivaModifica;
+            //cmbMod_TipoIndirizzoLegale.Enabled = !attivaModifica;
+            //cmbMod_TipoIndirizzoOperativo.Enabled = !attivaModifica;
         }
 
         private void gestisciPulsantiAzienda(string stato)

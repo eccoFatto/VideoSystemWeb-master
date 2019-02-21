@@ -211,7 +211,7 @@
                                 <div class="w3-row-padding">
                                     <div class="w3-quarter">
                                         <label>Data Nascita</label>
-                                        <asp:TextBox ID="tbMod_DataNascita" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="Date" MaxLength="10"></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_DataNascita" runat="server" class="w3-input w3-border" placeholder="gg/mm/aaaa" MaxLength="10" ReadOnly="true"></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Comune Riferimento</label>

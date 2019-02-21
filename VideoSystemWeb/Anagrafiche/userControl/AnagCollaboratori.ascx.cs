@@ -442,6 +442,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_ProvinciaNascita.ReadOnly = attivaModifica;
             cbMod_Assunto.Enabled = !attivaModifica;
             cbMod_Attivo.Enabled = !attivaModifica;
+
         }
 
         private void editCollaboratore()
@@ -464,7 +465,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     tbMod_ComuneNascita.Text = collaboratore.ComuneNascita;
                     tbMod_ProvinciaNascita.Text = collaboratore.ProvinciaNascita;
                     tbMod_ComuneRiferimento.Text = collaboratore.ComuneRiferimento;
-                    tbMod_DataNascita.Text = collaboratore.DataNascita.ToShortDateString();
+
+                    //tbMod_DataNascita.Text = collaboratore.DataNascita.ToShortDateString();
+                    tbMod_DataNascita.Text = collaboratore.DataNascita.ToString("dd/MM/yyyy");
+
                     tbMod_NomeSocieta.Text = collaboratore.NomeSocieta;
                     tbMod_PartitaIva.Text = collaboratore.PartitaIva;
                     cbMod_Assunto.Checked = collaboratore.Assunto;

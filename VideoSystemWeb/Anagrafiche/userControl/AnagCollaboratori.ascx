@@ -3,6 +3,10 @@
 
 <script>
 
+    $(document).ready(function () {
+        $('.loader').hide();
+    });
+
     // APRO POPUP VISUALIZZAZIONE/MODIFICA COLLABORATORE
     function mostraCollaboratore(row) {
         $("#<%=hf_idColl.ClientID%>").val(row);

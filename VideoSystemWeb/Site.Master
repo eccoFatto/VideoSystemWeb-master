@@ -36,7 +36,7 @@
 </head>
 <body >
     
-    
+    <div class="loader"></div>
 
     <form runat="server" autocomplete="off">
         <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server" />   
@@ -55,11 +55,11 @@
               <a href="/Agenda/Agenda.aspx" class="w3-bar-item w3-button">Agenda</a>
               <a href="#" class="w3-bar-item w3-button">Report</a>
               <div class="w3-dropdown-hover">
-                <button class="w3-button w3-yellow">Anagrafiche</button>
+                <button class="w3-button w3-yellow" onclick="return false;">Anagrafiche</button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
-                  <a href="/Anagrafiche/AnagCollaboratori.aspx" class="w3-bar-item w3-button">Collaboratori</a>
-                  <a href="/Anagrafiche/AnagClientiFornitori.aspx?TIPO=CLIENTI" class="w3-bar-item w3-button">Clienti</a>
-                  <a href="/Anagrafiche/AnagClientiFornitori.aspx?TIPO=FORNITORI" class="w3-bar-item w3-button">Fornitori</a>
+                  <a href="/Anagrafiche/AnagCollaboratori.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Collaboratori</a>
+                  <a href="/Anagrafiche/AnagClientiFornitori.aspx?TIPO=CLIENTI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Clienti</a>
+                  <a href="/Anagrafiche/AnagClientiFornitori.aspx?TIPO=FORNITORI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Fornitori</a>
                 </div>
               </div>
               <a href="/Login.aspx" class="w3-bar-item w3-button w3-right">Esci</a>

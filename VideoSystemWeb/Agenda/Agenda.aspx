@@ -113,7 +113,7 @@
     </script>
 
   
-    <div class="loader"></div>
+    
     <link rel='stylesheet' href='/Css/Agenda.css' />
 
     <asp:HiddenField ID="hf_valoreData" runat="server" />

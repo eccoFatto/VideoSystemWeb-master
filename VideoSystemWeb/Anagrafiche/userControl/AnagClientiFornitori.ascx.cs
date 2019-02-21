@@ -82,13 +82,14 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             }
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAzienda('" + hf_tabChiamata.Value + "')", addScriptTags: true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
         private void abilitaBottoni(bool utenteAbilitatoInScrittura)
         {
             if (!utenteAbilitatoInScrittura)
             {
-                btnInserisciAzienda.Visible = false;
+                divBtnInserisciAzienda.Visible = false;
                 btnModifica.Visible = false;
                 btnAnnulla.Visible = false;
                 btnSalva.Visible = false;
@@ -97,7 +98,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
             else
             {
-                btnInserisciAzienda.Visible = true;
+                divBtnInserisciAzienda.Visible = true;
                 btnModifica.Visible = true;
                 btnAnnulla.Visible = true;
                 btnSalva.Visible = true;

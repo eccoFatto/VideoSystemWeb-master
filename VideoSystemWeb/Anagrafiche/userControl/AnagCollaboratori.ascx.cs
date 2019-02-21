@@ -80,7 +80,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
             // SELEZIONO L'ULTIMA TAB SELEZIONATA
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('" + hf_tabChiamata.Value + "')", addScriptTags: true);
-
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
         // ABILITO I BOTTONI DI MODIFICA IN BASE ALLA TIPOLOGIA DI UTENTE
         private void abilitaBottoni(bool utenteAbilitatoInScrittura)

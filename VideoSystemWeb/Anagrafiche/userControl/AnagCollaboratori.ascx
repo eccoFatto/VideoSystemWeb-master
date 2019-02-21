@@ -5,16 +5,24 @@
 
     $(document).ready(function () {
         $('.loader').hide();
+        
+            $(window).keydown(function(e){
+            if(e.keyCode == 13) {
+                $("#<%=btnRicercaCollaboratori.ClientID%>").click();
+            }
+        }); 
     });
 
     // APRO POPUP VISUALIZZAZIONE/MODIFICA COLLABORATORE
     function mostraCollaboratore(row) {
+        $('.loader').show();
         $("#<%=hf_idColl.ClientID%>").val(row);
         $("#<%=hf_tipoOperazione.ClientID%>").val('MODIFICA');
         $("#<%=btnEditCollaboratore.ClientID%>").click();
     }
     // APRO POPUP DI INSERIMENTO COLLABORATORE
     function inserisciCollaboratore() {
+        $('.loader').show();
         $("#<%=hf_idColl.ClientID%>").val('');
         $("#<%=hf_tipoOperazione.ClientID%>").val('INSERIMENTO');
         $("#<%=btnInsCollaboratore.ClientID%>").click();
@@ -102,11 +110,12 @@
                 <table style="width:100%;">
                     <tr>
                         <td style="width:40%;">                    
-                            <asp:Button ID="btnRicercaCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaCollaboratori_Click" Text="Ricerca" />
+                            <asp:Button ID="btnRicercaCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaCollaboratori_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
                         </td>
                         <td style="width:40%;">                    
                             <div id="divBtnInserisciCollaboratori" runat="server"> 
-                                <button id="clientBtnInserisciCollaboratori" class="w3-btn w3-white w3-border w3-border-red w3-round-large" value="Inserisci" onclick="inserisciCollaboratore();">Inserisci</button>
+                                <%--<button id="clientBtnInserisciCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" value="Inserisci" onclick="inserisciCollaboratore();">Inserisci</button>--%>
+                                <div id="BtnInserisciCollaboratori" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciCollaboratore();">Inserisci</div>
                             </div>
                         </td>
                         <td style="width:20%;">

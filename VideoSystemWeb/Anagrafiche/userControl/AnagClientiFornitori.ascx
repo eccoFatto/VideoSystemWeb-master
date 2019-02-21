@@ -3,16 +3,24 @@
 <script>
     $(document).ready(function () {
         $('.loader').hide();
+
+        $(window).keydown(function(e){
+            if(e.keyCode == 13) {
+                $("#<%=btnRicercaAziende.ClientID%>").click();
+            }
+        }); 
     });
 
     // APRO POPUP VISUALIZZAZIONE/MODIFICA AZIENDA
     function mostraAzienda(row) {
+        $('.loader').show();
         $("#<%=hf_idAzienda.ClientID%>").val(row);
         $("#<%=hf_tipoOperazione.ClientID%>").val('MODIFICA');
         $("#<%=btnEditAzienda.ClientID%>").click();
     }
     // APRO POPUP DI INSERIMENTO COLLABORATORE
     function inserisciAzienda() {
+        $('.loader').show();
         $("#<%=hf_idAzienda.ClientID%>").val('');
         $("#<%=hf_tipoOperazione.ClientID%>").val('INSERIMENTO');
         $("#<%=btnInsAzienda.ClientID%>").click();
@@ -113,10 +121,13 @@
                 <table style="width:100%;">
                     <tr>
                         <td style="width:40%;">                    
-                            <asp:Button ID="btnRicercaAziende" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaAziende_Click" Text="Ricerca" />
+                            <asp:Button ID="btnRicercaAziende" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaAziende_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
                         </td>
                         <td style="width:40%;">                    
-                            <asp:Button ID="btnInserisciAzienda" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" Text="Inserisci" OnClientClick="inserisciAzienda();"/>
+                            <div id="divBtnInserisciAzienda" runat="server"> 
+                                <div id="btnInserisciAzienda" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciAzienda();">Inserisci</div>
+                            </div>
+
                         </td>
                         <td style="width:20%;">
                             <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;"  OnClientClick="azzeraCampiRicerca();" />

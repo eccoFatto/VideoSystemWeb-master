@@ -94,13 +94,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Button btnRicercaAziende;
         
         /// <summary>
-        /// Controllo btnInserisciAzienda.
+        /// Controllo divBtnInserisciAzienda.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnInserisciAzienda;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBtnInserisciAzienda;
         
         /// <summary>
         /// Controllo BtnPulisciCampiRicerca.

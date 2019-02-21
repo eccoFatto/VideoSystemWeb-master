@@ -1,6 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AnagClientiFornitori.ascx.cs" Inherits="VideoSystemWeb.Anagrafiche.userControl.AnagClientiFornitori" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <script>
+    $(document).ready(function () {
+        $('.loader').hide();
+    });
 
     // APRO POPUP VISUALIZZAZIONE/MODIFICA AZIENDA
     function mostraAzienda(row) {

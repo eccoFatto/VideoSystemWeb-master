@@ -531,6 +531,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\DOCUMENTI\" />
+    <Folder Include="LOGS\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

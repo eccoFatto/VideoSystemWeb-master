@@ -39,7 +39,8 @@
     <div class="loader"></div>
 
     <form runat="server" autocomplete="off">
-        <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server" />   
+        <%--<ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server" />--%>   
+        <asp:ScriptManager ID="ScriptManager2" runat="server" EnablePartialRendering="true" ></asp:ScriptManager>
         <div id="MENU" class="w3-container w3-0 mydiv" style="align-content:center;">
             <table id="tblmenu" style="width:100%;">
                 <tr>

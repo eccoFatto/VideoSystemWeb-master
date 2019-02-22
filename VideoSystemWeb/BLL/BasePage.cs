@@ -10,14 +10,14 @@ using System.Text.RegularExpressions;
 
 namespace VideoSystemWeb.BLL
 {
-    public class BasePage: System.Web.UI.Page
+    public class BasePage : System.Web.UI.Page
     {
         public List<Tipologica> listaRisorse
         {
             get
             {
-                List <Tipologica> _listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
-                _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo=="extra").ThenBy(c => c.sottotipo).ToList<Tipologica>();
+                List<Tipologica> _listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
+                _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<Tipologica>();
                 return _listaRisorse;
             }
         }
@@ -83,7 +83,7 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-        public static T ValidaCampo<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito) 
+        public static T ValidaCampo<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito)
         {
             T result = defaultValue;
 
@@ -230,6 +230,14 @@ namespace VideoSystemWeb.BLL
         private static T ConvertValue<T>(object value)
         {
             return (T)Convert.ChangeType(value, typeof(T));
+        }
+
+        public void CheckIsMobile() { 
+
+            HttpBrowserCapabilities bc = Request.Browser;
+            if (bc.IsMobileDevice) {
+                this.MasterPageFile = "/Site.Master";
+            }
         }
     }
 }

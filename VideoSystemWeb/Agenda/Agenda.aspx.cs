@@ -12,8 +12,16 @@ namespace VideoSystemWeb.Agenda
 {
     public partial class Agenda : BasePage
     {
+
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            CheckIsMobile();
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
 

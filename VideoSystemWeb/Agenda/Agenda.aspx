@@ -17,8 +17,11 @@
 
             $('.calendarAgenda').on('dp.change', function (e) {
                 $('.loader').show();
-
+                
                 var data = e.date.date() + "/" + (e.date.month() + 1) + "/" + e.date.year();
+
+                alert("data: " + data);
+
                 $("#<%=hf_valoreData.ClientID%>").val(data);
                 $("#<%=btnsearch.ClientID%>").click();
 
@@ -169,7 +172,7 @@
                 <div class="modalBackground"></div>
                 <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopup round" ScrollBars="Auto" Style="font-size: 13px;">
 
-                    <div class="alert alert-danger alert-dismissible fade in out" role="alert" runat="server" id="panelErrore" style="display: none">
+                    <div class="alert alert-danger alert-dismissible fade in out" role="alert" runat="server" id="panelErrore" style="display: none;opacity:1;">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <asp:Label ID="lbl_MessaggioErrore" runat="server" CssClass="form-control-sm"></asp:Label>
                     </div>
@@ -198,7 +201,7 @@
                     </div>
 
                     <div style="position: absolute; width: 100%; bottom: 10px; text-align: center;">
-                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" />
+                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();"/>
                         <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" />
 
                         <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();" />

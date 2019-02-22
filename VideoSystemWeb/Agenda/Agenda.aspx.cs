@@ -517,7 +517,7 @@ namespace VideoSystemWeb.Agenda
             string check = "";
             foreach (Tipologica colonna in listaSottotipiColonne)
             {
-                check += "<div class='checkbox'><label><input type='checkbox' class='filtroColonna' value='" + colonna.sottotipo + "' checked onchange=\"filtraColonna(this,'" + colonna.sottotipo + "');\">" + colonna.sottotipo + "</label></div>";
+                check += "<div class='checkbox'><label><input type='checkbox' class='filtroColonna' value='" + colonna.sottotipo + "' checked onchange=\"filtraColonna(this,'" + colonna.sottotipo + "');\">&nbsp;" + colonna.sottotipo + "</label></div>";
             }
 
             return check;

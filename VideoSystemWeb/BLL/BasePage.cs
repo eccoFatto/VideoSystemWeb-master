@@ -207,7 +207,7 @@ namespace VideoSystemWeb.BLL
             string elementi = listaDaPopolare.InnerHtml;
             foreach (Tipologica tipologica in listaTipologica)
             {
-                elementi += "<li><a class='elemLista' href='#' val='" + tipologica.id.ToString() + "'>" + tipologica.nome + "</a></li>";
+                elementi += "<li class='dropdown-item'><a class='elemLista' href='#' val='" + tipologica.id.ToString() + "'>" + tipologica.nome + "</a></li>";
             }
             listaDaPopolare.InnerHtml = elementi;
         }
@@ -221,7 +221,7 @@ namespace VideoSystemWeb.BLL
                 foreach (T elem in lista)
                 {
                     Anag_Clienti_Fornitori cliente = ConvertValue<Anag_Clienti_Fornitori>(elem);
-                    elementi += "<li><a class='elemLista' href='#' val='" + cliente.Id.ToString() + "'>" + cliente.RagioneSociale + "</a></li>";
+                    elementi += "<li class='dropdown-item'><a class='elemLista' href='#' val='" + cliente.Id.ToString() + "'>" + cliente.RagioneSociale + "</a></li>";
                 }
                 listaDaPopolare.InnerHtml = elementi;
             }

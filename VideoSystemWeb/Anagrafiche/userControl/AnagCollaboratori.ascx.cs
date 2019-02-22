@@ -18,6 +18,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
     {
 
         BasePage basePage = new BasePage();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -40,7 +41,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (!Page.IsPostBack)
             {
-
+                log.Info("PAGE AnagCollaboratori");
                 BasePage p = new BasePage();
                 Esito esito = p.CaricaListeTipologiche();
 
@@ -71,6 +72,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 else
                 {
+                    log.Error(esito.descrizione);
                     Session["ErrorPageText"] = esito.descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
@@ -252,6 +254,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (esito.codice != Esito.ESITO_OK)
             {
+                log.Error(esito.descrizione);
                 panelErrore.Style.Remove("display");
                 lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
             }
@@ -264,6 +267,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 
                 if (esito.codice != Esito.ESITO_OK)
                 {
+                    log.Error(esito.descrizione);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = esito.descrizione;
                 }
@@ -388,6 +392,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         {
             if (!string.IsNullOrEmpty(tbIdDocumentoDaModificare.Text.Trim()))
             {
+
                 // SE L'UTENTE E' IN MODIFICA CARICO L'IMMAGINE
                 if (fuDoc.HasFile)
                 {
@@ -591,6 +596,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 else
                 {
+                    log.Error(esito.descrizione);
                     Session["ErrorPageText"] = esito.descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
@@ -702,6 +708,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                 if (esito.codice != Esito.ESITO_OK)
                 {
+                    log.Error(esito.descrizione);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = esito.descrizione;
                 }
@@ -725,6 +732,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
+                        log.Error(esito.descrizione);
                         panelErrore.Style.Remove("display");
                         lbl_MessaggioErrore.Text = esito.descrizione;
                     }
@@ -736,6 +744,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnEliminaQualifica_Click", ex);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -777,6 +786,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnEliminaEmail_Click", ex);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -826,6 +836,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnEliminaIndirizzo_Click", ex);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -871,6 +882,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnEliminaTelefono_Click", ex);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -917,6 +929,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnEliminaDocumento_Click", ex);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -961,6 +974,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("lbMod_Email_DoubleClick", ex);
                     btnModificaEmail.Visible = false;
                     btnInserisciEmail.Visible = true;
                     tbIdEmailDaModificare.Text = "";
@@ -1020,6 +1034,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("lbMod_Indirizzi_DoubleClick", ex);
                     btnModificaIndirizzo.Visible = false;
                     btnInserisciIndirizzo.Visible = true;
                     tbIdIndirizzoDaModificare.Text = "";
@@ -1078,6 +1093,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("lbMod_Telefoni_DoubleClick", ex);
                     btnModificaTelefono.Visible = false;
                     btnInserisciTelefono.Visible = true;
                     tbIdTelefonoDaModificare.Text = "";
@@ -1128,6 +1144,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("lbMod_Documenti_DoubleClick", ex);
                     btnModificaDocumento.Visible = false;
                     btnInserisciDocumento.Visible = true;
                     tbIdDocumentoDaModificare.Text = "";
@@ -1169,6 +1186,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnConfermaInserimentoQualifica_Click", ex);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -1214,6 +1232,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnConfermaInserimentoEmail_Click", ex);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -1271,6 +1290,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnConfermaInserimentoIndirizzo_Click", ex);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -1325,6 +1345,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnConfermaInserimentoTelefono_Click", ex);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -1369,6 +1390,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnConfermaInserimentoDocumento_Click", ex);
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -1417,6 +1439,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnConfermaMdoficaEmail_Click", ex);
                     btnModificaEmail.Visible = false;
                     btnInserisciEmail.Visible = true;
                     panelErrore.Style.Remove("display");
@@ -1482,6 +1505,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnConfermaMdoficaIndirizzo_Click", ex);
                     btnModificaIndirizzo.Visible = false;
                     btnInserisciIndirizzo.Visible = true;
                     panelErrore.Style.Remove("display");
@@ -1541,6 +1565,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnConfermaMdoficaTelefono_Click", ex);
                     btnModificaTelefono.Visible = false;
                     btnInserisciTelefono.Visible = true;
                     panelErrore.Style.Remove("display");
@@ -1593,6 +1618,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("btnConfermaMdoficaDocumento_Click", ex);
                     btnModificaDocumento.Visible = false;
                     btnInserisciDocumento.Visible = true;
                     panelErrore.Style.Remove("display");
@@ -1764,6 +1790,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
+                    log.Error("gvMod_Documenti_RigaSelezionata", ex);
                     btnModificaDocumento.Visible = false;
                     btnInserisciDocumento.Visible = true;
                     btnCaricaDocumento.Visible = false;

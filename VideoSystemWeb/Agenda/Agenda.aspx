@@ -16,7 +16,6 @@
 
             $('.calendarAgenda').on('dp.change', function (e) {
                 $('.loader').show();
-                //var data = e.date.date() + "/" + (e.date.month() + 1) + "/" + e.date.year();
 
                 $("#<%=hf_valoreData.ClientID%>").val(e.date.format('DD/MM/YYYY'));
                 $("#<%=btnsearch.ClientID%>").click();

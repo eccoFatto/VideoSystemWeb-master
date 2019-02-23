@@ -21,8 +21,6 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            
-
             if (!IsPostBack)
             {
                 basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
@@ -32,13 +30,13 @@ namespace VideoSystemWeb.Agenda.userControl
                 basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
                 basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
 
-               
+                List<DatiAgenda> listaCompletaEventi = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);
+                string[] elencoProduzioni = CaricaElencoProduzioni(listaCompletaEventi);
+                ViewState["elencoProduzioni"] = elencoProduzioni;
+                string[] elencoLavorazioni = CaricaElencoLavorazioni(listaCompletaEventi);
+                ViewState["elencoLavorazioni"] = elencoLavorazioni;
             }
-            List<DatiAgenda> listaCompletaEventi = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);
-            string[] elencoProduzioni = CaricaElencoProduzioni(listaCompletaEventi);
-            ViewState["elencoProduzioni"] = elencoProduzioni;
-            string[] elencoLavorazioni = CaricaElencoLavorazioni(listaCompletaEventi);
-            ViewState["elencoLavorazioni"] = elencoLavorazioni;
+            
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataInizioLavorazione.ClientID + "', '" + txt_DataFineLavorazione.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataInizioImpegno.ClientID + "', '" + txt_DataFineImpegno.ClientID + "');", true);

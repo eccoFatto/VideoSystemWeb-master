@@ -20,8 +20,6 @@ namespace VideoSystemWeb.Agenda
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
 
@@ -300,7 +298,7 @@ namespace VideoSystemWeb.Agenda
                     }
                     if (isUtenteAbilitatoInScrittura)
                     {
-                        e.Row.Cells[indiceColonna].Attributes["onclick"] = "mostracella('" + data + "', '" + id_risorsa + "');";
+                        e.Row.Cells[indiceColonna].Attributes["ondblclick"] = "mostracella('" + data + "', '" + id_risorsa + "');";
                     }
                 }
             }

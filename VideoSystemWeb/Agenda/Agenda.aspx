@@ -1,6 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Agenda.aspx.cs" Inherits="VideoSystemWeb.Agenda.Agenda" %>
 
-<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <%@ Register TagPrefix="popup" TagName="Appuntamento" Src="~/Agenda/userControl/Appuntamento.ascx" %>
 <%@ Register TagPrefix="popup" TagName="Offerta" Src="~/Agenda/userControl/Offerta.ascx" %>
 <%@ Register TagPrefix="popup" TagName="Lavorazione" Src="~/Agenda/userControl/Lavorazione.ascx" %>
@@ -17,12 +16,9 @@
 
             $('.calendarAgenda').on('dp.change', function (e) {
                 $('.loader').show();
-                
-                var data = e.date.date() + "/" + (e.date.month() + 1) + "/" + e.date.year();
+                //var data = e.date.date() + "/" + (e.date.month() + 1) + "/" + e.date.year();
 
-                alert("data: " + data);
-
-                $("#<%=hf_valoreData.ClientID%>").val(data);
+                $("#<%=hf_valoreData.ClientID%>").val(e.date.format('DD/MM/YYYY'));
                 $("#<%=btnsearch.ClientID%>").click();
 
             });
@@ -114,8 +110,6 @@
             evt.currentTarget.className += " w3-red";
         }
     </script>
-
-  
     
     <link rel='stylesheet' href='/Css/Agenda.css' />
 

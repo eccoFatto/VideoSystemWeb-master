@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -125,6 +126,10 @@
     <Content Include="Anagrafiche\userControl\AnagClientiFornitori.ascx" />
     <Content Include="Anagrafiche\userControl\AnagCollaboratori.ascx" />
     <Content Include="Contact.aspx" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -135,6 +140,14 @@
     <Content Include="Css\bootstrap-datetimepicker-standalone.css" />
     <Content Include="Css\bootstrap-datetimepicker.css" />
     <Content Include="Css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Css\bootstrap-glyphicons.css" />
+    <Content Include="Css\bootstrap-glyphicons.min.css" />
+    <Content Include="Css\bootstrap-grid.css" />
+    <Content Include="Css\bootstrap-grid.min.css" />
+    <Content Include="Css\bootstrap-reboot.css" />
+    <Content Include="Css\bootstrap-reboot.min.css" />
+    <Content Include="Css\bootstrap.css" />
+    <Content Include="Css\bootstrap.min.css" />
     <Content Include="Css\easy-autocomplete.min.css" />
     <Content Include="Css\multi-select.css" />
     <Content Include="Css\multi-select.dev.css" />
@@ -194,6 +207,16 @@
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.woff2" />
     <Content Include="Css\multi-select.dev.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Css\bootstrap-grid.css.map" />
+    <Content Include="Css\bootstrap-grid.min.css.map" />
+    <Content Include="Css\bootstrap-reboot.css.map" />
+    <Content Include="Css\bootstrap-reboot.min.css.map" />
+    <Content Include="Css\bootstrap.css.map" />
+    <Content Include="Css\bootstrap.min.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -314,6 +337,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\tether.js" />
     <Content Include="Scripts\Utility.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />

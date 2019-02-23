@@ -151,7 +151,7 @@
                         <div id="divRis" class="dropdown " style="position: absolute; width: 190px;">
                             <asp:HiddenField ID="hf_Risorse" runat="server" Value="" />
                             <asp:Button ID="ddl_Risorse" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" data-boundary="divRis" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
-                            <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;position:fixed">
+                            <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;">
                                 <input class="form-control" id="filtroRisorse" type="text" placeholder="Cerca..">
                             </ul>
                         </div>

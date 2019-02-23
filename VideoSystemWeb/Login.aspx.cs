@@ -11,8 +11,10 @@ using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb
 {
+    
     public partial class Login : BasePage
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         Esito esito = new Esito();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,6 +37,7 @@ namespace VideoSystemWeb
 
             if (esito.codice == Esito.ESITO_OK)
             {
+                log.Info("UTENTE " + tbUser.Text.Trim() + " Loggato!");
                 Response.Redirect("~/Agenda/Agenda.aspx");
             }
             else if (esito.codice == Esito.ESITO_KO_ERRORE_UTENTE_NON_RICONOSCIUTO)

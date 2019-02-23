@@ -10,6 +10,10 @@ namespace VideoSystemWeb.Anagrafiche
 {
     public partial class AnagCollaboratori : BasePage
     {
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            CheckIsMobile();
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
 

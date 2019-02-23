@@ -50,6 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Downloads\AjaxFileUpload\Bin\AjaxControlToolkit.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.TelemetryCorrelation">
       <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
     </Reference>
@@ -207,16 +210,6 @@
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.woff2" />
     <Content Include="Css\multi-select.dev.css.map" />
-    <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Content\bootstrap-grid.min.css.map" />
-    <Content Include="Content\bootstrap-reboot.css.map" />
-    <Content Include="Content\bootstrap-reboot.min.css.map" />
-    <Content Include="Css\bootstrap-grid.css.map" />
-    <Content Include="Css\bootstrap-grid.min.css.map" />
-    <Content Include="Css\bootstrap-reboot.css.map" />
-    <Content Include="Css\bootstrap-reboot.min.css.map" />
-    <Content Include="Css\bootstrap.css.map" />
-    <Content Include="Css\bootstrap.min.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -549,6 +542,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\DOCUMENTI\" />
+    <Folder Include="LOGS\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

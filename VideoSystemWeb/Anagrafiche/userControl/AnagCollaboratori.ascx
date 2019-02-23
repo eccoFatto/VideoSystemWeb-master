@@ -61,6 +61,21 @@
         $("#<%=ddlQualifiche.ClientID%>").val('');
 
     }
+
+
+function onFilesUploadStart(s, e) {
+    dxbsDemo.uploadedFilesContainer.hide();
+}
+function onFileUploadComplete(s, e) {
+    if(e.callbackData) {
+        var fileData = e.callbackData.split('|');
+        var fileName = fileData[0],
+            fileUrl = fileData[1],
+            fileSize = fileData[2];
+        dxbsDemo.uploadedFilesContainer.addFile(s, fileName, fileUrl, fileSize);
+    }
+}
+
 </script>
 <Label class="w3-text-blue"><asp:Label ID="lblTipoAzienda" runat="server" Text="COLLABORATORI"></asp:Label></Label>
 
@@ -467,7 +482,7 @@
                             </p>
                         </div>
                     </div>
-                    <!-- TAB EMAIL -->
+                    <!-- TAB DOCUMENTI -->
                     <div id="Documenti" class="w3-container  w3-border collab" style="display:none">
                         <label>Documenti</label>
                         <asp:ListBox ID="lbMod_Documenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3" Visible="false"></asp:ListBox>
@@ -508,6 +523,14 @@
                                         </div>
                                     </div>
                                     <div class="w3-row-padding w3-center">
+<%--                                        <div class="w3-quarter">
+                                            <div class="input-group">
+                                              <div class="custom-file">
+                                                <input runat="server" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                              </div>
+                                            </div>
+                                        </div>--%>
+                                        
                                         <div class="w3-half">
                                             <asp:FileUpload ID="fuDoc" runat="server" Font-Size="X-Small" class="w3-input w3-border" Visible="false" />
                                         </div>

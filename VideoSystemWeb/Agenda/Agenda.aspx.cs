@@ -30,7 +30,9 @@ namespace VideoSystemWeb.Agenda
                 Esito esito = new Esito();
                 DateTime dataPartenza = DateTime.Now;
 
-                listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito);
+                listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito); //CARICO SOLO EVENTI VISUALIZZATI
+                //listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito); //CARICO TUTTI GLI EVENTI
+                
                 ViewState["listaDatiAgenda"] = listaDatiAgenda;
 
                 hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
@@ -158,7 +160,8 @@ namespace VideoSystemWeb.Agenda
                 int indiceColonna = 1;
                 foreach (Tipologica risorsa in listaRisorse)
                 {
-                    DatiAgenda datiAgendaFiltrati = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(listaDatiAgenda, dataRiga, risorsa.id); listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_colonne_agenda == risorsa.id).ToList<DatiAgenda>();
+                    DatiAgenda datiAgendaFiltrati = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(listaDatiAgenda, dataRiga, risorsa.id);
+                    //listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_colonne_agenda == risorsa.id).ToList<DatiAgenda>();
                     if (datiAgendaFiltrati != null)
                     {
                         row[indiceColonna++] = datiAgendaFiltrati.id.ToString(); // inserisco id datoAgenda per poi formattare la cella in RowDataBound 
@@ -203,15 +206,12 @@ namespace VideoSystemWeb.Agenda
             #region dati agenda
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+                e.Row.Cells[0].Attributes.Add("class", "first");
+
                 if ((int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 0 || (int) DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 6)
                 {
-                    e.Row.Cells[0].Attributes.Add("style", "font-weight:bold;background-color:#FFD2D2; border: 3px solid #800000; color: #800000; width:100px;height:40px;");
+                    e.Row.Cells[0].Attributes.Add("class", "first festivo");
                 }
-                else
-                {
-                    e.Row.Cells[0].Attributes.Add("style", "font-weight:bold;background-color:#FDEDB5;width:100px;height:40px;");
-                }
-                e.Row.Cells[0].Attributes.Add("class", "first");
 
                 for (int indiceColonna = 1; indiceColonna <= listaRisorse.Count; indiceColonna++)
                 {
@@ -231,7 +231,7 @@ namespace VideoSystemWeb.Agenda
                         string colore;
                         colore = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "color", ref esito);
 
-                        e.Row.Cells[indiceColonna].CssClass = "evento " + risorsa.sottotipo;
+                        e.Row.Cells[indiceColonna].CssClass = "cellaEvento " + risorsa.sottotipo;
 
                         string titoloEvento = datoAgendaCorrente.id_stato == DatiAgenda.STATO_RIPOSO ? "Riposo" : datoAgendaCorrente.produzione;
 
@@ -309,10 +309,14 @@ namespace VideoSystemWeb.Agenda
 
         private void AggiornaAgenda()
         {
-            Esito esito = new Esito();
+            
+            //listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"]; //CARICO TUTTI GLI EVENTI
 
+            //CARICO SOLO GLI EVENTI VISUALIZZATI
+            Esito esito = new Esito();
             listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
             ViewState["listaDatiAgenda"] = listaDatiAgenda;
+
             gv_scheduler.DataSource = CreateDataTable(DateTime.Parse(hf_valoreData.Value));
             gv_scheduler.DataBind();
 
@@ -331,7 +335,6 @@ namespace VideoSystemWeb.Agenda
 
             return eventoEsistente == null;
         }
-
        
         #endregion
         

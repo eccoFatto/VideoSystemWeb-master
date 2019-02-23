@@ -108,12 +108,15 @@ namespace VideoSystemWeb.DAL
 
         public List<DatiAgenda> CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, ref Esito esito)
         {
+            string dataDa = dataInizio.ToString("yyyy-MM-ddT00:00:00.000");
+            string dataA = dataFine.ToString("yyyy-MM-ddT23:59:59.999");
+
             List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_lavorazione between '" + dataInizio.ToString("dd/MM/yyyy") + "' and '" + dataFine.ToString("dd/MM/yyyy") + "' OR data_fine_lavorazione between '" + dataInizio.ToString("dd/MM/yyyy") + "' and '" + dataFine.ToString("dd/MM/yyyy") + "'"))
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_lavorazione between '" + dataDa + "' and '" + dataA + "' OR data_fine_lavorazione between '" + dataDa + "' and '" + dataA + "'"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -133,7 +136,7 @@ namespace VideoSystemWeb.DAL
                                         datoAgenda.data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
                                         datoAgenda.data_fine_lavorazione = riga.Field<DateTime>("data_fine_lavorazione");
                                         datoAgenda.durata_lavorazione = riga.Field<int>("durata_lavorazione");
-                                        datoAgenda.id_tipologia =  riga.Field<int?>("id_tipologia");
+                                        datoAgenda.id_tipologia = riga.Field<int?>("id_tipologia");
                                         datoAgenda.id_cliente = riga.Field<int>("id_cliente");
                                         datoAgenda.durata_viaggio_andata = riga.Field<int>("durata_viaggio_andata");
                                         datoAgenda.durata_viaggio_ritorno = riga.Field<int>("durata_viaggio_ritorno");

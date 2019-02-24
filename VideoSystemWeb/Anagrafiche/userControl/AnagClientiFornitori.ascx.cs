@@ -81,7 +81,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
 
             }
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAzienda('" + hf_tabChiamata.Value + "')", addScriptTags: true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAzienda('" + hf_tabChiamata.Value + "');", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
@@ -115,7 +115,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 editAzienda();
                 AttivaDisattivaModificaAzienda(true);
                 gestisciPulsantiAzienda("VISUALIZZAZIONE");
-                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAzienda('Azienda')", addScriptTags: true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAzienda('Azienda');", addScriptTags: true);
                 pnlContainer.Visible = true;
             }
         }

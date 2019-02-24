@@ -1,0 +1,25 @@
+2019-02-23 16:42:49,860 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-02-23 16:42:51,647 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-23 16:42:55,255 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-23 16:42:55,255 [8] ERROR VideoSystemWeb.Agenda.Agenda - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-23 16:42:56,715 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-23 16:42:56,715 [9] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-23 16:42:58,360 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-23 16:42:58,360 [7] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-23 16:43:00,068 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-23 16:43:00,069 [7] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-23 16:43:01,318 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-23 16:43:01,318 [11] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-23 16:43:02,033 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-23 16:43:02,033 [8] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-23 16:43:02,894 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-23 16:43:02,894 [7] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-23 16:43:04,355 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-23 16:43:04,355 [7] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-23 16:43:05,597 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-23 16:43:05,597 [11] ERROR VideoSystemWeb.Agenda.Agenda - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-23 16:43:13,409 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-23 16:43:13,409 [11] ERROR VideoSystemWeb.Agenda.Agenda - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-24 11:17:02,345 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-02-24 11:17:04,220 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-24 11:17:09,645 [8] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori

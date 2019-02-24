@@ -307,7 +307,6 @@ namespace VideoSystemWeb.Agenda
 
         private void AggiornaAgenda()
         {
-            
             //listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"]; //CARICO TUTTI GLI EVENTI
 
             //CARICO SOLO GLI EVENTI VISUALIZZATI
@@ -390,8 +389,6 @@ namespace VideoSystemWeb.Agenda
         #region OPERAZIONI EVENTO
         private DatiAgenda CreaEventoDaSelezioneAgenda(DateTime dataEvento, int risorsaEvento)
         {
-           // bool isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
-
             listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"];
 
             DatiAgenda eventoSelezionato = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(listaDatiAgenda, dataEvento, risorsaEvento);
@@ -441,7 +438,6 @@ namespace VideoSystemWeb.Agenda
                 }
                 else
                 {
-
                     if (IsDisponibileDataRisorsa(eventoSelezionato))
                     {
                         if (eventoSelezionato.id == 0)
@@ -452,8 +448,8 @@ namespace VideoSystemWeb.Agenda
                         {
                             Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato);
                         }
+                        
                         ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
-
                     }
                     else
                     {

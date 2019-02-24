@@ -29,29 +29,13 @@ namespace VideoSystemWeb.Agenda.userControl
                 basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
                 basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
                 basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
-
-                List<DatiAgenda> listaCompletaEventi = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito);
-                string[] elencoProduzioni = CaricaElencoProduzioni(listaCompletaEventi);
-                ViewState["elencoProduzioni"] = elencoProduzioni;
-                string[] elencoLavorazioni = CaricaElencoLavorazioni(listaCompletaEventi);
-                ViewState["elencoLavorazioni"] = elencoLavorazioni;
             }
-            
+            string[] elencoProduzioni = Agenda_BLL.Instance.CaricaElencoProduzioni(ref esito);
+            string[] elencoLavorazioni = Agenda_BLL.Instance.CaricaElencoLavorazioni(ref esito);
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataInizioLavorazione.ClientID + "', '" + txt_DataFineLavorazione.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataInizioImpegno.ClientID + "', '" + txt_DataFineImpegno.ClientID + "');", true);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "setElenchi", "setElenchi(" + Newtonsoft.Json.JsonConvert.SerializeObject((string[])ViewState["elencoProduzioni"]) + ", " + Newtonsoft.Json.JsonConvert.SerializeObject((string[])ViewState["elencoLavorazioni"]) + ");", true);
-        }
-
-        private string[] CaricaElencoProduzioni(List<DatiAgenda> lista)
-        {
-            List<string> elencoProduzioni = lista.Where(s => !string.IsNullOrWhiteSpace(s.produzione)).Distinct().ToList().Select(o => o.produzione).ToList();
-            return elencoProduzioni.ToArray();
-        }
-        private string[] CaricaElencoLavorazioni(List<DatiAgenda> lista)
-        {
-            List<string> elencoLavorazioni = lista.Where(s => !string.IsNullOrWhiteSpace(s.lavorazione)).Distinct().ToList().Select(o => o.lavorazione).ToList();
-            return elencoLavorazioni.ToArray();
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "setElenchi", "setElenchi(" + Newtonsoft.Json.JsonConvert.SerializeObject(elencoProduzioni) + ", " + Newtonsoft.Json.JsonConvert.SerializeObject(elencoLavorazioni) + ");", true);
         }
 
         public Esito CreaOggettoSalvataggio(ref DatiAgenda datiAgenda)

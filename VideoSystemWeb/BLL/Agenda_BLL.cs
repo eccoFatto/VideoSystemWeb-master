@@ -84,6 +84,16 @@ namespace VideoSystemWeb.BLL
             return listaDatiAgenda;
         }
 
+        public string[] CaricaElencoProduzioni(ref Esito esito)
+        {
+            return Agenda_DAL.Instance.CaricaElencoProduzioni(ref esito).ToArray();
+        }
+
+        public string[] CaricaElencoLavorazioni(ref Esito esito)
+        {
+            return Agenda_DAL.Instance.CaricaElencoLavorazioni(ref esito).ToArray();
+        }
+
         public DatiAgenda GetDatiAgendaById(List<DatiAgenda> listaDatiAgenda, int id)
         {
             return listaDatiAgenda.Where(x => x.id == id).FirstOrDefault();

@@ -420,49 +420,103 @@ namespace VideoSystemWeb.Agenda
 
         private Esito SalvaEvento()
         {
+            panelErrore.Style.Add("display", "none");
+            popupAppuntamento.NascondiErroriValidazione();
+
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
 
-            #region DATI DELL'APPUNTAMENTO
+            esito = ValidazioneSalvataggio(eventoSelezionato);
 
-            esito = popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.codice == Esito.ESITO_OK)
             {
-                esito.descrizione = "Controllare i campi evidenziati";
-            }
-            else
-            {
-                panelErrore.Style.Add("display", "none");
-                popupAppuntamento.NascondiErroriValidazione();
-
-                if (!popupAppuntamento.ControlloGiorniViaggio())
+                if (eventoSelezionato.id == 0)
                 {
-                    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                    esito.descrizione = "Non è possibile salvare l'evento perché i giorni viaggio eccedono la durata della lavorazione";
+                    Agenda_BLL.Instance.CreaEvento(eventoSelezionato);
                 }
                 else
                 {
-                    if (IsDisponibileDataRisorsa(eventoSelezionato))
-                    {
-                        if (eventoSelezionato.id == 0)
-                        {
-                            Agenda_BLL.Instance.CreaEvento(eventoSelezionato);
-                        }
-                        else
-                        {
-                            Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato);
-                        }
-                        
-                        ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
-                    }
-                    else
-                    {
-                        esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                        esito.descrizione = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
-                    }
+                    Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato);
                 }
+
+                ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
             }
+            else
+            {
+                popupAppuntamento.PopolaPopup(eventoSelezionato);
+            }
+
+            #region DATI DELL'APPUNTAMENTO
+
+            //esito = popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
+
+            
+
+            //if (esito.codice != Esito.ESITO_OK)
+            //{
+            //    esito.descrizione = "Controllare i campi evidenziati";
+            //    popupAppuntamento.PopolaPopup(eventoSelezionato);
+            //}
+            //else
+            //{
+            //    panelErrore.Style.Add("display", "none");
+            //    popupAppuntamento.NascondiErroriValidazione();
+
+            //    if (!popupAppuntamento.ControlloGiorniViaggio())
+            //    {
+            //        esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+            //        esito.descrizione = "Non è possibile salvare l'evento perché i giorni viaggio eccedono la durata della lavorazione";
+            //    }
+            //    else
+            //    {
+            //        if (IsDisponibileDataRisorsa(eventoSelezionato))
+            //        {
+            //            if (eventoSelezionato.id == 0)
+            //            {
+            //                Agenda_BLL.Instance.CreaEvento(eventoSelezionato);
+            //            }
+            //            else
+            //            {
+            //                Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato);
+            //            }
+                        
+            //            ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
+            //        }
+            //        else
+            //        {
+            //            esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+            //            esito.descrizione = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
+            //        }
+            //    }
+            //}
             #endregion
+            return esito;
+        }
+
+        private Esito ValidazioneSalvataggio(DatiAgenda eventoSelezionato)
+        {
+            Esito esito = new Esito();
+            esito = popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
+
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                esito.descrizione = "Controllare i campi evidenziati";
+               
+            }
+
+            else if (!popupAppuntamento.ControlloGiorniViaggio(eventoSelezionato))
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.descrizione = "Non è possibile salvare l'evento perché i giorni viaggio eccedono la durata della lavorazione";
+                
+            }
+
+            else if (!IsDisponibileDataRisorsa(eventoSelezionato))
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.descrizione = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
+            }
+
             return esito;
         }
 
@@ -495,8 +549,6 @@ namespace VideoSystemWeb.Agenda
 
             return false;
         }
-
-
         #endregion
 
         #region COSTRUZIONE PAGINA

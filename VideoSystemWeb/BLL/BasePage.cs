@@ -38,6 +38,7 @@ namespace VideoSystemWeb.BLL
                 return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_UTENTE);
             }
         }
+
         public List<Tipologica> listaTipiTipologie
         {
             get
@@ -45,6 +46,7 @@ namespace VideoSystemWeb.BLL
                 return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE);
             }
         }
+
         public List<Tipologica> listaQualifiche
         {
             get
@@ -191,15 +193,6 @@ namespace VideoSystemWeb.BLL
             abilitazioneScrittura = UtilityTipologiche.getParametroDaTipologica(tipoUtenteLoggato, "SCRITTURA", ref esito) == "1";
 
             return abilitazioneScrittura;
-        }
-
-        public void PopolaDDLTipologicaOLD(DropDownList ddl, List<Tipologica> listaTipologica)
-        {
-            ddl.Items.Add(new ListItem("<seleziona>", "", true));
-            foreach (Tipologica tipologica in listaTipologica)
-            {
-                ddl.Items.Add(new ListItem(tipologica.nome, tipologica.id.ToString(), true));
-            }
         }
 
         public void PopolaDDLTipologica(HtmlGenericControl listaDaPopolare, List<Tipologica> listaTipologica)

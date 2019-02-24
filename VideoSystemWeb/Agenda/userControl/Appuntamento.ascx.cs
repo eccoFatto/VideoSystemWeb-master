@@ -14,9 +14,7 @@ namespace VideoSystemWeb.Agenda.userControl
         BasePage basePage = new BasePage();
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
         public event PopupHandler RichiediOperazionePopup; //evento
-        //public string[] elencoProduzioni;
-        //public string[] elencoLavorazioni;
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             Esito esito = new Esito();
@@ -118,7 +116,6 @@ namespace VideoSystemWeb.Agenda.userControl
             else
             {
                 hf_Clienti.Value = evento.id_cliente.ToString();
-                
                 ddl_Clienti.Text = ddl_Clienti.ToolTip = ((List<Anag_Clienti_Fornitori>)ViewState["listaClientiFornitori"]).Where(x => x.Id == evento.id_cliente).FirstOrDefault().RagioneSociale;
             }
 
@@ -141,7 +138,6 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, evento.id_stato, ref esito).nome;
 
             //txt_ImpegnoOrarioDa.Enabled = txt_ImpegnoOrarioA.Enabled = evento.impegnoOrario;
-            
         }
 
         public void ClearPopupEventi()
@@ -201,9 +197,9 @@ namespace VideoSystemWeb.Agenda.userControl
             }
         }
 
-        public bool ControlloGiorniViaggio()
+        public bool ControlloGiorniViaggio(DatiAgenda eventoSelezionato)
         {
-            return int.Parse(txt_DurataViaggioAndata.Text) + int.Parse(txt_DurataViaggioRitorno.Text) < int.Parse(txt_DurataLavorazione.Text);
+            return (eventoSelezionato.durata_viaggio_andata + eventoSelezionato.durata_viaggio_ritorno) < eventoSelezionato.durata_lavorazione;
         }
     }
 }

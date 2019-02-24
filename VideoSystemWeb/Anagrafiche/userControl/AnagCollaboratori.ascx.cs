@@ -81,7 +81,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             }
             // SELEZIONO L'ULTIMA TAB SELEZIONATA
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('" + hf_tabChiamata.Value + "')", addScriptTags: true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('" + hf_tabChiamata.Value + "');", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
         // ABILITO I BOTTONI DI MODIFICA IN BASE ALLA TIPOLOGIA DI UTENTE
@@ -173,7 +173,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 editCollaboratore();
                 AttivaDisattivaModificaAnagrafica(true);
                 gestisciPulsantiAnagrafica("VISUALIZZAZIONE");
-                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('Anagrafica')", addScriptTags: true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('Anagrafica');", addScriptTags: true);
                 pnlContainer.Visible = true;
             }
         }

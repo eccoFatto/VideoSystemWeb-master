@@ -167,6 +167,7 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
+                
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
                 esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }

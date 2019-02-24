@@ -10,6 +10,8 @@ namespace VideoSystemWeb.BLL
 {
     public class Agenda_BLL
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         //singleton
         private static volatile Agenda_BLL instance;
         private static object objForLock = new Object();
@@ -76,6 +78,8 @@ namespace VideoSystemWeb.BLL
             {
                 listaDatiAgenda = Tipologie.getListaDatiAgenda();
             }
+
+            log.Error(esito.descrizione);
 
             return listaDatiAgenda;
         }

@@ -12,6 +12,7 @@ namespace VideoSystemWeb.Agenda
 {
     public partial class Agenda : BasePage
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
@@ -312,6 +313,9 @@ namespace VideoSystemWeb.Agenda
             //CARICO SOLO GLI EVENTI VISUALIZZATI
             Esito esito = new Esito();
             listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
+
+            log.Error(esito.descrizione);
+
             ViewState["listaDatiAgenda"] = listaDatiAgenda;
 
             gv_scheduler.DataSource = CreateDataTable(DateTime.Parse(hf_valoreData.Value));

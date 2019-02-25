@@ -197,9 +197,6 @@ namespace VideoSystemWeb.Agenda.userControl
             }
         }
 
-        public bool ControlloGiorniViaggio(DatiAgenda eventoSelezionato)
-        {
-            return (eventoSelezionato.durata_viaggio_andata + eventoSelezionato.durata_viaggio_ritorno) < eventoSelezionato.durata_lavorazione;
-        }
+        
     }
 }

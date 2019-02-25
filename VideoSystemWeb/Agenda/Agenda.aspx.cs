@@ -504,7 +504,7 @@ namespace VideoSystemWeb.Agenda
                
             }
 
-            else if (!popupAppuntamento.ControlloGiorniViaggio(eventoSelezionato))
+            else if (!ControlloGiorniViaggio(eventoSelezionato))
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
                 esito.descrizione = "Non è possibile salvare l'evento perché i giorni viaggio eccedono la durata della lavorazione";
@@ -548,6 +548,11 @@ namespace VideoSystemWeb.Agenda
             }
 
             return false;
+        }
+
+        private bool ControlloGiorniViaggio(DatiAgenda eventoSelezionato)
+        {
+            return (eventoSelezionato.durata_viaggio_andata + eventoSelezionato.durata_viaggio_ritorno) < eventoSelezionato.durata_lavorazione;
         }
         #endregion
 

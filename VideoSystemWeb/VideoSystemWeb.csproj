@@ -444,6 +444,9 @@
     <Compile Include="BLL\Anag_Clienti_Fornitori_BLL.cs" />
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
+    <Compile Include="BLL\Art_Gruppi_Articoli_BLL.cs" />
+    <Compile Include="BLL\Art_Gruppi_BLL.cs" />
+    <Compile Include="BLL\Art_Articoli_BLL.cs" />
     <Compile Include="BLL\Anag_Email_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Indirizzi_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Qualifiche_Collaboratori_BLL.cs" />

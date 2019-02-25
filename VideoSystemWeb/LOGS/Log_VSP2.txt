@@ -23,3 +23,21 @@
 2019-02-24 11:17:02,345 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2019-02-24 11:17:04,220 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - Nessun dato trovato nella tabella tab_dati_agenda 
 2019-02-24 11:17:09,645 [8] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-02-24 12:27:37,769 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-02-24 12:27:39,204 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-24 12:27:45,450 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-24 12:27:45,450 [7] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-24 12:27:46,939 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-24 12:27:46,940 [6] ERROR VideoSystemWeb.Agenda.Agenda - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-02-24 12:27:48,676 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-24 12:27:48,676 [7] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-24 12:27:49,498 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-24 12:27:49,499 [6] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-24 12:27:54,779 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-24 12:27:54,780 [7] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-24 12:28:09,337 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-24 12:28:09,624 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-24 12:28:09,624 [10] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-24 12:28:17,980 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-02-24 12:28:17,980 [10] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-02-24 12:28:21,135 [7] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori

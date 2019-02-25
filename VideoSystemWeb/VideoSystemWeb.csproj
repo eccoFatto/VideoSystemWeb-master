@@ -464,7 +464,11 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\Agenda_DAL.cs" />
+    <Compile Include="DAL\Art_Gruppi_Articoli_DAL.cs" />
+    <Compile Include="DAL\Art_Gruppi_DAL.cs" />
+    <Compile Include="DAL\Art_Articoli_DAL.cs" />
     <Compile Include="DAL\Anag_Clienti_Fornitori_DAL.cs" />
+    <Compile Include="DAL\Dati_Articoli_DAL.cs" />
     <Compile Include="DAL\Anag_Documenti_Collaboratori_DAL.cs" />
     <Compile Include="DAL\Anag_Referente_Clienti_Fornitori_DAL.cs" />
     <Compile Include="DAL\Anag_Telefoni_Collaboratori_DAL.cs" />
@@ -489,6 +493,10 @@
     <Compile Include="Entity\Anag_Qualifiche_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
     <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />
+    <Compile Include="Entity\Art_Gruppi_Articoli.cs" />
+    <Compile Include="Entity\Art_Gruppi.cs" />
+    <Compile Include="Entity\Art_Articoli.cs" />
+    <Compile Include="Entity\DatiArticoli.cs" />
     <Compile Include="Entity\DatiAgenda.cs" />
     <Compile Include="Entity\Evento.cs" />
     <Compile Include="Entity\Json\Evento_Json.cs" />

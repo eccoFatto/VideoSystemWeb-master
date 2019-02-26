@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using VideoSystemWeb.BLL;
+using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
@@ -12,16 +14,16 @@ namespace VideoSystemWeb.Agenda.userControl
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
         public event PopupHandler RichiediOperazionePopup; //evento
 
-        List<ProvaElementiOfferta> listaGenerale = new List<ProvaElementiOfferta>();
-        List<ProvaElementiOfferta> listaSelezione = new List<ProvaElementiOfferta>();
+        List<Art_Gruppi> listaGruppi = new List<Art_Gruppi>();
+        List<DatiArticoli> listaArticoli = new List<DatiArticoli>();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                caricaListaGenerale();
+                caricaListaGruppi();
 
-                gvElencoOfferta.DataSource = listaGenerale;
-                gvElencoOfferta.DataBind();
+                gvGruppi.DataSource = listaGruppi;
+                gvGruppi.DataBind();
             }
 
             //if (ViewState["listaSelezione"] != null)
@@ -33,19 +35,25 @@ namespace VideoSystemWeb.Agenda.userControl
             //}
         }
 
-        private void caricaListaGenerale()
+        //private void caricaListaGenerale()
+        //{
+        //    listaGenerale.Add(new ProvaElementiOfferta(1, "19 20 21", "Personale tecnico monocamera", "", 1, 100, 40));
+        //    listaGenerale.Add(new ProvaElementiOfferta(2, "22 23 24", "Personale tecnico bicamera", "", 1, 200, 70));
+        //    listaGenerale.Add(new ProvaElementiOfferta(3, "25 26 27", "Personale tecnico tricamera", "", 2, 300, 100));
+        //    listaGenerale.Add(new ProvaElementiOfferta(4, "Acquisti", "Costi acquisti", "Acquisti", 1, 80, 70));
+        //}
+
+        private void caricaListaGruppi()
         {
-            listaGenerale.Add(new ProvaElementiOfferta(1, "19 20 21", "Personale tecnico monocamera", "", 1, 100, 40));
-            listaGenerale.Add(new ProvaElementiOfferta(2, "22 23 24", "Personale tecnico bicamera", "", 1, 200, 70));
-            listaGenerale.Add(new ProvaElementiOfferta(3, "25 26 27", "Personale tecnico tricamera", "", 2, 300, 100));
-            listaGenerale.Add(new ProvaElementiOfferta(4, "Acquisti", "Costi acquisti", "Acquisti", 1, 80, 70));
+            Esito esito = new Esito();
+            listaGruppi = Articoli_BLL.Instance.CaricaListaGruppi(ref esito);
         }
 
-        private void aggiungiAListaSelezione(int idElemento)
+        private void aggiungiAListaArticoli(int idArticolo)
         {
-            ProvaElementiOfferta elemento = listaGenerale.Where(x => x.ID == idElemento).FirstOrDefault();
-
-            listaSelezione.Add(elemento);
+            Esito esito = new Esito();
+            int idEvento = 0;// ((DatiAgenda)ViewState["eventoSelezionato"]).id;
+            listaArticoli.AddRange(Articoli_BLL.Instance.CaricaListaArticoliByIDGruppo(idEvento, idArticolo, ref esito));
         }
 
         #region COMPORTAMENTO ELEMENTI PAGINA
@@ -59,27 +67,35 @@ namespace VideoSystemWeb.Agenda.userControl
             
         }
 
-        protected void gvElencoOfferta_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void gvGruppi_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int idSelezione = Convert.ToInt32(e.CommandArgument);
 
-            caricaListaGenerale();
-            listaSelezione = (List<ProvaElementiOfferta>)ViewState["listaSelezione"];
-            if (listaSelezione == null)
+            caricaListaGruppi();
+            listaArticoli = (List<DatiArticoli>)ViewState["listaArticoli"];
+            if (listaArticoli == null)
             {
-                listaSelezione = new List<ProvaElementiOfferta>();
+                listaArticoli = new List<DatiArticoli>();
             }
-            aggiungiAListaSelezione(idSelezione);
+            aggiungiAListaArticoli(idSelezione);
 
-            ViewState["listaSelezione"] = listaSelezione;
+            ViewState["listaArticoli"] = listaArticoli;
            
 
-            gvSelezioneOfferta.DataSource = listaSelezione;
-            gvSelezioneOfferta.DataBind();
+            gvArticoli.DataSource = listaArticoli;
+            gvArticoli.DataBind();
 
             RichiediOperazionePopup("UPDATE");
         }
         #endregion
+
+        public void ClearOfferta()
+        {
+            gvArticoli.DataSource = null;
+            gvArticoli.DataBind();
+
+            //NascondiErroriValidazione();
+        }
     }
 
     [Serializable]
@@ -105,5 +121,6 @@ namespace VideoSystemWeb.Agenda.userControl
             this.Prezzo = prezzo;
             this.Costo = costo;
         }
+
     }
 }

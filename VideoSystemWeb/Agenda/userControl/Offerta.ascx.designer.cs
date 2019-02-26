@@ -40,40 +40,40 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
         
         /// <summary>
-        /// Controllo panel1.
+        /// Controllo panelArticoli.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panel1;
+        protected global::System.Web.UI.WebControls.Panel panelArticoli;
         
         /// <summary>
-        /// Controllo gvSelezioneOfferta.
+        /// Controllo gvArticoli.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvSelezioneOfferta;
+        protected global::System.Web.UI.WebControls.GridView gvArticoli;
         
         /// <summary>
-        /// Controllo panel2.
+        /// Controllo panelGruppi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panel2;
+        protected global::System.Web.UI.WebControls.Panel panelGruppi;
         
         /// <summary>
-        /// Controllo gvElencoOfferta.
+        /// Controllo gvGruppi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvElencoOfferta;
+        protected global::System.Web.UI.WebControls.GridView gvGruppi;
         
         /// <summary>
         /// Controllo btnSalva.

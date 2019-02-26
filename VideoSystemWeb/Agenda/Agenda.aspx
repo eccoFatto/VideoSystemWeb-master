@@ -90,12 +90,14 @@
             $("#<%=btnEditEvent.ClientID%>").click();
         }
 
-        function chiudiPopup() {
+        function chiudiPopup() {            
             $("#<%=btn_chiudi.ClientID%>").click();
         }
 
         function openTabEvento(evt, tipoName) {
+            
             $("#<%=hf_tabSelezionata.ClientID%>").val(tipoName);
+            
             var i, x, tablinks;
             x = document.getElementsByClassName("tabEvento");
             for (i = 0; i < x.length; i++) {
@@ -107,6 +109,12 @@
             }
             document.getElementById(tipoName).style.display = "block";
             evt.currentTarget.className += " w3-red";
+
+            document.getElementById("tab_"+tipoName).className += " w3-red";
+        }
+
+        function resetTabSelezionata() {
+            $("#<%=hf_tabSelezionata.ClientID%>").val("Appuntamento");
         }
     </script>
     
@@ -172,9 +180,9 @@
 
                     <div class="w3-container">
                         <div class="w3-bar w3-blue w3-round">
-                            <div class="w3-bar-item w3-button tablink w3-red" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
-                            <div class="w3-bar-item w3-button tablink" onclick="openTabEvento(event, 'Offerta')">Offerta</div>
-                            <div class="w3-bar-item w3-button tablink" onclick="openTabEvento(event, 'Lavorazione')">Lavorazione</div>
+                            <div class="w3-bar-item w3-button tablink w3-red" id="tab_Appuntamento" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
+                            <div class="w3-bar-item w3-button tablink" id="tab_Offerta" onclick="openTabEvento(event, 'Offerta')">Offerta</div>
+                            <div class="w3-bar-item w3-button tablink" id="tab_Lavorazione" onclick="openTabEvento(event, 'Lavorazione')">Lavorazione</div>
                             <div style="position: relative; text-align: right; top: 5px; float: right; width: 30px;">
                                 <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" />
                             </div>
@@ -194,12 +202,12 @@
                     </div>
 
                     <div style="position: absolute; width: 100%; bottom: 10px; text-align: center;">
-                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();"/>
-                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="$('.loader').show();"/>
+                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="resetTabSelezionata();$('.loader').show();"/>
+                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="resetTabSelezionata();$('.loader').show();"/>
 
                         <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();" />
-                        <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato()" Visible="false" />
-                        <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato()" OnClick="btnLavorazione_Click" Visible="false" />
+                        <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();" Visible="false" />
+                        <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();" OnClick="btnLavorazione_Click" Visible="false" />
                         <asp:Button ID="btnRiposo" runat="server" Text="Riposo" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRiposo_Click" Visible="false" />
                     </div>
 

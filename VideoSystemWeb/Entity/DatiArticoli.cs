@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using VideoSystemWeb.BLL;
 
 namespace VideoSystemWeb.Entity
 {
@@ -31,6 +32,9 @@ namespace VideoSystemWeb.Entity
         private decimal costo;
         private int iva;
 
+        private Art_Articoli artArticoli;
+
+
         public int Id { get => id; set => id = value; }
         public int IdArtArticoli { get => idArtArticoli; set => idArtArticoli = value; }
         public int IdTipoGenere { get => idTipoGenere; set => idTipoGenere = value; }
@@ -41,5 +45,9 @@ namespace VideoSystemWeb.Entity
         public decimal Prezzo { get => prezzo; set => prezzo = value; }
         public decimal Costo { get => costo; set => costo = value; }
         public int Iva { get => iva; set => iva = value; }
+
+        public Art_Articoli ArtArticoli { get => artArticoli; set => artArticoli = value; }
+
+
     }
 }

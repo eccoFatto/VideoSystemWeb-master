@@ -140,7 +140,7 @@ namespace VideoSystemWeb.Agenda.userControl
             //txt_ImpegnoOrarioDa.Enabled = txt_ImpegnoOrarioA.Enabled = evento.impegnoOrario;
         }
 
-        public void ClearPopupEventi()
+        public void ClearAppuntamento()
         {
             txt_DataInizioLavorazione.Text = string.Empty;
             txt_DataFineLavorazione.Text = string.Empty;

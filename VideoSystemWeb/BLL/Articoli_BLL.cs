@@ -153,12 +153,12 @@ namespace VideoSystemWeb.BLL
                 DatiArticoli articolo = new DatiArticoli();
                 articolo.IdArtArticoli = articoloTemplate.Id;
                 articolo.IdDatiAgenda = idEvento;
+                articolo.Descrizione = articoloTemplate.DefaultDescrizione;
+                articolo.DescrizioneLunga = articoloTemplate.DefaultDescrizioneLunga;
                 articolo.Stampa = articoloTemplate.DefaultStampa;
                 articolo.Prezzo = articoloTemplate.DefaultPrezzo;
                 articolo.Costo = articoloTemplate.DefaultCosto;
                 articolo.Iva = articoloTemplate.DefaultIva;
-
-                articolo.ArtArticoli = articoloTemplate;
 
                 listaArticoliDelGruppo.Add(articolo);
             }

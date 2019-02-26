@@ -19,8 +19,8 @@ namespace VideoSystemWeb.Entity
         [attivo] [bit] NOT NULL,
         */
         private int id;
-        private string descrizione;
-        private string descrizioneLunga;
+        private string defaultDescrizione;
+        private string defaultDescrizioneLunga;
         private bool defaultStampa;
         private decimal defaultPrezzo;
         private decimal defaultCosto;
@@ -28,8 +28,8 @@ namespace VideoSystemWeb.Entity
         private bool attivo;
 
         public int Id { get => id; set => id = value; }
-        public string Descrizione { get => descrizione; set => descrizione = value; }
-        public string DescrizioneLunga { get => descrizioneLunga; set => descrizioneLunga = value; }
+        public string DefaultDescrizione { get => defaultDescrizione; set => defaultDescrizione = value; }
+        public string DefaultDescrizioneLunga { get => defaultDescrizioneLunga; set => defaultDescrizioneLunga = value; }
         public bool DefaultStampa { get => defaultStampa; set => defaultStampa = value; }
         public decimal DefaultPrezzo { get => defaultPrezzo; set => defaultPrezzo = value; }
         public decimal DefaultCosto { get => defaultCosto; set => defaultCosto = value; }

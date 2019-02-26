@@ -24,6 +24,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 gvGruppi.DataSource = listaGruppi;
                 gvGruppi.DataBind();
+
             }
 
             //if (ViewState["listaSelezione"] != null)

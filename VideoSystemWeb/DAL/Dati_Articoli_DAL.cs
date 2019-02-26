@@ -62,6 +62,9 @@ namespace VideoSystemWeb.DAL
                                         datiArticoli.IdTipoGruppo = riga.Field<int>("idTipoGruppo");
                                         datiArticoli.IdTipoSottogruppo = riga.Field<int>("idTipoSottogruppo");
 
+                                        datiArticoli.Descrizione = riga.Field<string>("descrizione");
+                                        datiArticoli.DescrizioneLunga = riga.Field<string>("descrizioneLunga");
+
                                         datiArticoli.Iva = riga.Field<int>("iva");
 
                                         datiArticoli.Prezzo = riga.Field<decimal>("prezzo");
@@ -116,6 +119,9 @@ namespace VideoSystemWeb.DAL
                                     datiArticoli.IdTipoGenere = dt.Rows[0].Field<int>("idTipoGenere");
                                     datiArticoli.IdTipoGruppo = dt.Rows[0].Field<int>("idTipoGruppo");
                                     datiArticoli.IdTipoSottogruppo = dt.Rows[0].Field<int>("idTipoSottogruppo");
+
+                                    datiArticoli.Descrizione = dt.Rows[0].Field<string>("descrizione");
+                                    datiArticoli.DescrizioneLunga = dt.Rows[0].Field<string>("descrizioneLunga");
 
                                     datiArticoli.Iva = dt.Rows[0].Field<int>("iva");
 
@@ -184,6 +190,14 @@ namespace VideoSystemWeb.DAL
                             SqlParameter idTipoSottogruppo = new SqlParameter("@idTipoSottogruppo", datoArticolo.IdTipoSottogruppo);
                             idTipoSottogruppo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idTipoSottogruppo);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", datoArticolo.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter descrizioneLunga = new SqlParameter("@descrizioneLunga", datoArticolo.DescrizioneLunga);
+                            descrizioneLunga.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizioneLunga);
 
                             SqlParameter iva = new SqlParameter("@iva", datoArticolo.Iva);
                             iva.Direction = ParameterDirection.Input;
@@ -260,6 +274,14 @@ namespace VideoSystemWeb.DAL
                             SqlParameter idTipoSottogruppo = new SqlParameter("@idTipoSottogruppo", datoArticolo.IdTipoSottogruppo);
                             idTipoSottogruppo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idTipoSottogruppo);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", datoArticolo.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter descrizioneLunga = new SqlParameter("@descrizioneLunga", datoArticolo.DescrizioneLunga);
+                            descrizioneLunga.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizioneLunga);
 
                             SqlParameter iva = new SqlParameter("@iva", datoArticolo.Iva);
                             iva.Direction = ParameterDirection.Input;

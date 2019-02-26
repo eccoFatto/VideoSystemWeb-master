@@ -57,8 +57,8 @@ namespace VideoSystemWeb.DAL
                                     articolo.DefaultIva = dt.Rows[0].Field<int>("defaultIva");
                                     articolo.DefaultPrezzo = dt.Rows[0].Field<decimal>("defaultPrezzo");
                                     articolo.DefaultStampa = dt.Rows[0].Field<bool>("defaultStampa");
-                                    articolo.Descrizione = dt.Rows[0].Field<string>("descrizione");
-                                    articolo.DescrizioneLunga = dt.Rows[0].Field<string>("descrizioneLunga");
+                                    articolo.DefaultDescrizione = dt.Rows[0].Field<string>("defaultDescrizione");
+                                    articolo.DefaultDescrizioneLunga = dt.Rows[0].Field<string>("defaultDescrizioneLunga");
                                     articolo.Attivo = dt.Rows[0].Field<bool>("attivo");
 
                                 }
@@ -110,8 +110,8 @@ namespace VideoSystemWeb.DAL
                                         articolo.DefaultIva = riga.Field<int>("defaultIva");
                                         articolo.DefaultPrezzo = riga.Field<decimal>("defaultPrezzo");
                                         articolo.DefaultStampa = riga.Field<bool>("defaultStampa");
-                                        articolo.Descrizione = riga.Field<string>("descrizione");
-                                        articolo.DescrizioneLunga = riga.Field<string>("descrizioneLunga");
+                                        articolo.DefaultDescrizione = riga.Field<string>("defaultDescrizione");
+                                        articolo.DefaultDescrizioneLunga = riga.Field<string>("defaultDescrizioneLunga");
                                         articolo.Attivo = riga.Field<bool>("attivo");
 
                                         listaArticoli.Add(articolo);
@@ -172,13 +172,13 @@ namespace VideoSystemWeb.DAL
                             defaultStampa.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(defaultStampa);
 
-                            SqlParameter descrizione = new SqlParameter("@descrizione", articolo.Descrizione);
-                            descrizione.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(descrizione);
+                            SqlParameter defaultDescrizione = new SqlParameter("@defaultDescrizione", articolo.DefaultDescrizione);
+                            defaultDescrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(defaultDescrizione);
 
-                            SqlParameter descrizioneLunga = new SqlParameter("@descrizioneLunga", articolo.DescrizioneLunga);
-                            descrizioneLunga.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(descrizioneLunga);
+                            SqlParameter defaultDescrizioneLunga = new SqlParameter("@defaultDescrizioneLunga", articolo.DefaultDescrizioneLunga);
+                            defaultDescrizioneLunga.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(defaultDescrizioneLunga);
 
                             StoreProc.Connection.Open();
 
@@ -239,13 +239,13 @@ namespace VideoSystemWeb.DAL
                             defaultStampa.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(defaultStampa);
 
-                            SqlParameter descrizione = new SqlParameter("@descrizione", articolo.Descrizione);
-                            descrizione.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(descrizione);
+                            SqlParameter defaultDescrizione = new SqlParameter("@defaultDescrizione", articolo.DefaultDescrizione);
+                            defaultDescrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(defaultDescrizione);
 
-                            SqlParameter descrizioneLunga = new SqlParameter("@descrizioneLunga", articolo.DescrizioneLunga);
-                            descrizioneLunga.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(descrizioneLunga);
+                            SqlParameter defaultDescrizioneLunga = new SqlParameter("@defaultDescrizioneLunga", articolo.DefaultDescrizioneLunga);
+                            defaultDescrizioneLunga.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(defaultDescrizioneLunga);
 
                             StoreProc.Connection.Open();
 

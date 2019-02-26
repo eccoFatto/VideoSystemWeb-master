@@ -402,11 +402,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         }
 
-        protected void btn_chiudi_Click(object sender, EventArgs e)
-        {
-            pnlContainer.Visible = false;
-        }
-
         protected void btnModifica_Click(object sender, EventArgs e)
         {
             AttivaDisattivaModificaAzienda(false);
@@ -524,13 +519,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     panelErrore.Style.Remove("display");
+                    
                     lbl_MessaggioErrore.Text = esito.descrizione;
                     AttivaDisattivaModificaAzienda(true);
                 }
                 else
                 {
                     AttivaDisattivaModificaAzienda(true);
-                    btn_chiudi_Click(null, null);
+                    //btn_chiudi_Click(null, null);
+                    pnlContainer.Visible = false;
                     btnRicercaAziende_Click(null, null);
                 }
 
@@ -640,7 +637,11 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = esito.descrizione;
                 }
-                EditAzienda_Click(null, null);
+                else
+                {
+                    EditAzienda_Click(null, null);
+                }
+                
             }
 
         }

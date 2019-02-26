@@ -58,8 +58,10 @@
         $("#<%=ddlTipoAzienda.ClientID%>").val('');
     }
     function copiaLegaleSuOperativo() {
+
         var x = $("#<%=tbMod_CapLegale.ClientID%>").val();
         $("#<%=tbMod_CapOperativo.ClientID%>").val(x);
+
 
         x = $("#<%=tbMod_CivicoLegale.ClientID%>").val();
         $("#<%=tbMod_CivicoOperativo.ClientID%>").val(x);
@@ -78,7 +80,16 @@
 
         x = $("#<%=cmbMod_TipoIndirizzoLegale.ClientID%>").val();
         $("#<%=cmbMod_TipoIndirizzoOperativo.ClientID%>").val(x);
+
     }
+
+    function chiudiPopup() {
+        // QUANDO APRO IL POPUP RIPARTE SEMPRE DA AZIENDA E NON DALL'ULTIMA TAB APERTA
+        $("#<%=hf_tabChiamata.ClientID%>").val('Azienda');
+        var pannelloPopup = document.getElementById('<%=pnlContainer.ClientID%>');
+        pannelloPopup.style.display = "none";
+    }
+
 </script>
 <Label><asp:Label ID="lblTipoAzienda" runat="server" Text=""></asp:Label></Label>
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
@@ -179,7 +190,9 @@
                     <div class="w3-bar w3-green w3-round">
                         <div class="w3-bar-item w3-button w3-green" onclick="openDettaglioAzienda('Azienda')">Azienda</div>
                         <div class="w3-bar-item w3-button w3-green" onclick="openDettaglioAzienda('Referenti')">Referenti</div>
-                        <div class="w3-bar-item w3-button w3-green w3-right"><asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-button w3-green w3-small w3-round" OnClick="btn_chiudi_Click" /></div>
+                        <div class="w3-bar-item w3-button w3-green w3-right">
+                            <div id="btnChiudiPopup" class="w3-button w3-green w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
+                        </div>
                     </div>
                     <!-- TAB AZIENDA -->
                     <div id="Azienda" class="w3-container w3-border azienda"  style="display:block">
@@ -305,7 +318,7 @@
                                 <asp:TextBox ID="tbMod_NazioneOperativo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
                             </div>
                             <div class="w3-quarter w3-center">
-                                <button id="clientBtnCopiaLegaleSuOperativo" class="w3-btn w3-white w3-border w3-border-red w3-round-large w3-margin-top" value="Copia" onclick="copiaLegaleSuOperativo();">Copia da Legale</button>
+                                <div id="clientBtnCopiaLegaleSuOperativo" class="w3-btn w3-white w3-border w3-border-red w3-round-large w3-margin-top" onclick="copiaLegaleSuOperativo();">Copia da Legale</div>
                             </div>
                         </div>
 
@@ -437,7 +450,6 @@
         <asp:AsyncPostBackTrigger ControlID="btnEditAzienda" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnInsAzienda" EventName="Click" />
         
-        <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnSalva" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnElimina" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnAnnulla" EventName="Click" />

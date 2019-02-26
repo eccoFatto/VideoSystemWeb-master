@@ -50,6 +50,7 @@
         x.className = x.className.replace(" w3-show", "");
       }
     }
+
     // AZZERO TUTTI I CAMPI RICERCA
     function azzeraCampiRicerca() {
         $("#<%=tbCF.ClientID%>").val('');
@@ -62,19 +63,15 @@
 
     }
 
-
-function onFilesUploadStart(s, e) {
-    dxbsDemo.uploadedFilesContainer.hide();
-}
-function onFileUploadComplete(s, e) {
-    if(e.callbackData) {
-        var fileData = e.callbackData.split('|');
-        var fileName = fileData[0],
-            fileUrl = fileData[1],
-            fileSize = fileData[2];
-        dxbsDemo.uploadedFilesContainer.addFile(s, fileName, fileUrl, fileSize);
+    function chiudiPopup() {
+        // QUANDO APRO IL POPUP RIPARTE SEMPRE DA ANAGRAFICA E NON DALL'ULTIMA TAB APERTA
+        $("#<%=hf_tabChiamata.ClientID%>").val('Anagrafica');
+        var pannelloPopup = document.getElementById('<%=pnlContainer.ClientID%>');
+        //alert(pannelloPopup.id);
+        pannelloPopup.style.display = "none";
     }
-}
+    
+
 
 </script>
 <Label class="w3-text-blue"><asp:Label ID="lblTipoAzienda" runat="server" Text="COLLABORATORI"></asp:Label></Label>
@@ -186,7 +183,9 @@ function onFileUploadComplete(s, e) {
                         <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Telefoni')">Telefoni</div>
                         <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Email')">Email</div>
                         <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Documenti')">Documenti</div>
-                        <div class="w3-bar-item w3-button w3-red w3-right"><asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-button w3-green w3-small w3-round" OnClick="btn_chiudi_Click" /></div>
+                        <div class="w3-bar-item w3-button w3-red w3-right">
+                            <div id="btnChiudiPopup" class="w3-button w3-green w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
+                        </div>
                     </div>
                     <!-- TAB ANAGRAFICA -->
                     <div id="Anagrafica" class="w3-container w3-border collab"  style="display:block">
@@ -564,7 +563,6 @@ function onFileUploadComplete(s, e) {
         <asp:PostBackTrigger ControlID="btnCaricaDocumento" />
         <asp:AsyncPostBackTrigger ControlID="btnEditCollaboratore" EventName="Click" />
 
-        <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnSalva" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnElimina" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnAnnulla" EventName="Click" />

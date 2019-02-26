@@ -288,12 +288,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             gestisciPulsantiAnagrafica("ANNULLAMENTO");
         }
         
-        protected void btn_chiudi_Click(object sender, EventArgs e)
-        {
-            //abilitaBottoni(basePage.AbilitazioneInScrittura());
-            pnlContainer.Visible = false;
-        }
-
         protected void InserisciCollaboratori_Click(object sender, EventArgs e)
         {
             ViewState["idColl"] = "";
@@ -656,7 +650,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 else
                 {
                     AttivaDisattivaModificaAnagrafica(true);
-                    btn_chiudi_Click(null, null);
+                    //btn_chiudi_Click(null, null);
+                    pnlContainer.Visible = false;
                     btnRicercaCollaboratori_Click(null, null);
                 }
 

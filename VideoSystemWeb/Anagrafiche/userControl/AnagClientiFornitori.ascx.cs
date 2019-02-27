@@ -402,11 +402,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         }
 
-        protected void btn_chiudi_Click(object sender, EventArgs e)
-        {
-            pnlContainer.Visible = false;
-        }
-
         protected void btnModifica_Click(object sender, EventArgs e)
         {
             AttivaDisattivaModificaAzienda(false);
@@ -523,14 +518,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 esito = Anag_Clienti_Fornitori_BLL.Instance.EliminaAzienda(Convert.ToInt32(ViewState["idAzienda"].ToString()));
                 if (esito.codice != Esito.ESITO_OK)
                 {
-                    panelErrore.Style.Remove("display");
+                    //panelErrore.Style.Remove("display");
+                    panelErrore.Style.Add("display","block");
                     lbl_MessaggioErrore.Text = esito.descrizione;
                     AttivaDisattivaModificaAzienda(true);
                 }
                 else
                 {
                     AttivaDisattivaModificaAzienda(true);
-                    btn_chiudi_Click(null, null);
+                    //btn_chiudi_Click(null, null);
+                    pnlContainer.Visible = false;
                     btnRicercaAziende_Click(null, null);
                 }
 
@@ -568,47 +565,57 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         private Anag_Clienti_Fornitori CreaOggettoSalvataggio(ref Esito esito)
         {
             Anag_Clienti_Fornitori azienda = new Anag_Clienti_Fornitori();
-
-            if (string.IsNullOrEmpty((string)ViewState["idAzienda"]))
+            try
             {
-                ViewState["idAzienda"] = 0;
+
+                if (string.IsNullOrEmpty((string)ViewState["idAzienda"]))
+                {
+                    ViewState["idAzienda"] = 0;
+                }
+
+                azienda.Id = Convert.ToInt16(ViewState["idAzienda"].ToString());
+
+                azienda.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
+                azienda.Cliente = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Cliente, "true", false, ref esito));
+                azienda.Fornitore = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Fornitore, "true", false, ref esito));
+
+                azienda.RagioneSociale = BasePage.ValidaCampo(tbMod_RagioneSociale, "", false, ref esito);
+                azienda.CapLegale = BasePage.ValidaCampo(tbMod_CapLegale, "", false, ref esito);
+                azienda.CapOperativo = BasePage.ValidaCampo(tbMod_CapOperativo, "", false, ref esito);
+                azienda.CodiceFiscale = BasePage.ValidaCampo(tbMod_CF, "", false, ref esito);
+                azienda.CodiceIdentificativo = BasePage.ValidaCampo(tbMod_CodiceIdentificativo, "", false, ref esito);
+                azienda.ComuneLegale = BasePage.ValidaCampo(tbMod_ComuneLegale, "", false, ref esito);
+                azienda.ComuneOperativo = BasePage.ValidaCampo(tbMod_ComuneOperativo, "", false, ref esito);
+                azienda.Email = BasePage.ValidaCampo(tbMod_Email, "", false, ref esito);
+                azienda.Fax = BasePage.ValidaCampo(tbMod_Fax, "", false, ref esito);
+                azienda.Iban = BasePage.ValidaCampo(tbMod_Iban, "", false, ref esito);
+                azienda.IndirizzoLegale = BasePage.ValidaCampo(tbMod_IndirizzoLegale, "", false, ref esito);
+                azienda.IndirizzoOperativo = BasePage.ValidaCampo(tbMod_IndirizzoOperativo, "", false, ref esito);
+                azienda.NazioneLegale = BasePage.ValidaCampo(tbMod_NazioneLegale, "", false, ref esito);
+                azienda.NazioneOperativo = BasePage.ValidaCampo(tbMod_NazioneOperativo, "", false, ref esito);
+                azienda.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
+                azienda.NumeroCivicoLegale = BasePage.ValidaCampo(tbMod_CivicoLegale, "", false, ref esito);
+                azienda.NumeroCivicoOperativo = BasePage.ValidaCampo(tbMod_CivicoOperativo, "", false, ref esito);
+                azienda.Pagamento = Convert.ToInt16(cmbMod_Pagamento.SelectedValue);
+                azienda.PartitaIva = BasePage.ValidaCampo(tbMod_PartitaIva, "", false, ref esito);
+                azienda.Pec = BasePage.ValidaCampo(tbMod_Pec, "", false, ref esito);
+                azienda.ProvinciaLegale = BasePage.ValidaCampo(tbMod_ProvinciaLegale, "", false, ref esito);
+                azienda.ProvinciaOperativo = BasePage.ValidaCampo(tbMod_ProvinciaOperativo, "", false, ref esito);
+                azienda.Telefono = BasePage.ValidaCampo(tbMod_Telefono, "", false, ref esito);
+                azienda.Tipo = cmbMod_TipoAzienda.SelectedValue;
+                azienda.TipoIndirizzoLegale = cmbMod_TipoIndirizzoLegale.SelectedValue;
+                azienda.TipoIndirizzoOperativo = cmbMod_TipoIndirizzoOperativo.SelectedValue;
+                azienda.WebSite = BasePage.ValidaCampo(tbMod_WebSite, "", false, ref esito);
+
+                return azienda;
+
             }
-
-            azienda.Id = Convert.ToInt16(ViewState["idAzienda"].ToString());
-
-            azienda.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
-            azienda.Cliente = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Cliente, "true", false, ref esito));
-            azienda.Fornitore = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Fornitore, "true", false, ref esito));
-
-            azienda.RagioneSociale = BasePage.ValidaCampo(tbMod_RagioneSociale, "", false, ref esito);
-            azienda.CapLegale = BasePage.ValidaCampo(tbMod_CapLegale, "", false, ref esito);
-            azienda.CapOperativo = BasePage.ValidaCampo(tbMod_CapOperativo, "", false, ref esito);
-            azienda.CodiceFiscale = BasePage.ValidaCampo(tbMod_CF, "", false, ref esito);
-            azienda.CodiceIdentificativo = BasePage.ValidaCampo(tbMod_CodiceIdentificativo, "", false, ref esito);
-            azienda.ComuneLegale = BasePage.ValidaCampo(tbMod_ComuneLegale, "", false, ref esito);
-            azienda.ComuneOperativo = BasePage.ValidaCampo(tbMod_ComuneOperativo, "", false, ref esito);
-            azienda.Email = BasePage.ValidaCampo(tbMod_Email, "", false, ref esito);
-            azienda.Fax = BasePage.ValidaCampo(tbMod_Fax, "", false, ref esito);
-            azienda.Iban = BasePage.ValidaCampo(tbMod_Iban, "", false, ref esito);
-            azienda.IndirizzoLegale = BasePage.ValidaCampo(tbMod_IndirizzoLegale, "", false, ref esito);
-            azienda.IndirizzoOperativo = BasePage.ValidaCampo(tbMod_IndirizzoOperativo, "", false, ref esito);
-            azienda.NazioneLegale = BasePage.ValidaCampo(tbMod_NazioneLegale, "", false, ref esito);
-            azienda.NazioneOperativo = BasePage.ValidaCampo(tbMod_NazioneOperativo, "", false, ref esito);
-            azienda.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
-            azienda.NumeroCivicoLegale = BasePage.ValidaCampo(tbMod_CivicoLegale, "", false, ref esito);
-            azienda.NumeroCivicoOperativo = BasePage.ValidaCampo(tbMod_CivicoOperativo, "", false, ref esito);
-            azienda.Pagamento = Convert.ToInt16(cmbMod_Pagamento.SelectedValue);
-            azienda.PartitaIva = BasePage.ValidaCampo(tbMod_PartitaIva, "", false, ref esito);
-            azienda.Pec = BasePage.ValidaCampo(tbMod_Pec, "", false, ref esito);
-            azienda.ProvinciaLegale = BasePage.ValidaCampo(tbMod_ProvinciaLegale, "", false, ref esito);
-            azienda.ProvinciaOperativo = BasePage.ValidaCampo(tbMod_ProvinciaOperativo, "", false, ref esito);
-            azienda.Telefono = BasePage.ValidaCampo(tbMod_Telefono, "", false, ref esito);
-            azienda.Tipo = cmbMod_TipoAzienda.SelectedValue;
-            azienda.TipoIndirizzoLegale = cmbMod_TipoIndirizzoLegale.SelectedValue;
-            azienda.TipoIndirizzoOperativo = cmbMod_TipoIndirizzoOperativo.SelectedValue;
-            azienda.WebSite = BasePage.ValidaCampo(tbMod_WebSite, "", false, ref esito);
-
-            return azienda;
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message;
+                return azienda;
+            }
         }
 
         protected void btnConfermaInserimento_Click(object sender, EventArgs e)
@@ -620,7 +627,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             if (esito.codice != Esito.ESITO_OK)
             {
                 panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+                lbl_MessaggioErrore.Text = esito.descrizione;
             }
             else
             {
@@ -637,10 +644,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                 if (esito.codice != Esito.ESITO_OK)
                 {
-                    panelErrore.Style.Remove("display");
+                    //panelErrore.Style.Remove("display");
+                    panelErrore.Style.Add("display","block");
                     lbl_MessaggioErrore.Text = esito.descrizione;
                 }
-                EditAzienda_Click(null, null);
+                else
+                {
+                    EditAzienda_Click(null, null);
+                }
+                
             }
 
         }

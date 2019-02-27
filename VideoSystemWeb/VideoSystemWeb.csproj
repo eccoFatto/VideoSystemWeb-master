@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -178,6 +177,9 @@
     <Content Include="Images\COLLABORATORI\dummy.jpg" />
     <Content Include="Images\delete.png" />
     <Content Include="Images\edit.png" />
+    <Content Include="Images\Icojam-Blue-Bits-Pictures.ico" />
+    <Content Include="Images\Icons8-Windows-8-Travel-Passport.ico" />
+    <Content Include="Images\Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" />
     <Content Include="Images\switch.png" />
     <Content Include="index.html" />
     <Content Include="Login.aspx" />

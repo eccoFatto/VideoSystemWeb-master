@@ -49,6 +49,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Panel panelArticoli;
         
         /// <summary>
+        /// Controllo lbl_selezionareArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_selezionareArticolo;
+        
+        /// <summary>
         /// Controllo gvArticoli.
         /// </summary>
         /// <remarks>

@@ -481,13 +481,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Button btnEliminaQualifica;
         
         /// <summary>
-        /// Controllo lbMod_Indirizzi.
+        /// Controllo gvMod_Indirizzi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbMod_Indirizzi;
+        protected global::System.Web.UI.WebControls.GridView gvMod_Indirizzi;
         
         /// <summary>
         /// Controllo btnApriIndirizzi.
@@ -625,13 +625,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Button btnAnnullaIndirizzo;
         
         /// <summary>
-        /// Controllo lbMod_Telefoni.
+        /// Controllo gvMod_Telefoni.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbMod_Telefoni;
+        protected global::System.Web.UI.WebControls.GridView gvMod_Telefoni;
         
         /// <summary>
         /// Controllo btnApriTelefoni.
@@ -760,13 +760,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Button btnAnnullaTelefono;
         
         /// <summary>
-        /// Controllo lbMod_Email.
+        /// Controllo gvMod_Email.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbMod_Email;
+        protected global::System.Web.UI.WebControls.GridView gvMod_Email;
         
         /// <summary>
         /// Controllo btnApriEmail.
@@ -857,15 +857,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnullaEmail;
-        
-        /// <summary>
-        /// Controllo lbMod_Documenti.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbMod_Documenti;
         
         /// <summary>
         /// Controllo gvMod_Documenti.

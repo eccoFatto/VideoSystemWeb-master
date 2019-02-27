@@ -169,11 +169,15 @@
                 <br />
                 
                 <!-- DIV MESSAGGI DI ERRORE -->        
-                <div class="alert alert-danger alert-dismissible fade in" role="alert" runat="server" id="panelErrore" style="display: none">
+<%--                <div class="alert alert-danger alert-dismissible fade in" role="alert" runat="server" id="panelErrore" style="display: none">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <asp:Label ID="lbl_MessaggioErrore" runat="server" CssClass="form-control-sm"></asp:Label>
-                </div>
-                            
+                </div>--%>
+                <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
+                  <span onclick="this.parentElement.style.display='none'"
+                  class="w3-button w3-large w3-display-topright">&times;</span>
+                  <p><asp:Label ID="lbl_MessaggioErrore" runat="server" ></asp:Label></p>
+                </div>                             
                 <div class="w3-container">
                     <!-- ELENCO TAB DETTAGLI COLLABORATORE -->
                     <div class="w3-bar w3-red w3-round">
@@ -276,6 +280,8 @@
                                             </div>
                                             <p>
                                             </p>
+                                            <p>
+                                            </p>
                                         </p>
                                     </div>
                                     </div>
@@ -315,13 +321,19 @@
                                 </asp:PlaceHolder>
                                 <p>
                                 </p>
+                                <p>
+                                </p>
                             </p>
                         </div>
                     </div>
                     <!-- TAB INDIRIZZI -->
                     <div id="Indirizzi" class="w3-container w3-border collab" style="display:none">
                         <label>Indirizzi</label>
-                        <asp:ListBox ID="lbMod_Indirizzi" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                        <%--<asp:ListBox ID="lbMod_Indirizzi" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>--%>
+                        <div class="round">
+                            <asp:GridView ID="gvMod_Indirizzi" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" AutoGenerateSelectButton="True" OnSelectedIndexChanged="gvMod_Indirizzi_RigaSelezionata" >
+                            </asp:GridView>
+                        </div>                        
                         <div class="w3-container w3-center">
                             <p>
                                 <asp:Button ID="btnApriIndirizzi" runat="server" OnClick="btnApriIndirizzi_Click" Text="Gestione Indirizzi" class="w3-panel w3-green w3-border w3-round" />
@@ -381,13 +393,19 @@
                                 </asp:PlaceHolder>
                                 <p>
                                 </p>
+                                <p>
+                                </p>
                             </p>
                         </div>
                     </div>
                     <!-- TAB TELEFONI -->
                     <div id="Telefoni" class="w3-container w3-border collab" style="display:none">
                         <label>Telefoni</label>
-                        <asp:ListBox ID="lbMod_Telefoni" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                        <%--<asp:ListBox ID="lbMod_Telefoni" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>--%>
+                        <div class="round">
+                            <asp:GridView ID="gvMod_Telefoni" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" AutoGenerateSelectButton="True" OnSelectedIndexChanged="gvMod_Telefoni_RigaSelezionata" >
+                            </asp:GridView>
+                        </div>
                         <div class="w3-container w3-center">
                             <p>
                                 <asp:Button ID="btnApriTelefoni" runat="server" OnClick="btnApriTelefoni_Click" Text="Gestione Telefoni" class="w3-panel w3-green w3-border w3-round" />
@@ -442,6 +460,8 @@
                                 </asp:PlaceHolder>
                                 <p>
                                 </p>
+                                <p>
+                                </p>
                             </p>
                         </div>
 
@@ -449,7 +469,11 @@
                     <!-- TAB EMAIL -->
                     <div id="Email" class="w3-container  w3-border collab" style="display:none">
                         <label>E-Mail</label>
-                        <asp:ListBox ID="lbMod_Email" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
+                        <%--<asp:ListBox ID="lbMod_Email" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3" Visible="false"></asp:ListBox>--%>
+                        <div class="round">
+                            <asp:GridView ID="gvMod_Email" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" AutoGenerateSelectButton="True" OnSelectedIndexChanged="gvMod_Email_RigaSelezionata" >
+                            </asp:GridView>
+                        </div>
                         <div class="w3-container w3-center">
                             <p>
                                 <asp:Button ID="btnApriEmail" runat="server" OnClick="btnApriEmail_Click" Text="Gestione Email" class="w3-panel w3-green w3-border w3-round" />
@@ -478,20 +502,23 @@
                                 </asp:PlaceHolder>
                                 <p>
                                 </p>
+                                <p>
+                                </p>
                             </p>
                         </div>
                     </div>
                     <!-- TAB DOCUMENTI -->
                     <div id="Documenti" class="w3-container  w3-border collab" style="display:none">
                         <label>Documenti</label>
-                        <asp:ListBox ID="lbMod_Documenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3" Visible="false"></asp:ListBox>
+                        <%--<asp:ListBox ID="lbMod_Documenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3" Visible="false"></asp:ListBox>--%>
                         <div class="round">
                             <asp:GridView ID="gvMod_Documenti" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" AutoGenerateSelectButton="True" OnSelectedIndexChanged="gvMod_Documenti_RigaSelezionata" OnRowDataBound="gvMod_Documenti_RowDataBound">
                                 <Columns>
-                                    <asp:TemplateField ShowHeader="False">
+                                    <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
                                         <ItemTemplate>
-                                            <asp:Button ID="btnOpenDoc" runat="server" CausesValidation="false"  Text="Vis." />
+                                            <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false"  Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" />
                                         </ItemTemplate>
+                                        <HeaderStyle Width="30px" />
                                     </asp:TemplateField>                                
                                 </Columns>
                             </asp:GridView>
@@ -547,6 +574,8 @@
                                     <asp:Button ID="btnEliminaDocumento" runat="server" Text="Elimina Documento" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaDocumento_Click" OnClientClick="return confirm('Confermi eliminazione Documento?')" />
                                     <asp:Button ID="btnAnnullaDocumento" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaDocumento_Click" />
                                 </asp:PlaceHolder>
+                                <p>
+                                </p>
                                 <p>
                                 </p>
                             </p>

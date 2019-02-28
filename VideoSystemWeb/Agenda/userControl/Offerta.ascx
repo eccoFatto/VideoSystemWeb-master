@@ -16,7 +16,8 @@
 
     <div>
         <asp:Panel runat="server" class="round" ID="panelArticoli" Style="width: 99%; height: 200px; position: relative; background-color: white; overflow: auto">
-            <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7; width: 98%" DataMember="id">
+            <asp:Label ID="lbl_selezionareArticolo" runat="server" Text="Selezionare un articolo dalla lista" style="position:absolute; top:45%; left:35%;font-size:large;color:cornflowerblue" />
+            <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7; width: 98%" OnRowCommand="gvArticoli_RowCommand" DataMember="IdentificatoreOggetto">
                 <Columns>
                     <asp:BoundField DataField="id" HeaderText="Codice" />
                     <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
@@ -26,7 +27,7 @@
                     <asp:BoundField DataField="Stampa" HeaderText="Stampa" />
                     <asp:TemplateField HeaderText="Seleziona">
                         <ItemTemplate>
-                            <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica" CommandArgument='<%# Eval("ArtArticoli.id") %>' />
+                            <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica"  CommandArgument='<%# Eval("IdentificatoreOggetto") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

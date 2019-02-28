@@ -81,47 +81,33 @@ namespace VideoSystemWeb.Agenda.userControl
             aggiungiAListaArticoli(idSelezione);
 
             ViewState["listaArticoli"] = listaArticoli;
-           
 
-            gvArticoli.DataSource = listaArticoli;
-            gvArticoli.DataBind();
+            if (listaArticoli != null && listaArticoli.Count > 0)
+            {
+                lbl_selezionareArticolo.Visible = false;
+                gvArticoli.DataSource = listaArticoli;
+                gvArticoli.DataBind();
 
-            RichiediOperazionePopup("UPDATE");
+                RichiediOperazionePopup("UPDATE");
+            }
+        }
+
+        protected void gvArticoli_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            long identificatoreOggetto = Convert.ToInt64(e.CommandArgument);
+
+            
         }
         #endregion
 
         public void ClearOfferta()
         {
+            lbl_selezionareArticolo.Visible = true;
+            ViewState["listaArticoli"] = null;
             gvArticoli.DataSource = null;
             gvArticoli.DataBind();
 
             //NascondiErroriValidazione();
         }
-    }
-
-    [Serializable]
-    public class ProvaElementiOfferta
-    {
-        public int ID { get; set; }
-        public string Codice { get; set; }
-        public string Descrizione { get; set; }
-        public string Misura { get; set; }
-        public int Quantita { get; set; }
-        public decimal Prezzo { get; set; }
-        public decimal Costo { get; set; }
-
-        public ProvaElementiOfferta() { }
-
-        public ProvaElementiOfferta(int id, string codice, string descrizione, string misura, int quantita, decimal prezzo, decimal costo)
-        {
-            this.ID = id;
-            this.Codice = codice;
-            this.Descrizione = descrizione;
-            this.Misura = misura;
-            this.Quantita = quantita;
-            this.Prezzo = prezzo;
-            this.Costo = costo;
-        }
-
     }
 }

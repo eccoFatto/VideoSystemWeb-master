@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 using VideoSystemWeb.DAL;
 using VideoSystemWeb.Entity;
@@ -9,6 +10,8 @@ namespace VideoSystemWeb.BLL
 {
     public class Articoli_BLL
     {
+        ObjectIDGenerator IDGenerator = new ObjectIDGenerator();
+
         //singleton
         private static volatile Articoli_BLL instance;
         private static object objForLock = new Object();
@@ -140,17 +143,21 @@ namespace VideoSystemWeb.BLL
         }
         #endregion
 
-        public List<DatiArticoli> CaricaListaArticoliByIDGruppo(int idEvento, int idGruppo, ref Esito esito, bool soloAttivi = true)
+        public List<DatiArticoli>  CaricaListaArticoliByIDGruppo(int idEvento, int idGruppo, ref Esito esito, bool soloAttivi = true)
         {
             List<DatiArticoli> listaArticoliDelGruppo = new List<DatiArticoli>();
 
             List<int> listaIDArticoli = CaricaListaGruppiArticoliByIDgruppo(idGruppo, ref esito).Select(x => x.IdArtArticoli).ToList<int>();
-
+            
             foreach (int idArticolo in listaIDArticoli)
             {
                 Art_Articoli articoloTemplate = getArticoloById(idArticolo, ref esito);
 
                 DatiArticoli articolo = new DatiArticoli();
+                
+                bool firstTime;
+                articolo.IdentificatoreOggetto = IDGenerator.GetId(articolo, out firstTime);
+
                 articolo.IdArtArticoli = articoloTemplate.Id;
                 articolo.IdDatiAgenda = idEvento;
                 articolo.Descrizione = articoloTemplate.DefaultDescrizione;

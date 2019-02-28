@@ -166,6 +166,9 @@ namespace VideoSystemWeb.BLL
                 articolo.Prezzo = articoloTemplate.DefaultPrezzo;
                 articolo.Costo = articoloTemplate.DefaultCosto;
                 articolo.Iva = articoloTemplate.DefaultIva;
+                articolo.IdTipoGenere = articoloTemplate.DefaultIdTipoGenere;
+                articolo.IdTipoGruppo = articoloTemplate.DefaultIdTipoGruppo;
+                articolo.IdTipoSottogruppo = articoloTemplate.DefaultIdTipoSottogruppo;
 
                 listaArticoliDelGruppo.Add(articolo);
             }

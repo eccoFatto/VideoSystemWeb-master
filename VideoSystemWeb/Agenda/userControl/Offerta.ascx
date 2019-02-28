@@ -75,15 +75,21 @@
             <div class="w3-third">
                 <div class="w3-third">
                     <label>Genere</label><br />
-                    <asp:DropDownList ID="ddl_Genere" runat="server" />
+                    <asp:DropDownList ID="ddl_Genere" runat="server" >
+                        <asp:ListItem Value="1" Text="Vari" Selected="True"/>
+                    </asp:DropDownList>
                 </div>
                 <div class="w3-third">
                     <label>Gruppo</label><br />
-                    <asp:DropDownList ID="ddl_Gruppo" runat="server" />
+                    <asp:DropDownList ID="ddl_Gruppo" runat="server" >
+                        <asp:ListItem Value="1" Text="Vari" Selected="True"/>
+                    </asp:DropDownList>
                 </div>
                 <div class="w3-third">
                     <label>Sottogruppo</label><br />
-                    <asp:DropDownList ID="ddl_Sottogruppo" runat="server" />
+                    <asp:DropDownList ID="ddl_Sottogruppo" runat="server" >
+                        <asp:ListItem Value="1" Text="Vari" Selected="True"/>
+                    </asp:DropDownList>
                 </div>
                
             </div>

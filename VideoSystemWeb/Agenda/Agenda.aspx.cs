@@ -428,17 +428,15 @@ namespace VideoSystemWeb.Agenda
 
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            List<DatiArticoli> listaArticoli = (List<DatiArticoli>)Session["listaArticoli"];
 
             esito = ValidazioneSalvataggio(eventoSelezionato);
 
             if (esito.codice == Esito.ESITO_OK)
             {
                 if (eventoSelezionato.id == 0)
-                {
-                    if (eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO)
-                    { 
-                        Agenda_BLL.Instance.CreaEvento(eventoSelezionato);
-                    }
+                {          
+                    Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaArticoli);
                 }
                 else
                 {

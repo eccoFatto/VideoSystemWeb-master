@@ -19,6 +19,9 @@ namespace VideoSystemWeb.Entity
         [attivo] [bit] NOT NULL,
         */
         private int id;
+        private int defaultIdTipoGenere;
+        private int defaultIdTipoGruppo;
+        private int defaultIdTipoSottogruppo;
         private string defaultDescrizione;
         private string defaultDescrizioneLunga;
         private bool defaultStampa;
@@ -28,6 +31,9 @@ namespace VideoSystemWeb.Entity
         private bool attivo;
 
         public int Id { get => id; set => id = value; }
+        public int DefaultIdTipoGenere { get => defaultIdTipoGenere; set => defaultIdTipoGenere = value; }
+        public int DefaultIdTipoGruppo { get => defaultIdTipoGruppo; set => defaultIdTipoGruppo = value; }
+        public int DefaultIdTipoSottogruppo { get => defaultIdTipoSottogruppo; set => defaultIdTipoSottogruppo = value; }
         public string DefaultDescrizione { get => defaultDescrizione; set => defaultDescrizione = value; }
         public string DefaultDescrizioneLunga { get => defaultDescrizioneLunga; set => defaultDescrizioneLunga = value; }
         public bool DefaultStampa { get => defaultStampa; set => defaultStampa = value; }

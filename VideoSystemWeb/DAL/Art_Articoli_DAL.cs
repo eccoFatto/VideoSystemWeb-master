@@ -53,6 +53,9 @@ namespace VideoSystemWeb.DAL
                                 if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
                                 {
                                     articolo.Id = dt.Rows[0].Field<int>("id");
+                                    articolo.DefaultIdTipoGenere = dt.Rows[0].Field<int>("defaultIdTipoGenere");
+                                    articolo.DefaultIdTipoGruppo = dt.Rows[0].Field<int>("defaultIdTipoGruppo");
+                                    articolo.DefaultIdTipoSottogruppo = dt.Rows[0].Field<int>("defaultIdTipoSottogruppo");
                                     articolo.DefaultCosto = dt.Rows[0].Field<decimal>("defaultCosto");
                                     articolo.DefaultIva = dt.Rows[0].Field<int>("defaultIva");
                                     articolo.DefaultPrezzo = dt.Rows[0].Field<decimal>("defaultPrezzo");

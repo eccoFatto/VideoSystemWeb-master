@@ -772,7 +772,7 @@ namespace VideoSystemWeb.DAL
                                 stampa.Direction = ParameterDirection.Input;
                                 StoreProc.Parameters.Add(stampa);
 
-                                StoreProc.Connection.Open();
+                                //StoreProc.Connection.Open();
 
                                 StoreProc.ExecuteNonQuery();
 

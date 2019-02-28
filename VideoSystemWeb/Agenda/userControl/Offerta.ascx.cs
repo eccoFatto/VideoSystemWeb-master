@@ -26,23 +26,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 gvGruppi.DataBind();
 
             }
-
-            //if (ViewState["listaSelezione"] != null)
-            //{
-            //    listaSelezione = (List<ProvaElementiOfferta>)ViewState["listaSelezione"];
-
-            //    gvSelezioneOfferta.DataSource = listaSelezione;
-            //    gvSelezioneOfferta.DataBind();
-            //}
         }
-
-        //private void caricaListaGenerale()
-        //{
-        //    listaGenerale.Add(new ProvaElementiOfferta(1, "19 20 21", "Personale tecnico monocamera", "", 1, 100, 40));
-        //    listaGenerale.Add(new ProvaElementiOfferta(2, "22 23 24", "Personale tecnico bicamera", "", 1, 200, 70));
-        //    listaGenerale.Add(new ProvaElementiOfferta(3, "25 26 27", "Personale tecnico tricamera", "", 2, 300, 100));
-        //    listaGenerale.Add(new ProvaElementiOfferta(4, "Acquisti", "Costi acquisti", "Acquisti", 1, 80, 70));
-        //}
 
         private void caricaListaGruppi()
         {
@@ -60,12 +44,35 @@ namespace VideoSystemWeb.Agenda.userControl
         #region COMPORTAMENTO ELEMENTI PAGINA
         protected void btnSalva_Click(object sender, EventArgs e)
         {
-            
+            long identificatoreOggetto = (long)ViewState["identificatoreArticolo"];
+            List<DatiArticoli> listaArticoli = (List<DatiArticoli>)ViewState["listaArticoli"];
+            DatiArticoli articoloSelezionato = listaArticoli.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
+            var index = listaArticoli.IndexOf(articoloSelezionato);
+
+            articoloSelezionato.Descrizione = txt_Descrizione.Text;
+            articoloSelezionato.DescrizioneLunga = txt_DescrizioneLunga.Text;
+            articoloSelezionato.Costo = decimal.Parse(txt_Costo.Text);
+            articoloSelezionato.Prezzo = decimal.Parse(txt_Prezzo.Text);
+            articoloSelezionato.Iva = int.Parse(txt_Iva.Text);
+
+            if (index != -1)
+            { 
+                listaArticoli[index] = articoloSelezionato;
+            }
+
+            gvArticoli.DataSource = listaArticoli;
+            gvArticoli.DataBind();
+
+            ClearModificaArticoli();
+            panelModificaArticolo.Style.Add("display", "none");
+            RichiediOperazionePopup("UPDATE");
         }
 
         protected void btnAnnulla_Click(object sender, EventArgs e)
         {
-            
+            ClearModificaArticoli();
+            panelModificaArticolo.Style.Add("display", "none");
+            RichiediOperazionePopup("UPDATE");
         }
 
         protected void gvGruppi_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -95,19 +102,43 @@ namespace VideoSystemWeb.Agenda.userControl
         protected void gvArticoli_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             long identificatoreOggetto = Convert.ToInt64(e.CommandArgument);
+            ViewState["identificatoreArticolo"] = identificatoreOggetto;
 
-            
+            List<DatiArticoli> listaArticoli = (List<DatiArticoli>)ViewState["listaArticoli"];
+            DatiArticoli articoloSelezionato = listaArticoli.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
+
+            txt_Descrizione.Text = articoloSelezionato.Descrizione;
+            txt_DescrizioneLunga.Text = articoloSelezionato.DescrizioneLunga;
+            txt_Costo.Text = articoloSelezionato.Costo.ToString();
+            txt_Prezzo.Text = articoloSelezionato.Prezzo.ToString();
+            txt_Iva.Text = articoloSelezionato.Iva.ToString();
+
+            panelModificaArticolo.Style.Remove("display");
+
+            RichiediOperazionePopup("UPDATE");
         }
         #endregion
 
         public void ClearOfferta()
         {
+            ClearModificaArticoli();
             lbl_selezionareArticolo.Visible = true;
             ViewState["listaArticoli"] = null;
             gvArticoli.DataSource = null;
             gvArticoli.DataBind();
 
             //NascondiErroriValidazione();
+        }
+
+        private void ClearModificaArticoli()
+        {
+            ViewState["identificatoreArticolo"] = null;
+
+            txt_Descrizione.Text = "";
+            txt_DescrizioneLunga.Text = "";
+            txt_Costo.Text = "";
+            txt_Prezzo.Text = "";
+            txt_Iva.Text = "";
         }
     }
 }

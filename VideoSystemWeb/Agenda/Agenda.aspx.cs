@@ -435,7 +435,10 @@ namespace VideoSystemWeb.Agenda
             {
                 if (eventoSelezionato.id == 0)
                 {
-                    Agenda_BLL.Instance.CreaEvento(eventoSelezionato);
+                    if (eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO)
+                    { 
+                        Agenda_BLL.Instance.CreaEvento(eventoSelezionato);
+                    }
                 }
                 else
                 {

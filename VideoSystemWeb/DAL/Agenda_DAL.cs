@@ -718,68 +718,67 @@ namespace VideoSystemWeb.DAL
                             int iDatiAgendaReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
 
                             // SE E' ANDATO TUTTO BENE FACCIO INSERT DEGLI ARTICOLI EVENTO DELLA LISTA IN INPUT
-                            foreach (DatiArticoli datoArticolo in listaArticoli)
-                            {
-                                StoreProc.CommandType = CommandType.StoredProcedure;
-                                StoreProc.CommandText = "InsertDatiArticoli";
-                                StoreProc.Parameters.Clear();
-                                sda.SelectCommand = StoreProc;
+                            if (listaArticoli != null) { 
+                                foreach (DatiArticoli datoArticolo in listaArticoli)
+                                {
+                                    StoreProc.CommandType = CommandType.StoredProcedure;
+                                    StoreProc.CommandText = "InsertDatiArticoli";
+                                    StoreProc.Parameters.Clear();
+                                    sda.SelectCommand = StoreProc;
 
-                                StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+                                    StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-                                SqlParameter costo = new SqlParameter("@costo", datoArticolo.Costo);
-                                costo.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(costo);
+                                    SqlParameter costo = new SqlParameter("@costo", datoArticolo.Costo);
+                                    costo.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(costo);
 
-                                SqlParameter idArtArticoli = new SqlParameter("@idArtArticoli", datoArticolo.IdArtArticoli);
-                                idArtArticoli.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(idArtArticoli);
+                                    SqlParameter idArtArticoli = new SqlParameter("@idArtArticoli", datoArticolo.IdArtArticoli);
+                                    idArtArticoli.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(idArtArticoli);
 
-                                // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
-                                SqlParameter idDatiAgenda = new SqlParameter("@idDatiAgenda", iDatiAgendaReturn);
-                                idDatiAgenda.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(idDatiAgenda);
+                                    // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+                                    SqlParameter idDatiAgenda = new SqlParameter("@idDatiAgenda", iDatiAgendaReturn);
+                                    idDatiAgenda.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(idDatiAgenda);
 
-                                SqlParameter idTipoGenere = new SqlParameter("@idTipoGenere", datoArticolo.IdTipoGenere);
-                                idTipoGenere.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(idTipoGenere);
+                                    SqlParameter idTipoGenere = new SqlParameter("@idTipoGenere", datoArticolo.IdTipoGenere);
+                                    idTipoGenere.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(idTipoGenere);
 
-                                SqlParameter idTipoGruppo = new SqlParameter("@idTipoGruppo", datoArticolo.IdTipoGruppo);
-                                idTipoGruppo.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(idTipoGruppo);
+                                    SqlParameter idTipoGruppo = new SqlParameter("@idTipoGruppo", datoArticolo.IdTipoGruppo);
+                                    idTipoGruppo.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(idTipoGruppo);
 
-                                SqlParameter idTipoSottogruppo = new SqlParameter("@idTipoSottogruppo", datoArticolo.IdTipoSottogruppo);
-                                idTipoSottogruppo.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(idTipoSottogruppo);
+                                    SqlParameter idTipoSottogruppo = new SqlParameter("@idTipoSottogruppo", datoArticolo.IdTipoSottogruppo);
+                                    idTipoSottogruppo.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(idTipoSottogruppo);
 
-                                SqlParameter descrizione = new SqlParameter("@descrizione", datoArticolo.Descrizione);
-                                descrizione.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(descrizione);
+                                    SqlParameter descrizione = new SqlParameter("@descrizione", datoArticolo.Descrizione);
+                                    descrizione.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(descrizione);
 
-                                SqlParameter descrizioneLunga = new SqlParameter("@descrizioneLunga", datoArticolo.DescrizioneLunga);
-                                descrizioneLunga.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(descrizioneLunga);
+                                    SqlParameter descrizioneLunga = new SqlParameter("@descrizioneLunga", datoArticolo.DescrizioneLunga);
+                                    descrizioneLunga.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(descrizioneLunga);
 
-                                SqlParameter iva = new SqlParameter("@iva", datoArticolo.Iva);
-                                iva.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(iva);
+                                    SqlParameter iva = new SqlParameter("@iva", datoArticolo.Iva);
+                                    iva.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(iva);
 
-                                SqlParameter prezzo = new SqlParameter("@prezzo", datoArticolo.Prezzo);
-                                prezzo.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(prezzo);
+                                    SqlParameter prezzo = new SqlParameter("@prezzo", datoArticolo.Prezzo);
+                                    prezzo.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(prezzo);
 
-                                SqlParameter stampa = new SqlParameter("@stampa", datoArticolo.Stampa);
-                                stampa.Direction = ParameterDirection.Input;
-                                StoreProc.Parameters.Add(stampa);
+                                    SqlParameter stampa = new SqlParameter("@stampa", datoArticolo.Stampa);
+                                    stampa.Direction = ParameterDirection.Input;
+                                    StoreProc.Parameters.Add(stampa);
 
-                                //StoreProc.Connection.Open();
+                                    StoreProc.ExecuteNonQuery();
 
-                                StoreProc.ExecuteNonQuery();
+                                    int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
 
-                                int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
-
+                                }
                             }
-
                             // Attempt to commit the transaction.
                             transaction.Commit();
 

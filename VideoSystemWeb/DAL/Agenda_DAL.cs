@@ -578,5 +578,231 @@ namespace VideoSystemWeb.DAL
 
             return listaLavorazioni;
         }
+
+        public Esito creaEventoConArticoli(DatiAgenda evento, List<DatiArticoli> listaArticoli)
+        {
+            Esito esito = new Esito();
+            using (SqlConnection con = new SqlConnection(sqlConstr))
+            {
+                SqlTransaction transaction;
+                using (SqlCommand StoreProc = new SqlCommand("InsertEvento"))
+                {
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        StoreProc.Connection = con;
+
+                        sda.SelectCommand = StoreProc;
+                        StoreProc.CommandType = CommandType.StoredProcedure;
+
+                        StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                        SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.DateTime);
+                        data_inizio_lavorazione.Direction = ParameterDirection.Input;
+                        data_inizio_lavorazione.Value = evento.data_inizio_lavorazione;
+                        StoreProc.Parameters.Add(data_inizio_lavorazione);
+
+                        SqlParameter data_fine_lavorazione = new SqlParameter("@data_fine_lavorazione", SqlDbType.DateTime);
+                        data_fine_lavorazione.Direction = ParameterDirection.Input;
+                        data_fine_lavorazione.Value = evento.data_fine_lavorazione;
+                        StoreProc.Parameters.Add(data_fine_lavorazione);
+
+                        SqlParameter durata_lavorazione = new SqlParameter("@durata_lavorazione", SqlDbType.Int);
+                        durata_lavorazione.Direction = ParameterDirection.Input;
+                        durata_lavorazione.Value = evento.durata_lavorazione;
+                        StoreProc.Parameters.Add(durata_lavorazione);
+
+                        SqlParameter id_colonne_agenda = new SqlParameter("@id_colonne_agenda", SqlDbType.Int);
+                        id_colonne_agenda.Direction = ParameterDirection.Input;
+                        id_colonne_agenda.Value = evento.id_colonne_agenda;
+                        StoreProc.Parameters.Add(id_colonne_agenda);
+
+                        SqlParameter id_tipologia = new SqlParameter("@id_tipologia", SqlDbType.Int);
+                        id_tipologia.Direction = ParameterDirection.Input;
+
+                        if (evento.id_tipologia == 0)
+                        {
+                            id_tipologia.Value = null;
+                        }
+                        else
+                        {
+                            id_tipologia.Value = evento.id_tipologia;
+                        }
+                        StoreProc.Parameters.Add(id_tipologia);
+
+                        SqlParameter id_stato = new SqlParameter("@id_stato", SqlDbType.Int);
+                        id_stato.Direction = ParameterDirection.Input;
+                        id_stato.Value = evento.id_stato;
+                        StoreProc.Parameters.Add(id_stato);
+
+                        SqlParameter id_cliente = new SqlParameter("@id_cliente", SqlDbType.Int);
+                        id_cliente.Direction = ParameterDirection.Input;
+                        id_cliente.Value = evento.id_cliente;
+                        StoreProc.Parameters.Add(id_cliente);
+
+                        SqlParameter durata_viaggio_andata = new SqlParameter("@durata_viaggio_andata", SqlDbType.Int);
+                        durata_viaggio_andata.Direction = ParameterDirection.Input;
+                        durata_viaggio_andata.Value = evento.durata_viaggio_andata;
+                        StoreProc.Parameters.Add(durata_viaggio_andata);
+
+                        SqlParameter durata_viaggio_ritorno = new SqlParameter("@durata_viaggio_ritorno", SqlDbType.Int);
+                        durata_viaggio_ritorno.Direction = ParameterDirection.Input;
+                        durata_viaggio_ritorno.Value = evento.durata_viaggio_ritorno;
+                        StoreProc.Parameters.Add(durata_viaggio_ritorno);
+
+                        SqlParameter data_inizio_impegno = new SqlParameter("@data_inizio_impegno", SqlDbType.DateTime);
+                        data_inizio_impegno.Direction = ParameterDirection.Input;
+                        data_inizio_impegno.Value = evento.data_inizio_impegno;
+                        StoreProc.Parameters.Add(data_inizio_impegno);
+
+                        SqlParameter data_fine_impegno = new SqlParameter("@data_fine_impegno", SqlDbType.DateTime);
+                        data_fine_impegno.Direction = ParameterDirection.Input;
+                        data_fine_impegno.Value = evento.data_fine_impegno;
+                        StoreProc.Parameters.Add(data_fine_impegno);
+
+                        SqlParameter impegnoOrario = new SqlParameter("@impegnoOrario", SqlDbType.Bit);
+                        impegnoOrario.Direction = ParameterDirection.Input;
+                        impegnoOrario.Value = evento.impegnoOrario;
+                        StoreProc.Parameters.Add(impegnoOrario);
+
+                        SqlParameter impegnoOrario_da = new SqlParameter("@impegnoOrario_da", SqlDbType.VarChar);
+                        impegnoOrario_da.Direction = ParameterDirection.Input;
+                        impegnoOrario_da.Value = evento.impegnoOrario_da;
+                        StoreProc.Parameters.Add(impegnoOrario_da);
+
+                        SqlParameter impegnoOrario_a = new SqlParameter("@impegnoOrario_a", SqlDbType.VarChar);
+                        impegnoOrario_a.Direction = ParameterDirection.Input;
+                        impegnoOrario_a.Value = evento.impegnoOrario_a;
+                        StoreProc.Parameters.Add(impegnoOrario_a);
+
+                        SqlParameter produzione = new SqlParameter("@produzione", SqlDbType.VarChar);
+                        produzione.Direction = ParameterDirection.Input;
+                        produzione.Value = evento.produzione;
+                        StoreProc.Parameters.Add(produzione);
+
+                        SqlParameter lavorazione = new SqlParameter("@lavorazione", SqlDbType.VarChar);
+                        lavorazione.Direction = ParameterDirection.Input;
+                        lavorazione.Value = evento.lavorazione;
+                        StoreProc.Parameters.Add(lavorazione);
+
+                        SqlParameter indirizzo = new SqlParameter("@indirizzo", SqlDbType.VarChar);
+                        indirizzo.Direction = ParameterDirection.Input;
+                        indirizzo.Value = evento.indirizzo;
+                        StoreProc.Parameters.Add(indirizzo);
+
+                        SqlParameter luogo = new SqlParameter("@luogo", SqlDbType.VarChar);
+                        luogo.Direction = ParameterDirection.Input;
+                        luogo.Value = evento.luogo;
+                        StoreProc.Parameters.Add(luogo);
+
+                        SqlParameter codice_lavoro = new SqlParameter("@codice_lavoro", SqlDbType.VarChar);
+                        codice_lavoro.Direction = ParameterDirection.Input;
+                        codice_lavoro.Value = evento.codice_lavoro;
+                        StoreProc.Parameters.Add(codice_lavoro);
+
+                        SqlParameter nota = new SqlParameter("@nota", SqlDbType.VarChar);
+                        nota.Direction = ParameterDirection.Input;
+                        nota.Value = evento.nota;
+                        StoreProc.Parameters.Add(nota);
+
+                        StoreProc.Connection.Open();
+                        
+                        // Start a local transaction.
+                        transaction = con.BeginTransaction("AgendaTransaction");
+
+                        StoreProc.Transaction = transaction;
+
+                        try
+                        {
+                            StoreProc.ExecuteNonQuery();
+                            // RECUPERO L'ID DELL'EVENTO AGENDA INSERITO
+                            int iDatiAgendaReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+                            // SE E' ANDATO TUTTO BENE FACCIO INSERT DEGLI ARTICOLI EVENTO DELLA LISTA IN INPUT
+                            foreach (DatiArticoli datoArticolo in listaArticoli)
+                            {
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+                                StoreProc.CommandText = "InsertDatiArticoli";
+                                StoreProc.Parameters.Clear();
+                                sda.SelectCommand = StoreProc;
+
+                                StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                                SqlParameter costo = new SqlParameter("@costo", datoArticolo.Costo);
+                                costo.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(costo);
+
+                                SqlParameter idArtArticoli = new SqlParameter("@idArtArticoli", datoArticolo.IdArtArticoli);
+                                idArtArticoli.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idArtArticoli);
+
+                                // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+                                SqlParameter idDatiAgenda = new SqlParameter("@idDatiAgenda", iDatiAgendaReturn);
+                                idDatiAgenda.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idDatiAgenda);
+
+                                SqlParameter idTipoGenere = new SqlParameter("@idTipoGenere", datoArticolo.IdTipoGenere);
+                                idTipoGenere.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idTipoGenere);
+
+                                SqlParameter idTipoGruppo = new SqlParameter("@idTipoGruppo", datoArticolo.IdTipoGruppo);
+                                idTipoGruppo.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idTipoGruppo);
+
+                                SqlParameter idTipoSottogruppo = new SqlParameter("@idTipoSottogruppo", datoArticolo.IdTipoSottogruppo);
+                                idTipoSottogruppo.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idTipoSottogruppo);
+
+                                SqlParameter descrizione = new SqlParameter("@descrizione", datoArticolo.Descrizione);
+                                descrizione.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(descrizione);
+
+                                SqlParameter descrizioneLunga = new SqlParameter("@descrizioneLunga", datoArticolo.DescrizioneLunga);
+                                descrizioneLunga.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(descrizioneLunga);
+
+                                SqlParameter iva = new SqlParameter("@iva", datoArticolo.Iva);
+                                iva.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(iva);
+
+                                SqlParameter prezzo = new SqlParameter("@prezzo", datoArticolo.Prezzo);
+                                prezzo.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(prezzo);
+
+                                SqlParameter stampa = new SqlParameter("@stampa", datoArticolo.Stampa);
+                                stampa.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(stampa);
+
+                                StoreProc.Connection.Open();
+
+                                StoreProc.ExecuteNonQuery();
+
+                                int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+                            }
+
+                            // Attempt to commit the transaction.
+                            transaction.Commit();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                            esito.descrizione = ex.Message;
+
+                            try
+                            {
+                                transaction.Rollback();
+                            }
+                            catch (Exception ex2)
+                            {
+                                esito.descrizione += Environment.NewLine + "ERRORE ROLLBACK: " + ex2.Message;
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            return esito;
+        }
     }
 }

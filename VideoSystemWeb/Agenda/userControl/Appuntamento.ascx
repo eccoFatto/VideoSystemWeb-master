@@ -20,6 +20,11 @@
                 var dataA = $('#<%=txt_DataFineLavorazione.ClientID%>');
 
                 $('#<%=txt_DurataLavorazione.ClientID%>').val(datediff(parseDate(dataDa.val()), parseDate(dataA.val())) + 1);
+
+                var durataAndata = parseInt($('#<%=txt_DurataViaggioAndata.ClientID%>').val());
+                var durataRitorno = parseInt($('#<%=txt_DurataViaggioRitorno.ClientID%>').val());
+                $('#<%=txt_DataInizioImpegno.ClientID%>').val(convertDate(parseDate(dataDa.val()).addDays(durataAndata)));
+                $('#<%=txt_DataFineImpegno.ClientID%>').val(convertDate(parseDate(dataA.val()).addDays(durataRitorno * -1)));
             });
 
             $('#<%=txt_DurataViaggioAndata.ClientID%>').on('change keyup paste', function () {

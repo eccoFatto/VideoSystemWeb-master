@@ -127,14 +127,12 @@ namespace VideoSystemWeb.Agenda.userControl
             gvArticoli.DataBind();
 
             ClearModificaArticoli();
-            panelModificaArticolo.Style.Add("display", "none");
             RichiediOperazionePopup("UPDATE");
         }
 
         protected void btnAnnullaModifiche_Click(object sender, EventArgs e)
         {
             ClearModificaArticoli();
-            panelModificaArticolo.Style.Add("display", "none");
             RichiediOperazionePopup("UPDATE");
         }
 
@@ -224,7 +222,7 @@ namespace VideoSystemWeb.Agenda.userControl
         private void ClearModificaArticoli()
         {
             ViewState["identificatoreArticolo"] = null;
-
+            panelModificaArticolo.Style.Add("display", "none");
             txt_Descrizione.Text = "";
             txt_DescrizioneLunga.Text = "";
             txt_Costo.Text = "";

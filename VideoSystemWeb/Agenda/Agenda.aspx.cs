@@ -369,26 +369,22 @@ namespace VideoSystemWeb.Agenda
             {
                 tab_Offerta.Attributes["onclick"] = "openTabEvento(event, 'Offerta');";
                 tab_Offerta.Style.Remove("cursor");
-                popupOfferta.AbilitaOfferta(true);
             }
             else
             {
                 tab_Offerta.Attributes["onclick"] = "return false;";
                 tab_Offerta.Style.Add("cursor", "not-allowed;");
-                popupOfferta.AbilitaOfferta(false);
             }
 
             if (eventoSelezionato.id_stato == DatiAgenda.STATO_LAVORAZIONE)
             {
                 tab_Lavorazione.Attributes["onclick"] = "openTabEvento(event, 'Lavorazione');";
                 tab_Lavorazione.Style.Remove("cursor");
-                popupOfferta.AbilitaOfferta(true);
             }
             else
             {
                 tab_Lavorazione.Attributes["onclick"] = "return false;";
                 tab_Lavorazione.Style.Add("cursor", "not-allowed;");
-                popupOfferta.AbilitaOfferta(false);
             }
 
             string sottotipoRisorsa = eventoSelezionato != null ? UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo.ToUpper() : "";

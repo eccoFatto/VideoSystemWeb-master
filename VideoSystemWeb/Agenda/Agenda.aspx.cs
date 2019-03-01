@@ -364,6 +364,33 @@ namespace VideoSystemWeb.Agenda
         {
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+
+            if (eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA || eventoSelezionato.id_stato == DatiAgenda.STATO_LAVORAZIONE)
+            {
+                tab_Offerta.Attributes["onclick"] = "openTabEvento(event, 'Offerta');";
+                tab_Offerta.Style.Remove("cursor");
+                popupOfferta.AbilitaOfferta(true);
+            }
+            else
+            {
+                tab_Offerta.Attributes["onclick"] = "return false;";
+                tab_Offerta.Style.Add("cursor", "not-allowed;");
+                popupOfferta.AbilitaOfferta(false);
+            }
+
+            if (eventoSelezionato.id_stato == DatiAgenda.STATO_LAVORAZIONE)
+            {
+                tab_Lavorazione.Attributes["onclick"] = "openTabEvento(event, 'Lavorazione');";
+                tab_Lavorazione.Style.Remove("cursor");
+                popupOfferta.AbilitaOfferta(true);
+            }
+            else
+            {
+                tab_Lavorazione.Attributes["onclick"] = "return false;";
+                tab_Lavorazione.Style.Add("cursor", "not-allowed;");
+                popupOfferta.AbilitaOfferta(false);
+            }
+
             string sottotipoRisorsa = eventoSelezionato != null ? UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo.ToUpper() : "";
 
             btnOfferta.Visible = eventoSelezionato != null && sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString() && /*eventoSelezionato.id != 0 &&*/ eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
@@ -559,7 +586,6 @@ namespace VideoSystemWeb.Agenda
         {
             return (eventoSelezionato.durata_viaggio_andata + eventoSelezionato.durata_viaggio_ritorno) < eventoSelezionato.durata_lavorazione;
         }
-
        
         #endregion
 

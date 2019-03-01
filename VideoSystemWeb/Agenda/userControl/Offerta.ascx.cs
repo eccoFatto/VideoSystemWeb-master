@@ -243,5 +243,10 @@ namespace VideoSystemWeb.Agenda.userControl
                 gvArticoli.DataBind();
             }
         }
+
+        public void AbilitaOfferta(bool abilita)
+        {
+            panelOfferta.Enabled = abilita;
+        }
     }
 }

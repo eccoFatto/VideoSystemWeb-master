@@ -13,13 +13,13 @@ namespace VideoSystemWeb.Agenda.userControl {
     public partial class Offerta {
         
         /// <summary>
-        /// Controllo panelAppuntamenti.
+        /// Controllo panelOfferta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelAppuntamenti;
+        protected global::System.Web.UI.WebControls.Panel panelOfferta;
         
         /// <summary>
         /// Controllo panelErrore.

@@ -157,6 +157,33 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
         
         /// <summary>
+        /// Controllo tab_Appuntamento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_Appuntamento;
+        
+        /// <summary>
+        /// Controllo tab_Offerta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_Offerta;
+        
+        /// <summary>
+        /// Controllo tab_Lavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_Lavorazione;
+        
+        /// <summary>
         /// Controllo mostraAgenda.
         /// </summary>
         /// <remarks>

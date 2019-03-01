@@ -9,7 +9,7 @@
 </script>
 
 
-<asp:Panel runat="server" ID="panelAppuntamenti" >
+<asp:Panel runat="server" ID="panelLavorazione" >
     <div class="w3-container w3-center w3-xlarge">LAVORAZIONE</div>
 
     <div class="alert alert-danger alert-dismissible fade in out" role="alert" runat="server" id="panelErrore" style="display: none">

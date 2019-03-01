@@ -110,7 +110,16 @@
             document.getElementById(tipoName).style.display = "block";
             evt.currentTarget.className += " w3-red";
 
-            document.getElementById("tab_"+tipoName).className += " w3-red";
+            var nomeElemento = '';
+            if (tipoName == 'Appuntamento') {
+                nomeElemento = '<%=tab_Appuntamento.ClientID%>';
+            } else if (tipoName == 'Offerta') {
+                nomeElemento = '<%=tab_Offerta.ClientID%>';
+            }  else if (tipoName == 'Lavorazione') {
+                nomeElemento = '<%=tab_Lavorazione.ClientID%>';
+            }
+
+            document.getElementById(nomeElemento).className += " w3-red";
         }
 
         function resetTabSelezionata() {
@@ -180,9 +189,9 @@
 
                     <div class="w3-container">
                         <div class="w3-bar w3-blue w3-round">
-                            <div class="w3-bar-item w3-button tablink w3-red" id="tab_Appuntamento" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
-                            <div class="w3-bar-item w3-button tablink" id="tab_Offerta" onclick="openTabEvento(event, 'Offerta')">Offerta</div>
-                            <div class="w3-bar-item w3-button tablink" id="tab_Lavorazione" onclick="openTabEvento(event, 'Lavorazione')">Lavorazione</div>
+                            <div class="w3-bar-item w3-button tablink w3-red" runat="server" id="tab_Appuntamento" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
+                            <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Offerta" >Offerta</div>
+                            <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Lavorazione">Lavorazione</div>
                             <div style="position: relative; text-align: right; top: 5px; float: right; width: 30px;">
                                 <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" />
                             </div>

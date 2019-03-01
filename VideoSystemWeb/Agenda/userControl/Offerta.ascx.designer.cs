@@ -175,21 +175,21 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.DropDownList ddl_Stampa;
         
         /// <summary>
-        /// Controllo btnSalva.
+        /// Controllo btnOK.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSalva;
+        protected global::System.Web.UI.WebControls.Button btnOK;
         
         /// <summary>
-        /// Controllo btnAnnulla.
+        /// Controllo btnAnnullaModifiche.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnnulla;
+        protected global::System.Web.UI.WebControls.Button btnAnnullaModifiche;
     }
 }

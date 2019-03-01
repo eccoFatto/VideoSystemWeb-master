@@ -129,7 +129,7 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-        public Esito AggiornaEvento(DatiAgenda evento)
+        public Esito AggiornaEvento(DatiAgenda evento, List<DatiArticoli> listaArticoli)
         {
             Esito esito = new Esito();
             //if (evento.id_stato == DatiAgenda.STATO_RIPOSO && evento.id_tipologia == 0)
@@ -137,7 +137,19 @@ namespace VideoSystemWeb.BLL
             //    evento.id_tipologia = UtilityTipologiche.getElementByNome(Base_DAL.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, false, ref esito), "DUMMY", ref esito).id;
             //}
 
-            esito = Agenda_DAL.Instance.AggiornaEvento(evento);
+
+            switch (evento.id_stato)
+            {
+                case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
+                    Agenda_DAL.Instance.AggiornaEvento(evento);
+                    break;
+                case DatiAgenda.STATO_OFFERTA:
+                    Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaArticoli);
+                    break;
+                default:
+                    break;
+            }
+
 
             return esito;
         }

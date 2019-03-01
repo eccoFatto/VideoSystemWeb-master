@@ -175,5 +175,10 @@ namespace VideoSystemWeb.BLL
             
             return listaArticoliDelGruppo;
         }
+
+        public List<DatiArticoli> CaricaListaArticoliByIDEvento(int idDatiAgenda, ref Esito esito)
+        {
+            return Dati_Articoli_DAL.Instance.getDatiArticoliByIdDatiAgenda(ref esito, idDatiAgenda);
+        }
     }
 }

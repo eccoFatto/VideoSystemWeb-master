@@ -182,7 +182,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         public void AbilitaComponentiPopup(DatiAgenda evento)
         {
-
             panelAppuntamenti.Enabled = basePage.AbilitazioneInScrittura();
 
             if (basePage.AbilitazioneInScrittura())
@@ -196,7 +195,5 @@ namespace VideoSystemWeb.Agenda.userControl
                 txt_CodiceLavoro.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
             }
         }
-
-        
     }
 }

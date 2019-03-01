@@ -383,6 +383,7 @@ namespace VideoSystemWeb.Agenda
             popupAppuntamento.PopolaPopup(eventoSelezionato);
 
             popupOfferta.ClearOfferta();
+            popupOfferta.PopolaOfferta(eventoSelezionato.id);
         }
 
         private void ChiudiPopup()
@@ -428,7 +429,7 @@ namespace VideoSystemWeb.Agenda
 
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            List<DatiArticoli> listaArticoli = (List<DatiArticoli>)Session["listaArticoli"];
+            List<DatiArticoli> listaArticoli = popupOfferta.listaArticoli;
 
             esito = ValidazioneSalvataggio(eventoSelezionato);
 
@@ -440,7 +441,7 @@ namespace VideoSystemWeb.Agenda
                 }
                 else
                 {
-                    Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato);
+                    Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato, listaArticoli);
                 }
 
                 ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
@@ -558,6 +559,8 @@ namespace VideoSystemWeb.Agenda
         {
             return (eventoSelezionato.durata_viaggio_andata + eventoSelezionato.durata_viaggio_ritorno) < eventoSelezionato.durata_lavorazione;
         }
+
+       
         #endregion
 
         #region COSTRUZIONE PAGINA

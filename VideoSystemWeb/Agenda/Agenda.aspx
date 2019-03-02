@@ -217,7 +217,7 @@
                         <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();" />
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();" Visible="false" />
                         <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();" OnClick="btnLavorazione_Click" Visible="false" />
-                        <asp:Button ID="btnRiposo" runat="server" Text="Riposo" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRiposo_Click" Visible="false" />
+                        <%--<asp:Button ID="btnRiposo" runat="server" Text="Riposo" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRiposo_Click" Visible="false" />--%>
                     </div>
 
                 </asp:Panel>
@@ -225,7 +225,7 @@
         </ContentTemplate>
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="btnEditEvent" EventName="Click" />
-            <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />
+            <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />           
         </Triggers>
     </asp:UpdatePanel>
     <div class="showAgendaBackground" style="display: none"></div>

@@ -72,8 +72,8 @@ namespace VideoSystemWeb.DAL
                                         datoAgenda.id_cliente = riga.Field<int>("id_cliente"); 
                                         datoAgenda.durata_viaggio_andata = riga.Field<int>("durata_viaggio_andata"); 
                                         datoAgenda.durata_viaggio_ritorno = riga.Field<int>("durata_viaggio_ritorno"); 
-                                        datoAgenda.data_inizio_impegno = riga.Field<DateTime?>("data_inizio_impegno");
-                                        datoAgenda.data_fine_impegno = riga.Field<DateTime?>("data_fine_impegno"); 
+                                        datoAgenda.data_inizio_impegno = riga.Field<DateTime>("data_inizio_impegno");
+                                        datoAgenda.data_fine_impegno = riga.Field<DateTime>("data_fine_impegno"); 
                                         datoAgenda.impegnoOrario = riga.Field <bool>("impegnoOrario");
                                         datoAgenda.impegnoOrario_da = riga.Field<string>("impegnoOrario_da");
                                         datoAgenda.impegnoOrario_a = riga.Field<string>("impegnoOrario_a"); 
@@ -116,7 +116,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_lavorazione between '" + dataDa + "' and '" + dataA + "' OR data_fine_lavorazione between '" + dataDa + "' and '" + dataA + "'"))
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_impegno between '" + dataDa + "' and '" + dataA + "' OR data_fine_impegno between '" + dataDa + "' and '" + dataA + "'"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -140,8 +140,8 @@ namespace VideoSystemWeb.DAL
                                         datoAgenda.id_cliente = riga.Field<int>("id_cliente");
                                         datoAgenda.durata_viaggio_andata = riga.Field<int>("durata_viaggio_andata");
                                         datoAgenda.durata_viaggio_ritorno = riga.Field<int>("durata_viaggio_ritorno");
-                                        datoAgenda.data_inizio_impegno = riga.Field<DateTime?>("data_inizio_impegno");
-                                        datoAgenda.data_fine_impegno = riga.Field<DateTime?>("data_fine_impegno");
+                                        datoAgenda.data_inizio_impegno = riga.Field<DateTime>("data_inizio_impegno");
+                                        datoAgenda.data_fine_impegno = riga.Field<DateTime>("data_fine_impegno");
                                         datoAgenda.impegnoOrario = riga.Field<bool>("impegnoOrario");
                                         datoAgenda.impegnoOrario_da = riga.Field<string>("impegnoOrario_da");
                                         datoAgenda.impegnoOrario_a = riga.Field<string>("impegnoOrario_a");
@@ -479,8 +479,6 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        
-
         public Esito EliminaEvento(int idEvento)
         {
             Esito esito = new Esito();
@@ -600,7 +598,6 @@ namespace VideoSystemWeb.DAL
 
             return listaLavorazioni;
         }
-
        
         private static void CostruisciSP_InsertDatiArticoli(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, DatiArticoli datoArticolo)
         {

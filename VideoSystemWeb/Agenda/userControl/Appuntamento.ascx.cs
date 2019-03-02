@@ -24,10 +24,11 @@ namespace VideoSystemWeb.Agenda.userControl
                 basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
                 ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
 
-                basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
+                // basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
                 basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
                 basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
             }
+
             string[] elencoProduzioni = Agenda_BLL.Instance.CaricaElencoProduzioni(ref esito);
             string[] elencoLavorazioni = Agenda_BLL.Instance.CaricaElencoLavorazioni(ref esito);
 
@@ -48,7 +49,7 @@ namespace VideoSystemWeb.Agenda.userControl
             datiAgenda.id_colonne_agenda = BasePage.ValidaCampo(ddl_Risorse, hf_Risorse, 0, true, ref esito);
             datiAgenda.id_tipologia = BasePage.ValidaCampo(ddl_Tipologie, hf_Tipologie, 0, campoObbligatorio, ref esito);
             datiAgenda.id_stato = int.Parse(hf_IdStato.Value);
-            datiAgenda.id_cliente = BasePage.ValidaCampo(ddl_Clienti, hf_Clienti, 0, true, ref esito);
+            datiAgenda.id_cliente = BasePage.ValidaCampo(ddl_Clienti, hf_Clienti, 0, campoObbligatorio, ref esito);
             datiAgenda.durata_viaggio_andata = BasePage.ValidaCampo(txt_DurataViaggioAndata, 0, campoObbligatorio, ref esito);
             datiAgenda.durata_viaggio_ritorno = BasePage.ValidaCampo(txt_DurataViaggioRitorno, 0, campoObbligatorio, ref esito);
             datiAgenda.data_inizio_impegno = BasePage.ValidaCampo(txt_DataInizioImpegno, DateTime.MinValue, campoObbligatorio, ref esito);
@@ -119,6 +120,19 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_Clienti.Text = ddl_Clienti.ToolTip = ((List<Anag_Clienti_Fornitori>)ViewState["listaClientiFornitori"]).Where(x => x.Id == evento.id_cliente).FirstOrDefault().RagioneSociale;
             }
 
+            if (evento.id_stato != DatiAgenda.STATO_PREVISIONE_IMPEGNO && evento.id_stato != DatiAgenda.STATO_RIPOSO)
+            {
+                List<Tipologica> listaRisorseNoDipendenti = basePage.listaRisorse.Where(x => x.sottotipo.ToUpper() != EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<Tipologica>();
+
+                elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
+                basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseNoDipendenti);
+            }
+            else
+            {
+                elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
+                basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
+            }
+
             txt_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
             txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
             txt_DataInizioImpegno.Text = evento.data_inizio_impegno.ToString();
@@ -180,20 +194,110 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, stato, ref esito).nome;
         }
 
-        public void AbilitaComponentiPopup(DatiAgenda evento)
+        public void AbilitaComponentiPopup(int statoEvento)
         {
             panelAppuntamenti.Enabled = basePage.AbilitazioneInScrittura();
 
             if (basePage.AbilitazioneInScrittura())
             {
-                txt_DataInizioLavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato ==  DatiAgenda.STATO_RIPOSO;
-                ddl_Clienti.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-                txt_Produzione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-                txt_Lavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-                txt_Indirizzo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-                txt_Luogo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-                txt_CodiceLavoro.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                //txt_DataInizioLavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato ==  DatiAgenda.STATO_RIPOSO;
+                //ddl_Clienti.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                //txt_Produzione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                //txt_Lavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                //txt_Indirizzo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                //txt_Luogo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+                //txt_CodiceLavoro.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
+
+                switch (statoEvento)
+                {
+                    case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
+                        txt_DataInizioLavorazione.Enabled =
+                        txt_DataFineLavorazione.Enabled =
+                        ddl_Risorse.Enabled = 
+                        ddl_Tipologie.Enabled =
+                        ddl_Clienti.Enabled = 
+                        txt_DurataViaggioAndata.Enabled =
+                        txt_DurataViaggioRitorno.Enabled =
+                        txt_Produzione.Enabled = 
+                        txt_Lavorazione.Enabled = 
+                        txt_Indirizzo.Enabled = 
+                        txt_Luogo.Enabled = 
+                        tb_Nota.Enabled = true;
+
+                        break;
+                    case DatiAgenda.STATO_OFFERTA:
+                        txt_DataInizioLavorazione.Enabled = false;
+                        txt_DataFineLavorazione.Enabled = true;
+                        ddl_Risorse.Enabled = true;
+                        ddl_Tipologie.Enabled = true;
+                        ddl_Clienti.Enabled = false;
+                        txt_DurataViaggioAndata.Enabled = true;
+                        txt_DurataViaggioRitorno.Enabled = true;
+                        txt_Produzione.Enabled = false;
+                        txt_Lavorazione.Enabled = false;
+                        txt_Indirizzo.Enabled = true;
+                        txt_Luogo.Enabled = false;
+                        tb_Nota.Enabled = true;
+
+                        break;
+                    case DatiAgenda.STATO_LAVORAZIONE:
+                        
+                        break;
+                    case DatiAgenda.STATO_FATTURA:
+                        
+                        break;
+                    case DatiAgenda.STATO_RIPOSO:
+                        txt_DataInizioLavorazione.Enabled = true;
+                        txt_DataFineLavorazione.Enabled = true;
+                        ddl_Risorse.Enabled = true;
+                        ddl_Tipologie.Enabled = false;
+                        ddl_Clienti.Enabled = false;
+                        txt_DurataViaggioAndata.Enabled = false;
+                        txt_DurataViaggioRitorno.Enabled = false;
+                        txt_Produzione.Enabled = false;
+                        txt_Lavorazione.Enabled = false;
+                        txt_Indirizzo.Enabled = false;
+                        txt_Luogo.Enabled = false;
+                        tb_Nota.Enabled = true;
+
+                        break;
+                }
             }
+        }
+
+        protected void btn_Risorse_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+           
+            string sottotipoRisorsa = UtilityTipologiche.getElementByID(basePage.listaRisorse, int.Parse(hf_Risorse.Value), ref esito).sottotipo.ToUpper();
+
+            if (sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString())
+            {
+                hf_IdStato.Value =  DatiAgenda.STATO_RIPOSO.ToString();
+                hf_Tipologie.Value = "";
+                ddl_Tipologie.Text = "<Seleziona>";
+                hf_Clienti.Value = "";
+                ddl_Clienti.Text = "<Seleziona>";
+                txt_DurataViaggioAndata.Text = "0";
+                txt_DurataViaggioRitorno.Text = "0";
+                txt_DataInizioImpegno.Text = txt_DataInizioLavorazione.Text;
+                txt_DataFineImpegno.Text = txt_DataFineLavorazione.Text;
+                txt_Produzione.Text = "";
+                txt_Lavorazione.Text = "";
+                txt_Indirizzo.Text = "";
+                txt_Luogo.Text = "";
+            }
+            else
+            {
+                hf_IdStato.Value = DatiAgenda.STATO_PREVISIONE_IMPEGNO.ToString();
+            }
+            
+
+            
+
+
+            AbilitaComponentiPopup(int.Parse(hf_IdStato.Value));
+            RichiediOperazionePopup("UPDATE");
         }
     }
 }

@@ -45,7 +45,7 @@
     <div class="w3-row-padding" style="font-size: small;">
         <div class="w3-half" style="padding-right:5px">
             <asp:Panel runat="server" ID="panelGruppi" CssClass="round" Style="height: 200px; position: relative; background-color: white; overflow: auto;">
-                <asp:TextBox ID="txt_FiltroGruppi" runat="server" CssClass="w3-round"  placeholder="Filtra i risultati" Style="width:100%;padding:5px"></asp:TextBox>
+                <asp:TextBox ID="txt_FiltroGruppi" runat="server" CssClass="w3-round"  placeholder="Cerca.." Style="width:100%;padding:5px"></asp:TextBox>
                 <asp:GridView ID="gvGruppi" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;text-align:center" OnRowCommand="gvGruppi_RowCommand" DataMember="ID">
                     <Columns>
                         <asp:BoundField DataField="ID" HeaderText="ID" />

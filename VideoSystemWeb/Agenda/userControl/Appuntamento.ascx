@@ -23,15 +23,15 @@
 
                 var durataAndata = parseInt($('#<%=txt_DurataViaggioAndata.ClientID%>').val());
                 var durataRitorno = parseInt($('#<%=txt_DurataViaggioRitorno.ClientID%>').val());
-                $('#<%=txt_DataInizioImpegno.ClientID%>').val(convertDate(parseDate(dataDa.val()).addDays(durataAndata)));
-                $('#<%=txt_DataFineImpegno.ClientID%>').val(convertDate(parseDate(dataA.val()).addDays(durataRitorno * -1)));
+                $('#<%=txt_DataInizioImpegno.ClientID%>').val(convertDate(parseDate(dataDa.val()).addDays(durataAndata * -1)));
+                $('#<%=txt_DataFineImpegno.ClientID%>').val(convertDate(parseDate(dataA.val()).addDays(durataRitorno)));
             });
 
             $('#<%=txt_DurataViaggioAndata.ClientID%>').on('change keyup paste', function () {
                 var dataDa = $('#<%=txt_DataInizioLavorazione.ClientID%>');
                 var durata = parseInt($('#<%=txt_DurataViaggioAndata.ClientID%>').val());
 
-                $('#<%=txt_DataInizioImpegno.ClientID%>').val(convertDate(parseDate(dataDa.val()).addDays(durata)));
+                $('#<%=txt_DataInizioImpegno.ClientID%>').val(convertDate(parseDate(dataDa.val()).addDays(durata * -1)));
 
             });
 
@@ -39,7 +39,7 @@
                 var dataA = $('#<%=txt_DataFineLavorazione.ClientID%>');
                 var durata = parseInt($('#<%=txt_DurataViaggioRitorno.ClientID%>').val());
 
-                $('#<%=txt_DataFineImpegno.ClientID%>').val(convertDate(parseDate(dataA.val()).addDays(durata * -1)));
+                $('#<%=txt_DataFineImpegno.ClientID%>').val(convertDate(parseDate(dataA.val()).addDays(durata)));
             });
 
             // GESTIONE DROPDOWN RISORSE
@@ -54,6 +54,8 @@
                 $("#<%=hf_Risorse.ClientID%>").val($(this.firstChild).attr('val'));
                 $("#<%=ddl_Risorse.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Risorse.ClientID%>").attr("title", $(e.target).text());
+
+                $("#<%=btn_Risorse.ClientID%>").click();
             });
 
             // GESTIONE DROPDOWN TIPOLOGIE
@@ -155,7 +157,8 @@
                         <%--<asp:DropDownList ID="ddl_Risorse" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:DropDownList>--%>
 
                         <div id="divRis" class="dropdown " style="position: absolute; width: 190px;">
-                            <asp:HiddenField ID="hf_Risorse" runat="server" Value="" />
+                            <asp:HiddenField ID="hf_Risorse" runat="server" Value="" ClientIDMode="Static"/>
+                            <asp:Button ID="btn_Risorse" runat="server"  Text="" Style="display:none"  OnClick="btn_Risorse_Click"/>
                             <asp:Button ID="ddl_Risorse" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" data-boundary="divRis" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
                             <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;">
                                 <input class="form-control" id="filtroRisorse" type="text" placeholder="Cerca..">
@@ -308,7 +311,7 @@
                     </div>
 
                     <div class="w3-col" style="width: 30%; margin-bottom: 5px;">
-                        <asp:TextBox ID="txt_CodiceLavoro" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:TextBox>
+                        <asp:TextBox ID="txt_CodiceLavoro" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax" Enabled="false"></asp:TextBox>
                     </div>
                 </div>
             </div>
@@ -334,14 +337,10 @@
 
                 <div class="w3-rest" style="width: 80%; margin-bottom: 5px;">
                     <asp:HiddenField ID="hf_IdStato" runat="server" />
-                    <asp:TextBox ID="txt_Stato" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax" ReadOnly="true"></asp:TextBox>
+                    <asp:TextBox ID="txt_Stato" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax" Enabled="false"></asp:TextBox>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
-
 </asp:Panel>
+

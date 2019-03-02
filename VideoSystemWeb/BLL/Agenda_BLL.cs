@@ -101,7 +101,7 @@ namespace VideoSystemWeb.BLL
 
         public DatiAgenda GetDatiAgendaByDataRisorsa(List<DatiAgenda> listaDatiAgenda, DateTime data, int id_risorsa)
         {
-            return listaDatiAgenda.Where(x => x.data_inizio_lavorazione.Date <= data.Date && x.data_fine_lavorazione.Date >= data.Date && x.id_colonne_agenda == id_risorsa).FirstOrDefault();
+            return listaDatiAgenda.Where(x => x.data_inizio_impegno.Date <= data.Date && x.data_fine_impegno.Date >= data.Date && x.id_colonne_agenda == id_risorsa).FirstOrDefault();
         }
 
         public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaArticoli)
@@ -119,6 +119,9 @@ namespace VideoSystemWeb.BLL
                     break;
                 case DatiAgenda.STATO_OFFERTA:
                     Agenda_DAL.Instance.creaEventoConArticoli(evento, listaArticoli);
+                    break;
+                case DatiAgenda.STATO_RIPOSO:
+                    Agenda_DAL.Instance.CreaEvento(evento);
                     break;
                 default:
                     break;
@@ -145,6 +148,9 @@ namespace VideoSystemWeb.BLL
                     break;
                 case DatiAgenda.STATO_OFFERTA:
                     Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaArticoli);
+                    break;
+                case DatiAgenda.STATO_RIPOSO:
+                    Agenda_DAL.Instance.AggiornaEvento(evento);
                     break;
                 default:
                     break;

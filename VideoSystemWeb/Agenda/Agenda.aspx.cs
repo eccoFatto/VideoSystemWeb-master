@@ -98,10 +98,10 @@ namespace VideoSystemWeb.Agenda
         protected void btnOfferta_Click(object sender, EventArgs e)
         {
             popupAppuntamento.SetStato(DatiAgenda.STATO_OFFERTA);
-            DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
-            popupAppuntamento.PopolaPopup(eventoSelezionato);
-            AbilitaComponentiPopup();
+            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            //popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
+            //popupAppuntamento.PopolaPopup(eventoSelezionato);
+            //AbilitaComponentiPopup();
             btnLavorazione.Visible = false;
             UpdatePopup();
         }
@@ -109,20 +109,20 @@ namespace VideoSystemWeb.Agenda
         protected void btnLavorazione_Click(object sender, EventArgs e)
         {
             popupAppuntamento.SetStato(DatiAgenda.STATO_LAVORAZIONE);
-            DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
-            popupAppuntamento.PopolaPopup(eventoSelezionato);
-            AbilitaComponentiPopup();
+            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            //popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
+            //popupAppuntamento.PopolaPopup(eventoSelezionato);
+            //AbilitaComponentiPopup();
             UpdatePopup();
         }
 
         protected void btnRiposo_Click(object sender, EventArgs e)
         {
             popupAppuntamento.SetStato(DatiAgenda.STATO_RIPOSO);
-            DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
-            popupAppuntamento.PopolaPopup(eventoSelezionato);
-            AbilitaComponentiPopup();
+            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            //popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
+            //popupAppuntamento.PopolaPopup(eventoSelezionato);
+            //AbilitaComponentiPopup();
             UpdatePopup();
         }
         #endregion
@@ -160,7 +160,6 @@ namespace VideoSystemWeb.Agenda
                 foreach (Tipologica risorsa in listaRisorse)
                 {
                     DatiAgenda datiAgendaFiltrati = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(listaDatiAgenda, dataRiga, risorsa.id);
-                    //listaDatiAgenda.Where(x => x.data_inizio_lavorazione <= dataRiga && x.data_fine_lavorazione >= dataRiga && x.id_colonne_agenda == risorsa.id).ToList<DatiAgenda>();
                     if (datiAgendaFiltrati != null)
                     {
                         row[indiceColonna++] = datiAgendaFiltrati.id.ToString(); // inserisco id datoAgenda per poi formattare la cella in RowDataBound 
@@ -327,12 +326,12 @@ namespace VideoSystemWeb.Agenda
         private bool IsDisponibileDataRisorsa(DatiAgenda eventoDaControllare)
         {
             listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"];
-            DatiAgenda eventoEsistente = listaDatiAgenda.Where(x => x.id != eventoDaControllare.id &&
+            DatiAgenda eventoEsistente = listaDatiAgenda.FirstOrDefault(x => x.id != eventoDaControllare.id &&
                                                          x.id_colonne_agenda == eventoDaControllare.id_colonne_agenda &&
-                                                        ((x.data_inizio_lavorazione <= eventoDaControllare.data_inizio_lavorazione && x.data_fine_lavorazione >= eventoDaControllare.data_inizio_lavorazione) ||
-                                                        (x.data_inizio_lavorazione <= eventoDaControllare.data_fine_lavorazione && x.data_fine_lavorazione >= eventoDaControllare.data_fine_lavorazione) ||
-                                                        (x.data_inizio_lavorazione >= eventoDaControllare.data_inizio_lavorazione && x.data_fine_lavorazione <= eventoDaControllare.data_fine_lavorazione)
-                                                        )).FirstOrDefault();
+                                                        ((x.data_inizio_impegno <= eventoDaControllare.data_inizio_impegno && x.data_fine_impegno >= eventoDaControllare.data_inizio_impegno) ||
+                                                        (x.data_inizio_impegno <= eventoDaControllare.data_fine_impegno && x.data_fine_impegno >= eventoDaControllare.data_fine_impegno) ||
+                                                        (x.data_inizio_impegno >= eventoDaControllare.data_inizio_impegno && x.data_fine_impegno <= eventoDaControllare.data_fine_impegno)
+                                                        ));
 
             return eventoEsistente == null;
         }
@@ -357,6 +356,11 @@ namespace VideoSystemWeb.Agenda
 
         private void UpdatePopup()
         {
+            DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
+            popupAppuntamento.PopolaPopup(eventoSelezionato);
+            AbilitaComponentiPopup();
+
             upEvento.Update();
         }
 
@@ -364,35 +368,98 @@ namespace VideoSystemWeb.Agenda
         {
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            string sottotipoRisorsa = "";
 
-            if (eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA || eventoSelezionato.id_stato == DatiAgenda.STATO_LAVORAZIONE)
+            if (eventoSelezionato != null)
             {
-                tab_Offerta.Attributes["onclick"] = "openTabEvento(event, 'Offerta');";
-                tab_Offerta.Style.Remove("cursor");
-            }
-            else
-            {
-                tab_Offerta.Attributes["onclick"] = "return false;";
-                tab_Offerta.Style.Add("cursor", "not-allowed;");
+                sottotipoRisorsa = UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo.ToUpper();
+
+                switch (eventoSelezionato.id_stato)
+                {
+                    case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
+                        tab_Offerta.Attributes["onclick"] = "return false;";
+                        tab_Offerta.Style.Add("cursor", "not-allowed;");
+
+                        tab_Lavorazione.Attributes["onclick"] = "return false;";
+                        tab_Lavorazione.Style.Add("cursor", "not-allowed;");
+
+                        btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
+                        btnLavorazione.Visible = false;
+                        btnElimina.Visible = eventoSelezionato.id != 0;
+                        //btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString();
+
+                        popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_PREVISIONE_IMPEGNO);
+
+                        break;
+                    case DatiAgenda.STATO_OFFERTA:
+                        tab_Offerta.Attributes["onclick"] = "openTabEvento(event, 'Offerta');";
+                        tab_Offerta.Style.Remove("cursor");
+
+                        tab_Lavorazione.Attributes["onclick"] = "return false;";
+                        tab_Lavorazione.Style.Add("cursor", "not-allowed;");
+
+                        btnOfferta.Visible = false;
+                        btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
+                        btnElimina.Visible = false;
+                        //btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString();
+
+                        popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_OFFERTA);
+
+                        break;
+                    case DatiAgenda.STATO_LAVORAZIONE:
+                        tab_Offerta.Attributes["onclick"] = "openTabEvento(event, 'Offerta');";
+                        tab_Offerta.Style.Remove("cursor");
+
+                        tab_Lavorazione.Attributes["onclick"] = "openTabEvento(event, 'Lavorazione');";
+                        tab_Lavorazione.Style.Remove("cursor");
+
+                        btnOfferta.Visible = false;
+                        btnLavorazione.Visible = false;
+                        btnElimina.Visible = false;
+                        //btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString();
+
+                        popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_LAVORAZIONE);
+
+                        break;
+                    case DatiAgenda.STATO_FATTURA:
+                        tab_Offerta.Attributes["onclick"] = "openTabEvento(event, 'Offerta');";
+                        tab_Offerta.Style.Remove("cursor");
+
+                        tab_Lavorazione.Attributes["onclick"] = "openTabEvento(event, 'Lavorazione');";
+                        tab_Lavorazione.Style.Remove("cursor");
+
+                        btnOfferta.Visible = false;
+                        btnLavorazione.Visible = false;
+                        btnElimina.Visible = false;
+                        //btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString();
+
+                        popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_FATTURA);
+
+                        break;
+                    case DatiAgenda.STATO_RIPOSO:
+                        tab_Offerta.Attributes["onclick"] = "return false;";
+                        tab_Offerta.Style.Add("cursor", "not-allowed;");
+
+                        tab_Lavorazione.Attributes["onclick"] = "return false;";
+                        tab_Lavorazione.Style.Add("cursor", "not-allowed;");
+
+                        btnOfferta.Visible = false;
+                        btnLavorazione.Visible = false;
+                        btnElimina.Visible = eventoSelezionato.id != 0;
+                        //btnRiposo.Visible = false;
+
+                        popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_RIPOSO);
+
+                        break;
+                }
             }
 
-            if (eventoSelezionato.id_stato == DatiAgenda.STATO_LAVORAZIONE)
-            {
-                tab_Lavorazione.Attributes["onclick"] = "openTabEvento(event, 'Lavorazione');";
-                tab_Lavorazione.Style.Remove("cursor");
-            }
-            else
-            {
-                tab_Lavorazione.Attributes["onclick"] = "return false;";
-                tab_Lavorazione.Style.Add("cursor", "not-allowed;");
-            }
+           // string sottotipoRisorsa = eventoSelezionato != null ? UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo.ToUpper() : "";
 
-            string sottotipoRisorsa = eventoSelezionato != null ? UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo.ToUpper() : "";
-
-            btnOfferta.Visible = eventoSelezionato != null && sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString() && /*eventoSelezionato.id != 0 &&*/ eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-            btnLavorazione.Visible = eventoSelezionato != null && sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString() && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA;
-            btnElimina.Visible = eventoSelezionato != null && eventoSelezionato.id != 0 && (eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || eventoSelezionato.id_stato == DatiAgenda.STATO_RIPOSO);
-            btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString() && eventoSelezionato.id_stato != DatiAgenda.STATO_RIPOSO;
+           // btnOfferta.Visible = eventoSelezionato != null && sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString() &&  eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
+           // btnLavorazione.Visible = eventoSelezionato != null && sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString() && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA;
+           // btnElimina.Visible = eventoSelezionato != null && eventoSelezionato.id != 0 && (eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || eventoSelezionato.id_stato == DatiAgenda.STATO_RIPOSO);
+           // btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString() && eventoSelezionato.id_stato != DatiAgenda.STATO_RIPOSO;
         }
 
         private void MostraPopup(DatiAgenda eventoSelezionato)
@@ -420,24 +487,24 @@ namespace VideoSystemWeb.Agenda
         #region OPERAZIONI EVENTO
         private DatiAgenda CreaEventoDaSelezioneAgenda(DateTime dataEvento, int risorsaEvento)
         {
+            Esito esito = new Esito();
             listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"];
 
             DatiAgenda eventoSelezionato = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(listaDatiAgenda, dataEvento, risorsaEvento);
-
+            string sottotipoRisorsa = UtilityTipologiche.getElementByID(listaRisorse, risorsaEvento, ref esito).sottotipo.ToUpper();
             if (eventoSelezionato == null)
             {
-                eventoSelezionato = new DatiAgenda
-                {
-                    data_inizio_lavorazione = dataEvento,
-                    data_fine_lavorazione = dataEvento,
-                    durata_lavorazione = 1,
-                    id_colonne_agenda = risorsaEvento,
-                    data_inizio_impegno = dataEvento,
-                    data_fine_impegno = dataEvento,
-                    durata_viaggio_andata = 0,
-                    durata_viaggio_ritorno = 0,
-                    id_stato = DatiAgenda.STATO_PREVISIONE_IMPEGNO
-                };
+                eventoSelezionato = new DatiAgenda();
+
+                eventoSelezionato.data_inizio_lavorazione = dataEvento;
+                eventoSelezionato.data_fine_lavorazione = dataEvento;
+                eventoSelezionato.durata_lavorazione = 1;
+                eventoSelezionato.id_colonne_agenda = risorsaEvento;
+                eventoSelezionato.data_inizio_impegno = dataEvento;
+                eventoSelezionato.data_fine_impegno = dataEvento;
+                eventoSelezionato.durata_viaggio_andata = 0;
+                eventoSelezionato.durata_viaggio_ritorno = 0;
+                eventoSelezionato.id_stato = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString() ? DatiAgenda.STATO_RIPOSO : DatiAgenda.STATO_PREVISIONE_IMPEGNO;
             }
 
             ViewState["eventoSelezionato"] = eventoSelezionato;
@@ -529,16 +596,14 @@ namespace VideoSystemWeb.Agenda
             if (esito.codice != Esito.ESITO_OK)
             {
                 esito.descrizione = "Controllare i campi evidenziati";
-               
-            }
 
-            else if (!ControlloGiorniViaggio(eventoSelezionato))
-            {
-                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.descrizione = "Non è possibile salvare l'evento perché i giorni viaggio eccedono la durata della lavorazione";
-                
             }
+            //else if (!ControlloGiorniViaggio(eventoSelezionato))
+            //{
+            //    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+            //    esito.descrizione = "Non è possibile salvare l'evento perché i giorni viaggio eccedono la durata della lavorazione";
 
+            //}
             else if (!IsDisponibileDataRisorsa(eventoSelezionato))
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
@@ -550,19 +615,19 @@ namespace VideoSystemWeb.Agenda
 
         private bool IsPrimoGiorno(DatiAgenda evento, DateTime data)
         {
-            return evento.data_inizio_lavorazione.Date == data.Date;
+            return evento.data_inizio_impegno.Date == data.Date;
         }
 
         private bool IsUltimoGiorno(DatiAgenda evento, DateTime data)
         {
-            return evento.data_fine_lavorazione.Date == data.Date;
+            return evento.data_fine_impegno.Date == data.Date;
         }
 
         private bool IsViaggioAndata(DatiAgenda evento, DateTime data)
         {
             if (evento.durata_viaggio_andata > 0)
             {
-                return (data.Date >= evento.data_inizio_lavorazione.Date && data.Date < evento.data_inizio_lavorazione.AddDays(evento.durata_viaggio_andata).Date);
+                return (data.Date >= evento.data_inizio_impegno.Date && data.Date < evento.data_inizio_lavorazione.Date);
             }
 
             return false;
@@ -572,17 +637,16 @@ namespace VideoSystemWeb.Agenda
         {
             if (evento.durata_viaggio_ritorno > 0)
             {
-                return (data.Date > evento.data_fine_lavorazione.AddDays(evento.durata_viaggio_ritorno * -1).Date && data <= evento.data_fine_lavorazione.Date);
+                return (data.Date > evento.data_fine_lavorazione.Date && data <= evento.data_fine_impegno.Date);
             }
 
             return false;
         }
 
-        private bool ControlloGiorniViaggio(DatiAgenda eventoSelezionato)
-        {
-            return (eventoSelezionato.durata_viaggio_andata + eventoSelezionato.durata_viaggio_ritorno) < eventoSelezionato.durata_lavorazione;
-        }
-       
+        //private bool ControlloGiorniViaggio(DatiAgenda eventoSelezionato)
+        //{
+        //    return (eventoSelezionato.durata_viaggio_andata + eventoSelezionato.durata_viaggio_ritorno) < eventoSelezionato.durata_lavorazione;
+        //}
         #endregion
 
         #region COSTRUZIONE PAGINA

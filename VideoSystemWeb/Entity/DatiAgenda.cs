@@ -14,8 +14,8 @@ namespace VideoSystemWeb.Entity
         public const int STATO_FATTURA = 4;
         public const int STATO_RIPOSO = 5;
 
-        private DateTime? _data_inizio_impegno;
-        private DateTime? _data_fine_impegno;
+        //private DateTime? _data_inizio_impegno;
+        //private DateTime? _data_fine_impegno;
 
         public int id { get; set; }
         public DateTime data_inizio_lavorazione { get; set; }
@@ -26,39 +26,39 @@ namespace VideoSystemWeb.Entity
         public int id_cliente { get; set; }
         public int durata_viaggio_andata { get; set; }
         public int durata_viaggio_ritorno { get; set; }
-        public DateTime? data_inizio_impegno
-        {
-            get { return _data_inizio_impegno; }
-            set
-            {
-                if (value == DateTime.MinValue)
-                {
-                    _data_inizio_impegno = null;
-                }
-                else
-                {          
-                    _data_inizio_impegno = value;                   
-                }
-            }
-        }
-        public DateTime? data_fine_impegno
-        {
-            get { return _data_fine_impegno; }
-            set
-            {
-                if (value == DateTime.MinValue)
-                {
-                    _data_fine_impegno = null;
-                }
-                else
-                {
-                    if (value != null)
-                    {
-                        _data_fine_impegno = value;
-                    }
-                }
-            }
-        }
+        public DateTime data_inizio_impegno { get; set; }
+        //{
+        //    get { return _data_inizio_impegno; }
+        //    set
+        //    {
+        //        if (value == DateTime.MinValue)
+        //        {
+        //            _data_inizio_impegno = null;
+        //        }
+        //        else
+        //        {          
+        //            _data_inizio_impegno = value;                   
+        //        }
+        //    }
+        //}
+        public DateTime data_fine_impegno { get; set; }
+        //{
+        //    get { return _data_fine_impegno; }
+        //    set
+        //    {
+        //        if (value == DateTime.MinValue)
+        //        {
+        //            _data_fine_impegno = null;
+        //        }
+        //        else
+        //        {
+        //            if (value != null)
+        //            {
+        //                _data_fine_impegno = value;
+        //            }
+        //        }
+        //    }
+        //}
         public bool impegnoOrario { get; set; }
         public string impegnoOrario_da { get; set; }
 

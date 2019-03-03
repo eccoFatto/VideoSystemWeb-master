@@ -66,6 +66,7 @@ namespace VideoSystemWeb.DAL
                                         datiArticoli.DescrizioneLunga = riga.Field<string>("descrizioneLunga");
 
                                         datiArticoli.Iva = riga.Field<int>("iva");
+                                        datiArticoli.Quantita = riga.Field<int>("quantita");
 
                                         datiArticoli.Prezzo = riga.Field<decimal>("prezzo");
                                         datiArticoli.Costo = riga.Field<decimal>("costo");
@@ -124,6 +125,7 @@ namespace VideoSystemWeb.DAL
                                     datiArticoli.DescrizioneLunga = dt.Rows[0].Field<string>("descrizioneLunga");
 
                                     datiArticoli.Iva = dt.Rows[0].Field<int>("iva");
+                                    datiArticoli.Quantita = dt.Rows[0].Field<int>("quantita");
 
                                     datiArticoli.Prezzo = dt.Rows[0].Field<decimal>("prezzo");
                                     datiArticoli.Costo = dt.Rows[0].Field<decimal>("costo");
@@ -202,6 +204,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter iva = new SqlParameter("@iva", datoArticolo.Iva);
                             iva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(iva);
+
+                            SqlParameter quantita = new SqlParameter("@quantita", datoArticolo.Quantita);
+                            quantita.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(quantita);
 
                             SqlParameter prezzo = new SqlParameter("@prezzo", datoArticolo.Prezzo);
                             prezzo.Direction = ParameterDirection.Input;
@@ -286,6 +292,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter iva = new SqlParameter("@iva", datoArticolo.Iva);
                             iva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(iva);
+
+                            SqlParameter quantita = new SqlParameter("@quantita", datoArticolo.Quantita);
+                            quantita.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(quantita);
 
                             SqlParameter prezzo = new SqlParameter("@prezzo", datoArticolo.Prezzo);
                             prezzo.Direction = ParameterDirection.Input;

@@ -20,6 +20,7 @@ namespace VideoSystemWeb.Entity
         //[prezzo] [decimal](18, 0) NOT NULL,
         //[costo] [decimal](18, 0) NOT NULL,
         //[iva] [int] NOT NULL,
+        //[quantita] [int] NOT NULL,
 
         private int id;
         private int idArtArticoli;
@@ -33,6 +34,7 @@ namespace VideoSystemWeb.Entity
         private decimal prezzo;
         private decimal costo;
         private int iva;
+        private int quantita;
 
         private long identificatoreOggetto;
         
@@ -50,8 +52,9 @@ namespace VideoSystemWeb.Entity
         public decimal Prezzo { get => prezzo; set => prezzo = value; }
         public decimal Costo { get => costo; set => costo = value; }
         public int Iva { get => iva; set => iva = value; }
+        public int Quantita { get => quantita; set => quantita = value; }
 
         public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
-
+        
     }
 }

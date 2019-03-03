@@ -645,6 +645,10 @@ namespace VideoSystemWeb.DAL
             iva.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(iva);
 
+            SqlParameter quantita = new SqlParameter("@quantita", datoArticolo.Quantita);
+            quantita.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(quantita);
+
             SqlParameter prezzo = new SqlParameter("@prezzo", datoArticolo.Prezzo);
             prezzo.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(prezzo);

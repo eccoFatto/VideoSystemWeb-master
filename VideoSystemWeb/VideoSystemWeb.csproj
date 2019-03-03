@@ -129,6 +129,8 @@
     <Content Include="Anagrafiche\AnagCollaboratori.aspx" />
     <Content Include="Anagrafiche\userControl\AnagClientiFornitori.ascx" />
     <Content Include="Anagrafiche\userControl\AnagCollaboratori.ascx" />
+    <Content Include="Articoli\GestioneArticoli.aspx" />
+    <Content Include="Articoli\userControl\ArtTipologie.ascx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -445,6 +447,20 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Articoli\GestioneArticoli.aspx.cs">
+      <DependentUpon>GestioneArticoli.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Articoli\GestioneArticoli.aspx.designer.cs">
+      <DependentUpon>GestioneArticoli.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Articoli\userControl\ArtTipologie.ascx.cs">
+      <DependentUpon>ArtTipologie.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Articoli\userControl\ArtTipologie.ascx.designer.cs">
+      <DependentUpon>ArtTipologie.ascx</DependentUpon>
+    </Compile>
     <Compile Include="BLL\Agenda_BLL.cs" />
     <Compile Include="BLL\Anag_Clienti_Fornitori_BLL.cs" />
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />

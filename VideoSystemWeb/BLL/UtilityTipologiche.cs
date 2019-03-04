@@ -117,7 +117,38 @@ namespace VideoSystemWeb.BLL
 
             return valoreParametro;
         }
-    }
+
+        public static List<Tipologica> CaricaTipologica(EnumTipologiche tipologica, bool soloElemAttivi, ref Esito esito)
+        {
+            List<Tipologica> lista = Base_DAL.CaricaTipologica(tipologica, soloElemAttivi, ref esito);
+            return lista;
+        }
+
+        public static Tipologica getTipologicaById(EnumTipologiche eTipo, int idTipologica, ref Esito esito)
+        {
+            Tipologica tipologica = Base_DAL.getTipologicaById(eTipo, idTipologica, ref esito);
+            return tipologica;
+        }
+
+        public static int CreaTipologia(EnumTipologiche tipoTipologica, Tipologica tipologica, ref Esito esito)
+        {
+            int iRet = Base_DAL.CreaTipologia(tipoTipologica, tipologica, ref esito);
+            return iRet;
+        }
+
+        public static Esito AggiornaTipologia(EnumTipologiche tipoTipologica, Tipologica tipologica)
+        {
+            Esito esito = Base_DAL.AggiornaTipologia(tipoTipologica, tipologica);
+            return esito;
+        }
+
+        public static Esito EliminaTipologia(EnumTipologiche tipoTipologica, int idTipologica)
+        {
+            Esito esito = Base_DAL.EliminaTipologia(tipoTipologica, idTipologica);
+            return esito;
+        }
+ }
+
 
 
     public enum EnumTipologiche { TIPO_COLONNE_AGENDA, TIPO_QUALIFICHE, TIPO_UTENTE, TIPO_STATO, TIPO_TIPOLOGIE, TIPO_CLIENTI_FORNITORI, TIPO_GENERE, TIPO_GRUPPO, TIPO_SOTTOGRUPPO }

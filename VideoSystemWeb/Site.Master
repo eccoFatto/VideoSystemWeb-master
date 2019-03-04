@@ -73,6 +73,18 @@
                   <a href="/Anagrafiche/AnagClientiFornitori.aspx?TIPO=FORNITORI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Fornitori</a>
                 </div>
               </div>
+
+              <div class="w3-dropdown-hover">
+                <button class="w3-button w3-yellow" onclick="return false;">Articoli</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
+                  <%--<a href="/Articoli/GestioneArticoli.aspx?TIPO=ARTICOLI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Articoli</a>--%>
+                  <a href="#" class="w3-bar-item w3-button">Articoli</a>
+                  <a href="/Articoli/GestioneArticoli.aspx?TIPO=GENERI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Generi</a>
+                  <a href="/Articoli/GestioneArticoli.aspx?TIPO=GRUPPI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Gruppi</a>
+                  <a href="/Articoli/GestioneArticoli.aspx?TIPO=SOTTOGRUPPI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Sottogruppi</a>
+                </div>
+              </div>
+
               <a href="/Login.aspx" class="w3-bar-item w3-button w3-right">Esci</a>
             </div>            
 

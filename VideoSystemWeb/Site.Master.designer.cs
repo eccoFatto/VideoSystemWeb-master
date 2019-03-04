@@ -40,6 +40,24 @@ namespace VideoSystemWeb {
         protected global::System.Web.UI.WebControls.Label lbl_benvenuto;
         
         /// <summary>
+        /// Controllo lblVersione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVersione;
+        
+        /// <summary>
+        /// Controllo lblDataVersione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDataVersione;
+        
+        /// <summary>
         /// Controllo MainContent.
         /// </summary>
         /// <remarks>

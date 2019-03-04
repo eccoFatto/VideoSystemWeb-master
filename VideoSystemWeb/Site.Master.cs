@@ -18,6 +18,9 @@ namespace VideoSystemWeb
             {
                 lbl_benvenuto.Text = "Utente: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Nome + " " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Cognome + " - Ruolo: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).tipoUtente;
 
+                lblVersione.Text = BasePage.versione;
+
+                lblDataVersione.Text = BasePage.dataVersione;
             }
             catch (Exception ex)
             {

@@ -10,6 +10,7 @@ namespace VideoSystemWeb.BLL
 {
     public class Articoli_BLL
     {
+
         ObjectIDGenerator IDGenerator = new ObjectIDGenerator();
 
         //singleton

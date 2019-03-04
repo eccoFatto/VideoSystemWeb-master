@@ -57,14 +57,14 @@
                     <td style="width:10%;align-content:center;text-align:center;">
                         <asp:Image ID="imgLogo" runat="server" Height="100px" ImageAlign="AbsMiddle" ImageUrl="~/Images/logoVSP.png" />
                     </td>
-                    <td style="width:90%;align-content:center;text-align:left;">
-                        <div class="w3-panel w3-yellow w3-border w3-round">GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp; <asp:Label ID="lbl_benvenuto" runat="server" ></asp:Label></div>
+                    <td style="width:80%;align-content:center;text-align:left;">
+                        <div class="w3-panel w3-yellow w3-border w3-round">GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp; <asp:Label ID="lbl_benvenuto" runat="server" ></asp:Label>&nbsp;&nbsp;  Ver.<asp:Label ID="lblVersione" runat="server" ForeColor="Blue" ></asp:Label>&nbsp; del <asp:Label ID="lblDataVersione" runat="server"  ForeColor="Blue" ></asp:Label></div>
                     </td>
                 </tr>
             </table>
             <div class="w3-bar w3-yellow w3-round w3-margin-bottom">
               <a href="/Agenda/Agenda.aspx" class="w3-bar-item w3-button">Agenda</a>
-              <a href="#" class="w3-bar-item w3-button">Report</a>
+              <a class="w3-bar-item w3-button w3-disabled">Report</a>
               <div class="w3-dropdown-hover">
                 <button class="w3-button w3-yellow" onclick="return false;">Anagrafiche</button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
@@ -75,10 +75,10 @@
               </div>
 
               <div class="w3-dropdown-hover">
-                <button class="w3-button w3-yellow" onclick="return false;">Articoli</button>
+                <button class="w3-button w3-yellow" onclick="return false;">Tabelle</button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                   <%--<a href="/Articoli/GestioneArticoli.aspx?TIPO=ARTICOLI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Articoli</a>--%>
-                  <a href="#" class="w3-bar-item w3-button">Articoli</a>
+                  <a class="w3-bar-item w3-button w3-disabled">Articoli</a>
                   <a href="/Articoli/GestioneArticoli.aspx?TIPO=GENERI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Generi</a>
                   <a href="/Articoli/GestioneArticoli.aspx?TIPO=GRUPPI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Gruppi</a>
                   <a href="/Articoli/GestioneArticoli.aspx?TIPO=SOTTOGRUPPI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Sottogruppi</a>

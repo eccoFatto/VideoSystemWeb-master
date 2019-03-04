@@ -61,16 +61,12 @@ namespace VideoSystemWeb.DAL
                                         datiArticoli.IdTipoGenere = riga.Field<int>("idTipoGenere");
                                         datiArticoli.IdTipoGruppo = riga.Field<int>("idTipoGruppo");
                                         datiArticoli.IdTipoSottogruppo = riga.Field<int>("idTipoSottogruppo");
-
                                         datiArticoli.Descrizione = riga.Field<string>("descrizione");
                                         datiArticoli.DescrizioneLunga = riga.Field<string>("descrizioneLunga");
-
                                         datiArticoli.Iva = riga.Field<int>("iva");
                                         datiArticoli.Quantita = riga.Field<int>("quantita");
-
                                         datiArticoli.Prezzo = riga.Field<decimal>("prezzo");
                                         datiArticoli.Costo = riga.Field<decimal>("costo");
-
                                         datiArticoli.Stampa = riga.Field<bool>("stampa");
 
                                         listaDatiArticoli.Add(datiArticoli);
@@ -120,16 +116,12 @@ namespace VideoSystemWeb.DAL
                                     datiArticoli.IdTipoGenere = dt.Rows[0].Field<int>("idTipoGenere");
                                     datiArticoli.IdTipoGruppo = dt.Rows[0].Field<int>("idTipoGruppo");
                                     datiArticoli.IdTipoSottogruppo = dt.Rows[0].Field<int>("idTipoSottogruppo");
-
                                     datiArticoli.Descrizione = dt.Rows[0].Field<string>("descrizione");
                                     datiArticoli.DescrizioneLunga = dt.Rows[0].Field<string>("descrizioneLunga");
-
                                     datiArticoli.Iva = dt.Rows[0].Field<int>("iva");
                                     datiArticoli.Quantita = dt.Rows[0].Field<int>("quantita");
-
                                     datiArticoli.Prezzo = dt.Rows[0].Field<decimal>("prezzo");
                                     datiArticoli.Costo = dt.Rows[0].Field<decimal>("costo");
-
                                     datiArticoli.Stampa = dt.Rows[0].Field<bool>("stampa");
 
                                 }

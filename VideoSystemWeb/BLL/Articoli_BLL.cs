@@ -169,6 +169,7 @@ namespace VideoSystemWeb.BLL
                 articolo.IdTipoGenere = articoloTemplate.DefaultIdTipoGenere;
                 articolo.IdTipoGruppo = articoloTemplate.DefaultIdTipoGruppo;
                 articolo.IdTipoSottogruppo = articoloTemplate.DefaultIdTipoSottogruppo;
+                articolo.Quantita = 1;
 
                 listaArticoliDelGruppo.Add(articolo);
             }

@@ -116,7 +116,7 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.IdTipoGruppo = int.Parse(ddl_Gruppo.SelectedValue);
             articoloSelezionato.IdTipoSottogruppo = int.Parse(ddl_Sottogruppo.SelectedValue);
             articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
-
+            articoloSelezionato.Quantita = int.Parse(txt_Quantita.Text);
 
             if (index != -1)
             { 
@@ -125,6 +125,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
             gvArticoli.DataSource = listaArticoli;
             gvArticoli.DataBind();
+
+            AggiornaTotali(listaArticoli);
 
             ClearModificaArticoli();
             RichiediOperazionePopup("UPDATE");
@@ -156,8 +158,31 @@ namespace VideoSystemWeb.Agenda.userControl
                 gvArticoli.DataSource = listaArticoli;
                 gvArticoli.DataBind();
 
+                AggiornaTotali(listaArticoli);
+
                 RichiediOperazionePopup("UPDATE");
             }
+        }
+
+        private void AggiornaTotali(List<DatiArticoli> listaArticoli)
+        {
+            decimal totPrezzo = 0;
+            decimal totCosto = 0;
+            decimal totIva = 0;
+
+            foreach (DatiArticoli art in listaArticoli)
+            {
+                totPrezzo += art.Prezzo * art.Quantita;
+                totCosto += art.Costo * art.Quantita;
+                totIva += (art.Prezzo * art.Iva / 100) * art.Quantita;
+
+            }
+            decimal percRicavo = totCosto / (totPrezzo / 100);
+
+            txt_TotPrezzo.Text = string.Format("{0:0.00}", totPrezzo); 
+            txt_TotCosto.Text = string.Format("{0:0.00}", totCosto);
+            txt_TotIva.Text = string.Format("{0:0.00}", totIva);
+            txt_PercRicavo.Text = string.Format("{0:0.00}", percRicavo);
         }
 
         protected void gvArticoli_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -192,6 +217,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_Genere.SelectedValue = articoloSelezionato.IdTipoGenere.ToString();
                     ddl_Gruppo.SelectedValue = articoloSelezionato.IdTipoGruppo.ToString();
                     ddl_Sottogruppo.SelectedValue = articoloSelezionato.IdTipoSottogruppo.ToString();
+                    txt_Quantita.Text = articoloSelezionato.Quantita.ToString();
 
                     panelModificaArticolo.Style.Remove("display");
 
@@ -200,6 +226,9 @@ namespace VideoSystemWeb.Agenda.userControl
                     listaArticoli.Remove(articoloSelezionato);
                     gvArticoli.DataSource = listaArticoli;
                     gvArticoli.DataBind();
+
+                    AggiornaTotali(listaArticoli);
+
                     break;
             }
             
@@ -216,6 +245,11 @@ namespace VideoSystemWeb.Agenda.userControl
             gvArticoli.DataSource = null;
             gvArticoli.DataBind();
 
+            txt_TotPrezzo.Text = "";
+            txt_TotCosto.Text = "";
+            txt_TotIva.Text = "";
+            txt_PercRicavo.Text = "";
+
             //NascondiErroriValidazione();
         }
 
@@ -228,6 +262,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Costo.Text = "";
             txt_Prezzo.Text = "";
             txt_Iva.Text = "";
+            txt_Quantita.Text = "";
         }
 
         public void PopolaOfferta(int idDatiAgenda)
@@ -239,6 +274,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 lbl_selezionareArticolo.Visible = false;
                 gvArticoli.DataSource = listaArticoli;
                 gvArticoli.DataBind();
+
+                AggiornaTotali(listaArticoli);
             }
         }
     }

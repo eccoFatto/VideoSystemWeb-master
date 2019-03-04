@@ -178,9 +178,72 @@ namespace VideoSystemWeb.BLL
             return listaArticoliDelGruppo;
         }
 
+        public DatiArticoli CaricaArticoloByID(int idEvento, int idArticolo, ref Esito esito, bool soloAttivi = true)
+        {
+            Art_Articoli articoloTemplate = getArticoloById(idArticolo, ref esito);
+
+            DatiArticoli articolo = new DatiArticoli();
+
+            bool firstTime;
+            articolo.IdentificatoreOggetto = IDGenerator.GetId(articolo, out firstTime);
+
+            articolo.IdArtArticoli = articoloTemplate.Id;
+            articolo.IdDatiAgenda = idEvento;
+            articolo.Descrizione = articoloTemplate.DefaultDescrizione;
+            articolo.DescrizioneLunga = articoloTemplate.DefaultDescrizioneLunga;
+            articolo.Stampa = articoloTemplate.DefaultStampa;
+            articolo.Prezzo = articoloTemplate.DefaultPrezzo;
+            articolo.Costo = articoloTemplate.DefaultCosto;
+            articolo.Iva = articoloTemplate.DefaultIva;
+            articolo.IdTipoGenere = articoloTemplate.DefaultIdTipoGenere;
+            articolo.IdTipoGruppo = articoloTemplate.DefaultIdTipoGruppo;
+            articolo.IdTipoSottogruppo = articoloTemplate.DefaultIdTipoSottogruppo;
+            articolo.Quantita = 1;
+
+
+            return articolo;
+        }
+
         public List<DatiArticoli> CaricaListaArticoliByIDEvento(int idDatiAgenda, ref Esito esito)
         {
             return Dati_Articoli_DAL.Instance.getDatiArticoliByIdDatiAgenda(ref esito, idDatiAgenda);
+        }
+
+        public List<ArticoliGruppi> CaricaListaArticoliGruppi()
+        {
+            List<ArticoliGruppi> listaArticoliGruppi = new List<ArticoliGruppi>();
+
+            Esito esito = new Esito();
+            List<Art_Gruppi> listaArt_Gruppi = Articoli_BLL.Instance.CaricaListaGruppi(ref esito);
+            List<Art_Articoli> listaArt_Articoli = Articoli_BLL.Instance.CaricaListaArticoli(ref esito);
+            foreach (Art_Gruppi gruppo in listaArt_Gruppi)
+            {
+                ArticoliGruppi articoloGruppo = new ArticoliGruppi();
+                bool firstTime;
+
+                articoloGruppo.Id = IDGenerator.GetId(articoloGruppo, out firstTime);
+                articoloGruppo.IdOggetto = gruppo.Id;
+                articoloGruppo.Nome = gruppo.Nome;
+                articoloGruppo.Descrizione = gruppo.Descrizione;
+                articoloGruppo.Isgruppo = true;
+
+                listaArticoliGruppi.Add(articoloGruppo);
+            }
+            foreach (Art_Articoli articolo in listaArt_Articoli)
+            {
+                ArticoliGruppi articoloGruppo = new ArticoliGruppi();
+                bool firstTime;
+
+                articoloGruppo.Id = IDGenerator.GetId(articoloGruppo, out firstTime);
+                articoloGruppo.IdOggetto = articolo.Id;
+                articoloGruppo.Nome = articolo.DefaultDescrizione;
+                articoloGruppo.Descrizione = articolo.DefaultDescrizioneLunga;
+                articoloGruppo.Isgruppo = false;
+
+                listaArticoliGruppi.Add(articoloGruppo);
+            }
+
+            return listaArticoliGruppi;
         }
     }
 }

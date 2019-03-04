@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -518,6 +519,7 @@
     <Compile Include="Entity\Anag_Qualifiche_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
     <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />
+    <Compile Include="Entity\ArticoliGruppi.cs" />
     <Compile Include="Entity\Art_Gruppi_Articoli.cs" />
     <Compile Include="Entity\Art_Gruppi.cs" />
     <Compile Include="Entity\Art_Articoli.cs" />

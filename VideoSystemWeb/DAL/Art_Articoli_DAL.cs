@@ -92,7 +92,7 @@ namespace VideoSystemWeb.DAL
                 {
                     string query = "SELECT * FROM art_articoli";
                     if (soloAttivi) query += " WHERE ATTIVO = 1";
-                    query += " ORDER BY descrizione";
+                    query += " ORDER BY defaultDescrizione";
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())

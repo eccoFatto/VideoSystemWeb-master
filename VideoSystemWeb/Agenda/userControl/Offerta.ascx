@@ -186,4 +186,15 @@
 
     </asp:Panel>
 
+    <asp:Panel runat="server" class="round" ID="panelRicercaOfferta" Style="width: 99%; height: 150px; position: relative; background-color: white; overflow: auto; font-size: 0.8em; display: none">
+        
+        <div class="w3-center" style="margin: 10px">
+            <asp:Button ID="btnOK_ricercaOfferta" runat="server" Text="Cerca" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" />
+            <asp:Button ID="btnAnnulla_ricercaOfferta" runat="server" Text="Annulla" class="w3-btn w3-white w3-border w3-border-red w3-round-large" Style="font-size: smaller; padding: 4px 8px" />
+        </div>
+    </asp:Panel>
+    <div style="width:99%;text-align:center;">
+        <asp:Button ID="btnRicercaOfferta" runat="server" Text="Ricerca offerta" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRicercaOfferta_Click" Style="font-size: smaller; padding: 4px 8px" />
+    </div>
+    
 </asp:Panel>

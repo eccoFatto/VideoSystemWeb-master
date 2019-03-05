@@ -145,6 +145,7 @@ namespace VideoSystemWeb.Agenda.userControl
             AggiornaTotali(listaDatiArticoli);
 
             ClearModificaArticoli();
+
             RichiediOperazionePopup("UPDATE");
         }
 
@@ -249,6 +250,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_Sottogruppo.SelectedValue = articoloSelezionato.IdTipoSottogruppo.ToString();
                     txt_Quantita.Text = articoloSelezionato.Quantita.ToString();
 
+                    panelRicercaOfferta.Style.Add("display", "none");
+                    btnRicercaOfferta.Visible = false;
                     panelModificaArticolo.Style.Remove("display");
 
                     break;
@@ -291,12 +294,14 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             ViewState["identificatoreArticolo"] = null;
             panelModificaArticolo.Style.Add("display", "none");
+            panelRicercaOfferta.Style.Add("display", "none");
             txt_Descrizione.Text = "";
             txt_DescrizioneLunga.Text = "";
             txt_Costo.Text = "";
             txt_Prezzo.Text = "";
             txt_Iva.Text = "";
             txt_Quantita.Text = "";
+            btnRicercaOfferta.Visible = true;
         }
 
         public void PopolaOfferta(int idDatiAgenda)
@@ -312,5 +317,14 @@ namespace VideoSystemWeb.Agenda.userControl
                 AggiornaTotali(listaDatiArticoli);
             }
         }
+
+        protected void btnRicercaOfferta_Click(object sender, EventArgs e)
+        {
+            panelModificaArticolo.Style.Add("display", "none");
+            panelRicercaOfferta.Style.Remove("display");
+            btnRicercaOfferta.Visible = false;
+            RichiediOperazionePopup("UPDATE");
+        }
+
     }
 }

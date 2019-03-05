@@ -125,6 +125,7 @@ namespace VideoSystemWeb.Agenda
             //AbilitaComponentiPopup();
             UpdatePopup();
         }
+
         #endregion
 
         #region OPERAZIONI AGENDA
@@ -401,7 +402,6 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                         btnElimina.Visible = true;
-                        //btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString();
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_OFFERTA);
 

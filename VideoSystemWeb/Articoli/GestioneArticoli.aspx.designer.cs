@@ -22,12 +22,12 @@ namespace VideoSystemWeb.Articoli {
         protected global::System.Web.UI.WebControls.HiddenField HF_TIPO_ARTICOLO;
         
         /// <summary>
-        /// Controllo controlAziende.
+        /// Controllo PH.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::VideoSystemWeb.Articoli.userControl.ArtTipologie controlAziende;
+        protected global::System.Web.UI.WebControls.PlaceHolder PH;
     }
 }

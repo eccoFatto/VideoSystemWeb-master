@@ -20,14 +20,24 @@ namespace VideoSystemWeb.Articoli
             // GENERI
             // GRUPPI
             // SOTTOGRUPPI
-
             string tipo = "ARTICOLI";
             if (!string.IsNullOrEmpty(Request.QueryString["TIPO"]))
             {
                 tipo = Request.QueryString["TIPO"];
             }
             HF_TIPO_ARTICOLO.Value = tipo;
-            
+            Control loadControl = new Control();
+            switch (tipo)
+            {
+                case "ARTICOLI":
+                    loadControl = this.LoadControl("~/Articoli/userControl/ArtArticoli.ascx");
+                    PH.Controls.Add(loadControl);
+                    break;
+                default:
+                    loadControl = this.LoadControl("~/Articoli/userControl/ArtTipologie.ascx");
+                    PH.Controls.Add(loadControl);
+                    break;
+            }
         }
     }
 }

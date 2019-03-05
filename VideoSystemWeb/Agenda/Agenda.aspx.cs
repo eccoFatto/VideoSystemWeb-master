@@ -519,7 +519,7 @@ namespace VideoSystemWeb.Agenda
 
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            List<DatiArticoli> listaArticoli = popupOfferta.listaArticoli;
+            List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli;
 
             esito = ValidazioneSalvataggio(eventoSelezionato);
 
@@ -527,11 +527,11 @@ namespace VideoSystemWeb.Agenda
             {
                 if (eventoSelezionato.id == 0)
                 {          
-                    Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaArticoli);
+                    Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaDatiArticoli);
                 }
                 else
                 {
-                    Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato, listaArticoli);
+                    Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato, listaDatiArticoli);
                 }
 
                 ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);

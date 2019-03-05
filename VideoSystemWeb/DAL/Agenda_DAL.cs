@@ -205,7 +205,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito creaEventoConArticoli(DatiAgenda evento, List<DatiArticoli> listaArticoli)
+        public Esito creaEventoConArticoli(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli)
         {
             Esito esito = new Esito();
             using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -232,9 +232,9 @@ namespace VideoSystemWeb.DAL
                             int iDatiAgendaReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
 
                             // SE E' ANDATO TUTTO BENE FACCIO INSERT DEGLI ARTICOLI EVENTO DELLA LISTA IN INPUT
-                            if (listaArticoli != null)
+                            if (listaDatiArticoli != null)
                             {
-                                foreach (DatiArticoli datoArticolo in listaArticoli)
+                                foreach (DatiArticoli datoArticolo in listaDatiArticoli)
                                 {
                                     CostruisciSP_InsertDatiArticoli(StoreProc, sda, iDatiAgendaReturn, datoArticolo);
                                     StoreProc.ExecuteNonQuery();
@@ -410,7 +410,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito AggiornaEventoConArticoli(DatiAgenda evento, List<DatiArticoli> listaArticoli)
+        public Esito AggiornaEventoConArticoli(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli)
         {
             Esito esito = new Esito();
             try
@@ -438,9 +438,9 @@ namespace VideoSystemWeb.DAL
                                 StoreProc.ExecuteNonQuery();
 
                                 // SE E' ANDATO TUTTO BENE FACCIO INSERT DEGLI ARTICOLI EVENTO DELLA LISTA IN INPUT
-                                if (listaArticoli != null)
+                                if (listaDatiArticoli != null)
                                 {
-                                    foreach (DatiArticoli datoArticolo in listaArticoli)
+                                    foreach (DatiArticoli datoArticolo in listaDatiArticoli)
                                     {
                                         CostruisciSP_InsertDatiArticoli(StoreProc, sda, evento.id, datoArticolo);
                                         StoreProc.ExecuteNonQuery();

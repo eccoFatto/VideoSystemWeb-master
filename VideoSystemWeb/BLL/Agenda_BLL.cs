@@ -104,7 +104,7 @@ namespace VideoSystemWeb.BLL
             return listaDatiAgenda.Where(x => x.data_inizio_impegno.Date <= data.Date && x.data_fine_impegno.Date >= data.Date && x.id_colonne_agenda == id_risorsa).FirstOrDefault();
         }
 
-        public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaArticoli)
+        public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli)
         {
             Esito esito = new Esito();
             //if (evento.id_stato == DatiAgenda.STATO_RIPOSO && evento.id_tipologia == 0)
@@ -118,7 +118,7 @@ namespace VideoSystemWeb.BLL
                     Agenda_DAL.Instance.CreaEvento(evento);
                     break;
                 case DatiAgenda.STATO_OFFERTA:
-                    Agenda_DAL.Instance.creaEventoConArticoli(evento, listaArticoli);
+                    Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli);
                     break;
                 case DatiAgenda.STATO_RIPOSO:
                     Agenda_DAL.Instance.CreaEvento(evento);
@@ -132,7 +132,7 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-        public Esito AggiornaEvento(DatiAgenda evento, List<DatiArticoli> listaArticoli)
+        public Esito AggiornaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli)
         {
             Esito esito = new Esito();
             //if (evento.id_stato == DatiAgenda.STATO_RIPOSO && evento.id_tipologia == 0)
@@ -147,7 +147,7 @@ namespace VideoSystemWeb.BLL
                     Agenda_DAL.Instance.AggiornaEvento(evento);
                     break;
                 case DatiAgenda.STATO_OFFERTA:
-                    Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaArticoli);
+                    Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli);
                     break;
                 case DatiAgenda.STATO_RIPOSO:
                     Agenda_DAL.Instance.AggiornaEvento(evento);

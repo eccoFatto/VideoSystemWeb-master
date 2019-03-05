@@ -350,5 +350,42 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
+        public Esito EliminaDatiArticoloByIdDatiAgenda(int idDatiAgenda)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteDatiArticoliByIdDatiAgenda"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter parIdDatiAgenda = new SqlParameter("@idDatiAgenda", SqlDbType.Int);
+                            parIdDatiAgenda.Direction = ParameterDirection.Input;
+                            parIdDatiAgenda.Value = idDatiAgenda;
+                            StoreProc.Parameters.Add(parIdDatiAgenda);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Dati_Articoli_DAL.cs - EliminaDatiArticoloByIdDatiAgenda " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
+
     }
 }

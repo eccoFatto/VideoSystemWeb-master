@@ -5,7 +5,7 @@
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
             $("#<%=txt_FiltroGruppi.ClientID%>").val("");
             $("#<%=txt_FiltroGruppi.ClientID%>").keyup(function () {
-                filter(1);
+                filter(2);
             });
         });
     });

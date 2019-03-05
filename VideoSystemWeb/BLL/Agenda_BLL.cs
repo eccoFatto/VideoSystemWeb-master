@@ -162,7 +162,8 @@ namespace VideoSystemWeb.BLL
 
         public Esito EliminaEvento(int idEvento)
         {
-            Esito esito = Agenda_DAL.Instance.EliminaEvento(idEvento);
+            Esito esito = Dati_Articoli_DAL.Instance.EliminaDatiArticoloByIdDatiAgenda(idEvento);
+            esito = Agenda_DAL.Instance.EliminaEvento(idEvento);
 
             return esito;
         }

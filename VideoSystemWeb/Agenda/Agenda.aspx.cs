@@ -400,7 +400,7 @@ namespace VideoSystemWeb.Agenda
 
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
-                        btnElimina.Visible = false;
+                        btnElimina.Visible = true;
                         //btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString();
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_OFFERTA);

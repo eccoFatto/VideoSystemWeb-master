@@ -30,6 +30,11 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             get
             {
+                if (ViewState["listaArticoliGruppi"] == null || ((List<ArticoliGruppi>)ViewState["listaArticoliGruppi"]).Count == 0)
+                {
+                    ViewState["listaArticoliGruppi"] = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
+                }
+
                 return (List<ArticoliGruppi>)ViewState["listaArticoliGruppi"];
             }
             set
@@ -45,7 +50,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 caricaDdlGenere();
                 caricaDdlGruppo();
                 caricaDdlSottogruppo();
-                listaArticoliGruppi = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
+                //listaArticoliGruppi = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
 
                 gvGruppi.DataSource = listaArticoliGruppi;
                 gvGruppi.DataBind();
@@ -187,23 +192,27 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void AggiornaTotali(List<DatiArticoli> listaDatiArticoli)
         {
+            
             decimal totPrezzo = 0;
             decimal totCosto = 0;
             decimal totIva = 0;
 
-            foreach (DatiArticoli art in listaDatiArticoli)
+            if (listaDatiArticoli.Count > 0)
             {
-                totPrezzo += art.Prezzo * art.Quantita;
-                totCosto += art.Costo * art.Quantita;
-                totIva += (art.Prezzo * art.Iva / 100) * art.Quantita;
+                foreach (DatiArticoli art in listaDatiArticoli)
+                {
+                    totPrezzo += art.Prezzo * art.Quantita;
+                    totCosto += art.Costo * art.Quantita;
+                    totIva += (art.Prezzo * art.Iva / 100) * art.Quantita;
 
+                }
+                decimal percRicavo = totCosto / (totPrezzo / 100);
+
+                txt_TotPrezzo.Text = string.Format("{0:0.00}", totPrezzo);
+                txt_TotCosto.Text = string.Format("{0:0.00}", totCosto);
+                txt_TotIva.Text = string.Format("{0:0.00}", totIva);
+                txt_PercRicavo.Text = string.Format("{0:0.00}", percRicavo);
             }
-            decimal percRicavo = totCosto / (totPrezzo / 100);
-
-            txt_TotPrezzo.Text = string.Format("{0:0.00}", totPrezzo); 
-            txt_TotCosto.Text = string.Format("{0:0.00}", totCosto);
-            txt_TotIva.Text = string.Format("{0:0.00}", totIva);
-            txt_PercRicavo.Text = string.Format("{0:0.00}", percRicavo);
         }
 
         protected void gvArticoli_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -249,6 +258,10 @@ namespace VideoSystemWeb.Agenda.userControl
                     gvArticoli.DataBind();
 
                     AggiornaTotali(listaDatiArticoli);
+                    if (listaDatiArticoli.Count == 0)
+                    {
+                        lbl_selezionareArticolo.Visible = true;
+                    }
 
                     break;
             }

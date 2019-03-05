@@ -30,6 +30,36 @@ namespace VideoSystemWeb.Articoli.userControl
                 // CARICO LE COMBO
                 if (string.IsNullOrEmpty(esito.descrizione))
                 {
+                    cmbMod_Genere.Items.Clear();
+                    cmbMod_Genere.Items.Add("");
+                    foreach (Tipologica tipologiaGenere in p.listaTipiGeneri)
+                    {
+                        ListItem item = new ListItem();
+                        item.Text = tipologiaGenere.nome;
+                        item.Value = tipologiaGenere.id.ToString();
+                        cmbMod_Genere.Items.Add(item);
+                    }
+
+                    cmbMod_Gruppo.Items.Clear();
+                    cmbMod_Gruppo.Items.Add("");
+                    foreach (Tipologica tipologiaGruppo in p.listaTipiGruppi)
+                    {
+                        ListItem item = new ListItem();
+                        item.Text = tipologiaGruppo.nome;
+                        item.Value = tipologiaGruppo.id.ToString();
+                        cmbMod_Gruppo.Items.Add(item);
+                    }
+
+                    cmbMod_Sottogruppo.Items.Clear();
+                    cmbMod_Sottogruppo.Items.Add("");
+                    foreach (Tipologica tipologiaSottogruppo in p.listaTipiSottogruppi)
+                    {
+                        ListItem item = new ListItem();
+                        item.Text = tipologiaSottogruppo.nome;
+                        item.Value = tipologiaSottogruppo.id.ToString();
+                        cmbMod_Sottogruppo.Items.Add(item);
+                    }
+
 
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                     abilitaBottoni(p.AbilitazioneInScrittura());
@@ -43,7 +73,7 @@ namespace VideoSystemWeb.Articoli.userControl
                 }
 
             }
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAzienda('" + hf_tabChiamata.Value + "');", addScriptTags: true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioArticolo('" + hf_tabChiamata.Value + "');", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
@@ -69,165 +99,161 @@ namespace VideoSystemWeb.Articoli.userControl
             }
         }
 
-        protected void EditAzienda_Click(object sendere, EventArgs e)
+        protected void EditArticolo_Click(object sendere, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(hf_idAzienda.Value) || (!string.IsNullOrEmpty((string)ViewState["idAzienda"])))
+            if (!string.IsNullOrEmpty(hf_idArticolo.Value) || (!string.IsNullOrEmpty((string)ViewState["idAzienda"])))
             {
-                if (!string.IsNullOrEmpty(hf_idAzienda.Value)) ViewState["idAzienda"] = hf_idAzienda.Value;
-                editAzienda();
-                AttivaDisattivaModificaAzienda(true);
-                gestisciPulsantiAzienda("VISUALIZZAZIONE");
-                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAzienda('Azienda');", addScriptTags: true);
+                if (!string.IsNullOrEmpty(hf_idArticolo.Value)) ViewState["idArticolo"] = hf_idArticolo.Value;
+                editArticolo();
+                AttivaDisattivaModificaArticolo(true);
+                gestisciPulsantiArticolo("VISUALIZZAZIONE");
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioArticolo('Articolo');", addScriptTags: true);
                 pnlContainer.Visible = true;
             }
         }
 
-        private void editAzienda()
+        private void editArticolo()
         {
-            string idAzienda = (string)ViewState["idAzienda"];
+            string idArticolo = (string)ViewState["idArticolo"];
             Esito esito = new Esito();
 
-            if (!string.IsNullOrEmpty(idAzienda))
+            if (!string.IsNullOrEmpty(idArticolo))
             {
-                Entity.Anag_Clienti_Fornitori azienda = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt16(idAzienda), ref esito);
+                Entity.Art_Articoli articolo = Art_Articoli_BLL.Instance.getArticoloById(Convert.ToInt16(idArticolo), ref esito);
                 if (esito.codice == 0)
                 {
                     pulisciCampiDettaglio();
 
                     // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
-                    tbMod_CF.Text = azienda.CodiceFiscale;
-                    tbMod_PartitaIva.Text = azienda.PartitaIva;
-                    tbMod_RagioneSociale.Text = azienda.RagioneSociale;
-                    tbMod_CodiceIdentificativo.Text = azienda.CodiceIdentificativo;
-                    tbMod_Iban.Text = azienda.Iban;
-                    tbMod_Note.Text = azienda.Note;
-                    tbMod_CapLegale.Text = azienda.CapLegale;
-                    tbMod_CapOperativo.Text = azienda.CapOperativo;
-                    tbMod_CivicoLegale.Text = azienda.NumeroCivicoLegale;
-                    tbMod_CivicoOperativo.Text = azienda.NumeroCivicoOperativo;
-                    tbMod_ComuneLegale.Text = azienda.ComuneLegale;
-                    tbMod_ComuneOperativo.Text = azienda.ComuneOperativo;
-                    tbMod_Email.Text = azienda.Email;
-                    tbMod_Fax.Text = azienda.Fax;
-                    tbMod_Iban.Text = azienda.Iban;
-                    tbMod_IndirizzoLegale.Text = azienda.IndirizzoLegale;
-                    tbMod_IndirizzoOperativo.Text = azienda.IndirizzoOperativo;
-                    tbMod_NazioneLegale.Text = azienda.NazioneLegale;
-                    tbMod_NazioneOperativo.Text = azienda.NazioneOperativo;
-                    tbMod_Pec.Text = azienda.Pec;
-                    tbMod_ProvinciaLegale.Text = azienda.ProvinciaLegale;
-                    tbMod_ProvinciaOperativo.Text = azienda.ProvinciaOperativo;
-                    tbMod_Telefono.Text = azienda.Telefono;
-                    tbMod_WebSite.Text = azienda.WebSite;
+                    tbMod_Descrizione.Text = articolo.DefaultDescrizioneLunga;
+                    tbMod_DescrizioneBreve.Text = articolo.DefaultDescrizione;
+                    tbMod_Prezzo.Text = articolo.DefaultPrezzo.ToString();
+                    tbMod_Costo.Text = articolo.DefaultCosto.ToString();
+                    tbMod_IVA.Text = articolo.DefaultIva.ToString();
+                    tbMod_Note.Text = articolo.Note;
 
 
-                    cbMod_Attivo.Checked = azienda.Attivo;
-                    cbMod_Cliente.Checked = azienda.Cliente;
-                    cbMod_Fornitore.Checked = azienda.Fornitore;
+                    cbMod_Attivo.Checked = articolo.Attivo;
+                    cbMod_Stampa.Checked = articolo.DefaultStampa;
 
-                    //TIPI PAGAMENTO
-                    ListItem trovati = cmbMod_Pagamento.Items.FindByValue(azienda.Pagamento.ToString());
-                    if (trovati != null)
+                    //GENERE
+                    if (articolo.DefaultTipoGenere != null)
                     {
-                        cmbMod_Pagamento.SelectedValue = trovati.Value;
-                    }
-                    else
-                    {
-                        cmbMod_Pagamento.Text = "";
-                    }
-
-                    // TIPO AZIENDA
-                    if (azienda.Tipo != null) { 
-                        trovati = cmbMod_TipoAzienda.Items.FindByValue(azienda.Tipo.ToString());
+                        ListItem trovati = cmbMod_Genere.Items.FindByText(articolo.DefaultTipoGenere.nome.ToString());
                         if (trovati != null)
                         {
-                            cmbMod_TipoAzienda.SelectedValue = trovati.Value;
+                            cmbMod_Genere.SelectedValue = trovati.Value;
                         }
                         else
                         {
-                            cmbMod_TipoAzienda.Text = "";
+                            cmbMod_Genere.Text = "";
                         }
                     }
                     else
                     {
-                        cmbMod_TipoAzienda.Text = "";
+                        cmbMod_Genere.Text = "";
                     }
 
-                    // TIPO INDIRIZZO LEGALE
-                    if (azienda.TipoIndirizzoLegale != null)
-                    {
-                        trovati = cmbMod_TipoIndirizzoLegale.Items.FindByValue(azienda.TipoIndirizzoLegale.ToString());
+                    //GRUPPO
+                    if (articolo.DefaultTipoGruppo != null) { 
+                        ListItem trovati = cmbMod_Gruppo.Items.FindByText(articolo.DefaultTipoGruppo.nome.ToString());
                         if (trovati != null)
                         {
-                            cmbMod_TipoIndirizzoLegale.SelectedValue = trovati.Value;
+                            cmbMod_Gruppo.SelectedValue = trovati.Value;
                         }
                         else
                         {
-                            cmbMod_TipoIndirizzoLegale.Text = "";
+                            cmbMod_Gruppo.Text = "";
                         }
                     }
                     else
                     {
-                        cmbMod_TipoIndirizzoLegale.Text = "";
+                        cmbMod_Gruppo.Text = "";
                     }
 
-                    // TIPO INDIRIZZO OPERATIVO
-                    if (azienda.TipoIndirizzoOperativo != null)
+                    //SOTTOGRUPPO
+                    if (articolo.DefaultTipoSottogruppo != null)
                     {
-                        trovati = cmbMod_TipoIndirizzoOperativo.Items.FindByValue(azienda.TipoIndirizzoOperativo.ToString());
+                        ListItem trovati = cmbMod_Sottogruppo.Items.FindByText(articolo.DefaultTipoSottogruppo.nome.ToString());
                         if (trovati != null)
                         {
-                            cmbMod_TipoIndirizzoOperativo.SelectedValue = trovati.Value;
+                            cmbMod_Sottogruppo.SelectedValue = trovati.Value;
                         }
                         else
                         {
-                            cmbMod_TipoIndirizzoOperativo.Text = "";
+                            cmbMod_Sottogruppo.Text = "";
                         }
                     }
                     else
                     {
-                        cmbMod_TipoIndirizzoOperativo.Text = "";
+                        cmbMod_Sottogruppo.Text = "";
                     }
 
+                    // GRUPPI
+                    lbMod_Gruppi.Items.Clear();
+                    List<Art_Gruppi> listaGruppi = Art_Gruppi_Articoli_BLL.Instance.getGruppiByIdArticolo(articolo.Id, ref esito);
+                    if (esito.codice == 0)
+                    {
+                        if (listaGruppi!=null && listaGruppi.Count>0) {
+                            lbMod_Gruppi.Rows = listaGruppi.Count;
+                            foreach (Art_Gruppi gruppo in listaGruppi)
+                            {
+                                ListItem item = new ListItem();
+                                item.Text = gruppo.Nome;
+                                item.Value = gruppo.Id.ToString();
+                                lbMod_Gruppi.Items.Add(item);
+                            }
+                        }
+                        else
+                        {
+                            lbMod_Gruppi.Rows = 1;
+                        }
+                    }
+                    else
+                    {
+                        Session["ErrorPageText"] = esito.descrizione;
+                        string url = String.Format("~/pageError.aspx");
+                        Response.Redirect(url, true);
+                    }
                     // REFERENTI
-                    DataTable dtReferenti = new DataTable();
-                    if (azienda.Referenti != null)
-                    {
-                        dtReferenti.Columns.Add("id");
-                        dtReferenti.Columns.Add("Cognome");
-                        dtReferenti.Columns.Add("Nome");
-                        dtReferenti.Columns.Add("Settore");
-                        dtReferenti.Columns.Add("Telefono1");
-                        dtReferenti.Columns.Add("Telefono2");
-                        dtReferenti.Columns.Add("Cellulare");
-                        dtReferenti.Columns.Add("Email");
-                        foreach (Anag_Referente_Clienti_Fornitori referente in azienda.Referenti)
-                        {
-                            ListItem itemReferente = new ListItem(referente.Cognome + " " + referente.Nome + " - " + referente.Settore + " - " + referente.Telefono1, referente.Id.ToString());
-                            lbMod_Referenti.Items.Add(itemReferente);
-                            DataRow dr = dtReferenti.NewRow();
-                            dr["id"] = referente.Id.ToString();
-                            dr["Cognome"] = referente.Cognome;
-                            dr["Nome"] = referente.Nome;
-                            dr["Settore"] = referente.Settore;
-                            dr["Telefono1"] = referente.Telefono1;
-                            dr["Telefono2"] = referente.Telefono2;
-                            dr["Cellulare"] = referente.Cellulare;
-                            dr["Email"] = referente.Email;
-                            dtReferenti.Rows.Add(dr);
-                        }
-                        gvMod_Referenti.DataSource = dtReferenti;
-                        gvMod_Referenti.DataBind();
-                    }
-                    if (azienda.Referenti != null && azienda.Referenti.Count > 0)
-                    {
-                        lbMod_Referenti.Rows = azienda.Referenti.Count;
-                    }
-                    else
-                    {
-                        lbMod_Referenti.Rows = 1;
-                        gvMod_Referenti.DataSource = null;
-                    }
+                    //DataTable dtGruppi = new DataTable();
+                    //if (articolo.Referenti != null)
+                    //{
+                    //    dtReferenti.Columns.Add("id");
+                    //    dtReferenti.Columns.Add("Cognome");
+                    //    dtReferenti.Columns.Add("Nome");
+                    //    dtReferenti.Columns.Add("Settore");
+                    //    dtReferenti.Columns.Add("Telefono1");
+                    //    dtReferenti.Columns.Add("Telefono2");
+                    //    dtReferenti.Columns.Add("Cellulare");
+                    //    dtReferenti.Columns.Add("Email");
+                    //    foreach (Anag_Referente_Clienti_Fornitori referente in azienda.Referenti)
+                    //    {
+                    //        ListItem itemReferente = new ListItem(referente.Cognome + " " + referente.Nome + " - " + referente.Settore + " - " + referente.Telefono1, referente.Id.ToString());
+                    //        lbMod_Referenti.Items.Add(itemReferente);
+                    //        DataRow dr = dtReferenti.NewRow();
+                    //        dr["id"] = referente.Id.ToString();
+                    //        dr["Cognome"] = referente.Cognome;
+                    //        dr["Nome"] = referente.Nome;
+                    //        dr["Settore"] = referente.Settore;
+                    //        dr["Telefono1"] = referente.Telefono1;
+                    //        dr["Telefono2"] = referente.Telefono2;
+                    //        dr["Cellulare"] = referente.Cellulare;
+                    //        dr["Email"] = referente.Email;
+                    //        dtReferenti.Rows.Add(dr);
+                    //    }
+                    //    gvMod_Referenti.DataSource = dtReferenti;
+                    //    gvMod_Referenti.DataBind();
+                    //}
+                    //if (azienda.Referenti != null && azienda.Referenti.Count > 0)
+                    //{
+                    //    lbMod_Referenti.Rows = azienda.Referenti.Count;
+                    //}
+                    //else
+                    //{
+                    //    lbMod_Referenti.Rows = 1;
+                    //    gvMod_Referenti.DataSource = null;
+                    //}
 
                 }
                 else
@@ -242,54 +268,33 @@ namespace VideoSystemWeb.Articoli.userControl
 
         private void pulisciCampiDettaglio()
         {
-            tbMod_CF.Text = "";
-            tbMod_CodiceIdentificativo.Text = "";
-            tbMod_Iban.Text = "";
-            tbMod_RagioneSociale.Text = "";
-            tbMod_PartitaIva.Text = "";
-            tbMod_Note.Text = "";
-            tbMod_CapLegale.Text = "";
-            tbMod_CapOperativo.Text = "";
-            tbMod_CivicoLegale.Text = "";
-            tbMod_CivicoOperativo.Text = "";
-            tbMod_ComuneLegale.Text = "";
-            tbMod_ComuneOperativo.Text = "";
-            tbMod_Email.Text = "";
-            tbMod_Fax.Text = "";
-            tbMod_Iban.Text = "";
-            tbMod_IndirizzoLegale.Text = "";
-            tbMod_IndirizzoOperativo.Text = "";
-            tbMod_NazioneLegale.Text = "";
-            tbMod_NazioneOperativo.Text = "";
-            tbMod_Pec.Text = "";
-            tbMod_ProvinciaLegale.Text = "";
-            tbMod_ProvinciaOperativo.Text = "";
-            tbMod_Telefono.Text = "";
-            tbMod_WebSite.Text = "";
-
-            cmbMod_TipoIndirizzoLegale.Text = "";
-            cmbMod_TipoIndirizzoOperativo.Text = "";
-            cmbMod_Pagamento.Text = "";
-            cmbMod_TipoAzienda.Text = "";
-
-            cbMod_Cliente.Checked = false;
-            cbMod_Fornitore.Checked = false;
-            cbMod_Attivo.Checked = false;
+            tbMod_Descrizione.Text = "";
+            tbMod_DescrizioneBreve.Text = "";
+            tbMod_Prezzo.Text = "";
+            tbMod_Costo.Text = "";
+            tbMod_IVA.Text = "";
             tbMod_Note.Text = "";
 
-            lbMod_Referenti.Items.Clear();
-            lbMod_Referenti.Rows = 1;
+            cmbMod_Genere.Text = "";
+            cmbMod_Gruppo.Text = "";
+            cmbMod_Sottogruppo.Text = "";
 
-            gvMod_Referenti.DataSource = null;
+            cbMod_Stampa.Checked = false;
+            cbMod_Attivo.Checked = true;
+
+            //lbMod_Referenti.Items.Clear();
+            //lbMod_Referenti.Rows = 1;
+
+            //gvMod_Referenti.DataSource = null;
 
         }
 
         protected void InserisciArticoli_Click(object sendere, EventArgs e)
         {
-            ViewState["idAzienda"] = "";
+            ViewState["idArticolo"] = "";
             editAziendaVuota();
-            AttivaDisattivaModificaAzienda(false);
-            gestisciPulsantiAzienda("INSERIMENTO");
+            AttivaDisattivaModificaArticolo(false);
+            gestisciPulsantiArticolo("INSERIMENTO");
 
             // PULISCO I PH DI MODIFICA
             btnAnnullaReferente_Click(null, null);
@@ -328,11 +333,11 @@ namespace VideoSystemWeb.Articoli.userControl
             {
                 // PRENDO L'ID DELL'AZIENDA SELEZIONATA
 
-                string idAziendaSelezionata = e.Row.Cells[0].Text;
+                string idArticoloSelezionato = e.Row.Cells[0].Text;
 
                 foreach (TableCell item in e.Row.Cells)
                 {
-                    item.Attributes["onclick"] = "mostraAzienda('" + idAziendaSelezionata + "');";
+                    item.Attributes["onclick"] = "mostraArticolo('" + idArticoloSelezionato + "');";
                 }
             }
 
@@ -346,62 +351,40 @@ namespace VideoSystemWeb.Articoli.userControl
 
         protected void btnModifica_Click(object sender, EventArgs e)
         {
-            AttivaDisattivaModificaAzienda(false);
-            gestisciPulsantiAzienda("MODIFICA");
+            AttivaDisattivaModificaArticolo(false);
+            gestisciPulsantiArticolo("MODIFICA");
         }
 
-        private void AttivaDisattivaModificaAzienda(bool attivaModifica)
+        private void AttivaDisattivaModificaArticolo(bool attivaModifica)
         {
-            tbMod_CF.ReadOnly = attivaModifica;
+            tbMod_Descrizione.ReadOnly = attivaModifica;
+            tbMod_DescrizioneBreve.ReadOnly = attivaModifica;
+            tbMod_Costo.ReadOnly = attivaModifica;
+            tbMod_IVA.ReadOnly = attivaModifica;
             tbMod_Note.ReadOnly = attivaModifica;
-            tbMod_PartitaIva.ReadOnly = attivaModifica;
-            tbMod_RagioneSociale.ReadOnly = attivaModifica;
-            tbMod_CodiceIdentificativo.ReadOnly = attivaModifica;
-            tbMod_CapLegale.ReadOnly = attivaModifica;
-            tbMod_CapOperativo.ReadOnly = attivaModifica;
-            tbMod_CivicoLegale.ReadOnly = attivaModifica;
-            tbMod_CivicoOperativo.ReadOnly = attivaModifica;
-            tbMod_ComuneLegale.ReadOnly = attivaModifica;
-            tbMod_ComuneOperativo.ReadOnly = attivaModifica;
-            tbMod_Email.ReadOnly = attivaModifica;
-            tbMod_Fax.ReadOnly = attivaModifica;
-            tbMod_Iban.ReadOnly = attivaModifica;
-            tbMod_IndirizzoLegale.ReadOnly = attivaModifica;
-            tbMod_IndirizzoOperativo.ReadOnly = attivaModifica;
-            tbMod_NazioneLegale.ReadOnly = attivaModifica;
-            tbMod_NazioneOperativo.ReadOnly = attivaModifica;
-            tbMod_Pec.ReadOnly = attivaModifica;
-            tbMod_ProvinciaLegale.ReadOnly = attivaModifica;
-            tbMod_ProvinciaOperativo.ReadOnly = attivaModifica;
-            tbMod_Telefono.ReadOnly = attivaModifica;
-            tbMod_WebSite.ReadOnly = attivaModifica;
+            tbMod_Prezzo.ReadOnly = attivaModifica;
 
             cbMod_Attivo.Enabled = !attivaModifica;
-            cbMod_Cliente.Enabled = !attivaModifica;
-            cbMod_Fornitore.Enabled = !attivaModifica;
+            cbMod_Stampa.Enabled = !attivaModifica;
 
             if (attivaModifica)
             {
-                cmbMod_TipoAzienda.Attributes.Add("disabled", "");
-                cmbMod_Pagamento.Attributes.Add("disabled", "");
-                cmbMod_TipoIndirizzoLegale.Attributes.Add("disabled", "");
-                cmbMod_TipoIndirizzoOperativo.Attributes.Add("disabled", "");
+                cmbMod_Gruppo.Attributes.Add("disabled", "");
+                cmbMod_Genere.Attributes.Add("disabled", "");
+                cmbMod_Sottogruppo.Attributes.Add("disabled", "");
+                lbMod_Gruppi.Attributes.Add("disabled", "");
             }
             else
             {
-                cmbMod_TipoAzienda.Attributes.Remove("disabled");
-                cmbMod_Pagamento.Attributes.Remove("disabled");
-                cmbMod_TipoIndirizzoLegale.Attributes.Remove("disabled");
-                cmbMod_TipoIndirizzoOperativo.Attributes.Remove("disabled");
+                cmbMod_Gruppo.Attributes.Remove("disabled");
+                cmbMod_Genere.Attributes.Remove("disabled");
+                cmbMod_Sottogruppo.Attributes.Remove("disabled");
+                lbMod_Gruppi.Attributes.Remove("disabled");
             }
 
-            //cmbMod_TipoAzienda.Enabled = !attivaModifica;
-            //cmbMod_Pagamento.Enabled = !attivaModifica;
-            //cmbMod_TipoIndirizzoLegale.Enabled = !attivaModifica;
-            //cmbMod_TipoIndirizzoOperativo.Enabled = !attivaModifica;
         }
 
-        private void gestisciPulsantiAzienda(string stato)
+        private void gestisciPulsantiArticolo(string stato)
         {
             switch (stato)
             {
@@ -455,19 +438,19 @@ namespace VideoSystemWeb.Articoli.userControl
         {
             Esito esito = new Esito();
 
-            if (!string.IsNullOrEmpty((string)ViewState["idAzienda"]))
+            if (!string.IsNullOrEmpty((string)ViewState["idArticolo"]))
             {
-                esito = Anag_Clienti_Fornitori_BLL.Instance.EliminaAzienda(Convert.ToInt32(ViewState["idAzienda"].ToString()));
+                esito = Art_Articoli_BLL.Instance.EliminaArticolo(Convert.ToInt32(ViewState["idArticolo"].ToString()));
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
                     panelErrore.Style.Add("display","block");
                     lbl_MessaggioErrore.Text = esito.descrizione;
-                    AttivaDisattivaModificaAzienda(true);
+                    AttivaDisattivaModificaArticolo(true);
                 }
                 else
                 {
-                    AttivaDisattivaModificaAzienda(true);
+                    AttivaDisattivaModificaArticolo(true);
                     //btn_chiudi_Click(null, null);
                     pnlContainer.Visible = false;
                     btnRicercaArticoli_Click(null, null);
@@ -479,9 +462,9 @@ namespace VideoSystemWeb.Articoli.userControl
 
         protected void btnSalva_Click(object sender, EventArgs e)
         {
-            // SALVO MODIFICHE AZIENDA
+            // SALVO MODIFICHE ARTICOLO
             Esito esito = new Esito();
-            Anag_Clienti_Fornitori azienda = CreaOggettoSalvataggio(ref esito);
+            Art_Articoli articolo = CreaOggettoSalvataggio(ref esito);
 
             if (esito.codice != Esito.ESITO_OK)
             {
@@ -492,7 +475,7 @@ namespace VideoSystemWeb.Articoli.userControl
             {
                 NascondiErroriValidazione();
 
-                esito = Anag_Clienti_Fornitori_BLL.Instance.AggiornaAzienda(azienda);
+                esito = Art_Articoli_BLL.Instance.AggiornaArticolo(articolo);
 
 
                 if (esito.codice != Esito.ESITO_OK)
@@ -500,71 +483,52 @@ namespace VideoSystemWeb.Articoli.userControl
                     panelErrore.Style.Remove("display");
                     lbl_MessaggioErrore.Text = esito.descrizione;
                 }
-                EditAzienda_Click(null, null);
+                EditArticolo_Click(null, null);
             }
 
         }
-        private Anag_Clienti_Fornitori CreaOggettoSalvataggio(ref Esito esito)
+        private Art_Articoli CreaOggettoSalvataggio(ref Esito esito)
         {
-            Anag_Clienti_Fornitori azienda = new Anag_Clienti_Fornitori();
+            Art_Articoli articolo = new Art_Articoli();
             try
             {
 
-                if (string.IsNullOrEmpty((string)ViewState["idAzienda"]))
+                if (string.IsNullOrEmpty((string)ViewState["idArticolo"]))
                 {
-                    ViewState["idAzienda"] = 0;
+                    ViewState["idArticolo"] = 0;
                 }
 
-                azienda.Id = Convert.ToInt16(ViewState["idAzienda"].ToString());
+                articolo.Id = Convert.ToInt16(ViewState["idAzienda"].ToString());
 
-                azienda.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
-                azienda.Cliente = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Cliente, "true", false, ref esito));
-                azienda.Fornitore = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Fornitore, "true", false, ref esito));
+                articolo.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
+                articolo.DefaultStampa = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Stampa, "true", false, ref esito));
+                articolo.DefaultDescrizione = BasePage.ValidaCampo(tbMod_DescrizioneBreve, "", false, ref esito);
+                articolo.DefaultDescrizioneLunga = BasePage.ValidaCampo(tbMod_Descrizione, "", false, ref esito);
+                articolo.DefaultIdTipoGenere = 1;
+                articolo.DefaultIdTipoGruppo = 1;
+                articolo.DefaultIdTipoSottogruppo = 1;
+                articolo.DefaultIva = Convert.ToInt16(BasePage.ValidaCampo(tbMod_IVA, "", false, ref esito));
+                articolo.DefaultPrezzo = Convert.ToDecimal(BasePage.ValidaCampo(tbMod_Prezzo, "", false, ref esito));
+                articolo.DefaultCosto = Convert.ToDecimal(BasePage.ValidaCampo(tbMod_Costo, "", false, ref esito));
 
-                azienda.RagioneSociale = BasePage.ValidaCampo(tbMod_RagioneSociale, "", false, ref esito);
-                azienda.CapLegale = BasePage.ValidaCampo(tbMod_CapLegale, "", false, ref esito);
-                azienda.CapOperativo = BasePage.ValidaCampo(tbMod_CapOperativo, "", false, ref esito);
-                azienda.CodiceFiscale = BasePage.ValidaCampo(tbMod_CF, "", false, ref esito);
-                azienda.CodiceIdentificativo = BasePage.ValidaCampo(tbMod_CodiceIdentificativo, "", false, ref esito);
-                azienda.ComuneLegale = BasePage.ValidaCampo(tbMod_ComuneLegale, "", false, ref esito);
-                azienda.ComuneOperativo = BasePage.ValidaCampo(tbMod_ComuneOperativo, "", false, ref esito);
-                azienda.Email = BasePage.ValidaCampo(tbMod_Email, "", false, ref esito);
-                azienda.Fax = BasePage.ValidaCampo(tbMod_Fax, "", false, ref esito);
-                azienda.Iban = BasePage.ValidaCampo(tbMod_Iban, "", false, ref esito);
-                azienda.IndirizzoLegale = BasePage.ValidaCampo(tbMod_IndirizzoLegale, "", false, ref esito);
-                azienda.IndirizzoOperativo = BasePage.ValidaCampo(tbMod_IndirizzoOperativo, "", false, ref esito);
-                azienda.NazioneLegale = BasePage.ValidaCampo(tbMod_NazioneLegale, "", false, ref esito);
-                azienda.NazioneOperativo = BasePage.ValidaCampo(tbMod_NazioneOperativo, "", false, ref esito);
-                azienda.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
-                azienda.NumeroCivicoLegale = BasePage.ValidaCampo(tbMod_CivicoLegale, "", false, ref esito);
-                azienda.NumeroCivicoOperativo = BasePage.ValidaCampo(tbMod_CivicoOperativo, "", false, ref esito);
-                azienda.Pagamento = Convert.ToInt16(cmbMod_Pagamento.SelectedValue);
-                azienda.PartitaIva = BasePage.ValidaCampo(tbMod_PartitaIva, "", false, ref esito);
-                azienda.Pec = BasePage.ValidaCampo(tbMod_Pec, "", false, ref esito);
-                azienda.ProvinciaLegale = BasePage.ValidaCampo(tbMod_ProvinciaLegale, "", false, ref esito);
-                azienda.ProvinciaOperativo = BasePage.ValidaCampo(tbMod_ProvinciaOperativo, "", false, ref esito);
-                azienda.Telefono = BasePage.ValidaCampo(tbMod_Telefono, "", false, ref esito);
-                azienda.Tipo = cmbMod_TipoAzienda.SelectedValue;
-                azienda.TipoIndirizzoLegale = cmbMod_TipoIndirizzoLegale.SelectedValue;
-                azienda.TipoIndirizzoOperativo = cmbMod_TipoIndirizzoOperativo.SelectedValue;
-                azienda.WebSite = BasePage.ValidaCampo(tbMod_WebSite, "", false, ref esito);
+                //azienda.TipoIndirizzoLegale = cmbMod_TipoIndirizzoLegale.SelectedValue;
 
-                return azienda;
+                return articolo;
 
             }
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
                 esito.descrizione = ex.Message;
-                return azienda;
+                return articolo;
             }
         }
 
         protected void btnConfermaInserimento_Click(object sender, EventArgs e)
         {
-            // INSERISCO AZIENDA
+            // INSERISCO ARTICOLO
             Esito esito = new Esito();
-            Anag_Clienti_Fornitori azienda = CreaOggettoSalvataggio(ref esito);
+            Art_Articoli articolo = CreaOggettoSalvataggio(ref esito);
 
             if (esito.codice != Esito.ESITO_OK)
             {
@@ -575,12 +539,12 @@ namespace VideoSystemWeb.Articoli.userControl
             {
                 NascondiErroriValidazione();
 
-                int iRet = Anag_Clienti_Fornitori_BLL.Instance.CreaAzienda(azienda, ref esito);
+                int iRet = Art_Articoli_BLL.Instance.CreaArticolo(articolo, ref esito);
                 if (iRet > 0)
                 {
                     // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO
-                    hf_idAzienda.Value = iRet.ToString();
-                    ViewState["idAzienda"] = hf_idAzienda.Value;
+                    hf_idArticolo.Value = iRet.ToString();
+                    ViewState["idArticolo"] = hf_idArticolo.Value;
                     hf_tipoOperazione.Value = "VISUALIZZAZIONE";
                 }
 
@@ -592,7 +556,7 @@ namespace VideoSystemWeb.Articoli.userControl
                 }
                 else
                 {
-                    EditAzienda_Click(null, null);
+                    EditArticolo_Click(null, null);
                 }
                 
             }
@@ -605,38 +569,20 @@ namespace VideoSystemWeb.Articoli.userControl
         private void annullaModifiche()
         {
             NascondiErroriValidazione();
-            AttivaDisattivaModificaAzienda(true);
-            editAzienda();
-            gestisciPulsantiAzienda("ANNULLAMENTO");
+            AttivaDisattivaModificaArticolo(true);
+            editArticolo();
+            gestisciPulsantiArticolo("ANNULLAMENTO");
         }
         private void NascondiErroriValidazione()
         {
             panelErrore.Style.Add("display", "none");
 
-            tbMod_CF.CssClass = tbMod_CF.CssClass.Replace("erroreValidazione", "");
-            tbMod_CodiceIdentificativo.CssClass = tbMod_CodiceIdentificativo.CssClass.Replace("erroreValidazione", "");
-            tbMod_Iban.CssClass = tbMod_Iban.CssClass.Replace("erroreValidazione", "");
-            tbMod_RagioneSociale.CssClass = tbMod_RagioneSociale.CssClass.Replace("erroreValidazione", "");
-            tbMod_PartitaIva.CssClass = tbMod_PartitaIva.CssClass.Replace("erroreValidazione", "");
+            tbMod_Descrizione.CssClass = tbMod_Descrizione.CssClass.Replace("erroreValidazione", "");
+            tbMod_DescrizioneBreve.CssClass = tbMod_DescrizioneBreve.CssClass.Replace("erroreValidazione", "");
+            tbMod_IVA.CssClass = tbMod_IVA.CssClass.Replace("erroreValidazione", "");
+            tbMod_Costo.CssClass = tbMod_Costo.CssClass.Replace("erroreValidazione", "");
+            tbMod_Prezzo.CssClass = tbMod_Prezzo.CssClass.Replace("erroreValidazione", "");
             tbMod_Note.CssClass = tbMod_Note.CssClass.Replace("erroreValidazione", "");
-            tbMod_CapLegale.CssClass = tbMod_CapLegale.CssClass.Replace("erroreValidazione", "");
-            tbMod_CapOperativo.CssClass = tbMod_CapOperativo.CssClass.Replace("erroreValidazione", "");
-            tbMod_CivicoLegale.CssClass = tbMod_CivicoLegale.CssClass.Replace("erroreValidazione", "");
-            tbMod_CivicoOperativo.CssClass = tbMod_CivicoOperativo.CssClass.Replace("erroreValidazione", "");
-            tbMod_ComuneLegale.CssClass = tbMod_ComuneLegale.CssClass.Replace("erroreValidazione", "");
-            tbMod_ComuneOperativo.CssClass = tbMod_ComuneOperativo.CssClass.Replace("erroreValidazione", "");
-            tbMod_Email.CssClass = tbMod_Email.CssClass.Replace("erroreValidazione", "");
-            tbMod_Fax.CssClass = tbMod_Fax.CssClass.Replace("erroreValidazione", "");
-            tbMod_Iban.CssClass = tbMod_Iban.CssClass.Replace("erroreValidazione", "");
-            tbMod_IndirizzoLegale.CssClass = tbMod_IndirizzoLegale.CssClass.Replace("erroreValidazione", "");
-            tbMod_IndirizzoOperativo.CssClass = tbMod_IndirizzoOperativo.CssClass.Replace("erroreValidazione", "");
-            tbMod_NazioneLegale.CssClass = tbMod_NazioneLegale.CssClass.Replace("erroreValidazione", "");
-            tbMod_NazioneOperativo.CssClass = tbMod_NazioneOperativo.CssClass.Replace("erroreValidazione", "");
-            tbMod_Pec.CssClass = tbMod_Pec.CssClass.Replace("erroreValidazione", "");
-            tbMod_ProvinciaLegale.CssClass = tbMod_ProvinciaLegale.CssClass.Replace("erroreValidazione", "");
-            tbMod_ProvinciaOperativo.CssClass = tbMod_ProvinciaOperativo.CssClass.Replace("erroreValidazione", "");
-            tbMod_Telefono.CssClass = tbMod_Telefono.CssClass.Replace("erroreValidazione", "");
-            tbMod_WebSite.CssClass = tbMod_WebSite.CssClass.Replace("erroreValidazione", "");
         }
         protected void btnApriReferenti_Click(object sender, EventArgs e)
         {
@@ -690,7 +636,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         tbInsTelefono1Referente.Text = "";
                         tbInsTelefono2Referente.Text = "";
                         cbInsAttivoReferente.Checked = true;
-                        editAzienda();
+                        editArticolo();
                     }
                 }
                 catch (Exception ex)
@@ -752,7 +698,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         tbInsTelefono1Referente.Text = "";
                         tbInsTelefono2Referente.Text = "";
                         cbInsAttivoReferente.Checked = true;
-                        editAzienda();
+                        editArticolo();
                     }
                 }
                 catch (Exception ex)
@@ -802,7 +748,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         btnModificaReferente.Visible = false;
                         btnInserisciReferente.Visible = true;
 
-                        editAzienda();
+                        editArticolo();
                     }
                 }
                 catch (Exception ex)

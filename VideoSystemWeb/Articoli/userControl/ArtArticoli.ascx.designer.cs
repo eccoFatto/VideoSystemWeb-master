@@ -49,6 +49,15 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbDescrizioneBreve;
         
         /// <summary>
+        /// Controllo tbIva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbIva;
+        
+        /// <summary>
         /// Controllo tbPrezzo.
         /// </summary>
         /// <remarks>
@@ -65,15 +74,6 @@ namespace VideoSystemWeb.Articoli.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TbCosto;
-        
-        /// <summary>
-        /// Controllo tbIva.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbIva;
         
         /// <summary>
         /// Controllo btnRicercaArticoli.
@@ -112,31 +112,31 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.WebControls.GridView gv_articoli;
         
         /// <summary>
-        /// Controllo btnEditAzienda.
+        /// Controllo btnEditArticolo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEditAzienda;
+        protected global::System.Web.UI.WebControls.Button btnEditArticolo;
         
         /// <summary>
-        /// Controllo btnInsAzienda.
+        /// Controllo btnInsArticolo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnInsAzienda;
+        protected global::System.Web.UI.WebControls.Button btnInsArticolo;
         
         /// <summary>
-        /// Controllo hf_idAzienda.
+        /// Controllo hf_idArticolo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_idAzienda;
+        protected global::System.Web.UI.WebControls.HiddenField hf_idArticolo;
         
         /// <summary>
         /// Controllo hf_tipoOperazione.
@@ -157,13 +157,13 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.WebControls.HiddenField hf_tabChiamata;
         
         /// <summary>
-        /// Controllo upAzienda.
+        /// Controllo upArticolo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upAzienda;
+        protected global::System.Web.UI.UpdatePanel upArticolo;
         
         /// <summary>
         /// Controllo pnlContainer.
@@ -202,265 +202,85 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
         
         /// <summary>
-        /// Controllo tbMod_RagioneSociale.
+        /// Controllo tbMod_Descrizione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_RagioneSociale;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Descrizione;
         
         /// <summary>
-        /// Controllo tbMod_PartitaIva.
+        /// Controllo tbMod_DescrizioneBreve.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_PartitaIva;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_DescrizioneBreve;
         
         /// <summary>
-        /// Controllo tbMod_CF.
+        /// Controllo tbMod_Prezzo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_CF;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Prezzo;
         
         /// <summary>
-        /// Controllo tbMod_CodiceIdentificativo.
+        /// Controllo tbMod_Costo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_CodiceIdentificativo;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Costo;
         
         /// <summary>
-        /// Controllo tbMod_Iban.
+        /// Controllo tbMod_IVA.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Iban;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_IVA;
         
         /// <summary>
-        /// Controllo cmbMod_Pagamento.
+        /// Controllo cmbMod_Genere.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Pagamento;
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Genere;
         
         /// <summary>
-        /// Controllo cmbMod_TipoIndirizzoLegale.
+        /// Controllo cmbMod_Gruppo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbMod_TipoIndirizzoLegale;
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Gruppo;
         
         /// <summary>
-        /// Controllo tbMod_IndirizzoLegale.
+        /// Controllo cmbMod_Sottogruppo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_IndirizzoLegale;
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Sottogruppo;
         
         /// <summary>
-        /// Controllo tbMod_CivicoLegale.
+        /// Controllo lbMod_Gruppi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_CivicoLegale;
-        
-        /// <summary>
-        /// Controllo tbMod_CapLegale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_CapLegale;
-        
-        /// <summary>
-        /// Controllo tbMod_ComuneLegale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_ComuneLegale;
-        
-        /// <summary>
-        /// Controllo tbMod_ProvinciaLegale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_ProvinciaLegale;
-        
-        /// <summary>
-        /// Controllo tbMod_NazioneLegale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_NazioneLegale;
-        
-        /// <summary>
-        /// Controllo cmbMod_TipoIndirizzoOperativo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbMod_TipoIndirizzoOperativo;
-        
-        /// <summary>
-        /// Controllo tbMod_IndirizzoOperativo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_IndirizzoOperativo;
-        
-        /// <summary>
-        /// Controllo tbMod_CivicoOperativo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_CivicoOperativo;
-        
-        /// <summary>
-        /// Controllo tbMod_CapOperativo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_CapOperativo;
-        
-        /// <summary>
-        /// Controllo tbMod_ComuneOperativo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_ComuneOperativo;
-        
-        /// <summary>
-        /// Controllo tbMod_ProvinciaOperativo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_ProvinciaOperativo;
-        
-        /// <summary>
-        /// Controllo tbMod_NazioneOperativo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_NazioneOperativo;
-        
-        /// <summary>
-        /// Controllo tbMod_Telefono.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Telefono;
-        
-        /// <summary>
-        /// Controllo tbMod_Fax.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Fax;
-        
-        /// <summary>
-        /// Controllo tbMod_Email.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Email;
-        
-        /// <summary>
-        /// Controllo tbMod_Pec.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Pec;
-        
-        /// <summary>
-        /// Controllo tbMod_WebSite.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_WebSite;
-        
-        /// <summary>
-        /// Controllo cmbMod_TipoAzienda.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbMod_TipoAzienda;
-        
-        /// <summary>
-        /// Controllo cbMod_Cliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbMod_Cliente;
-        
-        /// <summary>
-        /// Controllo cbMod_Fornitore.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbMod_Fornitore;
-        
-        /// <summary>
-        /// Controllo cbMod_Attivo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbMod_Attivo;
+        protected global::System.Web.UI.WebControls.ListBox lbMod_Gruppi;
         
         /// <summary>
         /// Controllo tbMod_Note.
@@ -470,6 +290,24 @@ namespace VideoSystemWeb.Articoli.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Note;
+        
+        /// <summary>
+        /// Controllo cbMod_Stampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbMod_Stampa;
+        
+        /// <summary>
+        /// Controllo cbMod_Attivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbMod_Attivo;
         
         /// <summary>
         /// Controllo btnModifica.
@@ -515,15 +353,6 @@ namespace VideoSystemWeb.Articoli.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnulla;
-        
-        /// <summary>
-        /// Controllo lbMod_Referenti.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbMod_Referenti;
         
         /// <summary>
         /// Controllo gvMod_Referenti.

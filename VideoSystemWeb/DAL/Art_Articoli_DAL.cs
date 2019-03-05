@@ -62,7 +62,12 @@ namespace VideoSystemWeb.DAL
                                     articolo.DefaultStampa = dt.Rows[0].Field<bool>("defaultStampa");
                                     articolo.DefaultDescrizione = dt.Rows[0].Field<string>("defaultDescrizione");
                                     articolo.DefaultDescrizioneLunga = dt.Rows[0].Field<string>("defaultDescrizioneLunga");
+                                    articolo.Note = dt.Rows[0].Field<string>("Note");
                                     articolo.Attivo = dt.Rows[0].Field<bool>("attivo");
+
+                                    articolo.DefaultTipoGenere = getTipologicaById(EnumTipologiche.TIPO_GENERE, articolo.DefaultIdTipoGenere, ref esito);
+                                    articolo.DefaultTipoGruppo = getTipologicaById(EnumTipologiche.TIPO_GRUPPO, articolo.DefaultIdTipoGruppo, ref esito);
+                                    articolo.DefaultTipoSottogruppo = getTipologicaById(EnumTipologiche.TIPO_SOTTOGRUPPO, articolo.DefaultIdTipoSottogruppo, ref esito);
 
                                 }
                                 else

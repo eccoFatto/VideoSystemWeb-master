@@ -66,6 +66,28 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public List<Tipologica> listaTipiGeneri
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GENERE);
+            }
+        }
+        public List<Tipologica> listaTipiGruppi
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GRUPPO);
+            }
+        }
+        public List<Tipologica> listaTipiSottogruppi
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO);
+            }
+        }
+
         public List<Anag_Clienti_Fornitori> listaClientiFornitori;
 
         public Esito CaricaListeTipologiche()

@@ -75,6 +75,55 @@ namespace VideoSystemWeb.DAL
             return gruppoArticolo;
         }
 
+        public List<Art_Gruppi> getGruppiByIdArticolo(int idArticolo, ref Esito esito)
+        {
+            List<Art_Gruppi> listaGruppi = new List<Art_Gruppi>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM art_gruppi_articoli where idArtArticoli = " + idArticolo.ToString();
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        Art_Gruppi_Articoli gruppoArticolo = new Art_Gruppi_Articoli();
+                                        gruppoArticolo.Id = riga.Field<int>("id");
+                                        gruppoArticolo.IdArtGruppi = riga.Field<int>("idArtGruppi");
+                                        gruppoArticolo.IdArtArticoli = riga.Field<int>("idArtArticoli");
+                                        Art_Gruppi gruppo = Art_Gruppi_DAL.Instance.getGruppiById(gruppoArticolo.IdArtGruppi, ref esito);
+                                        listaGruppi.Add(gruppo);
+                                    }
+
+                                }
+                                else
+                                {
+                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.descrizione = "GruppoArticolo con idArtArticoli " + idArticolo.ToString() + " non trovato in tabella art_gruppi_articoli ";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+            return listaGruppi;
+        }
+
+
         public List<Art_Gruppi_Articoli> CaricaListaGruppiArticoli(ref Esito esito)
         {
             List<Art_Gruppi_Articoli> listaGruppiArticoli = new List<Art_Gruppi_Articoli>();

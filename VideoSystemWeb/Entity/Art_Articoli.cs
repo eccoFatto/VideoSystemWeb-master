@@ -20,8 +20,11 @@ namespace VideoSystemWeb.Entity
         */
         private int id;
         private int defaultIdTipoGenere;
+        private Tipologica defaultTipoGenere;
         private int defaultIdTipoGruppo;
+        private Tipologica defaultTipoGruppo;
         private int defaultIdTipoSottogruppo;
+        private Tipologica defaultTipoSottogruppo;
         private string defaultDescrizione;
         private string defaultDescrizioneLunga;
         private bool defaultStampa;
@@ -29,6 +32,8 @@ namespace VideoSystemWeb.Entity
         private decimal defaultCosto;
         private int defaultIva;
         private bool attivo;
+        private string note;
+        
 
         public int Id { get => id; set => id = value; }
         public int DefaultIdTipoGenere { get => defaultIdTipoGenere; set => defaultIdTipoGenere = value; }
@@ -41,5 +46,9 @@ namespace VideoSystemWeb.Entity
         public decimal DefaultCosto { get => defaultCosto; set => defaultCosto = value; }
         public int DefaultIva { get => defaultIva; set => defaultIva = value; }
         public bool Attivo { get => attivo; set => attivo = value; }
+        public Tipologica DefaultTipoGenere { get => defaultTipoGenere; set => defaultTipoGenere = value; }
+        public Tipologica DefaultTipoGruppo { get => defaultTipoGruppo; set => defaultTipoGruppo = value; }
+        public Tipologica DefaultTipoSottogruppo { get => defaultTipoSottogruppo; set => defaultTipoSottogruppo = value; }
+        public string Note { get => note; set => note = value; }
     }
 }

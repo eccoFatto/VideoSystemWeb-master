@@ -14,6 +14,10 @@
         return confirm("Eliminare l'articolo corrente?");
     }
 
+    function confermaEliminazioneTuttiArticoli() {
+        return confirm("Eliminare tutti gli articoli inseriti?");
+    }
+
     function filter(columnIndex) {
         var filterText = $("#<%=txt_FiltroGruppi.ClientID%>").val().toLowerCase();
         var cellText = "";
@@ -194,6 +198,7 @@
         </div>
     </asp:Panel>
     <div style="width:99%;text-align:center;">
+        <asp:Button ID="btnEliminaArticoli" runat="server" Text="Elimina tutti gli articoli" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnEliminaArticoli_Click" Style="font-size: smaller; padding: 4px 8px" OnClientClick="return confermaEliminazioneTuttiArticoli();"/>
         <asp:Button ID="btnRicercaOfferta" runat="server" Text="Ricerca offerta" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRicercaOfferta_Click" Style="font-size: smaller; padding: 4px 8px" />
     </div>
     

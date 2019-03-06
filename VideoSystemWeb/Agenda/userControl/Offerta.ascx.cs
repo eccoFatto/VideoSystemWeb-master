@@ -142,16 +142,18 @@ namespace VideoSystemWeb.Agenda.userControl
             gvArticoli.DataSource = listaDatiArticoli;
             gvArticoli.DataBind();
 
-            AggiornaTotali(listaDatiArticoli);
+            AggiornaTotali();
 
-            ClearModificaArticoli();
+            //ClearModificaArticoli();
+            resetPanelOfferta();
 
             RichiediOperazionePopup("UPDATE");
         }
 
         protected void btnAnnullaModifiche_Click(object sender, EventArgs e)
         {
-            ClearModificaArticoli();
+            //ClearModificaArticoli();
+            resetPanelOfferta();
             RichiediOperazionePopup("UPDATE");
         }
 
@@ -185,13 +187,15 @@ namespace VideoSystemWeb.Agenda.userControl
                 gvArticoli.DataSource = listaDatiArticoli;
                 gvArticoli.DataBind();
 
-                AggiornaTotali(listaDatiArticoli);
+                AggiornaTotali();
+
+                resetPanelOfferta();
 
                 RichiediOperazionePopup("UPDATE");
             }
         }
 
-        private void AggiornaTotali(List<DatiArticoli> listaDatiArticoli)
+        private void AggiornaTotali()
         {
             
             decimal totPrezzo = 0;
@@ -218,7 +222,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void gvArticoli_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            List<DatiArticoli> listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
+            //List<DatiArticoli> listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
             DatiArticoli articoloSelezionato;
 
             string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
@@ -252,6 +256,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     panelRicercaOfferta.Style.Add("display", "none");
                     btnRicercaOfferta.Visible = false;
+                    btnEliminaArticoli.Visible = false;
                     panelModificaArticolo.Style.Remove("display");
 
                     break;
@@ -260,15 +265,11 @@ namespace VideoSystemWeb.Agenda.userControl
                     gvArticoli.DataSource = listaDatiArticoli;
                     gvArticoli.DataBind();
 
-                    AggiornaTotali(listaDatiArticoli);
-                    if (listaDatiArticoli.Count == 0)
-                    {
-                        lbl_selezionareArticolo.Visible = true;
-                    }
+                    AggiornaTotali();
+                    resetPanelOfferta();
 
                     break;
             }
-            
 
             RichiediOperazionePopup("UPDATE");
         }
@@ -288,6 +289,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_PercRicavo.Text = "";
 
             //NascondiErroriValidazione();
+            resetPanelOfferta();
         }
 
         private void ClearModificaArticoli()
@@ -301,7 +303,22 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Prezzo.Text = "";
             txt_Iva.Text = "";
             txt_Quantita.Text = "";
+        }
+
+        private void resetPanelOfferta()
+        {
+            ClearModificaArticoli();
+            panelModificaArticolo.Style.Add("display", "none");
+            panelRicercaOfferta.Style.Add("display", "none");
+
+            gvArticoli.DataSource = listaDatiArticoli;
+            gvArticoli.DataBind();
+
             btnRicercaOfferta.Visible = true;
+            btnEliminaArticoli.Visible = (listaDatiArticoli != null && listaDatiArticoli.Count > 0);
+            lbl_selezionareArticolo.Visible = (listaDatiArticoli == null || listaDatiArticoli.Count == 0);
+
+
         }
 
         public void PopolaOfferta(int idDatiAgenda)
@@ -314,8 +331,10 @@ namespace VideoSystemWeb.Agenda.userControl
                 gvArticoli.DataSource = listaDatiArticoli;
                 gvArticoli.DataBind();
 
-                AggiornaTotali(listaDatiArticoli);
+                AggiornaTotali();
             }
+            //btnEliminaArticoli.Visible = (listaDatiArticoli != null && listaDatiArticoli.Count > 0);
+            resetPanelOfferta();
         }
 
         protected void btnRicercaOfferta_Click(object sender, EventArgs e)
@@ -323,8 +342,19 @@ namespace VideoSystemWeb.Agenda.userControl
             panelModificaArticolo.Style.Add("display", "none");
             panelRicercaOfferta.Style.Remove("display");
             btnRicercaOfferta.Visible = false;
+            btnEliminaArticoli.Visible = false;
             RichiediOperazionePopup("UPDATE");
         }
 
+        
+        protected void btnEliminaArticoli_Click(object sender, EventArgs e)
+        {
+            listaDatiArticoli = null;
+            
+
+            resetPanelOfferta();
+
+            RichiediOperazionePopup("UPDATE");
+        }
     }
 }

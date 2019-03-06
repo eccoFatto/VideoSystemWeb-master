@@ -800,3 +800,32 @@
 2019-03-05 18:10:54,798 [12] ERROR VideoSystemWeb.Agenda.Agenda - 
 2019-03-05 18:11:06,430 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-05 18:11:06,430 [11] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-03-06 09:19:56,165 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 09:19:57,793 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 09:47:49,866 [31] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 09:47:51,027 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 09:49:00,874 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 09:49:02,477 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 09:51:08,103 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 09:51:09,204 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 09:51:55,696 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 09:51:55,696 [10] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-03-06 09:52:17,716 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 09:52:18,817 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 09:55:30,235 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 09:55:31,292 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 09:56:05,656 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 09:57:16,515 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 09:57:17,853 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 09:57:40,940 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 09:57:40,940 [14] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-03-06 10:22:42,953 [28] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 10:22:44,108 [30] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 10:24:59,814 [29] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 10:25:00,827 [29] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 10:27:17,186 [28] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 10:27:18,278 [28] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 10:51:38,704 [26] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 10:51:38,714 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 10:52:03,140 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-06 10:52:03,140 [19] ERROR VideoSystemWeb.Agenda.Agenda - 

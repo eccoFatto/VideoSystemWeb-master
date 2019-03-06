@@ -157,7 +157,7 @@
                     <!-- ELENCO TAB DETTAGLI ARTICOLO -->
                     <div class="w3-bar w3-green w3-round">
                         <div class="w3-bar-item w3-button w3-green" onclick="openDettaglioArticolo('Azienda')">Articolo</div>
-                        <div class="w3-bar-item w3-button w3-green" onclick="openDettaglioArticolo('Referenti')">Referenti</div>
+                        <div class="w3-bar-item w3-button w3-green" onclick="openDettaglioArticolo('Referenti')" style="display:none">Referenti</div>
                         <div class="w3-bar-item w3-button w3-green w3-right">
                             <div id="btnChiudiPopup" class="w3-button w3-green w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
                         </div>

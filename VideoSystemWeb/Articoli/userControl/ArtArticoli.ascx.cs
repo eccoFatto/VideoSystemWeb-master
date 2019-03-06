@@ -16,65 +16,81 @@ namespace VideoSystemWeb.Articoli.userControl
 {
     public partial class ArtArticoli : System.Web.UI.UserControl
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         BasePage basePage = new BasePage();
         protected void Page_Load(object sender, EventArgs e)
         {
+            // FUNZIONA SE NELLA PAGINA ASPX CHIAMANTE C'E' UN CAMPO HIDDENFIELD COL TIPO ARTICOLO (GENERI/GRUPPI/SOTTOGRUPPI/ARTICOLI)
+            HiddenField tipoArticolo = this.Parent.FindControl("HF_TIPO_ARTICOLO") as HiddenField;
+            if (tipoArticolo.Value.ToUpper().Equals("ARTICOLI")) { 
 
-            if (!Page.IsPostBack)
-            {
-                lblIntestazionePagina.Text = "ARTICOLI";
-
-                BasePage p = new BasePage();
-                Esito esito = p.CaricaListeTipologiche();
-
-                // CARICO LE COMBO
-                if (string.IsNullOrEmpty(esito.descrizione))
+                if (!Page.IsPostBack)
                 {
-                    cmbMod_Genere.Items.Clear();
-                    cmbMod_Genere.Items.Add("");
-                    foreach (Tipologica tipologiaGenere in p.listaTipiGeneri)
+                    lblIntestazionePagina.Text = "ARTICOLI";
+
+                    BasePage p = new BasePage();
+                    Esito esito = p.CaricaListeTipologiche();
+
+                    // CARICO LE COMBO
+                    if (string.IsNullOrEmpty(esito.descrizione))
                     {
-                        ListItem item = new ListItem();
-                        item.Text = tipologiaGenere.nome;
-                        item.Value = tipologiaGenere.id.ToString();
-                        cmbMod_Genere.Items.Add(item);
-                    }
+                        // GENERI
+                        cmbMod_Genere.Items.Clear();
+                        cmbMod_Genere.Items.Add("");
+                        foreach (Tipologica tipologiaGenere in p.listaTipiGeneri)
+                        {
+                            ListItem item = new ListItem();
+                            item.Text = tipologiaGenere.nome;
+                            item.Value = tipologiaGenere.id.ToString();
+                            cmbMod_Genere.Items.Add(item);
+                        }
+                        //GRUPPI
+                        cmbMod_Gruppo.Items.Clear();
+                        cmbMod_Gruppo.Items.Add("");
+                        foreach (Tipologica tipologiaGruppo in p.listaTipiGruppi)
+                        {
+                            ListItem item = new ListItem();
+                            item.Text = tipologiaGruppo.nome;
+                            item.Value = tipologiaGruppo.id.ToString();
+                            cmbMod_Gruppo.Items.Add(item);
+                        }
+                        //SOTTOGRUPPI
+                        cmbMod_Sottogruppo.Items.Clear();
+                        cmbMod_Sottogruppo.Items.Add("");
+                        foreach (Tipologica tipologiaSottogruppo in p.listaTipiSottogruppi)
+                        {
+                            ListItem item = new ListItem();
+                            item.Text = tipologiaSottogruppo.nome;
+                            item.Value = tipologiaSottogruppo.id.ToString();
+                            cmbMod_Sottogruppo.Items.Add(item);
+                        }
 
-                    cmbMod_Gruppo.Items.Clear();
-                    cmbMod_Gruppo.Items.Add("");
-                    foreach (Tipologica tipologiaGruppo in p.listaTipiGruppi)
+                        //GRUPPI ARTICOLI
+                        ddlGruppiDaAggiungere.Items.Clear();
+                        List<Art_Gruppi> listaGruppiMain = Art_Gruppi_BLL.Instance.CaricaListaGruppi(ref esito, true);
+                        foreach (Art_Gruppi gruppoMain in listaGruppiMain)
+                        {
+                            ListItem item = new ListItem();
+                            item.Text = gruppoMain.Nome;
+                            item.Value = gruppoMain.Id.ToString();
+                            ddlGruppiDaAggiungere.Items.Add(item);
+                        }
+
+                        // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
+                        abilitaBottoni(p.AbilitazioneInScrittura());
+
+                    }
+                    else
                     {
-                        ListItem item = new ListItem();
-                        item.Text = tipologiaGruppo.nome;
-                        item.Value = tipologiaGruppo.id.ToString();
-                        cmbMod_Gruppo.Items.Add(item);
+                        Session["ErrorPageText"] = esito.descrizione;
+                        string url = String.Format("~/pageError.aspx");
+                        Response.Redirect(url, true);
                     }
-
-                    cmbMod_Sottogruppo.Items.Clear();
-                    cmbMod_Sottogruppo.Items.Add("");
-                    foreach (Tipologica tipologiaSottogruppo in p.listaTipiSottogruppi)
-                    {
-                        ListItem item = new ListItem();
-                        item.Text = tipologiaSottogruppo.nome;
-                        item.Value = tipologiaSottogruppo.id.ToString();
-                        cmbMod_Sottogruppo.Items.Add(item);
-                    }
-
-
-                    // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                    abilitaBottoni(p.AbilitazioneInScrittura());
 
                 }
-                else
-                {
-                    Session["ErrorPageText"] = esito.descrizione;
-                    string url = String.Format("~/pageError.aspx");
-                    Response.Redirect(url, true);
-                }
-
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioArticolo('" + hf_tabChiamata.Value + "');", addScriptTags: true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
             }
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioArticolo('" + hf_tabChiamata.Value + "');", addScriptTags: true);
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
         private void abilitaBottoni(bool utenteAbilitatoInScrittura)
@@ -86,7 +102,7 @@ namespace VideoSystemWeb.Articoli.userControl
                 btnAnnulla.Visible = false;
                 btnSalva.Visible = false;
                 btnElimina.Visible = false;
-
+                btnApriGruppi.Visible = false;
             }
             else
             {
@@ -95,7 +111,7 @@ namespace VideoSystemWeb.Articoli.userControl
                 btnAnnulla.Visible = true;
                 btnSalva.Visible = true;
                 btnElimina.Visible = true;
-
+                btnApriGruppi.Visible = true;
             }
         }
 
@@ -292,26 +308,27 @@ namespace VideoSystemWeb.Articoli.userControl
         protected void InserisciArticoli_Click(object sendere, EventArgs e)
         {
             ViewState["idArticolo"] = "";
-            editAziendaVuota();
+            editArticoloVuoto();
             AttivaDisattivaModificaArticolo(false);
             gestisciPulsantiArticolo("INSERIMENTO");
 
             // PULISCO I PH DI MODIFICA
-            btnAnnullaReferente_Click(null, null);
 
-            phReferenti.Visible = false;
+            phGruppi.Visible = false;
 
             pnlContainer.Visible = true;
 
         }
 
-        private void editAziendaVuota()
+        private void editArticoloVuoto()
         {
             Esito esito = new Esito();
             pulisciCampiDettaglio();
         }
         protected void btnRicercaArticoli_Click(object sender, EventArgs e)
         {
+            NascondiErroriValidazione();
+
             string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_ARTICOLI"];
 
             queryRicerca = queryRicerca.Replace("@defaultDescrizioneLunga", tbDescrizione.Text.Trim().Replace("'", "''"));
@@ -372,14 +389,12 @@ namespace VideoSystemWeb.Articoli.userControl
                 cmbMod_Gruppo.Attributes.Add("disabled", "");
                 cmbMod_Genere.Attributes.Add("disabled", "");
                 cmbMod_Sottogruppo.Attributes.Add("disabled", "");
-                lbMod_Gruppi.Attributes.Add("disabled", "");
             }
             else
             {
                 cmbMod_Gruppo.Attributes.Remove("disabled");
                 cmbMod_Genere.Attributes.Remove("disabled");
                 cmbMod_Sottogruppo.Attributes.Remove("disabled");
-                lbMod_Gruppi.Attributes.Remove("disabled");
             }
 
         }
@@ -398,8 +413,7 @@ namespace VideoSystemWeb.Articoli.userControl
 
                     if (basePage.AbilitazioneInScrittura())
                     {
-                        btnAnnullaReferente_Click(null, null);
-                        phReferenti.Visible = false;
+                        phGruppi.Visible = false;
                     }
                     break;
                 case "INSERIMENTO":
@@ -498,18 +512,19 @@ namespace VideoSystemWeb.Articoli.userControl
                     ViewState["idArticolo"] = 0;
                 }
 
-                articolo.Id = Convert.ToInt16(ViewState["idAzienda"].ToString());
+                articolo.Id = Convert.ToInt16(ViewState["idArticolo"].ToString());
 
                 articolo.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
                 articolo.DefaultStampa = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Stampa, "true", false, ref esito));
                 articolo.DefaultDescrizione = BasePage.ValidaCampo(tbMod_DescrizioneBreve, "", false, ref esito);
                 articolo.DefaultDescrizioneLunga = BasePage.ValidaCampo(tbMod_Descrizione, "", false, ref esito);
-                articolo.DefaultIdTipoGenere = 1;
-                articolo.DefaultIdTipoGruppo = 1;
-                articolo.DefaultIdTipoSottogruppo = 1;
+                articolo.DefaultIdTipoGenere = Convert.ToInt16(cmbMod_Genere.SelectedValue);
+                articolo.DefaultIdTipoGruppo = Convert.ToInt16(cmbMod_Gruppo.SelectedValue);
+                articolo.DefaultIdTipoSottogruppo = Convert.ToInt16(cmbMod_Sottogruppo.SelectedValue);
                 articolo.DefaultIva = Convert.ToInt16(BasePage.ValidaCampo(tbMod_IVA, "", false, ref esito));
                 articolo.DefaultPrezzo = Convert.ToDecimal(BasePage.ValidaCampo(tbMod_Prezzo, "", false, ref esito));
                 articolo.DefaultCosto = Convert.ToDecimal(BasePage.ValidaCampo(tbMod_Costo, "", false, ref esito));
+                articolo.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
 
                 //azienda.TipoIndirizzoLegale = cmbMod_TipoIndirizzoLegale.SelectedValue;
 
@@ -584,254 +599,131 @@ namespace VideoSystemWeb.Articoli.userControl
             tbMod_Prezzo.CssClass = tbMod_Prezzo.CssClass.Replace("erroreValidazione", "");
             tbMod_Note.CssClass = tbMod_Note.CssClass.Replace("erroreValidazione", "");
         }
-        protected void btnApriReferenti_Click(object sender, EventArgs e)
+        protected void btnApriGruppi_Click(object sender, EventArgs e)
         {
-            if (phReferenti.Visible)
+            if (phGruppi.Visible)
             {
-                phReferenti.Visible = false;
+                phGruppi.Visible = false;
             }
             else
             {
-                phReferenti.Visible = true;
+                phGruppi.Visible = true;
             }
         }
-        protected void btnConfermaInserimentoReferente_Click(object sender, EventArgs e)
+        protected void btnConfermaInserimentoGruppo_Click(object sender, EventArgs e)
         {
-            //INSERISCO IL REFERENTE
-            if (!string.IsNullOrEmpty(tbInsCognomeReferente.Text) && (string.IsNullOrEmpty(tbInsEmailReferente.Text)|| basePage.validaIndirizzoEmail(tbInsEmailReferente.Text.Trim())))
+            //INSERISCO IL GRUPPO ARTICOLO SE SELEZIONATO
+            if (ddlGruppiDaAggiungere.SelectedIndex >= 0)
             {
                 try
                 {
                     NascondiErroriValidazione();
-
+                    ListItem item = ddlGruppiDaAggiungere.Items[ddlGruppiDaAggiungere.SelectedIndex];
+                    string value = item.Value;
+                    string gruppoSelezionato = item.Text;
                     Esito esito = new Esito();
-                    Anag_Referente_Clienti_Fornitori nuovoReferente = new Anag_Referente_Clienti_Fornitori();
-                    nuovoReferente.Id_azienda = Convert.ToInt32(ViewState["idAzienda"]);
-                    nuovoReferente.Attivo = cbInsAttivoReferente.Checked;
-                    nuovoReferente.Cognome = tbInsCognomeReferente.Text.Trim();
-                    nuovoReferente.Nome = tbInsNomeReferente.Text.Trim();
-                    nuovoReferente.Cellulare = tbInsCellulareReferente.Text.Trim();
-                    nuovoReferente.Email = tbInsEmailReferente.Text.Trim();
-                    nuovoReferente.Note = tbInsNoteReferente.Text.Trim();
-                    nuovoReferente.Settore = tbInsSettoreReferente.Text.Trim();
-                    nuovoReferente.Telefono1 = tbInsTelefono1Referente.Text.Trim();
-                    nuovoReferente.Telefono2 = tbInsTelefono2Referente.Text.Trim();
 
+                    Art_Gruppi_Articoli nuovoGruppoArticolo = new Art_Gruppi_Articoli();
 
-                    int iNuovoReferente = Anag_Referente_Clienti_Fornitori_BLL.Instance.CreaReferente(nuovoReferente, ref esito);
+                    nuovoGruppoArticolo.IdArtGruppi = Convert.ToInt16(item.Value.Trim());
+
+                    nuovoGruppoArticolo.IdArtArticoli = Convert.ToInt32(ViewState["idArticolo"]);
+
+                    int iNuovoArtGruppo = Art_Gruppi_Articoli_BLL.Instance.CreaGruppoArticolo(nuovoGruppoArticolo, ref esito);
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
-                        panelErrore.Style.Remove("display");
+                        //panelErrore.Style.Remove("display");
+                        panelErrore.Style.Add("display", "block");
                         lbl_MessaggioErrore.Text = esito.descrizione;
                     }
                     else
                     {
-                        tbInsCognomeReferente.Text = "";
-                        tbInsNomeReferente.Text = "";
-                        tbInsCellulareReferente.Text = "";
-                        tbInsEmailReferente.Text = "";
-                        tbInsNoteReferente.Text = "";
-                        tbInsSettoreReferente.Text = "";
-                        tbInsTelefono1Referente.Text = "";
-                        tbInsTelefono2Referente.Text = "";
-                        cbInsAttivoReferente.Checked = true;
                         editArticolo();
                     }
                 }
                 catch (Exception ex)
                 {
-                    panelErrore.Style.Remove("display");
+                    log.Error("btnConfermaInserimentoGruppo_Click", ex);
+                    //panelErrore.Style.Remove("display");
+                    panelErrore.Style.Add("display", "block");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
             }
             else
             {
-                panelErrore.Style.Remove("display");
+                //panelErrore.Style.Remove("display");
+                panelErrore.Style.Add("display", "block");
                 lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
             }
 
         }
-        protected void btnConfermaModificaReferente_Click(object sender, EventArgs e)
+        protected void btnEliminaGruppo_Click(object sender, EventArgs e)
         {
-            //MODIFICO IL REFERENTE
-            if (!string.IsNullOrEmpty(tbIdReferenteDaModificare.Text) && !string.IsNullOrEmpty(tbInsCognomeReferente.Text) && (string.IsNullOrEmpty(tbInsEmailReferente.Text) || basePage.validaIndirizzoEmail(tbInsEmailReferente.Text.Trim())))
+            //ELIMINO IL GRUPPO ARTICOLO SE SELEZIONATO
+            if (lbMod_Gruppi.SelectedIndex >= 0)
             {
-
                 try
                 {
                     NascondiErroriValidazione();
+                    ListItem item = lbMod_Gruppi.Items[lbMod_Gruppi.SelectedIndex];
+                    string value = item.Value;
+                    string gruppoSelezionato = item.Text;
+
+                    // DEVO TROVARE PRIMA IL GRUPPO ARTICOLO FORMATO DA ID GRUPPO E ID ARTICOLO
 
                     Esito esito = new Esito();
-                    Anag_Referente_Clienti_Fornitori nuovoReferente = new Anag_Referente_Clienti_Fornitori();
-                    nuovoReferente.Id = Convert.ToInt32(tbIdReferenteDaModificare.Text);
-                    nuovoReferente.Id_azienda = Convert.ToInt32(ViewState["idAzienda"]);
-                    nuovoReferente.Attivo = cbInsAttivoReferente.Checked;
-                    nuovoReferente.Cognome = tbInsCognomeReferente.Text.Trim();
-                    nuovoReferente.Nome = tbInsNomeReferente.Text.Trim();
-                    nuovoReferente.Cellulare = tbInsCellulareReferente.Text.Trim();
-                    nuovoReferente.Email = tbInsEmailReferente.Text.Trim();
-                    nuovoReferente.Note = tbInsNoteReferente.Text.Trim();
-                    nuovoReferente.Settore = tbInsSettoreReferente.Text.Trim();
-                    nuovoReferente.Telefono1 = tbInsTelefono1Referente.Text.Trim();
-                    nuovoReferente.Telefono2 = tbInsTelefono2Referente.Text.Trim();
+                    string query = "SELECT id FROM art_gruppi_articoli where idArtGruppi = " + value + " AND idArtArticoli = " + ViewState["idArticolo"].ToString();
+                    DataTable dtGruppiArticoli = Base_DAL.getDatiBySql(query, ref esito);
 
-                    esito = Anag_Referente_Clienti_Fornitori_BLL.Instance.AggiornaReferente(nuovoReferente);
-
-                    btnModificaReferente.Visible = false;
-                    btnInserisciReferente.Visible = true;
-
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (dtGruppiArticoli == null || dtGruppiArticoli.Rows == null)
                     {
+                        esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                        esito.descrizione = "btnEliminaGruppo_Click - Nessun risultato restituito dalla query " + query;
+                    }
+
+                    if (esito.codice != Esito.ESITO_OK )
+                    {
+                        log.Error(esito.descrizione);
                         panelErrore.Style.Remove("display");
                         lbl_MessaggioErrore.Text = esito.descrizione;
                     }
                     else
                     {
-                        tbIdReferenteDaModificare.Text = "";
-                        tbInsCognomeReferente.Text = "";
-                        tbInsNomeReferente.Text = "";
-                        tbInsCellulareReferente.Text = "";
-                        tbInsEmailReferente.Text = "";
-                        tbInsNoteReferente.Text = "";
-                        tbInsSettoreReferente.Text = "";
-                        tbInsTelefono1Referente.Text = "";
-                        tbInsTelefono2Referente.Text = "";
-                        cbInsAttivoReferente.Checked = true;
-                        editArticolo();
+                        foreach (DataRow riga in dtGruppiArticoli.Rows)
+                        {
+                            int idGruppoArticolo = Convert.ToInt16(riga["id"]);
+                            esito = Art_Gruppi_Articoli_BLL.Instance.EliminaGruppoArticolo(idGruppoArticolo);
+                        }
+                        if (esito.codice != Esito.ESITO_OK)
+                        {
+                            log.Error(esito.descrizione);
+                            panelErrore.Style.Remove("display");
+                            lbl_MessaggioErrore.Text = esito.descrizione;
+                        }
+                        else
+                        {
+                            editArticolo();
+                        }
+                        
                     }
                 }
                 catch (Exception ex)
                 {
-                    btnModificaReferente.Visible = false;
-                    btnInserisciReferente.Visible = true;
-                    panelErrore.Style.Remove("display");
+                    log.Error("btnEliminaGruppo_Click", ex);
+                    //panelErrore.Style.Remove("display");
+                    panelErrore.Style.Add("display", "block");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
             }
             else
             {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
-            }
-
-        }
-        protected void btnEliminaReferente_Click(object sender, EventArgs e)
-        {
-            //ELIMINO IL REFERENTE SE SELEZIONATO
-            if (gvMod_Referenti.SelectedIndex >= 0)
-            {
-                try
-                {
-                    NascondiErroriValidazione();
-                    string referenteSelezionato = gvMod_Referenti.Rows[gvMod_Referenti.SelectedIndex].Cells[1].Text;
-                    Esito esito = Anag_Referente_Clienti_Fornitori_BLL.Instance.EliminaReferente(Convert.ToInt32(referenteSelezionato.Trim()));
-
-                    if (esito.codice != Esito.ESITO_OK)
-                    {
-                        panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
-                    }
-                    else
-                    {
-                        tbIdReferenteDaModificare.Text = "";
-                        tbInsCognomeReferente.Text = "";
-                        tbInsNomeReferente.Text = "";
-                        tbInsCellulareReferente.Text = "";
-                        tbInsEmailReferente.Text = "";
-                        tbInsNoteReferente.Text = "";
-                        tbInsSettoreReferente.Text = "";
-                        tbInsTelefono1Referente.Text = "";
-                        tbInsTelefono2Referente.Text = "";
-                        cbInsAttivoReferente.Checked = true;
-
-                        btnModificaReferente.Visible = false;
-                        btnInserisciReferente.Visible = true;
-
-                        editArticolo();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    panelErrore.Style.Remove("display");
-                    lbl_MessaggioErrore.Text = ex.Message;
-                }
-            }
-            else
-            {
-                panelErrore.Style.Remove("display");
+                panelErrore.Style.Add("display", "block");
                 lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
             }
 
         }
 
-        protected void btnAnnullaReferente_Click(object sender, EventArgs e)
-        {
-            tbIdReferenteDaModificare.Text = "";
-            tbInsCognomeReferente.Text = "";
-            tbInsNomeReferente.Text = "";
-            tbInsCellulareReferente.Text = "";
-            tbInsEmailReferente.Text = "";
-            tbInsNoteReferente.Text = "";
-            tbInsSettoreReferente.Text = "";
-            tbInsTelefono1Referente.Text = "";
-            tbInsTelefono2Referente.Text = "";
-            cbInsAttivoReferente.Checked = true;
-
-            btnModificaReferente.Visible = false;
-            btnInserisciReferente.Visible = true;
-
-        }
-
-        protected void gvMod_Referenti_RigaSelezionata(object sender, EventArgs e)
-        {
-            //SCARICO IL REFERENTE SE SELEZIONATO
-            if (gvMod_Referenti.SelectedIndex >= 0)
-            {
-                try
-                {
-                    NascondiErroriValidazione();
-
-                    string referenteSelezionato = gvMod_Referenti.Rows[gvMod_Referenti.SelectedIndex].Cells[1].Text;
-                    Esito esito = new Esito();
-                    Anag_Referente_Clienti_Fornitori referente = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferenteById(ref esito, Convert.ToInt32(referenteSelezionato));
-
-                    if (esito.codice != Esito.ESITO_OK)
-                    {
-                        btnModificaReferente.Visible = false;
-                        btnInserisciReferente.Visible = true;
-                        tbIdReferenteDaModificare.Text = "";
-                        panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
-                    }
-                    else
-                    {
-                        btnModificaReferente.Visible = true;
-                        btnInserisciReferente.Visible = false;
-
-                        tbIdReferenteDaModificare.Text = referente.Id.ToString();
-                        tbInsCognomeReferente.Text = referente.Cognome;
-                        tbInsNomeReferente.Text = referente.Nome;
-                        tbInsSettoreReferente.Text = referente.Settore;
-                        tbInsEmailReferente.Text = referente.Email;
-                        tbInsTelefono1Referente.Text = referente.Telefono1;
-                        tbInsTelefono2Referente.Text = referente.Telefono2;
-                        tbInsNoteReferente.Text = referente.Note;
-                        tbInsCellulareReferente.Text = referente.Cellulare;
-                        cbInsAttivoReferente.Checked = referente.Attivo;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    btnModificaReferente.Visible = false;
-                    btnInserisciReferente.Visible = true;
-                    tbIdReferenteDaModificare.Text = "";
-                    panelErrore.Style.Remove("display");
-                    lbl_MessaggioErrore.Text = ex.Message;
-                }
-            }
-
-        }
 
     }
 }

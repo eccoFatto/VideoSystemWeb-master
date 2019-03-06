@@ -829,3 +829,5 @@
 2019-03-06 10:51:38,714 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-06 10:52:03,140 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-06 10:52:03,140 [19] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-03-06 17:33:13,104 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-06 17:33:14,588 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

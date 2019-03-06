@@ -211,7 +211,12 @@ namespace VideoSystemWeb.Agenda.userControl
                     totIva += (art.Prezzo * art.Iva / 100) * art.Quantita;
 
                 }
-                decimal percRicavo = totCosto / (totPrezzo / 100);
+                decimal percRicavo = 0;
+                if (totPrezzo != 0)
+                {
+                    percRicavo = totCosto / (totPrezzo / 100);
+                }
+                
 
                 txt_TotPrezzo.Text = string.Format("{0:0.00}", totPrezzo);
                 txt_TotCosto.Text = string.Format("{0:0.00}", totCosto);

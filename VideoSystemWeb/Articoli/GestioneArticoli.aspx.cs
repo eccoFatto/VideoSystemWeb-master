@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using VideoSystemWeb.BLL;
-
+using VideoSystemWeb.Articoli.userControl;
 namespace VideoSystemWeb.Articoli
 {
     public partial class GestioneArticoli : BasePage
@@ -26,16 +26,18 @@ namespace VideoSystemWeb.Articoli
                 tipo = Request.QueryString["TIPO"];
             }
             HF_TIPO_ARTICOLO.Value = tipo;
-            Control loadControl = new Control();
+            //Control loadControl = new ArtArticoli();
             switch (tipo)
             {
                 case "ARTICOLI":
-                    loadControl = this.LoadControl("~/Articoli/userControl/ArtArticoli.ascx");
-                    PH.Controls.Add(loadControl);
+                    //loadControl = (ArtArticoli)Page.LoadControl("~/Articoli/userControl/ArtArticoli.ascx");
+                    //PH.Controls.Add(loadControl);
+                    controlArt.Visible = true;
                     break;
                 default:
-                    loadControl = this.LoadControl("~/Articoli/userControl/ArtTipologie.ascx");
-                    PH.Controls.Add(loadControl);
+                    //loadControl = this.LoadControl("~/Articoli/userControl/ArtTipologie.ascx"); 
+                    //PH.Controls.Add(loadControl);
+                    controlTipo.Visible = true;
                     break;
             }
         }

@@ -29,5 +29,23 @@ namespace VideoSystemWeb.Articoli {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder PH;
+        
+        /// <summary>
+        /// Controllo controlTipo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::VideoSystemWeb.Articoli.userControl.ArtTipologie controlTipo;
+        
+        /// <summary>
+        /// Controllo controlArt.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::VideoSystemWeb.Articoli.userControl.ArtArticoli controlArt;
     }
 }

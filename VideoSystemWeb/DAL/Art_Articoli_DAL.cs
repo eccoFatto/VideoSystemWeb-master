@@ -188,6 +188,22 @@ namespace VideoSystemWeb.DAL
                             defaultDescrizioneLunga.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(defaultDescrizioneLunga);
 
+                            SqlParameter defaultIdTipoGenere = new SqlParameter("@defaultIdTipoGenere", articolo.DefaultIdTipoGenere);
+                            defaultIdTipoGenere.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(defaultIdTipoGenere);
+
+                            SqlParameter defaultIdTipoGruppo = new SqlParameter("@defaultIdTipoGruppo", articolo.DefaultIdTipoGruppo);
+                            defaultIdTipoGruppo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(defaultIdTipoGruppo);
+
+                            SqlParameter defaultIdTipoSottogruppo = new SqlParameter("@defaultIdTipoSottogruppo", articolo.DefaultIdTipoSottogruppo);
+                            defaultIdTipoSottogruppo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(defaultIdTipoSottogruppo);
+
+                            SqlParameter note = new SqlParameter("@note", articolo.Note);
+                            note.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(note);
+
                             StoreProc.Connection.Open();
 
                             StoreProc.ExecuteNonQuery();
@@ -215,7 +231,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
                 {
-                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateClienteFornitore"))
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateArtArticoli"))
                     {
                         using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
                         {
@@ -254,6 +270,22 @@ namespace VideoSystemWeb.DAL
                             SqlParameter defaultDescrizioneLunga = new SqlParameter("@defaultDescrizioneLunga", articolo.DefaultDescrizioneLunga);
                             defaultDescrizioneLunga.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(defaultDescrizioneLunga);
+
+                            SqlParameter defaultIdTipoGenere = new SqlParameter("@defaultIdTipoGenere", articolo.DefaultIdTipoGenere);
+                            defaultIdTipoGenere.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(defaultIdTipoGenere);
+
+                            SqlParameter defaultIdTipoGruppo = new SqlParameter("@defaultIdTipoGruppo", articolo.DefaultIdTipoGruppo);
+                            defaultIdTipoGruppo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(defaultIdTipoGruppo);
+
+                            SqlParameter defaultIdTipoSottogruppo = new SqlParameter("@defaultIdTipoSottogruppo", articolo.DefaultIdTipoSottogruppo);
+                            defaultIdTipoSottogruppo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(defaultIdTipoSottogruppo);
+
+                            SqlParameter note = new SqlParameter("@note", articolo.Note);
+                            note.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(note);
 
                             StoreProc.Connection.Open();
 

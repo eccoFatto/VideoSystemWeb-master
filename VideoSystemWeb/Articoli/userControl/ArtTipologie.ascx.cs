@@ -22,24 +22,27 @@ namespace VideoSystemWeb.Articoli.userControl
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!Page.IsPostBack)
+            // FUNZIONA SE NELLA PAGINA ASPX CHIAMANTE C'E' UN CAMPO HIDDENFIELD COL TIPO ARTICOLO (GENERI/GRUPPI/SOTTOGRUPPI)
+            HiddenField tipoArticolo = this.Parent.FindControl("HF_TIPO_ARTICOLO") as HiddenField;
+            if (tipoArticolo != null)
             {
-
-                // FUNZIONA SE NELLA PAGINA ASPX CHIAMANTE C'E' UN CAMPO HIDDENFIELD COL TIPO ARTICOLO (GENERI/GRUPPI/SOTTOGRUPPI)
-                HiddenField tipoArticolo = this.Parent.FindControl("HF_TIPO_ARTICOLO") as HiddenField;
-                if (tipoArticolo != null) { 
-                    ViewState["TIPO_ARTICOLO"] = tipoArticolo.Value;
-                }
-                else
-                {
-                    ViewState["TIPO_ARTICOLO"] = "GENERI";
-                }
-                lblTipoArticolo.Text = ViewState["TIPO_ARTICOLO"].ToString();
-                caricaTipologia();
-
+                ViewState["TIPO_ARTICOLO"] = tipoArticolo.Value;
             }
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
+            else
+            {
+                ViewState["TIPO_ARTICOLO"] = "GENERI";
+            }
+            if (!tipoArticolo.Value.ToUpper().Equals("ARTICOLI"))
+            {
+                if (!Page.IsPostBack)
+                {
+
+                    lblTipoArticolo.Text = ViewState["TIPO_ARTICOLO"].ToString();
+                    caricaTipologia();
+
+                }
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
+            }
         }
 
         private void caricaTipologia()

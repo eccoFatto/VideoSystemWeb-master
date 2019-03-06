@@ -274,15 +274,6 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_Sottogruppo;
         
         /// <summary>
-        /// Controllo lbMod_Gruppi.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbMod_Gruppi;
-        
-        /// <summary>
         /// Controllo tbMod_Note.
         /// </summary>
         /// <remarks>
@@ -355,156 +346,57 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.WebControls.Button btnAnnulla;
         
         /// <summary>
-        /// Controllo gvMod_Referenti.
+        /// Controllo lbMod_Gruppi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvMod_Referenti;
+        protected global::System.Web.UI.WebControls.ListBox lbMod_Gruppi;
         
         /// <summary>
-        /// Controllo btnApriReferenti.
+        /// Controllo btnApriGruppi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnApriReferenti;
+        protected global::System.Web.UI.WebControls.Button btnApriGruppi;
         
         /// <summary>
-        /// Controllo phReferenti.
+        /// Controllo phGruppi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder phReferenti;
+        protected global::System.Web.UI.WebControls.PlaceHolder phGruppi;
         
         /// <summary>
-        /// Controllo tbInsCognomeReferente.
+        /// Controllo ddlGruppiDaAggiungere.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsCognomeReferente;
+        protected global::System.Web.UI.WebControls.DropDownList ddlGruppiDaAggiungere;
         
         /// <summary>
-        /// Controllo tbInsNomeReferente.
+        /// Controllo btnInserisciGruppo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsNomeReferente;
+        protected global::System.Web.UI.WebControls.Button btnInserisciGruppo;
         
         /// <summary>
-        /// Controllo tbInsSettoreReferente.
+        /// Controllo btnEliminaGruppo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsSettoreReferente;
-        
-        /// <summary>
-        /// Controllo tbInsEmailReferente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsEmailReferente;
-        
-        /// <summary>
-        /// Controllo tbIdReferenteDaModificare.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbIdReferenteDaModificare;
-        
-        /// <summary>
-        /// Controllo tbInsTelefono1Referente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsTelefono1Referente;
-        
-        /// <summary>
-        /// Controllo tbInsTelefono2Referente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsTelefono2Referente;
-        
-        /// <summary>
-        /// Controllo tbInsCellulareReferente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsCellulareReferente;
-        
-        /// <summary>
-        /// Controllo cbInsAttivoReferente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbInsAttivoReferente;
-        
-        /// <summary>
-        /// Controllo tbInsNoteReferente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsNoteReferente;
-        
-        /// <summary>
-        /// Controllo btnInserisciReferente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnInserisciReferente;
-        
-        /// <summary>
-        /// Controllo btnModificaReferente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificaReferente;
-        
-        /// <summary>
-        /// Controllo btnEliminaReferente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminaReferente;
-        
-        /// <summary>
-        /// Controllo btnAnnullaReferente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnnullaReferente;
+        protected global::System.Web.UI.WebControls.Button btnEliminaGruppo;
     }
 }

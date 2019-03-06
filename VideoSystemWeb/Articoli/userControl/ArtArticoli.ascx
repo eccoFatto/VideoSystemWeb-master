@@ -155,11 +155,11 @@
                 
                 <div class="w3-container">
                     <!-- ELENCO TAB DETTAGLI ARTICOLO -->
-                    <div class="w3-bar w3-green w3-round">
-                        <div class="w3-bar-item w3-button w3-green" onclick="openDettaglioArticolo('Azienda')">Articolo</div>
-                        <div class="w3-bar-item w3-button w3-green" onclick="openDettaglioArticolo('Referenti')" style="display:none">Referenti</div>
-                        <div class="w3-bar-item w3-button w3-green w3-right">
-                            <div id="btnChiudiPopup" class="w3-button w3-green w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
+                    <div class="w3-bar w3-amber w3-round">
+                        <div class="w3-bar-item w3-button w3-amber" onclick="openDettaglioArticolo('Articolo')">Articolo</div>
+                        <div class="w3-bar-item w3-button w3-amber" onclick="openDettaglioArticolo('Gruppi')">Gruppi</div>
+                        <div class="w3-bar-item w3-button w3-amber w3-right">
+                            <div id="btnChiudiPopup" class="w3-button w3-amber w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
                         </div>
                     </div>
                     <!-- TAB ARTICOLI -->
@@ -205,10 +205,6 @@
                                 <asp:DropDownList ID="cmbMod_Sottogruppo" runat="server" class="w3-input w3-border" disabled></asp:DropDownList>
                             </div>
                         </div>
-                        <div class="w3-container">
-                            <label>Gruppi</label>
-                            <asp:ListBox ID="lbMod_Gruppi" runat="server" class="w3-input w3-border " ReadOnly="true" Rows="3" disabled></asp:ListBox>
-                        </div>
 
                         <div class="w3-container">
                             <label>Note</label>
@@ -228,71 +224,27 @@
 
                         <div style="text-align: center;">
                             <asp:Button ID="btnModifica" runat="server" Text="Modifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnModifica_Click" />
-                            <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-panel w3-green w3-border w3-round" OnClick="btnElimina_Click"  OnClientClick="return confirm('Confermi eliminazione Azienda?')" Visible="false" />
+                            <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-panel w3-green w3-border w3-round" OnClick="btnElimina_Click"  OnClientClick="return confirm('Confermi eliminazione Articolo?')" Visible="false" />
                             <asp:Button ID="btnSalva" runat="server" Text="Salva" class="w3-panel w3-green w3-border w3-round" OnClick="btnSalva_Click" OnClientClick="return confirm('Confermi salvataggio modifiche?')" Visible="false"/>
-                            <asp:Button ID="btnConfermaInserimento" runat="server" Text="Inserisci" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimento_Click" OnClientClick="return confirm('Confermi inserimento Azienda?')" Visible="false"/>
+                            <asp:Button ID="btnConfermaInserimento" runat="server" Text="Inserisci" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimento_Click" OnClientClick="return confirm('Confermi inserimento Articolo?')" Visible="false"/>
                             <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false"/>
                         </div>
                     </div>
-                    <!-- TAB REFERENTI -->
-                    <div id="Referenti" class="w3-container w3-border azienda" style="display:none">
-                        <label>Referenti</label>
-                        <div class="round">
-                            <asp:GridView ID="gvMod_Referenti" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" AutoGenerateSelectButton="True" OnSelectedIndexChanged="gvMod_Referenti_RigaSelezionata">
-                            </asp:GridView>
-                        </div>
+                    <!-- TAB GRUPPI -->
+                    <div id="Gruppi" class="w3-container w3-border articolo" style="display:none">
+                        <label>Raggruppamenti</label>
+                        <asp:ListBox ID="lbMod_Gruppi" runat="server" class="w3-input w3-border " Rows="3" ></asp:ListBox>
                         <div class="w3-container w3-center">
-                            <p>
-                                <asp:Button ID="btnApriReferenti" runat="server" OnClick="btnApriReferenti_Click" Text="Gestione Referenti" class="w3-panel w3-green w3-border w3-round" />
-                                <asp:PlaceHolder ID="phReferenti" runat="server" Visible="false">                                
-                                    <div class="w3-row-padding w3-center w3-text-center">
-                                        <div class="w3-quarter">
-                                            <label>Cognome</label>
-                                            <asp:TextBox ID="tbInsCognomeReferente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                                        </div>
-                                        <div class="w3-quarter">
-                                            <label>Nome</label>
-                                            <asp:TextBox ID="tbInsNomeReferente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                                        </div>
-                                        <div class="w3-quarter">
-                                            <label>Settore</label>
-                                            <asp:TextBox ID="tbInsSettoreReferente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
-                                        </div>
-                                        <div class="w3-quarter">
-                                            <label>Email</label>
-                                            <asp:TextBox ID="tbInsEmailReferente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
-                                            <asp:TextBox ID="tbIdReferenteDaModificare" runat="server" Visible="false"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <div class="w3-row-padding">
-                                        <div class="w3-quarter">
-                                            <label>Telefono 1</label>
-                                            <asp:TextBox ID="tbInsTelefono1Referente" runat="server" MaxLength="25" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
-                                        </div>
-                                        <div class="w3-quarter">
-                                            <label>Telefono 2</label>
-                                            <asp:TextBox ID="tbInsTelefono2Referente" runat="server" MaxLength="25" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
-                                        </div>
-                                        <div class="w3-quarter">
-                                            <label>Cellulare</label>
-                                            <asp:TextBox ID="tbInsCellulareReferente" runat="server" MaxLength="25" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
-                                        </div>
-                                        <div class="w3-quarter">
-                                            <label>Attivo</label><br />
-                                            <asp:CheckBox ID="cbInsAttivoReferente" runat="server" class="w3-check" Checked="true"></asp:CheckBox>
-                                        </div>
-                                    </div>
-                                    <div class="w3-container">
-                                        <label>Note</label>
-                                        <asp:TextBox ID="tbInsNoteReferente" runat="server" class="w3-input w3-border" placeholder="" Width="99%" TextMode="MultiLine" Rows="3"></asp:TextBox>
-                                    </div>
-
-                                    <asp:Button ID="btnInserisciReferente" runat="server" Text="Inserisci Referente" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoReferente_Click" OnClientClick="return confirm('Confermi inserimento Referente?')" />
-                                    <asp:Button ID="btnModificaReferente" runat="server" Text="Modifica Referente" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaModificaReferente_Click" OnClientClick="return confirm('Confermi modifica Referente?')" Visible="false" />
-                                    <asp:Button ID="btnEliminaReferente" runat="server" Text="Elimina Referente" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaReferente_Click" OnClientClick="return confirm('Confermi eliminazione Referente?')" />
-                                    <asp:Button ID="btnAnnullaReferente" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round"  OnClick="btnAnnullaReferente_Click" />
-                                </asp:PlaceHolder>
-                            </p>
+                            <asp:Button ID="btnApriGruppi" runat="server" OnClick="btnApriGruppi_Click" Text="Gestione Gruppi" class="w3-panel w3-green w3-border w3-round" />
+                            <asp:PlaceHolder ID="phGruppi" runat="server" Visible="false">                                
+                                <div class="w3-row-padding w3-center w3-text-center" style="width:50%;">
+                                    <label>Selezione Gruppi da aggiungere</label>
+                                    <asp:DropDownList ID="ddlGruppiDaAggiungere" runat="server" AutoPostBack="false" Width="100%" class="w3-input w3-border">
+                                    </asp:DropDownList>                                                
+                                </div>
+                                <asp:Button ID="btnInserisciGruppo" runat="server" Text="Inserisci Gruppo" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoGruppo_Click" OnClientClick="return confirm('Confermi inserimento Gruppo?')" />
+                                <asp:Button ID="btnEliminaGruppo" runat="server" Text="Elimina Gruppo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaGruppo_Click" OnClientClick="return confirm('Confermi eliminazione Gruppo?')" />
+                            </asp:PlaceHolder>
                         </div>
                     </div>
                 </div>
@@ -307,7 +259,7 @@
         <asp:AsyncPostBackTrigger ControlID="btnElimina" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnAnnulla" EventName="Click" />
         
-        <asp:AsyncPostBackTrigger ControlID="btnEliminaReferente" EventName="Click" />
-        <asp:AsyncPostBackTrigger ControlID="btnInserisciReferente" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnEliminaGruppo" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnInserisciGruppo" EventName="Click" />
     </Triggers>
 </asp:UpdatePanel>

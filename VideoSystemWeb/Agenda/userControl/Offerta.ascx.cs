@@ -323,7 +323,7 @@ namespace VideoSystemWeb.Agenda.userControl
             btnEliminaArticoli.Visible = (listaDatiArticoli != null && listaDatiArticoli.Count > 0);
             lbl_selezionareArticolo.Visible = (listaDatiArticoli == null || listaDatiArticoli.Count == 0);
 
-
+            AggiornaTotali();
         }
 
         public void PopolaOfferta(int idDatiAgenda)

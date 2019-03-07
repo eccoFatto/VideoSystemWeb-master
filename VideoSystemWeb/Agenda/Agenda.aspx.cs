@@ -229,6 +229,8 @@ namespace VideoSystemWeb.Agenda
 
                         string colore;
                         colore = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "color", ref esito);
+                        string coloreFont;
+                        coloreFont = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "font_color", ref esito);
 
                         e.Row.Cells[indiceColonna].CssClass = "cellaEvento " + risorsa.sottotipo;
 
@@ -240,7 +242,7 @@ namespace VideoSystemWeb.Agenda
                             Panel mainPanel = new Panel();
                             mainPanel.Controls.Add(new LiteralControl(titoloEvento));
                             mainPanel.CssClass = "round-corners-6px w3-tooltip";
-                            mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
+                            mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore+";color:" +coloreFont);
                             
                             mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
@@ -258,7 +260,7 @@ namespace VideoSystemWeb.Agenda
                                 Panel mainPanel = new Panel();
                                 mainPanel.Controls.Add(new LiteralControl(titoloEvento));
                                 mainPanel.CssClass = "round-corners-6px unround-bottom-corners w3-tooltip";
-                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
+                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
@@ -274,7 +276,7 @@ namespace VideoSystemWeb.Agenda
                                 Panel mainPanel = new Panel();
                                 mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
                                 mainPanel.CssClass = "round-corners-6px unround-top-corners w3-tooltip";
-                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
+                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
@@ -290,10 +292,10 @@ namespace VideoSystemWeb.Agenda
                                 Panel mainPanel = new Panel();
                                 mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
                                 mainPanel.CssClass = "w3-tooltip";
-                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore);
+                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
-                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; border-bottom: 0px; background-color:" + colore);
+                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; border-bottom: 0px; background-color:" + colore + ";color:" + coloreFont);
                             }
                         }
                     }

@@ -831,3 +831,29 @@
 2019-03-06 10:52:03,140 [19] ERROR VideoSystemWeb.Agenda.Agenda - 
 2019-03-06 17:33:13,104 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2019-03-06 17:33:14,588 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:14:36,579 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-07 11:14:38,472 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:15:20,268 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-07 11:15:21,182 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:15:57,058 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:15:57,058 [8] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-03-07 11:20:10,099 [15] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-07 11:20:11,111 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:25:43,385 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:25:57,196 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:25:57,196 [7] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-03-07 11:26:20,959 [16] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-07 11:26:21,710 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:26:38,155 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:26:57,986 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-07 11:26:58,710 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:27:05,303 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:27:05,303 [8] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-03-07 11:33:43,053 [21] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-07 11:33:44,197 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:33:49,761 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:33:49,761 [8] ERROR VideoSystemWeb.Agenda.Agenda - 
+2019-03-07 11:34:26,557 [23] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-07 11:34:27,486 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:34:31,467 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-07 11:34:31,467 [23] ERROR VideoSystemWeb.Agenda.Agenda - 

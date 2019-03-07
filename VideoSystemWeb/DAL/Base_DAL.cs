@@ -186,6 +186,10 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_SOTTOGRUPPO:
                     nomeSP = "InsertTipoSottogruppo";
                     break;
+                case EnumTipologiche.TIPO_COLONNE_AGENDA:
+                    nomeSP = "InsertTipoColonneAgenda";
+                    break;
+
                 default:
                     break;
             }
@@ -264,6 +268,9 @@ namespace VideoSystemWeb.DAL
                     break;
                 case EnumTipologiche.TIPO_SOTTOGRUPPO:
                     nomeSP = "UpdateTipoSottogruppo";
+                    break;
+                case EnumTipologiche.TIPO_COLONNE_AGENDA:
+                    nomeSP = "UpdateTipoColonneAgenda";
                     break;
                 default:
                     break;
@@ -344,6 +351,10 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_SOTTOGRUPPO:
                     nomeSP = "DeleteTipoSottogruppo";
                     break;
+                case EnumTipologiche.TIPO_COLONNE_AGENDA:
+                    nomeSP = "DeleteTipoColonneAgenda";
+                    break;
+
                 default:
                     break;
             }

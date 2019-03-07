@@ -7,13 +7,14 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using VideoSystemWeb.Entity;
 using System.Text.RegularExpressions;
-
+using System.Security.Cryptography;
+using System.Text;
 namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "1.02";
-        public static string dataVersione = "06/03/2019";
+        public static string versione = "1.03";
+        public static string dataVersione = "07/03/2019";
 
         public List<Tipologica> listaRisorse
         {
@@ -257,5 +258,46 @@ namespace VideoSystemWeb.BLL
                 this.MasterPageFile = "/Site.Master";
             }
         }
+
+        public static string GetMd5Hash(MD5 md5Hash, string input)
+        {
+
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data 
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
+        }
+
+        // Verify a hash against a string.
+        public static bool VerifyMd5Hash(MD5 md5Hash, string input, string hash)
+        {
+            // Hash the input.
+            string hashOfInput = GetMd5Hash(md5Hash, input);
+
+            // Create a StringComparer an compare the hashes.
+            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+
+            if (0 == comparer.Compare(hashOfInput, hash))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

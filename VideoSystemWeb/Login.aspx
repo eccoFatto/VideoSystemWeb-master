@@ -10,13 +10,12 @@
     
 
 
-    <%--    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css"/>--%>
+
     <link rel="stylesheet" href="/Css/w3.css" />
     <link rel="stylesheet" href="/Css/w3-colors-win8.css" />
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css" />
-    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css" />
+    <link rel="stylesheet" href="/Css/spectre.min.css" />
+    <link rel="stylesheet" href="/Css/spectre-exp.min.css" />
+    <link rel="stylesheet" href="/Css/spectre-icons.min.css" />
 
     <script type="text/javascript" src="/Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src='/Scripts/bootstrap.bundle.min.js'></script>

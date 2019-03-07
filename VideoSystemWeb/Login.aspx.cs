@@ -8,6 +8,8 @@ using System.Data;
 using System.Configuration;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace VideoSystemWeb
 {
@@ -33,7 +35,13 @@ namespace VideoSystemWeb
             Esito esito = new Esito();
             lblErrorLogin.Visible = false;
 
-            Login_BLL.Instance.Connetti(tbUser.Text.Trim(), tbPassword.Text.Trim(), ref esito);
+            // TROVO IL CODICE MD5 DELLA PASSWORD
+            MD5 md5Hash = MD5.Create();
+            string pwdEncrypted = GetMd5Hash(md5Hash, tbPassword.Text.Trim());
+            md5Hash.Dispose();
+
+            //Login_BLL.Instance.Connetti(tbUser.Text.Trim(), tbPassword.Text.Trim(), ref esito);
+            Login_BLL.Instance.Connetti(tbUser.Text.Trim(), pwdEncrypted, ref esito);
 
             if (esito.codice == Esito.ESITO_OK)
             {
@@ -53,5 +61,6 @@ namespace VideoSystemWeb
             }
             
         }
+
     }
 }

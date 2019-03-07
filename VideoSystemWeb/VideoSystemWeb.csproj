@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -122,6 +121,7 @@
     <Content Include="About.aspx" />
     <Content Include="Agenda\Agenda.aspx" />
     <Content Include="Agenda\calendar.aspx" />
+    <Content Include="Agenda\GestioneColonneAgenda.aspx" />
     <Content Include="Agenda\prova.aspx" />
     <Content Include="Agenda\userControl\Appuntamento.ascx" />
     <Content Include="Agenda\userControl\Lavorazione.ascx" />
@@ -383,6 +383,13 @@
     </Compile>
     <Compile Include="Agenda\calendar.aspx.designer.cs">
       <DependentUpon>calendar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\GestioneColonneAgenda.aspx.cs">
+      <DependentUpon>GestioneColonneAgenda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\GestioneColonneAgenda.aspx.designer.cs">
+      <DependentUpon>GestioneColonneAgenda.aspx</DependentUpon>
     </Compile>
     <Compile Include="Agenda\prova.aspx.cs">
       <DependentUpon>prova.aspx</DependentUpon>

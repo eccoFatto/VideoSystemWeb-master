@@ -202,7 +202,7 @@ namespace VideoSystemWeb.Agenda.userControl
             decimal totCosto = 0;
             decimal totIva = 0;
 
-            if (listaDatiArticoli.Count > 0)
+            if (listaDatiArticoli!= null && listaDatiArticoli.Count > 0)
             {
                 foreach (DatiArticoli art in listaDatiArticoli)
                 {

@@ -65,6 +65,10 @@ namespace VideoSystemWeb.DAL
                                     utente.username = dt.Rows[0]["Username"].ToString();
                                     utente.id_tipoUtente = Convert.ToInt16(dt.Rows[0]["id1"].ToString());
                                     utente.tipoUtente = dt.Rows[0]["Nome1"].ToString();
+                                    utente.id = Convert.ToInt32(dt.Rows[0]["id"].ToString());
+                                    utente.password = dt.Rows[0]["password"].ToString();
+                                    utente.Descrizione = dt.Rows[0]["descrizione"].ToString();
+                                    utente.attivo = Convert.ToBoolean(dt.Rows[0]["Attivo"].ToString());
                                     HttpContext.Current.Session[SessionManager.UTENTE] = utente;
                                 }
                                 else
@@ -83,5 +87,70 @@ namespace VideoSystemWeb.DAL
                 esito.descrizione = "Login_DAL.cs - Connetti " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
         }
+
+        public Esito AggiornaUtente(Anag_Utenti utente)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
+                {
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateAnagUtente"))
+                    {
+                        using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", utente.id);
+                            id.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id);
+
+                            SqlParameter id_tipoUtente = new SqlParameter("@id_tipoUtente", utente.id_tipoUtente);
+                            id_tipoUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_tipoUtente);
+
+                            SqlParameter cognome = new SqlParameter("@cognome", utente.Cognome);
+                            cognome.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(cognome);
+
+                            SqlParameter nome = new SqlParameter("@nome", utente.Nome);
+                            nome.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nome);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", utente.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter username = new SqlParameter("@username", utente.username);
+                            username.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(username);
+
+                            SqlParameter password = new SqlParameter("@password", utente.password);
+                            password.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(password);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", utente.attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Login_DAL.cs - AggiornaUtente " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
     }
 }

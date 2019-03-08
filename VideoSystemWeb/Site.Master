@@ -58,7 +58,7 @@
                         <asp:Image ID="imgLogo" runat="server" Height="100px" ImageAlign="AbsMiddle" ImageUrl="~/Images/logoVSP.png" />
                     </td>
                     <td style="width:80%;align-content:center;text-align:left;">
-                        <div class="w3-panel w3-yellow w3-border w3-round">GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp; <asp:Label ID="lbl_benvenuto" runat="server" ></asp:Label>&nbsp;&nbsp;  Ver.<asp:Label ID="lblVersione" runat="server" ForeColor="Blue" ></asp:Label>&nbsp; del <asp:Label ID="lblDataVersione" runat="server"  ForeColor="Blue" ></asp:Label></div>
+                        <div class="w3-panel w3-yellow w3-border w3-round">GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp; <asp:Label ID="lbl_benvenuto" runat="server" ></asp:Label>&nbsp;&nbsp;  Ver.<asp:Label ID="lblVersione" runat="server" ForeColor="Blue" ></asp:Label>&nbsp; del <asp:Label ID="lblDataVersione" runat="server"  ForeColor="Blue" ></asp:Label><a href="/Utente/GestionePassword.aspx" class="w3-bar-item w3-right">Gestione Password</a></div>
                     </td>
                 </tr>
             </table>

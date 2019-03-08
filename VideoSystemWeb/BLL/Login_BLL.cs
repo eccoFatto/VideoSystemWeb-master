@@ -34,14 +34,19 @@ namespace VideoSystemWeb.BLL
 
         public void Connetti(string tbUser, string tbPassword, ref Esito esito)
         {
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
-            {
+            //if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
+            //{
                 Login_DAL.Instance.Connetti(tbUser, tbPassword, ref esito);
-            }
-            else
-            {
-                HttpContext.Current.Session[SessionManager.UTENTE] = new Anag_Utenti() { id = 1, Nome = "Nicola", Cognome = "Foti", id_tipoUtente = 2 };
-            }
+            //}
+            //else
+            //{
+            //    HttpContext.Current.Session[SessionManager.UTENTE] = new Anag_Utenti() { id = 1, Nome = "Nicola", Cognome = "Foti", id_tipoUtente = 2 };
+            //}
+        }
+        public Esito AggiornaUtente(Anag_Utenti utente)
+        {
+            Esito esito = Login_DAL.Instance.AggiornaUtente(utente);
+            return esito;
         }
 
     }

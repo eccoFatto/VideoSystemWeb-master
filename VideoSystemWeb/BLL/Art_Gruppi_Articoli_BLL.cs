@@ -46,6 +46,12 @@ namespace VideoSystemWeb.BLL
             return gruppoArticolo;
         }
 
+        public List<Art_Articoli> getArticoliByIdGruppo(int idGruppo, ref Esito esito)
+        {
+            List<Art_Articoli> listaArticoli = Art_Gruppi_Articoli_DAL.Instance.getArticoliByIdGruppo(idGruppo, ref esito);
+            return listaArticoli;
+        }
+
         public int CreaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo, ref Esito esito)
         {
             int iREt = Art_Gruppi_Articoli_DAL.Instance.CreaGruppoArticolo(gruppoArticolo, ref esito);

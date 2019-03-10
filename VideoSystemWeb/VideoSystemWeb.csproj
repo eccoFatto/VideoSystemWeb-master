@@ -131,6 +131,7 @@
     <Content Include="Anagrafiche\userControl\AnagClientiFornitori.ascx" />
     <Content Include="Anagrafiche\userControl\AnagCollaboratori.ascx" />
     <Content Include="Articoli\GestioneArticoli.aspx" />
+    <Content Include="Articoli\GestioneRaggruppamentiArticoli.aspx" />
     <Content Include="Articoli\userControl\ArtArticoli.ascx" />
     <Content Include="Articoli\userControl\ArtTipologie.ascx" />
     <Content Include="Contact.aspx" />
@@ -466,6 +467,13 @@
     </Compile>
     <Compile Include="Articoli\GestioneArticoli.aspx.designer.cs">
       <DependentUpon>GestioneArticoli.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Articoli\GestioneRaggruppamentiArticoli.aspx.cs">
+      <DependentUpon>GestioneRaggruppamentiArticoli.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Articoli\GestioneRaggruppamentiArticoli.aspx.designer.cs">
+      <DependentUpon>GestioneRaggruppamentiArticoli.aspx</DependentUpon>
     </Compile>
     <Compile Include="Articoli\userControl\ArtArticoli.ascx.cs">
       <DependentUpon>ArtArticoli.ascx</DependentUpon>

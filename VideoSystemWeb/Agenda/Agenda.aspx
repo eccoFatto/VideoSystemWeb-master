@@ -134,10 +134,10 @@
     <asp:HiddenField ID="hf_risorsa" runat="server" />
     <asp:HiddenField ID="hf_tabSelezionata" runat="server" EnableViewState="true" Value="Appuntamento" />
 
-    <div class="alert alert-success alert-dismissible fade in" role="alert" id="panelSuccesso" runat="server" style="display: none">
+    <%--<div class="alert alert-success alert-dismissible fade in" role="alert" id="panelSuccesso" runat="server" style="display: none">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <label id="lbl_Successo" class="form-control-sm">Operazione eseguita correttamente</label>
-    </div>
+    </div>--%>
 
     <table style="width: 99%; height: 100%;">
         <tr>
@@ -182,10 +182,10 @@
                 <div class="modalBackground"></div>
                 <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopup round" ScrollBars="Auto" Style="font-size: 13px;">
 
-                    <div class="alert alert-danger alert-dismissible fade in out" role="alert" runat="server" id="panelErrore" style="display: none;opacity:1;">
+                    <%--<div class="alert alert-danger alert-dismissible fade in out" role="alert" runat="server" id="panelErrore" style="display: none;opacity:1;">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <asp:Label ID="lbl_MessaggioErrore" runat="server" CssClass="form-control-sm"></asp:Label>
-                    </div>
+                    </div>--%>
 
                     <div class="w3-container">
                         <div class="w3-bar w3-blue w3-round">

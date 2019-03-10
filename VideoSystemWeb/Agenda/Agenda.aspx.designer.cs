@@ -49,15 +49,6 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.HiddenField hf_tabSelezionata;
         
         /// <summary>
-        /// Controllo panelSuccesso.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelSuccesso;
-        
-        /// <summary>
         /// Controllo btnsearch.
         /// </summary>
         /// <remarks>
@@ -137,24 +128,6 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel innerContainer;
-        
-        /// <summary>
-        /// Controllo panelErrore.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelErrore;
-        
-        /// <summary>
-        /// Controllo lbl_MessaggioErrore.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
         
         /// <summary>
         /// Controllo tab_Appuntamento.

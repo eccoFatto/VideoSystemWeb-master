@@ -299,5 +299,38 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public void ShowSuccess(string messaggio)
+        {
+            ClientScript.RegisterStartupScript(typeof(Page), "apriModalSuccess", "<script>openSuccess('" + messaggio + "');</script>");
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModalSuccess", script: "openSuccess('" + messaggio + "')", addScriptTags: true);
+        }
+
+        public void ShowWarning(string messaggio)
+        {
+            
+            ClientScript.RegisterStartupScript(typeof(Page), "apriModalWarning", "<script>openWarning('" + messaggio + "');</script>");
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModalWarning", script: "openWarning('" + messaggio + "')", addScriptTags: true);
+        }
+
+        public void ShowError(string messaggio)
+        {
+            ClientScript.RegisterStartupScript(typeof(Page), "apriModalError",  "<script>openError('" + messaggio + "');</script>");
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModalError", script: "openError('" + messaggio + "')", addScriptTags: true);
+        }
+
+        public void GestisciErrore(Esito esito, string messaggioErroreSpecifico = null)
+        {
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                if (messaggioErroreSpecifico != null)
+                {
+                    ShowError(messaggioErroreSpecifico);
+                }
+                else
+                {
+                    ShowError(esito.descrizione);
+                }
+            }
+        }
     }
 }

@@ -31,7 +31,9 @@ namespace VideoSystemWeb.Agenda
 
                 listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito); //CARICO SOLO EVENTI VISUALIZZATI
                 //listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito); //CARICO TUTTI GLI EVENTI
-                
+
+                GestisciErrore(esito);
+
                 ViewState["listaDatiAgenda"] = listaDatiAgenda;
 
                 hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
@@ -72,18 +74,20 @@ namespace VideoSystemWeb.Agenda
             if (esito.codice == Esito.ESITO_OK)
             {
                 ChiudiPopup();
+                ShowSuccess("Salvataggio eseguito correttamente");
             }
             else
             {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = esito.descrizione;
+                //panelErrore.Style.Remove("display");
+                //lbl_MessaggioErrore.Text = esito.descrizione;
+                ShowWarning(esito.descrizione);
                 UpdatePopup();
             }
         }
 
         protected void btnElimina_Click(object sender, EventArgs e)
         {
-            panelErrore.Style.Add("display", "none");
+            //panelErrore.Style.Add("display", "none");
 
             Agenda_BLL.Instance.EliminaEvento(((DatiAgenda)ViewState["eventoSelezionato"]).id);
 
@@ -98,10 +102,6 @@ namespace VideoSystemWeb.Agenda
         protected void btnOfferta_Click(object sender, EventArgs e)
         {
             popupAppuntamento.SetStato(DatiAgenda.STATO_OFFERTA);
-            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            //popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
-            //popupAppuntamento.PopolaPopup(eventoSelezionato);
-            //AbilitaComponentiPopup();
             btnLavorazione.Visible = false;
             UpdatePopup();
         }
@@ -109,20 +109,12 @@ namespace VideoSystemWeb.Agenda
         protected void btnLavorazione_Click(object sender, EventArgs e)
         {
             popupAppuntamento.SetStato(DatiAgenda.STATO_LAVORAZIONE);
-            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            //popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
-            //popupAppuntamento.PopolaPopup(eventoSelezionato);
-            //AbilitaComponentiPopup();
             UpdatePopup();
         }
 
         protected void btnRiposo_Click(object sender, EventArgs e)
         {
             popupAppuntamento.SetStato(DatiAgenda.STATO_RIPOSO);
-            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            //popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
-            //popupAppuntamento.PopolaPopup(eventoSelezionato);
-            //AbilitaComponentiPopup();
             UpdatePopup();
         }
 
@@ -318,7 +310,7 @@ namespace VideoSystemWeb.Agenda
             Esito esito = new Esito();
             listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
 
-            log.Error(esito.descrizione);
+            GestisciErrore(esito);
 
             ViewState["listaDatiAgenda"] = listaDatiAgenda;
 
@@ -378,6 +370,7 @@ namespace VideoSystemWeb.Agenda
             if (eventoSelezionato != null)
             {
                 sottotipoRisorsa = UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo.ToUpper();
+                GestisciErrore(esito);
 
                 switch (eventoSelezionato.id_stato)
                 {
@@ -470,8 +463,8 @@ namespace VideoSystemWeb.Agenda
         {
             pnlContainer.Style.Remove("display");
 
-            panelErrore.Style.Add("display", "none");
-            lbl_MessaggioErrore.Text = string.Empty;
+            //panelErrore.Style.Add("display", "none");
+            //lbl_MessaggioErrore.Text = string.Empty;
 
             popupAppuntamento.ClearAppuntamento();
             popupAppuntamento.PopolaPopup(eventoSelezionato);
@@ -493,9 +486,12 @@ namespace VideoSystemWeb.Agenda
         {
             Esito esito = new Esito();
             listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"];
+            GestisciErrore(esito);
 
             DatiAgenda eventoSelezionato = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(listaDatiAgenda, dataEvento, risorsaEvento);
             string sottotipoRisorsa = UtilityTipologiche.getElementByID(listaRisorse, risorsaEvento, ref esito).sottotipo.ToUpper();
+            GestisciErrore(esito);
+
             if (eventoSelezionato == null)
             {
                 eventoSelezionato = new DatiAgenda();
@@ -518,7 +514,7 @@ namespace VideoSystemWeb.Agenda
 
         private Esito SalvaEvento()
         {
-            panelErrore.Style.Add("display", "none");
+            //panelErrore.Style.Add("display", "none");
             popupAppuntamento.NascondiErroriValidazione();
 
             Esito esito = new Esito();
@@ -545,50 +541,6 @@ namespace VideoSystemWeb.Agenda
                 popupAppuntamento.PopolaPopup(eventoSelezionato);
             }
 
-            #region DATI DELL'APPUNTAMENTO
-
-            //esito = popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
-
-            
-
-            //if (esito.codice != Esito.ESITO_OK)
-            //{
-            //    esito.descrizione = "Controllare i campi evidenziati";
-            //    popupAppuntamento.PopolaPopup(eventoSelezionato);
-            //}
-            //else
-            //{
-            //    panelErrore.Style.Add("display", "none");
-            //    popupAppuntamento.NascondiErroriValidazione();
-
-            //    if (!popupAppuntamento.ControlloGiorniViaggio())
-            //    {
-            //        esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-            //        esito.descrizione = "Non è possibile salvare l'evento perché i giorni viaggio eccedono la durata della lavorazione";
-            //    }
-            //    else
-            //    {
-            //        if (IsDisponibileDataRisorsa(eventoSelezionato))
-            //        {
-            //            if (eventoSelezionato.id == 0)
-            //            {
-            //                Agenda_BLL.Instance.CreaEvento(eventoSelezionato);
-            //            }
-            //            else
-            //            {
-            //                Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato);
-            //            }
-                        
-            //            ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
-            //        }
-            //        else
-            //        {
-            //            esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-            //            esito.descrizione = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
-            //        }
-            //    }
-            //}
-            #endregion
             return esito;
         }
 
@@ -663,6 +615,8 @@ namespace VideoSystemWeb.Agenda
             foreach (Tipologica stato in listaStati)
             {
                 string colore = UtilityTipologiche.getParametroDaTipologica(stato, "COLOR", ref esito);
+                GestisciErrore(esito);
+
                 legenda += "<li><div class='boxLegenda' style='background:" + colore + "'/>&nbsp;</div>&nbsp;- " + stato.nome + "</li>";
             }
 
@@ -673,8 +627,6 @@ namespace VideoSystemWeb.Agenda
 
         private string CreaFiltriColonneAgenda()
         {
-            Esito esito = new Esito();
-
             List<Tipologica> listaSottotipiColonne = listaRisorse.GroupBy(x => x.sottotipo).Select(x => x.FirstOrDefault()).ToList<Tipologica>();
 
             string check = "";
@@ -697,6 +649,7 @@ namespace VideoSystemWeb.Agenda
                 if (evento.id_cliente != 0)
                 {
                     cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
+                    GestisciErrore(esito);
                 }
                 string stato = listaStati.Where(x => x.id == evento.id_stato).FirstOrDefault().nome;
                 string tipologia = listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;

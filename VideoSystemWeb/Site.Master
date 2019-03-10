@@ -45,8 +45,66 @@
 
 </head>
 <body >
-    
+    <script>
+        function openSuccess(messaggio) {
+            document.getElementById('modalSuccess').style.display = 'block';
+            $('#textSuccess').html(messaggio);
+            setTimeout(function(){
+                $('#modalSuccess').fadeOut();
+            }, 3000);
+        }
+
+        function openWarning(messaggio) {
+            document.getElementById('modalWarning').style.display = 'block';
+            $('#textWarning').html(messaggio);
+        }
+
+        function openError(messaggio) {
+            document.getElementById('modalError').style.display = 'block';
+            $('#textError').html(messaggio);
+        }
+    </script>
+    <%--<input type="button" onclick="openError('prova')" />--%>
     <div class="loader"></div>
+
+    <div id="modalError" class="w3-modal">
+        <div class="w3-modal-content w3-animate-top w3-card-4">
+            <header class="w3-container w3-red"> 
+                <span onclick="document.getElementById('modalError').style.display='none'" 
+                    class="w3-button w3-display-topright">&times;</span>
+                <h2>Errore</h2>
+            </header>
+          <div class="w3-container">
+            <p id="textError">Some text..</p>
+          </div>
+        </div>
+    </div>
+
+    <div id="modalWarning" class="w3-modal">
+        <div class="w3-modal-content w3-animate-top w3-card-4">
+            <header class="w3-container w3-orange"> 
+                <span onclick="document.getElementById('modalWarning').style.display='none'" 
+                    class="w3-button w3-display-topright">&times;</span>
+                <h2>Attenzione</h2>
+            </header>
+          <div class="w3-container">
+            <p id="textWarning"></p>
+          </div>
+        </div>
+    </div>
+
+    <div id="modalSuccess" class="w3-modal">
+        <div class="w3-modal-content w3-animate-opacity w3-card-4">
+            <header class="w3-container w3-green"> 
+                <span onclick="document.getElementById('modalSuccess').style.display='none'" 
+                    class="w3-button w3-display-topright">&times;</span>
+                <h2>Operazione completata</h2>
+            </header>
+          <div class="w3-container">
+            <p id="textSuccess"></p>
+          </div>
+        </div>
+    </div>
 
     <form runat="server" autocomplete="off">
         <%--<ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server" />--%>   

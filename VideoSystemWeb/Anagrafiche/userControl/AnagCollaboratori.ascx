@@ -76,11 +76,6 @@
 </script>
 <Label class="w3-text-blue"><asp:Label ID="lblTipoAzienda" runat="server" Text="COLLABORATORI"></asp:Label></Label>
 
-
-<div>
-
-</div>
-
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
         

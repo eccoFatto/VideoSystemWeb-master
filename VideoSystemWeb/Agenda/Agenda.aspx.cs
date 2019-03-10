@@ -190,9 +190,11 @@ namespace VideoSystemWeb.Agenda
                 {
                     string idRisorsa = (e.Row.Cells[indiceColonna].Text.Trim());
 
-                    Tipologica risorsaCorrente = Tipologie.getRisorsaById(int.Parse(idRisorsa));
+                    //Tipologica risorsaCorrente = Tipologie.getRisorsaById(int.Parse(idRisorsa));
 
                     Esito esito = new Esito();
+                    Tipologica risorsaCorrente = UtilityTipologiche.getElementByID(listaRisorse, int.Parse(idRisorsa), ref esito);
+                    
                     string colore = UtilityTipologiche.getParametroDaTipologica(risorsaCorrente, "color", ref esito);
 
                     e.Row.Cells[indiceColonna].Attributes.Add("class", risorsaCorrente.sottotipo);

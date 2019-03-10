@@ -46,7 +46,7 @@
                                 <label>Password</label>
                                 <asp:TextBox ID="tbPassword" runat="server" TextMode="Password" class="w3-input w3-border w3-round" Style="width: 99%" required="required"></asp:TextBox>
                             </p>
-                            <p>
+                            <p style="display:none;">
                                 <input id="cbStayLogged" class="w3-check" type="checkbox" checked="checked" />
                                 <label>Rimani Connesso</label>
                             </p>

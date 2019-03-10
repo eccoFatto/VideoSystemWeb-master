@@ -13,8 +13,8 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "1.03";
-        public static string dataVersione = "07/03/2019";
+        public static string versione = "1.04";
+        public static string dataVersione = "10/03/2019";
 
         public List<Tipologica> listaRisorse
         {

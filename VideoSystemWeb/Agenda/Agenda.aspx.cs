@@ -32,8 +32,6 @@ namespace VideoSystemWeb.Agenda
                 listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito); //CARICO SOLO EVENTI VISUALIZZATI
                 //listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito); //CARICO TUTTI GLI EVENTI
 
-                GestisciErrore(esito);
-
                 ViewState["listaDatiAgenda"] = listaDatiAgenda;
 
                 hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
@@ -310,8 +308,6 @@ namespace VideoSystemWeb.Agenda
             Esito esito = new Esito();
             listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
 
-            GestisciErrore(esito);
-
             ViewState["listaDatiAgenda"] = listaDatiAgenda;
 
             gv_scheduler.DataSource = CreateDataTable(DateTime.Parse(hf_valoreData.Value));
@@ -370,7 +366,6 @@ namespace VideoSystemWeb.Agenda
             if (eventoSelezionato != null)
             {
                 sottotipoRisorsa = UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo.ToUpper();
-                GestisciErrore(esito);
 
                 switch (eventoSelezionato.id_stato)
                 {
@@ -486,11 +481,9 @@ namespace VideoSystemWeb.Agenda
         {
             Esito esito = new Esito();
             listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"];
-            GestisciErrore(esito);
 
             DatiAgenda eventoSelezionato = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(listaDatiAgenda, dataEvento, risorsaEvento);
             string sottotipoRisorsa = UtilityTipologiche.getElementByID(listaRisorse, risorsaEvento, ref esito).sottotipo.ToUpper();
-            GestisciErrore(esito);
 
             if (eventoSelezionato == null)
             {
@@ -615,7 +608,6 @@ namespace VideoSystemWeb.Agenda
             foreach (Tipologica stato in listaStati)
             {
                 string colore = UtilityTipologiche.getParametroDaTipologica(stato, "COLOR", ref esito);
-                GestisciErrore(esito);
 
                 legenda += "<li><div class='boxLegenda' style='background:" + colore + "'/>&nbsp;</div>&nbsp;- " + stato.nome + "</li>";
             }
@@ -649,7 +641,6 @@ namespace VideoSystemWeb.Agenda
                 if (evento.id_cliente != 0)
                 {
                     cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
-                    GestisciErrore(esito);
                 }
                 string stato = listaStati.Where(x => x.id == evento.id_stato).FirstOrDefault().nome;
                 string tipologia = listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;

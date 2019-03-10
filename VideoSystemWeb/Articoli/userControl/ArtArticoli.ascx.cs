@@ -231,45 +231,6 @@ namespace VideoSystemWeb.Articoli.userControl
                         string url = String.Format("~/pageError.aspx");
                         Response.Redirect(url, true);
                     }
-                    // REFERENTI
-                    //DataTable dtGruppi = new DataTable();
-                    //if (articolo.Referenti != null)
-                    //{
-                    //    dtReferenti.Columns.Add("id");
-                    //    dtReferenti.Columns.Add("Cognome");
-                    //    dtReferenti.Columns.Add("Nome");
-                    //    dtReferenti.Columns.Add("Settore");
-                    //    dtReferenti.Columns.Add("Telefono1");
-                    //    dtReferenti.Columns.Add("Telefono2");
-                    //    dtReferenti.Columns.Add("Cellulare");
-                    //    dtReferenti.Columns.Add("Email");
-                    //    foreach (Anag_Referente_Clienti_Fornitori referente in azienda.Referenti)
-                    //    {
-                    //        ListItem itemReferente = new ListItem(referente.Cognome + " " + referente.Nome + " - " + referente.Settore + " - " + referente.Telefono1, referente.Id.ToString());
-                    //        lbMod_Referenti.Items.Add(itemReferente);
-                    //        DataRow dr = dtReferenti.NewRow();
-                    //        dr["id"] = referente.Id.ToString();
-                    //        dr["Cognome"] = referente.Cognome;
-                    //        dr["Nome"] = referente.Nome;
-                    //        dr["Settore"] = referente.Settore;
-                    //        dr["Telefono1"] = referente.Telefono1;
-                    //        dr["Telefono2"] = referente.Telefono2;
-                    //        dr["Cellulare"] = referente.Cellulare;
-                    //        dr["Email"] = referente.Email;
-                    //        dtReferenti.Rows.Add(dr);
-                    //    }
-                    //    gvMod_Referenti.DataSource = dtReferenti;
-                    //    gvMod_Referenti.DataBind();
-                    //}
-                    //if (azienda.Referenti != null && azienda.Referenti.Count > 0)
-                    //{
-                    //    lbMod_Referenti.Rows = azienda.Referenti.Count;
-                    //}
-                    //else
-                    //{
-                    //    lbMod_Referenti.Rows = 1;
-                    //    gvMod_Referenti.DataSource = null;
-                    //}
 
                 }
                 else

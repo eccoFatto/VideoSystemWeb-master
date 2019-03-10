@@ -58,13 +58,22 @@ namespace VideoSystemWeb.Articoli {
         protected global::System.Web.UI.WebControls.ListBox lbMod_Raggruppamenti;
         
         /// <summary>
-        /// Controllo btnSeleziona.
+        /// Controllo divSelRaggruppamento.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSeleziona;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSelRaggruppamento;
+        
+        /// <summary>
+        /// Controllo divBtnInserisciRaggruppamento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBtnInserisciRaggruppamento;
         
         /// <summary>
         /// Controllo btnEditRaggruppamento.
@@ -211,12 +220,57 @@ namespace VideoSystemWeb.Articoli {
         protected global::System.Web.UI.WebControls.Button btnEliminaRaggruppamento;
         
         /// <summary>
-        /// Controllo btnAnnullaRaggruppamento.
+        /// Controllo lbMod_Articoli.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnnullaRaggruppamento;
+        protected global::System.Web.UI.WebControls.ListBox lbMod_Articoli;
+        
+        /// <summary>
+        /// Controllo btnApriArticoli.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnApriArticoli;
+        
+        /// <summary>
+        /// Controllo phArticoli.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phArticoli;
+        
+        /// <summary>
+        /// Controllo ddlArticoliDaAggiungere.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlArticoliDaAggiungere;
+        
+        /// <summary>
+        /// Controllo btnInserisciArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnInserisciArticolo;
+        
+        /// <summary>
+        /// Controllo btnEliminaArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminaArticolo;
     }
 }

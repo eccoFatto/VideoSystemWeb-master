@@ -458,7 +458,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             if (!string.IsNullOrEmpty(idCollaboratore))
             {
                 Entity.Anag_Collaboratori collaboratore = Anag_Collaboratori_DAL.Instance.getCollaboratoreById(Convert.ToInt16(idCollaboratore), ref esito);
-                if (esito.codice == 0)
+                if (esito.codice == Esito.ESITO_OK)
                 {
                     pulisciCampiDettaglio();
 

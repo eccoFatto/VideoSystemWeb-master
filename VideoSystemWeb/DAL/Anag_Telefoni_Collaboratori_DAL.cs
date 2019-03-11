@@ -72,11 +72,11 @@ namespace VideoSystemWeb.DAL
                                         listaTelefoni.Add(telefono);
                                     }
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella anag_telefoni_collaboratori ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_telefoni_collaboratori ";
+                                //}
                             }
                         }
                     }
@@ -123,11 +123,11 @@ namespace VideoSystemWeb.DAL
                                         telefono.Priorita = dt.Rows[0].Field<int>("priorita");
                                         telefono.Attivo = dt.Rows[0].Field<bool>("attivo");
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella anag_telefoni_collaboratori ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_telefoni_collaboratori ";
+                                //}
                             }
                         }
                     }

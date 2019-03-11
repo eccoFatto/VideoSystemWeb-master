@@ -873,3 +873,31 @@
 2019-03-10 22:43:24,464 [3] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2019-03-10 22:43:25,622 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-10 22:43:29,464 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - Nessun dato trovato nella tabella tab_dati_agenda 
+2019-03-11 11:11:30,140 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-11 11:11:32,469 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-11 11:16:14,093 [8] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-03-11 11:16:29,999 [6] ERROR VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - Nessun dato trovato nella tabella anag_documenti_collaboratori 
+2019-03-11 11:25:33,419 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-11 11:25:34,424 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-11 11:25:43,632 [8] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-03-11 11:25:47,716 [8] ERROR VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - Nessun dato trovato nella tabella anag_telefoni_collaboratori 
+2019-03-11 11:29:02,111 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-11 11:29:03,464 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-11 11:29:19,676 [5] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-03-11 11:29:23,561 [10] ERROR VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - Nessun dato trovato nella tabella anag_email_collaboratori 
+2019-03-11 11:31:19,724 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-11 11:31:20,740 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-11 11:31:26,205 [10] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-03-11 11:31:28,117 [11] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-03-11 11:31:33,794 [10] ERROR VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - Nessun dato trovato nella tabella anag_indirizzi_collaboratori 
+2019-03-11 11:33:12,702 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-11 11:33:13,934 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-11 11:33:19,398 [18] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-03-11 11:33:22,494 [17] ERROR VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - Nessun dato trovato nella tabella anag_qualifiche_collaboratori 
+2019-03-11 11:35:13,371 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-11 11:35:14,784 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-11 11:35:23,536 [8] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-03-11 11:35:41,915 [10] ERROR VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - Nessun dato trovato nella tabella anag_qualifiche_collaboratori 
+2019-03-11 11:37:07,610 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-11 11:37:09,070 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-11 11:37:13,491 [9] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori

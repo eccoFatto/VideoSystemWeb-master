@@ -114,11 +114,11 @@ namespace VideoSystemWeb.DAL
                                         listaEmail.Add(email);
                                     }
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella anag_email_collaboratori ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_email_collaboratori ";
+                                //}
                             }
                         }
                     }

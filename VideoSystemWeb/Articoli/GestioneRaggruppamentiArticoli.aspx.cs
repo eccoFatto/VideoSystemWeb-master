@@ -87,12 +87,14 @@ namespace VideoSystemWeb.Articoli
             {
                 //btnInserisciRaggruppamento.Visible = false;
                 divBtnInserisciRaggruppamento.Visible = false;
+                divSelRaggruppamento.Visible = false;
                 //btnAnnullaRaggruppamento.Visible = false;
             }
             else
             {
                 //btnInserisciRaggruppamento.Visible = true;
                 divBtnInserisciRaggruppamento.Visible = true;
+                divSelRaggruppamento.Visible = true;
                 //btnAnnullaRaggruppamento.Visible = true;
             }
         }
@@ -123,15 +125,19 @@ namespace VideoSystemWeb.Articoli
                 int iRet = Art_Gruppi_BLL.Instance.CreaGruppo(gruppo, ref esito);
                 if (esito.codice != Esito.ESITO_OK)
                 {
-                    panelErrore.Style.Add("display", "block");
-                    lbl_MessaggioErrore.Text = esito.descrizione;
+                    //panelErrore.Style.Add("display", "block");
+                    //lbl_MessaggioErrore.Text = esito.descrizione;
+                    ShowError(esito.descrizione);
                 }
                 else
                 {
                     tbInsNomeRaggruppamento.Text = "";
                     tbInsDescrizioneRaggruppamento.Text = "";
-
+                    tbIdRaggruppamentoDaModificare.Text = iRet.ToString();
                     caricaRaggruppamenti();
+                    ShowSuccess("Raggruppamento Correttamente Inserito!");
+                    //btnEditRaggruppamento_Click(null, null);
+                    pnlContainer.Visible = false;
                 }
 
             }
@@ -150,32 +156,38 @@ namespace VideoSystemWeb.Articoli
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
-                        panelErrore.Style.Add("display", "block");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Add("display", "block");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        ShowError(esito.descrizione);
                     }
                     else
                     {
                         tbInsNomeRaggruppamento.Text = "";
                         tbInsDescrizioneRaggruppamento.Text = "";
+                        tbIdRaggruppamentoDaModificare.Text = "";
 
                         btnModificaRaggruppamento.Visible =false;
                         btnInserisciRaggruppamento.Visible = true;
                         btnEliminaRaggruppamento.Visible = false;
 
                         caricaRaggruppamenti();
+                        ShowSuccess("Raggruppamento Correttamente Eliminato!");
+                        pnlContainer.Visible = false;
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaDocumento_Click", ex);
-                    panelErrore.Style.Add("display", "block");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Add("display", "block");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    ShowError(ex.Message);
                 }
             }
             else
             {
-                panelErrore.Style.Add("display", "block");
-                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                //panelErrore.Style.Add("display", "block");
+                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                ShowError("Verificare il corretto inserimento dei campi!");
             }
         }
 
@@ -212,8 +224,9 @@ namespace VideoSystemWeb.Articoli
                     btnEliminaRaggruppamento.Visible = false;
                     if (esito.codice != Esito.ESITO_OK)
                     {
-                        panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Remove("display");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        ShowError(esito.descrizione);
                     }
                     else
                     {
@@ -221,6 +234,10 @@ namespace VideoSystemWeb.Articoli
                         tbInsNomeRaggruppamento.Text = "";
                         tbInsDescrizioneRaggruppamento.Text = "";
                         caricaRaggruppamenti();
+                        ShowSuccess("Raggruppamento Correttamente Modificato!");
+                        //btnEditRaggruppamento_Click(null, null);
+                        pnlContainer.Visible = false;
+
                     }
                 }
                 catch (Exception ex)
@@ -229,14 +246,16 @@ namespace VideoSystemWeb.Articoli
                     btnModificaRaggruppamento.Visible = false;
                     btnInserisciRaggruppamento.Visible = true;
                     btnEliminaRaggruppamento.Visible = false;
-                    panelErrore.Style.Remove("display");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Remove("display");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    ShowError(ex.Message);
                 }
             }
             else
             {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                //panelErrore.Style.Remove("display");
+                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                ShowError("Verificare il corretto inserimento dei campi");
             }
 
         }
@@ -319,8 +338,6 @@ namespace VideoSystemWeb.Articoli
                             Response.Redirect(url, true);
                         }
 
-
-
                         pnlContainer.Visible = true;
                     }
                 }
@@ -330,8 +347,9 @@ namespace VideoSystemWeb.Articoli
                     btnInserisciRaggruppamento.Visible = true;
                     btnModificaRaggruppamento.Visible = false;
                     btnEliminaRaggruppamento.Visible = false;
-                    panelErrore.Style.Add("display", "block");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Add("display", "block");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    ShowError(ex.Message);
                 }
             }
 
@@ -341,6 +359,8 @@ namespace VideoSystemWeb.Articoli
         {
             // ARTICOLI ASSOCIATI
             tbIdRaggruppamentoDaModificare.Text = "";
+            tbInsNomeRaggruppamento.Text = "";
+            tbInsDescrizioneRaggruppamento.Text = "";
             lbMod_Articoli.Items.Clear();
             lbMod_Articoli.Rows = 1;
             pnlContainer.Visible = true;
@@ -370,25 +390,29 @@ namespace VideoSystemWeb.Articoli
                     if (esito.codice != Esito.ESITO_OK)
                     {
                         //panelErrore.Style.Remove("display");
-                        panelErrore.Style.Add("display", "block");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Add("display", "block");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        ShowError(esito.descrizione);
                     }
                     else
                     {
                         btnEditRaggruppamento_Click(null, null);
+
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnInserisciArticolo_Click", ex);
-                    panelErrore.Style.Add("display", "block");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Add("display", "block");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    ShowError(ex.Message);
                 }
             }
             else
             {
-                panelErrore.Style.Add("display", "block");
-                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                //panelErrore.Style.Add("display", "block");
+                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                ShowError("Verificare il corretto inserimento dei campi!");
             }
         }
 
@@ -419,8 +443,9 @@ namespace VideoSystemWeb.Articoli
                     if (esito.codice != Esito.ESITO_OK)
                     {
                         log.Error(esito.descrizione);
-                        panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Remove("display");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        ShowError(esito.descrizione);
                     }
                     else
                     {
@@ -432,8 +457,9 @@ namespace VideoSystemWeb.Articoli
                         if (esito.codice != Esito.ESITO_OK)
                         {
                             log.Error(esito.descrizione);
-                            panelErrore.Style.Remove("display");
-                            lbl_MessaggioErrore.Text = esito.descrizione;
+                            //panelErrore.Style.Remove("display");
+                            //lbl_MessaggioErrore.Text = esito.descrizione;
+                            ShowError(esito.descrizione);
                         }
                         else
                         {
@@ -445,14 +471,16 @@ namespace VideoSystemWeb.Articoli
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaArticolo_Click", ex);
-                    panelErrore.Style.Add("display", "block");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Add("display", "block");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    ShowError(ex.Message);
                 }
             }
             else
             {
-                panelErrore.Style.Add("display", "block");
-                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                //panelErrore.Style.Add("display", "block");
+                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                ShowError("Verificare il corretto inserimento dei campi!");
             }
 
         }

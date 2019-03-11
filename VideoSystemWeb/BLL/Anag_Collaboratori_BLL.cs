@@ -48,5 +48,10 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
+        public Anag_Collaboratori getCollaboratoreById(int idCollaboratore,ref Esito esito)
+        {
+            Anag_Collaboratori collaboratore = Anag_Collaboratori_DAL.Instance.getCollaboratoreById(idCollaboratore, ref esito);
+            return collaboratore;
+        }
     }
 }

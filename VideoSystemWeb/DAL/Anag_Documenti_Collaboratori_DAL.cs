@@ -67,11 +67,11 @@ namespace VideoSystemWeb.DAL
                                         listaDocumenti.Add(documento);
                                     }
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella anag_documenti_collaboratori ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_documenti_collaboratori ";
+                                //}
                             }
                         }
                     }

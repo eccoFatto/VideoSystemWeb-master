@@ -74,11 +74,11 @@ namespace VideoSystemWeb.DAL
                                         listaIndirizzi.Add(indirizzo);
                                     }
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella anag_indirizzi_collaboratori ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_indirizzi_collaboratori ";
+                                //}
                             }
                         }
                     }

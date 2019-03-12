@@ -128,6 +128,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             queryRicerca = queryRicerca.Replace("@cognome", tbCognome.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@codiceFiscale", tbCF.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@comuneRiferimento", tbCitta.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@regioneRiferimento", tbRegione.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@partitaIva", TbPiva.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@nomeSocieta", TbSocieta.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@qualifica", ddlQualifiche.SelectedValue.ToString().Trim().Replace("'","''"));
@@ -262,7 +263,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 NascondiErroriValidazione();
 
-                esito = Anag_Collaboratori_BLL.Instance.AggiornaCollaboratore(collaboratore);
+                esito = Anag_Collaboratori_BLL.Instance.AggiornaCollaboratore(collaboratore, ((Anag_Utenti)Session[SessionManager.UTENTE]));
                 
                 if (esito.codice != Esito.ESITO_OK)
                 {
@@ -319,11 +320,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_ComuneNascita.Text = "";
             tbMod_ProvinciaNascita.Text = "";
             tbMod_ComuneRiferimento.Text = "";
+            cmbMod_RegioneRiferimento.Text = "";
             tbMod_DataNascita.Text = "";
             tbMod_NomeSocieta.Text = "";
             tbMod_PartitaIva.Text = "";
             cbMod_Assunto.Checked = false;
-            cbMod_Attivo.Checked = false;
+            //cbMod_Attivo.Checked = false;
             tbMod_Note.Text = "";
 
             lbMod_Qualifiche.Items.Clear();
@@ -453,9 +455,19 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_Note.ReadOnly = attivaModifica;
             tbMod_PartitaIva.ReadOnly = attivaModifica;
             tbMod_ProvinciaNascita.ReadOnly = attivaModifica;
-            cbMod_Assunto.Enabled = !attivaModifica;
-            cbMod_Attivo.Enabled = !attivaModifica;
-
+            //cbMod_Assunto.Enabled = !attivaModifica;
+            //cbMod_Attivo.Enabled = !attivaModifica;
+            //cmbMod_RegioneRiferimento.Enabled
+            if (attivaModifica)
+            {
+                cmbMod_RegioneRiferimento.Attributes.Add("disabled", "");
+                cbMod_Assunto.Attributes.Add("disabled", "");
+            }
+            else
+            {
+                cmbMod_RegioneRiferimento.Attributes.Remove("disabled");
+                cbMod_Assunto.Attributes.Remove("disabled");
+            }
         }
 
         private void editCollaboratore()
@@ -485,8 +497,19 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     tbMod_NomeSocieta.Text = collaboratore.NomeSocieta;
                     tbMod_PartitaIva.Text = collaboratore.PartitaIva;
                     cbMod_Assunto.Checked = collaboratore.Assunto;
-                    cbMod_Attivo.Checked = collaboratore.Attivo;
+                    //cbMod_Attivo.Checked = collaboratore.Attivo;
                     tbMod_Note.Text = collaboratore.Note;
+
+                    //REGIONE RIFERIMENTO
+                    ListItem trovati = cmbMod_RegioneRiferimento.Items.FindByValue(collaboratore.RegioneRiferimento.ToString());
+                    if (trovati != null)
+                    {
+                        cmbMod_RegioneRiferimento.SelectedValue = trovati.Value;
+                    }
+                    else
+                    {
+                        cmbMod_RegioneRiferimento.Text = "";
+                    }
 
                     // QUALIFICHE
                     if (collaboratore.Qualifiche != null) { 
@@ -693,10 +716,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             collaboratore.Cognome = BasePage.ValidaCampo(tbMod_Cognome, "", true, ref esito);
             collaboratore.ComuneNascita = BasePage.ValidaCampo(tbMod_ComuneNascita, "", false, ref esito);
             collaboratore.ComuneRiferimento = BasePage.ValidaCampo(tbMod_ComuneRiferimento, "", false, ref esito);
+            collaboratore.RegioneRiferimento = BasePage.ValidaCampo(cmbMod_RegioneRiferimento, "", false, ref esito);
             collaboratore.DataNascita = BasePage.ValidaCampo(tbMod_DataNascita, DateTime.Now, true, ref esito);
             collaboratore.CodiceFiscale = BasePage.ValidaCampo(tbMod_CF, "", true, ref esito);
             collaboratore.Assunto = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Assunto, "false", false, ref esito));
-            collaboratore.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
+            //collaboratore.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
+            collaboratore.Attivo = true;
             collaboratore.NomeSocieta = BasePage.ValidaCampo(tbMod_NomeSocieta, "", false, ref esito);
             collaboratore.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
             collaboratore.PartitaIva = BasePage.ValidaCampo(tbMod_PartitaIva, "", false, ref esito);
@@ -720,7 +745,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (!string.IsNullOrEmpty((string)ViewState["idColl"]))
             {
-                esito = Anag_Collaboratori_BLL.Instance.EliminaCollaboratore(Convert.ToInt32(ViewState["idColl"].ToString()));
+                esito = Anag_Collaboratori_BLL.Instance.EliminaCollaboratore(Convert.ToInt32(ViewState["idColl"].ToString()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
@@ -776,7 +801,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 NascondiErroriValidazione();
 
-                int iRet = Anag_Collaboratori_BLL.Instance.CreaCollaboratore(collaboratore, ref esito);
+                int iRet = Anag_Collaboratori_BLL.Instance.CreaCollaboratore(collaboratore, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
                 if (iRet > 0)
                 {
                     // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO

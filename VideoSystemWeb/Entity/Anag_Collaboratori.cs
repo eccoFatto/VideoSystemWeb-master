@@ -35,6 +35,7 @@ namespace VideoSystemWeb.Entity
         private string provinciaNascita;
         private DateTime dataNascita;
         private string comuneRiferimento;
+        private string regioneRiferimento;
         private string partitaIva;
         private string nomeSocieta;
         private bool assunto;
@@ -52,6 +53,7 @@ namespace VideoSystemWeb.Entity
         public string NomeSocieta { get => nomeSocieta; set => nomeSocieta = value; }
         public string PartitaIva { get => partitaIva; set => partitaIva = value; }
         public string ComuneRiferimento { get => comuneRiferimento; set => comuneRiferimento = value; }
+        public string RegioneRiferimento { get => regioneRiferimento; set => regioneRiferimento = value; }
         public DateTime DataNascita { get => dataNascita; set => dataNascita = value; }
         public string ProvinciaNascita { get => provinciaNascita; set => provinciaNascita = value; }
         public string ComuneNascita { get => comuneNascita; set => comuneNascita = value; }
@@ -66,5 +68,6 @@ namespace VideoSystemWeb.Entity
         public List<Anag_Email_Collaboratori> Email { get => email; set => email = value; }
         public List<Anag_Telefoni_Collaboratori> Telefoni { get => telefoni; set => telefoni = value; }
         public List<Anag_Documenti_Collaboratori> Documenti { get => documenti; set => documenti = value; }
+        
     }
 }

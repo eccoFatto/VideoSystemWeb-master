@@ -60,6 +60,7 @@
         $("#<%=TbPiva.ClientID%>").val('');
         $("#<%=TbSocieta.ClientID%>").val('');
         $("#<%=ddlQualifiche.ClientID%>").val('');
+        $("#<%=tbRegione.ClientID%>").val('');
 
     }
 

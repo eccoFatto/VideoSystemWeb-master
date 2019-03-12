@@ -137,9 +137,12 @@
                 <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                   <a href="/Articoli/GestioneArticoli.aspx?TIPO=ARTICOLI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Articoli</a>
                   <a href="/Articoli/GestioneRaggruppamentiArticoli.aspx" class="w3-bar-item w3-button">Articoli Composti</a>
-                  <a href="/Articoli/GestioneArticoli.aspx?TIPO=GENERI" class="w3-bar-item w3-button w3-disabled" onclick="$('.loader').show();">Generi</a>
+<%--                  <a href="/Articoli/GestioneArticoli.aspx?TIPO=GENERI" class="w3-bar-item w3-button w3-disabled" onclick="$('.loader').show();">Generi</a>
                   <a href="/Articoli/GestioneArticoli.aspx?TIPO=GRUPPI" class="w3-bar-item w3-button w3-disabled" onclick="$('.loader').show();">Gruppi</a>
-                  <a href="/Articoli/GestioneArticoli.aspx?TIPO=SOTTOGRUPPI" class="w3-bar-item w3-button w3-disabled" onclick="$('.loader').show();">Sottogruppi</a>
+                  <a href="/Articoli/GestioneArticoli.aspx?TIPO=SOTTOGRUPPI" class="w3-bar-item w3-button w3-disabled" onclick="$('.loader').show();">Sottogruppi</a>--%>
+                  <a class="w3-bar-item w3-button w3-disabled">Generi</a>
+                  <a class="w3-bar-item w3-button w3-disabled">Gruppi</a>
+                  <a class="w3-bar-item w3-button w3-disabled">Sottogruppi</a>
                   <a href="/Agenda/GestioneColonneAgenda.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Colonne Agenda</a>
                 </div>
               </div>

@@ -519,8 +519,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
-                    panelErrore.Style.Add("display","block");
-                    lbl_MessaggioErrore.Text = esito.descrizione;
+                    //panelErrore.Style.Add("display","block");
+                    //lbl_MessaggioErrore.Text = esito.descrizione;
+                    basePage.ShowError(esito.descrizione);
                     AttivaDisattivaModificaAzienda(true);
                 }
                 else
@@ -543,8 +544,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (esito.codice != Esito.ESITO_OK)
             {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+                //panelErrore.Style.Remove("display");
+                //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+                basePage.ShowError("Controllare i campi evidenziati");
             }
             else
             {
@@ -555,8 +557,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                 if (esito.codice != Esito.ESITO_OK)
                 {
-                    panelErrore.Style.Remove("display");
-                    lbl_MessaggioErrore.Text = esito.descrizione;
+                    //panelErrore.Style.Remove("display");
+                    //lbl_MessaggioErrore.Text = esito.descrizione;
+                    basePage.ShowError(esito.descrizione);
                 }
                 EditAzienda_Click(null, null);
             }
@@ -626,8 +629,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (esito.codice != Esito.ESITO_OK)
             {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = esito.descrizione;
+                //panelErrore.Style.Remove("display");
+                //lbl_MessaggioErrore.Text = esito.descrizione;
+                basePage.ShowError(esito.descrizione);
             }
             else
             {
@@ -645,8 +649,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
-                    panelErrore.Style.Add("display","block");
-                    lbl_MessaggioErrore.Text = esito.descrizione;
+                    //panelErrore.Style.Add("display","block");
+                    //lbl_MessaggioErrore.Text = esito.descrizione;
+                    basePage.ShowError(esito.descrizione);
                 }
                 else
                 {
@@ -734,8 +739,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
-                        panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Remove("display");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        basePage.ShowError(esito.descrizione);
                     }
                     else
                     {
@@ -753,14 +759,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
-                    panelErrore.Style.Remove("display");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Remove("display");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    basePage.ShowError(ex.Message);
                 }
             }
             else
             {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                //panelErrore.Style.Remove("display");
+                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                basePage.ShowError("Verificare il corretto inserimento dei campi");
             }
 
         }
@@ -795,8 +803,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
-                        panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Remove("display");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        basePage.ShowError(esito.descrizione);
                     }
                     else
                     {
@@ -817,14 +826,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     btnModificaReferente.Visible = false;
                     btnInserisciReferente.Visible = true;
-                    panelErrore.Style.Remove("display");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Remove("display");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    basePage.ShowError(ex.Message);
                 }
             }
             else
             {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                //panelErrore.Style.Remove("display");
+                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                basePage.ShowError("Verificare il corretto inserimento dei campi");
             }
 
         }
@@ -841,8 +852,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
-                        panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Remove("display");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        basePage.ShowError(esito.descrizione);
                     }
                     else
                     {
@@ -865,14 +877,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
-                    panelErrore.Style.Remove("display");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Remove("display");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    basePage.ShowError(ex.Message);
                 }
             }
             else
             {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                //panelErrore.Style.Remove("display");
+                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                basePage.ShowError("Verificare il corretto inserimento dei campi");
             }
 
         }
@@ -913,8 +927,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         btnModificaReferente.Visible = false;
                         btnInserisciReferente.Visible = true;
                         tbIdReferenteDaModificare.Text = "";
-                        panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Remove("display");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        basePage.ShowError(esito.descrizione);
                     }
                     else
                     {
@@ -938,8 +953,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     btnModificaReferente.Visible = false;
                     btnInserisciReferente.Visible = true;
                     tbIdReferenteDaModificare.Text = "";
-                    panelErrore.Style.Remove("display");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Remove("display");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    basePage.ShowError(ex.Message);
                 }
             }
 

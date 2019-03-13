@@ -127,11 +127,11 @@ namespace VideoSystemWeb.DAL
                                     indirizzo.Attivo = dt.Rows[0].Field<bool>("attivo");
 
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella anag_indirizzi_collaboratori ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_indirizzi_collaboratori ";
+                                //}
                             }
                         }
                     }

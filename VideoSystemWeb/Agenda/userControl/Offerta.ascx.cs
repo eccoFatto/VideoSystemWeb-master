@@ -42,53 +42,51 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState["listaArticoliGruppi"] = value;
             }
         }
-        //List<DatiArticoli> listaDatiArticoli = new List<DatiArticoli>();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                caricaDdlGenere();
-                caricaDdlGruppo();
-                caricaDdlSottogruppo();
-                //listaArticoliGruppi = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
+                //caricaDdlGenere();
+                //caricaDdlGruppo();
+                //caricaDdlSottogruppo();
 
                 gvGruppi.DataSource = listaArticoliGruppi;
                 gvGruppi.DataBind();
             }
         }
 
-        private void caricaDdlGenere()
-        {
-            Esito esito = new Esito();
-            List<Tipologica> listaTipologicaGenere = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GENERE);
+        //private void caricaDdlGenere()
+        //{
+        //    Esito esito = new Esito();
+        //    List<Tipologica> listaTipologicaGenere = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GENERE);
 
-            ddl_Genere.DataSource = listaTipologicaGenere;
-            ddl_Genere.DataTextField = "nome";
-            ddl_Genere.DataValueField = "id";
-            ddl_Genere.DataBind();
-        }
+        //    ddl_Genere.DataSource = listaTipologicaGenere;
+        //    ddl_Genere.DataTextField = "nome";
+        //    ddl_Genere.DataValueField = "id";
+        //    ddl_Genere.DataBind();
+        //}
 
-        private void caricaDdlGruppo()
-        {
-            Esito esito = new Esito();
-            List<Tipologica> listaTipologicaGruppo = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GRUPPO);
+        //private void caricaDdlGruppo()
+        //{
+        //    Esito esito = new Esito();
+        //    List<Tipologica> listaTipologicaGruppo = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GRUPPO);
 
-            ddl_Gruppo.DataSource = listaTipologicaGruppo;
-            ddl_Gruppo.DataTextField = "nome";
-            ddl_Gruppo.DataValueField = "id";
-            ddl_Gruppo.DataBind();
-        }
+        //    ddl_Gruppo.DataSource = listaTipologicaGruppo;
+        //    ddl_Gruppo.DataTextField = "nome";
+        //    ddl_Gruppo.DataValueField = "id";
+        //    ddl_Gruppo.DataBind();
+        //}
 
-        private void caricaDdlSottogruppo()
-        {
-            Esito esito = new Esito();
-            List<Tipologica> listaTipologicaSottogruppo = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO);
+        //private void caricaDdlSottogruppo()
+        //{
+        //    Esito esito = new Esito();
+        //    List<Tipologica> listaTipologicaSottogruppo = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO);
 
-            ddl_Sottogruppo.DataSource = listaTipologicaSottogruppo;
-            ddl_Sottogruppo.DataTextField = "nome";
-            ddl_Sottogruppo.DataValueField = "id";
-            ddl_Sottogruppo.DataBind();
-        }
+        //    ddl_Sottogruppo.DataSource = listaTipologicaSottogruppo;
+        //    ddl_Sottogruppo.DataTextField = "nome";
+        //    ddl_Sottogruppo.DataValueField = "id";
+        //    ddl_Sottogruppo.DataBind();
+        //}
 
         private void aggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
         {
@@ -128,9 +126,9 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.Costo = decimal.Parse(txt_Costo.Text);
             articoloSelezionato.Prezzo = decimal.Parse(txt_Prezzo.Text);
             articoloSelezionato.Iva = int.Parse(txt_Iva.Text);
-            articoloSelezionato.IdTipoGenere = int.Parse(ddl_Genere.SelectedValue);
-            articoloSelezionato.IdTipoGruppo = int.Parse(ddl_Gruppo.SelectedValue);
-            articoloSelezionato.IdTipoSottogruppo = int.Parse(ddl_Sottogruppo.SelectedValue);
+            //articoloSelezionato.IdTipoGenere = int.Parse(ddl_Genere.SelectedValue);
+            //articoloSelezionato.IdTipoGruppo = int.Parse(ddl_Gruppo.SelectedValue);
+            //articoloSelezionato.IdTipoSottogruppo = int.Parse(ddl_Sottogruppo.SelectedValue);
             articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
             articoloSelezionato.Quantita = int.Parse(txt_Quantita.Text);
 
@@ -160,8 +158,6 @@ namespace VideoSystemWeb.Agenda.userControl
         protected void gvGruppi_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             long idSelezione = Convert.ToInt64(e.CommandArgument);
-
-            //listaArticoliGruppi = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
 
             listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
             if (listaDatiArticoli == null)
@@ -254,9 +250,9 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_Costo.Text = articoloSelezionato.Costo.ToString();
                     txt_Prezzo.Text = articoloSelezionato.Prezzo.ToString();
                     txt_Iva.Text = articoloSelezionato.Iva.ToString();
-                    ddl_Genere.SelectedValue = articoloSelezionato.IdTipoGenere.ToString();
-                    ddl_Gruppo.SelectedValue = articoloSelezionato.IdTipoGruppo.ToString();
-                    ddl_Sottogruppo.SelectedValue = articoloSelezionato.IdTipoSottogruppo.ToString();
+                    //ddl_Genere.SelectedValue = articoloSelezionato.IdTipoGenere.ToString();
+                    //ddl_Gruppo.SelectedValue = articoloSelezionato.IdTipoGruppo.ToString();
+                    //ddl_Sottogruppo.SelectedValue = articoloSelezionato.IdTipoSottogruppo.ToString();
                     txt_Quantita.Text = articoloSelezionato.Quantita.ToString();
 
                     panelRicercaOfferta.Style.Add("display", "none");
@@ -338,7 +334,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 AggiornaTotali();
             }
-            //btnEliminaArticoli.Visible = (listaDatiArticoli != null && listaDatiArticoli.Count > 0);
             resetPanelOfferta();
         }
 
@@ -355,7 +350,6 @@ namespace VideoSystemWeb.Agenda.userControl
         protected void btnEliminaArticoli_Click(object sender, EventArgs e)
         {
             listaDatiArticoli = null;
-            
 
             resetPanelOfferta();
 

@@ -13,6 +13,7 @@ namespace VideoSystemWeb.DAL
     {
         // STRINGA DI CONNESSIONE PER CLASSI SQLCLIENT (NON SERVE SPECIFICARE IL PROVIDER)
         public static string sqlConstr = ConfigurationManager.ConnectionStrings["sqlConstrMSSQL"].ConnectionString;
+        protected static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static int executeUpdateBySql(string querySql, ref Esito esito)
         {
@@ -37,7 +38,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Base_DAL.cs - executeUpdateBySql " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return iReturn;
@@ -69,7 +72,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Base_DAL.cs - getDatiBySql " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return dtReturn;
@@ -120,7 +125,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Base_DAL.cs - CaricaTipologica " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return listaTipologiche;
@@ -166,7 +173,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Base_DAL.cs - getTipologicaById " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return tipologica;
@@ -244,7 +253,9 @@ namespace VideoSystemWeb.DAL
                 catch (Exception ex)
                 {
                     esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                    esito.descrizione = "Base_DAL.cs - CreaTipologia " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                    esito.descrizione = "Base_DAL.cs - CreaTipologia " + Environment.NewLine + ex.Message;
+
+                    log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
                 }
             }
             else
@@ -327,7 +338,9 @@ namespace VideoSystemWeb.DAL
                 catch (Exception ex)
                 {
                     esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                    esito.descrizione = "Base_DAL.cs - AggiornaTipologia " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                    esito.descrizione = "Base_DAL.cs - AggiornaTipologia " + Environment.NewLine + ex.Message;
+
+                    log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
                 }
             }
             else
@@ -386,7 +399,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Base_DAL.cs - EliminaTipologia " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Base_DAL.cs - EliminaTipologia " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return esito;

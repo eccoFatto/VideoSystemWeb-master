@@ -100,7 +100,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Agenda_DAL.cs - CaricaDatiAgenda " + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return listaDatiAgenda;
@@ -155,11 +157,11 @@ namespace VideoSystemWeb.DAL
                                         listaDatiAgenda.Add(datoAgenda);
                                     }
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella tab_dati_agenda ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Nessun dato trovato nella tabella tab_dati_agenda ";
+                                //}
                             }
                         }
                     }
@@ -167,9 +169,10 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Agenda_DAL.cs - CaricaDatiAgenda " + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return listaDatiAgenda;
@@ -199,7 +202,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Agenda_DAL.cs - creaEvento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Agenda_DAL.cs - creaEvento " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return esito;
@@ -248,7 +253,7 @@ namespace VideoSystemWeb.DAL
                         catch (Exception ex)
                         {
                             esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                            esito.descrizione = ex.Message;
+                            esito.descrizione = "Agenda_DAL.cs - creaEventoConArticoli " + Environment.NewLine + ex.Message;
 
                             try
                             {
@@ -257,7 +262,10 @@ namespace VideoSystemWeb.DAL
                             catch (Exception ex2)
                             {
                                 esito.descrizione += Environment.NewLine + "ERRORE ROLLBACK: " + ex2.Message;
+                                log.Error(ex2.Message + Environment.NewLine + ex2.StackTrace);
                             }
+
+                            log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
                         }
 
                     }
@@ -404,7 +412,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Agenda_DAL.cs - aggiornaEvento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Agenda_DAL.cs - aggiornaEvento " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return esito;
@@ -455,7 +465,9 @@ namespace VideoSystemWeb.DAL
                             catch (Exception ex)
                             {
                                 esito.codice = Esito.ESITO_KO_ERRORE_UPDATE_TABELLA;
-                                esito.descrizione = ex.Message;
+                                esito.descrizione = "Agenda_DAL.cs - AggiornaEventoConArticoli " + Environment.NewLine + ex.Message;
+
+                                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
 
                                 try
                                 {
@@ -464,6 +476,7 @@ namespace VideoSystemWeb.DAL
                                 catch (Exception ex2)
                                 {
                                     esito.descrizione += Environment.NewLine + "ERRORE ROLLBACK: " + ex2.Message;
+                                    log.Error(ex2.Message + Environment.NewLine + ex2.StackTrace);
                                 }
                             }
                         }
@@ -473,7 +486,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Agenda_DAL.cs - aggiornaEvento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Agenda_DAL.cs - AggiornaEventoConArticoli " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return esito;
@@ -509,7 +524,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Agenda_DAL.cs - EliminaEvento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Agenda_DAL.cs - EliminaEvento " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return esito;
@@ -538,11 +555,11 @@ namespace VideoSystemWeb.DAL
                                         listaProduzioni.Add(riga.Field<string>("produzione"));
                                     }
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato di produzione nella tabella tab_dati_agenda ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Nessun dato di produzione nella tabella tab_dati_agenda ";
+                                //}
                             }
                         }
                     }
@@ -551,7 +568,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Agenda_DAL.cs - CaricaElencoProduzioni " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return listaProduzioni;
@@ -580,11 +599,11 @@ namespace VideoSystemWeb.DAL
                                         listaLavorazioni.Add(riga.Field<string>("lavorazione"));
                                     }
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato di lavorazione nella tabella tab_dati_agenda ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Nessun dato di lavorazione nella tabella tab_dati_agenda ";
+                                //}
                             }
                         }
                     }
@@ -593,7 +612,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Agenda_DAL.cs - CaricaElencoLavorazioni " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return listaLavorazioni;

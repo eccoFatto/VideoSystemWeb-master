@@ -13,6 +13,8 @@ namespace VideoSystemWeb.Agenda
     public partial class Agenda : BasePage
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        bool isUtenteAbilitatoInScrittura;
+        string coloreViaggio;
 
         protected void Page_PreInit(object sender, EventArgs e)
         {
@@ -21,12 +23,19 @@ namespace VideoSystemWeb.Agenda
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Esito esito = new Esito();
+
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
 
+            isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
+            Tipologica viaggio  = UtilityTipologiche.getElementByID(listaStati, DatiAgenda.STATO_VIAGGIO, ref esito);
+            coloreViaggio = UtilityTipologiche.getParametroDaTipologica(viaggio, "color", ref esito);
+
+
             if (!IsPostBack)
             {
-                Esito esito = new Esito();
+                
                 DateTime dataPartenza = DateTime.Now;
 
                 listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito); //CARICO SOLO EVENTI VISUALIZZATI
@@ -43,6 +52,7 @@ namespace VideoSystemWeb.Agenda
             }
             else
             {
+                
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento(event,'" + hf_tabSelezionata.Value + "')", addScriptTags: true);
             }
@@ -60,6 +70,22 @@ namespace VideoSystemWeb.Agenda
             int risorsaEvento = int.Parse(hf_risorsa.Value);
 
             DatiAgenda eventoSelezionato = CreaEventoDaSelezioneAgenda(dataEvento, risorsaEvento);
+
+            switch (eventoSelezionato.id_stato)
+            {
+                case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento(event,'Appuntamento');", true);
+                    break;
+                case DatiAgenda.STATO_OFFERTA:
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento(event,'Offerta');", true);
+                    break;
+                case DatiAgenda.STATO_LAVORAZIONE:
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento(event,'Lavorazione');", true);
+                    break;
+                default:
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento(event,'Appuntamento');", true);
+                    break;
+            }
 
             AbilitaComponentiPopup();
 
@@ -101,7 +127,12 @@ namespace VideoSystemWeb.Agenda
         {
             popupAppuntamento.SetStato(DatiAgenda.STATO_OFFERTA);
             btnLavorazione.Visible = false;
+
+            hf_tabSelezionata.Value = "2";
+
             UpdatePopup();
+
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "passaAOfferta", "openTabEvento(event,'Offerta');", true);
         }
 
         protected void btnLavorazione_Click(object sender, EventArgs e)
@@ -109,13 +140,6 @@ namespace VideoSystemWeb.Agenda
             popupAppuntamento.SetStato(DatiAgenda.STATO_LAVORAZIONE);
             UpdatePopup();
         }
-
-        protected void btnRiposo_Click(object sender, EventArgs e)
-        {
-            popupAppuntamento.SetStato(DatiAgenda.STATO_RIPOSO);
-            UpdatePopup();
-        }
-
         #endregion
 
         #region OPERAZIONI AGENDA
@@ -170,8 +194,6 @@ namespace VideoSystemWeb.Agenda
         protected void gv_scheduler_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Esito esito = new Esito();
-            bool isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
-
             e.Row.Cells[0].Attributes.Add("class", "first");
 
             #region intestazione tabella
@@ -180,11 +202,7 @@ namespace VideoSystemWeb.Agenda
                 for (int indiceColonna = 1; indiceColonna <= listaRisorse.Count; indiceColonna++)
                 {
                     string idRisorsa = (e.Row.Cells[indiceColonna].Text.Trim());
-
-                    //Tipologica risorsaCorrente = Tipologie.getRisorsaById(int.Parse(idRisorsa));
-
                     Tipologica risorsaCorrente = UtilityTipologiche.getElementByID(listaRisorse, int.Parse(idRisorsa), ref esito);
-
                    
                     string colore = UtilityTipologiche.getParametroDaTipologica(risorsaCorrente, "color", ref esito);
 
@@ -216,17 +234,25 @@ namespace VideoSystemWeb.Agenda
                     if (!string.IsNullOrEmpty(e.Row.Cells[indiceColonna].Text.Trim()))
                     {
                         DatiAgenda datoAgendaCorrente = Agenda_BLL.Instance.GetDatiAgendaById(listaDatiAgenda, int.Parse(e.Row.Cells[indiceColonna].Text.Trim()));
-
                         Tipologica statoCorrente = UtilityTipologiche.getElementByID(listaStati, datoAgendaCorrente.id_stato, ref esito);
 
+                        #region COLORE EVENTO
                         string colore;
                         colore = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "color", ref esito);
                         string coloreFont;
                         coloreFont = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "font_color", ref esito);
+                        #endregion
 
                         e.Row.Cells[indiceColonna].CssClass = "cellaEvento " + risorsa.sottotipo;
 
-                        string titoloEvento = datoAgendaCorrente.id_stato == DatiAgenda.STATO_RIPOSO ? "Riposo" : datoAgendaCorrente.produzione;
+                        #region TITOLO EVENTO
+                        string tipologia = "";
+                        if (datoAgendaCorrente.id_tipologia != null && datoAgendaCorrente.id_tipologia!= 0)
+                        {
+                            tipologia = UtilityTipologiche.getTipologicaById(EnumTipologiche.TIPO_TIPOLOGIE, (int)datoAgendaCorrente.id_tipologia, ref esito).nome;
+                        }
+                        string titoloEvento = datoAgendaCorrente.id_stato == DatiAgenda.STATO_RIPOSO ? "Riposo" : datoAgendaCorrente.produzione + "<br/>" + tipologia;
+                        #endregion
 
                         // EVENTO GIORNO SINGOLO
                         if (IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
@@ -246,11 +272,20 @@ namespace VideoSystemWeb.Agenda
                             {
                                 if (IsViaggioAndata(datoAgendaCorrente, DateTime.Parse(data)))
                                 {
-                                    colore = "#FFFF00";
+                                    colore = coloreViaggio;
                                 }
 
                                 Panel mainPanel = new Panel();
-                                mainPanel.Controls.Add(new LiteralControl(titoloEvento));
+
+                                if (IsPrimoGiornoLavorazione(datoAgendaCorrente, DateTime.Parse(data)))
+                                {
+                                    mainPanel.Controls.Add(new LiteralControl(titoloEvento));
+                                }
+                                else
+                                {
+                                    mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
+                                }
+                                
                                 mainPanel.CssClass = "round-corners-6px unround-bottom-corners w3-tooltip";
                                 mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
@@ -262,7 +297,7 @@ namespace VideoSystemWeb.Agenda
                             {
                                 if (IsViaggioRitorno(datoAgendaCorrente, DateTime.Parse(data)))
                                 {
-                                    colore = "#FFFF00";
+                                    colore = coloreViaggio;
                                 }
 
                                 Panel mainPanel = new Panel();
@@ -278,11 +313,20 @@ namespace VideoSystemWeb.Agenda
                             {
                                 if (IsViaggioAndata(datoAgendaCorrente, DateTime.Parse(data)) || IsViaggioRitorno(datoAgendaCorrente, DateTime.Parse(data)))
                                 {
-                                    colore = "#FFFF00";
+                                    colore = coloreViaggio;
                                 }
 
                                 Panel mainPanel = new Panel();
-                                mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
+
+                                if (IsPrimoGiornoLavorazione(datoAgendaCorrente, DateTime.Parse(data)))
+                                {
+                                    mainPanel.Controls.Add(new LiteralControl(titoloEvento));
+                                }
+                                else
+                                {
+                                    mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
+                                }
+                                
                                 mainPanel.CssClass = "w3-tooltip";
                                 mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
@@ -379,7 +423,6 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = eventoSelezionato.id != 0;
-                        //btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString();
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_PREVISIONE_IMPEGNO);
 
@@ -408,7 +451,6 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = false;
-                        //btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString();
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_LAVORAZIONE);
 
@@ -423,7 +465,6 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = false;
-                        //btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString();
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_FATTURA);
 
@@ -438,20 +479,12 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = eventoSelezionato.id != 0;
-                        //btnRiposo.Visible = false;
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_RIPOSO);
 
                         break;
                 }
             }
-
-           // string sottotipoRisorsa = eventoSelezionato != null ? UtilityTipologiche.getElementByID(listaRisorse, eventoSelezionato.id_colonne_agenda, ref esito).sottotipo.ToUpper() : "";
-
-           // btnOfferta.Visible = eventoSelezionato != null && sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString() &&  eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO;
-           // btnLavorazione.Visible = eventoSelezionato != null && sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString() && eventoSelezionato.id != 0 && eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA;
-           // btnElimina.Visible = eventoSelezionato != null && eventoSelezionato.id != 0 && (eventoSelezionato.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || eventoSelezionato.id_stato == DatiAgenda.STATO_RIPOSO);
-           // btnRiposo.Visible = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString() && eventoSelezionato.id_stato != DatiAgenda.STATO_RIPOSO;
         }
 
         private void MostraPopup(DatiAgenda eventoSelezionato)
@@ -590,6 +623,11 @@ namespace VideoSystemWeb.Agenda
             }
 
             return false;
+        }
+
+        private bool IsPrimoGiornoLavorazione(DatiAgenda evento, DateTime data)
+        {
+            return evento.data_inizio_lavorazione.Date == data.Date;
         }
 
         //private bool ControlloGiorniViaggio(DatiAgenda eventoSelezionato)

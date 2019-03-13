@@ -122,8 +122,12 @@
             document.getElementById(nomeElemento).className += " w3-red";
         }
 
-        function resetTabSelezionata() {
+        <%--function resetTabSelezionata() {
             $("#<%=hf_tabSelezionata.ClientID%>").val("Appuntamento");
+        }--%>
+
+        function confermaChiusura() {
+            return confirm("Le modifiche non salvate verranno perse. Confermare la chiusura?");
         }
     </script>
     
@@ -211,14 +215,12 @@
                     </div>
 
                     <div style="position: absolute; width: 100%; bottom: 10px; text-align: center;">
-                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="resetTabSelezionata();$('.loader').show();"/>
-                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="resetTabSelezionata();$('.loader').show();"/>
+                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();"/>
+                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); $('.loader').show();"/>
 
-                        <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="resetTabSelezionata();return confermaEliminazione();" />
-                        <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();" Visible="false" />
+                        <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();" />
+                        <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" />
                         <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();" OnClick="btnLavorazione_Click" Visible="false" />
-                        
-                        <%--<asp:Button ID="btnRiposo" runat="server" Text="Riposo" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRiposo_Click" Visible="false" />--%>
                     </div>
 
                 </asp:Panel>

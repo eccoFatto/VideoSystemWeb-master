@@ -1026,7 +1026,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     //ListItem item = lbMod_Documenti.Items[lbMod_Documenti.SelectedIndex];
                     //string value = item.Value;
                     //string documentoSelezionato = item.Text;
-                    Esito esito = Anag_Documenti_Collaboratori_BLL.Instance.EliminaDocumentoCollaboratore(Convert.ToInt32(tbIdDocumentoDaModificare.Text.Trim()));
+                    Esito esito = Anag_Documenti_Collaboratori_BLL.Instance.EliminaDocumentoCollaboratore(Convert.ToInt32(tbIdDocumentoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -1524,7 +1524,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovoDocumento.NumeroDocumento = tbInsNumeroDocumento.Text.Trim();
                     nuovoDocumento.PathDocumento = "";
 
-                    int iNuovoDocumento = Anag_Documenti_Collaboratori_BLL.Instance.CreaDocumentoCollaboratore(nuovoDocumento, ref esito);
+                    int iNuovoDocumento = Anag_Documenti_Collaboratori_BLL.Instance.CreaDocumentoCollaboratore(nuovoDocumento, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -1759,7 +1759,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovoDocumento.PathDocumento = "";
                     nuovoDocumento.Attivo = true;
 
-                    esito = Anag_Documenti_Collaboratori_BLL.Instance.AggiornaDocumentoCollaboratore(nuovoDocumento);
+                    esito = Anag_Documenti_Collaboratori_BLL.Instance.AggiornaDocumentoCollaboratore(nuovoDocumento, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     btnModificaDocumento.Visible = false;
                     btnInserisciDocumento.Visible = true;

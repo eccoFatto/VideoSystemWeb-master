@@ -135,12 +135,12 @@
                             <asp:Button ID="btnApriArticoli" runat="server" OnClick="btnApriArticoli_Click" Text="Gestione Articoli" class="w3-panel w3-green w3-border w3-round" />
                             <asp:PlaceHolder ID="phArticoli" runat="server" Visible="false">                                
                                 <div class="w3-row-padding w3-center w3-text-center" >
-                                    <div class="w3-twothird">
+                                    <div class="w3-threequarter">
                                         <label>Selezione Gruppi da aggiungere</label>
                                         <asp:DropDownList ID="ddlArticoliDaAggiungere" runat="server" AutoPostBack="false" Width="100%" class="w3-input w3-border">
                                         </asp:DropDownList>  
                                     </div>
-                                    <div class="w3-third">
+                                    <div class="w3-quarter">
                                         <label>Qta</label>
                                         <asp:TextBox ID="tbQtaArticoliDaAggiungere" class="w3-input w3-border" runat="server" MaxLength="2" Text="1"></asp:TextBox>
                                         <%--<ajaxToolkit:NumericUpDownExtender ID="nudeArticoli" Width="200" runat="server" Minimum="1" Maximum="20" Step="1" TargetControlID="tbQtaArticoliDaAggiungere" ></ajaxToolkit:NumericUpDownExtender>--%>

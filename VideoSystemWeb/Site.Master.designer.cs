@@ -13,13 +13,13 @@ namespace VideoSystemWeb {
     public partial class SiteMaster {
         
         /// <summary>
-        /// Controllo ScriptManager2.
+        /// Controllo ScriptManager1.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager2;
+        protected global::AjaxControlToolkit.ToolkitScriptManager ScriptManager1;
         
         /// <summary>
         /// Controllo imgLogo.

@@ -584,18 +584,10 @@
                                         </div>
                                     </div>
                                     <div class="w3-row-padding w3-center">
-<%--                                        <div class="w3-quarter">
-                                            <div class="input-group">
-                                              <div class="custom-file">
-                                                <input runat="server" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                                              </div>
-                                            </div>
-                                        </div>--%>
-                                        
-                                        <div class="w3-half">
+                                        <div class="w3-threequarter"">
                                             <asp:FileUpload ID="fuDoc" runat="server" Font-Size="X-Small" class="w3-input w3-border" Visible="false" />
                                         </div>
-                                        <div class="w3-half">
+                                        <div class="w3-quarter">
                                             <asp:Button ID="btnCaricaDocumento" runat="server" class="w3-btn w3-circle w3-green w3-left" ToolTip="Upload Documento" OnClick="CaricaDocumento" Text="+" Visible="false" />
                                         </div>
                                     </div>

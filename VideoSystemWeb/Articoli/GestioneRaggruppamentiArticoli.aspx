@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master"  AutoEventWireup="true" CodeBehind="GestioneRaggruppamentiArticoli.aspx.cs" Inherits="VideoSystemWeb.Articoli.GestioneRaggruppamentiArticoli" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <script>
     $(document).ready(function () {
@@ -133,17 +134,24 @@
                         <div class="w3-container w3-center">
                             <asp:Button ID="btnApriArticoli" runat="server" OnClick="btnApriArticoli_Click" Text="Gestione Articoli" class="w3-panel w3-green w3-border w3-round" />
                             <asp:PlaceHolder ID="phArticoli" runat="server" Visible="false">                                
-                                <div class="w3-row-padding w3-center w3-text-center" style="width:50%;">
-                                    <label>Selezione Gruppi da aggiungere</label>
-                                    <asp:DropDownList ID="ddlArticoliDaAggiungere" runat="server" AutoPostBack="false" Width="100%" class="w3-input w3-border">
-                                    </asp:DropDownList>                                                
+                                <div class="w3-row-padding w3-center w3-text-center" >
+                                    <div class="w3-twothird">
+                                        <label>Selezione Gruppi da aggiungere</label>
+                                        <asp:DropDownList ID="ddlArticoliDaAggiungere" runat="server" AutoPostBack="false" Width="100%" class="w3-input w3-border">
+                                        </asp:DropDownList>  
+                                    </div>
+                                    <div class="w3-third">
+                                        <label>Qta</label>
+                                        <asp:TextBox ID="tbQtaArticoliDaAggiungere" class="w3-input w3-border" runat="server" MaxLength="2" Text="1"></asp:TextBox>
+                                        <%--<ajaxToolkit:NumericUpDownExtender ID="nudeArticoli" Width="200" runat="server" Minimum="1" Maximum="20" Step="1" TargetControlID="tbQtaArticoliDaAggiungere" ></ajaxToolkit:NumericUpDownExtender>--%>
+                                    </div>
                                 </div>
                                 <asp:Button ID="btnInserisciArticolo" runat="server" Text="Inserisci Articolo" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciArticolo_Click" OnClientClick="return confirm('Confermi inserimento Articolo?')" />
                                 <asp:Button ID="btnEliminaArticolo" runat="server" Text="Elimina Articolo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaArticolo_Click" OnClientClick="return confirm('Confermi eliminazione Articolo?')" />
                             </asp:PlaceHolder>
                         </div>
+                        <%--<ajaxToolkit:AsyncFileUpload ID="AsyncFileUpload1" runat="server" UploaderStyle="Traditional" />--%>
                     </div>
-
             </asp:Panel>
         </asp:Panel>
     </ContentTemplate>

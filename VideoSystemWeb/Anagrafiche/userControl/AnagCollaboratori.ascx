@@ -60,6 +60,7 @@
         $("#<%=TbPiva.ClientID%>").val('');
         $("#<%=TbSocieta.ClientID%>").val('');
         $("#<%=ddlQualifiche.ClientID%>").val('');
+        $("#<%=tbRegione.ClientID%>").val('');
 
     }
 
@@ -113,6 +114,21 @@
                 <asp:TextBox ID="TbPiva" runat="server" MaxLength="11" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
             <div class="w3-quarter">
+                <label>Regione</label>
+                <asp:TextBox ID="tbRegione" runat="server" class="w3-input w3-border" placeholder=""></asp:TextBox>
+            </div>
+        </div>   
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-quarter">
+                &nbsp;
+            </div>
+            <div class="w3-quarter">
+                &nbsp;
+            </div>
+            <div class="w3-quarter">
+                &nbsp;
+            </div>
+            <div class="w3-quarter">
                 <label></label>
                 <table style="width:100%;">
                     <tr>
@@ -131,7 +147,7 @@
                     </tr>
                 </table>
             </div>
-        </div>   
+        </div>
 
         <div class="round">
             <asp:GridView ID="gv_collaboratori" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_collaboratori_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_collaboratori_PageIndexChanging" PageSize="20" >
@@ -241,13 +257,37 @@
                                 </div>
                                         
                                 <div class="w3-row-padding">
+                                     <div class="w3-half">
+<%--                                        <label>Attivo</label>
+                                        <asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>--%>
+                                         <label>Regione Riferimento</label>
+                                        <asp:DropDownList runat="server" ID="cmbMod_RegioneRiferimento" class="w3-input w3-border" disabled>
+                                            <asp:ListItem Text="" Value="" />
+                                            <asp:ListItem Text="Abruzzo" Value="Abruzzo" />
+                                            <asp:ListItem Text="Basilicata" Value="Basilicata" />
+                                            <asp:ListItem Text="Calabria" Value="Calabria" />
+                                            <asp:ListItem Text="Campania" Value="Campania" />
+                                            <asp:ListItem Text="Emilia Romagna" Value="Emilia Romagna" />
+                                            <asp:ListItem Text="Friuli Venezia Giulia" Value="Friuli Venezia Giulia" />
+                                            <asp:ListItem Text="Lazio" Value="Lazio" />
+                                            <asp:ListItem Text="Liguria" Value="Liguria" />
+                                            <asp:ListItem Text="Lombardia" Value="Lombardia" />
+                                            <asp:ListItem Text="Marche" Value="Marche" />
+                                            <asp:ListItem Text="Molise" Value="Molise" />
+                                            <asp:ListItem Text="Piemonte" Value="Piemonte" />
+                                            <asp:ListItem Text="Puglia" Value="Puglia" />
+                                            <asp:ListItem Text="Sardegna" Value="Sardegna" />
+                                            <asp:ListItem Text="Sicilia" Value="Sicilia" />
+                                            <asp:ListItem Text="Toscana" Value="Toscana" />
+                                            <asp:ListItem Text="Trentino Alto Adige" Value="Trentino Alto Adige" />
+                                            <asp:ListItem Text="Umbria" Value="Umbria" />
+                                            <asp:ListItem Text="Val d'Aosta" Value="Val d'Aosta" />
+                                            <asp:ListItem Text="Veneto" Value="Veneto" />
+                                        </asp:DropDownList>
+                                    </div>                                   
                                     <div class="w3-half">
-                                        <label>Assunto</label>
-                                        <asp:CheckBox ID="cbMod_Assunto" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
-                                    </div>
-                                    <div class="w3-half">
-                                        <label>Attivo</label>
-                                        <asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
+                                        <label>Assunto</label><br />
+                                        <asp:CheckBox ID="cbMod_Assunto" runat="server" class="w3-check" disabled></asp:CheckBox>
                                     </div>
                                 </div>
 

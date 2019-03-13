@@ -38,9 +38,10 @@ namespace VideoSystemWeb.Utente
                     Esito esito = Login_BLL.Instance.AggiornaUtente(u);
                     if (esito.codice != Esito.ESITO_OK)
                     {
+                        ShowError(esito.descrizione);
                         //panelErrore.Style.Remove("display");
-                        panelErrore.Style.Add("display", "block");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Add("display", "block");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
                     }
                     else
                     {
@@ -48,9 +49,16 @@ namespace VideoSystemWeb.Utente
                         lblMessage.Text = "PASSWORD MODIFICATA CORRETTAMENTE";
                         lblMessage.ForeColor = System.Drawing.Color.Green;
                         lblMessage.Visible = true;
+                        ShowSuccess("PASSWORD MODIFICATA CORRETTAMENTE");
                     }
                 }
-
+                else
+                {
+                    lblMessage.Text = "Errore nella convalida delle nuove Password";
+                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                    lblMessage.Visible = true;
+                    ShowError("La password inserita non è valida!");
+                }
 
             }
             else
@@ -58,6 +66,7 @@ namespace VideoSystemWeb.Utente
                 lblMessage.Text = "Errore nella convalida delle nuove Password";
                 lblMessage.ForeColor = System.Drawing.Color.Red;
                 lblMessage.Visible = true;
+                ShowWarning("Errore nella convalida delle nuove Password");
             }
         }
     }

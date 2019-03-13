@@ -86,11 +86,11 @@
                 <br />
                 
                 <!-- DIV MESSAGGI DI ERRORE -->        
-                <div id="Div1" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
+<%--                <div id="Div1" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
                   <span onclick="this.parentElement.style.display='none'"
                   class="w3-button w3-large w3-display-topright">&times;</span>
                   <p><asp:Label ID="Label1" runat="server" ></asp:Label></p>
-                </div>                             
+                </div>                             --%>
                 <div class="w3-container">
                     <!-- ELENCO TAB DETTAGLI COLLABORATORE -->
                     <div class="w3-bar w3-yellow w3-round">

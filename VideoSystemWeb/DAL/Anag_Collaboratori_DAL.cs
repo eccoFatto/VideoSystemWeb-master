@@ -62,6 +62,7 @@ namespace VideoSystemWeb.DAL
                                     collaboratore.ProvinciaNascita = dt.Rows[0].Field<string>("provinciaNascita");
                                     collaboratore.DataNascita = dt.Rows[0]["dataNascita"] != DBNull.Value ? dt.Rows[0].Field<DateTime>("dataNascita") : DateTime.MinValue;
                                     collaboratore.ComuneRiferimento = dt.Rows[0].Field<string>("comuneRiferimento");
+                                    collaboratore.RegioneRiferimento = dt.Rows[0].Field<string>("regioneRiferimento");
                                     collaboratore.PartitaIva = dt.Rows[0].Field<string>("partitaIva");
                                     collaboratore.NomeSocieta = dt.Rows[0].Field<string>("nomeSocieta");
                                     collaboratore.Assunto = dt.Rows[0].Field<bool>("assunto");
@@ -73,11 +74,11 @@ namespace VideoSystemWeb.DAL
                                     collaboratore.Telefoni = Anag_Telefoni_Collaboratori_DAL.Instance.getTelefoniByIdCollaboratore(ref esito, collaboratore.Id);
                                     collaboratore.Documenti = Anag_Documenti_Collaboratori_DAL.Instance.getDocumentiByIdCollaboratore(ref esito, collaboratore.Id);
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Collaboratore con id " + idCollaboratore.ToString() + " non trovato in tabella anag_collaboratori ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Collaboratore con id " + idCollaboratore.ToString() + " non trovato in tabella anag_collaboratori ";
+                                //}
                             }
                         }
                     }
@@ -142,6 +143,7 @@ namespace VideoSystemWeb.DAL
                                         collaboratore.ProvinciaNascita = riga.Field<string>("provinciaNascita");
                                         collaboratore.DataNascita = riga["dataNascita"] != DBNull.Value ? riga.Field<DateTime>("dataNascita") : DateTime.MinValue;
                                         collaboratore.ComuneRiferimento = riga.Field<string>("comuneRiferimento");
+                                        collaboratore.RegioneRiferimento = riga.Field<string>("regioneRiferimento");
                                         collaboratore.PartitaIva = riga.Field<string>("partitaIva");
                                         collaboratore.NomeSocieta = riga.Field<string>("nomeSocieta");
                                         collaboratore.Assunto = riga.Field<bool>("assunto");
@@ -155,11 +157,11 @@ namespace VideoSystemWeb.DAL
                                         listaCollaboratori.Add(collaboratore);
                                     }
                                 }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella anag_collaboratori ";
-                                }
+                                //else
+                                //{
+                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_collaboratori ";
+                                //}
                             }
                         }
                     }
@@ -174,7 +176,7 @@ namespace VideoSystemWeb.DAL
             return listaCollaboratori;
         }
 
-        public int CreaCollaboratore(Anag_Collaboratori collaboratore, ref Esito esito)
+        public int CreaCollaboratore(Anag_Collaboratori collaboratore, Anag_Utenti utente, ref Esito esito)
         {
             //@cognome varchar(50),
             //@nome varchar(50),
@@ -205,6 +207,16 @@ namespace VideoSystemWeb.DAL
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
                             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter cognome = new SqlParameter("@cognome", collaboratore.Cognome);
                             cognome.Direction = ParameterDirection.Input;
@@ -241,6 +253,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter comuneRiferimento = new SqlParameter("@comuneRiferimento", collaboratore.ComuneRiferimento);
                             comuneRiferimento.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(comuneRiferimento);
+
+                            SqlParameter regioneRiferimento = new SqlParameter("@regioneRiferimento", collaboratore.RegioneRiferimento);
+                            regioneRiferimento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(regioneRiferimento);
 
                             SqlParameter partitaIva = new SqlParameter("@partitaIva", collaboratore.PartitaIva);
                             partitaIva.Direction = ParameterDirection.Input;
@@ -287,7 +303,7 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaCollaboratore(Anag_Collaboratori collaboratore)
+        public Esito AggiornaCollaboratore(Anag_Collaboratori collaboratore, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -301,6 +317,16 @@ namespace VideoSystemWeb.DAL
                             StoreProc.Connection = con;
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", collaboratore.Id);
                             id.Direction = ParameterDirection.Input;
@@ -342,6 +368,10 @@ namespace VideoSystemWeb.DAL
                             comuneRiferimento.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(comuneRiferimento);
 
+                            SqlParameter regioneRiferimento = new SqlParameter("@regioneRiferimento", collaboratore.RegioneRiferimento);
+                            regioneRiferimento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(regioneRiferimento);
+
                             System.Data.SqlClient.SqlParameter partitaIva = new System.Data.SqlClient.SqlParameter("@partitaIva", collaboratore.PartitaIva);
                             partitaIva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(partitaIva);
@@ -379,7 +409,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito EliminaCollaboratore(int idCollaboratore)
+        public Esito EliminaCollaboratore(int idCollaboratore, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -397,6 +427,18 @@ namespace VideoSystemWeb.DAL
                             SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
                             id.Direction = ParameterDirection.Input;
                             id.Value = idCollaboratore;
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+
                             StoreProc.Parameters.Add(id);
 
                             StoreProc.Connection.Open();

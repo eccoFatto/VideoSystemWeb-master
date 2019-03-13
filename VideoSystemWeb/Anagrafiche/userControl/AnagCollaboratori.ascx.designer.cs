@@ -94,6 +94,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox TbPiva;
         
         /// <summary>
+        /// Controllo tbRegione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbRegione;
+        
+        /// <summary>
         /// Controllo btnRicercaCollaboratori.
         /// </summary>
         /// <remarks>
@@ -310,6 +319,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbMod_NomeSocieta;
         
         /// <summary>
+        /// Controllo cmbMod_RegioneRiferimento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_RegioneRiferimento;
+        
+        /// <summary>
         /// Controllo cbMod_Assunto.
         /// </summary>
         /// <remarks>
@@ -317,15 +335,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox cbMod_Assunto;
-        
-        /// <summary>
-        /// Controllo cbMod_Attivo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbMod_Attivo;
         
         /// <summary>
         /// Controllo tbMod_Note.

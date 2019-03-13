@@ -419,8 +419,9 @@ namespace VideoSystemWeb.Articoli.userControl
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
-                    panelErrore.Style.Add("display","block");
-                    lbl_MessaggioErrore.Text = esito.descrizione;
+                    //panelErrore.Style.Add("display","block");
+                    //lbl_MessaggioErrore.Text = esito.descrizione;
+                    basePage.ShowError(esito.descrizione);
                     AttivaDisattivaModificaArticolo(true);
                 }
                 else
@@ -443,8 +444,9 @@ namespace VideoSystemWeb.Articoli.userControl
 
             if (esito.codice != Esito.ESITO_OK)
             {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+                //panelErrore.Style.Remove("display");
+                //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+                basePage.ShowError("Controllare i campi evidenziati");
             }
             else
             {
@@ -455,8 +457,9 @@ namespace VideoSystemWeb.Articoli.userControl
 
                 if (esito.codice != Esito.ESITO_OK)
                 {
-                    panelErrore.Style.Remove("display");
-                    lbl_MessaggioErrore.Text = esito.descrizione;
+                    //panelErrore.Style.Remove("display");
+                    //lbl_MessaggioErrore.Text = esito.descrizione;
+                    basePage.ShowError(esito.descrizione);
                 }
                 EditArticolo_Click(null, null);
             }
@@ -508,8 +511,9 @@ namespace VideoSystemWeb.Articoli.userControl
 
             if (esito.codice != Esito.ESITO_OK)
             {
-                panelErrore.Style.Remove("display");
-                lbl_MessaggioErrore.Text = esito.descrizione;
+                //panelErrore.Style.Remove("display");
+                //lbl_MessaggioErrore.Text = esito.descrizione;
+                basePage.ShowError(esito.descrizione);
             }
             else
             {
@@ -527,8 +531,9 @@ namespace VideoSystemWeb.Articoli.userControl
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
-                    panelErrore.Style.Add("display","block");
-                    lbl_MessaggioErrore.Text = esito.descrizione;
+                    //panelErrore.Style.Add("display","block");
+                    //lbl_MessaggioErrore.Text = esito.descrizione;
+                    basePage.ShowError(esito.descrizione);
                 }
                 else
                 {
@@ -595,8 +600,9 @@ namespace VideoSystemWeb.Articoli.userControl
                     if (esito.codice != Esito.ESITO_OK)
                     {
                         //panelErrore.Style.Remove("display");
-                        panelErrore.Style.Add("display", "block");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Add("display", "block");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        basePage.ShowError(esito.descrizione);
                     }
                     else
                     {
@@ -607,15 +613,17 @@ namespace VideoSystemWeb.Articoli.userControl
                 {
                     log.Error("btnConfermaInserimentoGruppo_Click", ex);
                     //panelErrore.Style.Remove("display");
-                    panelErrore.Style.Add("display", "block");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Add("display", "block");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    basePage.ShowError(ex.Message);
                 }
             }
             else
             {
                 //panelErrore.Style.Remove("display");
-                panelErrore.Style.Add("display", "block");
-                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                //panelErrore.Style.Add("display", "block");
+                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                basePage.ShowError("Verificare il corretto inserimento dei campi");
             }
 
         }
@@ -646,8 +654,9 @@ namespace VideoSystemWeb.Articoli.userControl
                     if (esito.codice != Esito.ESITO_OK )
                     {
                         log.Error(esito.descrizione);
-                        panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Remove("display");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        basePage.ShowError(esito.descrizione);
                     }
                     else
                     {
@@ -659,8 +668,9 @@ namespace VideoSystemWeb.Articoli.userControl
                         if (esito.codice != Esito.ESITO_OK)
                         {
                             log.Error(esito.descrizione);
-                            panelErrore.Style.Remove("display");
-                            lbl_MessaggioErrore.Text = esito.descrizione;
+                            //panelErrore.Style.Remove("display");
+                            //lbl_MessaggioErrore.Text = esito.descrizione;
+                            basePage.ShowError(esito.descrizione);
                         }
                         else
                         {
@@ -673,14 +683,16 @@ namespace VideoSystemWeb.Articoli.userControl
                 {
                     log.Error("btnEliminaGruppo_Click", ex);
                     //panelErrore.Style.Remove("display");
-                    panelErrore.Style.Add("display", "block");
-                    lbl_MessaggioErrore.Text = ex.Message;
+                    //panelErrore.Style.Add("display", "block");
+                    //lbl_MessaggioErrore.Text = ex.Message;
+                    basePage.ShowError(ex.Message);
                 }
             }
             else
             {
-                panelErrore.Style.Add("display", "block");
-                lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                //panelErrore.Style.Add("display", "block");
+                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+                basePage.ShowError("Verificare il corretto inserimento dei campi");
             }
 
         }

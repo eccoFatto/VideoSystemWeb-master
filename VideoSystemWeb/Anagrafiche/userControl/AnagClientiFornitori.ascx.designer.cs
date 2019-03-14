@@ -463,15 +463,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.CheckBox cbMod_Fornitore;
         
         /// <summary>
-        /// Controllo cbMod_Attivo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbMod_Attivo;
-        
-        /// <summary>
         /// Controllo tbMod_Note.
         /// </summary>
         /// <remarks>

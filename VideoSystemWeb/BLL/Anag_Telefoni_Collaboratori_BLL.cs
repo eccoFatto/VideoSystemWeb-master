@@ -35,23 +35,23 @@ namespace VideoSystemWeb.BLL
             return telefonoREt;
         }
 
-        public int CreaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore, ref Esito esito)
+        public int CreaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore, Anag_Utenti utente, ref Esito esito)
         {
-            int iREt = Anag_Telefoni_Collaboratori_DAL.Instance.CreaTelefonoCollaboratore(telefonoCollaboratore, ref esito);
+            int iREt = Anag_Telefoni_Collaboratori_DAL.Instance.CreaTelefonoCollaboratore(telefonoCollaboratore, utente, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore)
+        public Esito AggiornaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore, Anag_Utenti utente)
         {
-            Esito esito = Anag_Telefoni_Collaboratori_DAL.Instance.AggiornaTelefonoCollaboratore(telefonoCollaboratore);
+            Esito esito = Anag_Telefoni_Collaboratori_DAL.Instance.AggiornaTelefonoCollaboratore(telefonoCollaboratore, utente);
 
             return esito;
         }
 
-        public Esito EliminaTelefonoCollaboratore(int idTelefonoCollaboratore)
+        public Esito EliminaTelefonoCollaboratore(int idTelefonoCollaboratore, Anag_Utenti utente)
         {
-            Esito esito = Anag_Telefoni_Collaboratori_DAL.Instance.EliminaTelefonoCollaboratore(idTelefonoCollaboratore);
+            Esito esito = Anag_Telefoni_Collaboratori_DAL.Instance.EliminaTelefonoCollaboratore(idTelefonoCollaboratore, utente);
 
             return esito;
         }

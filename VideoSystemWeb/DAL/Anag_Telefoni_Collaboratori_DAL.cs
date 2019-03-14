@@ -142,7 +142,7 @@ namespace VideoSystemWeb.DAL
             return telefono;
 
         }
-        public int CreaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore, ref Esito esito)
+        public int CreaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore, Anag_Utenti utente, ref Esito esito)
         {
             //@id_collaboratore int,
             //@priorita int,
@@ -166,6 +166,16 @@ namespace VideoSystemWeb.DAL
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
                             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", telefonoCollaboratore.Id_collaboratore);
                             id_collaboratore.Direction = ParameterDirection.Input;
@@ -224,7 +234,7 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore)
+        public Esito AggiornaTelefonoCollaboratore(Anag_Telefoni_Collaboratori telefonoCollaboratore, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -242,6 +252,16 @@ namespace VideoSystemWeb.DAL
                             System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", telefonoCollaboratore.Id);
                             id.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", telefonoCollaboratore.Id_collaboratore);
                             id_collaboratore.Direction = ParameterDirection.Input;
@@ -296,7 +316,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito EliminaTelefonoCollaboratore(int idTelefonoCollaboratore)
+        public Esito EliminaTelefonoCollaboratore(int idTelefonoCollaboratore, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -315,6 +335,16 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             id.Value = idTelefonoCollaboratore;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             StoreProc.Connection.Open();
 

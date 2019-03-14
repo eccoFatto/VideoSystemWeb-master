@@ -909,5 +909,42 @@ namespace VideoSystemWeb.DAL
             parIdDatiAgenda.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(parIdDatiAgenda);
         }
+
+        public string GetMaxCodiceLavorazione(string anno, ref Esito esito)
+        {
+            string maxCodiceLavorazione = "";
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT MAX(codice_lavoro) FROM " + TABELLA_DATI_AGENDA + " WHERE codice_lavoro like '" + anno + "%'"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    maxCodiceLavorazione = dt.Rows[0].Field<string>(0);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = "Agenda_DAL.cs - GetMaxCodiceLavorazione " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return maxCodiceLavorazione;
+        }
     }
 }

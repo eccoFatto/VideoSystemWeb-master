@@ -191,6 +191,12 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
             hf_IdStato.Value = stato.ToString();
+
+            if (stato == DatiAgenda.STATO_OFFERTA)
+            {
+                txt_CodiceLavoro.Text = Agenda_BLL.Instance.GeneraCodiceLavorazione();
+            }
+
             txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, stato, ref esito).nome;
         }
 

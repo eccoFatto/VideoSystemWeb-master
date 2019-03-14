@@ -135,12 +135,7 @@ namespace VideoSystemWeb.BLL
         public Esito AggiornaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli)
         {
             Esito esito = new Esito();
-            //if (evento.id_stato == DatiAgenda.STATO_RIPOSO && evento.id_tipologia == 0)
-            //{
-            //    evento.id_tipologia = UtilityTipologiche.getElementByNome(Base_DAL.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, false, ref esito), "DUMMY", ref esito).id;
-            //}
-
-
+          
             switch (evento.id_stato)
             {
                 case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
@@ -166,6 +161,23 @@ namespace VideoSystemWeb.BLL
             esito = Agenda_DAL.Instance.EliminaEvento(idEvento);
 
             return esito;
+        }
+
+        public string GeneraCodiceLavorazione()
+        {
+            Esito esito = new Esito();
+            string annoCorrente = DateTime.Now.Year.ToString();
+            string codiceLavorazione = Agenda_DAL.Instance.GetMaxCodiceLavorazione(annoCorrente, ref esito);
+
+            if (string.IsNullOrEmpty(codiceLavorazione))
+            {
+                return annoCorrente + "00001";
+            }
+            else
+            {
+                int progressivoCodLavorazione = int.Parse(codiceLavorazione.Substring(4));
+                return annoCorrente + ((progressivoCodLavorazione + 1).ToString()).PadLeft(5, '0');
+            }
         }
     }
 }

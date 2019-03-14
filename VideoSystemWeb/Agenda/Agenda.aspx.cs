@@ -128,8 +128,6 @@ namespace VideoSystemWeb.Agenda
             popupAppuntamento.SetStato(DatiAgenda.STATO_OFFERTA);
             btnLavorazione.Visible = false;
 
-            hf_tabSelezionata.Value = "2";
-
             UpdatePopup();
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "passaAOfferta", "openTabEvento(event,'Offerta');", true);
@@ -547,7 +545,7 @@ namespace VideoSystemWeb.Agenda
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli;
 
-            esito = ValidazioneSalvataggio(eventoSelezionato);
+            esito = ValidazioneSalvataggio(eventoSelezionato, listaDatiArticoli);
 
             if (esito.codice == Esito.ESITO_OK)
             {
@@ -570,7 +568,7 @@ namespace VideoSystemWeb.Agenda
             return esito;
         }
 
-        private Esito ValidazioneSalvataggio(DatiAgenda eventoSelezionato)
+        private Esito ValidazioneSalvataggio(DatiAgenda eventoSelezionato, List<DatiArticoli> listaDatiArticoli)
         {
             Esito esito = new Esito();
             esito = popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
@@ -590,6 +588,11 @@ namespace VideoSystemWeb.Agenda
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
                 esito.descrizione = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
+            }
+            else if (eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA && (listaDatiArticoli==null || listaDatiArticoli.Count==0))
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.descrizione = "Non è possibile salvare un'offerta senza aver associato gli articoli";
             }
 
             return esito;
@@ -629,11 +632,6 @@ namespace VideoSystemWeb.Agenda
         {
             return evento.data_inizio_lavorazione.Date == data.Date;
         }
-
-        //private bool ControlloGiorniViaggio(DatiAgenda eventoSelezionato)
-        //{
-        //    return (eventoSelezionato.durata_viaggio_andata + eventoSelezionato.durata_viaggio_ritorno) < eventoSelezionato.durata_lavorazione;
-        //}
         #endregion
 
         #region COSTRUZIONE PAGINA

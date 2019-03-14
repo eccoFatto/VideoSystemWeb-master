@@ -242,6 +242,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 articoloSelezionato = listaDatiArticoli.FirstOrDefault(x => x.Id == id);
             }
 
+            int indexArticolo = listaDatiArticoli.IndexOf(articoloSelezionato);
+
             switch (e.CommandName)
             {
                 case "modifica":
@@ -269,6 +271,24 @@ namespace VideoSystemWeb.Agenda.userControl
                     AggiornaTotali();
                     resetPanelOfferta();
 
+                    break;
+                case "moveUp":
+                    if (indexArticolo > 0)
+                    {
+                        listaDatiArticoli.Remove(articoloSelezionato);
+                        listaDatiArticoli.Insert(indexArticolo - 1, articoloSelezionato);
+                        gvArticoli.DataSource = listaDatiArticoli;
+                        gvArticoli.DataBind();
+                    }
+                    break;
+                case "moveDown":
+                    if (indexArticolo < listaDatiArticoli.Count-1)
+                    {
+                        listaDatiArticoli.Remove(articoloSelezionato);
+                        listaDatiArticoli.Insert(indexArticolo + 1, articoloSelezionato);
+                        gvArticoli.DataSource = listaDatiArticoli;
+                        gvArticoli.DataBind();
+                    }
                     break;
             }
 

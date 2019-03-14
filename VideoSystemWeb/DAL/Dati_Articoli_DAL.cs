@@ -39,7 +39,7 @@ namespace VideoSystemWeb.DAL
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
                     string query = "SELECT * FROM dati_articoli WHERE idDatiAgenda = " + idDatiAgenda.ToString();
-                    query += " ORDER BY idArtArticoli";
+                    query += " ORDER BY id";
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())

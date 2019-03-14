@@ -69,15 +69,17 @@
                 <asp:Label ID="lbl_selezionareArticolo" runat="server" Text="Selezionare un articolo dalla lista" Style="position: absolute; top: 45%; left: 25%; font-size: large; color: cornflowerblue" />
                 <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvArticoli_RowCommand" DataMember="IdentificatoreOggetto">
                     <Columns>
-                        <asp:BoundField DataField="id" HeaderText="Codice" />
+                        <%--<asp:BoundField DataField="id" HeaderText="Codice" />--%>
                         <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
-                        <asp:BoundField DataField="Quantita" HeaderText="Quantità" />
-                        <asp:BoundField DataField="Prezzo" HeaderText="Prezzo" />
+                        <asp:BoundField DataField="Quantita" HeaderText="Q.tà" />
+                        <asp:BoundField DataField="Prezzo" HeaderText="Listino" />
                         <asp:BoundField DataField="Costo" HeaderText="Costo" />
                         <asp:BoundField DataField="Iva" HeaderText="Iva" />
                         <asp:BoundField DataField="Stampa" HeaderText="Stampa" />
                         <asp:TemplateField HeaderText="Seleziona">
                             <ItemTemplate>
+                                <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
+                                <asp:ImageButton ID="imgDown" runat="server" ImageUrl="/Images/arrow-down-icon.png" ToolTip="Sposta giù" CommandName="moveDown" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                 <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                 <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" CommandName="elimina" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="return confermaEliminazioneArticolo();" />
                             </ItemTemplate>
@@ -131,6 +133,7 @@
                             </div>
                             <div class="w3-third" style="padding: 5px">
                                 <label style="margin-bottom: 0.2rem;">Quantità</label>
+                                
                                 <asp:TextBox ID="txt_Quantita" runat="server" class="w3-input w3-border" placeholder="iva" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                             </div>
 

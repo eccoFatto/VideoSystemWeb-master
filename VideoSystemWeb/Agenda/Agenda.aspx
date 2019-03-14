@@ -220,7 +220,7 @@
 
                         <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();" />
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" />
-                        <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();" OnClick="btnLavorazione_Click" Visible="false" />
+                        <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();$('.loader').show();" OnClick="btnLavorazione_Click" Visible="false" />
                     </div>
 
                 </asp:Panel>

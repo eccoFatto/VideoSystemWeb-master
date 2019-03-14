@@ -587,12 +587,12 @@ namespace VideoSystemWeb.Agenda
             else if (!IsDisponibileDataRisorsa(eventoSelezionato))
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.descrizione = "Non è possibile salvare l'evento perché la risorsa è già impiegata nel periodo selezionato";
+                esito.descrizione = "Non è possibile salvare perché la risorsa è già impiegata nel periodo selezionato";
             }
             else if (eventoSelezionato.id_stato == DatiAgenda.STATO_OFFERTA && (listaDatiArticoli==null || listaDatiArticoli.Count==0))
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.descrizione = "Non è possibile salvare un'offerta senza aver associato gli articoli";
+                esito.descrizione = "Non è possibile salvare senza aver associato gli articoli";
             }
 
             return esito;

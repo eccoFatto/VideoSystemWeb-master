@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master"  AutoEventWireup="true" CodeBehind="GestioneRaggruppamentiArticoli.aspx.cs" Inherits="VideoSystemWeb.Articoli.GestioneRaggruppamentiArticoli" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <script>
     $(document).ready(function () {
@@ -40,7 +41,7 @@
         pannelloPopup.style.display = "none";
     }
 </script>
-<Label><asp:Label ID="lblRaggruppamenti" runat="server" Text="RAGGRUPPAMENTI ARTICOLI" ForeColor="Teal"></asp:Label></Label>
+<Label><asp:Label ID="lblRaggruppamenti" runat="server" Text="ARTICOLI COMPOSTI" ForeColor="Teal"></asp:Label></Label>
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
         <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
@@ -81,7 +82,7 @@
             <div class="modalBackground"></div>
             <asp:Panel  runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto">
                 <div class="w3-container w3-center w3-xlarge">
-                    GESTIONE RAGGRUPPAMENTI
+                    GESTIONE ARTICOLI COMPOSTI
                 </div>
                 <br />
                 
@@ -94,8 +95,8 @@
                 <div class="w3-container">
                     <!-- ELENCO TAB DETTAGLI COLLABORATORE -->
                     <div class="w3-bar w3-yellow w3-round">
-                        <div class="w3-bar-item w3-button w3-yellow" onclick="openDettaglioRaggruppamento('Raggruppamento')">Raggruppamento</div>
-                        <div class="w3-bar-item w3-button w3-yellow" onclick="openDettaglioRaggruppamento('Articoli')">Articoli</div>
+                        <div class="w3-bar-item w3-button w3-yellow" onclick="openDettaglioRaggruppamento('Raggruppamento')">Articoli Composti</div>
+                        <div class="w3-bar-item w3-button w3-yellow" onclick="openDettaglioRaggruppamento('Articoli')">Articoli Associati</div>
                         <div class="w3-bar-item w3-button w3-yellow w3-right">
                             <div id="btnChiudiPopup" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
                         </div>
@@ -103,12 +104,12 @@
                 </div>
                     <!-- TAB RAGGRUPPAMENTI -->
                     <div id="Raggruppamento" class="w3-container w3-border ragg" style="display:block" >
-                        <label>Raggruppamento</label>
+                        <label>Articoli Composti</label>
                         <div class="w3-container w3-center">
                             <p>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
-                                        <label>Nome Raggruppamento</label>
+                                        <label>Nome Articolo Composto</label>
                                         <asp:TextBox ID="tbInsNomeRaggruppamento" runat="server" MaxLength="50" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
                                     <div class="w3-half">
@@ -128,22 +129,29 @@
                     </div>
                 <!-- TAB ARTICOLI -->
                     <div id="Articoli" class="w3-container w3-border ragg" style="display:none">
-                        <label>Articoli</label>
+                        <label>Articoli Associati</label>
                         <asp:ListBox ID="lbMod_Articoli" runat="server" class="w3-input w3-border " Rows="3" ></asp:ListBox>
                         <div class="w3-container w3-center">
                             <asp:Button ID="btnApriArticoli" runat="server" OnClick="btnApriArticoli_Click" Text="Gestione Articoli" class="w3-panel w3-green w3-border w3-round" />
                             <asp:PlaceHolder ID="phArticoli" runat="server" Visible="false">                                
-                                <div class="w3-row-padding w3-center w3-text-center" style="width:50%;">
-                                    <label>Selezione Gruppi da aggiungere</label>
-                                    <asp:DropDownList ID="ddlArticoliDaAggiungere" runat="server" AutoPostBack="false" Width="100%" class="w3-input w3-border">
-                                    </asp:DropDownList>                                                
+                                <div class="w3-row-padding w3-center w3-text-center" >
+                                    <div class="w3-threequarter">
+                                        <label>Selezione Gruppi da aggiungere</label>
+                                        <asp:DropDownList ID="ddlArticoliDaAggiungere" runat="server" AutoPostBack="false" Width="100%" class="w3-input w3-border">
+                                        </asp:DropDownList>  
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Qta</label>
+                                        <asp:TextBox ID="tbQtaArticoliDaAggiungere" class="w3-input w3-border" runat="server" MaxLength="2" Text="1"></asp:TextBox>
+                                        <%--<ajaxToolkit:NumericUpDownExtender ID="nudeArticoli" Width="200" runat="server" Minimum="1" Maximum="20" Step="1" TargetControlID="tbQtaArticoliDaAggiungere" ></ajaxToolkit:NumericUpDownExtender>--%>
+                                    </div>
                                 </div>
                                 <asp:Button ID="btnInserisciArticolo" runat="server" Text="Inserisci Articolo" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciArticolo_Click" OnClientClick="return confirm('Confermi inserimento Articolo?')" />
                                 <asp:Button ID="btnEliminaArticolo" runat="server" Text="Elimina Articolo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaArticolo_Click" OnClientClick="return confirm('Confermi eliminazione Articolo?')" />
                             </asp:PlaceHolder>
                         </div>
+                        <%--<ajaxToolkit:AsyncFileUpload ID="AsyncFileUpload1" runat="server" UploaderStyle="Traditional" />--%>
                     </div>
-
             </asp:Panel>
         </asp:Panel>
     </ContentTemplate>

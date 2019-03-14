@@ -164,16 +164,13 @@
                     </div>
                     <!-- TAB ARTICOLI -->
                     <div id="Articolo" class="w3-container w3-border articolo"  style="display:block">
-
-                        <div class="w3-row-padding">
-                            <div class="w3-half">
-                                <label>Descrizione</label>
-                                <asp:TextBox ID="tbMod_Descrizione" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"  ></asp:TextBox>
-                            </div>
-                            <div class="w3-half">
-                                <label>Desc. breve</label>
-                                <asp:TextBox ID="tbMod_DescrizioneBreve" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"  MaxLength="11"></asp:TextBox>
-                            </div>
+                        <div class="w3-container">
+                            <label>Descrizione</label>
+                            <asp:TextBox ID="tbMod_Descrizione" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="3" ></asp:TextBox>
+                        </div>
+                        <div class="w3-container">
+                            <label>Desc. breve</label>
+                            <asp:TextBox ID="tbMod_DescrizioneBreve" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"  MaxLength="60"></asp:TextBox>
                         </div>
                                         
                         <div class="w3-row-padding">

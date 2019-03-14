@@ -385,7 +385,29 @@ namespace VideoSystemWeb.Articoli
 
                     nuovoGruppoArticolo.IdArtGruppi = Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim());
 
-                    int iNuovoArtGruppo = Art_Gruppi_Articoli_BLL.Instance.CreaGruppoArticolo(nuovoGruppoArticolo, ref esito);
+                    int nArtDaInserire = 1;
+                    if (!string.IsNullOrEmpty(tbQtaArticoliDaAggiungere.Text))
+                    {
+                        try
+                        {
+                            int x = Convert.ToInt16(tbQtaArticoliDaAggiungere.Text.Trim());
+                            nArtDaInserire = x;
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        
+                    }
+
+                    for (int i = 0; i < nArtDaInserire; i++)
+                    {
+                        int iNuovoArtGruppo = Art_Gruppi_Articoli_BLL.Instance.CreaGruppoArticolo(nuovoGruppoArticolo, ref esito);
+                        if (esito.codice != Esito.ESITO_OK)
+                        {
+                            break;
+                        }
+                    }
+                    
 
                     if (esito.codice != Esito.ESITO_OK)
                     {

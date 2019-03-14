@@ -35,23 +35,23 @@ namespace VideoSystemWeb.BLL
             return documentoREt;
         }
 
-        public int CreaDocumentoCollaboratore(Anag_Documenti_Collaboratori documentoCollaboratore, ref Esito esito)
+        public int CreaDocumentoCollaboratore(Anag_Documenti_Collaboratori documentoCollaboratore, Anag_Utenti utente, ref Esito esito)
         {
-            int iREt = Anag_Documenti_Collaboratori_DAL.Instance.CreaDocumentoCollaboratore(documentoCollaboratore, ref esito);
+            int iREt = Anag_Documenti_Collaboratori_DAL.Instance.CreaDocumentoCollaboratore(documentoCollaboratore, utente, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaDocumentoCollaboratore(Anag_Documenti_Collaboratori documentoCollaboratore)
+        public Esito AggiornaDocumentoCollaboratore(Anag_Documenti_Collaboratori documentoCollaboratore, Anag_Utenti utente)
         {
-            Esito esito = Anag_Documenti_Collaboratori_DAL.Instance.AggiornaDocumentoCollaboratore(documentoCollaboratore);
+            Esito esito = Anag_Documenti_Collaboratori_DAL.Instance.AggiornaDocumentoCollaboratore(documentoCollaboratore, utente);
 
             return esito;
         }
 
-        public Esito EliminaDocumentoCollaboratore(int idDocumentoCollaboratore)
+        public Esito EliminaDocumentoCollaboratore(int idDocumentoCollaboratore, Anag_Utenti utente)
         {
-            Esito esito = Anag_Documenti_Collaboratori_DAL.Instance.EliminaDocumentoCollaboratore(idDocumentoCollaboratore);
+            Esito esito = Anag_Documenti_Collaboratori_DAL.Instance.EliminaDocumentoCollaboratore(idDocumentoCollaboratore,utente);
 
             return esito;
         }

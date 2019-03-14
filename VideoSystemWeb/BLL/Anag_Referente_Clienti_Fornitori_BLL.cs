@@ -35,23 +35,23 @@ namespace VideoSystemWeb.BLL
             return referenteREt;
         }
 
-        public int CreaReferente(Anag_Referente_Clienti_Fornitori referente, ref Esito esito)
+        public int CreaReferente(Anag_Referente_Clienti_Fornitori referente, Anag_Utenti utente, ref Esito esito)
         {
-            int iREt = Anag_Referente_Clienti_Fornitori_DAL.Instance.CreaReferente(referente, ref esito);
+            int iREt = Anag_Referente_Clienti_Fornitori_DAL.Instance.CreaReferente(referente, utente, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaReferente(Anag_Referente_Clienti_Fornitori referente)
+        public Esito AggiornaReferente(Anag_Referente_Clienti_Fornitori referente, Anag_Utenti utente)
         {
-            Esito esito = Anag_Referente_Clienti_Fornitori_DAL.Instance.AggiornaReferente(referente);
+            Esito esito = Anag_Referente_Clienti_Fornitori_DAL.Instance.AggiornaReferente(referente, utente);
 
             return esito;
         }
 
-        public Esito EliminaReferente(int idReferente)
+        public Esito EliminaReferente(int idReferente, Anag_Utenti utente)
         {
-            Esito esito = Anag_Referente_Clienti_Fornitori_DAL.Instance.EliminaReferente(idReferente);
+            Esito esito = Anag_Referente_Clienti_Fornitori_DAL.Instance.EliminaReferente(idReferente, utente);
 
             return esito;
         }

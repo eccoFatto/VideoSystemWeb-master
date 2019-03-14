@@ -359,18 +359,18 @@
                         </div>
 
                         <div class="w3-row-padding">
-                            <div class="w3-quarter">
+                            <div class="w3-half">
                                 <label>Cliente</label>
                                 <asp:CheckBox ID="cbMod_Cliente" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
                             </div>
-                            <div class="w3-quarter">
+                            <div class="w3-half">
                                 <label>Fornitore</label>
                                 <asp:CheckBox ID="cbMod_Fornitore" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
                             </div>
-                            <div class="w3-quarter">
+<%--                            <div class="w3-quarter">
                                 <label>Attivo</label>
                                 <asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
-                            </div>
+                            </div>--%>
                         </div>
 
                         <div class="w3-container">

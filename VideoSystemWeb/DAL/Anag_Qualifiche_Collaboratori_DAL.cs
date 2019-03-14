@@ -86,7 +86,7 @@ namespace VideoSystemWeb.DAL
             return listaQUalifiche;
         }
 
-        public int CreaQualificaCollaboratore(Anag_Qualifiche_Collaboratori qualificaCollaboratore, ref Esito esito)
+        public int CreaQualificaCollaboratore(Anag_Qualifiche_Collaboratori qualificaCollaboratore, Anag_Utenti utente, ref Esito esito)
         {
             //@id int,
             //@id_collaboratore int,
@@ -111,6 +111,16 @@ namespace VideoSystemWeb.DAL
                             SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", qualificaCollaboratore.Id_collaboratore);
                             id_collaboratore.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id_collaboratore);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter priorita = new SqlParameter("@priorita", qualificaCollaboratore.Priorita);
                             priorita.Direction = ParameterDirection.Input;
@@ -149,7 +159,7 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaQualificaCollaboratore(Anag_Qualifiche_Collaboratori qualificaCollaboratore)
+        public Esito AggiornaQualificaCollaboratore(Anag_Qualifiche_Collaboratori qualificaCollaboratore, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -167,6 +177,16 @@ namespace VideoSystemWeb.DAL
                             System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", qualificaCollaboratore.Id);
                             id.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", qualificaCollaboratore.Id_collaboratore);
                             id_collaboratore.Direction = ParameterDirection.Input;
@@ -205,7 +225,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito EliminaQualificaCollaboratore(int idQualificaCollaboratore)
+        public Esito EliminaQualificaCollaboratore(int idQualificaCollaboratore, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -224,6 +244,16 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             id.Value = idQualificaCollaboratore;
                             StoreProc.Parameters.Add(id);
+                            
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             StoreProc.Connection.Open();
 

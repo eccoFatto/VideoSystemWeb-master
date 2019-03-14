@@ -500,7 +500,7 @@
     <Compile Include="BLL\Anag_Email_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Indirizzi_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Qualifiche_Collaboratori_BLL.cs" />
-    <Compile Include="BLL\Anag_Referente_Clienti_Fornitori_BLL - Copia.cs" />
+    <Compile Include="BLL\Anag_Referente_Clienti_Fornitori_BLL.cs" />
     <Compile Include="BLL\Anag_Telefoni_Collaboratori_BLL.cs" />
     <Compile Include="BLL\BasePage.cs">
       <SubType>ASPXCodeBehind</SubType>

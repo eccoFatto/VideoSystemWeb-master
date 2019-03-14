@@ -133,7 +133,7 @@ namespace VideoSystemWeb.DAL
             return listaEmail;
         }
 
-        public int CreaEmailCollaboratore(Anag_Email_Collaboratori emailCollaboratore, ref Esito esito)
+        public int CreaEmailCollaboratore(Anag_Email_Collaboratori emailCollaboratore, Anag_Utenti utente, ref Esito esito)
         {
             //@id_collaboratore int,
             //@priorita int,
@@ -153,6 +153,16 @@ namespace VideoSystemWeb.DAL
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
                             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter id_collaboratore = new SqlParameter("@id_collaboratore", emailCollaboratore.Id_collaboratore);
                             id_collaboratore.Direction = ParameterDirection.Input;
@@ -195,7 +205,7 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaEmailCollaboratore(Anag_Email_Collaboratori emailCollaboratore)
+        public Esito AggiornaEmailCollaboratore(Anag_Email_Collaboratori emailCollaboratore, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -209,6 +219,16 @@ namespace VideoSystemWeb.DAL
                             StoreProc.Connection = con;
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", emailCollaboratore.Id);
                             id.Direction = ParameterDirection.Input;
@@ -251,7 +271,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito EliminaEmailCollaboratore(int idEmailCollaboratore)
+        public Esito EliminaEmailCollaboratore(int idEmailCollaboratore, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -270,6 +290,16 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             id.Value = idEmailCollaboratore;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             StoreProc.Connection.Open();
 

@@ -90,7 +90,7 @@ namespace VideoSystemWeb.DAL
             return listaReferenti;
         }
 
-        public int CreaReferente(Anag_Referente_Clienti_Fornitori referente, ref Esito esito)
+        public int CreaReferente(Anag_Referente_Clienti_Fornitori referente, Anag_Utenti utente, ref Esito esito)
         {
             //@id_azienda int,
             //@cognome varchar(50),
@@ -116,6 +116,16 @@ namespace VideoSystemWeb.DAL
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
                             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter id_azienda = new SqlParameter("@id_azienda", referente.Id_azienda);
                             id_azienda.Direction = ParameterDirection.Input;
@@ -178,7 +188,7 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaReferente(Anag_Referente_Clienti_Fornitori referente)
+        public Esito AggiornaReferente(Anag_Referente_Clienti_Fornitori referente, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -196,6 +206,16 @@ namespace VideoSystemWeb.DAL
                             System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", referente.Id);
                             id.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter id_azienda = new SqlParameter("@id_azienda", referente.Id_azienda);
                             id_azienda.Direction = ParameterDirection.Input;
@@ -254,7 +274,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito EliminaReferente(int idReferente)
+        public Esito EliminaReferente(int idReferente, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -273,6 +293,16 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             id.Value = idReferente;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             StoreProc.Connection.Open();
 

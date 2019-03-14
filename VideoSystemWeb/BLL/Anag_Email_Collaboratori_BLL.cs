@@ -40,23 +40,23 @@ namespace VideoSystemWeb.BLL
             return retEmailCollaboratore;
         }
 
-        public int CreaEmailCollaboratore(Anag_Email_Collaboratori emailCollaboratore, ref Esito esito)
+        public int CreaEmailCollaboratore(Anag_Email_Collaboratori emailCollaboratore, Anag_Utenti utente, ref Esito esito)
         {
-            int iREt = Anag_Email_Collaboratori_DAL.Instance.CreaEmailCollaboratore(emailCollaboratore, ref esito);
+            int iREt = Anag_Email_Collaboratori_DAL.Instance.CreaEmailCollaboratore(emailCollaboratore,utente, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaEmailCollaboratore(Anag_Email_Collaboratori emailCollaboratore)
+        public Esito AggiornaEmailCollaboratore(Anag_Email_Collaboratori emailCollaboratore, Anag_Utenti utente)
         {
-            Esito esito = Anag_Email_Collaboratori_DAL.Instance.AggiornaEmailCollaboratore(emailCollaboratore);
+            Esito esito = Anag_Email_Collaboratori_DAL.Instance.AggiornaEmailCollaboratore(emailCollaboratore,utente);
 
             return esito;
         }
 
-        public Esito EliminaEmailCollaboratore(int idEmailCollaboratore)
+        public Esito EliminaEmailCollaboratore(int idEmailCollaboratore, Anag_Utenti utente)
         {
-            Esito esito = Anag_Email_Collaboratori_DAL.Instance.EliminaEmailCollaboratore(idEmailCollaboratore);
+            Esito esito = Anag_Email_Collaboratori_DAL.Instance.EliminaEmailCollaboratore(idEmailCollaboratore,utente);
 
             return esito;
         }

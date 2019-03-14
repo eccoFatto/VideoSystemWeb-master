@@ -159,7 +159,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     tbMod_WebSite.Text = azienda.WebSite;
 
 
-                    cbMod_Attivo.Checked = azienda.Attivo;
+                    //cbMod_Attivo.Checked = azienda.Attivo;
                     cbMod_Cliente.Checked = azienda.Cliente;
                     cbMod_Fornitore.Checked = azienda.Fornitore;
 
@@ -312,7 +312,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             cbMod_Cliente.Checked = false;
             cbMod_Fornitore.Checked = false;
-            cbMod_Attivo.Checked = false;
+            //cbMod_Attivo.Checked = false;
             tbMod_Note.Text = "";
 
             lbMod_Referenti.Items.Clear();
@@ -347,20 +347,20 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         {
             string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_AZIENDE"];
 
-            string cliente = "0";
-            string fornitore = "0";
+            string ClienteFornitore = "";
+            //string fornitore = "";
 
             if (ViewState["TIPO_AZIENDA"].ToString() == "CLIENTI")
             {
-                cliente = "1";
+                ClienteFornitore = " cliente = 1 ";
             }
             else
             {
-                fornitore = "1";
+                ClienteFornitore = " fornitore = 1 ";
             }
 
-            queryRicerca = queryRicerca.Replace("@cliente", cliente);
-            queryRicerca = queryRicerca.Replace("@fornitore", fornitore);
+            queryRicerca = queryRicerca.Replace("@ClienteFornitore", ClienteFornitore);
+
             queryRicerca = queryRicerca.Replace("@cognome", TbReferente.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@codiceFiscale", tbCF.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@partitaIva", TbPiva.Text.Trim().Replace("'", "''"));
@@ -434,7 +434,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_Telefono.ReadOnly = attivaModifica;
             tbMod_WebSite.ReadOnly = attivaModifica;
 
-            cbMod_Attivo.Enabled = !attivaModifica;
+            //cbMod_Attivo.Enabled = !attivaModifica;
             cbMod_Cliente.Enabled = !attivaModifica;
             cbMod_Fornitore.Enabled = !attivaModifica;
 
@@ -515,7 +515,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (!string.IsNullOrEmpty((string)ViewState["idAzienda"]))
             {
-                esito = Anag_Clienti_Fornitori_BLL.Instance.EliminaAzienda(Convert.ToInt32(ViewState["idAzienda"].ToString()));
+                esito = Anag_Clienti_Fornitori_BLL.Instance.EliminaAzienda(Convert.ToInt32(ViewState["idAzienda"].ToString()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
@@ -552,7 +552,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 NascondiErroriValidazione();
 
-                esito = Anag_Clienti_Fornitori_BLL.Instance.AggiornaAzienda(azienda);
+                esito = Anag_Clienti_Fornitori_BLL.Instance.AggiornaAzienda(azienda, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
 
                 if (esito.codice != Esito.ESITO_OK)
@@ -578,7 +578,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                 azienda.Id = Convert.ToInt16(ViewState["idAzienda"].ToString());
 
-                azienda.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
+                //azienda.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
+                azienda.Attivo = true;
                 azienda.Cliente = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Cliente, "true", false, ref esito));
                 azienda.Fornitore = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Fornitore, "true", false, ref esito));
 
@@ -637,7 +638,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 NascondiErroriValidazione();
 
-                int iRet = Anag_Clienti_Fornitori_BLL.Instance.CreaAzienda(azienda, ref esito);
+                int iRet = Anag_Clienti_Fornitori_BLL.Instance.CreaAzienda(azienda, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
                 if (iRet > 0)
                 {
                     // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO
@@ -735,7 +736,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovoReferente.Telefono2 = tbInsTelefono2Referente.Text.Trim();
 
 
-                    int iNuovoReferente = Anag_Referente_Clienti_Fornitori_BLL.Instance.CreaReferente(nuovoReferente, ref esito);
+                    int iNuovoReferente = Anag_Referente_Clienti_Fornitori_BLL.Instance.CreaReferente(nuovoReferente, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -796,7 +797,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovoReferente.Telefono1 = tbInsTelefono1Referente.Text.Trim();
                     nuovoReferente.Telefono2 = tbInsTelefono2Referente.Text.Trim();
 
-                    esito = Anag_Referente_Clienti_Fornitori_BLL.Instance.AggiornaReferente(nuovoReferente);
+                    esito = Anag_Referente_Clienti_Fornitori_BLL.Instance.AggiornaReferente(nuovoReferente, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     btnModificaReferente.Visible = false;
                     btnInserisciReferente.Visible = true;
@@ -848,7 +849,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     NascondiErroriValidazione();
                     string referenteSelezionato = gvMod_Referenti.Rows[gvMod_Referenti.SelectedIndex].Cells[1].Text;
-                    Esito esito = Anag_Referente_Clienti_Fornitori_BLL.Instance.EliminaReferente(Convert.ToInt32(referenteSelezionato.Trim()));
+                    Esito esito = Anag_Referente_Clienti_Fornitori_BLL.Instance.EliminaReferente(Convert.ToInt32(referenteSelezionato.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     if (esito.codice != Esito.ESITO_OK)
                     {

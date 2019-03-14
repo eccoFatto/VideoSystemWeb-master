@@ -835,7 +835,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     ListItem item = lbMod_Qualifiche.Items[lbMod_Qualifiche.SelectedIndex];
                     string value = item.Value;
                     string qualificaSelezionata = item.Text;
-                    Esito esito = Anag_Qualifiche_Collaboratori_BLL.Instance.EliminaQualificaCollaboratore(Convert.ToInt32(item.Value));
+                    Esito esito = Anag_Qualifiche_Collaboratori_BLL.Instance.EliminaQualificaCollaboratore(Convert.ToInt32(item.Value), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -878,7 +878,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 try
                 {
                     NascondiErroriValidazione();
-                    Esito esito = Anag_Email_Collaboratori_BLL.Instance.EliminaEmailCollaboratore(Convert.ToInt32(tbIdEmailDaModificare.Text.Trim()));
+                    Esito esito = Anag_Email_Collaboratori_BLL.Instance.EliminaEmailCollaboratore(Convert.ToInt32(tbIdEmailDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -924,7 +924,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 try
                 {
                     NascondiErroriValidazione();
-                    Esito esito = Anag_Indirizzi_Collaboratori_BLL.Instance.EliminaIndirizziCollaboratore(Convert.ToInt32(tbIdIndirizzoDaModificare.Text.Trim()));
+                    Esito esito = Anag_Indirizzi_Collaboratori_BLL.Instance.EliminaIndirizziCollaboratore(Convert.ToInt32(tbIdIndirizzoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -975,7 +975,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 try
                 {
                     NascondiErroriValidazione();
-                    Esito esito = Anag_Telefoni_Collaboratori_BLL.Instance.EliminaTelefonoCollaboratore(Convert.ToInt32(tbIdTelefonoDaModificare.Text.Trim()));
+                    Esito esito = Anag_Telefoni_Collaboratori_BLL.Instance.EliminaTelefonoCollaboratore(Convert.ToInt32(tbIdTelefonoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -1306,7 +1306,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovaQualifica.Qualifica = qualificaSelezionata.Replace("'","''");
                     nuovaQualifica.Attivo = true;
                     nuovaQualifica.Descrizione = "";
-                    int iNuovaQualifica = Anag_Qualifiche_Collaboratori_BLL.Instance.CreaQualificaCollaboratore(nuovaQualifica, ref esito);
+                    int iNuovaQualifica = Anag_Qualifiche_Collaboratori_BLL.Instance.CreaQualificaCollaboratore(nuovaQualifica, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -1355,7 +1355,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovaEmail.IndirizzoEmail = tbInsEmail.Text.Trim();
                     nuovaEmail.Attivo = true;
                     nuovaEmail.Descrizione = tbInsTipoEmail.Text.Trim();
-                    int iNuovaEmail = Anag_Email_Collaboratori_BLL.Instance.CreaEmailCollaboratore(nuovaEmail, ref esito);
+                    int iNuovaEmail = Anag_Email_Collaboratori_BLL.Instance.CreaEmailCollaboratore(nuovaEmail, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -1411,7 +1411,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovoIndirizzo.Provincia = tbInsProvinciaIndirizzo.Text.Trim();
                     nuovoIndirizzo.Cap = tbInsCapIndirizzo.Text.Trim();
                     nuovoIndirizzo.NumeroCivico = tbInsCivicoIndirizzo.Text.Trim();
-                    int iNuovoIndirizzo = Anag_Indirizzi_Collaboratori_BLL.Instance.CreaIndirizziCollaboratore(nuovoIndirizzo, ref esito);
+                    int iNuovoIndirizzo = Anag_Indirizzi_Collaboratori_BLL.Instance.CreaIndirizziCollaboratore(nuovoIndirizzo, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -1470,7 +1470,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovoTelefono.Numero = tbInsNumeroTelefono.Text.Trim();
                     nuovoTelefono.Whatsapp = cbInsWhatsappTelefono.Checked;
 
-                    int iNuovoTelefono = Anag_Telefoni_Collaboratori_BLL.Instance.CreaTelefonoCollaboratore(nuovoTelefono, ref esito);
+                    int iNuovoTelefono = Anag_Telefoni_Collaboratori_BLL.Instance.CreaTelefonoCollaboratore(nuovoTelefono, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -1572,7 +1572,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovaEmail.IndirizzoEmail = tbInsEmail.Text.Trim();
                     nuovaEmail.Attivo = true;
                     nuovaEmail.Descrizione = tbInsTipoEmail.Text.Trim();
-                    esito = Anag_Email_Collaboratori_BLL.Instance.AggiornaEmailCollaboratore(nuovaEmail);
+                    esito = Anag_Email_Collaboratori_BLL.Instance.AggiornaEmailCollaboratore(nuovaEmail, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     btnModificaEmail.Visible = false;
                     btnInserisciEmail.Visible = true;
@@ -1634,7 +1634,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovoIndirizzo.Comune = tbInsComuneIndirizzo.Text.Trim();
                     nuovoIndirizzo.Provincia = tbInsProvinciaIndirizzo.Text.Trim();
 
-                    esito = Anag_Indirizzi_Collaboratori_BLL.Instance.AggiornaIndirizziCollaboratore(nuovoIndirizzo);
+                    esito = Anag_Indirizzi_Collaboratori_BLL.Instance.AggiornaIndirizziCollaboratore(nuovoIndirizzo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     btnModificaIndirizzo.Visible = false;
                     btnInserisciIndirizzo.Visible = true;
@@ -1699,7 +1699,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     nuovoTelefono.Attivo = true;
                     nuovoTelefono.Descrizione = tbInsDescrizioneTelefono.Text.Trim();
 
-                    esito = Anag_Telefoni_Collaboratori_BLL.Instance.AggiornaTelefonoCollaboratore(nuovoTelefono);
+                    esito = Anag_Telefoni_Collaboratori_BLL.Instance.AggiornaTelefonoCollaboratore(nuovoTelefono, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     btnModificaTelefono.Visible = false;
                     btnInserisciTelefono.Visible = true;

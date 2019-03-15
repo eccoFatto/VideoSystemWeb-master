@@ -102,11 +102,14 @@ namespace VideoSystemWeb.Agenda
             }
             else
             {
-                //panelErrore.Style.Remove("display");
-                //lbl_MessaggioErrore.Text = esito.descrizione;
                 ShowWarning(esito.descrizione);
                 UpdatePopup();
             }
+        }
+
+        protected void btnRiepilogo_Click(object sender, EventArgs e)
+        {
+            
         }
 
         protected void btnElimina_Click(object sender, EventArgs e)
@@ -433,6 +436,8 @@ namespace VideoSystemWeb.Agenda
                         tab_Lavorazione.Style.Add("cursor", "not-allowed;");
 
                         btnOfferta.Visible = false;
+                        btnSalva.Visible = false;
+                        btnRiepilogo.Visible = true;
                         btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                         btnElimina.Visible = true;
 

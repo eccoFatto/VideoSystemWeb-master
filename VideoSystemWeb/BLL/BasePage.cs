@@ -301,22 +301,39 @@ namespace VideoSystemWeb.BLL
 
         public void ShowSuccess(string messaggio)
         {
-            ClientScript.RegisterStartupScript(typeof(Page), "apriModalSuccess", "<script>openSuccess('" + messaggio + "');</script>");
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModalSuccess", script: "openSuccess('" + messaggio + "')", addScriptTags: true);
+            messaggio = messaggio.Replace("'", "\\'");
+            messaggio = messaggio.Replace("\r\n", "<br/>");
+
+            Page page = HttpContext.Current.Handler as Page;
+
+           // ClientScript.RegisterStartupScript(typeof(Page), "apriModalSuccess", "<script>openSuccess('" + messaggio + "');</script>");
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalSuccess", script: "openSuccess('" + messaggio + "')", addScriptTags: true);
         }
 
         public void ShowWarning(string messaggio)
         {
-            
-            ClientScript.RegisterStartupScript(typeof(Page), "apriModalWarning", "<script>openWarning('" + messaggio + "');</script>");
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModalWarning", script: "openWarning('" + messaggio + "')", addScriptTags: true);
+            messaggio = messaggio.Replace("'", "\\'");
+            messaggio = messaggio.Replace("\r\n", "<br/>");
+
+            Page page = HttpContext.Current.Handler as Page;
+
+            //ClientScript.RegisterStartupScript(typeof(Page), "apriModalWarning", "<script>openWarning('" + messaggio + "');</script>");
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalWarning", script: "openWarning('" + messaggio + "')", addScriptTags: true);
         }
 
         public void ShowError(string messaggio)
         {
-            ClientScript.RegisterStartupScript(typeof(Page), "apriModalError",  "<script>openError('" + messaggio + "');</script>");
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModalError", script: "openError('" + messaggio + "')", addScriptTags: true);
+            messaggio = messaggio.Replace("'", "\\'");
+            messaggio = messaggio.Replace("\r\n", "<br/>");
+
+            Page page = HttpContext.Current.Handler as Page;
+
+            //ClientScript.RegisterStartupScript(typeof(Page), "apriModalError",  "<script>openError('" + messaggio + "');</script>");
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalError", script: "openError('" + messaggio + "')", addScriptTags: true);
+            
         }
+
+        
 
         public void GestisciErrore(Esito esito, string messaggioErroreSpecifico = null)
         {

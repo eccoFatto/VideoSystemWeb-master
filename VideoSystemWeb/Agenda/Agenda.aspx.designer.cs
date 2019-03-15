@@ -193,6 +193,15 @@ namespace VideoSystemWeb.Agenda {
         protected global::VideoSystemWeb.Agenda.userControl.Lavorazione popupLavorazione;
         
         /// <summary>
+        /// Controllo btnRiepilogo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRiepilogo;
+        
+        /// <summary>
         /// Controllo btnSalva.
         /// </summary>
         /// <remarks>

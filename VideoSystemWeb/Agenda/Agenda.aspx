@@ -4,7 +4,7 @@
 <%@ Register TagPrefix="popup" TagName="Offerta" Src="~/Agenda/userControl/Offerta.ascx" %>
 <%@ Register TagPrefix="popup" TagName="Lavorazione" Src="~/Agenda/userControl/Lavorazione.ascx" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    
+
     <script>
         $(document).ready(function () {
             $('.calendarAgenda').datetimepicker({
@@ -23,8 +23,8 @@
             });
 
             $('.loader').hide();
-            
-       
+
+
             registraPassaggioMouse();
 
             //FUNZIONI DA ESEGUIRE DOPO IL POSTBACK PARZIALE
@@ -58,7 +58,7 @@
             });
         }
 
-        function aggiornaAgenda() {           
+        function aggiornaAgenda() {
             $("#<%=btnsearch.ClientID%>").click();
         }
 
@@ -90,14 +90,14 @@
             $("#<%=btnEditEvent.ClientID%>").click();
         }
 
-        function chiudiPopup() {            
+        function chiudiPopup() {
             $("#<%=btn_chiudi.ClientID%>").click();
         }
 
         function openTabEvento(evt, tipoName) {
-            
+
             $("#<%=hf_tabSelezionata.ClientID%>").val(tipoName);
-            
+
             var i, x, tablinks;
             x = document.getElementsByClassName("tabEvento");
             for (i = 0; i < x.length; i++) {
@@ -115,7 +115,7 @@
                 nomeElemento = '<%=tab_Appuntamento.ClientID%>';
             } else if (tipoName == 'Offerta') {
                 nomeElemento = '<%=tab_Offerta.ClientID%>';
-            }  else if (tipoName == 'Lavorazione') {
+            } else if (tipoName == 'Lavorazione') {
                 nomeElemento = '<%=tab_Lavorazione.ClientID%>';
             }
 
@@ -130,7 +130,7 @@
             return confirm("Le modifiche non salvate verranno perse. Confermare la chiusura?");
         }
     </script>
-    
+
     <link rel='stylesheet' href='/Css/Agenda.css' />
 
     <asp:HiddenField ID="hf_valoreData" runat="server" />
@@ -194,7 +194,7 @@
                     <div class="w3-container">
                         <div class="w3-bar w3-blue w3-round">
                             <div class="w3-bar-item w3-button tablink w3-red" runat="server" id="tab_Appuntamento" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
-                            <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Offerta" >Offerta</div>
+                            <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Offerta">Offerta</div>
                             <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Lavorazione">Lavorazione</div>
                             <div style="position: relative; text-align: right; top: 5px; float: right; width: 30px;">
                                 <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" />
@@ -215,8 +215,9 @@
                     </div>
 
                     <div style="position: absolute; width: 100%; bottom: 10px; text-align: center;">
-                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();"/>
-                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); $('.loader').show();"/>
+                        <asp:Button ID="btnRiepilogo" runat="server" Text="Visualizza riepilogo" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" OnClientClick="javascript: document.getElementById('id01').style.display='block'" Visible="false" />
+                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" />
+                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); $('.loader').show();" />
 
                         <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();" />
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" />
@@ -225,11 +226,41 @@
 
                 </asp:Panel>
             </div>
+
+            <div id="id01" class="w3-modal">
+                <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 600px">
+
+                    <div class="w3-center">
+                        <br>
+                        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+                    </div>
+
+
+                    <div class="w3-section">
+                        <label><b>Username</b></label>
+                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter Username" name="usrname" >
+                        <label><b>Password</b></label>
+                        <input class="w3-input w3-border" type="password" placeholder="Enter Password" name="psw" >
+                        <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Login</button>
+                        <input class="w3-check w3-margin-top" type="checkbox" checked="checked">
+                        Remember me
+                    </div>
+
+                    <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                        <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
+                        <span class="w3-right w3-padding w3-hide-small">Forgot <a href="#">password?</a></span>
+                    </div>
+
+                </div>
+            </div>
+
         </ContentTemplate>
+
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="btnEditEvent" EventName="Click" />
-            <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />           
+            <asp:AsyncPostBackTrigger ControlID="btn_chiudi" EventName="Click" />
         </Triggers>
+
     </asp:UpdatePanel>
     <div class="showAgendaBackground" style="display: none"></div>
 </asp:Content>

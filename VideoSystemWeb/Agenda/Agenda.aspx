@@ -339,15 +339,15 @@
                         <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False"
                             Style="font-size: 10pt; width: 100%; position: relative; background-color: #FFF; text-align: center"
                             HeaderStyle-BackColor="#2196F3" HeaderStyle-Font-Bold="true" HeaderStyle-ForeColor="White" BorderWidth="0"
-                            GridLines="None" OnRowDataBound="gvArticoli_RowDataBound" HeaderStyle-HorizontalAlign="Left">
+                            GridLines="None" OnRowDataBound="gvArticoli_RowDataBound" >
                             <Columns>
-                                <asp:BoundField DataField="id" HeaderText="Codice" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left" />
-                                <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="50%" ItemStyle-HorizontalAlign="Left" />
-                                <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Left" />
-                                <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Left" />
-                                <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Left" />
-                                <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Left" />
-                                <asp:TemplateField HeaderText="Totale" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left">
+                                <asp:BoundField DataField="id" HeaderText="Codice" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
+                                <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="40%" ItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Left"/>
+                                <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-Width="9%" ItemStyle-HorizontalAlign="Right" HeaderStyle-HorizontalAlign="Right" />
+                                <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-Width="12%" ItemStyle-HorizontalAlign="Right" HeaderStyle-HorizontalAlign="Right" />
+                                <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Width="12%" ItemStyle-HorizontalAlign="Right" HeaderStyle-HorizontalAlign="Right" />
+                                <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-Width="9%" ItemStyle-HorizontalAlign="Right" HeaderStyle-HorizontalAlign="Right" />
+                                <asp:TemplateField HeaderText="Totale" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right" HeaderStyle-HorizontalAlign="Right">
                                     <ItemTemplate>
                                         <asp:Label ID="totaleRiga" runat="server" />
                                     </ItemTemplate>

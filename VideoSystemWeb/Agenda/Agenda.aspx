@@ -186,11 +186,6 @@
                 <div class="modalBackground"></div>
                 <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopup round" ScrollBars="Auto" Style="font-size: 13px;">
 
-                    <%--<div class="alert alert-danger alert-dismissible fade in out" role="alert" runat="server" id="panelErrore" style="display: none;opacity:1;">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <asp:Label ID="lbl_MessaggioErrore" runat="server" CssClass="form-control-sm"></asp:Label>
-                    </div>--%>
-
                     <div class="w3-container">
                         <div class="w3-bar w3-blue w3-round">
                             <div class="w3-bar-item w3-button tablink w3-red" runat="server" id="tab_Appuntamento" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
@@ -215,7 +210,7 @@
                     </div>
 
                     <div style="position: absolute; width: 100%; bottom: 10px; text-align: center;">
-                        <asp:Button ID="btnRiepilogo" runat="server" Text="Visualizza riepilogo" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" OnClientClick="javascript: document.getElementById('id01').style.display='block'" Visible="false" />
+                        <asp:Button ID="btnRiepilogo" runat="server" Text="Visualizza riepilogo" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" />
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" />
                         <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); $('.loader').show();" />
 
@@ -227,28 +222,159 @@
                 </asp:Panel>
             </div>
 
-            <div id="id01" class="w3-modal">
-                <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width: 600px">
+            <div id="modalRiepilogoOfferta" class="w3-modal ">
+                <div class="w3-modal-content w3-card-4 w3-animate-zoom " style="max-width: 800px">
 
                     <div class="w3-center">
                         <br>
-                        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+                        <span onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
                     </div>
 
+                    <div class="w3-row  w3-padding-large w3-small">
 
-                    <div class="w3-section">
-                        <label><b>Username</b></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter Username" name="usrname" >
-                        <label><b>Password</b></label>
-                        <input class="w3-input w3-border" type="password" placeholder="Enter Password" name="psw" >
-                        <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Login</button>
-                        <input class="w3-check w3-margin-top" type="checkbox" checked="checked">
-                        Remember me
+                        <div class="w3-col">
+                            <img src="../Images/logoVSP_trim.png" alt="Logo" height="120px">
+                        </div>
+
+                        <div class="w3-half ">
+
+                            <div class="w3-col">
+                                <div class="w3-section ">
+                                    <div class="w3-row">
+                                        <div class="w3-third">
+                                            <label><b>Roma</b></label>
+                                        </div>
+                                        <div class="w3-twothird">
+                                            <asp:Label ID="lbl_Data" runat="server"></asp:Label>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div class="w3-row">
+                                        <div class="w3-third">
+                                            <label><b>Produzione</b></label>
+                                        </div>
+                                        <div class="w3-twothird">
+                                            <asp:Label ID="lbl_Produzione" runat="server"></asp:Label>
+                                        </div>
+                                    </div>
+                                    <div class="w3-row">
+                                        <div class="w3-third">
+                                            <label><b>Lavorazione</b></label>
+                                        </div>
+                                        <div class="w3-twothird">
+                                            <asp:Label ID="lbl_Lavorazione" runat="server"></asp:Label>
+                                        </div>
+                                    </div>
+                                    <div class="w3-row">
+                                        <div class="w3-third">
+                                            <label><b>Data Lav.ne</b></label>
+                                        </div>
+                                        <div class="w3-twothird">
+                                            <asp:Label ID="lbl_DataLavorazione" runat="server"></asp:Label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w3-half">
+                            <div class="w3-section ">
+
+                                <div class="w3-row">
+                                    <div class="w3-third">
+                                        <label><b>Spettabile</b></label>
+                                    </div>
+                                    <div class="w3-twothird">
+                                        <asp:Label ID="lbl_Cliente" runat="server"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="w3-row">
+                                    <div class="w3-third">
+                                        <label><b>Indirizzo</b></label>
+                                    </div>
+                                    <div class="w3-twothird">
+                                        <asp:Label ID="lbl_IndirizzoCliente" runat="server"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="w3-row">
+                                    <div class="w3-third">
+                                        <label><b>P. Iva / C.F.</b></label>
+                                    </div>
+                                    <div class="w3-twothird">
+                                        <asp:Label ID="lbl_PIvaCliente" runat="server"></asp:Label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-                        <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red">Cancel</button>
-                        <span class="w3-right w3-padding w3-hide-small">Forgot <a href="#">password?</a></span>
+                    <div class="w3-card-4 w3-margin-left w3-margin-right">
+                        <div class="w3-row w3-padding w3-small">
+                            <div class="w3-half">
+                                <div class="w3-section ">
+                                    <div class="w3-third">
+                                        <label><b>Offerta numero</b></label>
+                                    </div>
+                                    <div class="w3-twothird">
+                                        <asp:Label ID="lbl_CodLavorazione" runat="server"></asp:Label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w3-half">
+                                <div class="w3-section ">
+                                    <div class="w3-third">
+                                        <label><b>Rif. prot.</b></label>
+                                    </div>
+                                    <div class="w3-twothird">
+                                        <asp:Label ID="lbl_Protocollo" runat="server"></asp:Label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-row w3-section w3-padding w3-small">
+
+                        <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False"
+                            Style="font-size: 10pt; width: 100%; position: relative; background-color: #FFF; text-align: center"
+                            HeaderStyle-BackColor="#2196F3" HeaderStyle-Font-Bold="true" HeaderStyle-ForeColor="White" BorderWidth="0"
+                            GridLines="None" OnRowDataBound="gvArticoli_RowDataBound" HeaderStyle-HorizontalAlign="Left">
+                            <Columns>
+                                <asp:BoundField DataField="id" HeaderText="Codice" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="50%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:TemplateField HeaderText="Totale" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left">
+                                    <ItemTemplate>
+                                        <asp:Label ID="totaleRiga" runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+
+                    </div>
+
+                    <div class="w3-row w3-section w3-padding w3-small">
+                        <div class="w3-col">
+                            <div class="w3-twothird">&nbsp;</div>
+                            <div class="w3-third">
+                                <div class="w3-half">
+                                    <label><b>Totale Iva esclusa</b></label>
+                                </div>
+                                <div class="w3-half w3-center">
+                                    <asp:Label ID="totale" runat="server" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-center w3-padding-small" style="margin: 10px">
+                        <asp:Button ID="btnSalvaOfferta" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnSalva_Click" />
+                        <button onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Chiudi</button>
+                        <asp:Button ID="btnStampaOfferta" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampa_Click" />
                     </div>
 
                 </div>

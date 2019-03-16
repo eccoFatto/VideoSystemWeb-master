@@ -22,24 +22,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Panel panelOfferta;
         
         /// <summary>
-        /// Controllo panelErrore.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelErrore;
-        
-        /// <summary>
-        /// Controllo lbl_MessaggioErrore.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
-        
-        /// <summary>
         /// Controllo panelGruppi.
         /// </summary>
         /// <remarks>
@@ -145,7 +127,7 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelModificaArticolo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelModificaArticolo;
         
         /// <summary>
         /// Controllo txt_Descrizione.
@@ -220,40 +202,22 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Button btnOK;
         
         /// <summary>
-        /// Controllo btnAnnullaModifiche.
+        /// Controllo panelRecuperaOfferta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnnullaModifiche;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelRecuperaOfferta;
         
         /// <summary>
-        /// Controllo panelRicercaOfferta.
+        /// Controllo btnOK_recuperaOfferta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelRicercaOfferta;
-        
-        /// <summary>
-        /// Controllo btnOK_ricercaOfferta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOK_ricercaOfferta;
-        
-        /// <summary>
-        /// Controllo btnAnnulla_ricercaOfferta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnnulla_ricercaOfferta;
+        protected global::System.Web.UI.WebControls.Button btnOK_recuperaOfferta;
         
         /// <summary>
         /// Controllo btnEliminaArticoli.
@@ -265,12 +229,12 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Button btnEliminaArticoli;
         
         /// <summary>
-        /// Controllo btnRicercaOfferta.
+        /// Controllo btnRecuperaOfferta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRicercaOfferta;
+        protected global::System.Web.UI.WebControls.Button btnRecuperaOfferta;
     }
 }

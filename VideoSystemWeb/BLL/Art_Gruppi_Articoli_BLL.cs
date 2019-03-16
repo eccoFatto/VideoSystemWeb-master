@@ -52,23 +52,23 @@ namespace VideoSystemWeb.BLL
             return listaArticoli;
         }
 
-        public int CreaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo, ref Esito esito)
+        public int CreaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo,Anag_Utenti utente, ref Esito esito)
         {
-            int iREt = Art_Gruppi_Articoli_DAL.Instance.CreaGruppoArticolo(gruppoArticolo, ref esito);
+            int iREt = Art_Gruppi_Articoli_DAL.Instance.CreaGruppoArticolo(gruppoArticolo, utente, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo)
+        public Esito AggiornaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo, Anag_Utenti utente)
         {
-            Esito esito = Art_Gruppi_Articoli_DAL.Instance.AggiornaGruppoArticolo(gruppoArticolo);
+            Esito esito = Art_Gruppi_Articoli_DAL.Instance.AggiornaGruppoArticolo(gruppoArticolo, utente);
 
             return esito;
         }
 
-        public Esito EliminaGruppoArticolo(int idGruppoArticolo)
+        public Esito EliminaGruppoArticolo(int idGruppoArticolo, Anag_Utenti utente)
         {
-            Esito esito = Art_Gruppi_Articoli_DAL.Instance.EliminaGruppoArticolo(idGruppoArticolo);
+            Esito esito = Art_Gruppi_Articoli_DAL.Instance.EliminaGruppoArticolo(idGruppoArticolo, utente);
 
             return esito;
         }

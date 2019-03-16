@@ -415,7 +415,7 @@ namespace VideoSystemWeb.Articoli.userControl
 
             if (!string.IsNullOrEmpty((string)ViewState["idArticolo"]))
             {
-                esito = Art_Articoli_BLL.Instance.EliminaArticolo(Convert.ToInt32(ViewState["idArticolo"].ToString()));
+                esito = Art_Articoli_BLL.Instance.EliminaArticolo(Convert.ToInt32(ViewState["idArticolo"].ToString()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
@@ -452,7 +452,7 @@ namespace VideoSystemWeb.Articoli.userControl
             {
                 NascondiErroriValidazione();
 
-                esito = Art_Articoli_BLL.Instance.AggiornaArticolo(articolo);
+                esito = Art_Articoli_BLL.Instance.AggiornaArticolo(articolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
 
                 if (esito.codice != Esito.ESITO_OK)
@@ -519,7 +519,7 @@ namespace VideoSystemWeb.Articoli.userControl
             {
                 NascondiErroriValidazione();
 
-                int iRet = Art_Articoli_BLL.Instance.CreaArticolo(articolo, ref esito);
+                int iRet = Art_Articoli_BLL.Instance.CreaArticolo(articolo, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
                 if (iRet > 0)
                 {
                     // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO
@@ -595,7 +595,7 @@ namespace VideoSystemWeb.Articoli.userControl
 
                     nuovoGruppoArticolo.IdArtArticoli = Convert.ToInt32(ViewState["idArticolo"]);
 
-                    int iNuovoArtGruppo = Art_Gruppi_Articoli_BLL.Instance.CreaGruppoArticolo(nuovoGruppoArticolo, ref esito);
+                    int iNuovoArtGruppo = Art_Gruppi_Articoli_BLL.Instance.CreaGruppoArticolo(nuovoGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -663,7 +663,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         foreach (DataRow riga in dtGruppiArticoli.Rows)
                         {
                             int idGruppoArticolo = Convert.ToInt16(riga["id"]);
-                            esito = Art_Gruppi_Articoli_BLL.Instance.EliminaGruppoArticolo(idGruppoArticolo);
+                            esito = Art_Gruppi_Articoli_BLL.Instance.EliminaGruppoArticolo(idGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
                         }
                         if (esito.codice != Esito.ESITO_OK)
                         {

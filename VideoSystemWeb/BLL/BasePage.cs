@@ -306,7 +306,7 @@ namespace VideoSystemWeb.BLL
 
             Page page = HttpContext.Current.Handler as Page;
 
-            // ClientScript.RegisterStartupScript(typeof(Page), "apriModalSuccess", "<script>openSuccess('" + messaggio + "');</script>");
+           // ClientScript.RegisterStartupScript(typeof(Page), "apriModalSuccess", "<script>openSuccess('" + messaggio + "');</script>");
             ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalSuccess", script: "openSuccess('" + messaggio + "')", addScriptTags: true);
         }
 
@@ -330,8 +330,10 @@ namespace VideoSystemWeb.BLL
 
             //ClientScript.RegisterStartupScript(typeof(Page), "apriModalError",  "<script>openError('" + messaggio + "');</script>");
             ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalError", script: "openError('" + messaggio + "')", addScriptTags: true);
-
+            
         }
+
+        
 
         public void GestisciErrore(Esito esito, string messaggioErroreSpecifico = null)
         {

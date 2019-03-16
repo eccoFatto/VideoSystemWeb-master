@@ -183,6 +183,7 @@
     <Content Include="Images\add.png" />
     <Content Include="Images\agenda.png" />
     <Content Include="Images\arrow-down-icon.png" />
+    <Content Include="Images\arrow-right-icon.png" />
     <Content Include="Images\arrow-up-icon.png" />
     <Content Include="Images\COLLABORATORI\dummy.jpg" />
     <Content Include="Images\delete.png" />

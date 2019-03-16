@@ -9,15 +9,15 @@ using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.DAL
 {
-    public class Dati_Agenda_Tender_DAL : Base_DAL
+    public class Dati_Tender_DAL : Base_DAL
     {
         //singleton
-        private static volatile Dati_Agenda_Tender_DAL instance;
+        private static volatile Dati_Tender_DAL instance;
         private static object objForLock = new Object();
 
-        private Dati_Agenda_Tender_DAL() { }
+        private Dati_Tender_DAL() { }
 
-        public static Dati_Agenda_Tender_DAL Instance
+        public static Dati_Tender_DAL Instance
         {
             get
             {
@@ -26,16 +26,16 @@ namespace VideoSystemWeb.DAL
                     lock (objForLock)
                     {
                         if (instance == null)
-                            instance = new Dati_Agenda_Tender_DAL();
+                            instance = new Dati_Tender_DAL();
                     }
                 }
                 return instance;
             }
         }
 
-        public Dati_Agenda_Tender getDatiAgendaTenderById(int idDatiAgendaTender, ref Esito esito)
+        public DatiTender getDatiAgendaTenderById(int idDatiAgendaTender, ref Esito esito)
         {
-            Dati_Agenda_Tender datiAgendaTender = new Dati_Agenda_Tender();
+            DatiTender datiAgendaTender = new DatiTender();
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -70,9 +70,9 @@ namespace VideoSystemWeb.DAL
             return datiAgendaTender;
         }
 
-        public List<Dati_Agenda_Tender> getDatiAgendaTenderByIdAgenda(int idAgenda, ref Esito esito)
+        public List<DatiTender> getDatiAgendaTenderByIdAgenda(int idAgenda, ref Esito esito)
         {
-            List<Dati_Agenda_Tender> listaDatiAgendaTender = new List<Dati_Agenda_Tender>();
+            List<DatiTender> listaDatiAgendaTender = new List<DatiTender>();
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -91,7 +91,7 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-                                        Dati_Agenda_Tender datiAgendaTender = new Dati_Agenda_Tender();
+                                        DatiTender datiAgendaTender = new DatiTender();
                                         datiAgendaTender.Id = riga.Field<int>("id");
                                         datiAgendaTender.IdDatiAgenda = riga.Field<int>("idDatiAgenda");
                                         datiAgendaTender.IdTender = riga.Field<int>("idTender");
@@ -113,13 +113,13 @@ namespace VideoSystemWeb.DAL
         }
 
 
-        public int CreaDatiAgendaTender(Dati_Agenda_Tender datiAgendaTender,Anag_Utenti utente, ref Esito esito)
+        public int CreaDatiAgendaTender(DatiTender datiAgendaTender,Anag_Utenti utente, ref Esito esito)
         {
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand StoreProc = new SqlCommand("InsertDatiAgendaTender"))
+                    using (SqlCommand StoreProc = new SqlCommand("InsertDatiTender"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -167,14 +167,14 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaDatiAgendaTender(Dati_Agenda_Tender datiAgendaTender, Anag_Utenti utente)
+        public Esito AggiornaDatiAgendaTender(DatiTender datiAgendaTender, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
             {
                 using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
                 {
-                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateDatiAgendaTender"))
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateDatiTender"))
                     {
                         using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
                         {
@@ -228,7 +228,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand StoreProc = new SqlCommand("DeleteDatiAgendaTender"))
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteDatiTender"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {

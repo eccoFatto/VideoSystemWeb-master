@@ -148,12 +148,11 @@ namespace VideoSystemWeb.Agenda.userControl
             RichiediOperazionePopup("UPDATE");
         }
 
-        protected void btnAnnullaModifiche_Click(object sender, EventArgs e)
-        {
-            //ClearModificaArticoli();
-            resetPanelOfferta();
-            RichiediOperazionePopup("UPDATE");
-        }
+        //protected void btnAnnullaModifiche_Click(object sender, EventArgs e)
+        //{
+        //    resetPanelOfferta();
+        //    RichiediOperazionePopup("UPDATE");
+        //}
 
         protected void gvGruppi_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -252,15 +251,14 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_Costo.Text = articoloSelezionato.Costo.ToString();
                     txt_Prezzo.Text = articoloSelezionato.Prezzo.ToString();
                     txt_Iva.Text = articoloSelezionato.Iva.ToString();
-                    //ddl_Genere.SelectedValue = articoloSelezionato.IdTipoGenere.ToString();
-                    //ddl_Gruppo.SelectedValue = articoloSelezionato.IdTipoGruppo.ToString();
-                    //ddl_Sottogruppo.SelectedValue = articoloSelezionato.IdTipoSottogruppo.ToString();
                     txt_Quantita.Text = articoloSelezionato.Quantita.ToString();
 
-                    panelRicercaOfferta.Style.Add("display", "none");
-                    btnRicercaOfferta.Visible = false;
+                    //panelRicercaOfferta.Style.Add("display", "none");
+                    btnRecuperaOfferta.Visible = false;
                     btnEliminaArticoli.Visible = false;
-                    panelModificaArticolo.Style.Remove("display");
+                    //panelModificaArticolo.Style.Remove("display");
+                    
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelModificaArticolo.ClientID + "').style.display='block'", addScriptTags: true);
 
                     break;
                 case "elimina":
@@ -316,8 +314,8 @@ namespace VideoSystemWeb.Agenda.userControl
         private void ClearModificaArticoli()
         {
             ViewState["identificatoreArticolo"] = null;
-            panelModificaArticolo.Style.Add("display", "none");
-            panelRicercaOfferta.Style.Add("display", "none");
+            //panelModificaArticolo.Style.Add("display", "none");
+            //panelRicercaOfferta.Style.Add("display", "none");
             txt_Descrizione.Text = "";
             txt_DescrizioneLunga.Text = "";
             txt_Costo.Text = "";
@@ -329,13 +327,13 @@ namespace VideoSystemWeb.Agenda.userControl
         private void resetPanelOfferta()
         {
             ClearModificaArticoli();
-            panelModificaArticolo.Style.Add("display", "none");
-            panelRicercaOfferta.Style.Add("display", "none");
+            //panelModificaArticolo.Style.Add("display", "none");
+            //panelRicercaOfferta.Style.Add("display", "none");
 
             gvArticoli.DataSource = listaDatiArticoli;
             gvArticoli.DataBind();
 
-            btnRicercaOfferta.Visible = true;
+            btnRecuperaOfferta.Visible = true;
             btnEliminaArticoli.Visible = (listaDatiArticoli != null && listaDatiArticoli.Count > 0);
             lbl_selezionareArticolo.Visible = (listaDatiArticoli == null || listaDatiArticoli.Count == 0);
 
@@ -357,11 +355,11 @@ namespace VideoSystemWeb.Agenda.userControl
             resetPanelOfferta();
         }
 
-        protected void btnRicercaOfferta_Click(object sender, EventArgs e)
+        protected void btnRecuperaOfferta_Click(object sender, EventArgs e)
         {
             panelModificaArticolo.Style.Add("display", "none");
-            panelRicercaOfferta.Style.Remove("display");
-            btnRicercaOfferta.Visible = false;
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelRecuperaOfferta.ClientID + "').style.display='block'", addScriptTags: true);
+            btnRecuperaOfferta.Visible = false;
             btnEliminaArticoli.Visible = false;
             RichiediOperazionePopup("UPDATE");
         }

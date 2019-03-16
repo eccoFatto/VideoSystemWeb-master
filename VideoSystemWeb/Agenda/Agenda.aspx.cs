@@ -109,7 +109,38 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnRiepilogo_Click(object sender, EventArgs e)
         {
-            
+            Esito esito = new Esito();
+            DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+
+            lbl_Data.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            lbl_Produzione.Text = eventoSelezionato.produzione;
+            lbl_Lavorazione.Text = eventoSelezionato.lavorazione;
+            lbl_DataLavorazione.Text = eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
+
+            Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
+            lbl_Cliente.Text = cliente.RagioneSociale;
+            lbl_IndirizzoCliente.Text = cliente.IndirizzoOperativo;
+            lbl_PIvaCliente.Text = string.IsNullOrEmpty(cliente.PartitaIva) ? cliente.CodiceFiscale : cliente.PartitaIva;
+
+            lbl_CodLavorazione.Text = eventoSelezionato.codice_lavoro;
+            lbl_Protocollo.Text = eventoSelezionato.codice_lavoro +" - 12345678";
+
+            List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
+
+            gvArticoli.DataSource = listaDatiArticoli;
+            gvArticoli.DataBind();
+
+            decimal totPrezzo = 0; 
+            foreach (DatiArticoli art in listaDatiArticoli)
+            {
+                totPrezzo += art.Prezzo * art.Quantita;
+            }
+
+            totale.Text = string.Format("{0:0.00}", totPrezzo);
+
+            upEvento.Update();
+
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriRiepilogo", script: "javascript: document.getElementById('modalRiepilogoOfferta').style.display='block'", addScriptTags: true);
         }
 
         protected void btnElimina_Click(object sender, EventArgs e)
@@ -140,6 +171,11 @@ namespace VideoSystemWeb.Agenda
         {
             popupAppuntamento.SetStato(DatiAgenda.STATO_LAVORAZIONE);
             UpdatePopup();
+        }
+
+        protected void btnStampa_Click(object sender, EventArgs e)
+        {
+            
         }
         #endregion
 
@@ -345,7 +381,18 @@ namespace VideoSystemWeb.Agenda
             #endregion
         }
 
-        private void AggiornaAgenda()
+        protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
+                totaleRiga.Text = string.Format("{0:0.00}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[3].Text)));
+
+                e.Row.Cells[3].Text = string.Format("{0:0.00}", (int.Parse(e.Row.Cells[3].Text)));
+                e.Row.Cells[4].Text = string.Format("{0:0.00}", (int.Parse(e.Row.Cells[4].Text)));
+            }
+        }
+            private void AggiornaAgenda()
         {
             //listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"]; //CARICO TUTTI GLI EVENTI
 

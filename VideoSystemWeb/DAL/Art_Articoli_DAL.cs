@@ -144,7 +144,7 @@ namespace VideoSystemWeb.DAL
             return listaArticoli;
         }
 
-        public int CreaArticolo(Art_Articoli articolo, ref Esito esito)
+        public int CreaArticolo(Art_Articoli articolo, Anag_Utenti utente, ref Esito esito)
         {
             try
             {
@@ -159,6 +159,16 @@ namespace VideoSystemWeb.DAL
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
                             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter attivo = new SqlParameter("@attivo", articolo.Attivo);
                             attivo.Direction = ParameterDirection.Input;
@@ -224,7 +234,7 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaArticolo(Art_Articoli articolo)
+        public Esito AggiornaArticolo(Art_Articoli articolo, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -242,6 +252,16 @@ namespace VideoSystemWeb.DAL
                             System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", articolo.Id);
                             id.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter attivo = new SqlParameter("@attivo", articolo.Attivo);
                             attivo.Direction = ParameterDirection.Input;
@@ -304,7 +324,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito EliminaArticolo(int idArticolo)
+        public Esito EliminaArticolo(int idArticolo, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -323,6 +343,16 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             id.Value = idArticolo;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             StoreProc.Connection.Open();
 

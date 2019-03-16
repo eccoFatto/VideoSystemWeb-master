@@ -45,23 +45,23 @@ namespace VideoSystemWeb.BLL
             return articolo;
         }
 
-        public int CreaArticolo(Art_Articoli articolo, ref Esito esito)
+        public int CreaArticolo(Art_Articoli articolo, Anag_Utenti utente, ref Esito esito)
         {
-            int iREt = Art_Articoli_DAL.Instance.CreaArticolo(articolo, ref esito);
+            int iREt = Art_Articoli_DAL.Instance.CreaArticolo(articolo, utente, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaArticolo(Art_Articoli articolo)
+        public Esito AggiornaArticolo(Art_Articoli articolo, Anag_Utenti utente)
         {
-            Esito esito = Art_Articoli_DAL.Instance.AggiornaArticolo(articolo);
+            Esito esito = Art_Articoli_DAL.Instance.AggiornaArticolo(articolo, utente);
 
             return esito;
         }
 
-        public Esito EliminaArticolo(int idArticolo)
+        public Esito EliminaArticolo(int idArticolo, Anag_Utenti utente)
         {
-            Esito esito = Art_Articoli_DAL.Instance.EliminaArticolo(idArticolo);
+            Esito esito = Art_Articoli_DAL.Instance.EliminaArticolo(idArticolo, utente);
 
             return esito;
         }
@@ -80,23 +80,23 @@ namespace VideoSystemWeb.BLL
             return articolo;
         }
 
-        public int CreaGruppo(Art_Gruppi gruppo, ref Esito esito)
+        public int CreaGruppo(Art_Gruppi gruppo, Anag_Utenti utente, ref Esito esito)
         {
-            int iREt = Art_Gruppi_DAL.Instance.CreaGruppo(gruppo, ref esito);
+            int iREt = Art_Gruppi_DAL.Instance.CreaGruppo(gruppo, utente, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaGruppo(Art_Gruppi gruppo)
+        public Esito AggiornaGruppo(Art_Gruppi gruppo, Anag_Utenti utente)
         {
-            Esito esito = Art_Gruppi_DAL.Instance.AggiornaGruppo(gruppo);
+            Esito esito = Art_Gruppi_DAL.Instance.AggiornaGruppo(gruppo, utente);
 
             return esito;
         }
 
-        public Esito EliminaGruppo(int idGruppo)
+        public Esito EliminaGruppo(int idGruppo, Anag_Utenti utente)
         {
-            Esito esito = Art_Gruppi_DAL.Instance.EliminaGruppo(idGruppo);
+            Esito esito = Art_Gruppi_DAL.Instance.EliminaGruppo(idGruppo, utente);
 
             return esito;
         }
@@ -122,23 +122,23 @@ namespace VideoSystemWeb.BLL
             return gruppoArticolo;
         }
 
-        public int CreaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo, ref Esito esito)
+        public int CreaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo, Anag_Utenti utente, ref Esito esito)
         {
-            int iREt = Art_Gruppi_Articoli_DAL.Instance.CreaGruppoArticolo(gruppoArticolo, ref esito);
+            int iREt = Art_Gruppi_Articoli_DAL.Instance.CreaGruppoArticolo(gruppoArticolo, utente, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo)
+        public Esito AggiornaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo, Anag_Utenti utente)
         {
-            Esito esito = Art_Gruppi_Articoli_DAL.Instance.AggiornaGruppoArticolo(gruppoArticolo);
+            Esito esito = Art_Gruppi_Articoli_DAL.Instance.AggiornaGruppoArticolo(gruppoArticolo, utente);
 
             return esito;
         }
 
-        public Esito EliminaGruppoArticolo(int idGruppoArticolo)
+        public Esito EliminaGruppoArticolo(int idGruppoArticolo, Anag_Utenti utente)
         {
-            Esito esito = Art_Gruppi_Articoli_DAL.Instance.EliminaGruppoArticolo(idGruppoArticolo);
+            Esito esito = Art_Gruppi_Articoli_DAL.Instance.EliminaGruppoArticolo(idGruppoArticolo, utente);
 
             return esito;
         }

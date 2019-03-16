@@ -40,23 +40,23 @@ namespace VideoSystemWeb.BLL
             return articolo;
         }
 
-        public int CreaArticolo(Art_Articoli articolo, ref Esito esito)
+        public int CreaArticolo(Art_Articoli articolo, Anag_Utenti utente, ref Esito esito)
         {
-            int iREt = Art_Articoli_DAL.Instance.CreaArticolo(articolo, ref esito);
+            int iREt = Art_Articoli_DAL.Instance.CreaArticolo(articolo, utente, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaArticolo(Art_Articoli articolo)
+        public Esito AggiornaArticolo(Art_Articoli articolo, Anag_Utenti utente)
         {
-            Esito esito = Art_Articoli_DAL.Instance.AggiornaArticolo(articolo);
+            Esito esito = Art_Articoli_DAL.Instance.AggiornaArticolo(articolo, utente);
 
             return esito;
         }
 
-        public Esito EliminaArticolo(int idArticolo)
+        public Esito EliminaArticolo(int idArticolo, Anag_Utenti utente)
         {
-            Esito esito = Art_Articoli_DAL.Instance.EliminaArticolo(idArticolo);
+            Esito esito = Art_Articoli_DAL.Instance.EliminaArticolo(idArticolo, utente);
 
             return esito;
         }

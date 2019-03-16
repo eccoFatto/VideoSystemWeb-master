@@ -9,15 +9,15 @@ using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.DAL
 {
-    public class Art_Gruppi_DAL : Base_DAL
+    public class Dati_Agenda_Tender_DAL : Base_DAL
     {
         //singleton
-        private static volatile Art_Gruppi_DAL instance;
+        private static volatile Dati_Agenda_Tender_DAL instance;
         private static object objForLock = new Object();
 
-        private Art_Gruppi_DAL() { }
+        private Dati_Agenda_Tender_DAL() { }
 
-        public static Art_Gruppi_DAL Instance
+        public static Dati_Agenda_Tender_DAL Instance
         {
             get
             {
@@ -26,21 +26,21 @@ namespace VideoSystemWeb.DAL
                     lock (objForLock)
                     {
                         if (instance == null)
-                            instance = new Art_Gruppi_DAL();
+                            instance = new Dati_Agenda_Tender_DAL();
                     }
                 }
                 return instance;
             }
         }
 
-        public Art_Gruppi getGruppiById(int idGruppo, ref Esito esito)
+        public Dati_Agenda_Tender getDatiAgendaTenderById(int idDatiAgendaTender, ref Esito esito)
         {
-            Art_Gruppi gruppo = new Art_Gruppi();
+            Dati_Agenda_Tender datiAgendaTender = new Dati_Agenda_Tender();
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM art_gruppi where id = " + idGruppo.ToString();
+                    string query = "SELECT * FROM dati_agenda_tender where id = " + idDatiAgendaTender.ToString();
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -52,18 +52,10 @@ namespace VideoSystemWeb.DAL
                                 sda.Fill(dt);
                                 if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
                                 {
-                                    gruppo.Id = dt.Rows[0].Field<int>("id");
-                                    gruppo.Attivo = dt.Rows[0].Field<bool>("attivo");
-                                    gruppo.Descrizione = dt.Rows[0].Field<string>("descrizione");
-                                    gruppo.Nome = dt.Rows[0].Field<string>("nome");
-                                    gruppo.Parametri = dt.Rows[0].Field<string>("parametri");
-                                    gruppo.SottoTipo = dt.Rows[0].Field<string>("sottoTipo");
+                                    datiAgendaTender.Id = dt.Rows[0].Field<int>("id");
+                                    datiAgendaTender.IdDatiAgenda = dt.Rows[0].Field<int>("idDatiAgenda");
+                                    datiAgendaTender.IdTender = dt.Rows[0].Field<int>("idTender");
 
-                                }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Gruppo con id " + idGruppo.ToString() + " non trovato in tabella art_gruppi ";
                                 }
                             }
                         }
@@ -75,23 +67,20 @@ namespace VideoSystemWeb.DAL
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
                 esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
-            return gruppo;
+            return datiAgendaTender;
         }
 
-        public List<Art_Gruppi> CaricaListaGruppi(ref Esito esito, bool soloAttivi = true)
+        public List<Dati_Agenda_Tender> getDatiAgendaTenderByIdAgenda(int idAgenda, ref Esito esito)
         {
-            List<Art_Gruppi> listaGruppi = new List<Art_Gruppi>();
+            List<Dati_Agenda_Tender> listaDatiAgendaTender = new List<Dati_Agenda_Tender>();
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM art_gruppi";
-                    if (soloAttivi) query += " WHERE ATTIVO = 1";
-                    query += " ORDER BY nome";
+                    string query = "SELECT * FROM dati_agenda_tender where idDatiAgenda = " + idAgenda.ToString();
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
-
                         {
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;
@@ -102,21 +91,13 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-                                        Art_Gruppi gruppo = new Art_Gruppi();
-                                        gruppo.Id = riga.Field<int>("id");
-                                        gruppo.Attivo = riga.Field<bool>("attivo");
-                                        gruppo.Descrizione = riga.Field<string>("descrizione");
-                                        gruppo.Nome = riga.Field<string>("nome");
-                                        gruppo.Parametri = riga.Field<string>("parametri");
-                                        gruppo.SottoTipo = riga.Field<string>("sottoTipo");
-
-                                        listaGruppi.Add(gruppo);
+                                        Dati_Agenda_Tender datiAgendaTender = new Dati_Agenda_Tender();
+                                        datiAgendaTender.Id = riga.Field<int>("id");
+                                        datiAgendaTender.IdDatiAgenda = riga.Field<int>("idDatiAgenda");
+                                        datiAgendaTender.IdTender = riga.Field<int>("idTender");
+                                        listaDatiAgendaTender.Add(datiAgendaTender);
                                     }
-                                }
-                                else
-                                {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella art_gruppi ";
+
                                 }
                             }
                         }
@@ -128,17 +109,17 @@ namespace VideoSystemWeb.DAL
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
                 esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
-
-            return listaGruppi;
+            return listaDatiAgendaTender;
         }
 
-        public int CreaGruppo(Art_Gruppi gruppo, Anag_Utenti utente, ref Esito esito)
+
+        public int CreaDatiAgendaTender(Dati_Agenda_Tender datiAgendaTender,Anag_Utenti utente, ref Esito esito)
         {
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand StoreProc = new SqlCommand("InsertArtGruppi"))
+                    using (SqlCommand StoreProc = new SqlCommand("InsertDatiAgendaTender"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -158,25 +139,13 @@ namespace VideoSystemWeb.DAL
                             StoreProc.Parameters.Add(nomeUtente);
                             // FINE PARAMETRI PER LOG UTENTE
 
-                            SqlParameter attivo = new SqlParameter("@attivo", gruppo.Attivo);
-                            attivo.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(attivo);
+                            SqlParameter idDatiAgenda = new SqlParameter("@idDatiAgenda", datiAgendaTender.IdDatiAgenda);
+                            idDatiAgenda.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idDatiAgenda);
 
-                            SqlParameter descrizione = new SqlParameter("@descrizione", gruppo.Descrizione);
-                            descrizione.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(descrizione);
-
-                            SqlParameter nome = new SqlParameter("@nome", gruppo.Nome);
-                            nome.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(nome);
-
-                            SqlParameter parametri = new SqlParameter("@parametri", gruppo.Parametri);
-                            parametri.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(parametri);
-
-                            SqlParameter sottoTipo = new SqlParameter("@sottoTipo", gruppo.SottoTipo);
-                            sottoTipo.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(sottoTipo);
+                            SqlParameter idTender = new SqlParameter("@idTender", datiAgendaTender.IdTender);
+                            idTender.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idTender);
 
                             StoreProc.Connection.Open();
 
@@ -192,20 +161,20 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Gruppi_DAL.cs - CreaGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Agenda_Tender_DAL.cs - CreaDatiAgendaTender " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return 0;
         }
 
-        public Esito AggiornaGruppo(Art_Gruppi gruppo, Anag_Utenti utente)
+        public Esito AggiornaDatiAgendaTender(Dati_Agenda_Tender datiAgendaTender, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
             {
                 using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
                 {
-                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateArtGruppi"))
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateDatiAgendaTender"))
                     {
                         using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
                         {
@@ -213,7 +182,7 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", gruppo.Id);
+                            System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", datiAgendaTender.Id);
                             id.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id);
 
@@ -227,25 +196,13 @@ namespace VideoSystemWeb.DAL
                             StoreProc.Parameters.Add(nomeUtente);
                             // FINE PARAMETRI PER LOG UTENTE
 
-                            SqlParameter attivo = new SqlParameter("@attivo", gruppo.Attivo);
-                            attivo.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(attivo);
+                            SqlParameter idDatiAgenda = new SqlParameter("@idDatiAgenda", datiAgendaTender.IdDatiAgenda);
+                            idDatiAgenda.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idDatiAgenda);
 
-                            SqlParameter descrizione = new SqlParameter("@descrizione", gruppo.Descrizione);
-                            descrizione.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(descrizione);
-
-                            SqlParameter nome = new SqlParameter("@nome", gruppo.Nome);
-                            nome.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(nome);
-
-                            SqlParameter parametri = new SqlParameter("@parametri", gruppo.Parametri);
-                            parametri.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(parametri);
-
-                            SqlParameter sottoTipo = new SqlParameter("@sottoTipo", gruppo.SottoTipo);
-                            sottoTipo.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(sottoTipo);
+                            SqlParameter idTender = new SqlParameter("@idTender", datiAgendaTender.IdTender);
+                            idTender.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idTender);
 
                             StoreProc.Connection.Open();
 
@@ -258,20 +215,20 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Gruppi_DAL.cs - AggiornaGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Agenda_Tender_DAL.cs - AggiornaDatiAgendaTender " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
         }
 
-        public Esito EliminaGruppo(int idGruppo, Anag_Utenti utente)
+        public Esito EliminaDatiAgendaTender(int idDatiAgendaTender, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand StoreProc = new SqlCommand("DeleteArtGruppi"))
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteDatiAgendaTender"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -281,7 +238,7 @@ namespace VideoSystemWeb.DAL
 
                             SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
                             id.Direction = ParameterDirection.Input;
-                            id.Value = idGruppo;
+                            id.Value = idDatiAgendaTender;
                             StoreProc.Parameters.Add(id);
 
                             // PARAMETRI PER LOG UTENTE
@@ -304,7 +261,7 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Gruppi_DAL.cs - EliminaGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Agenda_Tender_DAL.cs - EliminaDatiAgendaTender " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

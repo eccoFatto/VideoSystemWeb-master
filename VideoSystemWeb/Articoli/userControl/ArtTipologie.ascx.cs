@@ -172,7 +172,8 @@ namespace VideoSystemWeb.Articoli.userControl
                     if (esito.codice != Esito.ESITO_OK)
                     {
                         //panelErrore.Style.Add("display", "block");
-                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        //lbl_MessaggioErrore.Text = esito.descrizione.Replace("'", "").Replace("\"", "");
+                        //basePage.ShowError(esito.descrizione.Replace("'","").Replace("\"", ""));
                         basePage.ShowError(esito.descrizione);
                     }
                     else

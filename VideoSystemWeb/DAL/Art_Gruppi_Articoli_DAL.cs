@@ -222,7 +222,7 @@ namespace VideoSystemWeb.DAL
             return listaGruppiArticoli;
         }
 
-        public int CreaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo, ref Esito esito)
+        public int CreaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo, Anag_Utenti utente, ref Esito esito)
         {
             try
             {
@@ -237,6 +237,16 @@ namespace VideoSystemWeb.DAL
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
                             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter idArtArticoli = new SqlParameter("@idArtArticoli", gruppoArticolo.IdArtArticoli);
                             idArtArticoli.Direction = ParameterDirection.Input;
@@ -266,7 +276,7 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo)
+        public Esito AggiornaGruppoArticolo(Art_Gruppi_Articoli gruppoArticolo, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -284,6 +294,16 @@ namespace VideoSystemWeb.DAL
                             System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", gruppoArticolo.Id);
                             id.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             SqlParameter idArtArticoli = new SqlParameter("@idArtArticoli", gruppoArticolo.IdArtArticoli);
                             idArtArticoli.Direction = ParameterDirection.Input;
@@ -310,7 +330,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito EliminaGruppoArticolo(int idGruppoArticolo)
+        public Esito EliminaGruppoArticolo(int idGruppoArticolo, Anag_Utenti utente)
         {
             Esito esito = new Esito();
             try
@@ -329,6 +349,16 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             id.Value = idGruppoArticolo;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             StoreProc.Connection.Open();
 

@@ -63,6 +63,18 @@
             document.getElementById('modalError').style.display = 'block';
             $('#textError').html(messaggio);
         }
+
+        function exitApplication() {
+            $('.loader').show();
+            <% Session[VideoSystemWeb.BLL.SessionManager.LISTA_RISORSE] = null;%>;
+            <% Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_QUALIFICA] = null;%>;
+            <% Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_STATO] = null;%>;
+            <% Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_TIPOLOGIA] = null;%>;
+            <% Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_UTENTE] = null;%>;
+            <%--<% Session[VideoSystemWeb.BLL.SessionManager.UTENTE] = null;%>;--%>
+            $('.loader').hide();
+            //alert('tutto ok');
+        }
     </script>
     <%--<input type="button" onclick="openError('prova')" />--%>
     <div class="loader"></div>
@@ -147,7 +159,7 @@
                 </div>
               </div>
 
-              <a href="/Login.aspx" class="w3-bar-item w3-button w3-right">Esci</a>
+              <a href="/Login.aspx" class="w3-bar-item w3-button w3-right" onclick="exitApplication();">Esci</a>
             </div>            
 
         </div>

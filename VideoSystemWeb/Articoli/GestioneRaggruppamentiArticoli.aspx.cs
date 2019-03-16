@@ -122,7 +122,7 @@ namespace VideoSystemWeb.Articoli
             {
                 NascondiErroriValidazione();
 
-                int iRet = Art_Gruppi_BLL.Instance.CreaGruppo(gruppo, ref esito);
+                int iRet = Art_Gruppi_BLL.Instance.CreaGruppo(gruppo, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Add("display", "block");
@@ -152,7 +152,7 @@ namespace VideoSystemWeb.Articoli
                 try
                 {
                     NascondiErroriValidazione();
-                    Esito esito = Art_Gruppi_BLL.Instance.EliminaGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()));
+                    Esito esito = Art_Gruppi_BLL.Instance.EliminaGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -217,7 +217,7 @@ namespace VideoSystemWeb.Articoli
                     nuovoGruppo.SottoTipo = "";
 
                     nuovoGruppo.Attivo = true;
-                    esito = Art_Gruppi_BLL.Instance.AggiornaGruppo(nuovoGruppo);
+                    esito = Art_Gruppi_BLL.Instance.AggiornaGruppo(nuovoGruppo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     btnModificaRaggruppamento.Visible = false;
                     btnInserisciRaggruppamento.Visible = true;
@@ -401,7 +401,7 @@ namespace VideoSystemWeb.Articoli
 
                     for (int i = 0; i < nArtDaInserire; i++)
                     {
-                        int iNuovoArtGruppo = Art_Gruppi_Articoli_BLL.Instance.CreaGruppoArticolo(nuovoGruppoArticolo, ref esito);
+                        int iNuovoArtGruppo = Art_Gruppi_Articoli_BLL.Instance.CreaGruppoArticolo(nuovoGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
                         if (esito.codice != Esito.ESITO_OK)
                         {
                             break;
@@ -474,7 +474,7 @@ namespace VideoSystemWeb.Articoli
                         foreach (DataRow riga in dtGruppiArticoli.Rows)
                         {
                             int idGruppoArticolo = Convert.ToInt16(riga["id"]);
-                            esito = Art_Gruppi_Articoli_BLL.Instance.EliminaGruppoArticolo(idGruppoArticolo);
+                            esito = Art_Gruppi_Articoli_BLL.Instance.EliminaGruppoArticolo(idGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
                         }
                         if (esito.codice != Esito.ESITO_OK)
                         {

@@ -622,12 +622,24 @@ namespace VideoSystemWeb.DAL
        
         private static void CostruisciSP_InsertDatiArticoli(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, DatiArticoli datoArticolo)
         {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
             StoreProc.CommandType = CommandType.StoredProcedure;
             StoreProc.CommandText = "InsertDatiArticoli";
             StoreProc.Parameters.Clear();
             sda.SelectCommand = StoreProc;
 
             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
 
             SqlParameter costo = new SqlParameter("@costo", datoArticolo.Costo);
             costo.Direction = ParameterDirection.Input;
@@ -681,10 +693,22 @@ namespace VideoSystemWeb.DAL
 
         private static void CostruisciSP_InsertEvento(DatiAgenda evento, SqlCommand StoreProc, SqlDataAdapter sda)
         {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
             sda.SelectCommand = StoreProc;
             StoreProc.CommandType = CommandType.StoredProcedure;
 
             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
 
             SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.DateTime);
             data_inizio_lavorazione.Direction = ParameterDirection.Input;
@@ -789,6 +813,8 @@ namespace VideoSystemWeb.DAL
 
         private static void CostruisciSP_UpdateEvento(DatiAgenda evento, SqlCommand StoreProc, SqlDataAdapter sda)
         {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
             sda.SelectCommand = StoreProc;
             StoreProc.CommandType = CommandType.StoredProcedure;
 
@@ -796,6 +822,16 @@ namespace VideoSystemWeb.DAL
             id.Direction = ParameterDirection.Input;
             id.Value = evento.id;
             StoreProc.Parameters.Add(id);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
 
             SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.DateTime);
             data_inizio_lavorazione.Direction = ParameterDirection.Input;
@@ -900,6 +936,8 @@ namespace VideoSystemWeb.DAL
 
         private static void CostruisciSP_DeleteDatiArticoli(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiAgenda)
         {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
             StoreProc.CommandType = CommandType.StoredProcedure;
             StoreProc.CommandText = "DeleteDatiArticoliByIdDatiAgenda";
             StoreProc.Parameters.Clear();
@@ -908,6 +946,17 @@ namespace VideoSystemWeb.DAL
             SqlParameter parIdDatiAgenda = new SqlParameter("@idDatiAgenda", idDatiAgenda);
             parIdDatiAgenda.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(parIdDatiAgenda);
+            
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
         }
 
         public string GetMaxCodiceLavorazione(string anno, ref Esito esito)

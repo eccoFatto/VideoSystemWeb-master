@@ -500,7 +500,7 @@
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Articoli_BLL.cs" />
-    <Compile Include="BLL\Dati_Agenda_Tender_BLL.cs" />
+    <Compile Include="BLL\Dati_Tender_BLL.cs" />
     <Compile Include="BLL\Art_Gruppi_Articoli_BLL.cs" />
     <Compile Include="BLL\Art_Gruppi_BLL.cs" />
     <Compile Include="BLL\Art_Articoli_BLL.cs" />
@@ -524,7 +524,7 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\Agenda_DAL.cs" />
-    <Compile Include="DAL\Dati_Agenda_Tender_DAL.cs" />
+    <Compile Include="DAL\Dati_Tender_DAL.cs" />
     <Compile Include="DAL\Art_Gruppi_Articoli_DAL.cs" />
     <Compile Include="DAL\Art_Gruppi_DAL.cs" />
     <Compile Include="DAL\Art_Articoli_DAL.cs" />
@@ -555,7 +555,7 @@
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
     <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />
     <Compile Include="Entity\ArticoliGruppi.cs" />
-    <Compile Include="Entity\Dati_Agenda_Tender.cs" />
+    <Compile Include="Entity\DatiTender.cs" />
     <Compile Include="Entity\Log_Utenti.cs" />
     <Compile Include="Entity\Art_Gruppi_Articoli.cs" />
     <Compile Include="Entity\Art_Gruppi.cs" />

@@ -6,7 +6,7 @@ using System.Web;
 namespace VideoSystemWeb.Entity
 {
     [Serializable]
-    public class Dati_Agenda_Tender
+    public class DatiTender
     {
         private int id;
         private int idDatiAgenda;

@@ -118,6 +118,8 @@ namespace VideoSystemWeb.Agenda
                     cmbInsSottotipoTipologia.SelectedIndex = 0;
 
                     caricaTipologia();
+
+                    HttpContext.Current.Session[EnumTipologiche.TIPO_COLONNE_AGENDA.ToString()] = null;
                 }
 
             }
@@ -155,6 +157,8 @@ namespace VideoSystemWeb.Agenda
                         btnEliminaTipologia.Visible = false;
 
                         caricaTipologia();
+
+                        HttpContext.Current.Session[EnumTipologiche.TIPO_COLONNE_AGENDA.ToString()] = null;
                     }
                 }
                 catch (Exception ex)
@@ -300,7 +304,10 @@ namespace VideoSystemWeb.Agenda
                         tbInsDescrizioneTipologia.Text = "";
                         cmbInsParametriTipologia.SelectedIndex = 0;
                         cmbInsSottotipoTipologia.SelectedIndex = 0;
+
                         caricaTipologia();
+
+                        HttpContext.Current.Session[EnumTipologiche.TIPO_COLONNE_AGENDA.ToString()] = null;
                     }
                 }
                 catch (Exception ex)

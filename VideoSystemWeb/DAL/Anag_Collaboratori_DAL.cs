@@ -176,7 +176,7 @@ namespace VideoSystemWeb.DAL
             return listaCollaboratori;
         }
 
-        public int CreaCollaboratore(Anag_Collaboratori collaboratore, Anag_Utenti utente, ref Esito esito)
+        public int CreaCollaboratore(Anag_Collaboratori collaboratore, ref Esito esito)
         {
             //@cognome varchar(50),
             //@nome varchar(50),
@@ -194,6 +194,8 @@ namespace VideoSystemWeb.DAL
             //@attivo bit
 
             //Esito esito = new Esito();
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -303,8 +305,9 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaCollaboratore(Anag_Collaboratori collaboratore, Anag_Utenti utente)
+        public Esito AggiornaCollaboratore(Anag_Collaboratori collaboratore)
         {
+            Anag_Utenti utente = ((Anag_Utenti) HttpContext.Current.Session[SessionManager.UTENTE]);
             Esito esito = new Esito();
             try
             {
@@ -409,8 +412,9 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito EliminaCollaboratore(int idCollaboratore, Anag_Utenti utente)
+        public Esito EliminaCollaboratore(int idCollaboratore)
         {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
             Esito esito = new Esito();
             try
             {

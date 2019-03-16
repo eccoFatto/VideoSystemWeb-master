@@ -383,6 +383,7 @@ namespace VideoSystemWeb.Agenda
 
         protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");

@@ -263,7 +263,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 NascondiErroriValidazione();
 
-                esito = Anag_Collaboratori_BLL.Instance.AggiornaCollaboratore(collaboratore, ((Anag_Utenti)Session[SessionManager.UTENTE]));
+                esito = Anag_Collaboratori_BLL.Instance.AggiornaCollaboratore(collaboratore);
                 
                 if (esito.codice != Esito.ESITO_OK)
                 {
@@ -746,7 +746,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (!string.IsNullOrEmpty((string)ViewState["idColl"]))
             {
-                esito = Anag_Collaboratori_BLL.Instance.EliminaCollaboratore(Convert.ToInt32(ViewState["idColl"].ToString()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
+                esito = Anag_Collaboratori_BLL.Instance.EliminaCollaboratore(Convert.ToInt32(ViewState["idColl"].ToString()));
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
@@ -802,7 +802,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 NascondiErroriValidazione();
 
-                int iRet = Anag_Collaboratori_BLL.Instance.CreaCollaboratore(collaboratore, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
+                int iRet = Anag_Collaboratori_BLL.Instance.CreaCollaboratore(collaboratore, ref esito);
                 if (iRet > 0)
                 {
                     // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO

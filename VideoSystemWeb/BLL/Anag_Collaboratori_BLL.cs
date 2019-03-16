@@ -27,23 +27,23 @@ namespace VideoSystemWeb.BLL
                 return instance;
             }
         }
-        public int CreaCollaboratore(Anag_Collaboratori collaboratore, Anag_Utenti utente, ref Esito esito)
+        public int CreaCollaboratore(Anag_Collaboratori collaboratore, ref Esito esito)
         {
-            int iREt = Anag_Collaboratori_DAL.Instance.CreaCollaboratore(collaboratore, utente, ref esito);
+            int iREt = Anag_Collaboratori_DAL.Instance.CreaCollaboratore(collaboratore, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaCollaboratore(Anag_Collaboratori collaboratore, Anag_Utenti utente)
+        public Esito AggiornaCollaboratore(Anag_Collaboratori collaboratore)
         {
-            Esito esito = Anag_Collaboratori_DAL.Instance.AggiornaCollaboratore(collaboratore, utente);
+            Esito esito = Anag_Collaboratori_DAL.Instance.AggiornaCollaboratore(collaboratore);
 
             return esito;
         }
 
-        public Esito EliminaCollaboratore(int idCollaboratore, Anag_Utenti utente)
+        public Esito EliminaCollaboratore(int idCollaboratore)
         {
-            Esito esito = Anag_Collaboratori_DAL.Instance.EliminaCollaboratore(idCollaboratore, utente);
+            Esito esito = Anag_Collaboratori_DAL.Instance.EliminaCollaboratore(idCollaboratore);
 
             return esito;
         }

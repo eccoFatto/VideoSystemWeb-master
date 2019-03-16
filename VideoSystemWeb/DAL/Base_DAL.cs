@@ -184,6 +184,8 @@ namespace VideoSystemWeb.DAL
         public static int CreaTipologia(EnumTipologiche tipoTipologica, Tipologica tipologica, ref Esito esito)
         {
             string nomeSP = "";
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
             switch (tipoTipologica)
             {
                 case EnumTipologiche.TIPO_GENERE:
@@ -217,6 +219,16 @@ namespace VideoSystemWeb.DAL
                                 StoreProc.CommandType = CommandType.StoredProcedure;
 
                                 StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                                // PARAMETRI PER LOG UTENTE
+                                System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                                idUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idUtente);
+
+                                System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                                nomeUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(nomeUtente);
+                                // FINE PARAMETRI PER LOG UTENTE
 
                                 SqlParameter nome = new SqlParameter("@nome", tipologica.nome);
                                 nome.Direction = ParameterDirection.Input;
@@ -269,6 +281,8 @@ namespace VideoSystemWeb.DAL
         public static Esito AggiornaTipologia(EnumTipologiche tipoTipologica, Tipologica tipologica)
         {
             string nomeSP = "";
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
             switch (tipoTipologica)
             {
                 case EnumTipologiche.TIPO_GENERE:
@@ -306,6 +320,16 @@ namespace VideoSystemWeb.DAL
                                 System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", tipologica.id);
                                 id.Direction = ParameterDirection.Input;
                                 StoreProc.Parameters.Add(id);
+
+                                // PARAMETRI PER LOG UTENTE
+                                System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                                idUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idUtente);
+
+                                System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                                nomeUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(nomeUtente);
+                                // FINE PARAMETRI PER LOG UTENTE
 
                                 SqlParameter nome = new SqlParameter("@nome", tipologica.nome);
                                 nome.Direction = ParameterDirection.Input;
@@ -353,6 +377,8 @@ namespace VideoSystemWeb.DAL
         public static Esito EliminaTipologia(EnumTipologiche tipoTipologica, int idTipologica)
         {
             string nomeSP = "";
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
             switch (tipoTipologica)
             {
                 case EnumTipologiche.TIPO_GENERE:
@@ -388,6 +414,16 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             id.Value = idTipologica;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             StoreProc.Connection.Open();
 

@@ -45,7 +45,7 @@ namespace VideoSystemWeb.Articoli.userControl
             }
         }
 
-        private void caricaTipologia()
+        private List<Tipologica> caricaTipologia()
         {
             List<Tipologica> lista;
             Esito esito = new Esito();
@@ -98,7 +98,7 @@ namespace VideoSystemWeb.Articoli.userControl
                 string url = String.Format("~/pageError.aspx");
                 Response.Redirect(url, true);
             }
-
+            return lista;
         }
 
         private void abilitaBottoni(bool utenteAbilitatoInScrittura)
@@ -152,7 +152,8 @@ namespace VideoSystemWeb.Articoli.userControl
                     tbInsDescrizioneTipologia.Text = "1";
                     tbInsParametriTipologia.Text = "";
                     tbInsSottotipoTipologia.Text = "";
-                    caricaTipologia();
+                    List<Tipologica> lista = caricaTipologia();
+                    HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
                 }
                 
             }
@@ -188,7 +189,9 @@ namespace VideoSystemWeb.Articoli.userControl
                         btnInserisciTipologia.Visible = true;
                         btnEliminaTipologia.Visible = false;
 
-                        caricaTipologia();
+                        List<Tipologica> lista = caricaTipologia();
+                        HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
+
                     }
                 }
                 catch (Exception ex)
@@ -298,7 +301,9 @@ namespace VideoSystemWeb.Articoli.userControl
                         tbInsDescrizioneTipologia.Text = "";
                         tbInsParametriTipologia.Text = "";
                         tbInsSottotipoTipologia.Text = "";
-                        caricaTipologia();
+                        List<Tipologica> lista = caricaTipologia();
+                        HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
+
                     }
                 }
                 catch (Exception ex)

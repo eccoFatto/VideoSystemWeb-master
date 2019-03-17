@@ -31,24 +31,6 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
         
         /// <summary>
-        /// Controllo panelErrore.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelErrore;
-        
-        /// <summary>
-        /// Controllo lbl_MessaggioErrore.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
-        
-        /// <summary>
         /// Controllo lbMod_Tipologia.
         /// </summary>
         /// <remarks>

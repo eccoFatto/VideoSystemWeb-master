@@ -9,11 +9,11 @@
 <Label><asp:Label ID="lblTipoArticolo" runat="server" Text=""></asp:Label></Label>
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
-        <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
+<%--        <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
             <span onclick="this.parentElement.style.display='none'"
             class="w3-button w3-large w3-display-topright">&times;</span>
             <p><asp:Label ID="lbl_MessaggioErrore" runat="server" ></asp:Label></p>
-        </div>
+        </div>--%>
         <div class="w3-container w3-center" style="width:50%;">
             <div class="w3-row-padding w3-center w3-text-center">
                 <div class="w3-threequarter">

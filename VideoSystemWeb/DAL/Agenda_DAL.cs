@@ -348,6 +348,7 @@ namespace VideoSystemWeb.DAL
                             // Start a local transaction.
                             transaction = con.BeginTransaction("UpdateAgendaTransaction");
 
+                            Anag_Utenti utente = (Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE];
 
                             try
                             {
@@ -355,6 +356,16 @@ namespace VideoSystemWeb.DAL
                                 id.Direction = ParameterDirection.Input;
                                 id.Value = evento.id;
                                 StoreProc.Parameters.Add(id);
+
+                                // PARAMETRI PER LOG UTENTE
+                                SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                                idUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idUtente);
+
+                                SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                                nomeUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(nomeUtente);
+                                // FINE PARAMETRI PER LOG UTENTE
 
                                 SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.DateTime);
                                 data_inizio_lavorazione.Direction = ParameterDirection.Input;

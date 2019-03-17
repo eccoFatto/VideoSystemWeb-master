@@ -389,7 +389,7 @@
                     <div class="w3-center w3-padding-small" style="margin: 10px">
                         <asp:Button ID="btnSalvaOfferta" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnSalva_Click" />
                         <button onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Chiudi</button>
-                        <asp:Button ID="btnStampaOfferta" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampa_Click" />
+                        <asp:Button ID="btnStampaOfferta" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-orange w3-round-large w3-disabled" Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampa_Click" />
                     </div>
 
                 </div>

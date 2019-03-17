@@ -383,6 +383,7 @@ namespace VideoSystemWeb.Agenda
                     if (isUtenteAbilitatoInScrittura)
                     {
                         e.Row.Cells[indiceColonna].Attributes["ondblclick"] = "mostracella('" + data + "', '" + id_risorsa + "');";
+                        e.Row.Cells[indiceColonna].Attributes["oncontextmenu"] = "mostracella('" + data + "', '" + id_risorsa + "');return false;";
                     }
                 }
             }

@@ -89,6 +89,14 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public List<Tipologica> listaTender
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TENDER);
+            }
+        }
+
         public List<Anag_Clienti_Fornitori> listaClientiFornitori;
 
         public Esito CaricaListeTipologiche()

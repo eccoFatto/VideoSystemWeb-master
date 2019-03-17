@@ -46,47 +46,10 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             if (!IsPostBack)
             {
-                //caricaDdlGenere();
-                //caricaDdlGruppo();
-                //caricaDdlSottogruppo();
-
                 gvGruppi.DataSource = listaArticoliGruppi;
                 gvGruppi.DataBind();
             }
         }
-
-        //private void caricaDdlGenere()
-        //{
-        //    Esito esito = new Esito();
-        //    List<Tipologica> listaTipologicaGenere = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GENERE);
-
-        //    ddl_Genere.DataSource = listaTipologicaGenere;
-        //    ddl_Genere.DataTextField = "nome";
-        //    ddl_Genere.DataValueField = "id";
-        //    ddl_Genere.DataBind();
-        //}
-
-        //private void caricaDdlGruppo()
-        //{
-        //    Esito esito = new Esito();
-        //    List<Tipologica> listaTipologicaGruppo = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GRUPPO);
-
-        //    ddl_Gruppo.DataSource = listaTipologicaGruppo;
-        //    ddl_Gruppo.DataTextField = "nome";
-        //    ddl_Gruppo.DataValueField = "id";
-        //    ddl_Gruppo.DataBind();
-        //}
-
-        //private void caricaDdlSottogruppo()
-        //{
-        //    Esito esito = new Esito();
-        //    List<Tipologica> listaTipologicaSottogruppo = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO);
-
-        //    ddl_Sottogruppo.DataSource = listaTipologicaSottogruppo;
-        //    ddl_Sottogruppo.DataTextField = "nome";
-        //    ddl_Sottogruppo.DataValueField = "id";
-        //    ddl_Sottogruppo.DataBind();
-        //}
 
         private void aggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
         {
@@ -126,9 +89,6 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.Costo = decimal.Parse(txt_Costo.Text);
             articoloSelezionato.Prezzo = decimal.Parse(txt_Prezzo.Text);
             articoloSelezionato.Iva = int.Parse(txt_Iva.Text);
-            //articoloSelezionato.IdTipoGenere = int.Parse(ddl_Genere.SelectedValue);
-            //articoloSelezionato.IdTipoGruppo = int.Parse(ddl_Gruppo.SelectedValue);
-            //articoloSelezionato.IdTipoSottogruppo = int.Parse(ddl_Sottogruppo.SelectedValue);
             articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
             articoloSelezionato.Quantita = int.Parse(txt_Quantita.Text);
 
@@ -147,12 +107,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
             RichiediOperazionePopup("UPDATE");
         }
-
-        //protected void btnAnnullaModifiche_Click(object sender, EventArgs e)
-        //{
-        //    resetPanelOfferta();
-        //    RichiediOperazionePopup("UPDATE");
-        //}
 
         protected void gvGruppi_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -192,7 +146,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void AggiornaTotali()
         {
-            
             decimal totPrezzo = 0;
             decimal totCosto = 0;
             decimal totIva = 0;
@@ -222,7 +175,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void gvArticoli_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            //List<DatiArticoli> listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
             DatiArticoli articoloSelezionato;
 
             string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
@@ -314,8 +266,6 @@ namespace VideoSystemWeb.Agenda.userControl
         private void ClearModificaArticoli()
         {
             ViewState["identificatoreArticolo"] = null;
-            //panelModificaArticolo.Style.Add("display", "none");
-            //panelRicercaOfferta.Style.Add("display", "none");
             txt_Descrizione.Text = "";
             txt_DescrizioneLunga.Text = "";
             txt_Costo.Text = "";
@@ -327,8 +277,6 @@ namespace VideoSystemWeb.Agenda.userControl
         private void resetPanelOfferta()
         {
             ClearModificaArticoli();
-            //panelModificaArticolo.Style.Add("display", "none");
-            //panelRicercaOfferta.Style.Add("display", "none");
 
             gvArticoli.DataSource = listaDatiArticoli;
             gvArticoli.DataBind();

@@ -691,6 +691,37 @@ namespace VideoSystemWeb.DAL
             StoreProc.Parameters.Add(stampa);
         }
 
+        private static void CostruisciSP_InsertDatiTender(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, DatiTender datoTender)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "InsertDatiTender";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+            SqlParameter idTender = new SqlParameter("@idDatiTender", datoTender.IdTender);
+            idTender.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idTender);
+
+            // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+            SqlParameter idDatiAgenda = new SqlParameter("@idDatiAgenda", iDatiAgendaReturn);
+            idDatiAgenda.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idDatiAgenda);
+        }
+
         private static void CostruisciSP_InsertEvento(DatiAgenda evento, SqlCommand StoreProc, SqlDataAdapter sda)
         {
             Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
@@ -947,6 +978,31 @@ namespace VideoSystemWeb.DAL
             parIdDatiAgenda.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(parIdDatiAgenda);
             
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+        }
+
+        private static void CostruisciSP_DeleteDatiTender(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiAgenda)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "DeleteDatiTenderByIdDatiAgenda";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            SqlParameter parIdDatiAgenda = new SqlParameter("@idDatiAgenda", idDatiAgenda);
+            parIdDatiAgenda.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parIdDatiAgenda);
+
             // PARAMETRI PER LOG UTENTE
             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
             idUtente.Direction = ParameterDirection.Input;

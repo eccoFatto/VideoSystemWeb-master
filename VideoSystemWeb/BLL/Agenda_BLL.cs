@@ -104,20 +104,20 @@ namespace VideoSystemWeb.BLL
             return listaDatiAgenda.Where(x => x.data_inizio_impegno.Date <= data.Date && x.data_fine_impegno.Date >= data.Date && x.id_colonne_agenda == id_risorsa).FirstOrDefault();
         }
 
-        public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli)
+        public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
         {
             Esito esito = new Esito();
 
             switch (evento.id_stato)
             {
                 case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
-                    Agenda_DAL.Instance.CreaEvento(evento);
+                    Agenda_DAL.Instance.CreaEvento(evento, listaIdTender);
                     break;
                 case DatiAgenda.STATO_OFFERTA:
-                    Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli);
+                    Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
                     break;
                 case DatiAgenda.STATO_RIPOSO:
-                    Agenda_DAL.Instance.CreaEvento(evento);
+                    Agenda_DAL.Instance.CreaEvento(evento, listaIdTender);
                     break;
                 default:
                     break;
@@ -128,20 +128,20 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-        public Esito AggiornaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli)
+        public Esito AggiornaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
         {
             Esito esito = new Esito();
           
             switch (evento.id_stato)
             {
                 case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
-                    Agenda_DAL.Instance.AggiornaEvento(evento);
+                    Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
                     break;
                 case DatiAgenda.STATO_OFFERTA:
-                    Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli);
+                    Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
                     break;
                 case DatiAgenda.STATO_RIPOSO:
-                    Agenda_DAL.Instance.AggiornaEvento(evento);
+                    Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
                     break;
                 default:
                     break;

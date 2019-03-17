@@ -605,11 +605,11 @@ namespace VideoSystemWeb.Agenda
             {
                 if (eventoSelezionato.id == 0)
                 {          
-                    Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaDatiArticoli);
+                    Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender);
                 }
                 else
                 {
-                    Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato, listaDatiArticoli);
+                    Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender);
                 }
 
                 ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);

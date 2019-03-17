@@ -35,7 +35,6 @@ namespace VideoSystemWeb.Agenda
 
             if (!IsPostBack)
             {
-                
                 DateTime dataPartenza = DateTime.Now;
 
                 listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito); //CARICO SOLO EVENTI VISUALIZZATI
@@ -598,6 +597,8 @@ namespace VideoSystemWeb.Agenda
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli;
 
+            List<string> listaIdTender = popupAppuntamento.listaIdTender;
+
             esito = ValidazioneSalvataggio(eventoSelezionato, listaDatiArticoli);
 
             if (esito.codice == Esito.ESITO_OK)
@@ -631,12 +632,6 @@ namespace VideoSystemWeb.Agenda
                 esito.descrizione = "Controllare i campi evidenziati";
 
             }
-            //else if (!ControlloGiorniViaggio(eventoSelezionato))
-            //{
-            //    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-            //    esito.descrizione = "Non è possibile salvare l'evento perché i giorni viaggio eccedono la durata della lavorazione";
-
-            //}
             else if (!IsDisponibileDataRisorsa(eventoSelezionato))
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;

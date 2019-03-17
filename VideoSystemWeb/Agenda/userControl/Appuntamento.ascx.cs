@@ -14,7 +14,18 @@ namespace VideoSystemWeb.Agenda.userControl
         BasePage basePage = new BasePage();
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
         public event PopupHandler RichiediOperazionePopup; //evento
-        
+        public List<string> listaIdTender
+        {
+            get
+            {
+                return (List<string>)ViewState["listaIdTender"];
+            }
+            set
+            {
+                ViewState["listaIdTender"] = value;
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Esito esito = new Esito();
@@ -27,6 +38,12 @@ namespace VideoSystemWeb.Agenda.userControl
                 // basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
                 basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
                 basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
+
+                List<Tipologica> listaTender = basePage.listaTender;
+                foreach (Tipologica tender in listaTender)
+                {
+                    check_tender.Items.Add(new ListItem(tender.descrizione, tender.id.ToString()));
+                }
             }
 
             string[] elencoProduzioni = Agenda_BLL.Instance.CaricaElencoProduzioni(ref esito);
@@ -54,9 +71,6 @@ namespace VideoSystemWeb.Agenda.userControl
             datiAgenda.durata_viaggio_ritorno = BasePage.ValidaCampo(txt_DurataViaggioRitorno, 0, campoObbligatorio, ref esito);
             datiAgenda.data_inizio_impegno = BasePage.ValidaCampo(txt_DataInizioImpegno, DateTime.MinValue, campoObbligatorio, ref esito);
             datiAgenda.data_fine_impegno = BasePage.ValidaCampo(txt_DataFineImpegno, DateTime.MinValue, campoObbligatorio, ref esito);
-            //datiAgenda.impegnoOrario = chk_ImpegnoOrario.Checked;
-            //datiAgenda.impegnoOrario_da = BasePage.validaCampo(txt_ImpegnoOrarioDa, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
-            //datiAgenda.impegnoOrario_a = BasePage.validaCampo(txt_ImpegnoOrarioA, "", chk_ImpegnoOrario.Checked && campoObbligatorio, ref esito);
             datiAgenda.produzione = BasePage.ValidaCampo(txt_Produzione, "", campoObbligatorio, ref esito);
             datiAgenda.lavorazione = BasePage.ValidaCampo(txt_Lavorazione, "", false, ref esito);
             datiAgenda.indirizzo = BasePage.ValidaCampo(txt_Indirizzo, "", false, ref esito);
@@ -137,9 +151,6 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
             txt_DataInizioImpegno.Text = evento.data_inizio_impegno.ToString();
             txt_DataFineImpegno.Text = evento.data_fine_impegno.ToString();
-            //chk_ImpegnoOrario.Checked = evento.impegnoOrario;
-            //txt_ImpegnoOrarioDa.Text = evento.impegnoOrario_da;
-            //txt_ImpegnoOrarioA.Text = evento.impegnoOrario_a;
             txt_Produzione.Text = evento.produzione;
             txt_Lavorazione.Text = evento.lavorazione;
             txt_Indirizzo.Text = evento.indirizzo;
@@ -150,8 +161,6 @@ namespace VideoSystemWeb.Agenda.userControl
             hf_IdStato.Value = evento.id_stato.ToString();
             Esito esito = new Esito();
             txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, evento.id_stato, ref esito).nome;
-
-            //txt_ImpegnoOrarioDa.Enabled = txt_ImpegnoOrarioA.Enabled = evento.impegnoOrario;
         }
 
         public void ClearAppuntamento()
@@ -174,15 +183,14 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DurataViaggioRitorno.Text = string.Empty;
             txt_DataInizioImpegno.Text = string.Empty;
             txt_DataFineImpegno.Text = string.Empty;
-            //chk_ImpegnoOrario.Checked = false;
-            //txt_ImpegnoOrarioDa.Text = string.Empty;
-            //txt_ImpegnoOrarioA.Text = string.Empty;
             txt_Produzione.Text = string.Empty;
             txt_Lavorazione.Text = string.Empty;
             txt_Indirizzo.Text = string.Empty;
             txt_Luogo.Text = string.Empty;
             txt_CodiceLavoro.Text = string.Empty;
             tb_Nota.Text = string.Empty;
+
+            check_tender.SelectedIndex = -1;
 
             NascondiErroriValidazione();
         }
@@ -206,14 +214,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (basePage.AbilitazioneInScrittura())
             {
-                //txt_DataInizioLavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato ==  DatiAgenda.STATO_RIPOSO;
-                //ddl_Clienti.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-                //txt_Produzione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-                //txt_Lavorazione.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-                //txt_Indirizzo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-                //txt_Luogo.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-                //txt_CodiceLavoro.Enabled = evento.id_stato == DatiAgenda.STATO_PREVISIONE_IMPEGNO || evento.id_stato == DatiAgenda.STATO_RIPOSO;
-
                 switch (statoEvento)
                 {
                     case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
@@ -229,6 +229,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         txt_Indirizzo.Enabled = 
                         txt_Luogo.Enabled = 
                         tb_Nota.Enabled = true;
+                        check_tender.Enabled = true;
 
                         break;
                     case DatiAgenda.STATO_OFFERTA:
@@ -244,6 +245,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         txt_Indirizzo.Enabled = true;
                         txt_Luogo.Enabled = false;
                         tb_Nota.Enabled = true;
+                        check_tender.Enabled = true;
 
                         break;
                     case DatiAgenda.STATO_LAVORAZIONE:
@@ -265,6 +267,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         txt_Indirizzo.Enabled = false;
                         txt_Luogo.Enabled = false;
                         tb_Nota.Enabled = true;
+                        check_tender.Enabled = false;
 
                         break;
                 }
@@ -304,6 +307,14 @@ namespace VideoSystemWeb.Agenda.userControl
 
             AbilitaComponentiPopup(int.Parse(hf_IdStato.Value));
             RichiediOperazionePopup("UPDATE");
+        }
+
+        protected void check_tender_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            listaIdTender = check_tender.Items.Cast<ListItem>()
+               .Where(li => li.Selected)
+               .Select(li => li.Value)
+               .ToList();
         }
     }
 }

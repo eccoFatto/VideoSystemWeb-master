@@ -5,6 +5,7 @@ using System.Web;
 
 namespace VideoSystemWeb.Entity
 {
+    [Serializable]
     public class Tipologica
     {
         public int id { get; set; }

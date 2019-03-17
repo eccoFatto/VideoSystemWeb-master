@@ -59,6 +59,8 @@ namespace VideoSystemWeb.BLL
                     return "tipo_gruppo";
                 case EnumTipologiche.TIPO_SOTTOGRUPPO:
                     return "tipo_sottogruppo";
+                case EnumTipologiche.TIPO_TENDER:
+                    return "tipo_tender";
                 default:
                     return string.Empty;
             }
@@ -151,7 +153,7 @@ namespace VideoSystemWeb.BLL
 
 
 
-    public enum EnumTipologiche { TIPO_COLONNE_AGENDA, TIPO_QUALIFICHE, TIPO_UTENTE, TIPO_STATO, TIPO_TIPOLOGIE, TIPO_CLIENTI_FORNITORI, TIPO_GENERE, TIPO_GRUPPO, TIPO_SOTTOGRUPPO }
+    public enum EnumTipologiche { TIPO_COLONNE_AGENDA, TIPO_QUALIFICHE, TIPO_UTENTE, TIPO_STATO, TIPO_TIPOLOGIE, TIPO_CLIENTI_FORNITORI, TIPO_GENERE, TIPO_GRUPPO, TIPO_SOTTOGRUPPO, TIPO_TENDER }
 
     public enum EnumSottotipiRisorse {DIPENDENTI, REGIE, EXTRA}
 }

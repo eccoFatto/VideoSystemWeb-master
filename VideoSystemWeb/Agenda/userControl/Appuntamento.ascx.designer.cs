@@ -337,22 +337,22 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.TextBox txt_Luogo;
         
         /// <summary>
-        /// Controllo lbl_CodiceLavoro.
+        /// Controllo lbl_tender.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_CodiceLavoro;
+        protected global::System.Web.UI.WebControls.Label lbl_tender;
         
         /// <summary>
-        /// Controllo txt_CodiceLavoro.
+        /// Controllo check_tender.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_CodiceLavoro;
+        protected global::System.Web.UI.WebControls.CheckBoxList check_tender;
         
         /// <summary>
         /// Controllo lbl_nota.
@@ -398,5 +398,23 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_Stato;
+        
+        /// <summary>
+        /// Controllo lbl_CodiceLavoro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_CodiceLavoro;
+        
+        /// <summary>
+        /// Controllo txt_CodiceLavoro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_CodiceLavoro;
     }
 }

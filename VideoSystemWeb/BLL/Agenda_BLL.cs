@@ -107,10 +107,6 @@ namespace VideoSystemWeb.BLL
         public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli)
         {
             Esito esito = new Esito();
-            //if (evento.id_stato == DatiAgenda.STATO_RIPOSO && evento.id_tipologia == 0)
-            //{
-            //    evento.id_tipologia = UtilityTipologiche.getElementByNome(Base_DAL.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE,false, ref esito), "DUMMY", ref esito).id;
-            //}
 
             switch (evento.id_stato)
             {

@@ -198,6 +198,7 @@ namespace VideoSystemWeb.DAL
                             try
                             {
                                 CostruisciSP_InsertEvento(evento, StoreProc, sda);
+                                StoreProc.Transaction = transaction;
 
                                 int iReturn = StoreProc.ExecuteNonQuery();
 
@@ -480,6 +481,8 @@ namespace VideoSystemWeb.DAL
 
                                 // ELIMINO GLI EVENTUALI TENDER ASSOCIATI ALL'EVENTO PER SOSTITUIRLI COI NUOVI
                                 CostruisciSP_DeleteDatiTender(StoreProc, sda, evento.id);
+                                StoreProc.Transaction = transaction;
+
                                 StoreProc.ExecuteNonQuery();
 
 

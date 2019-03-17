@@ -212,7 +212,7 @@ namespace VideoSystemWeb.Articoli.userControl
 
         private void NascondiErroriValidazione()
         {
-            panelErrore.Style.Add("display", "none");
+            //panelErrore.Style.Add("display", "none");
 
             tbInsDescrizioneTipologia.CssClass = tbInsDescrizioneTipologia.CssClass.Replace("erroreValidazione", "");
             tbInsNomeTipologia.CssClass = tbInsNomeTipologia.CssClass.Replace("erroreValidazione", "");

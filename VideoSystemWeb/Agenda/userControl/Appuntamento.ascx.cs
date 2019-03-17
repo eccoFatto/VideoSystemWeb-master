@@ -42,7 +42,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 List<Tipologica> listaTender = basePage.listaTender;
                 foreach (Tipologica tender in listaTender)
                 {
-                    check_tender.Items.Add(new ListItem(tender.descrizione, tender.id.ToString()));
+                    check_tender.Items.Add(new ListItem(tender.nome, tender.id.ToString()));
                 }
             }
 

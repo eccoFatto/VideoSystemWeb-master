@@ -337,7 +337,16 @@ namespace VideoSystemWeb.Agenda
                                 }
 
                                 Panel mainPanel = new Panel();
-                                mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
+
+                                if (IsPrimoGiornoLavorazione(datoAgendaCorrente, DateTime.Parse(data)))
+                                {
+                                    mainPanel.Controls.Add(new LiteralControl(titoloEvento));
+                                }
+                                else
+                                {
+                                    mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
+                                }
+                                
                                 mainPanel.CssClass = "round-corners-6px unround-top-corners w3-tooltip";
                                 mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
@@ -471,6 +480,8 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = eventoSelezionato.id != 0;
+                        btnSalva.Visible = true;
+                        btnRiepilogo.Visible = false;
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_PREVISIONE_IMPEGNO);
 
@@ -487,6 +498,7 @@ namespace VideoSystemWeb.Agenda
                         btnRiepilogo.Visible = true;
                         btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                         btnElimina.Visible = true;
+                       
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_OFFERTA);
 
@@ -501,6 +513,8 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = false;
+                        btnSalva.Visible = true;
+                        btnRiepilogo.Visible = false;
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_LAVORAZIONE);
 
@@ -515,6 +529,8 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = false;
+                        btnSalva.Visible = true;
+                        btnRiepilogo.Visible = false;
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_FATTURA);
 
@@ -529,6 +545,8 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = eventoSelezionato.id != 0;
+                        btnSalva.Visible = true;
+                        btnRiepilogo.Visible = false;
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_RIPOSO);
 

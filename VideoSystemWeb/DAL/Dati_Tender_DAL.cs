@@ -40,7 +40,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM dati_agenda_tender where id = " + idDatiAgendaTender.ToString();
+                    string query = "SELECT * FROM dati_tender where id = " + idDatiAgendaTender.ToString();
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -77,7 +77,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM dati_agenda_tender where idDatiAgenda = " + idAgenda.ToString();
+                    string query = "SELECT * FROM dati_tender where idDatiAgenda = " + idAgenda.ToString();
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -161,7 +161,7 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Agenda_Tender_DAL.cs - CreaDatiAgendaTender " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Tender_DAL.cs - CreaDatiAgendaTender " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return 0;
@@ -215,7 +215,7 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Agenda_Tender_DAL.cs - AggiornaDatiAgendaTender " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Tender_DAL.cs - AggiornaDatiAgendaTender " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -261,7 +261,7 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Agenda_Tender_DAL.cs - EliminaDatiAgendaTender " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Tender_DAL.cs - EliminaDatiAgendaTender " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

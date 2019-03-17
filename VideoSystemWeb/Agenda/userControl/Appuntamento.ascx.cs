@@ -158,8 +158,18 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_CodiceLavoro.Text = evento.codice_lavoro;
             tb_Nota.Text = evento.nota;
 
-            hf_IdStato.Value = evento.id_stato.ToString();
             Esito esito = new Esito();
+            List<DatiTender> listaDatiTender = Dati_Tender_BLL.Instance.getDatiAgendaTenderByIdAgenda(evento.id, ref esito);
+
+            for (int i = 0; i < check_tender.Items.Count; i++)
+            {
+                if (listaDatiTender.Where(x=>x.IdTender==int.Parse(check_tender.Items[i].Value)).ToList<DatiTender>().Count>0)
+                {
+                    check_tender.Items[i].Selected = true;// .SetItemChecked(i, true);
+                }
+            }
+
+            hf_IdStato.Value = evento.id_stato.ToString();
             txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, evento.id_stato, ref esito).nome;
         }
 

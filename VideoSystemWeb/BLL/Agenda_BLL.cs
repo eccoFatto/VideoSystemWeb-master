@@ -135,13 +135,13 @@ namespace VideoSystemWeb.BLL
             switch (evento.id_stato)
             {
                 case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
-                    Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
+                    esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
                     break;
                 case DatiAgenda.STATO_OFFERTA:
-                    Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
+                    esito = Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
                     break;
                 case DatiAgenda.STATO_RIPOSO:
-                    Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
+                    esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
                     break;
                 default:
                     break;

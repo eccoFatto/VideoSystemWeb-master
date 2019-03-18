@@ -100,8 +100,7 @@ namespace VideoSystemWeb.Agenda
                 ShowSuccess("Salvataggio eseguito correttamente");
             }
             else
-            {
-                ShowWarning(esito.descrizione);
+            {               
                 UpdatePopup();
             }
         }
@@ -287,7 +286,7 @@ namespace VideoSystemWeb.Agenda
                         {
                             tipologia = UtilityTipologiche.getTipologicaById(EnumTipologiche.TIPO_TIPOLOGIE, (int)datoAgendaCorrente.id_tipologia, ref esito).nome;
                         }
-                        string titoloEvento = datoAgendaCorrente.id_stato == DatiAgenda.STATO_RIPOSO ? "Riposo" : datoAgendaCorrente.produzione + "<br/>" + tipologia;
+                        string titoloEvento = datoAgendaCorrente.id_stato == DatiAgenda.STATO_RIPOSO ? "Riposo" : datoAgendaCorrente.produzione.PadRight(10,' ').Substring(0,10) + "<br/>" + tipologia.PadRight(10, ' ').Substring(0, 10);
                         #endregion
 
                         // EVENTO GIORNO SINGOLO
@@ -623,18 +622,21 @@ namespace VideoSystemWeb.Agenda
             if (esito.codice == Esito.ESITO_OK)
             {
                 if (eventoSelezionato.id == 0)
-                {          
-                    Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender);
+                {
+                    esito = Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender);
                 }
                 else
                 {
-                    Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender);
+                    esito = Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender);
                 }
+
+                GestisciErrore(esito);
 
                 ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
             }
             else
             {
+                ShowWarning(esito.descrizione);
                 popupAppuntamento.PopolaPopup(eventoSelezionato);
             }
 

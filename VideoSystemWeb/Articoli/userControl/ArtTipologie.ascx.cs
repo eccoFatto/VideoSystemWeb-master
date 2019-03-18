@@ -66,6 +66,11 @@ namespace VideoSystemWeb.Articoli.userControl
                     lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_SOTTOGRUPPO;
                     break;
+                case "TENDER":
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.Brown;
+                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TENDER, true, ref esito);
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_TENDER;
+                    break;
                 default:
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Red;
                     lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);

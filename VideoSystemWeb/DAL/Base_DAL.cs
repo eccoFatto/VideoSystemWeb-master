@@ -200,6 +200,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_COLONNE_AGENDA:
                     nomeSP = "InsertTipoColonneAgenda";
                     break;
+                case EnumTipologiche.TIPO_TENDER:
+                    nomeSP = "InsertTipoTender";
+                    break;
 
                 default:
                     break;
@@ -297,6 +300,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_COLONNE_AGENDA:
                     nomeSP = "UpdateTipoColonneAgenda";
                     break;
+                case EnumTipologiche.TIPO_TENDER:
+                    nomeSP = "UpdateTipoTender";
+                    break;
                 default:
                     break;
             }
@@ -392,6 +398,9 @@ namespace VideoSystemWeb.DAL
                     break;
                 case EnumTipologiche.TIPO_COLONNE_AGENDA:
                     nomeSP = "DeleteTipoColonneAgenda";
+                    break;
+                case EnumTipologiche.TIPO_TENDER:
+                    nomeSP = "DeleteTipoTender";
                     break;
 
                 default:

@@ -149,7 +149,7 @@ namespace VideoSystemWeb.Articoli.userControl
                     tbMod_Note.Text = articolo.Note;
 
 
-                    cbMod_Attivo.Checked = articolo.Attivo;
+                    //cbMod_Attivo.Checked = articolo.Attivo;
                     cbMod_Stampa.Checked = articolo.DefaultStampa;
 
                     //GENERE
@@ -257,7 +257,7 @@ namespace VideoSystemWeb.Articoli.userControl
             cmbMod_Sottogruppo.Text = "";
 
             cbMod_Stampa.Checked = false;
-            cbMod_Attivo.Checked = true;
+            //cbMod_Attivo.Checked = true;
 
             //lbMod_Referenti.Items.Clear();
             //lbMod_Referenti.Rows = 1;
@@ -342,7 +342,7 @@ namespace VideoSystemWeb.Articoli.userControl
             tbMod_Note.ReadOnly = attivaModifica;
             tbMod_Prezzo.ReadOnly = attivaModifica;
 
-            cbMod_Attivo.Enabled = !attivaModifica;
+            //cbMod_Attivo.Enabled = !attivaModifica;
             cbMod_Stampa.Enabled = !attivaModifica;
 
             if (attivaModifica)
@@ -478,7 +478,8 @@ namespace VideoSystemWeb.Articoli.userControl
 
                 articolo.Id = Convert.ToInt16(ViewState["idArticolo"].ToString());
 
-                articolo.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
+                //articolo.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
+                articolo.Attivo = true;
                 articolo.DefaultStampa = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Stampa, "true", false, ref esito));
                 articolo.DefaultDescrizione = BasePage.ValidaCampo(tbMod_DescrizioneBreve, "", false, ref esito);
                 articolo.DefaultDescrizioneLunga = BasePage.ValidaCampo(tbMod_Descrizione, "", false, ref esito);

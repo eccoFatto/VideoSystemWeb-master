@@ -214,8 +214,9 @@
                                 <asp:CheckBox ID="cbMod_Stampa" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
                             </div>
                             <div class="w3-half">
-                                <label>Attivo</label>
-                                <asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
+                                <%--<label>Attivo</label>--%>
+                                <%--<asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>--%>
+                                &nbsp;
                             </div>
                         </div>
 

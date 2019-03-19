@@ -45,6 +45,7 @@ namespace VideoSystemWeb
 
             if (esito.codice == Esito.ESITO_OK)
             {
+                Application.Set("IS_AUTHENTICATED", "true");
                 log.Info("UTENTE " + tbUser.Text.Trim() + " Loggato!");
                 Response.Redirect("~/Agenda/Agenda.aspx");
             }

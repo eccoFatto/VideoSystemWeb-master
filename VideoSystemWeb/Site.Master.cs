@@ -16,11 +16,23 @@ namespace VideoSystemWeb
             // lbl_benvenuto.Text = "Bentornato " + ((Anag_Utente)Session[SessionManager.UTENTE]).Nome + " " + ((Anag_Utente)Session[SessionManager.UTENTE]).Cognome;
             try
             {
-                lbl_benvenuto.Text = "Utente: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Nome + " " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Cognome + " - Ruolo: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).tipoUtente;
+                bool isAutenticated = Convert.ToBoolean(Application.Get("IS_AUTHENTICATED").ToString());
+                if (!isAutenticated)
+                {
+                    Session["ErrorPageText"] = "TimeOut Sessione";
+                    string url = String.Format("~/pageError.aspx");
+                    Response.Redirect(url, true);
 
-                lblVersione.Text = BasePage.versione;
+                }
+                else
+                {
 
-                lblDataVersione.Text = BasePage.dataVersione;
+                    lbl_benvenuto.Text = "Utente: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Nome + " " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Cognome + " - Ruolo: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).tipoUtente;
+
+                    lblVersione.Text = BasePage.versione;
+
+                    lblDataVersione.Text = BasePage.dataVersione;
+                }
             }
             catch (Exception ex)
             {

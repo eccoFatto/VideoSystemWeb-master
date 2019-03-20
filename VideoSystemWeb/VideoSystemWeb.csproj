@@ -500,6 +500,7 @@
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Articoli_BLL.cs" />
+    <Compile Include="BLL\Protocollo_BLL.cs" />
     <Compile Include="BLL\Dati_Tender_BLL.cs" />
     <Compile Include="BLL\Art_Gruppi_Articoli_BLL.cs" />
     <Compile Include="BLL\Art_Gruppi_BLL.cs" />

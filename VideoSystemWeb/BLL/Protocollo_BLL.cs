@@ -54,7 +54,7 @@ namespace VideoSystemWeb.BLL
             if (esito.codice == Esito.ESITO_OK)
             {
                 ret = ret.Replace("@anno", DateTime.Today.Year.ToString("0000"));
-                ret = ret.Replace("@protocollo", nProt.ToString("0000000"));
+                ret = ret.Replace("@protocollo", nProt.ToString(ConfigurationManager.AppSettings["FORMAT_NUMERO_PROTOCOLLO"]));
             }
             else
             {
@@ -62,5 +62,38 @@ namespace VideoSystemWeb.BLL
             }
             return ret;
         }
+        public int getCodiceLavorazione(ref Esito esito)
+        {
+            int iREt = Base_DAL.getCodiceLavorazione(ref esito);
+
+            return iREt;
+        }
+
+        public Esito resetCodiceLavorazione(int codiceLavorazioneIniziale)
+        {
+            Esito esito = Base_DAL.resetCodiceLavorazione(codiceLavorazioneIniziale);
+
+            return esito;
+        }
+
+        public string getCodLavFormattato()
+        {
+            string ret = "";
+
+            ret = ConfigurationManager.AppSettings["CODICE_LAVORAZIONE"];
+            Esito esito = new Esito();
+            int codLav = getCodiceLavorazione(ref esito);
+            if (esito.codice == Esito.ESITO_OK)
+            {
+                ret = ret.Replace("@anno", DateTime.Today.Year.ToString("0000"));
+                ret = ret.Replace("@codiceLavorazione", codLav.ToString(ConfigurationManager.AppSettings["FORMAT_CODICE_LAVORAZIONE"]));
+            }
+            else
+            {
+                ret = "";
+            }
+            return ret;
+        }
+
     }
 }

@@ -139,15 +139,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.TextBox txt_Descrizione;
         
         /// <summary>
-        /// Controllo txt_Quantita.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_Quantita;
-        
-        /// <summary>
         /// Controllo txt_Prezzo.
         /// </summary>
         /// <remarks>
@@ -164,6 +155,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_Costo;
+        
+        /// <summary>
+        /// Controllo txt_Quantita.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Quantita;
         
         /// <summary>
         /// Controllo txt_Iva.

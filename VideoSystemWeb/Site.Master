@@ -78,47 +78,47 @@
     </script>
     <%--<input type="button" onclick="openError('prova')" />--%>
     <div class="loader"></div>
-
-    <div id="modalError" class="w3-modal">
-        <div class="w3-modal-content w3-animate-top w3-card-4">
-            <header class="w3-container w3-red">
-                <span onclick="document.getElementById('modalError').style.display='none'"
-                    class="w3-button w3-display-topright">&times;</span>
-                <h2>Errore</h2>
-            </header>
-            <div class="w3-container">
-                <p id="textError">Some text..</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="modalWarning" class="w3-modal">
-        <div class="w3-modal-content w3-animate-top w3-card-4">
-            <header class="w3-container w3-orange">
-                <span onclick="document.getElementById('modalWarning').style.display='none'"
-                    class="w3-button w3-display-topright">&times;</span>
-                <h2>Attenzione</h2>
-            </header>
-            <div class="w3-container">
-                <p id="textWarning"></p>
-            </div>
-        </div>
-    </div>
-
-    <div id="modalSuccess" class="w3-modal">
-        <div class="w3-modal-content w3-animate-opacity w3-card-4">
-            <header class="w3-container w3-green">
-                <span onclick="document.getElementById('modalSuccess').style.display='none'"
-                    class="w3-button w3-display-topright">&times;</span>
-                <h2>Operazione completata</h2>
-            </header>
-            <div class="w3-container">
-                <p id="textSuccess"></p>
-            </div>
-        </div>
-    </div>
-
     <form runat="server" autocomplete="off" enctype="multipart/form-data">
+        <div id="modalError" class="w3-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container w3-red">
+                    <span onclick="document.getElementById('modalError').style.display='none'"
+                        class="w3-button w3-display-topright">&times;</span>
+                    <h2>Errore</h2>
+                </header>
+                <div class="w3-container">
+                    <p id="textError"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalWarning" class="w3-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container w3-orange">
+                    <span onclick="document.getElementById('modalWarning').style.display='none'"
+                        class="w3-button w3-display-topright">&times;</span>
+                    <h2>Attenzione</h2>
+                </header>
+                <div class="w3-container">
+                    <p id="textWarning"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalSuccess" class="w3-modal">
+            <div class="w3-modal-content w3-animate-opacity w3-card-4">
+                <header class="w3-container w3-green">
+                    <span onclick="document.getElementById('modalSuccess').style.display='none'"
+                        class="w3-button w3-display-topright">&times;</span>
+                    <h2>Operazione completata</h2>
+                </header>
+                <div class="w3-container">
+                    <p id="textSuccess"></p>
+                </div>
+            </div>
+        </div>
+
+
         <ajaxToolkit:ToolkitScriptManager ID="ScriptManager1" EnablePartialRendering="true" runat="server" />
         <%--<asp:ScriptManager ID="ScriptManager2" runat="server" EnablePartialRendering="true" ></asp:ScriptManager>--%>
         <div id="MENU" class="w3-container w3-0 mydiv" style="align-content: center;">
@@ -128,9 +128,11 @@
                         <asp:Image ID="imgLogo" runat="server" Height="100px" ImageAlign="AbsMiddle" ImageUrl="~/Images/logoVSP.png" />
                     </td>
                     <td style="width: 80%; align-content: center; text-align: left;">
-                        <div class="w3-panel w3-yellow w3-border w3-round">GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp;
+                        <div class="w3-panel w3-yellow w3-border w3-round">
+                            GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp;
                             <asp:Label ID="lbl_benvenuto" runat="server"></asp:Label>&nbsp;&nbsp;  Ver.<asp:Label ID="lblVersione" runat="server" ForeColor="Blue"></asp:Label>&nbsp; del
-                            <asp:Label ID="lblDataVersione" runat="server" ForeColor="Blue"></asp:Label><a href="/Utente/GestionePassword.aspx" class="w3-bar-item w3-right">Gestione Password</a></div>
+                            <asp:Label ID="lblDataVersione" runat="server" ForeColor="Blue"></asp:Label><a href="/Utente/GestionePassword.aspx" class="w3-bar-item w3-right">Gestione Password</a>
+                        </div>
                     </td>
                 </tr>
             </table>

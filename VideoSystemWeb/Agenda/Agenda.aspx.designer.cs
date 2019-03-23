@@ -247,6 +247,33 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Button btnLavorazione;
         
         /// <summary>
+        /// Controllo modalRiepilogoContent.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl modalRiepilogoContent;
+        
+        /// <summary>
+        /// Controllo imgLogo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgLogo;
+        
+        /// <summary>
+        /// Controllo intestazioneSchermo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl intestazioneSchermo;
+        
+        /// <summary>
         /// Controllo lbl_Data.
         /// </summary>
         /// <remarks>
@@ -310,6 +337,15 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Label lbl_PIvaCliente;
         
         /// <summary>
+        /// Controllo protocolloSchermo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl protocolloSchermo;
+        
+        /// <summary>
         /// Controllo lbl_CodLavorazione.
         /// </summary>
         /// <remarks>
@@ -328,6 +364,96 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Label lbl_Protocollo;
         
         /// <summary>
+        /// Controllo intestazioneStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl intestazioneStampa;
+        
+        /// <summary>
+        /// Controllo lbl_DataStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DataStampa;
+        
+        /// <summary>
+        /// Controllo lbl_ProduzioneStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_ProduzioneStampa;
+        
+        /// <summary>
+        /// Controllo lbl_LavorazioneStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_LavorazioneStampa;
+        
+        /// <summary>
+        /// Controllo lbl_DataLavorazioneStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DataLavorazioneStampa;
+        
+        /// <summary>
+        /// Controllo lbl_ClienteStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_ClienteStampa;
+        
+        /// <summary>
+        /// Controllo lbl_IndirizzoClienteStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_IndirizzoClienteStampa;
+        
+        /// <summary>
+        /// Controllo lbl_PIvaClienteStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_PIvaClienteStampa;
+        
+        /// <summary>
+        /// Controllo lbl_CodLavorazioneStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_CodLavorazioneStampa;
+        
+        /// <summary>
+        /// Controllo lbl_ProtocolloStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_ProtocolloStampa;
+        
+        /// <summary>
         /// Controllo gvArticoli.
         /// </summary>
         /// <remarks>
@@ -335,6 +461,15 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvArticoli;
+        
+        /// <summary>
+        /// Controllo footerSchermo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerSchermo;
         
         /// <summary>
         /// Controllo totale.
@@ -346,13 +481,22 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Label totale;
         
         /// <summary>
-        /// Controllo btnSalvaOfferta.
+        /// Controllo footerStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSalvaOfferta;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerStampa;
+        
+        /// <summary>
+        /// Controllo totaleStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label totaleStampa;
         
         /// <summary>
         /// Controllo btnStampaOfferta.

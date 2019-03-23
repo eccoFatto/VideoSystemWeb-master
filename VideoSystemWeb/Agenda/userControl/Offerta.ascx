@@ -116,8 +116,8 @@
     <br />
 
 
-    <div id="panelModificaArticolo" class="w3-modal " runat="server">
-        <div class="w3-modal-content w3-card-4 w3-animate-top " style="max-width: 800px; width: 60%; height: 220px; position: relative; background-color: white; overflow: auto; font-size: 0.8em;">
+    <div id="panelModificaArticolo" class="w3-modal " style="position:absolute;" runat="server">
+        <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width:80%; background-color: white; overflow: auto; ">
             <div class="w3-row-padding">
 
                 <div class="w3-center">
@@ -138,25 +138,26 @@
 
                     <div class="w3-col">
                         <div class="w3-half">
+                  
                             <div class="w3-third" style="padding: 5px">
-                                &nbsp;
+                                <label style="margin-bottom: 0.2rem;">Prezzo</label>
+                                <asp:TextBox ID="txt_Prezzo" runat="server" class="w3-input w3-border" placeholder="Prezzo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                            </div>
+                            <div class="w3-third" style="padding: 5px">
+                                <label style="margin-bottom: 0.2rem;">Costo</label>
+                                <asp:TextBox ID="txt_Costo" runat="server" class="w3-input w3-border" placeholder="Costo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                             </div>
                             <div class="w3-third" style="padding: 5px">
                                 <label style="margin-bottom: 0.2rem;">Quantità</label>
 
                                 <asp:TextBox ID="txt_Quantita" runat="server" class="w3-input w3-border" placeholder="iva" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                             </div>
-
-                            <div class="w3-third" style="padding: 5px">
-                                <label style="margin-bottom: 0.2rem;">Prezzo</label>
-                                <asp:TextBox ID="txt_Prezzo" runat="server" class="w3-input w3-border" placeholder="Prezzo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
-                            </div>
                         </div>
                         <div class="w3-half">
                             <div class="w3-third" style="padding: 5px">
-                                <label style="margin-bottom: 0.2rem;">Costo</label>
-                                <asp:TextBox ID="txt_Costo" runat="server" class="w3-input w3-border" placeholder="Costo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                &nbsp;
                             </div>
+
                             <div class="w3-third" style="padding: 5px">
                                 <label style="margin-bottom: 0.2rem;">Iva</label>
                                 <asp:TextBox ID="txt_Iva" runat="server" class="w3-input w3-border" placeholder="iva" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
@@ -184,18 +185,24 @@
         </div>
     </div>
 
-    <div id="panelRecuperaOfferta" class="w3-modal " runat="server">
-        <div class="w3-modal-content w3-card-4 w3-animate-top " style="max-width: 800px; width: 60%; height: 220px; position: relative; background-color: white; overflow: auto; font-size: 0.8em;">
+    <div id="panelRecuperaOfferta" class="w3-modal " style="position:absolute;" runat="server">
+        <div class="w3-modal-content w3-card-4 w3-animate-top round" style="max-width: 800px; width: 60%; height: 220px; position: relative; background-color: white; overflow: auto; font-size: 0.8em;">
 
             <div class="w3-center">
-                    <br>
-                    <span onclick="document.getElementById('<%= panelRecuperaOfferta.ClientID%>').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
-                </div>
+                <br>
+                <span onclick="document.getElementById('<%= panelRecuperaOfferta.ClientID%>').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+            </div>
 
-                <div class="w3-center">
-                    <h3>Recupera Offerta</h3>
-                </div>
-                <br /><br /><br /><br /><br /><br /><br />
+            <div class="w3-center">
+                <h3>Recupera Offerta</h3>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <div class="w3-center" style="margin: 10px">
                 <asp:Button ID="btnOK_recuperaOfferta" runat="server" Text="Cerca" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" />
                 <button onclick="document.getElementById('<%= panelRecuperaOfferta.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>

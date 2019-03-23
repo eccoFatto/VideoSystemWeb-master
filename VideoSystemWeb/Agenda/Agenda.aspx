@@ -229,167 +229,296 @@
                         <br>
                         <span onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
                     </div>
+                    <div id="modalRiepilogoContent" runat="server">
 
-                    <div class="w3-row  w3-padding-large w3-small">
-
-                        <div class="w3-col">
-                            <img src="../Images/logoVSP_trim.png" alt="Logo" height="120px">
-                        </div>
-
-                        <div class="w3-half ">
+                        <div class="w3-row  w3-padding-large w3-small">
 
                             <div class="w3-col">
-                                <div class="w3-section ">
-                                    <div class="w3-row">
-                                        <div class="w3-third">
-                                            <label><b>Roma</b></label>
-                                        </div>
-                                        <div class="w3-twothird">
-                                            <asp:Label ID="lbl_Data" runat="server"></asp:Label>
-                                        </div>
-                                        <br />
-                                        <br />
-                                    </div>
-                                    <div class="w3-row">
-                                        <div class="w3-third">
-                                            <label><b>Produzione</b></label>
-                                        </div>
-                                        <div class="w3-twothird">
-                                            <asp:Label ID="lbl_Produzione" runat="server"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="w3-row">
-                                        <div class="w3-third">
-                                            <label><b>Lavorazione</b></label>
-                                        </div>
-                                        <div class="w3-twothird">
-                                            <asp:Label ID="lbl_Lavorazione" runat="server"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="w3-row">
-                                        <div class="w3-third">
-                                            <label><b>Data Lav.ne</b></label>
-                                        </div>
-                                        <div class="w3-twothird">
-                                            <asp:Label ID="lbl_DataLavorazione" runat="server"></asp:Label>
-                                        </div>
-                                    </div>
-                                </div>
+                                <%--<img  src="../Images/logoVSP_trim.png" alt="Logo" style="height:120px">--%>
+                                <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/logoVSP_trim.png" Style="height: 120px" />
                             </div>
-                        </div>
 
-                        <div class="w3-half">
-                            <div class="w3-section ">
-
-                                <div class="w3-row">
-                                    <div class="w3-third">
-                                        <label><b>Spettabile</b></label>
-                                    </div>
-                                    <div class="w3-twothird">
-                                        <asp:Label ID="lbl_Cliente" runat="server"></asp:Label>
+                            <div id="intestazioneSchermo" runat="server">
+                                <div class="w3-half ">
+                                    <div class="w3-col">
+                                        <div class="w3-section ">
+                                            <div class="w3-row">
+                                                <div class="w3-third">
+                                                    <label><b>Roma</b></label>
+                                                </div>
+                                                <div class="w3-twothird">
+                                                    <asp:Label ID="lbl_Data" runat="server"></asp:Label>
+                                                </div>
+                                                <br />
+                                                <br />
+                                            </div>
+                                            <div class="w3-row">
+                                                <div class="w3-third">
+                                                    <label><b>Produzione</b></label>
+                                                </div>
+                                                <div class="w3-twothird">
+                                                    <asp:Label ID="lbl_Produzione" runat="server"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="w3-row">
+                                                <div class="w3-third">
+                                                    <label><b>Lavorazione</b></label>
+                                                </div>
+                                                <div class="w3-twothird">
+                                                    <asp:Label ID="lbl_Lavorazione" runat="server"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="w3-row">
+                                                <div class="w3-third">
+                                                    <label><b>Data Lav.ne</b></label>
+                                                </div>
+                                                <div class="w3-twothird">
+                                                    <asp:Label ID="lbl_DataLavorazione" runat="server"></asp:Label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="w3-row">
-                                    <div class="w3-third">
-                                        <label><b>Indirizzo</b></label>
-                                    </div>
-                                    <div class="w3-twothird">
-                                        <asp:Label ID="lbl_IndirizzoCliente" runat="server"></asp:Label>
-                                    </div>
-                                </div>
-                                <div class="w3-row">
-                                    <div class="w3-third">
-                                        <label><b>P. Iva / C.F.</b></label>
-                                    </div>
-                                    <div class="w3-twothird">
-                                        <asp:Label ID="lbl_PIvaCliente" runat="server"></asp:Label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="w3-card-4 w3-margin-left w3-margin-right">
-                        <div class="w3-row w3-padding w3-small">
-                            <div class="w3-half">
-                                <div class="w3-section ">
-                                    <div class="w3-third">
-                                        <label><b>Offerta numero</b></label>
-                                    </div>
-                                    <div class="w3-twothird">
-                                        <asp:Label ID="lbl_CodLavorazione" runat="server"></asp:Label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w3-half">
-                                <div class="w3-section ">
-                                    <div class="w3-third">
-                                        <label><b>Rif. prot.</b></label>
-                                    </div>
-                                    <div class="w3-twothird">
-                                        <asp:Label ID="lbl_Protocollo" runat="server"></asp:Label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w3-row w3-section w3-padding w3-small">
-
-                        <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False"
-                            Style="font-size: 10pt; width: 100%; position: relative; background-color: #FFF; text-align: center"
-                            HeaderStyle-BackColor="#2196F3" HeaderStyle-Font-Bold="true" HeaderStyle-ForeColor="White" BorderWidth="0"
-                            GridLines="None" OnRowDataBound="gvArticoli_RowDataBound" HeaderStyle-HorizontalAlign="Right">
-                            <Columns>
-                                <asp:TemplateField HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left">
-                                    <HeaderTemplate>
-                                        <div style="text-align: left;">Codice</div>
-                                    </HeaderTemplate>
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" ID="lblCodice" Text='<%# Eval("id") %>' />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Descrizione" HeaderStyle-Width="40%" ItemStyle-HorizontalAlign="Left">
-                                    <HeaderTemplate>
-                                        <div style="text-align: left;">Descrizione</div>
-                                    </HeaderTemplate>
-                                    <ItemTemplate>
-                                        <asp:Label runat="server" ID="lblDescrizione" Text='<%# Eval("Descrizione") %>' />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-
-                                <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-Width="9%" ItemStyle-HorizontalAlign="Right" />
-                                <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-Width="12%" ItemStyle-HorizontalAlign="Right" />
-                                <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Width="12%" ItemStyle-HorizontalAlign="Right" />
-                                <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-Width="9%" ItemStyle-HorizontalAlign="Right" />
-                                <asp:TemplateField HeaderText="Totale" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right">
-                                    <ItemTemplate>
-                                        <asp:Label ID="totaleRiga" runat="server" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-
-                    </div>
-
-                    <div class="w3-row w3-section w3-padding w3-small">
-                        <div class="w3-col">
-                            <div class="w3-twothird">&nbsp;</div>
-                            <div class="w3-third">
                                 <div class="w3-half">
-                                    <label><b>Totale Iva esclusa</b></label>
+                                    <div class="w3-section ">
+
+                                        <div class="w3-row">
+                                            <div class="w3-third">
+                                                <label><b>Spettabile</b></label>
+                                            </div>
+                                            <div class="w3-twothird">
+                                                <asp:Label ID="lbl_Cliente" runat="server"></asp:Label>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-third">
+                                                <label><b>Indirizzo</b></label>
+                                            </div>
+                                            <div class="w3-twothird">
+                                                <asp:Label ID="lbl_IndirizzoCliente" runat="server"></asp:Label>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row">
+                                            <div class="w3-third">
+                                                <label><b>P. Iva / C.F.</b></label>
+                                            </div>
+                                            <div class="w3-twothird">
+                                                <asp:Label ID="lbl_PIvaCliente" runat="server"></asp:Label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="w3-half w3-center">
-                                    <asp:Label ID="totale" runat="server" />
+                            </div>
+
+
+                        </div>
+
+
+                        <div id="protocolloSchermo" runat="server">
+                            <div class="w3-card-4 w3-margin-left w3-margin-right">
+                                <div class="w3-row w3-padding w3-small">
+                                    <div class="w3-half">
+                                        <div class="w3-section ">
+                                            <div class="w3-third">
+                                                <label><b>Offerta numero</b></label>
+                                            </div>
+                                            <div class="w3-twothird">
+                                                <asp:Label ID="lbl_CodLavorazione" runat="server"></asp:Label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="w3-half">
+                                        <div class="w3-section ">
+                                            <div class="w3-third">
+                                                <label><b>Rif. prot.</b></label>
+                                            </div>
+                                            <div class="w3-twothird">
+                                                <asp:Label ID="lbl_Protocollo" runat="server"></asp:Label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
+
+                        <%--STAMPA--%>
+                        <div id="intestazioneStampa" runat="server" visible="false">
+                            <br />
+                            <br />
+                            <table>
+                                <tr>
+                                    <td style="width: 50%">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 33%">
+                                                    <label><b>Roma</b></label></td>
+                                                <td style="width: 66%">
+                                                    <asp:Label ID="lbl_DataStampa" runat="server"></asp:Label></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 33%">
+                                                    <label><b>Produzione</b></label></td>
+                                                <td style="width: 66%">
+                                                    <asp:Label ID="lbl_ProduzioneStampa" runat="server"></asp:Label></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 33%">
+                                                    <label><b>Lavorazione</b></label></td>
+                                                <td style="width: 66%">
+                                                    <asp:Label ID="lbl_LavorazioneStampa" runat="server"></asp:Label></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 33%">
+                                                    <label><b>Data Lav.ne</b></label></td>
+                                                <td style="width: 66%">
+                                                    <asp:Label ID="lbl_DataLavorazioneStampa" runat="server"></asp:Label></td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 50%">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 33%">
+                                                    <label><b>Spettabile</b></label></td>
+                                                <td style="width: 66%">
+                                                    <asp:Label ID="lbl_ClienteStampa" runat="server"></asp:Label></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 33%">
+                                                    <label><b>Indirizzo</b></label></td>
+                                                <td style="width: 66%">
+                                                    <asp:Label ID="lbl_IndirizzoClienteStampa" runat="server"></asp:Label></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td style="width: 33%">
+                                                    <label><b>P. Iva / C.F.</b></label></td>
+                                                <td style="width: 66%">
+                                                    <asp:Label ID="lbl_PIvaClienteStampa" runat="server"></asp:Label></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+
+                            </table>
+                            <br />
+                            <br />
+                            <table>
+                                <tr>
+                                    <td style="width: 50%">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 33%">
+                                                    <label><b>Offerta numero</b></label></td>
+                                                <td style="width: 66%">
+                                                    <asp:Label ID="lbl_CodLavorazioneStampa" runat="server"></asp:Label></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                    <td style="width: 50%">
+                                        <table>
+                                            <tr>
+                                                <td style="width: 33%">
+                                                    <label><b>Rif. prot.</b></label></td>
+                                                <td style="width: 66%">
+                                                    <asp:Label ID="lbl_ProtocolloStampa" runat="server"></asp:Label></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                        <%--FINE STAMPA--%>
+
+
+                        <div class="w3-row w3-section w3-padding w3-small">
+
+                            <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False"
+                                Style="font-size: 10pt; width: 100%; position: relative; background-color: #FFF; text-align: center"
+                                HeaderStyle-BackColor="#2196F3" HeaderStyle-Font-Bold="true" HeaderStyle-ForeColor="White" BorderWidth="0"
+                                GridLines="None" OnRowDataBound="gvArticoli_RowDataBound" HeaderStyle-HorizontalAlign="Right">
+                                <Columns>
+                                    <asp:TemplateField HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left">
+                                        <HeaderTemplate>
+                                            <div style="text-align: left;">Codice</div>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" ID="lblCodice" Text='<%# Eval("id") %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Descrizione" HeaderStyle-Width="40%" ItemStyle-HorizontalAlign="Left">
+                                        <HeaderTemplate>
+                                            <div style="text-align: left;">Descrizione</div>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label runat="server" ID="lblDescrizione" Text='<%# Eval("Descrizione") %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+
+                                    <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-Width="9%" ItemStyle-HorizontalAlign="Right" />
+                                    <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-Width="12%" ItemStyle-HorizontalAlign="Right" />
+                                    <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Width="12%" ItemStyle-HorizontalAlign="Right" />
+                                    <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-Width="9%" ItemStyle-HorizontalAlign="Right" />
+                                    <asp:TemplateField HeaderText="Totale" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right">
+                                        <ItemTemplate>
+                                            <asp:Label ID="totaleRiga" runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+
+                        <div id="footerSchermo" runat="server">
+                            <div class="w3-row w3-section w3-padding w3-small">
+                                <div class="w3-col">
+                                    <div class="w3-twothird">&nbsp;</div>
+                                    <div class="w3-third">
+                                        <div class="w3-half">
+                                            <label><b>Totale Iva esclusa</b></label>
+                                        </div>
+                                        <div class="w3-half w3-center">
+                                            <asp:Label ID="totale" runat="server" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="footerStampa" style="width:100%" runat="server" visible="false">
+                            <table style="width:100%">
+                                <tr>
+                                    <td style="width:60%">&nbsp;</td>
+                                    <td style="width:40%">
+                                        <table style="width:100%">
+                                            <tr>
+                                               <td style="width:60%"><label><b>Totale Iva esclusa</b></label></td>
+                                               <td style="width:40%;text-align:center;"><asp:Label ID="totaleStampa" runat="server" /></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+
+                    </div>
                     <div class="w3-center w3-padding-small" style="margin: 10px">
-                        <asp:Button ID="btnSalvaOfferta" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnSalva_Click" />
+                        <%--<asp:Button ID="btnSalvaOfferta" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnSalva_Click" />--%>
+                        <asp:Button ID="btnStampaOfferta" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-orange w3-round-large " Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampa_Click" />
                         <button onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Chiudi</button>
-                        <asp:Button ID="btnStampaOfferta" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-orange w3-round-large w3-disabled" Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampa_Click" />
+
                     </div>
 
                 </div>

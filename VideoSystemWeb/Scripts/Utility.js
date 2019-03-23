@@ -55,3 +55,4 @@ function controlloCoerenzaDate(id_calendarDataInizio, id_calendarDataFine) {
         $('#' + id_calendarDataInizio).data("DateTimePicker").maxDate(e.date);
     });
 }
+

@@ -162,7 +162,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 decimal percRicavo = 0;
                 if (totPrezzo != 0)
                 {
-                    percRicavo = totCosto / (totPrezzo / 100);
+                    percRicavo = ((totPrezzo- totCosto) / totPrezzo) / 100;
                 }
                 
 
@@ -206,8 +206,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_Quantita.Text = articoloSelezionato.Quantita.ToString();
 
                     //panelRicercaOfferta.Style.Add("display", "none");
-                    btnRecuperaOfferta.Visible = false;
-                    btnEliminaArticoli.Visible = false;
+                    //btnRecuperaOfferta.Visible = false;
+                    //btnEliminaArticoli.Visible = false;
                     //panelModificaArticolo.Style.Remove("display");
                     
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelModificaArticolo.ClientID + "').style.display='block'", addScriptTags: true);
@@ -307,8 +307,8 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             panelModificaArticolo.Style.Add("display", "none");
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelRecuperaOfferta.ClientID + "').style.display='block'", addScriptTags: true);
-            btnRecuperaOfferta.Visible = false;
-            btnEliminaArticoli.Visible = false;
+            //btnRecuperaOfferta.Visible = false;
+            //btnEliminaArticoli.Visible = false;
             RichiediOperazionePopup("UPDATE");
         }
 

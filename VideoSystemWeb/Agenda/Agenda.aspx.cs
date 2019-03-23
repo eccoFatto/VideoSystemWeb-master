@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using VideoSystemWeb.BLL;
+using VideoSystemWeb.BLL.Stampa;
 using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.Agenda
@@ -54,6 +55,10 @@ namespace VideoSystemWeb.Agenda
                 
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento(event,'" + hf_tabSelezionata.Value + "')", addScriptTags: true);
+
+                // Registrazione pulsante di stampa
+                ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
+                scriptManager.RegisterPostBackControl(this.btnStampaOfferta);
             }
         }
 
@@ -110,18 +115,18 @@ namespace VideoSystemWeb.Agenda
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
 
-            lbl_Data.Text = DateTime.Now.ToString("dd/MM/yyyy");
-            lbl_Produzione.Text = eventoSelezionato.produzione;
-            lbl_Lavorazione.Text = eventoSelezionato.lavorazione;
-            lbl_DataLavorazione.Text = eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
+            lbl_Data.Text = lbl_DataStampa.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            lbl_Produzione.Text = lbl_ProduzioneStampa.Text = eventoSelezionato.produzione;
+            lbl_Lavorazione.Text = lbl_LavorazioneStampa.Text = eventoSelezionato.lavorazione;
+            lbl_DataLavorazione.Text = lbl_DataLavorazioneStampa.Text = eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
 
             Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
-            lbl_Cliente.Text = cliente.RagioneSociale;
-            lbl_IndirizzoCliente.Text = cliente.IndirizzoOperativo;
-            lbl_PIvaCliente.Text = string.IsNullOrEmpty(cliente.PartitaIva) ? cliente.CodiceFiscale : cliente.PartitaIva;
+            lbl_Cliente.Text = lbl_ClienteStampa.Text = cliente.RagioneSociale;
+            lbl_IndirizzoCliente.Text = lbl_IndirizzoClienteStampa.Text = cliente.IndirizzoOperativo;
+            lbl_PIvaCliente.Text = lbl_PIvaClienteStampa.Text = string.IsNullOrEmpty(cliente.PartitaIva) ? cliente.CodiceFiscale : cliente.PartitaIva;
 
-            lbl_CodLavorazione.Text = eventoSelezionato.codice_lavoro;
-            lbl_Protocollo.Text = eventoSelezionato.codice_lavoro +" - 12345678";
+            lbl_CodLavorazione.Text = lbl_CodLavorazioneStampa.Text = eventoSelezionato.codice_lavoro;
+            lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = eventoSelezionato.codice_lavoro +" - 12345678";
 
             List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
 
@@ -134,7 +139,7 @@ namespace VideoSystemWeb.Agenda
                 totPrezzo += art.Prezzo * art.Quantita;
             }
 
-            totale.Text = string.Format("{0:0.00}", totPrezzo);
+            totale.Text = totaleStampa.Text = string.Format("{0:0.00}", totPrezzo);
 
             upEvento.Update();
 
@@ -173,8 +178,50 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnStampa_Click(object sender, EventArgs e)
         {
+            string prefissoUrl = Request.Url.Scheme+"://"  +Request.Url.Authority;
+            imgLogo.ImageUrl = prefissoUrl + "/Images/logoVSP_trim.png";
+            gvArticoli.Columns[4].Visible = false;
+
+            intestazioneSchermo.Visible = false;
+            protocolloSchermo.Visible = false;
+            footerSchermo.Visible = false;
+
+            intestazioneStampa.Visible = true;
+            footerStampa.Visible = true;
             
+
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            modalRiepilogoContent.RenderControl(hw);
+
+            //var html = "<html><head><link rel='stylesheet' type='text/css' href='" + prefissoUrl + "/Css/w3.css' /></head><body>" + sw.ToString() + "</body></html>";
+
+            //html = html.Replace("\r", "");
+            //html = html.Replace("\n", "");
+            //html = html.Replace("\t", "");
+
+            //var workStream = new MemoryStream();
+
+            //using (var pdfWriter = new PdfWriter(workStream))
+            //{
+            //    pdfWriter.SetCloseStream(false);
+            //    var document = HtmlConverter.ConvertToDocument(html, pdfWriter);
+
+            //    document.Close();
+            //}
+
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("Content-Disposition", "attachment; filename=myfile.pdf");
+            //Response.BinaryWrite(workStream.ToArray());
+            Response.BinaryWrite(BaseStampa.Instance.GeneraPdf(sw.ToString()));
+            Response.Flush();
+            Response.Close();
+            Response.End();
         }
+
+        
+
         #endregion
 
         #region OPERAZIONI AGENDA
@@ -401,7 +448,8 @@ namespace VideoSystemWeb.Agenda
                 e.Row.Cells[4].Text = string.Format("{0:0.00}", (int.Parse(e.Row.Cells[4].Text)));
             }
         }
-            private void AggiornaAgenda()
+
+        private void AggiornaAgenda()
         {
             //listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"]; //CARICO TUTTI GLI EVENTI
 
@@ -480,7 +528,7 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = eventoSelezionato.id != 0;
-                        btnSalva.Visible = true;
+                        //btnSalva.Visible = true;
                         btnRiepilogo.Visible = false;
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_PREVISIONE_IMPEGNO);
@@ -494,7 +542,7 @@ namespace VideoSystemWeb.Agenda
                         tab_Lavorazione.Style.Add("cursor", "not-allowed;");
 
                         btnOfferta.Visible = false;
-                        btnSalva.Visible = false;
+                        //btnSalva.Visible = true;
                         btnRiepilogo.Visible = true;
                         btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                         btnElimina.Visible = true;
@@ -513,7 +561,7 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = false;
-                        btnSalva.Visible = true;
+                        //btnSalva.Visible = true;
                         btnRiepilogo.Visible = false;
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_LAVORAZIONE);
@@ -529,7 +577,7 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = false;
-                        btnSalva.Visible = true;
+                        //btnSalva.Visible = true;
                         btnRiepilogo.Visible = false;
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_FATTURA);
@@ -545,7 +593,7 @@ namespace VideoSystemWeb.Agenda
                         btnOfferta.Visible = false;
                         btnLavorazione.Visible = false;
                         btnElimina.Visible = eventoSelezionato.id != 0;
-                        btnSalva.Visible = true;
+                        //btnSalva.Visible = true;
                         btnRiepilogo.Visible = false;
 
                         popupAppuntamento.AbilitaComponentiPopup(DatiAgenda.STATO_RIPOSO);
@@ -765,5 +813,10 @@ namespace VideoSystemWeb.Agenda
             return innerPanel;
         }
         #endregion
+
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+            /* Non eliminare questo metodo. Risolve il problema della stampa. */
+        }
     }
 }

@@ -23,24 +23,33 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (basePage.AbilitazioneInScrittura())
-            {
-                // ASSOCIO L'EVENTO DOUBLECLICK ALLE LISTBOX
-                //if (Request["__EVENTARGUMENT"] != null && Request["__EVENTARGUMENT"] == "move")
-                //{
-                      //lbMod_Email_DoubleClick();
-                //    //lbMod_Indirizzi_DoubleClick();
-                //    //lbMod_Telefoni_DoubleClick();
-                //    //lbMod_Documenti_DoubleClick();
-                //}
-                //lbMod_Email.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Email, "move"));
-                //lbMod_Indirizzi.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Indirizzi, "move"));
-                //lbMod_Telefoni.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Telefoni, "move"));
-                //lbMod_Documenti.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Documenti, "move"));
-            }
+            //if (basePage.AbilitazioneInScrittura())
+            //{
+            // ASSOCIO L'EVENTO DOUBLECLICK ALLE LISTBOX
+            //if (Request["__EVENTARGUMENT"] != null && Request["__EVENTARGUMENT"] == "move")
+            //{
+            //lbMod_Email_DoubleClick();
+            //    //lbMod_Indirizzi_DoubleClick();
+            //    //lbMod_Telefoni_DoubleClick();
+            //    //lbMod_Documenti_DoubleClick();
+            //}
+            //lbMod_Email.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Email, "move"));
+            //lbMod_Indirizzi.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Indirizzi, "move"));
+            //lbMod_Telefoni.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Telefoni, "move"));
+            //lbMod_Documenti.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Documenti, "move"));
+            //}
+
+            //string prot = Protocollo_BLL.Instance.getNumeroProtocollo();
+            //Protocollo_BLL.Instance.resetProcotollo(10);
+            //prot = Protocollo_BLL.Instance.getNumeroProtocollo();
+
+            //string codLav = Protocollo_BLL.Instance.getCodLavFormattato();
+            //Protocollo_BLL.Instance.resetCodiceLavorazione(27);
+            //codLav = Protocollo_BLL.Instance.getCodLavFormattato();
 
             if (!Page.IsPostBack)
             {
+
                 log.Info("PAGE AnagCollaboratori");
                 BasePage p = new BasePage();
                 Esito esito = p.CaricaListeTipologiche();

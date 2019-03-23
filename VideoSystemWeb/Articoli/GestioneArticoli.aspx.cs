@@ -20,6 +20,7 @@ namespace VideoSystemWeb.Articoli
             // GENERI
             // GRUPPI
             // SOTTOGRUPPI
+            // TENDER
             string tipo = "ARTICOLI";
             if (!string.IsNullOrEmpty(Request.QueryString["TIPO"]))
             {

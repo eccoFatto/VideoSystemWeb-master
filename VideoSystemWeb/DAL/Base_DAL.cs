@@ -200,6 +200,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_COLONNE_AGENDA:
                     nomeSP = "InsertTipoColonneAgenda";
                     break;
+                case EnumTipologiche.TIPO_TENDER:
+                    nomeSP = "InsertTipoTender";
+                    break;
 
                 default:
                     break;
@@ -297,6 +300,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_COLONNE_AGENDA:
                     nomeSP = "UpdateTipoColonneAgenda";
                     break;
+                case EnumTipologiche.TIPO_TENDER:
+                    nomeSP = "UpdateTipoTender";
+                    break;
                 default:
                     break;
             }
@@ -393,6 +399,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_COLONNE_AGENDA:
                     nomeSP = "DeleteTipoColonneAgenda";
                     break;
+                case EnumTipologiche.TIPO_TENDER:
+                    nomeSP = "DeleteTipoTender";
+                    break;
 
                 default:
                     break;
@@ -441,6 +450,162 @@ namespace VideoSystemWeb.DAL
             }
 
             return esito;
+        }
+
+        public static int getProtocollo(ref Esito esito)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("getProtocollo"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            StoreProc.Connection.Open();
+
+                            StoreProc.ExecuteNonQuery();
+
+                            //int iReturn = (Int32)o;
+                            int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+
+                            return iReturn;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Base_DAL.cs - getProtocollo " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+            return 0;
+        }
+
+        public static Esito resetProtocollo(int protIniziale)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("resetProtocollo"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter protocolloIniziale = new SqlParameter("@protocolloIniziale", SqlDbType.Int);
+                            protocolloIniziale.Direction = ParameterDirection.Input;
+                            protocolloIniziale.Value = protIniziale;
+                            StoreProc.Parameters.Add(protocolloIniziale);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Base_DAL.cs - resetProtocollo " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return esito;
+
+        }
+
+        public static int getCodiceLavorazione(ref Esito esito)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("getCodiceLavorazione"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            StoreProc.Connection.Open();
+
+                            StoreProc.ExecuteNonQuery();
+
+                            //int iReturn = (Int32)o;
+                            int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+
+                            return iReturn;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Base_DAL.cs - getCodiceLavorazione " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+            return 0;
+        }
+
+        public static Esito resetCodiceLavorazione(int codLavIniziale)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("resetCodiceLavorazione"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter codiceLavorazioneIniziale = new SqlParameter("@codiceLavorazioneIniziale", SqlDbType.Int);
+                            codiceLavorazioneIniziale.Direction = ParameterDirection.Input;
+                            codiceLavorazioneIniziale.Value = codLavIniziale;
+                            StoreProc.Parameters.Add(codiceLavorazioneIniziale);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Base_DAL.cs - resetCodiceLavorazione " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return esito;
+
         }
 
     }

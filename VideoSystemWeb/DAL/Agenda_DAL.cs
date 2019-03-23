@@ -347,6 +347,7 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
                             // Start a local transaction.
+                            StoreProc.Connection.Open();
                             transaction = con.BeginTransaction("UpdateAgendaTransaction");
 
                             Anag_Utenti utente = (Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE];
@@ -475,13 +476,13 @@ namespace VideoSystemWeb.DAL
                                 nota.Value = evento.nota;
                                 StoreProc.Parameters.Add(nota);
 
-                                StoreProc.Connection.Open();
-
+                                //StoreProc.Connection.Open();
+                                StoreProc.Transaction = transaction;
                                 int iReturn = StoreProc.ExecuteNonQuery();
 
                                 // ELIMINO GLI EVENTUALI TENDER ASSOCIATI ALL'EVENTO PER SOSTITUIRLI COI NUOVI
                                 CostruisciSP_DeleteDatiTender(StoreProc, sda, evento.id);
-                                StoreProc.Transaction = transaction;
+                                //StoreProc.Transaction = transaction;
 
                                 StoreProc.ExecuteNonQuery();
 

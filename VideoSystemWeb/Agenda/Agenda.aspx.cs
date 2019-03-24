@@ -126,7 +126,12 @@ namespace VideoSystemWeb.Agenda
             lbl_PIvaCliente.Text = lbl_PIvaClienteStampa.Text = string.IsNullOrEmpty(cliente.PartitaIva) ? cliente.CodiceFiscale : cliente.PartitaIva;
 
             lbl_CodLavorazione.Text = lbl_CodLavorazioneStampa.Text = eventoSelezionato.codice_lavoro;
-            lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = eventoSelezionato.codice_lavoro +" - 12345678";
+
+            int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
+            List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
+            string protocollo = listaProtocolli.Count == 0 ?  "N.D." : eventoSelezionato.codice_lavoro + " - " + listaProtocolli.First().Numero_protocollo;
+            
+            lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
 
             List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
 
@@ -194,26 +199,9 @@ namespace VideoSystemWeb.Agenda
             HtmlTextWriter hw = new HtmlTextWriter(sw);
             modalRiepilogoContent.RenderControl(hw);
 
-            //var html = "<html><head><link rel='stylesheet' type='text/css' href='" + prefissoUrl + "/Css/w3.css' /></head><body>" + sw.ToString() + "</body></html>";
-
-            //html = html.Replace("\r", "");
-            //html = html.Replace("\n", "");
-            //html = html.Replace("\t", "");
-
-            //var workStream = new MemoryStream();
-
-            //using (var pdfWriter = new PdfWriter(workStream))
-            //{
-            //    pdfWriter.SetCloseStream(false);
-            //    var document = HtmlConverter.ConvertToDocument(html, pdfWriter);
-
-            //    document.Close();
-            //}
-
             Response.Clear();
             Response.ContentType = "application/pdf";
             Response.AddHeader("Content-Disposition", "attachment; filename=myfile.pdf");
-            //Response.BinaryWrite(workStream.ToArray());
             Response.BinaryWrite(BaseStampa.Instance.GeneraPdf(sw.ToString()));
             Response.Flush();
             Response.Close();

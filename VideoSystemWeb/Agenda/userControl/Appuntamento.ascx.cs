@@ -212,7 +212,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (stato == DatiAgenda.STATO_OFFERTA)
             {
-                txt_CodiceLavoro.Text = Agenda_BLL.Instance.GeneraCodiceLavorazione();
+                txt_CodiceLavoro.Text = Protocolli_BLL.Instance.getCodLavFormattato();// Agenda_BLL.Instance.GeneraCodiceLavorazione();
             }
 
             txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, stato, ref esito).nome;

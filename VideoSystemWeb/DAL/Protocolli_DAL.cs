@@ -81,6 +81,57 @@ namespace VideoSystemWeb.DAL
             return listaProtocolli;
         }
 
+        public List<Protocolli> getProtocolliByCodLavIdTipoProtocollo(string codiceLavorazione, int IdTipoProtocollo, ref Esito esito, bool soloAttivi = true)
+        {
+            List<Protocolli> listaProtocolli = new List<Protocolli>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM dati_protocollo WHERE codice_lavoro = '" +codiceLavorazione.Trim() + "' AND id_tipo_protocollo = " + IdTipoProtocollo.ToString();
+                    
+                    if (soloAttivi) query += " AND ATTIVO = 1";
+                    query += " ORDER BY codice_lavoro,numero_protocollo";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+
+                                        Protocolli protocollo = new Protocolli();
+                                        protocollo.Id = riga.Field<int>("id");
+                                        protocollo.Codice_lavoro = riga.Field<string>("codice_lavoro");
+                                        protocollo.Numero_protocollo = riga.Field<string>("numero_protocollo");
+                                        protocollo.Cliente = riga.Field<string>("cliente");
+                                        protocollo.Id_tipo_protocollo = riga.Field<int>("id_tipo_protocollo");
+                                        protocollo.PathDocumento = riga.Field<string>("pathDocumento");
+                                        protocollo.Descrizione = riga.Field<string>("descrizione");
+                                        protocollo.Attivo = riga.Field<bool>("attivo");
+                                        listaProtocolli.Add(protocollo);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaProtocolli;
+        }
+
         public Protocolli getProtocolloById(ref Esito esito, int id)
         {
             Protocolli protocollo = new Protocolli();

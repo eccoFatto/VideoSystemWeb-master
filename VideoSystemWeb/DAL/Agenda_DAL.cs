@@ -304,6 +304,31 @@ namespace VideoSystemWeb.DAL
                                 }
                             }
 
+
+                            //GESTIONE PROTOCOLLO
+                            if (evento.id_stato == DatiAgenda.STATO_OFFERTA)
+                            {
+                                string protocollo = Protocolli_BLL.Instance.getNumeroProtocollo();
+                                // SE E' ANDATO TUTTO BENE FACCIO INSERT SU TABELLA DATI_PROTOCOLLO
+                                if (!string.IsNullOrEmpty(protocollo))
+                                {
+
+                                    Protocolli protocolloOfferta = new Protocolli();
+                                    protocolloOfferta.Codice_lavoro = evento.codice_lavoro;
+                                    protocolloOfferta.Numero_protocollo = protocollo;
+                                    protocolloOfferta.Cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
+                                    protocolloOfferta.Id_tipo_protocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
+                                    protocolloOfferta.PathDocumento = "";
+                                    protocolloOfferta.Descrizione = evento.produzione.Trim() + " " + evento.lavorazione.Trim();
+                                    protocolloOfferta.Attivo = true;
+
+                                    CostruisciSP_InsertProtocollo(StoreProc, sda, iDatiAgendaReturn, protocolloOfferta);
+                                    StoreProc.ExecuteNonQuery();
+
+                                    int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+                                }
+                            }
+
                             // Attempt to commit the transaction.
                             transaction.Commit();
                         }
@@ -592,6 +617,32 @@ namespace VideoSystemWeb.DAL
                                     }
                                 }
 
+                                //GESTIONE PROTOCOLLO
+                                int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
+                                if (Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(evento.codice_lavoro, idTipoProtocollo,ref esito,true).Count == 0  
+                                    &&  evento.id_stato == DatiAgenda.STATO_OFFERTA)
+                                {
+                                    string protocollo = Protocolli_BLL.Instance.getNumeroProtocollo();
+                                    // SE E' ANDATO TUTTO BENE FACCIO INSERT SU TABELLA DATI_PROTOCOLLO
+                                    if (!string.IsNullOrEmpty(protocollo))
+                                    {
+
+                                        Protocolli protocolloOfferta = new Protocolli();
+                                        protocolloOfferta.Codice_lavoro = evento.codice_lavoro;
+                                        protocolloOfferta.Numero_protocollo = protocollo;
+                                        protocolloOfferta.Cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
+                                        protocolloOfferta.Id_tipo_protocollo = idTipoProtocollo;
+                                        protocolloOfferta.PathDocumento = "";
+                                        protocolloOfferta.Descrizione = evento.produzione.Trim() + " " + evento.lavorazione.Trim();
+                                        protocolloOfferta.Attivo = true;
+
+                                        CostruisciSP_InsertProtocollo(StoreProc, sda, iDatiAgendaReturn, protocolloOfferta);
+                                        StoreProc.ExecuteNonQuery();
+
+                                        int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+                                    }
+                                }
+
                                 // Attempt to commit the transaction.
                                 transaction.Commit();
 
@@ -854,6 +905,56 @@ namespace VideoSystemWeb.DAL
             SqlParameter idDatiAgenda = new SqlParameter("@idDatiAgenda", iDatiAgendaReturn);
             idDatiAgenda.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(idDatiAgenda);
+        }
+
+        private static void CostruisciSP_InsertProtocollo(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, Protocolli protocollo)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "[InsertProtocollo]";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+            SqlParameter codice_lavoro = new SqlParameter("@codice_lavoro", protocollo.Codice_lavoro);
+            codice_lavoro.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(codice_lavoro);
+
+            SqlParameter numero_protocollo = new SqlParameter("@numero_protocollo", protocollo.Numero_protocollo);
+            numero_protocollo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(numero_protocollo);
+
+            SqlParameter cliente = new SqlParameter("@cliente", protocollo.Cliente);
+            cliente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(cliente);
+
+            SqlParameter id_tipo_protocollo = new SqlParameter("@id_tipo_protocollo", protocollo.Id_tipo_protocollo);
+            id_tipo_protocollo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(id_tipo_protocollo);
+
+            SqlParameter pathDocumento = new SqlParameter("@pathDocumento", protocollo.PathDocumento);
+            pathDocumento.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(pathDocumento);
+
+            SqlParameter descrizione = new SqlParameter("@descrizione", protocollo.Descrizione);
+            descrizione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(descrizione);
+
+            SqlParameter attivo = new SqlParameter("@attivo", protocollo.Attivo);
+            attivo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(attivo);
         }
 
         private static void CostruisciSP_InsertEvento(DatiAgenda evento, SqlCommand StoreProc, SqlDataAdapter sda)

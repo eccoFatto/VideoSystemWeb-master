@@ -2389,3 +2389,78 @@ Operazione non valida. La connessione è chiusa.
 2019-03-23 12:22:12,413 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-23 12:25:36,394 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-23 12:25:41,357 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-23 14:41:34,645 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-23 14:41:35,928 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-23 14:41:42,766 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 16:11:48,144 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-24 16:11:49,283 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 16:11:56,389 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 16:12:32,550 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 16:13:31,347 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 16:13:31,861 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 16:30:10,556 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 16:30:11,086 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:16:48,978 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-24 18:16:50,753 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:18:04,525 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:18:09,832 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:20:31,308 [10] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'InsertProtocollo' prevede il parametro '@numero_protocollo', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.creaEventoConArticoli(DatiAgenda evento, List`1 listaDatiArticoli, List`1 listaIdTender) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 325
+2019-03-24 18:20:31,309 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:20:31,823 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:20:45,348 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:20:46,936 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:23:01,148 [14] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'InsertProtocollo' prevede il parametro '@numero_protocollo', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.creaEventoConArticoli(DatiAgenda evento, List`1 listaDatiArticoli, List`1 listaIdTender) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 325
+2019-03-24 18:26:55,709 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-24 18:26:57,163 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:27:32,262 [6] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'InsertProtocollo' prevede il parametro '@numero_protocollo', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.creaEventoConArticoli(DatiAgenda evento, List`1 listaDatiArticoli, List`1 listaIdTender) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 325
+2019-03-24 18:27:36,669 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - Agenda_DAL.cs - creaEventoConArticoli 
+La procedura o funzione 'InsertProtocollo' prevede il parametro '@numero_protocollo', che non è stato specificato.
+2019-03-24 18:28:05,810 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:30:45,340 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-24 18:30:46,893 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:31:53,178 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:31:53,669 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:33:12,567 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:33:13,163 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:33:31,282 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:34:08,493 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:34:08,919 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:34:47,223 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:34:47,607 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:45:54,797 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-24 18:45:56,036 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:48:17,023 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:48:17,961 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:49:31,822 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:49:32,290 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-24 18:49:59,704 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

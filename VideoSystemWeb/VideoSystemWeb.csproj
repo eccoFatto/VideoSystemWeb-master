@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -275,6 +274,9 @@
     <Content Include="fonts\glyphicons\glyphicons-halflings-regular.woff2" />
     <Content Include="Css\multi-select.dev.css.map" />
     <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DOCUMENTI\HELP\HELP VIDEOSYSTEM.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
@@ -549,6 +551,7 @@
     <Compile Include="BLL\Anag_Clienti_Fornitori_BLL.cs" />
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
+    <Compile Include="BLL\Protocolli_BLL.cs" />
     <Compile Include="BLL\Articoli_BLL.cs" />
     <Compile Include="BLL\Dati_Tender_BLL.cs" />
     <Compile Include="BLL\Art_Gruppi_Articoli_BLL.cs" />
@@ -575,6 +578,7 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\Agenda_DAL.cs" />
+    <Compile Include="DAL\Protocolli_DAL.cs" />
     <Compile Include="DAL\Dati_Tender_DAL.cs" />
     <Compile Include="DAL\Art_Gruppi_Articoli_DAL.cs" />
     <Compile Include="DAL\Art_Gruppi_DAL.cs" />
@@ -604,6 +608,7 @@
     <Compile Include="Entity\Anag_Indirizzi_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Qualifiche_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
+    <Compile Include="Entity\Protocolli.cs" />
     <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />
     <Compile Include="Entity\ArticoliGruppi.cs" />
     <Compile Include="Entity\DatiTender.cs" />

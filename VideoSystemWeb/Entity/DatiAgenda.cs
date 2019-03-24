@@ -2,19 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using VideoSystemWeb.BLL;
 
 namespace VideoSystemWeb.Entity
 {
     [Serializable]
     public class DatiAgenda
     {
-        public const int STATO_PREVISIONE_IMPEGNO = 1;
-        public const int STATO_OFFERTA = 2;
-        public const int STATO_LAVORAZIONE = 3;
-        public const int STATO_FATTURA = 4;
-        public const int STATO_RIPOSO = 5;
-        public const int STATO_VIAGGIO = 6;
-
         public int id { get; set; }
         public DateTime data_inizio_lavorazione { get; set; }
         public DateTime data_fine_lavorazione { get; set; }

@@ -58,7 +58,7 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            bool campoObbligatorio = int.Parse(hf_IdStato.Value) != DatiAgenda.STATO_RIPOSO;
+            bool campoObbligatorio = int.Parse(hf_IdStato.Value) != Stato.Instance.STATO_RIPOSO;
 
             datiAgenda.data_inizio_lavorazione = BasePage.ValidaCampo(txt_DataInizioLavorazione, DateTime.MinValue, true, ref esito);
             datiAgenda.data_fine_lavorazione = BasePage.ValidaCampo(txt_DataFineLavorazione, DateTime.MinValue, true, ref esito);
@@ -134,7 +134,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_Clienti.Text = ddl_Clienti.ToolTip = ((List<Anag_Clienti_Fornitori>)ViewState["listaClientiFornitori"]).Where(x => x.Id == evento.id_cliente).FirstOrDefault().RagioneSociale;
             }
 
-            if (evento.id_stato != DatiAgenda.STATO_PREVISIONE_IMPEGNO && evento.id_stato != DatiAgenda.STATO_RIPOSO)
+            if (evento.id_stato != Stato.Instance.STATO_PREVISIONE_IMPEGNO && evento.id_stato != Stato.Instance.STATO_RIPOSO)
             {
                 List<Tipologica> listaRisorseNoDipendenti = basePage.listaRisorse.Where(x => x.sottotipo.ToUpper() != EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<Tipologica>();
 
@@ -210,7 +210,7 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
             hf_IdStato.Value = stato.ToString();
 
-            if (stato == DatiAgenda.STATO_OFFERTA)
+            if (stato == Stato.Instance.STATO_OFFERTA)
             {
                 txt_CodiceLavoro.Text = Protocolli_BLL.Instance.getCodLavFormattato();// Agenda_BLL.Instance.GeneraCodiceLavorazione();
             }
@@ -224,62 +224,60 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (basePage.AbilitazioneInScrittura())
             {
-                switch (statoEvento)
+
+                if (statoEvento == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
                 {
-                    case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
-                        txt_DataInizioLavorazione.Enabled =
-                        txt_DataFineLavorazione.Enabled =
-                        ddl_Risorse.Enabled = 
-                        ddl_Tipologie.Enabled =
-                        ddl_Clienti.Enabled = 
-                        txt_DurataViaggioAndata.Enabled =
-                        txt_DurataViaggioRitorno.Enabled =
-                        txt_Produzione.Enabled = 
-                        txt_Lavorazione.Enabled = 
-                        txt_Indirizzo.Enabled = 
-                        txt_Luogo.Enabled = 
-                        tb_Nota.Enabled = true;
-                        check_tender.Enabled = true;
+                    txt_DataInizioLavorazione.Enabled =
+                    txt_DataFineLavorazione.Enabled =
+                    ddl_Risorse.Enabled =
+                    ddl_Tipologie.Enabled =
+                    ddl_Clienti.Enabled =
+                    txt_DurataViaggioAndata.Enabled =
+                    txt_DurataViaggioRitorno.Enabled =
+                    txt_Produzione.Enabled =
+                    txt_Lavorazione.Enabled =
+                    txt_Indirizzo.Enabled =
+                    txt_Luogo.Enabled =
+                    tb_Nota.Enabled = true;
+                    check_tender.Enabled = true;
 
-                        break;
-                    case DatiAgenda.STATO_OFFERTA:
-                        txt_DataInizioLavorazione.Enabled = false;
-                        txt_DataFineLavorazione.Enabled = true;
-                        ddl_Risorse.Enabled = true;
-                        ddl_Tipologie.Enabled = true;
-                        ddl_Clienti.Enabled = false;
-                        txt_DurataViaggioAndata.Enabled = true;
-                        txt_DurataViaggioRitorno.Enabled = true;
-                        txt_Produzione.Enabled = false;
-                        txt_Lavorazione.Enabled = false;
-                        txt_Indirizzo.Enabled = true;
-                        txt_Luogo.Enabled = false;
-                        tb_Nota.Enabled = true;
-                        check_tender.Enabled = true;
+                }
+                else if (statoEvento == Stato.Instance.STATO_OFFERTA)
+                {
+                    txt_DataInizioLavorazione.Enabled = false;
+                    txt_DataFineLavorazione.Enabled = true;
+                    ddl_Risorse.Enabled = true;
+                    ddl_Tipologie.Enabled = true;
+                    ddl_Clienti.Enabled = false;
+                    txt_DurataViaggioAndata.Enabled = true;
+                    txt_DurataViaggioRitorno.Enabled = true;
+                    txt_Produzione.Enabled = false;
+                    txt_Lavorazione.Enabled = false;
+                    txt_Indirizzo.Enabled = true;
+                    txt_Luogo.Enabled = false;
+                    tb_Nota.Enabled = true;
+                    check_tender.Enabled = true;
 
-                        break;
-                    case DatiAgenda.STATO_LAVORAZIONE:
-                        
-                        break;
-                    case DatiAgenda.STATO_FATTURA:
-                        
-                        break;
-                    case DatiAgenda.STATO_RIPOSO:
-                        txt_DataInizioLavorazione.Enabled = true;
-                        txt_DataFineLavorazione.Enabled = true;
-                        ddl_Risorse.Enabled = true;
-                        ddl_Tipologie.Enabled = false;
-                        ddl_Clienti.Enabled = false;
-                        txt_DurataViaggioAndata.Enabled = false;
-                        txt_DurataViaggioRitorno.Enabled = false;
-                        txt_Produzione.Enabled = false;
-                        txt_Lavorazione.Enabled = false;
-                        txt_Indirizzo.Enabled = false;
-                        txt_Luogo.Enabled = false;
-                        tb_Nota.Enabled = true;
-                        check_tender.Enabled = false;
-
-                        break;
+                }
+                else if (statoEvento == Stato.Instance.STATO_LAVORAZIONE)
+                { }
+                else if (statoEvento == Stato.Instance.STATO_FATTURA)
+                { }
+                else if (statoEvento == Stato.Instance.STATO_RIPOSO)
+                {
+                    txt_DataInizioLavorazione.Enabled = true;
+                    txt_DataFineLavorazione.Enabled = true;
+                    ddl_Risorse.Enabled = true;
+                    ddl_Tipologie.Enabled = false;
+                    ddl_Clienti.Enabled = false;
+                    txt_DurataViaggioAndata.Enabled = false;
+                    txt_DurataViaggioRitorno.Enabled = false;
+                    txt_Produzione.Enabled = false;
+                    txt_Lavorazione.Enabled = false;
+                    txt_Indirizzo.Enabled = false;
+                    txt_Luogo.Enabled = false;
+                    tb_Nota.Enabled = true;
+                    check_tender.Enabled = false;
                 }
             }
         }
@@ -292,7 +290,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString())
             {
-                hf_IdStato.Value =  DatiAgenda.STATO_RIPOSO.ToString();
+                hf_IdStato.Value = Stato.Instance.STATO_RIPOSO.ToString();
                 hf_Tipologie.Value = "";
                 ddl_Tipologie.Text = "<Seleziona>";
                 hf_Clienti.Value = "";
@@ -308,12 +306,8 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                hf_IdStato.Value = DatiAgenda.STATO_PREVISIONE_IMPEGNO.ToString();
+                hf_IdStato.Value = Stato.Instance.STATO_PREVISIONE_IMPEGNO.ToString();
             }
-            
-
-            
-
 
             AbilitaComponentiPopup(int.Parse(hf_IdStato.Value));
             RichiediOperazionePopup("UPDATE");

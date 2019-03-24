@@ -306,7 +306,7 @@ namespace VideoSystemWeb.DAL
 
 
                             //GESTIONE PROTOCOLLO
-                            if (evento.id_stato == DatiAgenda.STATO_OFFERTA)
+                            if (evento.id_stato == Stato.Instance.STATO_OFFERTA)
                             {
                                 string protocollo = Protocolli_BLL.Instance.getNumeroProtocollo();
                                 // SE E' ANDATO TUTTO BENE FACCIO INSERT SU TABELLA DATI_PROTOCOLLO
@@ -620,7 +620,7 @@ namespace VideoSystemWeb.DAL
                                 //GESTIONE PROTOCOLLO
                                 int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
                                 if (Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(evento.codice_lavoro, idTipoProtocollo,ref esito,true).Count == 0  
-                                    &&  evento.id_stato == DatiAgenda.STATO_OFFERTA)
+                                    &&  evento.id_stato == Stato.Instance.STATO_OFFERTA)
                                 {
                                     string protocollo = Protocolli_BLL.Instance.getNumeroProtocollo();
                                     // SE E' ANDATO TUTTO BENE FACCIO INSERT SU TABELLA DATI_PROTOCOLLO

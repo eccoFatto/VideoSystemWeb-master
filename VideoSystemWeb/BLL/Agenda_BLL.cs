@@ -108,22 +108,19 @@ namespace VideoSystemWeb.BLL
         {
             Esito esito = new Esito();
 
-            switch (evento.id_stato)
-            {
-                case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
-                    esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender);
-                    break;
-                case DatiAgenda.STATO_OFFERTA:
-                    esito = Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
-                    break;
-                case DatiAgenda.STATO_RIPOSO:
-                    esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender);
-                    break;
-                default:
-                    break;
-            }
 
-            
+            if (evento.id_stato == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
+            {
+                esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender);
+            }
+            else if (evento.id_stato == Stato.Instance.STATO_OFFERTA)
+            {
+                esito = Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
+            }
+            else if (evento.id_stato == Stato.Instance.STATO_RIPOSO)
+            {
+                esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender);
+            }
 
             return esito;
         }
@@ -131,22 +128,20 @@ namespace VideoSystemWeb.BLL
         public Esito AggiornaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
         {
             Esito esito = new Esito();
-          
-            switch (evento.id_stato)
-            {
-                case DatiAgenda.STATO_PREVISIONE_IMPEGNO:
-                    esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
-                    break;
-                case DatiAgenda.STATO_OFFERTA:
-                    esito = Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
-                    break;
-                case DatiAgenda.STATO_RIPOSO:
-                    esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
-                    break;
-                default:
-                    break;
-            }
 
+
+            if (evento.id_stato == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
+            {
+                esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
+            }
+            else if (evento.id_stato == Stato.Instance.STATO_OFFERTA)
+            {
+                esito = Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
+            }
+            else if (evento.id_stato == Stato.Instance.STATO_RIPOSO)
+            {
+                esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
+            }
 
             return esito;
         }

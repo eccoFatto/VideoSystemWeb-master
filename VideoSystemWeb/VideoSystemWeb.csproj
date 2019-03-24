@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -573,6 +574,7 @@
     <Compile Include="BLL\Login_BLL.cs" />
     <Compile Include="BLL\SessionManager.cs" />
     <Compile Include="BLL\Stampa\BaseStampa.cs" />
+    <Compile Include="BLL\Stato.cs" />
     <Compile Include="BLL\UtilityTipologiche.cs" />
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>

@@ -685,6 +685,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DOCUMENTI\PROTOCOLLI\" />
     <Folder Include="Images\DOCUMENTI\" />
     <Folder Include="LOGS\" />
   </ItemGroup>

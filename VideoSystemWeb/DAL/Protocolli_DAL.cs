@@ -38,7 +38,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM protocolli";
+                    string query = "SELECT * FROM dati_protocollo";
                     if (soloAttivi) query += " WHERE ATTIVO = 1";
                     query += " ORDER BY codice_lavoro,numero_protocollo";
                     using (SqlCommand cmd = new SqlCommand(query))
@@ -60,7 +60,7 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Codice_lavoro = riga.Field<string>("codice_lavoro");
                                         protocollo.Numero_protocollo = riga.Field<string>("numero_protocollo");
                                         protocollo.Cliente = riga.Field<string>("cliente");
-                                        protocollo.Tipologia = riga.Field<string>("tipologia");
+                                        protocollo.Id_tipo_protocollo = riga.Field<int>("id_tipo_protocollo");
                                         protocollo.PathDocumento = riga.Field<string>("pathDocumento");
                                         protocollo.Descrizione = riga.Field<string>("descrizione");
                                         protocollo.Attivo = riga.Field<bool>("attivo");
@@ -88,7 +88,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM protocolli WHERE id = " + id.ToString();
+                    string query = "SELECT * FROM dati_protocollo WHERE id = " + id.ToString();
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -104,7 +104,7 @@ namespace VideoSystemWeb.DAL
                                     protocollo.Codice_lavoro = dt.Rows[0].Field<string>("codice_lavoro");
                                     protocollo.Numero_protocollo = dt.Rows[0].Field<string>("numero_protocollo");
                                     protocollo.Cliente = dt.Rows[0].Field<string>("cliente");
-                                    protocollo.Tipologia = dt.Rows[0].Field<string>("tipologia");
+                                    protocollo.Id_tipo_protocollo = dt.Rows[0].Field<int>("id_tipo_protocollo");
                                     protocollo.PathDocumento = dt.Rows[0].Field<string>("pathDocumento");
                                     protocollo.Descrizione = dt.Rows[0].Field<string>("descrizione");
                                     protocollo.Attivo = dt.Rows[0].Field<bool>("attivo");
@@ -171,9 +171,9 @@ namespace VideoSystemWeb.DAL
                             cliente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(cliente);
 
-                            SqlParameter tipologia = new SqlParameter("@tipologia", protocollo.Tipologia);
-                            tipologia.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(tipologia);
+                            SqlParameter id_tipo_protocollo = new SqlParameter("@id_tipo_protocollo", protocollo.Id_tipo_protocollo);
+                            id_tipo_protocollo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_tipo_protocollo);
 
                             SqlParameter pathDocumento = new SqlParameter("@pathDocumento", protocollo.PathDocumento);
                             pathDocumento.Direction = ParameterDirection.Input;
@@ -250,9 +250,9 @@ namespace VideoSystemWeb.DAL
                             cliente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(cliente);
 
-                            SqlParameter tipologia = new SqlParameter("@tipologia", protocollo.Tipologia);
-                            tipologia.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(tipologia);
+                            SqlParameter id_tipo_protocollo = new SqlParameter("@id_tipo_protocollo", protocollo.Id_tipo_protocollo);
+                            id_tipo_protocollo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_tipo_protocollo);
 
                             SqlParameter pathDocumento = new SqlParameter("@pathDocumento", protocollo.PathDocumento);
                             pathDocumento.Direction = ParameterDirection.Input;

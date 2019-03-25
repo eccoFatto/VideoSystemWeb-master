@@ -626,7 +626,6 @@ namespace VideoSystemWeb.DAL
                                     // SE E' ANDATO TUTTO BENE FACCIO INSERT SU TABELLA DATI_PROTOCOLLO
                                     if (!string.IsNullOrEmpty(protocollo))
                                     {
-
                                         Protocolli protocolloOfferta = new Protocolli();
                                         protocolloOfferta.Codice_lavoro = evento.codice_lavoro;
                                         protocolloOfferta.Numero_protocollo = protocollo;

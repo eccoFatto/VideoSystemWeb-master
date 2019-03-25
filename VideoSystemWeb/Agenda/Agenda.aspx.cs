@@ -789,7 +789,20 @@ namespace VideoSystemWeb.Agenda
                 string lavorazione = evento.lavorazione;
                 string luogo = evento.luogo;
 
-                string contenuto = "<p style='text-align:center;font-weight:bold; background-color:white'>Anteprima appuntamento</p><p style='text-align:left;font-weight:normal;background-color:white'><b>Tipo impegno:</b> " + stato + "<br/><b>Cliente:</b> " + cliente + "<br/><b>Lavorazione:</b> " + lavorazione + "<br/><b>Produzione:</b> " + produzione + "<br/><b>Tipologia:</b> " + tipologia + "<br/><b>Data inizio:</b> " + dataInizio + "&nbsp;&nbsp;<b>Data fine:</b> " + datatFine + "<br/><b>Luogo:</b> " + luogo + "</p>";
+                string tender = "-";
+                List<DatiTender> listaTenderEvento = Dati_Tender_BLL.Instance.getDatiAgendaTenderByIdAgenda(evento.id, ref esito);
+                if (listaTenderEvento != null && listaTenderEvento.Count > 0)
+                {
+                    tender = "";
+                    foreach (DatiTender tenderCurr in listaTenderEvento)
+                    {
+                        string nomeTenderCurr = listaTender.Where(x => x.id == tenderCurr.IdTender).Select(y => y.nome).FirstOrDefault();
+                        tender += nomeTenderCurr + "; ";
+                    }
+                    tender = tender.Substring(0, tender.Length - 2);
+                }
+
+                string contenuto = "<p style='text-align:center;font-weight:bold; background-color:white'>Anteprima appuntamento</p><p style='text-align:left;font-weight:normal;background-color:white'><b>Tipo impegno:</b> " + stato + "<br/><b>Cliente:</b> " + cliente + "<br/><b>Lavorazione:</b> " + lavorazione + "<br/><b>Produzione:</b> " + produzione + "<br/><b>Tipologia:</b> " + tipologia + "<br/><b>Data inizio:</b> " + dataInizio + "&nbsp;&nbsp;<b>Data fine:</b> " + datatFine + "<br/><b>Luogo:</b> " + luogo + "<br/><b>Tender:</b> " + tender + "</p>";
                 LiteralControl anteprima = new LiteralControl(contenuto);
 
                 innerPanel.Controls.Add(anteprima);

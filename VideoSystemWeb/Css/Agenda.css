@@ -25,12 +25,11 @@
 .containerPopup {
     background-color: #EEF1F7;
     border: solid 3px #5377A9;
-    width: 94%;
-    min-height:600px;
-    height: 65%;
+    width: 47%;
     position: fixed;
     top: 1%;
-    right: 3%;
+    left: 50%;
+    bottom:1%
 }
 
 .cellaEvento {
@@ -88,7 +87,7 @@
     background-color: white !important;
     width: 300px;
     position: absolute;
-    height: 170px;
+    height: 190px;
     z-index: 1000;
     padding: 5px;
 }

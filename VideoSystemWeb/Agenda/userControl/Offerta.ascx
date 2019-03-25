@@ -42,35 +42,33 @@
     <div class="w3-container w3-center w3-xlarge">OFFERTA</div>
     <br />
     <div class="w3-row-padding" style="font-size: small;">
-        <div class="w3-half" style="padding-right: 5px">
-            <div class="w3-col" style="width: 99%">
-                <asp:Panel runat="server" ID="panelGruppi" CssClass="round" Style="height: 200px; position: relative; background-color: white; overflow: auto; width: 95%;">
-                    <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Articoli e Articoli composti</p>
-                    <asp:GridView ID="gvGruppi" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvGruppi_RowCommand" DataMember="ID">
-                        <Columns>
-                            <asp:BoundField DataField="ID" HeaderText="ID" />
-                            <asp:BoundField DataField="nome" HeaderText="Nome" />
-                            <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
-                            <asp:TemplateField HeaderText="Seleziona">
-                                <ItemTemplate>
-                                    <asp:ImageButton ID="imgOk" runat="server" ImageUrl="/Images/add.png" ToolTip="Aggiungi" CommandName="aggiungi" CommandArgument='<%# Eval("ID") %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-                </asp:Panel>
-            </div>
-            <div class="w3-col" style="width: 1%">
-                <asp:Image ID="imgFreccia" runat="server" ImageUrl="~/Images/arrow-right-icon.png" Style="top: 100px; position: relative; right: 20px;" />
-            </div>
+        <div class="w3-col">
+
+            <asp:Panel runat="server" ID="panelGruppi" CssClass="round" Style="height: 150px; position: relative; background-color: white; overflow: auto;">
+                <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Articoli e Articoli composti</p>
+                <asp:GridView ID="gvGruppi" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvGruppi_RowCommand" DataMember="ID">
+                    <Columns>
+                        <asp:BoundField DataField="ID" HeaderText="ID" />
+                        <asp:BoundField DataField="nome" HeaderText="Nome" />
+                        <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
+                        <asp:TemplateField HeaderText="Seleziona">
+                            <ItemTemplate>
+                                <asp:ImageButton ID="imgOk" runat="server" ImageUrl="/Images/add.png" ToolTip="Aggiungi" CommandName="aggiungi" CommandArgument='<%# Eval("ID") %>' />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </asp:Panel>
         </div>
-        <div class="w3-half" style="padding-left: 5px">
-            <asp:Panel runat="server" ID="panelArticoli" CssClass="round" Style="height: 200px; position: relative; background-color: white; overflow: auto;">
+        <div class="w3-col">
+            <asp:TextBox ID="txt_FiltroGruppi" runat="server" CssClass="w3-round" placeholder="Cerca.." Style="width: 100%; padding: 5px; margin-top: 10px;margin-bottom:20px;"></asp:TextBox>
+        </div>
+        <div class="w3-col">
+            <asp:Panel runat="server" ID="panelArticoli" CssClass="round" Style="height: 150px; position: relative; background-color: white; overflow: auto;">
                 <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Articoli selezionati</p>
                 <asp:Label ID="lbl_selezionareArticolo" runat="server" Text="Selezionare un articolo dalla lista" Style="position: absolute; top: 45%; left: 25%; font-size: large; color: cornflowerblue" />
                 <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvArticoli_RowCommand" DataMember="IdentificatoreOggetto">
                     <Columns>
-                        <%--<asp:BoundField DataField="id" HeaderText="Codice" />--%>
                         <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
                         <asp:BoundField DataField="Quantita" HeaderText="Q.tà" />
                         <asp:BoundField DataField="Prezzo" HeaderText="Listino" />
@@ -90,10 +88,8 @@
                 </asp:GridView>
             </asp:Panel>
         </div>
-        <div class="w3-half" style="padding-right: 5px">
-            <asp:TextBox ID="txt_FiltroGruppi" runat="server" CssClass="w3-round" placeholder="Cerca.." Style="width: 94%; padding: 5px; margin-top: 22px"></asp:TextBox>
-        </div>
-        <div class="w3-half" style="padding-left: 5px">
+
+        <div class="w3-col" style="padding-left: 5px">
             <div class="w3-quarter" style="padding: 5px">
                 <label style="margin-bottom: 0.2rem;">Totale prezzo</label><br />
                 <asp:TextBox ID="txt_TotPrezzo" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
@@ -116,8 +112,8 @@
     <br />
 
 
-    <div id="panelModificaArticolo" class="w3-modal " style="position:absolute;" runat="server">
-        <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width:80%; background-color: white; overflow: auto; ">
+    <div id="panelModificaArticolo" class="w3-modal " style="position: fixed;" runat="server">
+        <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 80%; background-color: white; overflow: auto;">
             <div class="w3-row-padding">
 
                 <div class="w3-center">
@@ -138,7 +134,7 @@
 
                     <div class="w3-col">
                         <div class="w3-half">
-                  
+
                             <div class="w3-third" style="padding: 5px">
                                 <label style="margin-bottom: 0.2rem;">Prezzo</label>
                                 <asp:TextBox ID="txt_Prezzo" runat="server" class="w3-input w3-border" placeholder="Prezzo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
@@ -185,7 +181,7 @@
         </div>
     </div>
 
-    <div id="panelRecuperaOfferta" class="w3-modal " style="position:absolute;" runat="server">
+    <div id="panelRecuperaOfferta" class="w3-modal " style="position: fixed;" runat="server">
         <div class="w3-modal-content w3-card-4 w3-animate-top round" style="max-width: 800px; width: 60%; height: 220px; position: relative; background-color: white; overflow: auto; font-size: 0.8em;">
 
             <div class="w3-center">

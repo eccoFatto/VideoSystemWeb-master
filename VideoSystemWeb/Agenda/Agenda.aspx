@@ -184,9 +184,9 @@
             <div runat="server" id="pnlContainer" style="display: none">
 
                 <div class="modalBackground"></div>
-                <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopup round" ScrollBars="Auto" Style="font-size: 13px;">
+                <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopup round"  Style="font-size: 13px;">
 
-                    <div class="w3-container">
+                    <div class="w3-container" style="width:100%;height:95%;position:absolute">
                         <div class="w3-bar w3-blue w3-round">
                             <div class="w3-bar-item w3-button tablink w3-red" runat="server" id="tab_Appuntamento" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
                             <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Offerta">Offerta</div>
@@ -196,34 +196,34 @@
                             </div>
                         </div>
 
-                        <div id="Appuntamento" class="w3-container w3-border tabEvento w3-padding-small">
+                        <div id="Appuntamento" class="w3-container w3-border tabEvento w3-padding-small" style="height:90%;overflow:auto;">
                             <popup:Appuntamento ID="popupAppuntamento" runat="server"></popup:Appuntamento>
                         </div>
 
-                        <div id="Offerta" class="w3-container w3-border tabEvento w3-padding-small" style="display: none">
+                        <div id="Offerta" class="w3-container w3-border tabEvento w3-padding-small" style="height:90%;overflow:auto;display: none">
                             <popup:Offerta ID="popupOfferta" runat="server"></popup:Offerta>
                         </div>
 
-                        <div id="Lavorazione" class="w3-container w3-border tabEvento w3-padding-small" style="display: none">
+                        <div id="Lavorazione" class="w3-container w3-border tabEvento w3-padding-small" style="height:90%;overflow:auto;display: none">
                             <popup:Lavorazione ID="popupLavorazione" runat="server"></popup:Lavorazione>
                         </div>
                     </div>
 
-                    <div style="position: absolute; width: 100%; bottom: 10px; text-align: center;">
-                        <asp:Button ID="btnRiepilogo" runat="server" Text="Visualizza riepilogo" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" />
-                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" />
-                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); $('.loader').show();" />
+                    <div style="position: absolute; width: 100%; bottom: 5px; text-align: center;height:7%">
+                        <asp:Button ID="btnRiepilogo" runat="server" Text="Visualizza riepilogo" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" style="padding:7px 10px"/>
+                        <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" style="padding:7px 10px"/>
+                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); $('.loader').show();" style="padding:7px 10px"/>
 
-                        <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();" />
-                        <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" />
-                        <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();$('.loader').show();" OnClick="btnLavorazione_Click" Visible="false" />
+                        <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();" style="padding:7px 10px"/>
+                        <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" style="padding:7px 10px"/>
+                        <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();$('.loader').show();" OnClick="btnLavorazione_Click" Visible="false" style="padding:7px 10px"/>
                     </div>
 
                 </asp:Panel>
             </div>
 
-            <div id="modalRiepilogoOfferta" class="w3-modal ">
-                <div class="w3-modal-content w3-card-4 w3-animate-zoom " style="max-width: 800px">
+            <div id="modalRiepilogoOfferta" class="w3-modal" >
+                <div class="w3-modal-content w3-card-4 w3-animate-zoom " style="max-width: 800px; position:fixed;top:5%;width:70%;left:20%">
 
                     <div class="w3-center">
                         <br>
@@ -234,7 +234,6 @@
                         <div class="w3-row  w3-padding-large w3-small">
 
                             <div class="w3-col">
-                                <%--<img  src="../Images/logoVSP_trim.png" alt="Logo" style="height:120px">--%>
                                 <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/logoVSP_trim.png" Style="height: 120px" />
                             </div>
 

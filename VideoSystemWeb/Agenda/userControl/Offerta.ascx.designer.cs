@@ -40,13 +40,13 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.GridView gvGruppi;
         
         /// <summary>
-        /// Controllo imgFreccia.
+        /// Controllo txt_FiltroGruppi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgFreccia;
+        protected global::System.Web.UI.WebControls.TextBox txt_FiltroGruppi;
         
         /// <summary>
         /// Controllo panelArticoli.
@@ -74,15 +74,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvArticoli;
-        
-        /// <summary>
-        /// Controllo txt_FiltroGruppi.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_FiltroGruppi;
         
         /// <summary>
         /// Controllo txt_TotPrezzo.

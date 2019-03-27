@@ -29,13 +29,21 @@ namespace VideoSystemWeb.Protocollo
                 if (string.IsNullOrEmpty(esito.descrizione))
                 {
                     ddlTipoProtocollo.Items.Clear();
+                    cmbMod_Tipologia.Items.Clear();
                     ddlTipoProtocollo.Items.Add("");
                     foreach (Tipologica tipologiaProtocollo in p.listaTipiProtocolli)
                     {
                         ListItem item = new ListItem();
                         item.Text = tipologiaProtocollo.nome;
                         item.Value = tipologiaProtocollo.nome;
+                        
                         ddlTipoProtocollo.Items.Add(item);
+
+                        ListItem itemMod = new ListItem();
+                        itemMod.Text = tipologiaProtocollo.nome;
+                        itemMod.Value = tipologiaProtocollo.id.ToString();
+
+                        cmbMod_Tipologia.Items.Add(itemMod);
                     }
 
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
@@ -51,7 +59,7 @@ namespace VideoSystemWeb.Protocollo
                 }
 
             }
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAzienda('" + hf_tabChiamata.Value + "');", addScriptTags: true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioProtocollo('" + hf_tabChiamata.Value + "');", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
 
         }
@@ -76,50 +84,35 @@ namespace VideoSystemWeb.Protocollo
             {
                 case "VISUALIZZAZIONE":
 
-                    btnEditProtocollo.Visible = basePage.AbilitazioneInScrittura();
-                    //btnSalva.Visible = false;
-                    //btnAnnulla.Visible = false;
-                    //btnElimina.Visible = false;
-                    //btnConfermaInserimento.Visible = false;
+                    btnInserisciProtocollo.Visible = false;
+                    btnModificaProtocollo.Visible = true;
+                    btnEliminaProtocollo.Visible = true;
+                    btnAnnullaProtocollo.Visible = true;
 
-                    //if (basePage.AbilitazioneInScrittura())
-                    //{
-                    //    btnAnnullaIndirizzo_Click(null, null);
-                    //    btnAnnullaTelefono_Click(null, null);
-                    //    btnAnnullaEmail_Click(null, null);
-                    //    phEmail.Visible = false;
-                    //    phTelefoni.Visible = false;
-                    //    phQualifiche.Visible = false;
-                    //    phIndirizzi.Visible = false;
-                    //}
                     break;
                 case "INSERIMENTO":
-                    //btnModifica.Visible = false;
-                    //btnSalva.Visible = false;
-                    //btnAnnulla.Visible = false;
-                    //btnElimina.Visible = false;
-                    //btnConfermaInserimento.Visible = true;
+                    btnInserisciProtocollo.Visible = true;
+                    btnModificaProtocollo.Visible = false;
+                    btnEliminaProtocollo.Visible = false;
+                    btnAnnullaProtocollo.Visible = true;
                     break;
                 case "MODIFICA":
-                    //btnModifica.Visible = false;
-                    //btnSalva.Visible = true;
-                    //btnAnnulla.Visible = true;
-                    //btnElimina.Visible = true;
-                    //btnConfermaInserimento.Visible = false;
+                    btnInserisciProtocollo.Visible = false;
+                    btnModificaProtocollo.Visible = true;
+                    btnEliminaProtocollo.Visible = true;
+                    btnAnnullaProtocollo.Visible = true;
                     break;
                 case "ANNULLAMENTO":
-                    //btnModifica.Visible = true;
-                    //btnSalva.Visible = false;
-                    //btnAnnulla.Visible = false;
-                    //btnElimina.Visible = false;
-                    //btnConfermaInserimento.Visible = false;
+                    btnInserisciProtocollo.Visible = false;
+                    btnModificaProtocollo.Visible = false;
+                    btnEliminaProtocollo.Visible = false;
+                    btnAnnullaProtocollo.Visible = false;
                     break;
                 default:
-                    //btnModifica.Visible = true;
-                    //btnSalva.Visible = false;
-                    //btnAnnulla.Visible = false;
-                    //btnElimina.Visible = false;
-                    //btnConfermaInserimento.Visible = false;
+                    btnInserisciProtocollo.Visible = false;
+                    btnModificaProtocollo.Visible = false;
+                    btnEliminaProtocollo.Visible = false;
+                    btnAnnullaProtocollo.Visible = false;
                     break;
             }
 
@@ -127,7 +120,13 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnInsProtocollo_Click(object sender, EventArgs e)
         {
+            // VISUALIZZO FORM INSERIMENTO NUOVO PROTOCOLLO
+            ViewState["idProtocollo"] = "";
+            editProtocolloVuoto();
+            AttivaDisattivaModificaProtocollo(false);
+            gestisciPulsantiProtocollo("INSERIMENTO");
 
+            pnlContainer.Visible = true;
         }
 
         protected void btnInserisciProtocollo_Click(object sender, EventArgs e)
@@ -158,6 +157,7 @@ namespace VideoSystemWeb.Protocollo
             queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@tipoProtocollo", ddlTipoProtocollo.SelectedValue.ToString().Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@protocolloRiferimento", tbProtocolloRiferimento.Text.Trim().Replace("'","''"));
 
             Esito esito = new Esito();
             DataTable dtAziende = Base_DAL.getDatiBySql(queryRicerca, ref esito);
@@ -193,6 +193,10 @@ namespace VideoSystemWeb.Protocollo
         {
             tbMod_CodiceLavoro.Text = "";
             tbMod_NumeroProtocollo.Text = "";
+            tbMod_ProtocolloRiferimento.Text = "";
+            tbMod_Cliente.Text = "";
+            tbMod_Descrizione.Text = "";
+            cmbMod_Tipologia.SelectedIndex = 0;
 
         }
 
@@ -200,19 +204,25 @@ namespace VideoSystemWeb.Protocollo
         {
             tbMod_CodiceLavoro.ReadOnly = attivaModifica;
             tbMod_NumeroProtocollo.ReadOnly = attivaModifica;
-
-            //if (attivaModifica)
-            //{
-            //    cmbMod_RegioneRiferimento.Attributes.Add("disabled", "");
-            //    cbMod_Assunto.Attributes.Add("disabled", "");
-            //}
-            //else
-            //{
-            //    cmbMod_RegioneRiferimento.Attributes.Remove("disabled");
-            //    cbMod_Assunto.Attributes.Remove("disabled");
-            //}
+            tbMod_ProtocolloRiferimento.ReadOnly = attivaModifica;
+            tbMod_Cliente.ReadOnly = attivaModifica;
+            tbMod_Descrizione.ReadOnly = attivaModifica;
+            
+            if (attivaModifica)
+            {
+                cmbMod_Tipologia.Attributes.Add("disabled", "");
+            }
+            else
+            {
+                cmbMod_Tipologia.Attributes.Remove("disabled");
+            }
         }
 
+        private void editProtocolloVuoto()
+        {
+            Esito esito = new Esito();
+            pulisciCampiDettaglio();
+        }
         private void editProtocollo()
         {
             string idProtocollo = (string)ViewState["idProtocollo"];
@@ -228,18 +238,20 @@ namespace VideoSystemWeb.Protocollo
                     // RIEMPIO I CAMPI DEL DETTAGLIO PROTOCOLLO
                     tbMod_CodiceLavoro.Text = protocollo.Codice_lavoro;
                     tbMod_NumeroProtocollo.Text = protocollo.Numero_protocollo;
-
+                    tbMod_ProtocolloRiferimento.Text = protocollo.Protocollo_riferimento;
+                    tbMod_Cliente.Text = protocollo.Cliente;
+                    tbMod_Descrizione.Text = protocollo.Descrizione;
 
                     //TIPI PROTOCOLLO
-                    //ListItem trovati = cbMod_TipoProtocollo.Items.FindByValue(tipoProtocollo.Pagamento.ToString());
-                    //if (trovati != null)
-                    //{
-                    //    cbMod_TipoProtocollo.SelectedValue = trovati.Value;
-                    //}
-                    //else
-                    //{
-                    //    cmbMod_Pagamento.Text = "";
-                    //}
+                    ListItem trovati = cmbMod_Tipologia.Items.FindByValue(protocollo.Id_tipo_protocollo.ToString());
+                    if (trovati != null)
+                    {
+                        cmbMod_Tipologia.SelectedValue = trovati.Value;
+                    }
+                    else
+                    {
+                        cmbMod_Tipologia.Text = "";
+                    }
 
                 }
                 else

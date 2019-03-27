@@ -311,6 +311,7 @@ namespace VideoSystemWeb.DAL
                                     protocolloOfferta.Numero_protocollo = protocollo;
                                     protocolloOfferta.Cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
                                     protocolloOfferta.Id_tipo_protocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
+                                    protocolloOfferta.Protocollo_riferimento = "";
                                     protocolloOfferta.PathDocumento = "";
                                     protocolloOfferta.Descrizione = evento.produzione.Trim() + " " + evento.lavorazione.Trim();
                                     protocolloOfferta.Attivo = true;
@@ -624,6 +625,7 @@ namespace VideoSystemWeb.DAL
                                         protocolloOfferta.Numero_protocollo = protocollo;
                                         protocolloOfferta.Cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
                                         protocolloOfferta.Id_tipo_protocollo = idTipoProtocollo;
+                                        protocolloOfferta.Protocollo_riferimento = "";
                                         protocolloOfferta.PathDocumento = "";
                                         protocolloOfferta.Descrizione = evento.produzione.Trim() + " " + evento.lavorazione.Trim();
                                         protocolloOfferta.Attivo = true;
@@ -946,6 +948,10 @@ namespace VideoSystemWeb.DAL
             SqlParameter id_tipo_protocollo = new SqlParameter("@id_tipo_protocollo", protocollo.Id_tipo_protocollo);
             id_tipo_protocollo.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(id_tipo_protocollo);
+
+            SqlParameter protocollo_riferimento = new SqlParameter("@protocollo_riferimento", protocollo.Protocollo_riferimento);
+            protocollo_riferimento.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(protocollo_riferimento);
 
             SqlParameter pathDocumento = new SqlParameter("@pathDocumento", protocollo.PathDocumento);
             pathDocumento.Direction = ParameterDirection.Input;

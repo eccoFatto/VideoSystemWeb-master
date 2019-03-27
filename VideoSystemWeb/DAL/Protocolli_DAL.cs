@@ -61,6 +61,7 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Numero_protocollo = riga.Field<string>("numero_protocollo");
                                         protocollo.Cliente = riga.Field<string>("cliente");
                                         protocollo.Id_tipo_protocollo = riga.Field<int>("id_tipo_protocollo");
+                                        protocollo.Protocollo_riferimento = riga.Field<string>("protocollo_riferimento");
                                         protocollo.PathDocumento = riga.Field<string>("pathDocumento");
                                         protocollo.Descrizione = riga.Field<string>("descrizione");
                                         protocollo.Attivo = riga.Field<bool>("attivo");
@@ -112,6 +113,7 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Numero_protocollo = riga.Field<string>("numero_protocollo");
                                         protocollo.Cliente = riga.Field<string>("cliente");
                                         protocollo.Id_tipo_protocollo = riga.Field<int>("id_tipo_protocollo");
+                                        protocollo.Protocollo_riferimento = riga.Field<string>("protocollo_riferimento");
                                         protocollo.PathDocumento = riga.Field<string>("pathDocumento");
                                         protocollo.Descrizione = riga.Field<string>("descrizione");
                                         protocollo.Attivo = riga.Field<bool>("attivo");
@@ -156,6 +158,7 @@ namespace VideoSystemWeb.DAL
                                     protocollo.Numero_protocollo = dt.Rows[0].Field<string>("numero_protocollo");
                                     protocollo.Cliente = dt.Rows[0].Field<string>("cliente");
                                     protocollo.Id_tipo_protocollo = dt.Rows[0].Field<int>("id_tipo_protocollo");
+                                    protocollo.Protocollo_riferimento = dt.Rows[0].Field<string>("protocollo_riferimento");
                                     protocollo.PathDocumento = dt.Rows[0].Field<string>("pathDocumento");
                                     protocollo.Descrizione = dt.Rows[0].Field<string>("descrizione");
                                     protocollo.Attivo = dt.Rows[0].Field<bool>("attivo");
@@ -225,6 +228,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter id_tipo_protocollo = new SqlParameter("@id_tipo_protocollo", protocollo.Id_tipo_protocollo);
                             id_tipo_protocollo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id_tipo_protocollo);
+
+                            SqlParameter protocollo_riferimento = new SqlParameter("@protocollo_riferimento", protocollo.Protocollo_riferimento);
+                            protocollo_riferimento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(protocollo_riferimento);
 
                             SqlParameter pathDocumento = new SqlParameter("@pathDocumento", protocollo.PathDocumento);
                             pathDocumento.Direction = ParameterDirection.Input;
@@ -304,6 +311,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter id_tipo_protocollo = new SqlParameter("@id_tipo_protocollo", protocollo.Id_tipo_protocollo);
                             id_tipo_protocollo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id_tipo_protocollo);
+
+                            SqlParameter protocollo_riferimento = new SqlParameter("@protocollo_riferimento", protocollo.Protocollo_riferimento);
+                            protocollo_riferimento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(protocollo_riferimento);
 
                             SqlParameter pathDocumento = new SqlParameter("@pathDocumento", protocollo.PathDocumento);
                             pathDocumento.Direction = ParameterDirection.Input;

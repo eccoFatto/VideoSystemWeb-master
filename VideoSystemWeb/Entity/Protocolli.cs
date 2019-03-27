@@ -21,6 +21,7 @@ namespace VideoSystemWeb.Entity
         private string numero_protocollo;   // OTTENUTO DALLA GET PROTOCOLLO DELLA TABELLA TAB_PROTOCOLLO
         private string cliente;             // DALLA TABELLA ANAG_CLIENTI_FORNITORI, COLONNA ragioneSociale
         private int id_tipo_protocollo;           // TIPOLOGIA DEL DOCUMENTO PROTOCOLLATO, EVENTUALMENTE DA PRENDERE DA TIPOLOGICA APPOSITA
+        private string protocollo_riferimento;
         private string pathDocumento;       // PATH DEL DOCUMENTO UPLOADATO - NOMENCLATURA = IDPROTOCOLLO_TICK.*
         private string descrizione;
         private bool attivo;
@@ -33,5 +34,6 @@ namespace VideoSystemWeb.Entity
         public string Descrizione { get => descrizione; set => descrizione = value; }
         public bool Attivo { get => attivo; set => attivo = value; }
         public int Id_tipo_protocollo { get => id_tipo_protocollo; set => id_tipo_protocollo = value; }
+        public string Protocollo_riferimento { get => protocollo_riferimento; set => protocollo_riferimento = value; }
     }
 }

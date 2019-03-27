@@ -1,15 +1,15 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Protocollo.aspx.cs" Inherits="VideoSystemWeb.Protocollo.Protocollo" %>
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-<script>
+    <script>
     $(document).ready(function () {
         $('.loader').hide();
     });
 
     // APRO POPUP VISUALIZZAZIONE/MODIFICA PROTOCOLLO
-    function mostraProtocollo() {
+        function mostraProtocollo(row) {
         $('.loader').show();
-        //$("#<%=hf_idProt.ClientID%>").val(row);
+        $("#<%=hf_idProt.ClientID%>").val(row);
         $("#<%=hf_tipoOperazione.ClientID%>").val('MODIFICA');
         $("#<%=btnEditProtocollo.ClientID%>").click();
     }
@@ -46,6 +46,7 @@
         $("#<%=tbCodiceLavoro.ClientID%>").val('');
         $("#<%=tbRagioneSociale.ClientID%>").val('');
         $("#<%=tbNumeroProtocollo.ClientID%>").val('');
+        $("#<%=tbProtocolloRiferimento.ClientID%>").val('');
         $("#<%=ddlTipoProtocollo.ClientID%>").val('');
     }
 </script>
@@ -53,15 +54,19 @@
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
         <div class="w3-row-padding">
-            <div class="w3-third">
+            <div class="w3-quarter">
                 <label>Codice Lavoro</label>
                 <asp:TextBox ID="tbCodiceLavoro" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
-            <div class="w3-third">
+            <div class="w3-quarter">
                 <label>Numero Protocollo</label>
                 <asp:TextBox ID="tbNumeroProtocollo" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
-            <div class="w3-third">
+            <div class="w3-quarter">
+                <label>Protocollo Riferimento</label>
+                <asp:TextBox ID="tbProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
+            </div>
+            <div class="w3-quarter">
                 <label>Tipo</label>
                 <asp:DropDownList ID="ddlTipoProtocollo" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
                 </asp:DropDownList>
@@ -69,11 +74,11 @@
         </div>
         
           <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-twothird">
+            <div class="w3-threequarter">
                 <label>Cliente</label>
                 <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
-            <div class="w3-third">
+            <div class="w3-quarter">
                 <label></label>
                 <table style="width:100%;">
                     <tr>
@@ -82,7 +87,7 @@
                         </td>
                         <td style="width:40%;">                    
                             <div id="divBtnInserisciProtocollo" runat="server"> 
-                                <div id="btnInserisciProtocollo" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciProtocollo();">Inserisci</div>
+                                <div id="clbtnInserisciProtocollo" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciProtocollo();">Inserisci</div>
                             </div>
 
                         </td>
@@ -132,43 +137,51 @@
                     </div>
                 </div>
                     <!-- TAB PROTOCOLLI -->
-                    <div id="Protocollo" class="w3-container w3-border ragg" style="display:block" >
+                    <div id="Protocollo" class="w3-container w3-border prot" style="display:block" >
                         <label>Protocolli</label>
                         <div class="w3-container w3-center">
                             <p>
                                 <div class="w3-row-padding w3-center w3-text-center">
-                                    <div class="w3-half">
+                                    <div class="w3-quarter">
                                         <label>Codice Lavorazione</label>
                                         <asp:TextBox ID="tbMod_CodiceLavoro" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
-                                    <div class="w3-half">
+                                    <div class="w3-quarter">
                                         <label>Numero Protocollo</label>
                                         <asp:TextBox ID="tbMod_NumeroProtocollo" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                         <asp:TextBox ID ="tbIdProtocolloDaModificare"  runat="server" Visible ="false"></asp:TextBox>
                                     </div>
+                                    <div class="w3-quarter">
+                                        <label>Prot. Riferimento</label>
+                                        <asp:TextBox ID="tbMod_ProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Cliente</label>
+                                        <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                    </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
-                                    <div class="w3-half">
-                                        <label>Codice Lavorazione</label>
-                                        <asp:TextBox ID="TextBox1" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                    <div class="w3-twothird">
+                                        <label>Descrizione</label>
+                                        <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
-                                    <div class="w3-half">
-                                        <label>Numero Protocollo</label>
-                                        <asp:TextBox ID="TextBox2" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
-                                        <asp:TextBox ID ="TextBox3"  runat="server" Visible ="false"></asp:TextBox>
+                                    <div class="w3-third">
+                                        <label>Tipo</label>
+                                        <asp:DropDownList ID="cmbMod_Tipologia" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                                        </asp:DropDownList>
                                     </div>
                                 </div>
                                 <div style="text-align: center;">
-<%--                                    <asp:Button ID="btnInserisciProtocollo" runat="server" Text="Inserisci Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciProtocollo_Click" OnClientClick="return confirm('Confermi inserimento Protocollo?')" />
+                                    <asp:Button ID="btnInserisciProtocollo" runat="server" Text="Inserisci Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciProtocollo_Click" OnClientClick="return confirm('Confermi inserimento Protocollo?')" />
                                     <asp:Button ID="btnModificaProtocollo" runat="server" Text="Modifica Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaProtocollo_Click" OnClientClick="return confirm('Confermi modifica Protocollo?')" Visible="false" />
                                     <asp:Button ID="btnEliminaProtocollo" runat="server" Text="Elimina Protocollo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaProtocollo_Click" OnClientClick="return confirm('Confermi eliminazione Protocollo?')" Visible="false" />
-                                    <asp:Button ID="btnAnnullaProtocollo" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnullaProtocollo_Click" />--%>
+                                    <asp:Button ID="btnAnnullaProtocollo" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnullaProtocollo_Click" />
                                 </div>
                             </p>
                         </div>
                     </div>
                 <!-- TAB ALTRO -->
-                    <div id="Altro" class="w3-container w3-border ragg" style="display:none">
+                    <div id="Altro" class="w3-container w3-border prot" style="display:none">
                         <label>Altro</label>
                     </div>
             </asp:Panel>

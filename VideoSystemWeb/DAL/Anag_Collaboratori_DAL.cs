@@ -65,6 +65,7 @@ namespace VideoSystemWeb.DAL
                                     collaboratore.RegioneRiferimento = dt.Rows[0].Field<string>("regioneRiferimento");
                                     collaboratore.PartitaIva = dt.Rows[0].Field<string>("partitaIva");
                                     collaboratore.NomeSocieta = dt.Rows[0].Field<string>("nomeSocieta");
+                                    collaboratore.Iban = dt.Rows[0].Field<string>("iban");
                                     collaboratore.Assunto = dt.Rows[0].Field<bool>("assunto");
                                     collaboratore.Note = dt.Rows[0].Field<string>("note");
                                     collaboratore.Attivo = dt.Rows[0].Field<bool>("attivo");
@@ -146,6 +147,7 @@ namespace VideoSystemWeb.DAL
                                         collaboratore.RegioneRiferimento = riga.Field<string>("regioneRiferimento");
                                         collaboratore.PartitaIva = riga.Field<string>("partitaIva");
                                         collaboratore.NomeSocieta = riga.Field<string>("nomeSocieta");
+                                        collaboratore.Iban = riga.Field<string>("iban");
                                         collaboratore.Assunto = riga.Field<bool>("assunto");
                                         collaboratore.Note = riga.Field<string>("note");
                                         collaboratore.Attivo = riga.Field<bool>("attivo");
@@ -268,6 +270,10 @@ namespace VideoSystemWeb.DAL
                             nomeSocieta.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nomeSocieta);
 
+                            SqlParameter iban = new SqlParameter("@iban", collaboratore.Iban);
+                            iban.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(iban);
+
                             SqlParameter note = new SqlParameter("@note", collaboratore.Note);
                             note.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(note);
@@ -382,6 +388,10 @@ namespace VideoSystemWeb.DAL
                             System.Data.SqlClient.SqlParameter nomeSocieta = new System.Data.SqlClient.SqlParameter("@nomeSocieta", collaboratore.NomeSocieta);
                             nomeSocieta.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nomeSocieta);
+
+                            System.Data.SqlClient.SqlParameter iban = new System.Data.SqlClient.SqlParameter("@iban", collaboratore.Iban);
+                            iban.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(iban);
 
                             System.Data.SqlClient.SqlParameter note = new System.Data.SqlClient.SqlParameter("@note", collaboratore.Note);
                             note.Direction = ParameterDirection.Input;

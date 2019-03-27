@@ -13,8 +13,8 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "1.12";
-        public static string dataVersione = "24/03/2019";
+        public static string versione = "1.13";
+        public static string dataVersione = "25/03/2019";
 
         public List<Tipologica> listaRisorse
         {
@@ -99,6 +99,13 @@ namespace VideoSystemWeb.BLL
 
         public List<Anag_Clienti_Fornitori> listaClientiFornitori;
 
+        public List<Tipologica> listaTipiProtocolli
+        {
+            get
+            {
+                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO);
+            }
+        }
         public Esito CaricaListeTipologiche()
         {
             Esito esito = new Esito();

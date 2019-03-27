@@ -332,6 +332,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             cmbMod_RegioneRiferimento.Text = "";
             tbMod_DataNascita.Text = "";
             tbMod_NomeSocieta.Text = "";
+            tbMod_Iban.Text = "";
             tbMod_PartitaIva.Text = "";
             cbMod_Assunto.Checked = false;
             //cbMod_Attivo.Checked = false;
@@ -462,6 +463,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_Nazione.ReadOnly = attivaModifica;
             tbMod_Nome.ReadOnly = attivaModifica;
             tbMod_NomeSocieta.ReadOnly = attivaModifica;
+            tbMod_Iban.ReadOnly = attivaModifica;
             tbMod_Note.ReadOnly = attivaModifica;
             tbMod_PartitaIva.ReadOnly = attivaModifica;
             tbMod_ProvinciaNascita.ReadOnly = attivaModifica;
@@ -505,6 +507,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     tbMod_DataNascita.Text = collaboratore.DataNascita.ToString("dd/MM/yyyy");
 
                     tbMod_NomeSocieta.Text = collaboratore.NomeSocieta;
+                    tbMod_Iban.Text = collaboratore.Iban.ToUpper();
                     tbMod_PartitaIva.Text = collaboratore.PartitaIva;
                     cbMod_Assunto.Checked = collaboratore.Assunto;
                     //cbMod_Attivo.Checked = collaboratore.Attivo;
@@ -733,6 +736,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             //collaboratore.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
             collaboratore.Attivo = true;
             collaboratore.NomeSocieta = BasePage.ValidaCampo(tbMod_NomeSocieta, "", false, ref esito);
+            collaboratore.Iban = BasePage.ValidaCampo(tbMod_Iban, "", false, ref esito).ToUpper();
             collaboratore.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
             collaboratore.PartitaIva = BasePage.ValidaCampo(tbMod_PartitaIva, "", false, ref esito);
             collaboratore.ProvinciaNascita = BasePage.ValidaCampo(tbMod_ProvinciaNascita, "", false, ref esito);
@@ -787,6 +791,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_Nazione.CssClass = tbMod_Nazione.CssClass.Replace("erroreValidazione", "");
             tbMod_Nome.CssClass = tbMod_Nome.CssClass.Replace("erroreValidazione", "");
             tbMod_NomeSocieta.CssClass = tbMod_NomeSocieta.CssClass.Replace("erroreValidazione", "");
+            tbMod_Iban.CssClass = tbMod_Iban.CssClass.Replace("erroreValidazione", "");
             tbMod_Note.CssClass = tbMod_Note.CssClass.Replace("erroreValidazione", "");
             tbMod_PartitaIva.CssClass = tbMod_PartitaIva.CssClass.Replace("erroreValidazione", "");
             tbMod_ProvinciaNascita.CssClass = tbMod_ProvinciaNascita.CssClass.Replace("erroreValidazione", "");

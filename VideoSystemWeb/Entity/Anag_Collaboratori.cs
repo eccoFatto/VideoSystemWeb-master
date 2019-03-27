@@ -38,6 +38,7 @@ namespace VideoSystemWeb.Entity
         private string regioneRiferimento;
         private string partitaIva;
         private string nomeSocieta;
+        private string iban;
         private bool assunto;
         private string note;
         private bool attivo;
@@ -68,6 +69,6 @@ namespace VideoSystemWeb.Entity
         public List<Anag_Email_Collaboratori> Email { get => email; set => email = value; }
         public List<Anag_Telefoni_Collaboratori> Telefoni { get => telefoni; set => telefoni = value; }
         public List<Anag_Documenti_Collaboratori> Documenti { get => documenti; set => documenti = value; }
-        
+        public string Iban { get => iban; set => iban = value; }
     }
 }

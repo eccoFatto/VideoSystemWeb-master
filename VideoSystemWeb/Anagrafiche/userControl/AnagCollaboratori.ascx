@@ -257,7 +257,7 @@
                                 </div>
                                         
                                 <div class="w3-row-padding">
-                                     <div class="w3-half">
+                                     <div class="w3-third">
 <%--                                        <label>Attivo</label>
                                         <asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>--%>
                                          <label>Regione Riferimento</label>
@@ -285,7 +285,11 @@
                                             <asp:ListItem Text="Veneto" Value="Veneto" />
                                         </asp:DropDownList>
                                     </div>                                   
-                                    <div class="w3-half">
+                                    <div class="w3-third">
+                                        <label>Iban</label><br />
+                                        <asp:TextBox ID="tbMod_Iban" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="27" ></asp:TextBox>
+                                    </div>
+                                    <div class="w3-third">
                                         <label>Assunto</label><br />
                                         <asp:CheckBox ID="cbMod_Assunto" runat="server" class="w3-check" disabled></asp:CheckBox>
                                     </div>

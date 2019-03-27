@@ -328,6 +328,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_RegioneRiferimento;
         
         /// <summary>
+        /// Controllo tbMod_Iban.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Iban;
+        
+        /// <summary>
         /// Controllo cbMod_Assunto.
         /// </summary>
         /// <remarks>

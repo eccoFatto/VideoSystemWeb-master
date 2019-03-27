@@ -2790,3 +2790,19 @@ La procedura o funzione 'InsertProtocollo' prevede il parametro '@numero_protoco
 2019-03-27 14:00:08,504 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-27 14:02:58,522 [51] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2019-03-27 14:03:00,891 [51] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 17:32:03,508 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 17:32:09,581 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 17:36:23,470 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 17:49:44,706 [30] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 17:50:05,924 [30] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 17:50:07,379 [30] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 17:53:07,514 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 17:54:01,271 [29] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 17:55:47,091 [26] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 17:58:41,073 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 17:59:17,938 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 18:00:31,079 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 18:02:58,890 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 18:03:30,218 [24] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 18:06:56,624 [30] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 18:07:51,207 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

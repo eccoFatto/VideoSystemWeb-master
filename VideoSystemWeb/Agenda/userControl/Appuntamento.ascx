@@ -1,5 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Appuntamento.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.Appuntamento" %>
 
+<style>
+    label {
+        margin-bottom: 0px;
+    }
+
+</style>
 
 <script>
     $(document).ready(function () {
@@ -126,7 +132,7 @@
                         <asp:Label ID="lbl_DataInizioLavorazione" runat="server" Text="Data inizio lavorazione" class="label"></asp:Label>
                     </div>
                     <div class="w3-twothird">
-                        <asp:TextBox ID="txt_DataInizioLavorazione" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldMedium calendar" placeholder="gg/mm/aaaa"></asp:TextBox>
+                        <asp:TextBox ID="txt_DataInizioLavorazione" runat="server" CssClass="w3-white w3-border w3-hover-shadow w3-round fieldMedium calendar" placeholder="gg/mm/aaaa"></asp:TextBox>
                     </div>
                 </div>
                 <div class="w3-row" style="margin-bottom: 5px;">
@@ -136,11 +142,11 @@
                     <div class="w3-twothird">
                         <div class="w3-row">
                             <div class="w3-third">
-                                <asp:TextBox CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMedium calendar" ID="txt_DataFineLavorazione" placeholder="gg/mm/aaaa" runat="server" />
+                                <asp:TextBox CssClass=" w3-white w3-border w3-hover-shadow w3-round fieldMedium calendar" ID="txt_DataFineLavorazione" placeholder="gg/mm/aaaa" runat="server" />
                             </div>
                             <div class="w3-twothird" style="text-align: right">
                                 <asp:Label ID="lbl_DurataLavorazione" runat="server" Text="Durata lavorazione" class="label"></asp:Label>
-                                <asp:TextBox ID="txt_DurataLavorazione" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldSmall" runat="server" MaxLength="2" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_DurataLavorazione" CssClass=" w3-white w3-border w3-hover-shadow w3-round fieldSmall" runat="server" MaxLength="2" Enabled="false"></asp:TextBox>
                             </div>
                         </div>
                     </div>
@@ -152,11 +158,11 @@
                     <div class="w3-twothird">
                         <div class="w3-row">
                             <div class="w3-third">
-                                <asp:TextBox ID="txt_DurataViaggioAndata" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldSmall" MaxLength="2" Style="width: 30px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                <asp:TextBox ID="txt_DurataViaggioAndata" runat="server" CssClass="w3-white w3-border w3-hover-shadow w3-round fieldSmall" MaxLength="2" Style="width: 30px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                             </div>
                             <div class="w3-twothird" style="text-align: right">
                                 <asp:Label ID="lbl_DataInizioImpegno" runat="server" Text="Inizio impegno" class="label"></asp:Label>
-                                <asp:TextBox ID="txt_DataInizioImpegno" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round fieldMedium " Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_DataInizioImpegno" runat="server" CssClass="w3-white w3-border w3-hover-shadow w3-round fieldMedium " Enabled="false"></asp:TextBox>
                             </div>
                         </div>
                     </div>
@@ -168,11 +174,11 @@
                     <div class="w3-twothird">
                         <div class="w3-row">
                             <div class="w3-third">
-                                <asp:TextBox ID="txt_DurataViaggioRitorno" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldSmall" MaxLength="2" Style="width: 30px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                <asp:TextBox ID="txt_DurataViaggioRitorno" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round fieldSmall" MaxLength="2" Style="width: 30px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                             </div>
                             <div class="w3-twothird" style="text-align: right">
                                 <asp:Label ID="lbl_DataFineImpegno" runat="server" Text="Fine impegno" class="label"></asp:Label>
-                                <asp:TextBox ID="txt_DataFineImpegno" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMedium" Enabled="false"></asp:TextBox>
+                                <asp:TextBox ID="txt_DataFineImpegno" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round fieldMedium" Enabled="false"></asp:TextBox>
                             </div>
                         </div>
 
@@ -195,7 +201,7 @@
                         <div id="divRis" class="dropdown ">
                             <asp:HiddenField ID="hf_Risorse" runat="server" Value="" ClientIDMode="Static" />
                             <asp:Button ID="btn_Risorse" runat="server" Text="" Style="display: none" OnClick="btn_Risorse_Click" />
-                            <asp:Button ID="ddl_Risorse" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" data-boundary="divRis" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
+                            <asp:Button ID="ddl_Risorse" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divRis" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
                             <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;">
                                 <input class="form-control" id="filtroRisorse" type="text" placeholder="Cerca..">
                             </ul>
@@ -208,7 +214,7 @@
                         <asp:Label ID="lbl_tender" runat="server" Text="Unità appoggio" class="label"></asp:Label>
                     </div>
                     <div class="w3-twothird">
-                        <div class=" w3-white w3-border w3-round w3-padding" style="height: 80px; width: 100%; position: relative; overflow: auto;">
+                        <div class=" w3-white w3-border w3-round w3-padding w3-hover-shadow" style="height: 80px; width: 95%; position: relative; overflow: auto;">
                             <asp:CheckBoxList ID="check_tender" AutoPostBack="True" runat="server" Height="50px" OnSelectedIndexChanged="check_tender_SelectedIndexChanged">
                             </asp:CheckBoxList>
                         </div>
@@ -222,7 +228,7 @@
                     <div class="w3-twothird">
                         <div id="divTip" class="dropdown">
                             <asp:HiddenField ID="hf_Tipologie" runat="server" Value="" />
-                            <asp:Button ID="ddl_Tipologie" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" data-boundary="divTip" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
+                            <asp:Button ID="ddl_Tipologie" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divTip" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
                             <ul id="elencoTipologie" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto">
                                 <input class="form-control" id="filtroTipologie" type="text" placeholder="Cerca..">
                             </ul>
@@ -246,7 +252,7 @@
                     <div class="w3-twothird">
                         <div id="divClienti" class="dropdown ">
                             <asp:HiddenField ID="hf_Clienti" runat="server" Value="" />
-                            <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle fieldMax" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
+                            <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
                             <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto">
                                 <input class="form-control" id="filtroClienti" type="text" placeholder="Cerca..">
                             </ul>
@@ -258,7 +264,7 @@
                         <asp:Label ID="lbl_Produzione" runat="server" Text="Produzione" class="label"></asp:Label>
                     </div>
                     <div class="w3-twothird">
-                        <asp:TextBox ID="txt_Produzione" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax" Style="padding: 3px;"></asp:TextBox>
+                        <asp:TextBox ID="txt_Produzione" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round fieldMax" Style="padding: 3px;"></asp:TextBox>
                     </div>
                 </div>
                 <div class="w3-row" style="margin-bottom: 5px;">
@@ -266,7 +272,7 @@
                         <asp:Label ID="lbl_lavorazione" runat="server" Text="Lavorazione" class="label"></asp:Label>
                     </div>
                     <div class="w3-twothird">
-                        <asp:TextBox ID="txt_Lavorazione" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax" Style="padding: 3px;"></asp:TextBox>
+                        <asp:TextBox ID="txt_Lavorazione" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round fieldMax" Style="padding: 3px;"></asp:TextBox>
                     </div>
                 </div>
                 <div class="w3-row" style="margin-bottom: 5px;">
@@ -274,7 +280,7 @@
                         <asp:Label ID="lbl_luogo" runat="server" Text="Luogo" class="label"></asp:Label>
                     </div>
                     <div class="w3-twothird">
-                        <asp:TextBox ID="txt_Luogo" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:TextBox>
+                        <asp:TextBox ID="txt_Luogo" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round fieldMax"></asp:TextBox>
                     </div>
                 </div>
                 <div class="w3-row" style="margin-bottom: 5px;">
@@ -282,7 +288,7 @@
                         <asp:Label ID="lbl_indirizzo" runat="server" Text="Descrizione / Via" class="label"></asp:Label>
                     </div>
                     <div class="w3-twothird">
-                        <asp:TextBox ID="txt_Indirizzo" runat="server" CssClass=" w3-white w3-border w3-hover-orange w3-round fieldMax"></asp:TextBox>
+                        <asp:TextBox ID="txt_Indirizzo" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round fieldMax"></asp:TextBox>
                     </div>
                 </div>
             </div>
@@ -297,7 +303,7 @@
             <div class="w3-padding">
                 <div class="w3-row" style="margin-bottom: 5px;">
                     <div class="w3-col">
-                        <asp:TextBox ID="tb_Nota" Style="width: 100%; position: relative;" Rows="3" TextMode="MultiLine" runat="server" CssClass="w3-white w3-border w3-hover-orange w3-round"></asp:TextBox>
+                        <asp:TextBox ID="tb_Nota" Style="width: 100%; position: relative;" Rows="3" TextMode="MultiLine" runat="server" CssClass="w3-white w3-border w3-hover-shadow w3-round"></asp:TextBox>
                     </div>
                 </div>
             </div>

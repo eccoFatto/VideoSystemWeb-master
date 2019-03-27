@@ -2536,3 +2536,257 @@ La procedura o funzione 'InsertProtocollo' prevede il parametro '@numero_protoco
 2019-03-25 22:57:27,238 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-25 23:01:11,890 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2019-03-25 23:01:13,272 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:12:02,360 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 15:12:09,868 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:28:45,701 [24] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 15:28:47,434 [24] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:41:03,064 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:42:03,640 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:49:25,318 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:50:54,792 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:51:26,290 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:51:36,414 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:51:36,915 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:52:00,270 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:52:09,834 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:52:33,213 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:52:51,975 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:58:04,727 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:58:36,729 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 15:59:24,966 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 16:17:08,375 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 16:18:16,127 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 16:21:07,844 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 16:21:49,647 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 16:25:22,302 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 16:25:25,471 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 16:27:07,892 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 16:27:07,935 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 16:38:40,738 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 16:38:42,209 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 16:46:34,819 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 16:46:34,857 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:05:17,853 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:07:00,539 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:07:48,203 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:09:46,492 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:14:52,760 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:16:04,606 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:16:58,856 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:25:32,027 [21] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 17:25:32,063 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:29:54,508 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:40:45,916 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:42:07,331 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:44:13,162 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:46:08,647 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:48:02,009 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:50:15,221 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:52:33,590 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:53:16,496 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:53:33,495 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:53:57,994 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 17:54:29,563 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:03:10,681 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 18:03:12,106 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:03:35,734 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:03:37,479 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:03:48,801 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:11:58,647 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:12:29,898 [16] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 18:12:31,374 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:12:34,846 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:13:01,407 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:16:39,938 [15] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 18:16:41,294 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:16:45,090 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:18:23,758 [17] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 18:18:23,891 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-26 18:18:25,022 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-26 18:18:31,092 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:16:50,907 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 09:16:53,747 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:18:07,735 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:19:29,586 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 09:19:33,287 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:19:44,942 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:26:25,119 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 09:26:28,662 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:26:32,246 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:26:44,731 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:27:30,591 [13] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 09:27:33,063 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:29:05,189 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 09:29:07,150 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:29:11,433 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:29:49,800 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 09:30:28,518 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 10:01:48,898 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 10:01:52,549 [22] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 10:01:58,280 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 10:02:30,209 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:22:29,030 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 11:22:30,867 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:22:36,410 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:24:46,705 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:24:48,204 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:25:22,443 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:25:55,843 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:29:21,955 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 11:29:23,578 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:29:31,111 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:29:41,894 [6] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'DeleteEvento' prevede il parametro '@idUtente', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 703
+2019-03-27 11:29:47,455 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:30:03,870 [11] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'DeleteEvento' prevede il parametro '@idUtente', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 703
+2019-03-27 11:30:05,889 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:30:17,242 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:30:22,583 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:30:24,745 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:30:40,916 [11] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'DeleteEvento' prevede il parametro '@idUtente', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 703
+2019-03-27 11:30:43,354 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:30:48,137 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:33:29,274 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 11:33:30,615 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:33:34,842 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:33:42,975 [6] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'DeleteEvento' prevede il parametro '@idUtente', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 703
+2019-03-27 11:35:18,584 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 11:35:19,908 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:35:25,488 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:35:31,209 [7] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'DeleteEvento' prevede il parametro '@idUtente', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 703
+2019-03-27 11:35:43,260 [7] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'DeleteEvento' prevede il parametro '@idUtente', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 703
+2019-03-27 11:37:57,498 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 11:37:58,770 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:38:02,426 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 11:38:06,847 [13] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'DeleteEvento' prevede il parametro '@idUtente', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 703
+2019-03-27 11:59:43,769 [33] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 11:59:45,178 [33] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 12:00:01,402 [36] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 12:00:21,000 [36] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'DeleteEvento' prevede il parametro '@idUtente', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 703
+2019-03-27 12:08:24,449 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 12:08:25,991 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 12:08:30,575 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 12:09:12,733 [6] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'DeleteEvento' prevede il parametro '@idUtente', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 703
+2019-03-27 12:10:59,200 [7] ERROR VideoSystemWeb.DAL.Base_DAL - La procedura o funzione 'DeleteEvento' prevede il parametro '@idUtente', che non è stato specificato.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 703
+2019-03-27 12:18:32,047 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 12:18:33,269 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 12:18:37,439 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 12:18:44,242 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:49:06,208 [79] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 13:49:07,445 [76] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:49:56,095 [79] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:49:56,453 [76] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:50:04,045 [77] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:56:14,333 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 13:56:15,733 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:56:24,718 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:56:25,136 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:56:43,044 [75] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:56:43,477 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:56:47,613 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:56:57,418 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:58:10,036 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 13:58:10,428 [51] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 14:00:08,039 [51] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 14:00:08,504 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-27 14:02:58,522 [51] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-27 14:03:00,891 [51] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

@@ -32,7 +32,7 @@ namespace VideoSystemWeb.BLL.Stampa
             }
         }
 
-        public byte[] GeneraPdf(string frammentoHtml)
+        public MemoryStream GeneraPdf(string frammentoHtml)
         {
             string prefissoUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
             var htmlCompleto = "<html><head><link rel='stylesheet' type='text/css' href='" + prefissoUrl + "/Css/w3.css' /></head><body>" + frammentoHtml + "</body></html>";
@@ -51,7 +51,7 @@ namespace VideoSystemWeb.BLL.Stampa
                 document.Close();
             }
 
-            return workStream.ToArray();
+            return workStream;
         }
     }
 }

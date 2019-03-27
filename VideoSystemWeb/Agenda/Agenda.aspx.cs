@@ -52,7 +52,6 @@ namespace VideoSystemWeb.Agenda
             }
             else
             {
-                
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento(event,'" + hf_tabSelezionata.Value + "')", addScriptTags: true);
 
@@ -106,7 +105,7 @@ namespace VideoSystemWeb.Agenda
                 ShowSuccess("Salvataggio eseguito correttamente");
             }
             else
-            {               
+            {                
                 UpdatePopup();
             }
         }
@@ -154,11 +153,18 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnElimina_Click(object sender, EventArgs e)
         {
-            //panelErrore.Style.Add("display", "none");
+            Esito esito = Agenda_BLL.Instance.EliminaEvento(((DatiAgenda)ViewState["eventoSelezionato"]).id);
 
-            Agenda_BLL.Instance.EliminaEvento(((DatiAgenda)ViewState["eventoSelezionato"]).id);
-
-            ChiudiPopup();
+            if (esito.codice == Esito.ESITO_OK)
+            {
+                ChiudiPopup();
+                ShowSuccess("Eliminazione eseguita correttamente");
+            }
+            else
+            {
+                ShowWarning(esito.descrizione);
+                UpdatePopup();
+            }
         }
 
         protected void btn_chiudi_Click(object sender, EventArgs e)
@@ -168,7 +174,16 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnOfferta_Click(object sender, EventArgs e)
         {
-            popupAppuntamento.SetStato(Stato.Instance.STATO_OFFERTA);
+            //popupAppuntamento.SetStato(Stato.Instance.STATO_OFFERTA);
+            DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            eventoSelezionato.id_stato = Stato.Instance.STATO_OFFERTA;
+            eventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
+            ViewState["eventoSelezionato"] = eventoSelezionato;
+
+            Esito esito = new Esito();
+            val_Stato.Text = UtilityTipologiche.getElementByID(listaStati, eventoSelezionato.id_stato, ref esito).nome;
+            val_CodiceLavoro.Text = eventoSelezionato.codice_lavoro;
+
             btnLavorazione.Visible = false;
 
             UpdatePopup();
@@ -178,7 +193,12 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnLavorazione_Click(object sender, EventArgs e)
         {
-            popupAppuntamento.SetStato(Stato.Instance.STATO_LAVORAZIONE);
+            //popupAppuntamento.SetStato(Stato.Instance.STATO_LAVORAZIONE);
+            DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            eventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
+            eventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
+            ViewState["eventoSelezionato"] = eventoSelezionato;
+
             UpdatePopup();
         }
 
@@ -200,16 +220,24 @@ namespace VideoSystemWeb.Agenda
             HtmlTextWriter hw = new HtmlTextWriter(sw);
             modalRiepilogoContent.RenderControl(hw);
 
+            string nomeFile = lbl_Protocollo.Text == "N.D." ? "OffertaNonProtocollata" : lbl_Protocollo.Text;
+
+            MemoryStream workStream = BaseStampa.Instance.GeneraPdf(sw.ToString());
+
+            sw.Flush();
+            hw.Flush();
             Response.Clear();
             Response.ContentType = "application/pdf";
-            Response.AddHeader("Content-Disposition", "attachment; filename=myfile.pdf");
-            Response.BinaryWrite(BaseStampa.Instance.GeneraPdf(sw.ToString()));
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile + ".pdf");
+            //Response.BinaryWrite(workStream.ToArray());
+
+            Response.OutputStream.Write(workStream.GetBuffer(), 0, workStream.GetBuffer().Length);
+
             Response.Flush();
             Response.Close();
             Response.End();
+            workStream.Close();
         }
-
-        
 
         #endregion
 
@@ -593,8 +621,9 @@ namespace VideoSystemWeb.Agenda
         {
             pnlContainer.Style.Remove("display");
 
-            //panelErrore.Style.Add("display", "none");
-            //lbl_MessaggioErrore.Text = string.Empty;
+            Esito esito = new Esito();   
+            val_Stato.Text = UtilityTipologiche.getElementByID(listaStati, eventoSelezionato.id_stato, ref esito).nome;
+            val_CodiceLavoro.Text = string.IsNullOrEmpty(eventoSelezionato.codice_lavoro) ? "-" : eventoSelezionato.codice_lavoro;
 
             popupAppuntamento.ClearAppuntamento();
             popupAppuntamento.PopolaPopup(eventoSelezionato);
@@ -609,6 +638,7 @@ namespace VideoSystemWeb.Agenda
             UpdatePopup();
             ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
         }
+        
         #endregion
 
         #region OPERAZIONI EVENTO
@@ -642,7 +672,6 @@ namespace VideoSystemWeb.Agenda
 
         private Esito SalvaEvento()
         {
-            //panelErrore.Style.Add("display", "none");
             popupAppuntamento.NascondiErroriValidazione();
 
             Esito esito = new Esito();
@@ -811,6 +840,7 @@ namespace VideoSystemWeb.Agenda
             }
             return innerPanel;
         }
+        
         #endregion
 
         public override void VerifyRenderingInServerForm(Control control)

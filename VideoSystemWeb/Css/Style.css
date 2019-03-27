@@ -72,6 +72,12 @@
     height: 22px;
 }
 
+.label {
+    padding-left: 5px;
+    padding-right: 5px;
+    color: black;
+}
+
 .column {
    padding-top:10px;
    padding-bottom:10px;

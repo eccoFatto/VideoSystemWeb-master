@@ -157,11 +157,6 @@ namespace VideoSystemWeb.DAL
                                         listaDatiAgenda.Add(datoAgenda);
                                     }
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella tab_dati_agenda ";
-                                //}
                             }
                         }
                     }
@@ -304,7 +299,6 @@ namespace VideoSystemWeb.DAL
                                 }
                             }
 
-
                             //GESTIONE PROTOCOLLO
                             if (evento.id_stato == Stato.Instance.STATO_OFFERTA)
                             {
@@ -312,7 +306,6 @@ namespace VideoSystemWeb.DAL
                                 // SE E' ANDATO TUTTO BENE FACCIO INSERT SU TABELLA DATI_PROTOCOLLO
                                 if (!string.IsNullOrEmpty(protocollo))
                                 {
-
                                     Protocolli protocolloOfferta = new Protocolli();
                                     protocolloOfferta.Codice_lavoro = evento.codice_lavoro;
                                     protocolloOfferta.Numero_protocollo = protocollo;
@@ -681,6 +674,7 @@ namespace VideoSystemWeb.DAL
         public Esito EliminaEvento(int idEvento)
         {
             Esito esito = new Esito();
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -697,6 +691,16 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             id.Value = idEvento;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
 
                             StoreProc.Connection.Open();
 
@@ -1249,41 +1253,41 @@ namespace VideoSystemWeb.DAL
 
         }
 
-        public string GetMaxCodiceLavorazione(string anno, ref Esito esito)
-        {
-            string maxCodiceLavorazione = "";
-            try
-            {
-                using (SqlConnection con = new SqlConnection(sqlConstr))
-                {
-                    using (SqlCommand cmd = new SqlCommand("SELECT MAX(codice_lavoro) FROM " + TABELLA_DATI_AGENDA + " WHERE codice_lavoro like '" + anno + "%'"))
-                    {
-                        using (SqlDataAdapter sda = new SqlDataAdapter())
-                        {
-                            cmd.Connection = con;
-                            sda.SelectCommand = cmd;
+        //public string GetMaxCodiceLavorazione(string anno, ref Esito esito)
+        //{
+        //    string maxCodiceLavorazione = "";
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(sqlConstr))
+        //        {
+        //            using (SqlCommand cmd = new SqlCommand("SELECT MAX(codice_lavoro) FROM " + TABELLA_DATI_AGENDA + " WHERE codice_lavoro like '" + anno + "%'"))
+        //            {
+        //                using (SqlDataAdapter sda = new SqlDataAdapter())
+        //                {
+        //                    cmd.Connection = con;
+        //                    sda.SelectCommand = cmd;
 
-                            using (DataTable dt = new DataTable())
-                            {
-                                sda.Fill(dt);
-                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
-                                {
-                                    maxCodiceLavorazione = dt.Rows[0].Field<string>(0);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Agenda_DAL.cs - GetMaxCodiceLavorazione " + Environment.NewLine + ex.Message;
+        //                    using (DataTable dt = new DataTable())
+        //                    {
+        //                        sda.Fill(dt);
+        //                        if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+        //                        {
+        //                            maxCodiceLavorazione = dt.Rows[0].Field<string>(0);
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+        //        esito.descrizione = "Agenda_DAL.cs - GetMaxCodiceLavorazione " + Environment.NewLine + ex.Message;
 
-                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
-            }
+        //        log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+        //    }
 
-            return maxCodiceLavorazione;
-        }
+        //    return maxCodiceLavorazione;
+        //}
     }
 }

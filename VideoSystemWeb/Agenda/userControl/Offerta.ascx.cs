@@ -102,7 +102,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
             AggiornaTotali();
 
-            //ClearModificaArticoli();
             resetPanelOfferta();
 
             RichiediOperazionePopup("UPDATE");
@@ -157,14 +156,13 @@ namespace VideoSystemWeb.Agenda.userControl
                     totPrezzo += art.Prezzo * art.Quantita;
                     totCosto += art.Costo * art.Quantita;
                     totIva += (art.Prezzo * art.Iva / 100) * art.Quantita;
-
                 }
+
                 decimal percRicavo = 0;
                 if (totPrezzo != 0)
                 {
                     percRicavo = ((totPrezzo- totCosto) / totPrezzo) * 100;
                 }
-                
 
                 txt_TotPrezzo.Text = string.Format("{0:0.00}", totPrezzo);
                 txt_TotCosto.Text = string.Format("{0:0.00}", totCosto);
@@ -239,6 +237,22 @@ namespace VideoSystemWeb.Agenda.userControl
 
             RichiediOperazionePopup("UPDATE");
         }
+
+        protected void btnRecuperaOfferta_Click(object sender, EventArgs e)
+        {
+            panelModificaArticolo.Style.Add("display", "none");
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelRecuperaOfferta.ClientID + "').style.display='block'", addScriptTags: true);
+            RichiediOperazionePopup("UPDATE");
+        }
+
+        protected void btnEliminaArticoli_Click(object sender, EventArgs e)
+        {
+            listaDatiArticoli = null;
+
+            resetPanelOfferta();
+
+            RichiediOperazionePopup("UPDATE");
+        }
         #endregion
 
         public void ClearOfferta()
@@ -254,7 +268,6 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_TotIva.Text = "";
             txt_PercRicavo.Text = "";
 
-            //NascondiErroriValidazione();
             resetPanelOfferta();
         }
 
@@ -298,23 +311,6 @@ namespace VideoSystemWeb.Agenda.userControl
             resetPanelOfferta();
         }
 
-        protected void btnRecuperaOfferta_Click(object sender, EventArgs e)
-        {
-            panelModificaArticolo.Style.Add("display", "none");
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelRecuperaOfferta.ClientID + "').style.display='block'", addScriptTags: true);
-            //btnRecuperaOfferta.Visible = false;
-            //btnEliminaArticoli.Visible = false;
-            RichiediOperazionePopup("UPDATE");
-        }
-
-        
-        protected void btnEliminaArticoli_Click(object sender, EventArgs e)
-        {
-            listaDatiArticoli = null;
-
-            resetPanelOfferta();
-
-            RichiediOperazionePopup("UPDATE");
-        }
+       
     }
 }

@@ -85,7 +85,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Articoli_DAL.cs - getDatiArticoliByIdDatiAgenda " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return listaDatiArticoli;
@@ -138,7 +140,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Articoli_DAL.cs - getDatiArticoliById " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return datiArticoli;
@@ -234,7 +238,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Articoli_DAL.cs - CreaDatoArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Articoli_DAL.cs - CreaDatoArticolo " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return 0;
@@ -328,7 +334,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Articoli_DAL.cs - AggiornaDatoArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Articoli_DAL.cs - AggiornaDatoArticolo " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return esito;
@@ -374,7 +382,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Articoli_DAL.cs - EliminaDatoArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Articoli_DAL.cs - EliminaDatoArticolo " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return esito;
@@ -383,6 +393,7 @@ namespace VideoSystemWeb.DAL
         public Esito EliminaDatiArticoloByIdDatiAgenda(int idDatiAgenda)
         {
             Esito esito = new Esito();
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -400,6 +411,16 @@ namespace VideoSystemWeb.DAL
                             parIdDatiAgenda.Value = idDatiAgenda;
                             StoreProc.Parameters.Add(parIdDatiAgenda);
 
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
                             StoreProc.Connection.Open();
 
                             int iReturn = StoreProc.ExecuteNonQuery();
@@ -410,7 +431,9 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Articoli_DAL.cs - EliminaDatiArticoloByIdDatiAgenda " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.descrizione = "Dati_Articoli_DAL.cs - EliminaDatiArticoloByIdDatiAgenda " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return esito;

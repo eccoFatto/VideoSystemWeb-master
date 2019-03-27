@@ -35,7 +35,6 @@ namespace VideoSystemWeb.Agenda.userControl
                 basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
                 ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
 
-                // basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
                 basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
                 basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
 
@@ -58,14 +57,14 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            bool campoObbligatorio = int.Parse(hf_IdStato.Value) != Stato.Instance.STATO_RIPOSO;
+            bool campoObbligatorio = datiAgenda.id_stato != Stato.Instance.STATO_RIPOSO;
 
             datiAgenda.data_inizio_lavorazione = BasePage.ValidaCampo(txt_DataInizioLavorazione, DateTime.MinValue, true, ref esito);
             datiAgenda.data_fine_lavorazione = BasePage.ValidaCampo(txt_DataFineLavorazione, DateTime.MinValue, true, ref esito);
             datiAgenda.durata_lavorazione = BasePage.ValidaCampo(txt_DurataLavorazione, 0, campoObbligatorio, ref esito);
             datiAgenda.id_colonne_agenda = BasePage.ValidaCampo(ddl_Risorse, hf_Risorse, 0, true, ref esito);
             datiAgenda.id_tipologia = BasePage.ValidaCampo(ddl_Tipologie, hf_Tipologie, 0, campoObbligatorio, ref esito);
-            datiAgenda.id_stato = int.Parse(hf_IdStato.Value);
+           // datiAgenda.id_stato = int.Parse(hf_IdStato.Value);
             datiAgenda.id_cliente = BasePage.ValidaCampo(ddl_Clienti, hf_Clienti, 0, campoObbligatorio, ref esito);
             datiAgenda.durata_viaggio_andata = BasePage.ValidaCampo(txt_DurataViaggioAndata, 0, campoObbligatorio, ref esito);
             datiAgenda.durata_viaggio_ritorno = BasePage.ValidaCampo(txt_DurataViaggioRitorno, 0, campoObbligatorio, ref esito);
@@ -75,7 +74,7 @@ namespace VideoSystemWeb.Agenda.userControl
             datiAgenda.lavorazione = BasePage.ValidaCampo(txt_Lavorazione, "", false, ref esito);
             datiAgenda.indirizzo = BasePage.ValidaCampo(txt_Indirizzo, "", false, ref esito);
             datiAgenda.luogo = BasePage.ValidaCampo(txt_Luogo, "", campoObbligatorio, ref esito);
-            datiAgenda.codice_lavoro = BasePage.ValidaCampo(txt_CodiceLavoro, "", false, ref esito);
+           // datiAgenda.codice_lavoro = BasePage.ValidaCampo(txt_CodiceLavoro, "", false, ref esito);
             datiAgenda.nota = BasePage.ValidaCampo(tb_Nota, "", false, ref esito);
 
             return esito;
@@ -99,7 +98,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Lavorazione.CssClass = txt_Lavorazione.CssClass.Replace("erroreValidazione", "");
             txt_Indirizzo.CssClass = txt_Indirizzo.CssClass.Replace("erroreValidazione", "");
             txt_Luogo.CssClass = txt_Luogo.CssClass.Replace("erroreValidazione", "");
-            txt_CodiceLavoro.CssClass = txt_CodiceLavoro.CssClass.Replace("erroreValidazione", "");
+            //txt_CodiceLavoro.CssClass = txt_CodiceLavoro.CssClass.Replace("erroreValidazione", "");
             tb_Nota.CssClass = tb_Nota.CssClass.Replace("erroreValidazione", "");
         }
 
@@ -155,7 +154,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Lavorazione.Text = evento.lavorazione;
             txt_Indirizzo.Text = evento.indirizzo;
             txt_Luogo.Text = evento.luogo;
-            txt_CodiceLavoro.Text = evento.codice_lavoro;
+            //txt_CodiceLavoro.Text = evento.codice_lavoro;
             tb_Nota.Text = evento.nota;
 
             Esito esito = new Esito();
@@ -169,8 +168,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 }
             }
 
-            hf_IdStato.Value = evento.id_stato.ToString();
-            txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, evento.id_stato, ref esito).nome;
+            //hf_IdStato.Value = evento.id_stato.ToString();
+            //txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, evento.id_stato, ref esito).nome;
         }
 
         public void ClearAppuntamento()
@@ -197,7 +196,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Lavorazione.Text = string.Empty;
             txt_Indirizzo.Text = string.Empty;
             txt_Luogo.Text = string.Empty;
-            txt_CodiceLavoro.Text = string.Empty;
+            //txt_CodiceLavoro.Text = string.Empty;
             tb_Nota.Text = string.Empty;
 
             check_tender.SelectedIndex = -1;
@@ -205,18 +204,18 @@ namespace VideoSystemWeb.Agenda.userControl
             NascondiErroriValidazione();
         }
 
-        public void SetStato(int stato)
-        {
-            Esito esito = new Esito();
-            hf_IdStato.Value = stato.ToString();
+        //public void SetStato(int stato)
+        //{
+        //    Esito esito = new Esito();
+        //    hf_IdStato.Value = stato.ToString();
 
-            if (stato == Stato.Instance.STATO_OFFERTA)
-            {
-                txt_CodiceLavoro.Text = Protocolli_BLL.Instance.getCodLavFormattato();// Agenda_BLL.Instance.GeneraCodiceLavorazione();
-            }
+        //    if (stato == Stato.Instance.STATO_OFFERTA)
+        //    {
+        //        txt_CodiceLavoro.Text = Protocolli_BLL.Instance.getCodLavFormattato();
+        //    }
 
-            txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, stato, ref esito).nome;
-        }
+        //    txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, stato, ref esito).nome;
+        //}
 
         public void AbilitaComponentiPopup(int statoEvento)
         {
@@ -224,7 +223,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (basePage.AbilitazioneInScrittura())
             {
-
                 if (statoEvento == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
                 {
                     txt_DataInizioLavorazione.Enabled =
@@ -290,7 +288,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString())
             {
-                hf_IdStato.Value = Stato.Instance.STATO_RIPOSO.ToString();
+              // hf_IdStato.Value = Stato.Instance.STATO_RIPOSO.ToString();
                 hf_Tipologie.Value = "";
                 ddl_Tipologie.Text = "<Seleziona>";
                 hf_Clienti.Value = "";
@@ -306,10 +304,10 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                hf_IdStato.Value = Stato.Instance.STATO_PREVISIONE_IMPEGNO.ToString();
+        //        hf_IdStato.Value = Stato.Instance.STATO_PREVISIONE_IMPEGNO.ToString();
             }
 
-            AbilitaComponentiPopup(int.Parse(hf_IdStato.Value));
+            AbilitaComponentiPopup(((DatiAgenda)ViewState["eventoSelezionato"]).id_stato);
             RichiediOperazionePopup("UPDATE");
         }
 

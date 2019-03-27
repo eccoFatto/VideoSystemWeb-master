@@ -157,6 +157,42 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_Lavorazione;
         
         /// <summary>
+        /// Controllo lbl_Stato.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Stato;
+        
+        /// <summary>
+        /// Controllo val_Stato.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_Stato;
+        
+        /// <summary>
+        /// Controllo lbl_CodiceLavoro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_CodiceLavoro;
+        
+        /// <summary>
+        /// Controllo val_CodiceLavoro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_CodiceLavoro;
+        
+        /// <summary>
         /// Controllo mostraAgenda.
         /// </summary>
         /// <remarks>

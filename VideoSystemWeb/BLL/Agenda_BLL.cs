@@ -154,21 +154,21 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-        public string GeneraCodiceLavorazione()
-        {
-            Esito esito = new Esito();
-            string annoCorrente = DateTime.Now.Year.ToString();
-            string codiceLavorazione = Agenda_DAL.Instance.GetMaxCodiceLavorazione(annoCorrente, ref esito);
+        //public string GeneraCodiceLavorazione()
+        //{
+        //    Esito esito = new Esito();
+        //    string annoCorrente = DateTime.Now.Year.ToString();
+        //    string codiceLavorazione = Agenda_DAL.Instance.GetMaxCodiceLavorazione(annoCorrente, ref esito);
 
-            if (string.IsNullOrEmpty(codiceLavorazione))
-            {
-                return annoCorrente + "00001";
-            }
-            else
-            {
-                int progressivoCodLavorazione = int.Parse(codiceLavorazione.Substring(4));
-                return annoCorrente + ((progressivoCodLavorazione + 1).ToString()).PadLeft(5, '0');
-            }
-        }
+        //    if (string.IsNullOrEmpty(codiceLavorazione))
+        //    {
+        //        return annoCorrente + "00001";
+        //    }
+        //    else
+        //    {
+        //        int progressivoCodLavorazione = int.Parse(codiceLavorazione.Substring(4));
+        //        return annoCorrente + ((progressivoCodLavorazione + 1).ToString()).PadLeft(5, '0');
+        //    }
+        //}
     }
 }

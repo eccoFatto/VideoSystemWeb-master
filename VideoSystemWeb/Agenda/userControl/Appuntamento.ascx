@@ -303,7 +303,7 @@
             <div class="w3-padding">
                 <div class="w3-row" style="margin-bottom: 5px;">
                     <div class="w3-col">
-                        <asp:TextBox ID="tb_Nota" Style="width: 100%; position: relative;" Rows="3" TextMode="MultiLine" runat="server" CssClass="w3-white w3-border w3-hover-shadow w3-round"></asp:TextBox>
+                        <asp:TextBox ID="tb_Nota" Style="width: 100%; position: relative;" Rows="6" TextMode="MultiLine" runat="server" CssClass="w3-white w3-border w3-hover-shadow w3-round"></asp:TextBox>
                     </div>
                 </div>
             </div>

@@ -2806,3 +2806,7 @@ La procedura o funzione 'InsertProtocollo' prevede il parametro '@numero_protoco
 2019-03-27 18:03:30,218 [24] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-27 18:06:56,624 [30] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-27 18:07:51,207 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 18:39:51,163 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-28 18:39:53,654 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 21:06:44,538 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-28 21:06:46,892 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

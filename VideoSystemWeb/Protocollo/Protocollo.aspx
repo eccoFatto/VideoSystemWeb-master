@@ -101,6 +101,13 @@
 
         <div class="round">
             <asp:GridView ID="gv_protocolli" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" PageSize="20">
+<%--                <Columns>
+                    <asp:TemplateField HeaderText="Seleziona">
+                        <ItemTemplate>
+                            <asp:ImageButton ID="imgOk" runat="server" ImageUrl="/Images/add.png" ToolTip="Aggiungi" CommandName="aggiungi" CommandArgument='<%# Eval("ID") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>--%>
             </asp:GridView>
         </div>
     </ContentTemplate>

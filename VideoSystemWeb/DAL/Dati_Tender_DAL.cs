@@ -113,8 +113,9 @@ namespace VideoSystemWeb.DAL
         }
 
 
-        public int CreaDatiAgendaTender(DatiTender datiAgendaTender,Anag_Utenti utente, ref Esito esito)
+        public int CreaDatiAgendaTender(DatiTender datiAgendaTender, ref Esito esito)
         {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -167,9 +168,10 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaDatiAgendaTender(DatiTender datiAgendaTender, Anag_Utenti utente)
+        public Esito AggiornaDatiAgendaTender(DatiTender datiAgendaTender)
         {
             Esito esito = new Esito();
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
             try
             {
                 using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
@@ -221,9 +223,10 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito EliminaDatiAgendaTender(int idDatiAgendaTender, Anag_Utenti utente)
+        public Esito EliminaDatiAgendaTender(int idDatiAgendaTender)
         {
             Esito esito = new Esito();
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -240,6 +243,53 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             id.Value = idDatiAgendaTender;
                             StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Dati_Tender_DAL.cs - EliminaDatiAgendaTender " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
+        public Esito EliminaDatiTenderByIdDatiAgenda(int idDatiAgenda)
+        {
+            Esito esito = new Esito();
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("[dbo].[DeleteDatiTenderByIdDatiAgenda]"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter parIdDatiAgenda = new SqlParameter("@idDatiAgenda", SqlDbType.Int);
+                            parIdDatiAgenda.Direction = ParameterDirection.Input;
+                            parIdDatiAgenda.Value = idDatiAgenda;
+                            StoreProc.Parameters.Add(parIdDatiAgenda);
 
                             // PARAMETRI PER LOG UTENTE
                             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);

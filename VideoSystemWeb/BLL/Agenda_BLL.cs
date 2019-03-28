@@ -149,26 +149,15 @@ namespace VideoSystemWeb.BLL
         public Esito EliminaEvento(int idEvento)
         {
             Esito esito = Dati_Articoli_DAL.Instance.EliminaDatiArticoloByIdDatiAgenda(idEvento);
-            esito = Agenda_DAL.Instance.EliminaEvento(idEvento);
-
+            if (esito.codice == Esito.ESITO_OK)
+            {
+                esito = Dati_Tender_DAL.Instance.EliminaDatiTenderByIdDatiAgenda(idEvento);
+            }
+            if (esito.codice == Esito.ESITO_OK)
+            {
+                esito = Agenda_DAL.Instance.EliminaEvento(idEvento);
+            }
             return esito;
         }
-
-        //public string GeneraCodiceLavorazione()
-        //{
-        //    Esito esito = new Esito();
-        //    string annoCorrente = DateTime.Now.Year.ToString();
-        //    string codiceLavorazione = Agenda_DAL.Instance.GetMaxCodiceLavorazione(annoCorrente, ref esito);
-
-        //    if (string.IsNullOrEmpty(codiceLavorazione))
-        //    {
-        //        return annoCorrente + "00001";
-        //    }
-        //    else
-        //    {
-        //        int progressivoCodLavorazione = int.Parse(codiceLavorazione.Substring(4));
-        //        return annoCorrente + ((progressivoCodLavorazione + 1).ToString()).PadLeft(5, '0');
-        //    }
-        //}
     }
 }

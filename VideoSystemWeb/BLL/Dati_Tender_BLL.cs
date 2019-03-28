@@ -40,23 +40,23 @@ namespace VideoSystemWeb.BLL
             return datiAgendaTender;
         }
 
-        public int CreaDatiAgendaTender(DatiTender datiAgendaTender, Anag_Utenti utente, ref Esito esito)
+        public int CreaDatiAgendaTender(DatiTender datiAgendaTender, ref Esito esito)
         {
-            int iREt = Dati_Tender_DAL.Instance.CreaDatiAgendaTender(datiAgendaTender, utente, ref esito);
+            int iREt = Dati_Tender_DAL.Instance.CreaDatiAgendaTender(datiAgendaTender, ref esito);
 
             return iREt;
         }
 
-        public Esito AggiornaDatiAgendaTender(DatiTender datiAgendaTender, Anag_Utenti utente)
+        public Esito AggiornaDatiAgendaTender(DatiTender datiAgendaTender)
         {
-            Esito esito = Dati_Tender_DAL.Instance.AggiornaDatiAgendaTender(datiAgendaTender, utente);
+            Esito esito = Dati_Tender_DAL.Instance.AggiornaDatiAgendaTender(datiAgendaTender);
 
             return esito;
         }
 
-        public Esito EliminaDatiAgendaTender(int idDatiAgendaTender, Anag_Utenti utente)
+        public Esito EliminaDatiAgendaTender(int idDatiAgendaTender)
         {
-            Esito esito = Dati_Tender_DAL.Instance.EliminaDatiAgendaTender(idDatiAgendaTender, utente);
+            Esito esito = Dati_Tender_DAL.Instance.EliminaDatiAgendaTender(idDatiAgendaTender);
 
             return esito;
         }

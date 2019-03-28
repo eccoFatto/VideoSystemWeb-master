@@ -2843,3 +2843,60 @@ La procedura o funzione 'InsertProtocollo' prevede il parametro '@numero_protoco
 2019-03-28 18:02:19,161 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-28 18:02:26,673 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-28 18:02:51,073 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:00:03,817 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-28 23:00:05,314 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:00:16,749 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:00:29,151 [7] ERROR VideoSystemWeb.DAL.Base_DAL - L'istruzione DELETE è in conflitto con il vincolo REFERENCE "FK_dati_agenda_tender_dati_agenda". Il conflitto si è verificato nella tabella "dbo.dati_tender", column 'idDatiAgenda' del database "dbvidsystest".
+ 
+L'istruzione è stata interrotta.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 709
+2019-03-28 23:03:42,456 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-03-28 23:03:43,845 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:03:47,292 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:03:54,718 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:05:22,131 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-28 23:05:23,629 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:05:27,576 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:05:30,805 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:05:39,260 [9] ERROR VideoSystemWeb.DAL.Base_DAL - L'istruzione DELETE è in conflitto con il vincolo REFERENCE "FK_dati_agenda_tender_dati_agenda". Il conflitto si è verificato nella tabella "dbo.dati_tender", column 'idDatiAgenda' del database "dbvidsystest".
+ 
+L'istruzione è stata interrotta.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 709
+2019-03-28 23:06:12,498 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-28 23:06:14,198 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:06:36,350 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:06:43,510 [11] ERROR VideoSystemWeb.DAL.Base_DAL - L'istruzione DELETE è in conflitto con il vincolo REFERENCE "FK_dati_agenda_tender_dati_agenda". Il conflitto si è verificato nella tabella "dbo.dati_tender", column 'idDatiAgenda' del database "dbvidsystest".
+ 
+L'istruzione è stata interrotta.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   in VideoSystemWeb.DAL.Agenda_DAL.EliminaEvento(Int32 idEvento) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 709
+2019-03-28 23:17:57,116 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-28 23:17:58,410 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:18:02,638 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-28 23:18:10,313 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

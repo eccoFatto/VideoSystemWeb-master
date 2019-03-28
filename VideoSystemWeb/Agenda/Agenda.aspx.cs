@@ -162,7 +162,7 @@ namespace VideoSystemWeb.Agenda
             }
             else
             {
-                ShowWarning(esito.descrizione);
+                ShowError(esito.descrizione);
                 UpdatePopup();
             }
         }

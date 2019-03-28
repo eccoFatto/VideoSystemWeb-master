@@ -227,12 +227,13 @@ namespace VideoSystemWeb.Agenda
             sw.Flush();
             hw.Flush();
             Response.Clear();
+            Response.ClearContent();
+            Response.ClearHeaders();
             Response.ContentType = "application/pdf";
             Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile + ".pdf");
-            //Response.BinaryWrite(workStream.ToArray());
-
-            Response.OutputStream.Write(workStream.GetBuffer(), 0, workStream.GetBuffer().Length);
-
+            Response.AddHeader("Content-Length", workStream.Length.ToString());
+            Response.BinaryWrite(workStream.ToArray());
+            //Response.OutputStream.Write(workStream.GetBuffer(), 0, workStream.GetBuffer().Length);
             Response.Flush();
             Response.Close();
             Response.End();

@@ -111,10 +111,20 @@
             evt.currentTarget.className += " w3-red";
 
             var nomeElemento = '';
+
+            var statoCorrente = $("#<%=val_Stato.ClientID%>").text();
+
             if (tipoName == 'Appuntamento') {
                 nomeElemento = '<%=tab_Appuntamento.ClientID%>';
+                if (statoCorrente != 'Previsione impegno' && statoCorrente != 'Riposo') {
+                    $("#<%=btnElimina.ClientID%>").addClass("w3-disabled");
+                }
+                else {
+                    $("#<%=btnElimina.ClientID%>").removeClass("w3-disabled");
+                }
             } else if (tipoName == 'Offerta') {
                 nomeElemento = '<%=tab_Offerta.ClientID%>';
+                $("#<%=btnElimina.ClientID%>").removeClass("w3-disabled");
             } else if (tipoName == 'Lavorazione') {
                 nomeElemento = '<%=tab_Lavorazione.ClientID%>';
             }

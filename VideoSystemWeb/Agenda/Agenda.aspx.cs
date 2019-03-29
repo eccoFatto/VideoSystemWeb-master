@@ -509,9 +509,25 @@ namespace VideoSystemWeb.Agenda
 
             return eventoEsistente == null;
         }
-       
+
+        private bool IsDisponibileTender(DatiAgenda eventoDaControllare, ref List<string> listaTenderNonDisponibili, List<string> listaIdTenderSelezionati)
+        {
+            Esito esito = new Esito();
+            List <int> listaIdTenderImpiegatiInPeriodo = Agenda_BLL.Instance.getTenderImpiegatiInPeriodo(eventoDaControllare.data_inizio_impegno, eventoDaControllare.data_fine_impegno, ref esito);
+
+            foreach (string idTenderCorrente in listaIdTenderSelezionati)
+            {
+                if (listaIdTenderImpiegatiInPeriodo.Contains(int.Parse(idTenderCorrente)))
+                {
+                    listaTenderNonDisponibili.Add(listaTender.Where(x => x.id == int.Parse(idTenderCorrente)).FirstOrDefault<Tipologica>().nome);
+                }
+            }
+
+            return listaTenderNonDisponibili.Count == 0;
+        }
+
         #endregion
-        
+
         #region OPERAZIONI POPUP
         public void OperazioniPopup(string operazione)
         {
@@ -695,7 +711,7 @@ namespace VideoSystemWeb.Agenda
 
             List<string> listaIdTender = popupAppuntamento.listaIdTender;
 
-            esito = ValidazioneSalvataggio(eventoSelezionato, listaDatiArticoli);
+            esito = ValidazioneSalvataggio(eventoSelezionato, listaDatiArticoli, listaIdTender);
 
             if (esito.codice == Esito.ESITO_OK)
             {
@@ -721,10 +737,12 @@ namespace VideoSystemWeb.Agenda
             return esito;
         }
 
-        private Esito ValidazioneSalvataggio(DatiAgenda eventoSelezionato, List<DatiArticoli> listaDatiArticoli)
+        private Esito ValidazioneSalvataggio(DatiAgenda eventoSelezionato, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
         {
             Esito esito = new Esito();
             esito = popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
+
+            List<string> listaTenderNonDisponibili = new List<string>();
 
             if (esito.codice != Esito.ESITO_OK)
             {
@@ -735,6 +753,18 @@ namespace VideoSystemWeb.Agenda
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
                 esito.descrizione = "Non è possibile salvare perché la risorsa è già impiegata nel periodo selezionato";
+            }
+            else if (!IsDisponibileTender(eventoSelezionato, ref listaTenderNonDisponibili, listaIdTender))
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.descrizione = "Non è possibile salvare perché le seguenti unità appoggio sono già impiegate nel periodo selezionato:<br/><ul>";
+
+                foreach (string tender in listaTenderNonDisponibili)
+                {
+                    esito.descrizione += "<li>" + tender + "</li>";
+                }
+                esito.descrizione += "</ul>";
+
             }
             else if (eventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA && (listaDatiArticoli==null || listaDatiArticoli.Count==0))
             {

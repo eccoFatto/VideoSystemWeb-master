@@ -112,7 +112,6 @@ namespace VideoSystemWeb.DAL
             return listaDatiAgendaTender;
         }
 
-
         public int CreaDatiAgendaTender(DatiTender datiAgendaTender, ref Esito esito)
         {
             Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);

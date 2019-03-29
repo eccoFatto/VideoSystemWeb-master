@@ -173,6 +173,53 @@ namespace VideoSystemWeb.DAL
             return listaDatiAgenda;
         }
 
+        public List<int> getTenderImpiegatiInPeriodo(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        {
+            List<int> listaIdTender = new List<int>();
+
+            string dataDa = dataInizio.ToString("yyyy-MM-ddT00:00:00.000");
+            string dataA = dataFine.ToString("yyyy-MM-ddT23:59:59.999");
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT DISTINCT c.id " +
+                                    " FROM tab_dati_agenda a " +
+                                    " join dati_tender b on a.id = b.idDatiAgenda " +
+                                    " join tipo_tender c on b.idTender = c.id " +
+                                    " where a.data_inizio_impegno >= '" + dataDa + "' " +
+                                    " and a.data_fine_impegno < '"+ dataA + "'";
+
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        listaIdTender.Add(riga.Field<int>(0));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+            return listaIdTender;
+        }
+
         public Esito CreaEvento(DatiAgenda evento, List<string> listaIdTender)
         {
             Esito esito = new Esito();

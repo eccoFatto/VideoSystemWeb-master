@@ -159,5 +159,10 @@ namespace VideoSystemWeb.BLL
             }
             return esito;
         }
+
+        public List<int> getTenderImpiegatiInPeriodo(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        {
+            return Agenda_DAL.Instance.getTenderImpiegatiInPeriodo(dataInizio, dataFine, ref esito);
+        }
     }
 }

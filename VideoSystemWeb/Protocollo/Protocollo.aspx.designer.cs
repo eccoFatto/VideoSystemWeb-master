@@ -247,6 +247,51 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_Tipologia;
         
         /// <summary>
+        /// Controllo tbMod_NomeFile.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_NomeFile;
+        
+        /// <summary>
+        /// Controllo fuFileProt.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FileUpload fuFileProt;
+        
+        /// <summary>
+        /// Controllo uploadButton.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button uploadButton;
+        
+        /// <summary>
+        /// Controllo lblImage.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblImage;
+        
+        /// <summary>
+        /// Controllo btnGestisciProtocollo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGestisciProtocollo;
+        
+        /// <summary>
         /// Controllo btnInserisciProtocollo.
         /// </summary>
         /// <remarks>

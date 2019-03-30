@@ -239,6 +239,7 @@
     <Content Include="Images\arrow-up-icon.png" />
     <Content Include="Images\COLLABORATORI\dummy.jpg" />
     <Content Include="Images\delete.png" />
+    <Content Include="Images\detail-icon.png" />
     <Content Include="Images\edit.png" />
     <Content Include="Images\Hopstarter-Soft-Scraps-Document-Copy.ico" />
     <Content Include="Images\Icojam-Blue-Bits-Pictures.ico" />

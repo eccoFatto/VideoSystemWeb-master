@@ -188,8 +188,12 @@ namespace VideoSystemWeb.DAL
                                     " FROM tab_dati_agenda a " +
                                     " join dati_tender b on a.id = b.idDatiAgenda " +
                                     " join tipo_tender c on b.idTender = c.id " +
-                                    " where a.data_inizio_impegno >= '" + dataDa + "' " +
-                                    " and a.data_fine_impegno < '"+ dataA + "'";
+                                    //" where a.data_inizio_impegno >= '" + dataDa + "' " +
+                                    //" and a.data_fine_impegno < '"+ dataA + "'";
+                                    " WHERE (a.data_inizio_impegno <= '" + dataDa + "' AND a.data_fine_impegno >= '" + dataDa + "') OR " +
+                                    " (a.data_inizio_impegno < '" + dataA + "' AND a.data_fine_impegno >= '" + dataA + "') OR " +
+                                    " (a.data_inizio_impegno >= '" + dataDa + "' AND a.data_fine_impegno < '" + dataA + "')";
+
 
                     using (SqlCommand cmd = new SqlCommand(query))
                     {

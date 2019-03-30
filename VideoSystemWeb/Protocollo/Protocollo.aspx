@@ -100,14 +100,21 @@
         </div>   
 
         <div class="round">
-            <asp:GridView ID="gv_protocolli" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" PageSize="20">
-<%--                <Columns>
-                    <asp:TemplateField HeaderText="Seleziona">
+            <asp:GridView ID="gv_protocolli" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" OnRowCommand="gv_protocolli_RowCommand" PageSize="20">
+                <Columns>
+<%--                    <asp:TemplateField HeaderText="Seleziona">
                         <ItemTemplate>
-                            <asp:ImageButton ID="imgOk" runat="server" ImageUrl="/Images/add.png" ToolTip="Aggiungi" CommandName="aggiungi" CommandArgument='<%# Eval("ID") %>' />
+                            <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" />
+                            <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" />
                         </ItemTemplate>
-                    </asp:TemplateField>
-                </Columns>--%>
+                    </asp:TemplateField> --%>   
+                    <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
+                        <ItemTemplate>
+                            <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false"  Text="Vis." ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza Protocollo" ImageAlign="AbsMiddle" Height="30px" />
+                        </ItemTemplate>
+                        <HeaderStyle Width="30px" />
+                    </asp:TemplateField>                       
+                </Columns>
             </asp:GridView>
         </div>
     </ContentTemplate>
@@ -137,7 +144,6 @@
                     <!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
                     <div class="w3-bar w3-yellow w3-round">
                         <div class="w3-bar-item w3-button w3-yellow" onclick="openDettaglioProtocollo('Protocollo')">Protocollo</div>
-                        <div class="w3-bar-item w3-button w3-yellow" onclick="openDettaglioProtocollo('Altro')">Altro</div>
                         <div class="w3-bar-item w3-button w3-yellow w3-right">
                             <div id="btnChiudiPopup" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
                         </div>
@@ -178,7 +184,25 @@
                                         </asp:DropDownList>
                                     </div>
                                 </div>
+                                <div class="w3-row-padding w3-center w3-text-center">
+                                    <div class="w3-third">
+                                        <label>Nome File</label>
+                                        <asp:TextBox ID="tbMod_NomeFile" runat="server" MaxLength="100" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                    </div>
+                                    <div class="w3-third" >
+                                        <label>Seleziona File</label>
+                                        <asp:FileUpload ID="fuFileProt" runat="server" Font-Size="X-Small" class="w3-input w3-border" style="vertical-align:central !important;"/>
+                                    </div>
+                                    <div class="w3-third" >
+                                        <label>&nbsp;</label>
+                                        <asp:Button ID="uploadButton" runat="server" class="w3-input w3-border w3-round w3-centered" Width="50%" OnClick="uploadButton_Click" Text="Carica File" />
+                                    </div>
+                                </div>
+                                <div class="w3-row-padding w3-center w3-text-center">
+                                    <asp:Label ID="lblImage" runat="server" Font-Size="Medium"></asp:Label>
+                                </div>
                                 <div style="text-align: center;">
+                                    <asp:Button ID="btnGestisciProtocollo" runat="server" Text="Gestisci Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnGestisciProtocollo_Click" />
                                     <asp:Button ID="btnInserisciProtocollo" runat="server" Text="Inserisci Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciProtocollo_Click" OnClientClick="return confirm('Confermi inserimento Protocollo?')" />
                                     <asp:Button ID="btnModificaProtocollo" runat="server" Text="Modifica Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaProtocollo_Click" OnClientClick="return confirm('Confermi modifica Protocollo?')" Visible="false" />
                                     <asp:Button ID="btnEliminaProtocollo" runat="server" Text="Elimina Protocollo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaProtocollo_Click" OnClientClick="return confirm('Confermi eliminazione Protocollo?')" Visible="false" />
@@ -186,10 +210,6 @@
                                 </div>
                             </p>
                         </div>
-                    </div>
-                <!-- TAB ALTRO -->
-                    <div id="Altro" class="w3-container w3-border prot" style="display:none">
-                        <label>Altro</label>
                     </div>
             </asp:Panel>
         </asp:Panel>

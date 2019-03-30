@@ -85,34 +85,39 @@ namespace VideoSystemWeb.Protocollo
                 case "VISUALIZZAZIONE":
 
                     btnInserisciProtocollo.Visible = false;
-                    btnModificaProtocollo.Visible = true;
-                    btnEliminaProtocollo.Visible = true;
-                    btnAnnullaProtocollo.Visible = true;
+                    btnModificaProtocollo.Visible = false;
+                    btnEliminaProtocollo.Visible = false;
+                    btnAnnullaProtocollo.Visible = false;
+                    btnGestisciProtocollo.Visible = true;
 
                     break;
                 case "INSERIMENTO":
                     btnInserisciProtocollo.Visible = true;
                     btnModificaProtocollo.Visible = false;
                     btnEliminaProtocollo.Visible = false;
-                    btnAnnullaProtocollo.Visible = true;
+                    btnAnnullaProtocollo.Visible = false;
+                    btnGestisciProtocollo.Visible = false;
                     break;
                 case "MODIFICA":
                     btnInserisciProtocollo.Visible = false;
                     btnModificaProtocollo.Visible = true;
                     btnEliminaProtocollo.Visible = true;
                     btnAnnullaProtocollo.Visible = true;
+                    btnGestisciProtocollo.Visible = false;
                     break;
                 case "ANNULLAMENTO":
                     btnInserisciProtocollo.Visible = false;
                     btnModificaProtocollo.Visible = false;
                     btnEliminaProtocollo.Visible = false;
                     btnAnnullaProtocollo.Visible = false;
+                    btnGestisciProtocollo.Visible = true;
                     break;
                 default:
                     btnInserisciProtocollo.Visible = false;
                     btnModificaProtocollo.Visible = false;
                     btnEliminaProtocollo.Visible = false;
                     btnAnnullaProtocollo.Visible = false;
+                    btnGestisciProtocollo.Visible = true;
                     break;
             }
 
@@ -160,8 +165,8 @@ namespace VideoSystemWeb.Protocollo
             queryRicerca = queryRicerca.Replace("@protocolloRiferimento", tbProtocolloRiferimento.Text.Trim().Replace("'","''"));
 
             Esito esito = new Esito();
-            DataTable dtAziende = Base_DAL.getDatiBySql(queryRicerca, ref esito);
-            gv_protocolli.DataSource = dtAziende;
+            DataTable dtProtocolli = Base_DAL.getDatiBySql(queryRicerca, ref esito);
+            gv_protocolli.DataSource = dtProtocolli;
             gv_protocolli.DataBind();
 
         }
@@ -170,18 +175,26 @@ namespace VideoSystemWeb.Protocollo
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
+
+
                 // PRENDO L'ID DEL COLLABORATORE SELEZIONATO
 
-                string idProtocolloSelezionato = e.Row.Cells[0].Text;
+                string idProtocolloSelezionato = e.Row.Cells[1].Text;
 
-                foreach (TableCell item in e.Row.Cells)
-                {
-                    item.Attributes["onclick"] = "mostraProtocollo('" + idProtocolloSelezionato + "');";
-                }
+                //foreach (TableCell item in e.Row.Cells)
+                //{
+                //    if (!string.IsNullOrEmpty(item.ID) && item.ID.Equals("imgEdit"))
+                //    {
+                //        item.Attributes["onclick"] = "mostraProtocollo('" + idProtocolloSelezionato + "');";
+                //    }
+                //}
+
+                ImageButton myButton = e.Row.FindControl("imgEdit") as ImageButton;
+                myButton.Attributes.Add("onclick", "mostraProtocollo('" + idProtocolloSelezionato + "');");
             }
 
         }
-
+  
         protected void gv_protocolli_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gv_protocolli.PageIndex = e.NewPageIndex;
@@ -195,6 +208,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_NumeroProtocollo.Text = "";
             tbMod_ProtocolloRiferimento.Text = "";
             tbMod_Cliente.Text = "";
+            tbMod_NomeFile.Text = "";
             tbMod_Descrizione.Text = "";
             cmbMod_Tipologia.SelectedIndex = 0;
 
@@ -205,6 +219,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_CodiceLavoro.ReadOnly = attivaModifica;
             tbMod_NumeroProtocollo.ReadOnly = attivaModifica;
             tbMod_ProtocolloRiferimento.ReadOnly = attivaModifica;
+            tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Descrizione.ReadOnly = attivaModifica;
             
@@ -240,6 +255,7 @@ namespace VideoSystemWeb.Protocollo
                     tbMod_NumeroProtocollo.Text = protocollo.Numero_protocollo;
                     tbMod_ProtocolloRiferimento.Text = protocollo.Protocollo_riferimento;
                     tbMod_Cliente.Text = protocollo.Cliente;
+                    tbMod_NomeFile.Text = protocollo.PathDocumento;
                     tbMod_Descrizione.Text = protocollo.Descrizione;
 
                     //TIPI PROTOCOLLO
@@ -264,5 +280,31 @@ namespace VideoSystemWeb.Protocollo
 
         }
 
+        protected void gv_protocolli_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+                case "modifica":
+
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        protected void uploadButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnGestisciProtocollo_Click(object sender, EventArgs e)
+        {
+            btnAnnullaProtocollo.Visible = true;
+            btnModificaProtocollo.Visible = true;
+            btnEliminaProtocollo.Visible = true;
+            btnInserisciProtocollo.Visible = false;
+            btnGestisciProtocollo.Visible = false;
+        }
     }
 }

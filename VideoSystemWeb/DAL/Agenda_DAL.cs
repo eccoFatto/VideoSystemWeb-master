@@ -560,8 +560,6 @@ namespace VideoSystemWeb.DAL
                                     {
                                         CostruisciSP_InsertDatiTender(StoreProc, sda, evento.id, idTender);
                                         StoreProc.ExecuteNonQuery();
-
-                                        //int iDatiArticoloReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
                                     }
                                 }
 
@@ -640,7 +638,6 @@ namespace VideoSystemWeb.DAL
                                     }
                                 }
 
-
                                 // ELIMINO GLI EVENTUALI TENDER ASSOCIATI ALL'EVENTO PER SOSTITUIRLI COI NUOVI
                                 CostruisciSP_DeleteDatiTender(StoreProc, sda, evento.id);
                                 StoreProc.ExecuteNonQuery();
@@ -653,8 +650,6 @@ namespace VideoSystemWeb.DAL
                                     {
                                         CostruisciSP_InsertDatiTender(StoreProc, sda, evento.id, idTender);
                                         StoreProc.ExecuteNonQuery();
-
-                                        //int iDatiArticoloReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
                                     }
                                 }
 
@@ -792,11 +787,6 @@ namespace VideoSystemWeb.DAL
                                         listaProduzioni.Add(riga.Field<string>("produzione"));
                                     }
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato di produzione nella tabella tab_dati_agenda ";
-                                //}
                             }
                         }
                     }
@@ -836,11 +826,6 @@ namespace VideoSystemWeb.DAL
                                         listaLavorazioni.Add(riga.Field<string>("lavorazione"));
                                     }
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato di lavorazione nella tabella tab_dati_agenda ";
-                                //}
                             }
                         }
                     }
@@ -1305,42 +1290,5 @@ namespace VideoSystemWeb.DAL
             // FINE PARAMETRI PER LOG UTENTE
 
         }
-
-        //public string GetMaxCodiceLavorazione(string anno, ref Esito esito)
-        //{
-        //    string maxCodiceLavorazione = "";
-        //    try
-        //    {
-        //        using (SqlConnection con = new SqlConnection(sqlConstr))
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand("SELECT MAX(codice_lavoro) FROM " + TABELLA_DATI_AGENDA + " WHERE codice_lavoro like '" + anno + "%'"))
-        //            {
-        //                using (SqlDataAdapter sda = new SqlDataAdapter())
-        //                {
-        //                    cmd.Connection = con;
-        //                    sda.SelectCommand = cmd;
-
-        //                    using (DataTable dt = new DataTable())
-        //                    {
-        //                        sda.Fill(dt);
-        //                        if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
-        //                        {
-        //                            maxCodiceLavorazione = dt.Rows[0].Field<string>(0);
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-        //        esito.descrizione = "Agenda_DAL.cs - GetMaxCodiceLavorazione " + Environment.NewLine + ex.Message;
-
-        //        log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
-        //    }
-
-        //    return maxCodiceLavorazione;
-        //}
     }
 }

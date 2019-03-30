@@ -19,55 +19,75 @@ namespace VideoSystemWeb.Utente
 
         protected void btnConfermaCambioPwd_Click(object sender, EventArgs e)
         {
-            lblMessage.Visible = false;
-            if (tbNewPassword.Text.Equals(tbConfirmNewPassword.Text))
+            Anag_Utenti utente = (Anag_Utenti)Session[SessionManager.UTENTE];
+            Esito esito = ValidazioneCampi(utente);
+            if (esito.codice == Esito.ESITO_OK)
             {
-                // TROVO IL CODICE MD5 DELLA PASSWORD
-                MD5 md5Hash = MD5.Create();
-                string pwdEncrypted = GetMd5Hash(md5Hash, tbOldPassword.Text.Trim());
-                md5Hash.Dispose();
-
-                Anag_Utenti u = (Anag_Utenti)Session[SessionManager.UTENTE];
-                if (u.password.Equals(pwdEncrypted))
+                // AGGIORNO LA NUOVA PASSWORD SU ANAG_UTENTI
+                esito = Login_BLL.Instance.AggiornaUtente(utente);
+                if (esito.codice != Esito.ESITO_OK)
                 {
-                    md5Hash = MD5.Create();
-                    string newPwdEncrypted = GetMd5Hash(md5Hash, tbNewPassword.Text.Trim());
-                    md5Hash.Dispose();
-                    u.password = newPwdEncrypted;
-                    // AGGIORNO LA NUOVA PASSWORD SU ANAG_UTENTI
-                    Esito esito = Login_BLL.Instance.AggiornaUtente(u);
-                    if (esito.codice != Esito.ESITO_OK)
-                    {
-                        ShowError(esito.descrizione);
-                        //panelErrore.Style.Remove("display");
-                        //panelErrore.Style.Add("display", "block");
-                        //lbl_MessaggioErrore.Text = esito.descrizione;
-                    }
-                    else
-                    {
-                        Session[SessionManager.UTENTE] = u;
-                        lblMessage.Text = "PASSWORD MODIFICATA CORRETTAMENTE";
-                        lblMessage.ForeColor = System.Drawing.Color.Green;
-                        lblMessage.Visible = true;
-                        ShowSuccess("PASSWORD MODIFICATA CORRETTAMENTE");
-                    }
+                    ShowWarning(esito.descrizione);
                 }
                 else
                 {
-                    lblMessage.Text = "Errore nella convalida delle nuove Password";
-                    lblMessage.ForeColor = System.Drawing.Color.Red;
-                    lblMessage.Visible = true;
-                    ShowError("La password inserita non è valida!");
-                }
+                    Session[SessionManager.UTENTE] = utente;
 
+                    ShowSuccess("Password modificata correttamente");
+                }
             }
             else
             {
-                lblMessage.Text = "Errore nella convalida delle nuove Password";
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-                lblMessage.Visible = true;
-                ShowWarning("Errore nella convalida delle nuove Password");
+                ShowWarning(esito.descrizione);
             }
+        }
+
+        private Esito ValidazioneCampi(Anag_Utenti utente)
+        {
+            Esito esito = new Esito();
+            esito = ControlloCampiObbligatori();
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                esito.descrizione = "Controllare i campi evidenziati";
+            }
+            else if (!ControlloNuovaPassword())
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.descrizione = "Errore nella convalida delle nuove Password";
+            }
+            else if (!ControlloVecchiaPassword(utente))
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.descrizione = "La password inserita non è valida";
+            }
+
+            return esito;
+        }
+
+        private Esito ControlloCampiObbligatori()
+        {
+            Esito esito = new Esito();
+
+            tbOldPassword.Text = BasePage.ValidaCampo(tbOldPassword, "", true, ref esito);
+            tbNewPassword.Text = BasePage.ValidaCampo(tbNewPassword, "", true, ref esito);
+            tbConfirmNewPassword.Text = BasePage.ValidaCampo(tbConfirmNewPassword, "", true, ref esito);
+
+            return esito;
+        }
+
+        private bool ControlloNuovaPassword()
+        {
+            return tbNewPassword.Text == tbConfirmNewPassword.Text;
+        }
+
+        private bool ControlloVecchiaPassword(Anag_Utenti utente)
+        {
+            // TROVO IL CODICE MD5 DELLA PASSWORD
+            MD5 md5Hash = MD5.Create();
+            string pwdEncrypted = GetMd5Hash(md5Hash, tbOldPassword.Text.Trim());
+            md5Hash.Dispose();
+
+            return utente.password.Equals(pwdEncrypted);
         }
     }
 }

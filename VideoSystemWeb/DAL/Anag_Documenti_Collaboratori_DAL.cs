@@ -67,11 +67,6 @@ namespace VideoSystemWeb.DAL
                                         listaDocumenti.Add(documento);
                                     }
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_documenti_collaboratori ";
-                                //}
                             }
                         }
                     }
@@ -113,11 +108,6 @@ namespace VideoSystemWeb.DAL
                                     documento.PathDocumento = dt.Rows[0].Field<string>("pathDocumento");
                                     documento.Attivo = dt.Rows[0].Field<bool>("attivo");
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_documenti_collaboratori ";
-                                //}
                             }
                         }
                     }
@@ -311,6 +301,5 @@ namespace VideoSystemWeb.DAL
 
             return esito;
         }
-
     }
 }

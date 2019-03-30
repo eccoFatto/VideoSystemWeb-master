@@ -2925,3 +2925,55 @@ L'istruzione è stata interrotta.
 2019-03-29 11:37:54,940 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-29 11:39:11,694 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-29 11:39:47,778 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 13:55:44,953 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 13:55:50,818 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 13:57:24,052 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 13:57:43,652 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:01:40,740 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:02:21,423 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:03:36,697 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:03:45,909 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:05:43,473 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:06:13,280 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:41:50,670 [6] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-03-30 14:41:58,803 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:42:32,528 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:46:39,443 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 14:46:40,727 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:47:02,288 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:48:44,034 [15] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-03-30 14:48:45,235 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:52:01,170 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 14:52:02,467 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:55:16,185 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 14:55:17,343 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:55:37,706 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:55:39,686 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:56:49,710 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 14:57:35,892 [7] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-03-30 14:57:45,532 [6] INFO VideoSystemWeb.Login - UTENTE oriana Loggato!
+2019-03-30 14:57:45,558 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 15:00:15,406 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 15:00:22,197 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 15:00:43,590 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 15:00:43,618 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 15:03:37,141 [9] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-03-30 15:03:37,877 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 15:04:14,584 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 15:12:35,441 [22] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 15:12:36,792 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 15:12:45,824 [22] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 15:13:45,922 [22] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-03-30 15:34:29,383 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 15:34:30,834 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 15:54:18,151 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 15:54:19,464 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 15:59:15,334 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 15:59:16,471 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 16:53:18,447 [37] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 16:53:21,105 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 17:09:11,184 [24] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 17:09:13,401 [24] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 17:19:03,137 [25] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 17:19:04,270 [42] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 17:19:45,367 [31] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori

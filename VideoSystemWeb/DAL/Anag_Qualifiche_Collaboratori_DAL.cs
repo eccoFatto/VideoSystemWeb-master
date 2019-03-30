@@ -67,11 +67,6 @@ namespace VideoSystemWeb.DAL
                                         listaQUalifiche.Add(qualifica);
                                     }
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_qualifiche_collaboratori ";
-                                //}
                             }
                         }
                     }
@@ -270,7 +265,5 @@ namespace VideoSystemWeb.DAL
 
             return esito;
         }
-
-
     }
 }

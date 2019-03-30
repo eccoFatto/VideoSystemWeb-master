@@ -57,11 +57,6 @@ namespace VideoSystemWeb.DAL
                                     gruppoArticolo.IdArtArticoli = dt.Rows[0].Field<int>("idArtArticoli");
 
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "GruppoArticolo con id " + idGruppoArticolo.ToString() + " non trovato in tabella art_gruppi_articoli ";
-                                //}
                             }
                         }
                     }
@@ -105,11 +100,6 @@ namespace VideoSystemWeb.DAL
                                     }
 
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "GruppoArticolo con idArtArticoli " + idArticolo.ToString() + " non trovato in tabella art_gruppi_articoli ";
-                                //}
                             }
                         }
                     }
@@ -153,11 +143,6 @@ namespace VideoSystemWeb.DAL
                                     }
 
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "GruppoArticolo con idArtGruppo " + idGruppo.ToString() + " non trovato in tabella art_gruppi_articoli ";
-                                //}
                             }
                         }
                     }
@@ -203,11 +188,6 @@ namespace VideoSystemWeb.DAL
                                         listaGruppiArticoli.Add(gruppoArticolo);
                                     }
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella art_gruppi_articoli ";
-                                //}
                             }
                         }
                     }

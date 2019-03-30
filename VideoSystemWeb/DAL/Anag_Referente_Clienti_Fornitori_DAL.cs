@@ -71,11 +71,6 @@ namespace VideoSystemWeb.DAL
                                         listaReferenti.Add(referente);
                                     }
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_referente_clienti_fornitori ";
-                                //}
                             }
                         }
                     }
@@ -172,7 +167,6 @@ namespace VideoSystemWeb.DAL
                             StoreProc.ExecuteNonQuery();
 
                             int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
-
 
                             return iReturn;
                         }
@@ -370,8 +364,6 @@ namespace VideoSystemWeb.DAL
             }
 
             return referente;
-
         }
-
     }
 }

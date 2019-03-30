@@ -151,6 +151,8 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnAnnullaProtocollo_Click(object sender, EventArgs e)
         {
+            AttivaDisattivaModificaProtocollo(true);
+            gestisciPulsantiProtocollo("ANNULLAMENTO");
 
         }
 
@@ -159,6 +161,7 @@ namespace VideoSystemWeb.Protocollo
             string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_PROTOCOLLI"];
 
             queryRicerca = queryRicerca.Replace("@numeroProtocollo", tbNumeroProtocollo.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@dataProtocollo", tbDataProtocollo.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@tipoProtocollo", ddlTipoProtocollo.SelectedValue.ToString().Trim().Replace("'", "''"));
@@ -300,11 +303,9 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnGestisciProtocollo_Click(object sender, EventArgs e)
         {
-            btnAnnullaProtocollo.Visible = true;
-            btnModificaProtocollo.Visible = true;
-            btnEliminaProtocollo.Visible = true;
-            btnInserisciProtocollo.Visible = false;
-            btnGestisciProtocollo.Visible = false;
+            AttivaDisattivaModificaProtocollo(false);
+            gestisciPulsantiProtocollo("MODIFICA");
+
         }
     }
 }

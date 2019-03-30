@@ -74,9 +74,13 @@
         </div>
         
           <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-threequarter">
+            <div class="w3-quarter">
                 <label>Cliente</label>
                 <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+            </div>
+            <div class="w3-quarter">
+                <label>Data Prot.</label>
+                <asp:TextBox ID="tbDataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
             </div>
             <div class="w3-quarter">
                 <label></label>

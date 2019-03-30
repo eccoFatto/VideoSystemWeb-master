@@ -76,6 +76,15 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbRagioneSociale;
         
         /// <summary>
+        /// Controllo tbDataProtocollo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbDataProtocollo;
+        
+        /// <summary>
         /// Controllo btnRicercaProtocollo.
         /// </summary>
         /// <remarks>

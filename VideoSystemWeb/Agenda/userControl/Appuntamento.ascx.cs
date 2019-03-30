@@ -64,7 +64,6 @@ namespace VideoSystemWeb.Agenda.userControl
             datiAgenda.durata_lavorazione = BasePage.ValidaCampo(txt_DurataLavorazione, 0, campoObbligatorio, ref esito);
             datiAgenda.id_colonne_agenda = BasePage.ValidaCampo(ddl_Risorse, hf_Risorse, 0, true, ref esito);
             datiAgenda.id_tipologia = BasePage.ValidaCampo(ddl_Tipologie, hf_Tipologie, 0, campoObbligatorio, ref esito);
-           // datiAgenda.id_stato = int.Parse(hf_IdStato.Value);
             datiAgenda.id_cliente = BasePage.ValidaCampo(ddl_Clienti, hf_Clienti, 0, campoObbligatorio, ref esito);
             datiAgenda.durata_viaggio_andata = BasePage.ValidaCampo(txt_DurataViaggioAndata, 0, campoObbligatorio, ref esito);
             datiAgenda.durata_viaggio_ritorno = BasePage.ValidaCampo(txt_DurataViaggioRitorno, 0, campoObbligatorio, ref esito);
@@ -74,7 +73,6 @@ namespace VideoSystemWeb.Agenda.userControl
             datiAgenda.lavorazione = BasePage.ValidaCampo(txt_Lavorazione, "", false, ref esito);
             datiAgenda.indirizzo = BasePage.ValidaCampo(txt_Indirizzo, "", false, ref esito);
             datiAgenda.luogo = BasePage.ValidaCampo(txt_Luogo, "", campoObbligatorio, ref esito);
-           // datiAgenda.codice_lavoro = BasePage.ValidaCampo(txt_CodiceLavoro, "", false, ref esito);
             datiAgenda.nota = BasePage.ValidaCampo(tb_Nota, "", false, ref esito);
 
             return esito;

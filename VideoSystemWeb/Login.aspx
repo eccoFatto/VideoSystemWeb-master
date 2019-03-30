@@ -6,31 +6,20 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>LOGIN</title>
-
-    
-
-
-
     <link rel="stylesheet" href="/Css/w3.css" />
     <link rel="stylesheet" href="/Css/w3-colors-win8.css" />
-    <link rel="stylesheet" href="/Css/spectre.min.css" />
-    <link rel="stylesheet" href="/Css/spectre-exp.min.css" />
-    <link rel="stylesheet" href="/Css/spectre-icons.min.css" />
-
+    
     <script type="text/javascript" src="/Scripts/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src='/Scripts/bootstrap.bundle.min.js'></script>
     <link rel='stylesheet' href='/Css/Style.css' />
-
 </head>
 <body>
     
     <form id="form1" runat="server">
-
-        <!-- CON SPECTRE SI PUO' DIVIDERE LA PAGINA IN 12 COLONNE CON I DIV -->
-        <div class="container" style="width: 70%;">
-            <div class="columns">
-                <div class="column col-2"></div>
-                <div class="column col-8">
+        <div class="container">
+            <div class="w3-row">
+                <div class="w3-third">&nbsp;</div>
+                <div class="w3-third">
                     <div class="w3-0 mydiv">
                         <%--<div class="w3-panel w3-gray w3-center w3-margin-top w3-text-white w3-card-2 w3-round">LOGIN APPLICATIVO VIDEOSYSTEM</div>--%>
                         <div class="w3-container w3-teal w3-center w3-margin-top">
@@ -59,8 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="column col-2"></div>
-
+               <div class="w3-third">&nbsp;</div>
             </div>
         </div>
         <br />
@@ -71,7 +59,6 @@
         <footer class="w3-container w3-teal">
             <h5 style="text-align: center">&copy; <%: DateTime.Now.Year %>- VIDEOSYSTEM</h5>
         </footer>
-
     </form>
 </body>
 </html>

@@ -54,7 +54,6 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-
                                         Protocolli protocollo = new Protocolli();
                                         protocollo.Id = riga.Field<int>("id");
                                         protocollo.Codice_lavoro = riga.Field<string>("codice_lavoro");
@@ -106,7 +105,6 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-
                                         Protocolli protocollo = new Protocolli();
                                         protocollo.Id = riga.Field<int>("id");
                                         protocollo.Codice_lavoro = riga.Field<string>("codice_lavoro");
@@ -391,7 +389,5 @@ namespace VideoSystemWeb.DAL
 
             return esito;
         }
-
-
     }
 }

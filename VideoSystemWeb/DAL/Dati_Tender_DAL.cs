@@ -97,7 +97,6 @@ namespace VideoSystemWeb.DAL
                                         datiAgendaTender.IdTender = riga.Field<int>("idTender");
                                         listaDatiAgendaTender.Add(datiAgendaTender);
                                     }
-
                                 }
                             }
                         }

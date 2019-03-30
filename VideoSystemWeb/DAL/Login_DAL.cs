@@ -52,9 +52,6 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = cmd;
                             using (DataTable dt = new DataTable())
                             {
-
-                                //System.Data.Common.DataTableMapping dtm = sda.TableMappings[1];
-
                                 sda.Fill(dt);
                                 if (dt != null && dt.Rows != null && dt.Rows.Count == 1)
                                 {
@@ -91,6 +88,7 @@ namespace VideoSystemWeb.DAL
         public Esito AggiornaUtente(Anag_Utenti utente)
         {
             Esito esito = new Esito();
+            
             try
             {
                 using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
@@ -135,6 +133,15 @@ namespace VideoSystemWeb.DAL
                             attivo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(attivo);
 
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
                             StoreProc.Connection.Open();
 
                             int iReturn = StoreProc.ExecuteNonQuery();
@@ -151,6 +158,5 @@ namespace VideoSystemWeb.DAL
 
             return esito;
         }
-
     }
 }

@@ -174,21 +174,33 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnOfferta_Click(object sender, EventArgs e)
         {
-            //popupAppuntamento.SetStato(Stato.Instance.STATO_OFFERTA);
-            DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            eventoSelezionato.id_stato = Stato.Instance.STATO_OFFERTA;
-            eventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
-            ViewState["eventoSelezionato"] = eventoSelezionato;
-
             Esito esito = new Esito();
-            val_Stato.Text = UtilityTipologiche.getElementByID(listaStati, eventoSelezionato.id_stato, ref esito).nome;
-            val_CodiceLavoro.Text = eventoSelezionato.codice_lavoro;
+            DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli;
+            List<string> listaIdTender = popupAppuntamento.listaIdTender;
 
-            btnLavorazione.Visible = false;
+            esito = ValidazioneSalvataggio(eventoSelezionato, listaDatiArticoli, listaIdTender);
+            if (esito.codice == Esito.ESITO_OK)
+            {
+                eventoSelezionato.id_stato = Stato.Instance.STATO_OFFERTA;
+                eventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
+                ViewState["eventoSelezionato"] = eventoSelezionato;
 
-            UpdatePopup();
+                val_Stato.Text = UtilityTipologiche.getElementByID(listaStati, eventoSelezionato.id_stato, ref esito).nome;
+                val_CodiceLavoro.Text = eventoSelezionato.codice_lavoro;
 
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "passaAOfferta", "openTabEvento(event,'Offerta');", true);
+                btnLavorazione.Visible = false;
+
+                UpdatePopup();
+
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "passaAOfferta", "openTabEvento(event,'Offerta');", true);
+            }
+            else
+            {
+                ShowWarning(esito.descrizione);
+                popupAppuntamento.PopolaPopup(eventoSelezionato);
+                UpdatePopup();
+            }
         }
 
         protected void btnLavorazione_Click(object sender, EventArgs e)
@@ -223,20 +235,6 @@ namespace VideoSystemWeb.Agenda
             string nomeFile = lbl_Protocollo.Text == "N.D." ? "OffertaNonProtocollata" : lbl_Protocollo.Text;
 
             MemoryStream workStream = BaseStampa.Instance.GeneraPdf(sw.ToString());
-
-            //sw.Flush();
-            //hw.Flush();
-            //Response.Clear();
-            //Response.ContentType = "application/pdf";
-            //Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile + ".pdf");
-            ////Response.BinaryWrite(workStream.ToArray());
-
-            //Response.OutputStream.Write(workStream.GetBuffer(), 0, workStream.GetBuffer().Length);
-
-            //Response.Flush();
-            //Response.Close();
-            //Response.End();
-            //workStream.Close();
 
             sw.Flush();
             hw.Flush();
@@ -708,7 +706,6 @@ namespace VideoSystemWeb.Agenda
             Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli;
-
             List<string> listaIdTender = popupAppuntamento.listaIdTender;
 
             esito = ValidazioneSalvataggio(eventoSelezionato, listaDatiArticoli, listaIdTender);

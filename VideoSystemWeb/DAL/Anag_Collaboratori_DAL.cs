@@ -75,11 +75,6 @@ namespace VideoSystemWeb.DAL
                                     collaboratore.Telefoni = Anag_Telefoni_Collaboratori_DAL.Instance.getTelefoniByIdCollaboratore(ref esito, collaboratore.Id);
                                     collaboratore.Documenti = Anag_Documenti_Collaboratori_DAL.Instance.getDocumentiByIdCollaboratore(ref esito, collaboratore.Id);
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Collaboratore con id " + idCollaboratore.ToString() + " non trovato in tabella anag_collaboratori ";
-                                //}
                             }
                         }
                     }
@@ -159,11 +154,6 @@ namespace VideoSystemWeb.DAL
                                         listaCollaboratori.Add(collaboratore);
                                     }
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_collaboratori ";
-                                //}
                             }
                         }
                     }
@@ -287,9 +277,6 @@ namespace VideoSystemWeb.DAL
                             StoreProc.Parameters.Add(attivo);
 
                             StoreProc.Connection.Open();
-
-                            //int iReturn = StoreProc.ExecuteNonQuery();
-                            //int iReturn = (int) StoreProc.ExecuteScalar();
 
                             StoreProc.ExecuteNonQuery();
 

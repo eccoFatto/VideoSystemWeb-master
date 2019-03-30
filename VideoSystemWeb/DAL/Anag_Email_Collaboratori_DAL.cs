@@ -59,11 +59,6 @@ namespace VideoSystemWeb.DAL
                                     anagEmail.Priorita = dt.Rows[0].Field<int>("priorita");
                                     anagEmail.Attivo = dt.Rows[0].Field<bool>("attivo");
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_email_collaboratori ";
-                                //}
                             }
                         }
                     }
@@ -114,11 +109,6 @@ namespace VideoSystemWeb.DAL
                                         listaEmail.Add(email);
                                     }
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_email_collaboratori ";
-                                //}
                             }
                         }
                     }
@@ -316,7 +306,5 @@ namespace VideoSystemWeb.DAL
 
             return esito;
         }
-
-
     }
 }

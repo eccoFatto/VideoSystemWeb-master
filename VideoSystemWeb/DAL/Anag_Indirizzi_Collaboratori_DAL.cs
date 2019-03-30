@@ -74,11 +74,6 @@ namespace VideoSystemWeb.DAL
                                         listaIndirizzi.Add(indirizzo);
                                     }
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_indirizzi_collaboratori ";
-                                //}
                             }
                         }
                     }
@@ -127,11 +122,6 @@ namespace VideoSystemWeb.DAL
                                     indirizzo.Attivo = dt.Rows[0].Field<bool>("attivo");
 
                                 }
-                                //else
-                                //{
-                                //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                //    esito.descrizione = "Nessun dato trovato nella tabella anag_indirizzi_collaboratori ";
-                                //}
                             }
                         }
                     }
@@ -231,7 +221,6 @@ namespace VideoSystemWeb.DAL
                             StoreProc.ExecuteNonQuery();
 
                             int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
-
 
                             return iReturn;
                         }

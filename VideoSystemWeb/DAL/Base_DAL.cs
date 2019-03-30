@@ -472,9 +472,7 @@ namespace VideoSystemWeb.DAL
 
                             StoreProc.ExecuteNonQuery();
 
-                            //int iReturn = (Int32)o;
                             int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
-
 
                             return iReturn;
                         }
@@ -605,8 +603,6 @@ namespace VideoSystemWeb.DAL
             }
 
             return esito;
-
         }
-
     }
 }

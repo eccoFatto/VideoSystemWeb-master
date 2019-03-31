@@ -2994,3 +2994,20 @@ L'istruzione è stata interrotta.
 2019-03-30 18:18:35,256 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-30 18:19:12,887 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-30 18:19:13,340 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 18:22:55,993 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-30 18:22:57,186 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 18:23:07,105 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-30 18:24:45,117 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-31 10:19:22,290 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-31 10:19:43,070 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-31 10:20:29,932 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-31 10:22:09,975 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-31 10:22:12,798 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-31 10:22:17,104 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-31 10:26:56,034 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-03-31 10:26:57,380 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-31 10:27:02,683 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-31 10:27:48,613 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-31 10:27:49,090 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-31 10:27:57,917 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-03-31 10:27:58,368 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

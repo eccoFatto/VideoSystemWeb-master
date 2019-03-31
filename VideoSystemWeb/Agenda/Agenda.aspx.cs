@@ -510,18 +510,26 @@ namespace VideoSystemWeb.Agenda
 
         private bool IsDisponibileTender(DatiAgenda eventoDaControllare, ref List<string> listaTenderNonDisponibili, List<string> listaIdTenderSelezionati)
         {
-            Esito esito = new Esito();
-            List <int> listaIdTenderImpiegatiInPeriodo = Agenda_BLL.Instance.getTenderImpiegatiInPeriodo(eventoDaControllare.data_inizio_impegno, eventoDaControllare.data_fine_impegno, ref esito);
-
-            foreach (string idTenderCorrente in listaIdTenderSelezionati)
+            if (listaIdTenderSelezionati == null)
             {
-                if (listaIdTenderImpiegatiInPeriodo.Contains(int.Parse(idTenderCorrente)))
-                {
-                    listaTenderNonDisponibili.Add(listaTender.Where(x => x.id == int.Parse(idTenderCorrente)).FirstOrDefault<Tipologica>().nome);
-                }
+                return true;
             }
+            else
+            {
+                Esito esito = new Esito();
+                List<int> listaIdTenderImpiegatiInPeriodo = Agenda_BLL.Instance.getTenderImpiegatiInPeriodo(eventoDaControllare.data_inizio_impegno, eventoDaControllare.data_fine_impegno, ref esito);
 
-            return listaTenderNonDisponibili.Count == 0;
+
+                foreach (string idTenderCorrente in listaIdTenderSelezionati)
+                {
+                    if (listaIdTenderImpiegatiInPeriodo.Contains(int.Parse(idTenderCorrente)))
+                    {
+                        listaTenderNonDisponibili.Add(listaTender.Where(x => x.id == int.Parse(idTenderCorrente)).FirstOrDefault<Tipologica>().nome);
+                    }
+                }
+
+                return listaTenderNonDisponibili.Count == 0;
+            }
         }
 
         #endregion

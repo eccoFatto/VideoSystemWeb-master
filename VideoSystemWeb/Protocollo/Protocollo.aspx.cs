@@ -332,7 +332,7 @@ namespace VideoSystemWeb.Protocollo
                     tbMod_DataProtocollo.Text = "";
                     if (protocollo.Data_protocollo != null)
                     {
-                        tbMod_DataProtocollo.Text = protocollo.Data_protocollo.ToString("dd/MM/yyyy");
+                        tbMod_DataProtocollo.Text = ((DateTime)protocollo.Data_protocollo).ToString("dd/MM/yyyy");
                     }
                     tbMod_ProtocolloRiferimento.Text = protocollo.Protocollo_riferimento;
                     tbMod_Cliente.Text = protocollo.Cliente;

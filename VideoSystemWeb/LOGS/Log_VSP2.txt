@@ -3058,3 +3058,16 @@ L'istruzione è stata interrotta.
 2019-04-01 21:26:13,003 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-04-01 21:26:57,388 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-04-01 21:27:20,767 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:35:03,202 [22] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-01 21:35:05,163 [26] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:35:10,328 [27] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:35:18,786 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - Impossibile eseguire il cast da DBNull.Value al tipo 'System.DateTime'. Utilizzare un tipo nullable.
+   in System.Data.DataRowExtensions.UnboxT`1.ValueField(Object value)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Protocolli_DAL.getProtocolliByCodLavIdTipoProtocollo(String codiceLavorazione, Int32 IdTipoProtocollo, Esito& esito, Boolean soloAttivi) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Protocolli_DAL.cs:riga 113
+2019-04-01 21:38:57,547 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-01 21:38:59,394 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:39:05,299 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:39:11,378 [22] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:39:11,894 [27] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:39:22,970 [22] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

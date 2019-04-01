@@ -68,7 +68,7 @@
         function UploadComplete(sender,args)
         {
             $('.loader').hide();
-            alert('Caricamento Completato');
+            //alert('Caricamento Completato');
             var filename = args.get_fileName();
             var contentType = args.get_contentType();
             var text = "La dimensione del file " + filename + " è " + args.get_length() + " bytes";
@@ -76,7 +76,8 @@
             {
                 text += " e la tipologia è '" + contentType + "'.";
             }
-            document.getElementById('<%=lblStatus.ClientID%>').innerText = text;
+            document.getElementById('<%=lblStatus.ClientID%>').innerText = '';
+            document.getElementById('<%=tbMod_NomeFile.ClientID%>').innerText = filename;
         }
 
 
@@ -276,8 +277,6 @@
         </asp:Panel>
     </ContentTemplate>
     <Triggers>
-        <%--<asp:PostBackTrigger ControlID="AsyncFileUpload1" />--%>
-        <%--<asp:AsyncPostBackTrigger ControlID="AsyncFileUpload1" />--%>
         <asp:AsyncPostBackTrigger ControlID="btnInserisciProtocollo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnModificaProtocollo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnEliminaProtocollo" EventName="Click" />

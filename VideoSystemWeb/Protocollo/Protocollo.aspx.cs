@@ -20,11 +20,10 @@ namespace VideoSystemWeb.Protocollo
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //ScriptManager scrManager = (ScriptManager)this.Master.FindControl("ScriptManager1");
-            //scrManager.RegisterPostBackControl(fuFileProt);
 
             if (!Page.IsPostBack)
             {
+                Session["NOME_FILE"] = "";
                 BasePage p = new BasePage();
                 Esito esito = p.CaricaListeTipologiche();
 
@@ -71,6 +70,7 @@ namespace VideoSystemWeb.Protocollo
         {
             if (!string.IsNullOrEmpty(hf_idProt.Value) || (!string.IsNullOrEmpty((string)ViewState["idProtocollo"])))
             {
+                Session["NOME_FILE"] = "";
                 if (!string.IsNullOrEmpty(hf_idProt.Value)) ViewState["idProtocollo"] = hf_idProt.Value;
                 editProtocollo();
                 AttivaDisattivaModificaProtocollo(true);
@@ -298,7 +298,9 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Descrizione.ReadOnly = attivaModifica;
-            
+            tbMod_NomeFile.ReadOnly = true;
+            //tbMod_NomeFile.ReadOnly = attivaModifica;
+
             if (attivaModifica)
             {
                 cmbMod_Tipologia.Attributes.Add("disabled", "");
@@ -321,6 +323,7 @@ namespace VideoSystemWeb.Protocollo
 
             if (!string.IsNullOrEmpty(idProtocollo))
             {
+                Session["NOME_FILE"] = "";
                 Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt16(idProtocollo));
                 if (esito.codice == 0)
                 {
@@ -337,6 +340,7 @@ namespace VideoSystemWeb.Protocollo
                     tbMod_ProtocolloRiferimento.Text = protocollo.Protocollo_riferimento;
                     tbMod_Cliente.Text = protocollo.Cliente;
                     tbMod_NomeFile.Text = protocollo.PathDocumento;
+                    Session["NOME_FILE"] = protocollo.PathDocumento;
                     tbMod_Descrizione.Text = protocollo.Descrizione;
 
                     //TIPI PROTOCOLLO
@@ -399,7 +403,8 @@ namespace VideoSystemWeb.Protocollo
 
             protocollo.Id_tipo_protocollo = Convert.ToInt32(cmbMod_Tipologia.SelectedValue);
             protocollo.Numero_protocollo = BasePage.ValidaCampo(tbMod_NumeroProtocollo, "", true, ref esito);
-            protocollo.PathDocumento = "";
+            //protocollo.PathDocumento = BasePage.ValidaCampo(tbMod_NomeFile, "", false, ref esito); 
+            protocollo.PathDocumento = (string)Session["NOME_FILE"];
             protocollo.Protocollo_riferimento = BasePage.ValidaCampo(tbMod_ProtocolloRiferimento, "", false, ref esito);
             protocollo.Cliente = BasePage.ValidaCampo(tbMod_Cliente, "", false, ref esito);
             protocollo.Codice_lavoro = BasePage.ValidaCampo(tbMod_CodiceLavoro, "", false, ref esito);
@@ -416,19 +421,43 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnAnnullaCaricamento_Click(object sender, EventArgs e)
         {
-            //    if (fuFileProt.HasFile)
-            //    {
-            //        fuFileProt.Dispose();
-            //    }
+
+            //fuFileProt.Dispose();
+            if (!string.IsNullOrEmpty(tbMod_NomeFile.Text.Trim()))
+            {
+                //SE ESISTE IL FILE LO CANCELLO
+                try
+                {
+                    File.Delete(tbMod_NomeFile.Text.Trim());
+                    tbMod_NomeFile.Text = "";
+                    Session["NOME_FILE"] = "";
+                }
+                catch (Exception)
+                {
+                }
+                
+            }
         }
 
         protected void AsyncFileUpload1_UploadedComplete (object sender, AjaxControlToolkit.AsyncFileUploadEventArgs e)
         {
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(5000);
             if (fuFileProt.HasFile)
             {
-                string strPath = MapPath("~/DOCUMENTI/PROTOCOLLI/") + Path.GetFileName(e.filename);
+                string nomeFileToSave = DateTime.Now.Ticks.ToString() + "_" + Path.GetFileName(e.filename);
+                string strPath = MapPath("~/DOCUMENTI/PROTOCOLLI/") + nomeFileToSave;
                 fuFileProt.SaveAs(strPath);
+                if (File.Exists(strPath))
+                {
+                    Session["NOME_FILE"] = nomeFileToSave;
+                    //tbMod_NomeFile.Text = nomeFileToSave;
+                }
+                else
+                {
+                    Session["NOME_FILE"] = "";
+                    tbMod_NomeFile.Text = "";
+                    basePage.ShowWarning("Attenzione, il file: " + strPath + " non è stato creato!");
+                }
             }
         }
 

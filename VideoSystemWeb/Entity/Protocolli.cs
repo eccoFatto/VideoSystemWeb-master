@@ -19,7 +19,7 @@ namespace VideoSystemWeb.Entity
         private int id;
         private string codice_lavoro;       // OTTENUTO DALLA GET CODICE LAVORO DELLA TABELLA TAB_COD_LAV
         private string numero_protocollo;   // OTTENUTO DALLA GET PROTOCOLLO DELLA TABELLA TAB_PROTOCOLLO
-        private DateTime data_protocollo;   // IN AUTOMATICO IN INSERIMENTO METTE LA DATA DEL MOMENTO
+        private DateTime? data_protocollo;   // IN AUTOMATICO IN INSERIMENTO METTE LA DATA DEL MOMENTO
         private string cliente;             // DALLA TABELLA ANAG_CLIENTI_FORNITORI, COLONNA ragioneSociale
         private int id_tipo_protocollo;           // TIPOLOGIA DEL DOCUMENTO PROTOCOLLATO, EVENTUALMENTE DA PRENDERE DA TIPOLOGICA APPOSITA
         private string protocollo_riferimento;  // EVENTUALE RIFERIMENTO AD UN PRECEDENTE PROTOCOLLO
@@ -36,6 +36,6 @@ namespace VideoSystemWeb.Entity
         public bool Attivo { get => attivo; set => attivo = value; }
         public int Id_tipo_protocollo { get => id_tipo_protocollo; set => id_tipo_protocollo = value; }
         public string Protocollo_riferimento { get => protocollo_riferimento; set => protocollo_riferimento = value; }
-        public DateTime Data_protocollo { get => data_protocollo; set => data_protocollo = value; }
+        public DateTime? Data_protocollo { get => data_protocollo; set => data_protocollo = value; }
     }
 }

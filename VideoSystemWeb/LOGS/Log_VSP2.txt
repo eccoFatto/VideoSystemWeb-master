@@ -3011,3 +3011,50 @@ L'istruzione è stata interrotta.
 2019-03-31 10:27:49,090 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-31 10:27:57,917 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-03-31 10:27:58,368 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 20:56:08,113 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-01 20:56:10,064 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 20:56:20,781 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 20:56:28,247 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 20:56:56,199 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 20:56:56,778 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:03:11,674 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-01 21:03:13,094 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:03:19,528 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:04:04,043 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:04:09,229 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:05:24,105 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:05:24,673 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:05:38,327 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:06:32,537 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:06:47,302 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - La colonna 'data_protocollo' non appartiene alla tabella .
+   in System.Data.DataRow.GetDataColumn(String columnName)
+   in System.Data.DataRow.get_Item(String columnName)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Protocolli_DAL.getProtocolliByCodLavIdTipoProtocollo(String codiceLavorazione, Int32 IdTipoProtocollo, Esito& esito, Boolean soloAttivi) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Protocolli_DAL.cs:riga 113
+2019-04-01 21:13:12,136 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:17:19,977 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-01 21:17:21,476 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:17:26,585 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:17:33,606 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:17:50,533 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - Impossibile eseguire il cast da DBNull.Value al tipo 'System.DateTime'. Utilizzare un tipo nullable.
+   in System.Data.DataRowExtensions.UnboxT`1.ValueField(Object value)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Protocolli_DAL.getProtocolliByCodLavIdTipoProtocollo(String codiceLavorazione, Int32 IdTipoProtocollo, Esito& esito, Boolean soloAttivi) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Protocolli_DAL.cs:riga 113
+2019-04-01 21:19:47,778 [18] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-01 21:19:49,208 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:19:54,403 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:20:04,004 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - Impossibile eseguire il cast da DBNull.Value al tipo 'System.DateTime'. Utilizzare un tipo nullable.
+   in System.Data.DataRowExtensions.UnboxT`1.ValueField(Object value)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Protocolli_DAL.getProtocolliByCodLavIdTipoProtocollo(String codiceLavorazione, Int32 IdTipoProtocollo, Esito& esito, Boolean soloAttivi) in d:\Profiles\nfoti\source\repos\VideoSystemWeb-master\VideoSystemWeb\DAL\Protocolli_DAL.cs:riga 113
+2019-04-01 21:23:04,652 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-01 21:23:07,589 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:23:14,986 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:25:45,142 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-01 21:25:46,775 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:25:51,400 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:26:00,948 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:26:01,467 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:26:13,003 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:26:57,388 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-01 21:27:20,767 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

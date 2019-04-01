@@ -22,33 +22,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Panel panelOfferta;
         
         /// <summary>
-        /// Controllo panelGruppi.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panelGruppi;
-        
-        /// <summary>
-        /// Controllo gvGruppi.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvGruppi;
-        
-        /// <summary>
-        /// Controllo txt_FiltroGruppi.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_FiltroGruppi;
-        
-        /// <summary>
         /// Controllo panelArticoli.
         /// </summary>
         /// <remarks>
@@ -110,6 +83,51 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_PercRicavo;
+        
+        /// <summary>
+        /// Controllo btnEliminaArticoli.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminaArticoli;
+        
+        /// <summary>
+        /// Controllo btnRecuperaOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRecuperaOfferta;
+        
+        /// <summary>
+        /// Controllo panelGruppi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelGruppi;
+        
+        /// <summary>
+        /// Controllo gvGruppi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvGruppi;
+        
+        /// <summary>
+        /// Controllo txt_FiltroGruppi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_FiltroGruppi;
         
         /// <summary>
         /// Controllo panelModificaArticolo.
@@ -209,23 +227,5 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnOK_recuperaOfferta;
-        
-        /// <summary>
-        /// Controllo btnEliminaArticoli.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminaArticoli;
-        
-        /// <summary>
-        /// Controllo btnRecuperaOfferta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRecuperaOfferta;
     }
 }

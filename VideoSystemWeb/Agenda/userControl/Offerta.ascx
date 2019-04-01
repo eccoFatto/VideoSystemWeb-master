@@ -42,27 +42,7 @@
     <div class="w3-container w3-center w3-xlarge">OFFERTA</div>
     <br />
     <div class="w3-row-padding" style="font-size: small;">
-        <div class="w3-col">
 
-            <asp:Panel runat="server" ID="panelGruppi" CssClass="round" Style="height: 150px; position: relative; background-color: white; overflow: auto;">
-                <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Articoli e Articoli composti</p>
-                <asp:GridView ID="gvGruppi" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvGruppi_RowCommand" DataMember="ID">
-                    <Columns>
-                        <asp:BoundField DataField="ID" HeaderText="ID" />
-                        <asp:BoundField DataField="nome" HeaderText="Nome" />
-                        <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
-                        <asp:TemplateField HeaderText="Seleziona">
-                            <ItemTemplate>
-                                <asp:ImageButton ID="imgOk" runat="server" ImageUrl="/Images/add.png" ToolTip="Aggiungi" CommandName="aggiungi" CommandArgument='<%# Eval("ID") %>' />
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
-            </asp:Panel>
-        </div>
-        <div class="w3-col">
-            <asp:TextBox ID="txt_FiltroGruppi" runat="server" CssClass="w3-round" placeholder="Cerca.." Style="width: 100%; padding: 5px; margin-top: 10px;margin-bottom:20px;"></asp:TextBox>
-        </div>
         <div class="w3-col">
             <asp:Panel runat="server" ID="panelArticoli" CssClass="round" Style="height: 150px; position: relative; background-color: white; overflow: auto;">
                 <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Articoli selezionati</p>
@@ -110,6 +90,34 @@
 
     </div>
     <br />
+
+    <div style="width: 99%; text-align: center;">
+        <asp:Button ID="btnEliminaArticoli" runat="server" Text="Elimina tutti gli articoli" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnEliminaArticoli_Click" Style="font-size: smaller; padding: 4px 8px" OnClientClick="return confermaEliminazioneTuttiArticoli();" />
+        <asp:Button ID="btnRecuperaOfferta" runat="server" Text="Recupera offerta" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRecuperaOfferta_Click" Style="font-size: smaller; padding: 4px 8px" />
+    </div>
+     <br /> <br />
+
+    <div class="w3-col">
+        <asp:Panel runat="server" ID="panelGruppi" CssClass="round" Style="height: 150px; position: relative; background-color: white; overflow: auto;">
+            <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Articoli e Articoli composti</p>
+            <asp:GridView ID="gvGruppi" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvGruppi_RowCommand" DataMember="ID">
+                <Columns>
+                    <asp:BoundField DataField="ID" HeaderText="ID" />
+                    <asp:BoundField DataField="nome" HeaderText="Descrizione" />
+                    <asp:BoundField DataField="Descrizione" HeaderText="Descrizione lunga" />
+                    <asp:TemplateField HeaderText="Seleziona">
+                        <ItemTemplate>
+                            <asp:ImageButton ID="imgOk" runat="server" ImageUrl="/Images/add.png" ToolTip="Aggiungi" CommandName="aggiungi" CommandArgument='<%# Eval("ID") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </asp:Panel>
+    </div>
+    <div class="w3-col">
+        <asp:TextBox ID="txt_FiltroGruppi" runat="server" CssClass="w3-round" placeholder="Cerca.." Style="width: 100%; padding: 5px; margin-top: 10px; margin-bottom: 20px;"></asp:TextBox>
+    </div>
+
 
 
     <div id="panelModificaArticolo" class="w3-modal " style="position: fixed;" runat="server">
@@ -206,9 +214,6 @@
         </div>
     </div>
 
-    <div style="width: 99%; text-align: center;">
-        <asp:Button ID="btnEliminaArticoli" runat="server" Text="Elimina tutti gli articoli" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnEliminaArticoli_Click" Style="font-size: smaller; padding: 4px 8px" OnClientClick="return confermaEliminazioneTuttiArticoli();" />
-        <asp:Button ID="btnRecuperaOfferta" runat="server" Text="Recupera offerta" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRecuperaOfferta_Click" Style="font-size: smaller; padding: 4px 8px" />
-    </div>
+    
 
 </asp:Panel>

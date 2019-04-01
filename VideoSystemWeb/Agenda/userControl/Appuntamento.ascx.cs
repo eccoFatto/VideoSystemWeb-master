@@ -202,19 +202,6 @@ namespace VideoSystemWeb.Agenda.userControl
             NascondiErroriValidazione();
         }
 
-        //public void SetStato(int stato)
-        //{
-        //    Esito esito = new Esito();
-        //    hf_IdStato.Value = stato.ToString();
-
-        //    if (stato == Stato.Instance.STATO_OFFERTA)
-        //    {
-        //        txt_CodiceLavoro.Text = Protocolli_BLL.Instance.getCodLavFormattato();
-        //    }
-
-        //    txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, stato, ref esito).nome;
-        //}
-
         public void AbilitaComponentiPopup(int statoEvento)
         {
             panelAppuntamenti.Enabled = basePage.AbilitazioneInScrittura();
@@ -247,10 +234,10 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_Clienti.Enabled = false;
                     txt_DurataViaggioAndata.Enabled = true;
                     txt_DurataViaggioRitorno.Enabled = true;
-                    txt_Produzione.Enabled = false;
+                    txt_Produzione.Enabled = true;
                     txt_Lavorazione.Enabled = false;
                     txt_Indirizzo.Enabled = true;
-                    txt_Luogo.Enabled = false;
+                    txt_Luogo.Enabled = true;
                     tb_Nota.Enabled = true;
                     check_tender.Enabled = true;
 

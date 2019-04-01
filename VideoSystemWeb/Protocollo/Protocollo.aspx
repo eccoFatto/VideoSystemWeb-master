@@ -46,9 +46,42 @@
         $("#<%=tbCodiceLavoro.ClientID%>").val('');
         $("#<%=tbRagioneSociale.ClientID%>").val('');
         $("#<%=tbNumeroProtocollo.ClientID%>").val('');
+        $("#<%=tbDataProtocollo.ClientID%>").val('');
         $("#<%=tbProtocolloRiferimento.ClientID%>").val('');
         $("#<%=ddlTipoProtocollo.ClientID%>").val('');
-    }
+        }
+
+        function uploadError(sender,args)
+        {
+            //alert('errore ');
+            $('.loader').hide();
+            document.getElementById('<%=lblStatus.ClientID%>').innerText = 'Errore sul file ' + args.get_fileName() + ' - ' +  args.get_errorMessage();
+        }
+
+        function StartUpload(sender,args)
+        {
+            //alert('start upload');
+            $('.loader').show();
+            document.getElementById('<%=lblStatus.ClientID%>').innerText = 'Caricamento Iniziato.';
+        }
+
+        function UploadComplete(sender,args)
+        {
+            $('.loader').hide();
+            alert('Caricamento Completato');
+            var filename = args.get_fileName();
+            var contentType = args.get_contentType();
+            var text = "La dimensione del file " + filename + " è " + args.get_length() + " bytes";
+            if (contentType.length > 0)
+            {
+                text += " e la tipologia è '" + contentType + "'.";
+            }
+            document.getElementById('<%=lblStatus.ClientID%>').innerText = text;
+        }
+
+
+
+
 </script>
 <Label><asp:Label ID="lblProtocolli" runat="server" Text="PROTOCOLLI" ForeColor="Teal"></asp:Label></Label>
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
@@ -74,7 +107,7 @@
         </div>
         
           <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-quarter">
+            <div class="w3-half">
                 <label>Cliente</label>
                 <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
@@ -83,7 +116,7 @@
                 <asp:TextBox ID="tbDataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
             </div>
             <div class="w3-quarter">
-                <label></label>
+                <label>&nbsp;</label>
                 <table style="width:100%;">
                     <tr>
                         <td style="width:40%;">                    
@@ -106,12 +139,6 @@
         <div class="round">
             <asp:GridView ID="gv_protocolli" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" OnRowCommand="gv_protocolli_RowCommand" PageSize="20">
                 <Columns>
-<%--                    <asp:TemplateField HeaderText="Seleziona">
-                        <ItemTemplate>
-                            <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" />
-                            <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" />
-                        </ItemTemplate>
-                    </asp:TemplateField> --%>   
                     <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
                         <ItemTemplate>
                             <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false"  Text="Vis." ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza Protocollo" ImageAlign="AbsMiddle" Height="30px" />
@@ -121,9 +148,10 @@
                 </Columns>
             </asp:GridView>
         </div>
+        
     </ContentTemplate>
     <Triggers>
-        
+        <asp:AsyncPostBackTrigger ControlID="btnRicercaProtocollo" EventName="Click" />
     </Triggers>
 </asp:UpdatePanel>
 
@@ -134,7 +162,7 @@
 <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
 <asp:HiddenField ID="hf_tabChiamata" runat="server" EnableViewState="true" Value="Protocollo" />
 
-<asp:UpdatePanel ID="upColl" runat="server" UpdateMode="Conditional">
+<asp:UpdatePanel ID="upColl" runat="server">
     <ContentTemplate>
         <asp:Panel  runat="server" ID="pnlContainer" visible="false">
             <div class="modalBackground"></div>
@@ -161,7 +189,17 @@
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-quarter">
                                         <label>Codice Lavorazione</label>
-                                        <asp:TextBox ID="tbMod_CodiceLavoro" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        <div class="w3-row-padding w3-center w3-text-center">
+                                            <div class="w3-half">
+                                                <asp:TextBox ID="tbMod_CodiceLavoro" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                            </div>
+                                            <div class="w3-quarter">
+                                                <asp:ImageButton ID="imgbtnCreateNewCodLav" ImageUrl="~/Images/detail-icon.png" runat="server" class="w3-input  w3-round " Text="+" ToolTip="Crea Nuovo Codice Lavorazione" OnClick="imgbtnCreateNewCodLav_Click" />
+                                            </div>
+                                            <div class="w3-quarter">
+                                                <asp:ImageButton ID="imgbtnSelectCodLav" ImageUrl="~/Images/Martz90-Circle-Camera.ico" runat="server" class="w3-input w3-round " Text="->" ToolTip="Cerca Codice Lavorazione" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Numero Protocollo</label>
@@ -169,42 +207,59 @@
                                         <asp:TextBox ID ="tbIdProtocolloDaModificare"  runat="server" Visible ="false"></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
+                                        <label>Data Prot</label>
+                                        <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA" Text="" ></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
                                         <label>Prot. Riferimento</label>
                                         <asp:TextBox ID="tbMod_ProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
-                                    <div class="w3-quarter">
+                                </div>
+                                <div class="w3-row-padding w3-center w3-text-center">
+                                    <div class="w3-half">
                                         <label>Cliente</label>
                                         <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
-                                </div>
-                                <div class="w3-row-padding w3-center w3-text-center">
-                                    <div class="w3-twothird">
+                                    <div class="w3-half">
                                         <label>Descrizione</label>
                                         <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
-                                    <div class="w3-third">
+                                </div>
+                                <div class="w3-row-padding w3-center w3-text-center">
+                                    <div class="w3-half">
                                         <label>Tipo</label>
                                         <asp:DropDownList ID="cmbMod_Tipologia" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
                                         </asp:DropDownList>
                                     </div>
-                                </div>
-                                <div class="w3-row-padding w3-center w3-text-center">
-                                    <div class="w3-third">
+                                    <div class="w3-half">
                                         <label>Nome File</label>
                                         <asp:TextBox ID="tbMod_NomeFile" runat="server" MaxLength="100" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
-                                    <div class="w3-third" >
-                                        <label>Seleziona File</label>
-                                        <asp:FileUpload ID="fuFileProt" runat="server" Font-Size="X-Small" class="w3-input w3-border" style="vertical-align:central !important;"/>
-                                    </div>
-                                    <div class="w3-third" >
-                                        <label>&nbsp;</label>
-                                        <asp:Button ID="uploadButton" runat="server" class="w3-input w3-border w3-round w3-centered" Width="50%" OnClick="uploadButton_Click" Text="Carica File" />
-                                    </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
-                                    <asp:Label ID="lblImage" runat="server" Font-Size="Medium"></asp:Label>
+                                    <div class="w3-threequarter">
+                                        <label>Seleziona File</label>
+                                        <ajaxToolkit:AsyncFileUpload ID="fuFileProt" 
+                                        runat="server" 
+                                        OnClientUploadError="uploadError" 
+                                        OnClientUploadStarted="StartUpload" 
+                                        OnClientUploadComplete="UploadComplete" 
+                                        UploaderStyle="Traditional" 
+                                        onuploadedcomplete="AsyncFileUpload1_UploadedComplete" 
+                                        OnUploadedFileError="AsyncFileUpload1_UploadedFileError"
+                                        clientIdMode="AutoID"
+                                        Width="600px"
+                                        class="w3-input w3-border w3-round"
+                                        />
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>&nbsp;</label>
+                                        <asp:Button ID="btnAnnullaCaricamento" runat="server" class="w3-input w3-border w3-round w3-red" Width="50px" Text="&times;" ToolTip="Annulla Caricamento File" OnClick="btnAnnullaCaricamento_Click" />
+                                    </div>
                                 </div>
+                                <br />
+                                <asp:Label ID="lblStatus" runat="server" Style="font-family: Arial; font-size: small;"></asp:Label>
+                                <br />
                                 <div style="text-align: center;">
                                     <asp:Button ID="btnGestisciProtocollo" runat="server" Text="Gestisci Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnGestisciProtocollo_Click" />
                                     <asp:Button ID="btnInserisciProtocollo" runat="server" Text="Inserisci Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciProtocollo_Click" OnClientClick="return confirm('Confermi inserimento Protocollo?')" />
@@ -212,11 +267,21 @@
                                     <asp:Button ID="btnEliminaProtocollo" runat="server" Text="Elimina Protocollo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaProtocollo_Click" OnClientClick="return confirm('Confermi eliminazione Protocollo?')" Visible="false" />
                                     <asp:Button ID="btnAnnullaProtocollo" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnullaProtocollo_Click" />
                                 </div>
+                                <p>
+                                </p>
                             </p>
                         </div>
                     </div>
             </asp:Panel>
         </asp:Panel>
     </ContentTemplate>
+    <Triggers>
+        <%--<asp:PostBackTrigger ControlID="AsyncFileUpload1" />--%>
+        <%--<asp:AsyncPostBackTrigger ControlID="AsyncFileUpload1" />--%>
+        <asp:AsyncPostBackTrigger ControlID="btnInserisciProtocollo" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnModificaProtocollo" EventName="Click" />
+        <asp:AsyncPostBackTrigger ControlID="btnEliminaProtocollo" EventName="Click" />
+    </Triggers>
+
 </asp:UpdatePanel>
 </asp:Content>

@@ -202,6 +202,24 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbMod_CodiceLavoro;
         
         /// <summary>
+        /// Controllo imgbtnCreateNewCodLav.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnCreateNewCodLav;
+        
+        /// <summary>
+        /// Controllo imgbtnSelectCodLav.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectCodLav;
+        
+        /// <summary>
         /// Controllo tbMod_NumeroProtocollo.
         /// </summary>
         /// <remarks>
@@ -218,6 +236,15 @@ namespace VideoSystemWeb.Protocollo {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbIdProtocolloDaModificare;
+        
+        /// <summary>
+        /// Controllo tbMod_DataProtocollo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_DataProtocollo;
         
         /// <summary>
         /// Controllo tbMod_ProtocolloRiferimento.
@@ -271,25 +298,25 @@ namespace VideoSystemWeb.Protocollo {
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fuFileProt;
+        protected global::AjaxControlToolkit.AsyncFileUpload fuFileProt;
         
         /// <summary>
-        /// Controllo uploadButton.
+        /// Controllo btnAnnullaCaricamento.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button uploadButton;
+        protected global::System.Web.UI.WebControls.Button btnAnnullaCaricamento;
         
         /// <summary>
-        /// Controllo lblImage.
+        /// Controllo lblStatus.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblImage;
+        protected global::System.Web.UI.WebControls.Label lblStatus;
         
         /// <summary>
         /// Controllo btnGestisciProtocollo.

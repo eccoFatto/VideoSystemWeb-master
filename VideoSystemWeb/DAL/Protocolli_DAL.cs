@@ -156,7 +156,12 @@ namespace VideoSystemWeb.DAL
                                     protocollo.Id = dt.Rows[0].Field<int>("id");
                                     protocollo.Codice_lavoro = dt.Rows[0].Field<string>("codice_lavoro");
                                     protocollo.Numero_protocollo = dt.Rows[0].Field<string>("numero_protocollo");
-                                    protocollo.Data_protocollo = dt.Rows[0].Field<DateTime>("data_protocollo");
+                                    //protocollo.Data_protocollo = dt.Rows[0].Field<DateTime>("data_protocollo");
+                                    if (!DBNull.Value.Equals(dt.Rows[0]["data_protocollo"]))
+                                    {
+                                        protocollo.Data_protocollo = dt.Rows[0].Field<DateTime>("data_protocollo");
+                                    }
+
                                     protocollo.Cliente = dt.Rows[0].Field<string>("cliente");
                                     protocollo.Id_tipo_protocollo = dt.Rows[0].Field<int>("id_tipo_protocollo");
                                     protocollo.Protocollo_riferimento = dt.Rows[0].Field<string>("protocollo_riferimento");

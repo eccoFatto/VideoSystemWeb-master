@@ -37,8 +37,11 @@
     function chiudiPopup() {
         // QUANDO APRO IL POPUP RIPARTE SEMPRE DA PROTOCOLLO E NON DALL'ULTIMA TAB APERTA
         $("#<%=hf_tabChiamata.ClientID%>").val('Protocollo');
-        var pannelloPopup = document.getElementById('<%=pnlContainer.ClientID%>');
-        pannelloPopup.style.display = "none";
+        //var pannelloPopup = document.getElementById('<%=pnlContainer.ClientID%>');
+        //pannelloPopup.style.display = "none";
+        $("#<%=hf_idProt.ClientID%>").val('');
+        $("#<%=btnChiudiPopupServer.ClientID%>").click();
+
     }
 
     // AZZERO TUTTI I CAMPI RICERCA
@@ -68,7 +71,7 @@
         function UploadComplete(sender,args)
         {
             $('.loader').hide();
-            alert('Caricamento Completato');
+            //alert('Caricamento Completato');
             var filename = args.get_fileName();
             var contentType = args.get_contentType();
             var text = "La dimensione del file " + filename + " è " + args.get_length() + " bytes";
@@ -76,7 +79,8 @@
             {
                 text += " e la tipologia è '" + contentType + "'.";
             }
-            document.getElementById('<%=lblStatus.ClientID%>').innerText = text;
+            document.getElementById('<%=lblStatus.ClientID%>').innerText = '';
+            document.getElementById('<%=tbMod_NomeFile.ClientID%>').innerText = filename;
         }
 
 
@@ -137,14 +141,18 @@
         </div>   
 
         <div class="round">
-            <asp:GridView ID="gv_protocolli" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" OnRowCommand="gv_protocolli_RowCommand" PageSize="20">
+            <asp:GridView ID="gv_protocolli" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" PageSize="20">
                 <Columns>
                     <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
                         <ItemTemplate>
-                            <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false"  Text="Vis." ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza Protocollo" ImageAlign="AbsMiddle" Height="30px" />
+                            <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false"  Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza Protocollo" ImageAlign="AbsMiddle" Height="30px" />
                         </ItemTemplate>
-                        <HeaderStyle Width="30px" />
-                    </asp:TemplateField>                       
+                    </asp:TemplateField>
+                    <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
+                        <ItemTemplate>
+                            <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false"  Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Allegato" ImageAlign="AbsMiddle" Height="30px" />
+                        </ItemTemplate>
+                    </asp:TemplateField>                                
                 </Columns>
             </asp:GridView>
         </div>
@@ -157,6 +165,7 @@
 
 <asp:Button runat="server" ID="btnEditProtocollo" Style="display: none" OnClick="btnEditProtocollo_Click"/>
 <asp:Button runat="server" ID="btnInsProtocollo" Style="display: none" OnClick="btnInsProtocollo_Click"/>
+<asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopup_Click"/>
 
 <asp:HiddenField ID="hf_idProt" runat="server" EnableViewState="true" />
 <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
@@ -238,7 +247,7 @@
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-threequarter">
-                                        <label>Seleziona File</label>
+                                        <label>&nbsp;</label>
                                         <ajaxToolkit:AsyncFileUpload ID="fuFileProt" 
                                         runat="server" 
                                         OnClientUploadError="uploadError" 
@@ -276,8 +285,6 @@
         </asp:Panel>
     </ContentTemplate>
     <Triggers>
-        <%--<asp:PostBackTrigger ControlID="AsyncFileUpload1" />--%>
-        <%--<asp:AsyncPostBackTrigger ControlID="AsyncFileUpload1" />--%>
         <asp:AsyncPostBackTrigger ControlID="btnInserisciProtocollo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnModificaProtocollo" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnEliminaProtocollo" EventName="Click" />

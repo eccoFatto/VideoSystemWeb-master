@@ -139,6 +139,15 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.Button btnInsProtocollo;
         
         /// <summary>
+        /// Controllo btnChiudiPopupServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnChiudiPopupServer;
+        
+        /// <summary>
         /// Controllo hf_idProt.
         /// </summary>
         /// <remarks>

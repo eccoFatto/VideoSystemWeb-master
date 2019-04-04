@@ -18,13 +18,17 @@ namespace VideoSystemWeb.Protocollo
         BasePage basePage = new BasePage();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            CheckIsMobile();
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            //ScriptManager scrManager = (ScriptManager)this.Master.FindControl("ScriptManager1");
-            //scrManager.RegisterPostBackControl(fuFileProt);
 
             if (!Page.IsPostBack)
             {
+                Session["NOME_FILE"] = "";
                 BasePage p = new BasePage();
                 Esito esito = p.CaricaListeTipologiche();
 
@@ -50,7 +54,7 @@ namespace VideoSystemWeb.Protocollo
                     }
 
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                    //abilitaBottoni(p.AbilitazioneInScrittura());
+                    abilitaBottoni(p.AbilitazioneInScrittura());
 
 
                 }
@@ -62,20 +66,19 @@ namespace VideoSystemWeb.Protocollo
                 }
 
             }
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioProtocollo('" + hf_tabChiamata.Value + "');", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
-
         }
 
         protected void btnEditProtocollo_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(hf_idProt.Value) || (!string.IsNullOrEmpty((string)ViewState["idProtocollo"])))
             {
+                Session["NOME_FILE"] = "";
                 if (!string.IsNullOrEmpty(hf_idProt.Value)) ViewState["idProtocollo"] = hf_idProt.Value;
                 editProtocollo();
                 AttivaDisattivaModificaProtocollo(true);
                 gestisciPulsantiProtocollo("VISUALIZZAZIONE");
-                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioProtocollo('Protocollo');", addScriptTags: true);
+                //ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioProtocollo('Protocollo');", addScriptTags: true);
                 pnlContainer.Visible = true;
             }
 
@@ -91,8 +94,14 @@ namespace VideoSystemWeb.Protocollo
                     btnModificaProtocollo.Visible = false;
                     btnEliminaProtocollo.Visible = false;
                     btnAnnullaProtocollo.Visible = false;
-                    btnGestisciProtocollo.Visible = true;
-
+                    if (!basePage.AbilitazioneInScrittura())
+                    {
+                        btnGestisciProtocollo.Visible = false;
+                    }
+                    else
+                    {
+                        btnGestisciProtocollo.Visible = true;
+                    }
                     imgbtnCreateNewCodLav.Attributes.Add("disabled","");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
                     btnAnnullaCaricamento.Attributes.Add("disabled", "");
@@ -156,6 +165,7 @@ namespace VideoSystemWeb.Protocollo
         protected void btnInsProtocollo_Click(object sender, EventArgs e)
         {
             // VISUALIZZO FORM INSERIMENTO NUOVO PROTOCOLLO
+            Session["NOME_FILE"] = "";
             ViewState["idProtocollo"] = "";
             editProtocolloVuoto();
             AttivaDisattivaModificaProtocollo(false);
@@ -166,7 +176,35 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnInserisciProtocollo_Click(object sender, EventArgs e)
         {
+            // INSERISCO PROTOCOLLO
+            Esito esito = new Esito();
+            Protocolli protocollo = CreaOggettoProtocollo(ref esito);
 
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                basePage.ShowError("Controllare i campi evidenziati");
+            }
+            else
+            {
+                NascondiErroriValidazione();
+
+                int iRet = Protocolli_BLL.Instance.CreaProtocollo(protocollo, ref esito);
+                if (iRet > 0)
+                {
+                    // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO
+                    hf_idProt.Value = iRet.ToString();
+                    ViewState["idProtocollo"] = hf_idProt.Value;
+                    hf_tipoOperazione.Value = "VISUALIZZAZIONE";
+                }
+
+                if (esito.codice != Esito.ESITO_OK)
+                {
+                    log.Error(esito.descrizione);
+                    basePage.ShowError(esito.descrizione);
+                }
+                basePage.ShowSuccess("Inserito Protocollo n. " + protocollo.Numero_protocollo);
+                btnEditProtocollo_Click(null, null);
+            }
         }
 
         protected void btnModificaProtocollo_Click(object sender, EventArgs e)
@@ -250,21 +288,23 @@ namespace VideoSystemWeb.Protocollo
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 
+                // PRENDO IL PATH DELL'ALLEGATO SE C'E'
+                string pathDocumento = e.Row.Cells[9].Text.Trim();
+                ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
+                if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
+                {
+                    string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "") + pathDocumento;
+                    myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
+                }
+                else
+                {
+                    myButton.Attributes.Add("disabled", "true");
+                }
 
-                // PRENDO L'ID DEL COLLABORATORE SELEZIONATO
-
-                string idProtocolloSelezionato = e.Row.Cells[1].Text;
-
-                //foreach (TableCell item in e.Row.Cells)
-                //{
-                //    if (!string.IsNullOrEmpty(item.ID) && item.ID.Equals("imgEdit"))
-                //    {
-                //        item.Attributes["onclick"] = "mostraProtocollo('" + idProtocolloSelezionato + "');";
-                //    }
-                //}
-
-                ImageButton myButton = e.Row.FindControl("imgEdit") as ImageButton;
-                myButton.Attributes.Add("onclick", "mostraProtocollo('" + idProtocolloSelezionato + "');");
+                // PRENDO L'ID DEL PROTOCOLLO SELEZIONATO
+                string idProtocolloSelezionato = e.Row.Cells[2].Text;
+                ImageButton myButtonEdit = e.Row.FindControl("imgEdit") as ImageButton;
+                myButtonEdit.Attributes.Add("onclick", "mostraProtocollo('" + idProtocolloSelezionato + "');");
             }
 
         }
@@ -298,7 +338,9 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Descrizione.ReadOnly = attivaModifica;
-            
+            tbMod_NomeFile.ReadOnly = true;
+            //tbMod_NomeFile.ReadOnly = attivaModifica;
+
             if (attivaModifica)
             {
                 cmbMod_Tipologia.Attributes.Add("disabled", "");
@@ -321,6 +363,7 @@ namespace VideoSystemWeb.Protocollo
 
             if (!string.IsNullOrEmpty(idProtocollo))
             {
+                Session["NOME_FILE"] = "";
                 Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt16(idProtocollo));
                 if (esito.codice == 0)
                 {
@@ -337,6 +380,7 @@ namespace VideoSystemWeb.Protocollo
                     tbMod_ProtocolloRiferimento.Text = protocollo.Protocollo_riferimento;
                     tbMod_Cliente.Text = protocollo.Cliente;
                     tbMod_NomeFile.Text = protocollo.PathDocumento;
+                    Session["NOME_FILE"] = protocollo.PathDocumento;
                     tbMod_Descrizione.Text = protocollo.Descrizione;
 
                     //TIPI PROTOCOLLO
@@ -361,24 +405,6 @@ namespace VideoSystemWeb.Protocollo
 
         }
 
-        protected void gv_protocolli_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            switch (e.CommandName)
-            {
-                case "modifica":
-
-                    break;
-                default:
-                    break;
-            }
-
-        }
-
-        protected void uploadButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void btnGestisciProtocollo_Click(object sender, EventArgs e)
         {
             AttivaDisattivaModificaProtocollo(false);
@@ -398,8 +424,13 @@ namespace VideoSystemWeb.Protocollo
             protocollo.Id = Convert.ToInt16(ViewState["idProtocollo"].ToString());
 
             protocollo.Id_tipo_protocollo = Convert.ToInt32(cmbMod_Tipologia.SelectedValue);
+            if (string.IsNullOrEmpty(tbMod_NumeroProtocollo.Text.Trim()))
+            {
+                tbMod_NumeroProtocollo.Text = Protocolli_BLL.Instance.getNumeroProtocollo();
+            }
             protocollo.Numero_protocollo = BasePage.ValidaCampo(tbMod_NumeroProtocollo, "", true, ref esito);
-            protocollo.PathDocumento = "";
+            //protocollo.PathDocumento = BasePage.ValidaCampo(tbMod_NomeFile, "", false, ref esito); 
+            protocollo.PathDocumento = (string)Session["NOME_FILE"];
             protocollo.Protocollo_riferimento = BasePage.ValidaCampo(tbMod_ProtocolloRiferimento, "", false, ref esito);
             protocollo.Cliente = BasePage.ValidaCampo(tbMod_Cliente, "", false, ref esito);
             protocollo.Codice_lavoro = BasePage.ValidaCampo(tbMod_CodiceLavoro, "", false, ref esito);
@@ -416,19 +447,43 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnAnnullaCaricamento_Click(object sender, EventArgs e)
         {
-            //    if (fuFileProt.HasFile)
-            //    {
-            //        fuFileProt.Dispose();
-            //    }
+
+            //fuFileProt.Dispose();
+            if (!string.IsNullOrEmpty(tbMod_NomeFile.Text.Trim()))
+            {
+                //SE ESISTE IL FILE LO CANCELLO
+                try
+                {
+                    File.Delete(tbMod_NomeFile.Text.Trim());
+                    tbMod_NomeFile.Text = "";
+                    Session["NOME_FILE"] = "";
+                }
+                catch (Exception)
+                {
+                }
+                
+            }
         }
 
         protected void AsyncFileUpload1_UploadedComplete (object sender, AjaxControlToolkit.AsyncFileUploadEventArgs e)
         {
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(5000);
             if (fuFileProt.HasFile)
             {
-                string strPath = MapPath("~/DOCUMENTI/PROTOCOLLI/") + Path.GetFileName(e.filename);
+                string nomeFileToSave = DateTime.Now.Ticks.ToString() + "_" + Path.GetFileName(e.filename);
+                string strPath = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFileToSave;
                 fuFileProt.SaveAs(strPath);
+                if (File.Exists(strPath))
+                {
+                    Session["NOME_FILE"] = nomeFileToSave;
+                    //tbMod_NomeFile.Text = nomeFileToSave;
+                }
+                else
+                {
+                    Session["NOME_FILE"] = "";
+                    tbMod_NomeFile.Text = "";
+                    basePage.ShowWarning("Attenzione, il file: " + strPath + " non è stato creato!");
+                }
             }
         }
 
@@ -437,5 +492,49 @@ namespace VideoSystemWeb.Protocollo
             lblStatus.Text = e.statusMessage;
             lblStatus.Visible = true;
         }
+
+        protected void btnChiudiPopup_Click(object sender, EventArgs e)
+        {
+            pnlContainer.Visible = false;
+        }
+
+        private void NascondiErroriValidazione()
+        {
+            tbMod_Cliente.CssClass = tbMod_Cliente.CssClass.Replace("erroreValidazione", "");
+            tbMod_CodiceLavoro.CssClass = tbMod_CodiceLavoro.CssClass.Replace("erroreValidazione", "");
+            tbMod_DataProtocollo.CssClass = tbMod_DataProtocollo.CssClass.Replace("erroreValidazione", "");
+            tbMod_Descrizione.CssClass = tbMod_Descrizione.CssClass.Replace("erroreValidazione", "");
+            tbMod_NomeFile.CssClass = tbMod_NomeFile.CssClass.Replace("erroreValidazione", "");
+            tbMod_NumeroProtocollo.CssClass = tbMod_NumeroProtocollo.CssClass.Replace("erroreValidazione", "");
+            tbMod_ProtocolloRiferimento.CssClass = tbMod_ProtocolloRiferimento.CssClass.Replace("erroreValidazione", "");
+        }
+
+        private void abilitaBottoni(bool utenteAbilitatoInScrittura)
+        {
+            //annullaModifiche();
+            if (!utenteAbilitatoInScrittura)
+            {
+                divBtnInserisciProtocollo.Visible = false;
+                btnModificaProtocollo.Visible = false;
+                btnAnnullaProtocollo.Visible = false;
+                btnAnnullaCaricamento.Visible = false;
+                btnEliminaProtocollo.Visible = false;
+                btnGestisciProtocollo.Visible = false;
+                fuFileProt.Visible = false;
+
+            }
+            else
+            {
+                divBtnInserisciProtocollo.Visible = true;
+                btnModificaProtocollo.Visible = true;
+                btnAnnullaProtocollo.Visible = false;
+                btnAnnullaCaricamento.Visible = true;
+                btnEliminaProtocollo.Visible = false;
+                btnGestisciProtocollo.Visible = true;
+                fuFileProt.Visible = true;
+
+            }
+        }
+
     }
 }

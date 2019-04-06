@@ -31,15 +31,6 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
         
         /// <summary>
-        /// Controllo tbDescrizione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbDescrizione;
-        
-        /// <summary>
         /// Controllo tbDescrizioneBreve.
         /// </summary>
         /// <remarks>
@@ -49,13 +40,40 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbDescrizioneBreve;
         
         /// <summary>
-        /// Controllo tbIva.
+        /// Controllo tbDescrizione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbIva;
+        protected global::System.Web.UI.WebControls.TextBox tbDescrizione;
+        
+        /// <summary>
+        /// Controllo ddlGenere.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlGenere;
+        
+        /// <summary>
+        /// Controllo ddlGruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlGruppo;
+        
+        /// <summary>
+        /// Controllo ddlSottoGruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSottoGruppo;
         
         /// <summary>
         /// Controllo tbPrezzo.
@@ -202,15 +220,6 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
         
         /// <summary>
-        /// Controllo tbMod_Descrizione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Descrizione;
-        
-        /// <summary>
         /// Controllo tbMod_DescrizioneBreve.
         /// </summary>
         /// <remarks>
@@ -218,6 +227,15 @@ namespace VideoSystemWeb.Articoli.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_DescrizioneBreve;
+        
+        /// <summary>
+        /// Controllo tbMod_Descrizione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Descrizione;
         
         /// <summary>
         /// Controllo tbMod_Prezzo.

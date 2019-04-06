@@ -106,9 +106,9 @@ namespace VideoSystemWeb.Protocollo
                     {
                         btnGestisciProtocollo.Visible = true;
                     }
-                    imgbtnCreateNewCodLav.Attributes.Add("disabled","");
+                    //imgbtnCreateNewCodLav.Attributes.Add("disabled","");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
-                    imbCercaCliente.Attributes.Add("disabled", "");
+                    //imbCercaCliente.Attributes.Add("disabled", "");
                     btnAnnullaCaricamento.Attributes.Add("disabled", "");
                     fuFileProt.Attributes.Add("disabled", "");
 
@@ -120,9 +120,9 @@ namespace VideoSystemWeb.Protocollo
                     btnAnnullaProtocollo.Visible = false;
                     btnGestisciProtocollo.Visible = false;
 
-                    imgbtnCreateNewCodLav.Attributes.Remove("disabled");
+                    //imgbtnCreateNewCodLav.Attributes.Remove("disabled");
                     imgbtnSelectCodLav.Attributes.Remove("disabled");
-                    imbCercaCliente.Attributes.Remove("disabled");
+                    //imbCercaCliente.Attributes.Remove("disabled");
                     btnAnnullaCaricamento.Attributes.Remove("disabled");
                     fuFileProt.Attributes.Remove("disabled");
                     break;
@@ -133,9 +133,9 @@ namespace VideoSystemWeb.Protocollo
                     btnAnnullaProtocollo.Visible = true;
                     btnGestisciProtocollo.Visible = false;
 
-                    imgbtnCreateNewCodLav.Attributes.Remove("disabled");
+                    //imgbtnCreateNewCodLav.Attributes.Remove("disabled");
                     imgbtnSelectCodLav.Attributes.Remove("disabled");
-                    imbCercaCliente.Attributes.Remove("disabled");
+                    //imbCercaCliente.Attributes.Remove("disabled");
                     btnAnnullaCaricamento.Attributes.Remove("disabled");
                     fuFileProt.Attributes.Remove("disabled");
 
@@ -147,9 +147,9 @@ namespace VideoSystemWeb.Protocollo
                     btnAnnullaProtocollo.Visible = false;
                     btnGestisciProtocollo.Visible = true;
 
-                    imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
+                    //imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
-                    imbCercaCliente.Attributes.Add("disabled","");
+                    //imbCercaCliente.Attributes.Add("disabled","");
                     btnAnnullaCaricamento.Attributes.Add("disabled", "");
                     fuFileProt.Attributes.Add("disabled", "");
 
@@ -161,9 +161,9 @@ namespace VideoSystemWeb.Protocollo
                     btnAnnullaProtocollo.Visible = false;
                     btnGestisciProtocollo.Visible = true;
 
-                    imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
+                    //imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
-                    imbCercaCliente.Attributes.Add("disabled","");
+                    //imbCercaCliente.Attributes.Add("disabled","");
                     btnAnnullaCaricamento.Attributes.Add("disabled", "");
                     fuFileProt.Attributes.Add("disabled", "");
                     break;
@@ -280,8 +280,10 @@ namespace VideoSystemWeb.Protocollo
 
             queryRicerca = queryRicerca.Replace("@numeroProtocollo", tbNumeroProtocollo.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@dataProtocollo", tbDataProtocollo.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@dataLavorazione", tbDataLavorazione.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@tipoProtocollo", ddlTipoProtocollo.SelectedValue.ToString().Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@protocolloRiferimento", tbProtocolloRiferimento.Text.Trim().Replace("'","''"));
 
@@ -331,6 +333,8 @@ namespace VideoSystemWeb.Protocollo
             tbMod_NumeroProtocollo.Text = "";
             tbMod_ProtocolloRiferimento.Text = "";
             tbMod_DataProtocollo.Text = "";
+            tbMod_DataLavorazione.Text = "";
+            tbMod_Produzione.Text = "";
             tbMod_Cliente.Text = "";
             tbMod_NomeFile.Text = "";
             tbMod_Descrizione.Text = "";
@@ -344,7 +348,8 @@ namespace VideoSystemWeb.Protocollo
             tbMod_NumeroProtocollo.ReadOnly = true;
             tbMod_ProtocolloRiferimento.ReadOnly = attivaModifica;
             tbMod_DataProtocollo.ReadOnly = true;
-            tbMod_Cliente.ReadOnly = attivaModifica;
+            tbMod_DataLavorazione.ReadOnly = attivaModifica;
+            tbMod_Produzione.ReadOnly = attivaModifica;
             tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Descrizione.ReadOnly = attivaModifica;
             tbMod_NomeFile.ReadOnly = true;
@@ -386,6 +391,12 @@ namespace VideoSystemWeb.Protocollo
                     {
                         tbMod_DataProtocollo.Text = ((DateTime)protocollo.Data_protocollo).ToString("dd/MM/yyyy");
                     }
+                    tbMod_DataLavorazione.Text = "";
+                    if (protocollo.Data_inizio_lavorazione != null)
+                    {
+                        tbMod_DataLavorazione.Text = ((DateTime)protocollo.Data_inizio_lavorazione).ToString("dd/MM/yyyy");
+                    }
+                    tbMod_Produzione.Text = protocollo.Produzione;
                     tbMod_ProtocolloRiferimento.Text = protocollo.Protocollo_riferimento;
                     tbMod_Cliente.Text = protocollo.Cliente;
                     tbMod_NomeFile.Text = protocollo.PathDocumento;
@@ -442,6 +453,8 @@ namespace VideoSystemWeb.Protocollo
             protocollo.PathDocumento = (string)Session["NOME_FILE"];
             protocollo.Protocollo_riferimento = BasePage.ValidaCampo(tbMod_ProtocolloRiferimento, "", false, ref esito);
             protocollo.Cliente = BasePage.ValidaCampo(tbMod_Cliente, "", false, ref esito);
+            protocollo.Produzione = BasePage.ValidaCampo(tbMod_Produzione, "", false, ref esito);
+            protocollo.Data_inizio_lavorazione = BasePage.ValidaCampo(tbMod_DataLavorazione, DateTime.Now, true, ref esito);
             protocollo.Codice_lavoro = BasePage.ValidaCampo(tbMod_CodiceLavoro, "", false, ref esito);
             protocollo.Descrizione = BasePage.ValidaCampo(tbMod_Descrizione,"", false, ref esito);
             protocollo.Attivo = true;
@@ -512,6 +525,8 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Cliente.CssClass = tbMod_Cliente.CssClass.Replace("erroreValidazione", "");
             tbMod_CodiceLavoro.CssClass = tbMod_CodiceLavoro.CssClass.Replace("erroreValidazione", "");
             tbMod_DataProtocollo.CssClass = tbMod_DataProtocollo.CssClass.Replace("erroreValidazione", "");
+            tbMod_DataLavorazione.CssClass = tbMod_DataLavorazione.CssClass.Replace("erroreValidazione", "");
+            tbMod_Produzione.CssClass = tbMod_Produzione.CssClass.Replace("erroreValidazione", "");
             tbMod_Descrizione.CssClass = tbMod_Descrizione.CssClass.Replace("erroreValidazione", "");
             tbMod_NomeFile.CssClass = tbMod_NomeFile.CssClass.Replace("erroreValidazione", "");
             tbMod_NumeroProtocollo.CssClass = tbMod_NumeroProtocollo.CssClass.Replace("erroreValidazione", "");
@@ -553,6 +568,48 @@ namespace VideoSystemWeb.Protocollo
         protected void btnChiudiPopupClientiServer_Click(object sender, EventArgs e)
         {
             PanelClienti.Visible = false;
+        }
+
+        protected void imgbtnSelectCodLav_Click(object sender, ImageClickEventArgs e)
+        {
+
+        }
+
+        protected void btnChiudiPopupLavorazioniServer_Click(object sender, EventArgs e)
+        {
+            PanelLavorazioni.Visible = false;
+        }
+
+        protected void btnCercaLavorazione_Click(object sender, EventArgs e)
+        {
+            PanelLavorazioni.Visible = true;
+        }
+
+        protected void btnRicercaLavorazioni_Click(object sender, EventArgs e)
+        {
+            string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_LAVORAZIONI"];
+
+            queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_Cliente.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@codiceLavorazione", tbSearch_CodiceLavoro.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@lavorazione", tbSearch_Lavorazione.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@luogo", tbSearch_Luogo.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@produzione", tbSearch_Produzione.Text.Trim().Replace("'", "''"));
+
+            Esito esito = new Esito();
+            DataTable dtLavorazioni = Base_DAL.getDatiBySql(queryRicerca, ref esito);
+            gvLavorazioni.DataSource = dtLavorazioni;
+            gvLavorazioni.DataBind();
+
+
+        }
+
+        protected void gvLavorazioni_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+        }
+
+        protected void gvLavorazioni_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
         }
     }
 }

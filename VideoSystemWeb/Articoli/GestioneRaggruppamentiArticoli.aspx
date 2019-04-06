@@ -44,14 +44,14 @@
 <Label><asp:Label ID="lblRaggruppamenti" runat="server" Text="ARTICOLI COMPOSTI" ForeColor="Teal"></asp:Label></Label>
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
-        <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
+<%--        <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
             <span onclick="this.parentElement.style.display='none'"
             class="w3-button w3-large w3-display-topright">&times;</span>
             <p><asp:Label ID="lbl_MessaggioErrore" runat="server" ></asp:Label></p>
-        </div>
-        <div class="w3-cell-row" style="width:75%">
+        </div>--%>
+        <div class="w3-cell-row" style="width:100%">
             <div class="w3-container w3-cell w3-cell-middle">
-                <asp:ListBox ID="lbMod_Raggruppamenti" runat="server" class="w3-input w3-border w3-margin" Width="99%" ></asp:ListBox>
+                <asp:ListBox ID="lbMod_Raggruppamenti" runat="server" class="w3-input w3-border w3-margin" Width="100%" ></asp:ListBox>
             </div>
             <div class="w3-container w3-cell w3-cell-middle">
                 <div id="divSelRaggruppamento" runat="server"> 

@@ -364,7 +364,9 @@ namespace VideoSystemWeb.DAL
                                     protocolloOfferta.Id_tipo_protocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
                                     protocolloOfferta.Protocollo_riferimento = "";
                                     protocolloOfferta.PathDocumento = "";
-                                    protocolloOfferta.Descrizione = evento.produzione.Trim() + " " + evento.lavorazione.Trim();
+                                    protocolloOfferta.Descrizione = evento.lavorazione.Trim();
+                                    protocolloOfferta.Produzione = evento.produzione.Trim();
+                                    protocolloOfferta.Data_inizio_lavorazione = evento.data_inizio_lavorazione;
                                     protocolloOfferta.Attivo = true;
 
                                     CostruisciSP_InsertProtocollo(StoreProc, sda, iDatiAgendaReturn, protocolloOfferta);
@@ -673,7 +675,10 @@ namespace VideoSystemWeb.DAL
                                         protocolloOfferta.Id_tipo_protocollo = idTipoProtocollo;
                                         protocolloOfferta.Protocollo_riferimento = "";
                                         protocolloOfferta.PathDocumento = "";
-                                        protocolloOfferta.Descrizione = evento.produzione.Trim() + " " + evento.lavorazione.Trim();
+                                        protocolloOfferta.Descrizione = evento.lavorazione.Trim();
+                                        protocolloOfferta.Produzione = evento.produzione.Trim();
+                                        protocolloOfferta.Data_inizio_lavorazione = evento.data_inizio_lavorazione;
+
                                         protocolloOfferta.Attivo = true;
 
                                         CostruisciSP_InsertProtocollo(StoreProc, sda, iDatiAgendaReturn, protocolloOfferta);
@@ -996,6 +1001,14 @@ namespace VideoSystemWeb.DAL
             SqlParameter descrizione = new SqlParameter("@descrizione", protocollo.Descrizione);
             descrizione.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(descrizione);
+
+            SqlParameter produzione = new SqlParameter("@produzione", protocollo.Produzione);
+            produzione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(produzione);
+
+            SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", protocollo.Data_inizio_lavorazione);
+            data_inizio_lavorazione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(data_inizio_lavorazione);
 
             SqlParameter attivo = new SqlParameter("@attivo", protocollo.Attivo);
             attivo.Direction = ParameterDirection.Input;

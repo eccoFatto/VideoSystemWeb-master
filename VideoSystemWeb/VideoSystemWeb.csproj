@@ -247,6 +247,7 @@
     <Content Include="Images\logoVSP_trim.png" />
     <Content Include="Images\Martz90-Circle-Camera.ico" />
     <Content Include="Images\Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" />
+    <Content Include="Images\Search.ico" />
     <Content Include="Images\switch.png" />
     <Content Include="index.html" />
     <Content Include="Login.aspx" />

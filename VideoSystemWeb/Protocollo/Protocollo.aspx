@@ -4,6 +4,23 @@
     <script>
     $(document).ready(function () {
         $('.loader').hide();
+
+        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+            // GESTIONE DROPDOWN CLIENTI
+            $("#filtroClienti").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#divClienti .dropdown-menu li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            $("#<%=elencoClienti.ClientID%> .dropdown-item").on("click", function (e) {
+                $("#<%=hf_Clienti.ClientID%>").val($(this.firstChild).attr('val'));
+                $("#<%=ddl_Clienti.ClientID%>").val($(e.target).text());
+                $("#<%=ddl_Clienti.ClientID%>").attr("title", $(e.target).text());
+            });
+
+        });
     });
 
     // APRO POPUP VISUALIZZAZIONE/MODIFICA PROTOCOLLO
@@ -19,7 +36,13 @@
         $("#<%=hf_idProt.ClientID%>").val('');
         $("#<%=hf_tipoOperazione.ClientID%>").val('INSERIMENTO');
         $("#<%=btnInsProtocollo.ClientID%>").click();
-    }
+        }
+
+    // APRO POPUP RICERCA CLIENTE
+        function cercaCliente() {
+            $('.loader').show();
+            $("#<%=btnCercaCliente.ClientID%>").click();
+        }
 
     // APRO LE TAB DETTAGLIO PROTOCOLLO
     function openDettaglioProtocollo(tipoName) {
@@ -42,8 +65,11 @@
         $("#<%=hf_idProt.ClientID%>").val('');
         $("#<%=btnChiudiPopupServer.ClientID%>").click();
 
+        }
+    function chiudiPopupClienti() {
+        $("#<%=btnChiudiPopupClientiServer.ClientID%>").click();
     }
-
+        
     // AZZERO TUTTI I CAMPI RICERCA
     function azzeraCampiRicerca() {
         $("#<%=tbCodiceLavoro.ClientID%>").val('');
@@ -165,7 +191,10 @@
 
 <asp:Button runat="server" ID="btnEditProtocollo" Style="display: none" OnClick="btnEditProtocollo_Click"/>
 <asp:Button runat="server" ID="btnInsProtocollo" Style="display: none" OnClick="btnInsProtocollo_Click"/>
+<asp:Button runat="server" ID="btnCercaCliente" Style="display: none" OnClick="btnCercaCliente_Click"/>
+    
 <asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopup_Click"/>
+<asp:Button runat="server" ID="btnChiudiPopupClientiServer" Style="display: none" OnClick="btnChiudiPopupClientiServer_Click"/>
 
 <asp:HiddenField ID="hf_idProt" runat="server" EnableViewState="true" />
 <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
@@ -192,7 +221,7 @@
                 </div>
                     <!-- TAB PROTOCOLLI -->
                     <div id="Protocollo" class="w3-container w3-border prot" style="display:block" >
-                        <label>Protocolli</label>
+                        <%--<label>Protocolli</label>--%>
                         <div class="w3-container w3-center">
                             <p>
                                 <div class="w3-row-padding w3-center w3-text-center">
@@ -203,10 +232,10 @@
                                                 <asp:TextBox ID="tbMod_CodiceLavoro" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                             </div>
                                             <div class="w3-quarter">
-                                                <asp:ImageButton ID="imgbtnCreateNewCodLav" ImageUrl="~/Images/detail-icon.png" runat="server" class="w3-input  w3-round " Text="+" ToolTip="Crea Nuovo Codice Lavorazione" OnClick="imgbtnCreateNewCodLav_Click" />
+                                                <asp:ImageButton ID="imgbtnCreateNewCodLav" ImageUrl="~/Images/detail-icon.png" runat="server" class="w3-input  w3-round " Height="40px" Width="40px" Text="+" ToolTip="Crea Nuovo Codice Lavorazione" OnClick="imgbtnCreateNewCodLav_Click" />
                                             </div>
                                             <div class="w3-quarter">
-                                                <asp:ImageButton ID="imgbtnSelectCodLav" ImageUrl="~/Images/Martz90-Circle-Camera.ico" runat="server" class="w3-input w3-round " Text="->" ToolTip="Cerca Codice Lavorazione" />
+                                                <asp:ImageButton ID="imgbtnSelectCodLav" ImageUrl="~/Images/Martz90-Circle-Camera.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" Text="->" ToolTip="Cerca Codice Lavorazione" />
                                             </div>
                                         </div>
                                     </div>
@@ -226,14 +255,24 @@
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
-                                        <label>Cliente</label>
-                                        <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        <div class="w3-row-padding w3-center w3-text-center">
+                                            <div class="w3-threequarter">
+                                                <label>Cliente</label>
+                                                <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                            </div>
+                                            <div class="w3-quarter">
+                                                <label>&nbsp;</label>
+                                                <asp:ImageButton ID="imbCercaCliente" ImageUrl="~/Images/Martz90-Circle-Camera.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" Text="->" ToolTip="Cerca Cliente" OnClientClick="cercaCliente();" />
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                     <div class="w3-half">
                                         <label>Descrizione</label>
                                         <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
                                 </div>
+                                
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
                                         <label>Tipo</label>
@@ -290,5 +329,41 @@
         <asp:AsyncPostBackTrigger ControlID="btnEliminaProtocollo" EventName="Click" />
     </Triggers>
 
+</asp:UpdatePanel>
+
+
+
+
+<asp:UpdatePanel ID="upClienti" runat="server">
+    <ContentTemplate>
+        <asp:Panel  runat="server" ID="PanelClienti" visible="false">
+            <div class="modalBackground"></div>
+            <asp:Panel  runat="server" ID="Panel2" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                <div class="w3-container">
+                    <!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
+                    <div class="w3-bar w3-yellow w3-round">
+                        <div class="w3-bar-item w3-button w3-yellow">Ricerca Clienti</div>
+                        <div class="w3-bar-item w3-button w3-yellow w3-right">
+                            <div id="btnChiudiPopupClienti" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopupClienti();">Chiudi</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-row" style="margin-bottom: 5px;">
+                    <div class="w3-third">
+                        <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente" class="label"></asp:Label>
+                    </div>
+                    <div class="w3-twothird">
+                        <div id="divClienti" class="dropdown ">
+                            <asp:HiddenField ID="hf_Clienti" runat="server" Value="" />
+                            <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
+                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto">
+                                <input class="form-control" id="filtroClienti" type="text" placeholder="Cerca..">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </asp:Panel>
+        </asp:Panel>
+    </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>

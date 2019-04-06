@@ -73,7 +73,7 @@
         <div class="w3-row-padding">
             <div class="w3-half">
                 <label>Descrizione</label>
-                <asp:TextBox ID="tbDescrizione" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                <asp:TextBox ID="tbDescrizione" runat="server" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
             <div class="w3-half">
                 <label>Descrizione Breve</label>

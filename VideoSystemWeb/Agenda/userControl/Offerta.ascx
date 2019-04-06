@@ -37,14 +37,14 @@
 
 </script>
 
-<asp:Panel runat="server" ID="panelOfferta">
+<asp:Panel runat="server" ID="panelOfferta" style="height:100%">
 
     <div class="w3-container w3-center w3-xlarge">OFFERTA</div>
     <br />
-    <div class="w3-row-padding" style="font-size: small;">
+    <div class="w3-row" style="height:50%;font-size: small;">
 
-        <div class="w3-col">
-            <asp:Panel runat="server" ID="panelArticoli" CssClass="round" Style="height: 150px; position: relative; background-color: white; overflow: auto;">
+        <div class="w3-col" style="height:80%">
+            <asp:Panel runat="server" ID="panelArticoli" CssClass="round" Style="height: 100%; position: relative; background-color: white; overflow: auto;">
                 <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Articoli selezionati</p>
                 <asp:Label ID="lbl_selezionareArticolo" runat="server" Text="Selezionare un articolo dalla lista" Style="position: absolute; top: 45%; left: 25%; font-size: large; color: cornflowerblue" />
                 <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvArticoli_RowCommand" DataMember="IdentificatoreOggetto">
@@ -69,7 +69,7 @@
             </asp:Panel>
         </div>
 
-        <div class="w3-col" style="padding-left: 5px">
+        <div class="w3-col" style="height: 20%;padding-left: 5px; margin-bottom: 10px;">
             <div class="w3-quarter" style="padding: 5px">
                 <label style="margin-bottom: 0.2rem;">Totale prezzo</label><br />
                 <asp:TextBox ID="txt_TotPrezzo" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
@@ -89,16 +89,16 @@
         </div>
 
     </div>
-    <br />
+    
 
-    <div style="width: 99%; text-align: center;">
+    <div style="width: 99%; text-align: center;height:6%;margin-bottom: 20px;">
         <asp:Button ID="btnEliminaArticoli" runat="server" Text="Elimina tutti gli articoli" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnEliminaArticoli_Click" Style="font-size: smaller; padding: 4px 8px" OnClientClick="return confermaEliminazioneTuttiArticoli();" />
         <asp:Button ID="btnRecuperaOfferta" runat="server" Text="Recupera offerta" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRecuperaOfferta_Click" Style="font-size: smaller; padding: 4px 8px" />
     </div>
-     <br /> <br />
+    
 
-    <div class="w3-col">
-        <asp:Panel runat="server" ID="panelGruppi" CssClass="round" Style="height: 150px; position: relative; background-color: white; overflow: auto;">
+    <div class="w3-col" style="height:23%;position:relative;">
+        <asp:Panel runat="server" ID="panelGruppi" CssClass="round" Style="height: 100%; position: relative; background-color: white; overflow: auto;">
             <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Articoli e Articoli composti</p>
             <asp:GridView ID="gvGruppi" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvGruppi_RowCommand" DataMember="ID">
                 <Columns>
@@ -114,10 +114,10 @@
             </asp:GridView>
         </asp:Panel>
     </div>
+
     <div class="w3-col">
         <asp:TextBox ID="txt_FiltroGruppi" runat="server" CssClass="w3-round" placeholder="Cerca.." Style="width: 100%; padding: 5px; margin-top: 10px; margin-bottom: 20px;"></asp:TextBox>
     </div>
-
 
 
     <div id="panelModificaArticolo" class="w3-modal " style="position: fixed;" runat="server">

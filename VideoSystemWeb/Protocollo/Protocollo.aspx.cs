@@ -29,8 +29,12 @@ namespace VideoSystemWeb.Protocollo
             if (!Page.IsPostBack)
             {
                 Session["NOME_FILE"] = "";
-                BasePage p = new BasePage();
-                Esito esito = p.CaricaListeTipologiche();
+                //BasePage p = new BasePage();
+                Esito esito = basePage.CaricaListeTipologiche();
+
+                basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
+                ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
+                basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
 
                 // CARICO LE COMBO
                 if (string.IsNullOrEmpty(esito.descrizione))
@@ -38,7 +42,7 @@ namespace VideoSystemWeb.Protocollo
                     ddlTipoProtocollo.Items.Clear();
                     cmbMod_Tipologia.Items.Clear();
                     ddlTipoProtocollo.Items.Add("");
-                    foreach (Tipologica tipologiaProtocollo in p.listaTipiProtocolli)
+                    foreach (Tipologica tipologiaProtocollo in basePage.listaTipiProtocolli)
                     {
                         ListItem item = new ListItem();
                         item.Text = tipologiaProtocollo.nome;
@@ -54,7 +58,7 @@ namespace VideoSystemWeb.Protocollo
                     }
 
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                    abilitaBottoni(p.AbilitazioneInScrittura());
+                    abilitaBottoni(basePage.AbilitazioneInScrittura());
 
 
                 }
@@ -104,6 +108,7 @@ namespace VideoSystemWeb.Protocollo
                     }
                     imgbtnCreateNewCodLav.Attributes.Add("disabled","");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
+                    imbCercaCliente.Attributes.Add("disabled", "");
                     btnAnnullaCaricamento.Attributes.Add("disabled", "");
                     fuFileProt.Attributes.Add("disabled", "");
 
@@ -117,6 +122,7 @@ namespace VideoSystemWeb.Protocollo
 
                     imgbtnCreateNewCodLav.Attributes.Remove("disabled");
                     imgbtnSelectCodLav.Attributes.Remove("disabled");
+                    imbCercaCliente.Attributes.Remove("disabled");
                     btnAnnullaCaricamento.Attributes.Remove("disabled");
                     fuFileProt.Attributes.Remove("disabled");
                     break;
@@ -129,6 +135,7 @@ namespace VideoSystemWeb.Protocollo
 
                     imgbtnCreateNewCodLav.Attributes.Remove("disabled");
                     imgbtnSelectCodLav.Attributes.Remove("disabled");
+                    imbCercaCliente.Attributes.Remove("disabled");
                     btnAnnullaCaricamento.Attributes.Remove("disabled");
                     fuFileProt.Attributes.Remove("disabled");
 
@@ -142,6 +149,7 @@ namespace VideoSystemWeb.Protocollo
 
                     imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
+                    imbCercaCliente.Attributes.Add("disabled","");
                     btnAnnullaCaricamento.Attributes.Add("disabled", "");
                     fuFileProt.Attributes.Add("disabled", "");
 
@@ -155,6 +163,7 @@ namespace VideoSystemWeb.Protocollo
 
                     imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
+                    imbCercaCliente.Attributes.Add("disabled","");
                     btnAnnullaCaricamento.Attributes.Add("disabled", "");
                     fuFileProt.Attributes.Add("disabled", "");
                     break;
@@ -536,5 +545,14 @@ namespace VideoSystemWeb.Protocollo
             }
         }
 
+        protected void btnCercaCliente_Click(object sender, EventArgs e)
+        {
+            PanelClienti.Visible = true;
+        }
+
+        protected void btnChiudiPopupClientiServer_Click(object sender, EventArgs e)
+        {
+            PanelClienti.Visible = false;
+        }
     }
 }

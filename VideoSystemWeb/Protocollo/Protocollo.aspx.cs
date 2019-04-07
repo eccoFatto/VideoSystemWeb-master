@@ -109,8 +109,12 @@ namespace VideoSystemWeb.Protocollo
                     //imgbtnCreateNewCodLav.Attributes.Add("disabled","");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
                     //imbCercaCliente.Attributes.Add("disabled", "");
-                    btnAnnullaCaricamento.Attributes.Add("disabled", "");
-                    fuFileProt.Attributes.Add("disabled", "");
+                    //btnAnnullaCaricamento.Attributes.Add("disabled", "");
+                    //fuFileProt.Attributes.Add("disabled", "");
+                    //fuFileProt.Enabled = false;
+                    btnAnnullaCaricamento.Visible = false;
+                    fuFileProt.Visible = false;
+                    lblStatus.Visible = fuFileProt.Visible;
 
                     break;
                 case "INSERIMENTO":
@@ -123,8 +127,12 @@ namespace VideoSystemWeb.Protocollo
                     //imgbtnCreateNewCodLav.Attributes.Remove("disabled");
                     imgbtnSelectCodLav.Attributes.Remove("disabled");
                     //imbCercaCliente.Attributes.Remove("disabled");
-                    btnAnnullaCaricamento.Attributes.Remove("disabled");
-                    fuFileProt.Attributes.Remove("disabled");
+                    //btnAnnullaCaricamento.Attributes.Remove("disabled");
+                    //fuFileProt.Attributes.Remove("disabled");
+                    //fuFileProt.Enabled = true;
+                    btnAnnullaCaricamento.Visible = true;
+                    fuFileProt.Visible = true;
+                    lblStatus.Visible = fuFileProt.Visible;
                     break;
                 case "MODIFICA":
                     btnInserisciProtocollo.Visible = false;
@@ -136,8 +144,12 @@ namespace VideoSystemWeb.Protocollo
                     //imgbtnCreateNewCodLav.Attributes.Remove("disabled");
                     imgbtnSelectCodLav.Attributes.Remove("disabled");
                     //imbCercaCliente.Attributes.Remove("disabled");
-                    btnAnnullaCaricamento.Attributes.Remove("disabled");
-                    fuFileProt.Attributes.Remove("disabled");
+                    //btnAnnullaCaricamento.Attributes.Remove("disabled");
+                    //fuFileProt.Attributes.Remove("disabled");
+                    //fuFileProt.Enabled = true;
+                    btnAnnullaCaricamento.Visible = true;
+                    fuFileProt.Visible = true;
+                    lblStatus.Visible = fuFileProt.Visible;
 
                     break;
                 case "ANNULLAMENTO":
@@ -150,8 +162,12 @@ namespace VideoSystemWeb.Protocollo
                     //imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
                     //imbCercaCliente.Attributes.Add("disabled","");
-                    btnAnnullaCaricamento.Attributes.Add("disabled", "");
-                    fuFileProt.Attributes.Add("disabled", "");
+                    //btnAnnullaCaricamento.Attributes.Add("disabled", "");
+                    //fuFileProt.Attributes.Add("disabled", "");
+                    //fuFileProt.Enabled = false;
+                    btnAnnullaCaricamento.Visible = false;
+                    fuFileProt.Visible = false;
+                    lblStatus.Visible = fuFileProt.Visible;
 
                     break;
                 default:
@@ -164,8 +180,13 @@ namespace VideoSystemWeb.Protocollo
                     //imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
                     //imbCercaCliente.Attributes.Add("disabled","");
-                    btnAnnullaCaricamento.Attributes.Add("disabled", "");
-                    fuFileProt.Attributes.Add("disabled", "");
+
+                    //btnAnnullaCaricamento.Attributes.Add("disabled", "");
+                    //fuFileProt.Attributes.Add("disabled", "");
+                    //fuFileProt.Enabled = false;
+                    btnAnnullaCaricamento.Visible = false;
+                    fuFileProt.Visible = false;
+                    lblStatus.Visible = fuFileProt.Visible;
                     break;
             }
 
@@ -595,6 +616,52 @@ namespace VideoSystemWeb.Protocollo
             queryRicerca = queryRicerca.Replace("@luogo", tbSearch_Luogo.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@produzione", tbSearch_Produzione.Text.Trim().Replace("'", "''"));
 
+            // SE DATA DA E' VALORIZZATA 
+            if (!string.IsNullOrEmpty(tbSearch_DataInizio.Text.Trim()))
+            {
+                // CONTROLLO SE E' UNA DATA VALIDA
+                try
+                {
+                    DateTime dataPartenza = Convert.ToDateTime(tbSearch_DataInizio.Text.Trim());
+                    // SE DATA DA E' VALIDA CONTROLLO DATA A 
+                    if (!string.IsNullOrEmpty(tbSearch_DataFine.Text.Trim()))
+                    {
+                        // CONTROLLO SE E' UNA DATA VALIDA
+                        try
+                        {
+                            DateTime dataArrivo = Convert.ToDateTime(tbSearch_DataFine.Text.Trim());
+                            // E' UNA DATA VALIDA, FACCIO BETWEEN TRA DATA DA E DATA A 
+                            string sDataPartenza = dataPartenza.ToString("yyyy-MM-ddTHH:mm:ss");
+                            string sDataArrivo = dataArrivo.ToString("yyyy-MM-ddTHH:mm:ss");
+                            queryRicerca = queryRicerca.Replace("@queryRangeDate", " and data_inizio_lavorazione between '" + sDataPartenza + "' and '" + dataArrivo + "' ");
+                        }
+                        catch (Exception)
+                        {
+                            // NON E' UNA DATA VALIDA, FACCIO CONTROLLO SU DATA DA PRECISA
+                            queryRicerca = queryRicerca.Replace("@queryRangeDate", " and convert(varchar, data_inizio_lavorazione, 103) = '" + dataPartenza.ToString("dd/MM/yyyy") + "' ");
+                            
+                        }
+                    }
+                    else
+                    {
+                        // FACCIO CONTROLLO SU DATA PRECISA SE DATA A NON E' VALIDA
+                        queryRicerca = queryRicerca.Replace("@queryRangeDate", " and convert(varchar, data_inizio_lavorazione, 103) = '" + dataPartenza.ToString("dd/MM/yyyy") + "' ");
+                    }
+
+                }
+                catch (Exception)
+                {
+                    // NON E' UNA DATA VALIDA QUINDI TENTO DI FARE LA LIKE CON IL TESTO INSERITO ED IGNORO tbSearch_DataFine
+                    queryRicerca = queryRicerca.Replace("@queryRangeDate", " and (isnull(convert(varchar, data_inizio_lavorazione, 103), '') like '%" + tbSearch_DataInizio.Text.Trim() + "%') ");
+                    
+                }
+            }
+            else
+            {
+                queryRicerca = queryRicerca.Replace("@queryRangeDate", "");
+            }
+            
+            
             Esito esito = new Esito();
             DataTable dtLavorazioni = Base_DAL.getDatiBySql(queryRicerca, ref esito);
             gvLavorazioni.DataSource = dtLavorazioni;
@@ -605,11 +672,24 @@ namespace VideoSystemWeb.Protocollo
 
         protected void gvLavorazioni_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
 
+
+                // PRENDO CODICE LAVORAZIONE E CLIENTE/FORNITORE E LI PASSO ALLA FUNZIONE
+                string codLavSelezionato = e.Row.Cells[2].Text;
+                string clienteFornitoreSelezionato = e.Row.Cells[3].Text;
+                ImageButton myButtonEdit = e.Row.FindControl("imgSelect") as ImageButton;
+                myButtonEdit.Attributes.Add("onclick", "associaCodiceLavorazione('" + codLavSelezionato.Replace("&nbsp;","") + "','" + clienteFornitoreSelezionato.Replace("&nbsp;", "") + "');");
+            }
+
+            //associaCodiceLavorazione(codLav, cliente)
         }
 
         protected void gvLavorazioni_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            gvLavorazioni.PageIndex = e.NewPageIndex;
+            btnRicercaLavorazioni_Click(null, null);
         }
     }
 }

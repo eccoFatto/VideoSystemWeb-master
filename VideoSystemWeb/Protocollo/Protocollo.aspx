@@ -6,8 +6,14 @@
             $('.loader').hide();
 
             $(window).keydown(function(e){
-                if(e.keyCode == 13) {
-                    $("#<%=btnRicercaProtocollo.ClientID%>").click();
+                if (e.keyCode == 13) {
+                    //alert($("#<=hf_tipoOperazione.ClientID%>").val());
+                    if ($("#<%=hf_tipoOperazione.ClientID%>").val() != 'MODIFICA' && $("#<%=hf_tipoOperazione.ClientID%>").val() != 'INSERIMENTO') {
+                        $("#<%=btnRicercaProtocollo.ClientID%>").click();
+                    }
+                    else {
+                        $("#<%=btnRicercaLavorazioni.ClientID%>").click();
+                    }
                 }
             });
 
@@ -75,6 +81,7 @@
             //var pannelloPopup = document.getElementById('<%=pnlContainer.ClientID%>');
             //pannelloPopup.style.display = "none";
             $("#<%=hf_idProt.ClientID%>").val('');
+            $("#<%=hf_tipoOperazione.ClientID%>").val('VISUALIZZAZIONE');
             $("#<%=btnChiudiPopupServer.ClientID%>").click();
 
         }
@@ -138,6 +145,11 @@
             document.getElementById('<%=tbMod_NomeFile.ClientID%>').innerText = filename;
         }
 
+        function associaCodiceLavorazione(codLav, cliente) {
+            document.getElementById('<%=tbMod_CodiceLavoro.ClientID%>').value = codLav;
+            document.getElementById('<%=tbMod_Cliente.ClientID%>').value = cliente;
+            chiudiPopupLavorazioni();
+        }
     </script>
 <Label><asp:Label ID="lblProtocolli" runat="server" Text="PROTOCOLLI" ForeColor="Teal"></asp:Label></Label>
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
@@ -391,7 +403,7 @@
                         <asp:TextBox ID="tbSearch_CodiceLavoro" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
                     </div>
                     <div class="w3-quarter">
-                        <label>Cliente</label>
+                        <label>Cliente/Fornitore</label>
                         <asp:TextBox ID="tbSearch_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
                     </div>
                     <div class="w3-quarter">
@@ -409,11 +421,11 @@
                         <asp:TextBox ID="tbSearch_Lavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
                     </div>
                     <div class="w3-quarter">
-                        <label>Data Inizio</label>
+                        <label>Data da</label>
                         <asp:TextBox ID="tbSearch_DataInizio" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
                     </div>
                     <div class="w3-quarter">
-                        <label>Data Fine</label>
+                        <label>Data a</label>
                         <asp:TextBox ID="tbSearch_DataFine" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
                     </div>
                     <div class="w3-quarter">
@@ -433,9 +445,9 @@
                 <div class="round">
                     <asp:GridView ID="gvLavorazioni" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gvLavorazioni_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvLavorazioni_PageIndexChanging" PageSize="20">
                         <Columns>
-                            <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
+                            <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
                                 <ItemTemplate>
-                                    <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false"  Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Lavorazione" ImageAlign="AbsMiddle" Height="30px" />
+                                    <asp:ImageButton ID="imgSelect" runat="server" CausesValidation="false"  Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Lavorazione" ImageAlign="AbsMiddle" Height="30px" />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -464,7 +476,7 @@
                 <div class="w3-container">
                     <!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
                     <div class="w3-bar w3-yellow w3-round">
-                        <div class="w3-bar-item w3-button w3-yellow">Ricerca Clienti</div>
+                        <div class="w3-bar-item w3-button w3-yellow">Ricerca Clienti/Fornitori</div>
                         <div class="w3-bar-item w3-button w3-yellow w3-right">
                             <div id="btnChiudiPopupClienti" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopupClienti();">Chiudi</div>
                         </div>

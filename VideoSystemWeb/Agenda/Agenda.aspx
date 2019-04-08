@@ -132,7 +132,7 @@
                 document.getElementById(nomeElemento).className += " w3-red";
         }
 
- 
+
 
         function confermaChiusura() {
             return confirm("Le modifiche non salvate verranno perse. Confermare la chiusura?");
@@ -192,19 +192,19 @@
                     <div class="w3-container" style="width: 100%; height: 95%; position: absolute">
                         <div class="w3-bar w3-blue w3-round">
                             <div class="w3-row">
-                                <div class="w3-col" style="width:60%">
+                                <div class="w3-col" style="width: 60%">
                                     <div class="w3-bar-item w3-button tablink w3-red" runat="server" id="tab_Appuntamento" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
                                     <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Offerta">Offerta</div>
                                     <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Lavorazione">Lavorazione</div>
                                 </div>
                                 <div class="w3-rest">
                                     <div class="w3-row">
-                                        <div class="w3-col" style="width:90%;font-size: smaller;">
+                                        <div class="w3-col" style="width: 90%; font-size: smaller;">
                                             <asp:Label ID="lbl_Stato" runat="server" Text="Stato attuale: "></asp:Label>
-                                            <asp:Label ID="val_Stato" runat="server" Text="previsione impegno" ></asp:Label>
+                                            <asp:Label ID="val_Stato" runat="server" Text="previsione impegno"></asp:Label>
                                             <br />
                                             <asp:Label ID="lbl_CodiceLavoro" runat="server" Text="Codice lavoro: "></asp:Label>
-                                            <asp:Label ID="val_CodiceLavoro" runat="server" ></asp:Label>
+                                            <asp:Label ID="val_CodiceLavoro" runat="server"></asp:Label>
                                         </div>
                                         <div class="w3-rest">
                                             <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" />
@@ -241,7 +241,7 @@
             </div>
 
             <div id="modalRiepilogoOfferta" class="w3-modal">
-                <div class="w3-modal-content w3-card-4 w3-animate-zoom " style="max-width: 800px; position: fixed; top: 5%; width: 70%; left: 20%">
+                <div class="w3-modal-content w3-card-4 w3-animate-zoom " style="position: fixed; top: 5%; width: 70%; left: 20%; overflow: auto; height: 90%">
 
                     <div class="w3-center">
                         <br>
@@ -355,10 +355,10 @@
                         </div>
 
                         <%--STAMPA--%>
-                        <div id="intestazioneStampa" runat="server" visible="false">
+                        <div id="intestazioneStampa" runat="server" visible="false" style="font-size: 8pt">
                             <br />
                             <br />
-                            <table>
+                            <table style="width: 100%">
                                 <tr>
                                     <td style="width: 50%">
                                         <table>
@@ -421,7 +421,7 @@
                             </table>
                             <br />
                             <br />
-                            <table>
+                            <table style="width: 100%">
                                 <tr>
                                     <td style="width: 50%">
                                         <table>
@@ -453,32 +453,32 @@
                         <div class="w3-row w3-section w3-padding w3-small">
 
                             <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False"
-                                Style="font-size: 10pt; width: 100%; position: relative; background-color: #FFF; text-align: center"
+                                Style="font-size: 8pt; width: 100%; position: relative; background-color: #FFF; text-align: center"
                                 HeaderStyle-BackColor="#2196F3" HeaderStyle-Font-Bold="true" HeaderStyle-ForeColor="White" BorderWidth="0"
                                 GridLines="None" OnRowDataBound="gvArticoli_RowDataBound" HeaderStyle-HorizontalAlign="Right">
                                 <Columns>
-                                    <asp:TemplateField HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left">
+                                    <asp:TemplateField HeaderStyle-Width="20%" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
                                         <HeaderTemplate>
                                             <div style="text-align: left;">Codice</div>
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:Label runat="server" ID="lblCodice" Text='<%# Eval("id") %>' />
+                                            <asp:Label runat="server" ID="lblCodice" Text='<%# Eval("Descrizione") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
-                                    <asp:TemplateField HeaderText="Descrizione" HeaderStyle-Width="40%" ItemStyle-HorizontalAlign="Left">
+                                    <asp:TemplateField HeaderText="Descrizione" HeaderStyle-Width="40%" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
                                         <HeaderTemplate>
                                             <div style="text-align: left;">Descrizione</div>
                                         </HeaderTemplate>
                                         <ItemTemplate>
-                                            <asp:Label runat="server" ID="lblDescrizione" Text='<%# Eval("Descrizione") %>' />
+                                            <asp:Label runat="server" ID="lblDescrizione" Text='<%# Eval("DescrizioneLunga") %>' />
                                         </ItemTemplate>
                                     </asp:TemplateField>
 
-                                    <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-Width="9%" ItemStyle-HorizontalAlign="Right" />
-                                    <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-Width="12%" ItemStyle-HorizontalAlign="Right" />
-                                    <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Width="12%" ItemStyle-HorizontalAlign="Right" />
-                                    <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-Width="9%" ItemStyle-HorizontalAlign="Right" />
-                                    <asp:TemplateField HeaderText="Totale" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right">
+                                    <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" />
+                                    <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" />
+                                    <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" />
+                                    <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" />
+                                    <asp:TemplateField HeaderText="Totale" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top">
                                         <ItemTemplate>
                                             <asp:Label ID="totaleRiga" runat="server" />
                                         </ItemTemplate>
@@ -487,42 +487,139 @@
                             </asp:GridView>
                         </div>
 
-                        <div id="footerSchermo" runat="server">
-                            <div class="w3-row w3-section w3-padding w3-small">
+                        <div id="totaliSchermo" runat="server">
+                            <div class="w3-row  w3-small">
                                 <div class="w3-col">
                                     <div class="w3-twothird">&nbsp;</div>
                                     <div class="w3-third">
-                                        <div class="w3-half">
-                                            <label><b>Totale Iva esclusa</b></label>
+                                        <div class="w3-half" style="padding-left: 50px;">
+                                            <label><b>Totale</b></label>
                                         </div>
-                                        <div class="w3-half w3-center">
-                                            <asp:Label ID="totale" runat="server" />
+                                        <div class="w3-half" style="text-align: right; padding-right: 20px;">
+                                            <b>
+                                                <asp:Label ID="totale" runat="server" /></b>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="w3-row w3-small">
+                                <div class="w3-col">
+                                    <div class="w3-twothird">&nbsp;</div>
+                                    <div class="w3-third">
+                                        <div class="w3-half" style="padding-left: 50px;">
+                                            <label><b>Totale i.v.a.</b></label>
+                                        </div>
+                                        <div class="w3-half" style="text-align: right; padding-right: 20px;">
+                                            <b>
+                                                <asp:Label ID="totaleIVA" runat="server" /></b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w3-row  w3-small">
+                                <div class="w3-col">
+                                    <div class="w3-twothird">&nbsp;</div>
+                                    <div class="w3-third">
+                                        <div class="w3-half" style="padding-left: 50px;">
+                                            <label><b>Totale Euro</b></label>
+                                        </div>
+                                        <div class="w3-half" style="text-align: right; padding-right: 20px;">
+                                            <b>
+                                                <asp:Label ID="totaleEuro" runat="server" /></b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div id="footerStampa" style="width: 100%" runat="server" visible="false">
+                        <div id="totaliStampa" style="width: 100%; font-size: 8pt" runat="server" visible="false">
                             <table style="width: 100%">
                                 <tr>
-                                    <td style="width: 60%">&nbsp;</td>
-                                    <td style="width: 40%">
+                                    <td style="width: 70%">&nbsp;</td>
+                                    <td style="width: 30%">
                                         <table style="width: 100%">
                                             <tr>
-                                                <td style="width: 60%">
-                                                    <label><b>Totale Iva esclusa</b></label></td>
-                                                <td style="width: 40%; text-align: center;">
-                                                    <asp:Label ID="totaleStampa" runat="server" /></td>
+                                                <td style="width: 60%; padding-left: 70%;">
+                                                    <label><b>Totale</b></label></td>
+                                                <td style="width: 40%; text-align: right; padding-right: 20px;">
+                                                    <b>
+                                                        <asp:Label ID="totaleStampa" runat="server" /></b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 60%; padding-left: 70%;">
+                                                    <label><b>Totale i.v.a.</b></label></td>
+                                                <td style="width: 40%; text-align: right; padding-right: 20px;">
+                                                    <b>
+                                                        <asp:Label ID="totaleIVAStampa" runat="server" /><b>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 60%; padding-left: 70%;">
+                                                    <label><b>Totale</b></label></td>
+                                                <td style="width: 40%; text-align: right; padding-right: 20px;">
+                                                    <b>
+                                                        <asp:Label ID="totaleEuroStampa" runat="server" /></b>
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
                             </table>
                         </div>
+
+                        <div id="datiClienteSchermo" runat="server" style="margin:10px; margin-top:25px;position:relative; width:98%">
+                            <div class="w3-row w3-small">
+                                <div class="w3-twothird">
+                                    <div class="w3-quarter w3-center" style="background-color: #2196F3; color: white; border: solid 1px #fff">
+                                        <label>Banca</label>
+                                    </div>
+                                    <div class="w3-threequarter w3-left" style="background-color: #CCC; border: solid 1px #fff; padding-left: 5px">
+                                        Unicredit Banca: IBAN: IT39H0200805198000103515620
+                                    </div>
+                                </div>
+                                <div class="w3-third w3-left" style="background-color: #2196F3; color: white; border: solid 1px #fff; padding-left: 5px">
+                                    <b>
+                                        <label>Timbro e firma per accettazione</label></b>
+                                </div>
+                            </div>
+
+                            <div class="w3-row  w3-small">
+                                <div class="w3-twothird">
+                                    <div class="w3-row">
+                                        <div class="w3-quarter w3-center" style="background-color: #2196F3; color: white; border: solid 1px #fff">
+                                            <label>Pagamento</label>
+                                        </div>
+                                        <div class="w3-threequarter w3-left" style="background-color: #CCC; border: solid 1px #fff; padding-left: 5px">
+                                            30 gg DFFM
+                                        </div>
+                                    </div>
+                                    <div class="w3-row">
+                                        <div class="w3-quarter w3-center" style="background-color: #2196F3; color: white; border: solid 1px #fff">
+                                            <label>Consegna</label>
+                                        </div>
+                                        <div class="w3-threequarter w3-left" style="background-color: #CCC; border: solid 1px #fff; padding-left: 5px">
+                                            Via Aurelia, 796 00165 Roma
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="w3-third w3-left" style="background-color: #CCC;border: solid 1px #fff;">
+                                    &nbsp;<br />&nbsp;
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="datiClienteStampa" style="width: 100%; font-size: 8pt" runat="server" visible="false">
+                        </div>
+
+                        <div id="footer" style="margin:10px; position:relative; width:98%; font-size:8pt; text-align:center;">
+                            <b>Videosystem Production srl&nbsp;&nbsp;P.IVA 13121341005<br />
+                            Sede legale:  Via T. Val di Pesa 34 - 00148 Roma&nbsp;&nbsp;e-mail: info@vsproduction.it</b>
+                        </div>
                     </div>
 
-                    <div class="w3-center w3-padding-small" style="margin: 10px">
+                    <div class="w3-center w3-padding-small" style="margin: 10px; position: relative; width: 98%; ">
                         <asp:Button ID="btnStampaOfferta" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-orange w3-round-large " Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampa_Click" />
                         <button onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Chiudi</button>
                     </div>

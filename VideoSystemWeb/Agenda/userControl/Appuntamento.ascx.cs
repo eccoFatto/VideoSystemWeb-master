@@ -131,18 +131,27 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_Clienti.Text = ddl_Clienti.ToolTip = ((List<Anag_Clienti_Fornitori>)ViewState["listaClientiFornitori"]).Where(x => x.Id == evento.id_cliente).FirstOrDefault().RagioneSociale;
             }
 
-            if (evento.id_stato != Stato.Instance.STATO_PREVISIONE_IMPEGNO && evento.id_stato != Stato.Instance.STATO_RIPOSO)
+            //Inibito il cambiamento tra sottotipi (dipendente o unità esterna) per evitare di entrare in stato inconsistente
+            //if (evento.id_stato != Stato.Instance.STATO_PREVISIONE_IMPEGNO && evento.id_stato != Stato.Instance.STATO_RIPOSO)
+            if (evento.id_stato != Stato.Instance.STATO_RIPOSO)
             {
                 List<Tipologica> listaRisorseNoDipendenti = basePage.listaRisorse.Where(x => x.sottotipo.ToUpper() != EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<Tipologica>();
 
                 elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
                 basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseNoDipendenti);
             }
-            else
+            else if (evento.id_stato == Stato.Instance.STATO_RIPOSO)
             {
+                List<Tipologica> listaRisorseSoloDipendenti = basePage.listaRisorse.Where(x => x.sottotipo.ToUpper() == EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<Tipologica>();
+
                 elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
-                basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
+                basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseSoloDipendenti);
             }
+            //else
+            //{
+            //    elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
+            //    basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
+            //}
 
             txt_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
             txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
@@ -221,7 +230,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_Lavorazione.Enabled =
                     txt_Indirizzo.Enabled =
                     txt_Luogo.Enabled =
-                    tb_Nota.Enabled = true;
+                    tb_Nota.Enabled = 
                     check_tender.Enabled = true;
 
                 }
@@ -268,12 +277,16 @@ namespace VideoSystemWeb.Agenda.userControl
         protected void btn_Risorse_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
-           
+
+            int idStato;
+
             string sottotipoRisorsa = UtilityTipologiche.getElementByID(basePage.listaRisorse, int.Parse(hf_Risorse.Value), ref esito).sottotipo.ToUpper();
 
             if (sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString())
             {
-              // hf_IdStato.Value = Stato.Instance.STATO_RIPOSO.ToString();
+                // hf_IdStato.Value = Stato.Instance.STATO_RIPOSO.ToString();
+                idStato = Stato.Instance.STATO_RIPOSO;
+
                 hf_Tipologie.Value = "";
                 ddl_Tipologie.Text = "<Seleziona>";
                 hf_Clienti.Value = "";
@@ -289,10 +302,11 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-        //        hf_IdStato.Value = Stato.Instance.STATO_PREVISIONE_IMPEGNO.ToString();
+                //        hf_IdStato.Value = Stato.Instance.STATO_PREVISIONE_IMPEGNO.ToString();
+                idStato = Stato.Instance.STATO_PREVISIONE_IMPEGNO;
             }
 
-            AbilitaComponentiPopup(((DatiAgenda)ViewState["eventoSelezionato"]).id_stato);
+            AbilitaComponentiPopup(idStato);
             RichiediOperazionePopup("UPDATE");
         }
 

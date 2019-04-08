@@ -64,7 +64,7 @@
     <%--<input type="button" onclick="openError('prova')" />--%>
     <div class="loader"></div>
     <form runat="server" autocomplete="off" enctype="multipart/form-data">
-        <div id="modalError" class="w3-modal">
+        <div id="modalError" class="w3-modal" style="z-index:10000">
             <div class="w3-modal-content w3-animate-top w3-card-4">
                 <header class="w3-container w3-red">
                     <span onclick="document.getElementById('modalError').style.display='none'"
@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        <div id="modalWarning" class="w3-modal">
+        <div id="modalWarning" class="w3-modal" style="z-index:10000">
             <div class="w3-modal-content w3-animate-top w3-card-4">
                 <header class="w3-container w3-orange">
                     <span onclick="document.getElementById('modalWarning').style.display='none'"
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <div id="modalSuccess" class="w3-modal">
+        <div id="modalSuccess" class="w3-modal" style="z-index:10000">
             <div class="w3-modal-content w3-animate-opacity w3-card-4">
                 <header class="w3-container w3-green">
                     <span onclick="document.getElementById('modalSuccess').style.display='none'"

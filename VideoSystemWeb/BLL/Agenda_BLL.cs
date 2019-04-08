@@ -160,9 +160,13 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-        public List<int> getTenderImpiegatiInPeriodo(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        public List<int> getTenderImpiegatiInPeriodo(DatiAgenda eventoDaControllare, ref Esito esito)
         {
-            return Agenda_DAL.Instance.getTenderImpiegatiInPeriodo(dataInizio, dataFine, ref esito);
+            DateTime dataInizio = eventoDaControllare.data_inizio_impegno;
+            DateTime dataFine = eventoDaControllare.data_fine_impegno;
+            int idEventoDaControllare = eventoDaControllare.id;
+
+            return Agenda_DAL.Instance.getTenderImpiegatiInPeriodo(dataInizio, dataFine, idEventoDaControllare,  ref esito);
         }
     }
 }

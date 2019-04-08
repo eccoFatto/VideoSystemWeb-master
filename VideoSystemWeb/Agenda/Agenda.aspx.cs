@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -112,8 +113,38 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnRiepilogo_Click(object sender, EventArgs e)
         {
-            Esito esito = new Esito();
+            Esito esito = SalvaEvento(); // l'apertura del riepilogo comporta il salvataggio dell'offerta per la generazione del protocollo
+
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            esito = popolaPannelloRiepilogo(eventoSelezionato);
+
+            upEvento.Update();
+
+            if (esito.codice == Esito.ESITO_OK)
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriRiepilogo", script: "javascript: document.getElementById('modalRiepilogoOfferta').style.display='block'", addScriptTags: true);
+
+                ShowSuccess("L'evento è stato salvato automaticamente");
+            }
+            else
+            {
+                UpdatePopup();
+            }
+        }
+
+        private Esito popolaPannelloRiepilogo(DatiAgenda eventoSelezionato)
+        {
+            Esito esito = new Esito();
+
+            #region Switch visualizzazione schermo
+            gvArticoli.Columns[4].Visible = true;
+            intestazioneSchermo.Visible = true;
+            protocolloSchermo.Visible = true;
+            totaliSchermo.Visible = true;
+            intestazioneStampa.Visible = false;
+            totaliStampa.Visible = false;
+            #endregion
 
             lbl_Data.Text = lbl_DataStampa.Text = DateTime.Now.ToString("dd/MM/yyyy");
             lbl_Produzione.Text = lbl_ProduzioneStampa.Text = eventoSelezionato.produzione;
@@ -127,28 +158,30 @@ namespace VideoSystemWeb.Agenda
 
             lbl_CodLavorazione.Text = lbl_CodLavorazioneStampa.Text = eventoSelezionato.codice_lavoro;
 
-            int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
-            List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
-            string protocollo = listaProtocolli.Count == 0 ?  "N.D." : eventoSelezionato.codice_lavoro + " - " + listaProtocolli.First().Numero_protocollo;
-            
-            lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
-
             List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
 
             gvArticoli.DataSource = listaDatiArticoli;
             gvArticoli.DataBind();
 
-            decimal totPrezzo = 0; 
+            decimal totPrezzo = 0;
+            decimal totIVA = 0;
+            decimal totEuro = 0;
             foreach (DatiArticoli art in listaDatiArticoli)
             {
                 totPrezzo += art.Prezzo * art.Quantita;
+                totIVA += (art.Prezzo * art.Iva / 100) * art.Quantita;
             }
 
-            totale.Text = totaleStampa.Text = string.Format("{0:0.00}", totPrezzo);
+            totale.Text = totaleStampa.Text = string.Format("{0:N2}", totPrezzo);
+            totaleIVA.Text = totaleIVAStampa.Text = string.Format("{0:N2}", totIVA);
+            totaleEuro.Text = totaleEuroStampa.Text = string.Format("{0:N2}", totPrezzo+totIVA);
 
-            upEvento.Update();
+            int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
+            List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
+            string protocollo = listaProtocolli.Count == 0 ? "N.D." : eventoSelezionato.codice_lavoro + " - " + listaProtocolli.First().Numero_protocollo;
+            lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
 
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriRiepilogo", script: "javascript: document.getElementById('modalRiepilogoOfferta').style.display='block'", addScriptTags: true);
+            return esito;
         }
 
         protected void btnElimina_Click(object sender, EventArgs e)
@@ -216,40 +249,19 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnStampa_Click(object sender, EventArgs e)
         {
-            string prefissoUrl = Request.Url.Scheme+"://"  +Request.Url.Authority;
-            imgLogo.ImageUrl = prefissoUrl + "/Images/logoVSP_trim.png";
-            gvArticoli.Columns[4].Visible = false;
+            string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
+            MemoryStream workStream = GeneraPdf();
 
-            intestazioneSchermo.Visible = false;
-            protocolloSchermo.Visible = false;
-            footerSchermo.Visible = false;
-
-            intestazioneStampa.Visible = true;
-            footerStampa.Visible = true;
-            
-
-            StringWriter sw = new StringWriter();
-            HtmlTextWriter hw = new HtmlTextWriter(sw);
-            modalRiepilogoContent.RenderControl(hw);
-
-            string nomeFile = lbl_Protocollo.Text == "N.D." ? "OffertaNonProtocollata" : lbl_Protocollo.Text;
-
-            MemoryStream workStream = BaseStampa.Instance.GeneraPdf(sw.ToString());
-
-            sw.Flush();
-            hw.Flush();
             Response.Clear();
             Response.ClearContent();
             Response.ClearHeaders();
             Response.ContentType = "application/pdf";
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile + ".pdf");
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile );
             Response.AddHeader("Content-Length", workStream.Length.ToString());
             Response.BinaryWrite(workStream.ToArray());
-            //Response.OutputStream.Write(workStream.GetBuffer(), 0, workStream.GetBuffer().Length);
             Response.Flush();
             Response.Close();
             Response.End();
-            workStream.Close();
         }
 
         #endregion
@@ -468,14 +480,16 @@ namespace VideoSystemWeb.Agenda
 
         protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
-                totaleRiga.Text = string.Format("{0:0.00}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[3].Text)));
+                Label lblDescrizione = (Label)e.Row.FindControl("lblDescrizione");
+                lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
 
-                e.Row.Cells[3].Text = string.Format("{0:0.00}", (int.Parse(e.Row.Cells[3].Text)));
-                e.Row.Cells[4].Text = string.Format("{0:0.00}", (int.Parse(e.Row.Cells[4].Text)));
+                Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
+                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[3].Text)));
+
+                e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
+                e.Row.Cells[4].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[4].Text)));
             }
         }
 
@@ -517,7 +531,7 @@ namespace VideoSystemWeb.Agenda
             else
             {
                 Esito esito = new Esito();
-                List<int> listaIdTenderImpiegatiInPeriodo = Agenda_BLL.Instance.getTenderImpiegatiInPeriodo(eventoDaControllare.data_inizio_impegno, eventoDaControllare.data_fine_impegno, ref esito);
+                List<int> listaIdTenderImpiegatiInPeriodo = Agenda_BLL.Instance.getTenderImpiegatiInPeriodo(eventoDaControllare, ref esito);
 
 
                 foreach (string idTenderCorrente in listaIdTenderSelezionati)
@@ -732,6 +746,14 @@ namespace VideoSystemWeb.Agenda
                 GestisciErrore(esito);
 
                 ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
+
+                esito = popolaPannelloRiepilogo(eventoSelezionato);
+
+                string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
+                MemoryStream workStream = GeneraPdf();
+
+                string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
+                File.WriteAllBytes(pathOfferta, workStream.ToArray());
             }
             else
             {
@@ -740,6 +762,35 @@ namespace VideoSystemWeb.Agenda
             }
 
             return esito;
+        }
+
+        private MemoryStream GeneraPdf()
+        {
+            string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+            imgLogo.ImageUrl = prefissoUrl + "/Images/logoVSP_trim.png";
+
+            #region Switch visualizzazione stampa
+            gvArticoli.Columns[4].Visible = false;
+
+            intestazioneSchermo.Visible = false;
+            protocolloSchermo.Visible = false;
+            totaliSchermo.Visible = false;
+
+            intestazioneStampa.Visible = true;
+            totaliStampa.Visible = true;
+            #endregion
+
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            modalRiepilogoContent.RenderControl(hw);
+            
+
+            MemoryStream workStream =  BaseStampa.Instance.GeneraPdf(sw.ToString());
+
+            sw.Flush();
+            hw.Flush();
+
+            return workStream;
         }
 
         private Esito ValidazioneSalvataggio(DatiAgenda eventoSelezionato, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)

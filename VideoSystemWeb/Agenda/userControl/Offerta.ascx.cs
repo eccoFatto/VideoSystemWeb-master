@@ -56,6 +56,7 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
             int idEvento = 0;
             listaDatiArticoli.AddRange(Articoli_BLL.Instance.CaricaListaArticoliByIDGruppo(idEvento, idGruppo, ref esito));
+            listaDatiArticoli = listaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
         }
 
         private void aggiungiArticoloAListaArticoli(int idArticolo)
@@ -63,6 +64,7 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
             int idEvento = 0;
             listaDatiArticoli.Add(Articoli_BLL.Instance.CaricaArticoloByID(idEvento, idArticolo, ref esito));
+            listaDatiArticoli = listaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
         }
 
         #region COMPORTAMENTO ELEMENTI PAGINA
@@ -164,10 +166,10 @@ namespace VideoSystemWeb.Agenda.userControl
                     percRicavo = ((totPrezzo- totCosto) / totPrezzo) * 100;
                 }
 
-                txt_TotPrezzo.Text = string.Format("{0:0.00}", totPrezzo);
-                txt_TotCosto.Text = string.Format("{0:0.00}", totCosto);
-                txt_TotIva.Text = string.Format("{0:0.00}", totIva);
-                txt_PercRicavo.Text = string.Format("{0:0.00}", percRicavo);
+                txt_TotPrezzo.Text = string.Format("{0:N2}", totPrezzo);
+                txt_TotCosto.Text = string.Format("{0:N2}", totCosto);
+                txt_TotIva.Text = string.Format("{0:N2}", totIva);
+                txt_PercRicavo.Text = string.Format("{0:N2}", percRicavo);
             }
         }
 

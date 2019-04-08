@@ -4,9 +4,11 @@
     $(document).ready(function () {
         $('.loader').hide();
 
-        $(window).keydown(function(e){
-            if(e.keyCode == 13) {
-                $("#<%=btnRicercaArticoli.ClientID%>").click();
+        $(window).keydown(function (e) {
+            if ($("#<%=hf_tipoOperazione.ClientID%>").val() != 'MODIFICA' && $("#<%=hf_tipoOperazione.ClientID%>").val() != 'INSERIMENTO') {
+                if (e.keyCode == 13) {
+                    $("#<%=btnRicercaArticoli.ClientID%>").click();
+                }
             }
         }); 
     });
@@ -63,6 +65,7 @@
 
     function chiudiPopup() {
         // QUANDO APRO IL POPUP RIPARTE SEMPRE DA ARTICOLO E NON DALL'ULTIMA TAB APERTA
+        $("#<%=hf_tipoOperazione.ClientID%>").val('VISUALIZZAZIONE');
         $("#<%=hf_tabChiamata.ClientID%>").val('Articolo');
         var pannelloPopup = document.getElementById('<%=pnlContainer.ClientID%>');
         pannelloPopup.style.display = "none";
@@ -166,11 +169,11 @@
                 
                 <!-- DIV MESSAGGI DI ERRORE -->        
 
-                <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
+<%--                <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
                   <span onclick="this.parentElement.style.display='none'"
                   class="w3-button w3-large w3-display-topright">&times;</span>
                   <p><asp:Label ID="lbl_MessaggioErrore" runat="server" ></asp:Label></p>
-                </div>                
+                </div>                --%>
                 
                 <div class="w3-container">
                     <!-- ELENCO TAB DETTAGLI ARTICOLO -->
@@ -189,7 +192,7 @@
                         </div>
                         <div class="w3-container">
                             <label>Descrizione</label>
-                            <asp:TextBox ID="tbMod_Descrizione" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="5" ></asp:TextBox>
+                            <asp:TextBox ID="tbMod_Descrizione" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="10" ></asp:TextBox>
                         </div>
                                         
                         <div class="w3-row-padding">

@@ -505,9 +505,9 @@ namespace VideoSystemWeb.Articoli.userControl
                 articolo.DefaultIdTipoGenere = Convert.ToInt16(cmbMod_Genere.SelectedValue);
                 articolo.DefaultIdTipoGruppo = Convert.ToInt16(cmbMod_Gruppo.SelectedValue);
                 articolo.DefaultIdTipoSottogruppo = Convert.ToInt16(cmbMod_Sottogruppo.SelectedValue);
-                articolo.DefaultIva = Convert.ToInt16(BasePage.ValidaCampo(tbMod_IVA, "", false, ref esito));
-                articolo.DefaultPrezzo = Convert.ToDecimal(BasePage.ValidaCampo(tbMod_Prezzo, "", false, ref esito));
-                articolo.DefaultCosto = Convert.ToDecimal(BasePage.ValidaCampo(tbMod_Costo, "", false, ref esito));
+                articolo.DefaultIva = Convert.ToInt16(BasePage.ValidaCampo(tbMod_IVA, "0", false, ref esito));
+                articolo.DefaultPrezzo = Convert.ToDecimal(BasePage.ValidaCampo(tbMod_Prezzo, "0", false, ref esito));
+                articolo.DefaultCosto = Convert.ToDecimal(BasePage.ValidaCampo(tbMod_Costo, "0", false, ref esito));
                 articolo.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
 
                 //azienda.TipoIndirizzoLegale = cmbMod_TipoIndirizzoLegale.SelectedValue;
@@ -576,7 +576,7 @@ namespace VideoSystemWeb.Articoli.userControl
         }
         private void NascondiErroriValidazione()
         {
-            panelErrore.Style.Add("display", "none");
+            //panelErrore.Style.Add("display", "none");
 
             tbMod_Descrizione.CssClass = tbMod_Descrizione.CssClass.Replace("erroreValidazione", "");
             tbMod_DescrizioneBreve.CssClass = tbMod_DescrizioneBreve.CssClass.Replace("erroreValidazione", "");

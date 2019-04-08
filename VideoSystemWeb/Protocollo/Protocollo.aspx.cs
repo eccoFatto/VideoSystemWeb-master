@@ -32,9 +32,9 @@ namespace VideoSystemWeb.Protocollo
                 //BasePage p = new BasePage();
                 Esito esito = basePage.CaricaListeTipologiche();
 
-                basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
-                ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
-                basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
+                //basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
+                //ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
+                //basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
 
                 // CARICO LE COMBO
                 if (string.IsNullOrEmpty(esito.descrizione))

@@ -17,7 +17,7 @@
                 }
             });
 
-            Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+<%--            Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
                 // GESTIONE DROPDOWN CLIENTI
                 $("#filtroClienti").on("keyup", function () {
                     var value = $(this).val().toLowerCase();
@@ -32,7 +32,7 @@
                     $("#<%=ddl_Clienti.ClientID%>").attr("title", $(e.target).text());
                 });
 
-            });
+            });--%>
         });
 
         // APRO POPUP VISUALIZZAZIONE/MODIFICA PROTOCOLLO
@@ -164,7 +164,7 @@
                 <asp:TextBox ID="tbNumeroProtocollo" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
             <div class="w3-quarter">
-                <label>Protocollo Riferimento</label>
+                <label>Riferimento Documento</label>
                 <asp:TextBox ID="tbProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
             <div class="w3-quarter">
@@ -298,7 +298,7 @@
                                         <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA" Text="" ></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>Prot. Riferimento</label>
+                                        <label>Riferimento Documento</label>
                                         <asp:TextBox ID="tbMod_ProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
                                 </div>

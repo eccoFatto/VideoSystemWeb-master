@@ -173,7 +173,8 @@ namespace VideoSystemWeb.DAL
             return listaDatiAgenda;
         }
 
-        public List<int> getTenderImpiegatiInPeriodo(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        // Controllo la disponibilità dei tender nel periodo selezionato, ESCLUDENDO quelli dell'evento corrente
+        public List<int> getTenderImpiegatiInPeriodo(DateTime dataInizio, DateTime dataFine, int idEventoCorrente, ref Esito esito)
         {
             List<int> listaIdTender = new List<int>();
 
@@ -188,11 +189,10 @@ namespace VideoSystemWeb.DAL
                                     " FROM tab_dati_agenda a " +
                                     " join dati_tender b on a.id = b.idDatiAgenda " +
                                     " join tipo_tender c on b.idTender = c.id " +
-                                    //" where a.data_inizio_impegno >= '" + dataDa + "' " +
-                                    //" and a.data_fine_impegno < '"+ dataA + "'";
-                                    " WHERE (a.data_inizio_impegno <= '" + dataDa + "' AND a.data_fine_impegno >= '" + dataDa + "') OR " +
+                                    " WHERE b.idDatiAgenda <> " + idEventoCorrente + " AND " +
+                                    " ((a.data_inizio_impegno <= '" + dataDa + "' AND a.data_fine_impegno >= '" + dataDa + "') OR " +
                                     " (a.data_inizio_impegno < '" + dataA + "' AND a.data_fine_impegno >= '" + dataA + "') OR " +
-                                    " (a.data_inizio_impegno >= '" + dataDa + "' AND a.data_fine_impegno < '" + dataA + "')";
+                                    " (a.data_inizio_impegno >= '" + dataDa + "' AND a.data_fine_impegno < '" + dataA + "')) ";
 
 
                     using (SqlCommand cmd = new SqlCommand(query))
@@ -265,7 +265,7 @@ namespace VideoSystemWeb.DAL
                                 }
                                 // Attempt to commit the transaction.
                                 transaction.Commit();
-
+                                evento.id = iDatiAgendaReturn; // setto l'id generato x salvataggio dovuto a riepilogo (non viene chiuso il popup e un successivo salvataggio genera errore validazione)
                             }
                             catch (Exception ex)
                             {
@@ -378,6 +378,7 @@ namespace VideoSystemWeb.DAL
 
                             // Attempt to commit the transaction.
                             transaction.Commit();
+                            evento.id = iDatiAgendaReturn; // setto l'id generato x salvataggio dovuto a riepilogo (non viene chiuso il popup e un successivo salvataggio genera errore validazione)
                         }
                         catch (Exception ex)
                         {

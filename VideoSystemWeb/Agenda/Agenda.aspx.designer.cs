@@ -499,13 +499,13 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.GridView gvArticoli;
         
         /// <summary>
-        /// Controllo footerSchermo.
+        /// Controllo totaliSchermo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerSchermo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totaliSchermo;
         
         /// <summary>
         /// Controllo totale.
@@ -517,13 +517,31 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Label totale;
         
         /// <summary>
-        /// Controllo footerStampa.
+        /// Controllo totaleIVA.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerStampa;
+        protected global::System.Web.UI.WebControls.Label totaleIVA;
+        
+        /// <summary>
+        /// Controllo totaleEuro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label totaleEuro;
+        
+        /// <summary>
+        /// Controllo totaliStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totaliStampa;
         
         /// <summary>
         /// Controllo totaleStampa.
@@ -533,6 +551,42 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label totaleStampa;
+        
+        /// <summary>
+        /// Controllo totaleIVAStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label totaleIVAStampa;
+        
+        /// <summary>
+        /// Controllo totaleEuroStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label totaleEuroStampa;
+        
+        /// <summary>
+        /// Controllo datiClienteSchermo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl datiClienteSchermo;
+        
+        /// <summary>
+        /// Controllo datiClienteStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl datiClienteStampa;
         
         /// <summary>
         /// Controllo btnStampaOfferta.

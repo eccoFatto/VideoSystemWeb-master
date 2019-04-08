@@ -53,8 +53,11 @@
         $("#<%=tbDescrizione.ClientID%>").val('');
         $("#<%=tbDescrizioneBreve.ClientID%>").val('');
         $("#<%=TbCosto.ClientID%>").val('');
-        $("#<%=tbIva.ClientID%>").val('');
+        //$("#<=tbIva.ClientID%>").val('');
         $("#<%=tbPrezzo.ClientID%>").val('');
+        $("#<%=ddlGenere.ClientID%>").val('');
+        $("#<%=ddlGruppo.ClientID%>").val('');
+        $("#<%=ddlSottoGruppo.ClientID%>").val('');
     }
 
 
@@ -72,30 +75,45 @@
         
         <div class="w3-row-padding">
             <div class="w3-half">
-                <label>Descrizione</label>
-                <asp:TextBox ID="tbDescrizione" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
-            </div>
-            <div class="w3-half">
                 <label>Descrizione Breve</label>
                 <asp:TextBox ID="tbDescrizioneBreve" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
+            <div class="w3-half">
+                <label>Descrizione</label>
+                <asp:TextBox ID="tbDescrizione" runat="server" class="w3-input w3-border" placeholder=""></asp:TextBox>
+            </div>
         </div>
         
-          <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-quarter">
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-third">
+                <label>Genere</label>
+                <asp:DropDownList ID="ddlGenere" runat="server" class="w3-input w3-border" ></asp:DropDownList>
+            </div>
+            <div class="w3-third">
+                <label>Gruppo</label>
+                <asp:DropDownList ID="ddlGruppo" runat="server" class="w3-input w3-border" ></asp:DropDownList>
+            </div>
+            <div class="w3-third">
+                <label>Gruppo</label>
+                <asp:DropDownList ID="ddlSottoGruppo" runat="server" class="w3-input w3-border" ></asp:DropDownList>
+            </div>
+        </div>
+
+        <div class="w3-row-padding w3-margin-bottom">
+<%--            <div class="w3-quarter">
                 <label>IVA</label>
                     <asp:TextBox ID="tbIva" runat="server" class="w3-input w3-border" placeholder="" ></asp:TextBox>
-            </div>
-            <div class="w3-quarter">
+            </div>--%>
+            <div class="w3-third">
                 <label>Prezzo</label>
                 <asp:TextBox ID="tbPrezzo" runat="server" MaxLength="16" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
-            <div class="w3-quarter">
+            <div class="w3-third">
                 <label>Costo</label>
                 <asp:TextBox ID="TbCosto" runat="server" class="w3-input w3-border" placeholder="" ></asp:TextBox>
             </div>
-            <div class="w3-quarter">
-                <label></label>
+            <div class="w3-third">
+                <label>&nbsp;</label>
                 <table style="width:100%;">
                     <tr>
                         <td style="width:40%;">                    
@@ -121,11 +139,12 @@
         </div>
         
     </ContentTemplate>
+
     <Triggers>
-        
         <asp:AsyncPostBackTrigger ControlID="btnRicercaArticoli" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="BtnPulisciCampiRicerca" EventName="Click" />
     </Triggers>
+
 </asp:UpdatePanel>
 
 <asp:Button runat="server" ID="btnEditArticolo" Style="display: none" OnClick="EditArticolo_Click"/>
@@ -165,12 +184,12 @@
                     <!-- TAB ARTICOLI -->
                     <div id="Articolo" class="w3-container w3-border articolo"  style="display:block">
                         <div class="w3-container">
-                            <label>Descrizione</label>
-                            <asp:TextBox ID="tbMod_Descrizione" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="3" ></asp:TextBox>
-                        </div>
-                        <div class="w3-container">
                             <label>Desc. breve</label>
                             <asp:TextBox ID="tbMod_DescrizioneBreve" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"  MaxLength="60"></asp:TextBox>
+                        </div>
+                        <div class="w3-container">
+                            <label>Descrizione</label>
+                            <asp:TextBox ID="tbMod_Descrizione" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="5" ></asp:TextBox>
                         </div>
                                         
                         <div class="w3-row-padding">
@@ -205,7 +224,7 @@
 
                         <div class="w3-container">
                             <label>Note</label>
-                            <asp:TextBox ID="tbMod_Note" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="3"></asp:TextBox>
+                            <asp:TextBox ID="tbMod_Note" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="1"></asp:TextBox>
                         </div>
 
                         <div class="w3-row-padding">
@@ -235,7 +254,7 @@
                         <div class="w3-container w3-center">
                             <asp:Button ID="btnApriGruppi" runat="server" OnClick="btnApriGruppi_Click" Text="Gestione Gruppi" class="w3-panel w3-green w3-border w3-round" />
                             <asp:PlaceHolder ID="phGruppi" runat="server" Visible="false">                                
-                                <div class="w3-row-padding w3-center w3-text-center" style="width:50%;">
+                                <div class="w3-row-padding w3-center w3-text-center" style="width:100%;">
                                     <label>Selezione Gruppi da aggiungere</label>
                                     <asp:DropDownList ID="ddlGruppiDaAggiungere" runat="server" AutoPostBack="false" Width="100%" class="w3-input w3-border">
                                     </asp:DropDownList>                                                

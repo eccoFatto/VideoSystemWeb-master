@@ -47,7 +47,9 @@ namespace VideoSystemWeb.Articoli
                 foreach (Art_Gruppi raggruppamento in lista)
                 {
                     ListItem item = new ListItem();
-                    item.Text = raggruppamento.Nome;
+                    string stringaVisualizzata = raggruppamento.Nome.Trim();
+                    if (!string.IsNullOrEmpty(raggruppamento.Descrizione)) stringaVisualizzata += " | " + raggruppamento.Descrizione.Trim();
+                    item.Text = stringaVisualizzata;
                     item.Value = raggruppamento.Id.ToString();
                     lbMod_Raggruppamenti.Items.Add(item);
                 }
@@ -67,7 +69,7 @@ namespace VideoSystemWeb.Articoli
                 foreach (Art_Articoli articoloMain in listaArticoliMain)
                 {
                     ListItem item = new ListItem();
-                    item.Text = articoloMain.DefaultDescrizioneLunga + " - " + articoloMain.DefaultDescrizione;
+                    item.Text = articoloMain.DefaultDescrizione + " | " + articoloMain.DefaultDescrizioneLunga;
                     item.Value = articoloMain.Id.ToString();
                     ddlArticoliDaAggiungere.Items.Add(item);
                 }
@@ -120,8 +122,9 @@ namespace VideoSystemWeb.Articoli
 
             if (esito.codice != Esito.ESITO_OK)
             {
-                panelErrore.Style.Add("display", "block");
-                lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+                //panelErrore.Style.Add("display", "block");
+                //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+                ShowError("Controllare i campi evidenziati");
             }
             else
             {
@@ -198,7 +201,7 @@ namespace VideoSystemWeb.Articoli
 
         private void NascondiErroriValidazione()
         {
-            panelErrore.Style.Add("display", "none");
+            //panelErrore.Style.Add("display", "none");
 
             tbInsDescrizioneRaggruppamento.CssClass = tbInsDescrizioneRaggruppamento.CssClass.Replace("erroreValidazione", "");
             tbInsNomeRaggruppamento.CssClass = tbInsNomeRaggruppamento.CssClass.Replace("erroreValidazione", "");
@@ -293,8 +296,9 @@ namespace VideoSystemWeb.Articoli
                     if (esito.codice != Esito.ESITO_OK)
                     {
                         btnInserisciRaggruppamento.Visible = true;
-                        panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        //panelErrore.Style.Remove("display");
+                        //lbl_MessaggioErrore.Text = esito.descrizione;
+                        ShowError(esito.descrizione);
                     }
                     else
                     {
@@ -318,7 +322,7 @@ namespace VideoSystemWeb.Articoli
                                 foreach (Art_Articoli articolo in listaArticoli)
                                 {
                                     ListItem item = new ListItem();
-                                    item.Text = articolo.DefaultDescrizioneLunga + " - " + articolo.DefaultDescrizione;
+                                    item.Text = articolo.DefaultDescrizione + " | " + articolo.DefaultDescrizioneLunga;
                                     item.Value = articolo.Id.ToString();
                                     lbMod_Articoli.Items.Add(item);
                                 }

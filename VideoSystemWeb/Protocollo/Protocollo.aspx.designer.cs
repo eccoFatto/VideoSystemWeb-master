@@ -67,6 +67,24 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.DropDownList ddlTipoProtocollo;
         
         /// <summary>
+        /// Controllo tbProduzione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbProduzione;
+        
+        /// <summary>
+        /// Controllo tbDataLavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbDataLavorazione;
+        
+        /// <summary>
         /// Controllo tbRagioneSociale.
         /// </summary>
         /// <remarks>
@@ -139,6 +157,24 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.Button btnInsProtocollo;
         
         /// <summary>
+        /// Controllo btnCercaCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCercaCliente;
+        
+        /// <summary>
+        /// Controllo btnCercaLavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCercaLavorazione;
+        
+        /// <summary>
         /// Controllo btnChiudiPopupServer.
         /// </summary>
         /// <remarks>
@@ -146,6 +182,24 @@ namespace VideoSystemWeb.Protocollo {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnChiudiPopupServer;
+        
+        /// <summary>
+        /// Controllo btnChiudiPopupClientiServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnChiudiPopupClientiServer;
+        
+        /// <summary>
+        /// Controllo btnChiudiPopupLavorazioniServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnChiudiPopupLavorazioniServer;
         
         /// <summary>
         /// Controllo hf_idProt.
@@ -211,15 +265,6 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbMod_CodiceLavoro;
         
         /// <summary>
-        /// Controllo imgbtnCreateNewCodLav.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton imgbtnCreateNewCodLav;
-        
-        /// <summary>
         /// Controllo imgbtnSelectCodLav.
         /// </summary>
         /// <remarks>
@@ -263,6 +308,24 @@ namespace VideoSystemWeb.Protocollo {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_ProtocolloRiferimento;
+        
+        /// <summary>
+        /// Controllo tbMod_Produzione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Produzione;
+        
+        /// <summary>
+        /// Controllo tbMod_DataLavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_DataLavorazione;
         
         /// <summary>
         /// Controllo tbMod_Cliente.
@@ -371,5 +434,176 @@ namespace VideoSystemWeb.Protocollo {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnullaProtocollo;
+        
+        /// <summary>
+        /// Controllo PanelLavorazioni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelLavorazioni;
+        
+        /// <summary>
+        /// Controllo Panel3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel3;
+        
+        /// <summary>
+        /// Controllo tbSearch_CodiceLavoro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_CodiceLavoro;
+        
+        /// <summary>
+        /// Controllo tbSearch_Cliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_Cliente;
+        
+        /// <summary>
+        /// Controllo tbSearch_Luogo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_Luogo;
+        
+        /// <summary>
+        /// Controllo tbSearch_Produzione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_Produzione;
+        
+        /// <summary>
+        /// Controllo tbSearch_Lavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_Lavorazione;
+        
+        /// <summary>
+        /// Controllo tbSearch_DataInizio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_DataInizio;
+        
+        /// <summary>
+        /// Controllo tbSearch_DataFine.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_DataFine;
+        
+        /// <summary>
+        /// Controllo btnRicercaLavorazioni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRicercaLavorazioni;
+        
+        /// <summary>
+        /// Controllo btnAzzeraCampiRicercaLavorazioni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAzzeraCampiRicercaLavorazioni;
+        
+        /// <summary>
+        /// Controllo gvLavorazioni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvLavorazioni;
+        
+        /// <summary>
+        /// Controllo upClienti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upClienti;
+        
+        /// <summary>
+        /// Controllo PanelClienti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelClienti;
+        
+        /// <summary>
+        /// Controllo Panel2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel2;
+        
+        /// <summary>
+        /// Controllo lbl_Cliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Cliente;
+        
+        /// <summary>
+        /// Controllo hf_Clienti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_Clienti;
+        
+        /// <summary>
+        /// Controllo ddl_Clienti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ddl_Clienti;
+        
+        /// <summary>
+        /// Controllo elencoClienti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoClienti;
     }
 }

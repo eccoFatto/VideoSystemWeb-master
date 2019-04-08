@@ -2,59 +2,121 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script>
-    $(document).ready(function () {
-        $('.loader').hide();
-    });
+        $(document).ready(function () {
+            $('.loader').hide();
 
-    // APRO POPUP VISUALIZZAZIONE/MODIFICA PROTOCOLLO
+            $(window).keydown(function(e){
+                if (e.keyCode == 13) {
+                    //alert($("#<=hf_tipoOperazione.ClientID%>").val());
+                    if ($("#<%=hf_tipoOperazione.ClientID%>").val() != 'MODIFICA' && $("#<%=hf_tipoOperazione.ClientID%>").val() != 'INSERIMENTO') {
+                        $("#<%=btnRicercaProtocollo.ClientID%>").click();
+                    }
+                    else {
+                        $("#<%=btnRicercaLavorazioni.ClientID%>").click();
+                    }
+                }
+            });
+
+            Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+                // GESTIONE DROPDOWN CLIENTI
+                $("#filtroClienti").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#divClienti .dropdown-menu li").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+
+                $("#<%=elencoClienti.ClientID%> .dropdown-item").on("click", function (e) {
+                    $("#<%=hf_Clienti.ClientID%>").val($(this.firstChild).attr('val'));
+                    $("#<%=ddl_Clienti.ClientID%>").val($(e.target).text());
+                    $("#<%=ddl_Clienti.ClientID%>").attr("title", $(e.target).text());
+                });
+
+            });
+        });
+
+        // APRO POPUP VISUALIZZAZIONE/MODIFICA PROTOCOLLO
         function mostraProtocollo(row) {
-        $('.loader').show();
-        $("#<%=hf_idProt.ClientID%>").val(row);
-        $("#<%=hf_tipoOperazione.ClientID%>").val('MODIFICA');
-        $("#<%=btnEditProtocollo.ClientID%>").click();
-    }
-    // APRO POPUP DI INSERIMENTO PROTOCOLLO
-    function inserisciProtocollo() {
-        $('.loader').show();
-        $("#<%=hf_idProt.ClientID%>").val('');
-        $("#<%=hf_tipoOperazione.ClientID%>").val('INSERIMENTO');
-        $("#<%=btnInsProtocollo.ClientID%>").click();
-    }
+            $('.loader').show();
+            $("#<%=hf_idProt.ClientID%>").val(row);
+            $("#<%=hf_tipoOperazione.ClientID%>").val('MODIFICA');
+            $("#<%=btnEditProtocollo.ClientID%>").click();
+        }
+        // APRO POPUP DI INSERIMENTO PROTOCOLLO
+        function inserisciProtocollo() {
+            $('.loader').show();
+            $("#<%=hf_idProt.ClientID%>").val('');
+            $("#<%=hf_tipoOperazione.ClientID%>").val('INSERIMENTO');
+            $("#<%=btnInsProtocollo.ClientID%>").click();
+        }
 
-    // APRO LE TAB DETTAGLIO PROTOCOLLO
-    function openDettaglioProtocollo(tipoName) {
-        $("#<%=hf_tabChiamata.ClientID%>").val(tipoName);
-        if (document.getElementById(tipoName) != undefined) {
-            var i;
-            var x = document.getElementsByClassName("prot");
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";  
+        // APRO POPUP RICERCA CLIENTE
+        function cercaCliente() {
+            $('.loader').show();
+            $("#<%=btnCercaCliente.ClientID%>").click();
+        }
+
+        // APRO POPUP RICERCA LAVORAZIONE
+        function cercaLavorazione() {
+            $('.loader').show();
+            $("#<%=btnCercaLavorazione.ClientID%>").click();
+        }
+
+        // APRO LE TAB DETTAGLIO PROTOCOLLO
+        function openDettaglioProtocollo(tipoName) {
+            $("#<%=hf_tabChiamata.ClientID%>").val(tipoName);
+            if (document.getElementById(tipoName) != undefined) {
+                var i;
+                var x = document.getElementsByClassName("prot");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";  
+                }
+                document.getElementById(tipoName).style.display = "block";  
             }
-            document.getElementById(tipoName).style.display = "block";  
-        }
-    }
-
-    function chiudiPopup() {
-        // QUANDO APRO IL POPUP RIPARTE SEMPRE DA PROTOCOLLO E NON DALL'ULTIMA TAB APERTA
-        $("#<%=hf_tabChiamata.ClientID%>").val('Protocollo');
-        //var pannelloPopup = document.getElementById('<%=pnlContainer.ClientID%>');
-        //pannelloPopup.style.display = "none";
-        $("#<%=hf_idProt.ClientID%>").val('');
-        $("#<%=btnChiudiPopupServer.ClientID%>").click();
-
-    }
-
-    // AZZERO TUTTI I CAMPI RICERCA
-    function azzeraCampiRicerca() {
-        $("#<%=tbCodiceLavoro.ClientID%>").val('');
-        $("#<%=tbRagioneSociale.ClientID%>").val('');
-        $("#<%=tbNumeroProtocollo.ClientID%>").val('');
-        $("#<%=tbDataProtocollo.ClientID%>").val('');
-        $("#<%=tbProtocolloRiferimento.ClientID%>").val('');
-        $("#<%=ddlTipoProtocollo.ClientID%>").val('');
         }
 
-        function uploadError(sender,args)
+        function chiudiPopup() {
+            // QUANDO APRO IL POPUP RIPARTE SEMPRE DA PROTOCOLLO E NON DALL'ULTIMA TAB APERTA
+            $("#<%=hf_tabChiamata.ClientID%>").val('Protocollo');
+            //var pannelloPopup = document.getElementById('<%=pnlContainer.ClientID%>');
+            //pannelloPopup.style.display = "none";
+            $("#<%=hf_idProt.ClientID%>").val('');
+            $("#<%=hf_tipoOperazione.ClientID%>").val('VISUALIZZAZIONE');
+            $("#<%=btnChiudiPopupServer.ClientID%>").click();
+
+        }
+
+        function chiudiPopupClienti() {
+            $("#<%=btnChiudiPopupClientiServer.ClientID%>").click();
+        }
+
+        function chiudiPopupLavorazioni() {
+            $("#<%=btnChiudiPopupLavorazioniServer.ClientID%>").click();
+        }
+
+        // AZZERO TUTTI I CAMPI RICERCA
+        function azzeraCampiRicerca() {
+            $("#<%=tbCodiceLavoro.ClientID%>").val('');
+            $("#<%=tbRagioneSociale.ClientID%>").val('');
+            $("#<%=tbNumeroProtocollo.ClientID%>").val('');
+            $("#<%=tbDataProtocollo.ClientID%>").val('');
+            $("#<%=tbDataLavorazione.ClientID%>").val('');
+            $("#<%=tbProduzione.ClientID%>").val('');
+            $("#<%=tbProtocolloRiferimento.ClientID%>").val('');
+            $("#<%=ddlTipoProtocollo.ClientID%>").val('');
+        }
+
+        function azzeraCampiRicercaLavorazione() {
+            $("#<%=tbSearch_Cliente.ClientID%>").val('');
+            $("#<%=tbSearch_CodiceLavoro.ClientID%>").val('');
+            $("#<%=tbSearch_DataFine.ClientID%>").val('');
+            $("#<%=tbSearch_DataInizio.ClientID%>").val('');
+            $("#<%=tbSearch_Lavorazione.ClientID%>").val('');
+            $("#<%=tbSearch_Luogo.ClientID%>").val('');
+            $("#<%=tbSearch_Produzione.ClientID%>").val('');
+        }
+
+        function uploadError(sender, args)
         {
             //alert('errore ');
             $('.loader').hide();
@@ -83,10 +145,12 @@
             document.getElementById('<%=tbMod_NomeFile.ClientID%>').innerText = filename;
         }
 
-
-
-
-</script>
+        function associaCodiceLavorazione(codLav, cliente) {
+            document.getElementById('<%=tbMod_CodiceLavoro.ClientID%>').value = codLav;
+            document.getElementById('<%=tbMod_Cliente.ClientID%>').value = cliente;
+            chiudiPopupLavorazioni();
+        }
+    </script>
 <Label><asp:Label ID="lblProtocolli" runat="server" Text="PROTOCOLLI" ForeColor="Teal"></asp:Label></Label>
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
@@ -109,8 +173,17 @@
                 </asp:DropDownList>
             </div>
         </div>
-        
-          <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-row-padding w3-margin-bottom">
+            <div class="w3-threequarter">
+                <label>Produzione</label>
+                <asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
+            </div>
+            <div class="w3-quarter">
+                <label>Data Lav.</label>
+                <asp:TextBox ID="tbDataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
+            </div>
+        </div>
+        <div class="w3-row-padding w3-margin-bottom">
             <div class="w3-half">
                 <label>Cliente</label>
                 <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
@@ -165,7 +238,12 @@
 
 <asp:Button runat="server" ID="btnEditProtocollo" Style="display: none" OnClick="btnEditProtocollo_Click"/>
 <asp:Button runat="server" ID="btnInsProtocollo" Style="display: none" OnClick="btnInsProtocollo_Click"/>
+<asp:Button runat="server" ID="btnCercaCliente" Style="display: none" OnClick="btnCercaCliente_Click"/>
+<asp:Button runat="server" ID="btnCercaLavorazione" Style="display: none" OnClick="btnCercaLavorazione_Click"/>
+    
 <asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopup_Click"/>
+<asp:Button runat="server" ID="btnChiudiPopupClientiServer" Style="display: none" OnClick="btnChiudiPopupClientiServer_Click"/>
+<asp:Button runat="server" ID="btnChiudiPopupLavorazioniServer" Style="display: none" OnClick="btnChiudiPopupLavorazioniServer_Click"/>
 
 <asp:HiddenField ID="hf_idProt" runat="server" EnableViewState="true" />
 <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
@@ -192,21 +270,21 @@
                 </div>
                     <!-- TAB PROTOCOLLI -->
                     <div id="Protocollo" class="w3-container w3-border prot" style="display:block" >
-                        <label>Protocolli</label>
+                        <%--<label>Protocolli</label>--%>
                         <div class="w3-container w3-center">
                             <p>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-quarter">
                                         <label>Codice Lavorazione</label>
                                         <div class="w3-row-padding w3-center w3-text-center">
-                                            <div class="w3-half">
+                                            <div class="w3-threequarter">
                                                 <asp:TextBox ID="tbMod_CodiceLavoro" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                             </div>
+<%--                                            <div class="w3-quarter">
+                                                <asp:ImageButton ID="imgbtnCreateNewCodLav" ImageUrl="~/Images/detail-icon.png" runat="server" class="w3-input  w3-round " Height="40px" Width="40px" Text="+" ToolTip="Crea Nuovo Codice Lavorazione" OnClick="imgbtnCreateNewCodLav_Click" />
+                                            </div>--%>
                                             <div class="w3-quarter">
-                                                <asp:ImageButton ID="imgbtnCreateNewCodLav" ImageUrl="~/Images/detail-icon.png" runat="server" class="w3-input  w3-round " Text="+" ToolTip="Crea Nuovo Codice Lavorazione" OnClick="imgbtnCreateNewCodLav_Click" />
-                                            </div>
-                                            <div class="w3-quarter">
-                                                <asp:ImageButton ID="imgbtnSelectCodLav" ImageUrl="~/Images/Martz90-Circle-Camera.ico" runat="server" class="w3-input w3-round " Text="->" ToolTip="Cerca Codice Lavorazione" />
+                                                <asp:ImageButton ID="imgbtnSelectCodLav" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" ToolTip="Cerca Codice Lavorazione" OnClick="imgbtnSelectCodLav_Click" OnClientClick="cercaLavorazione()"  />
                                             </div>
                                         </div>
                                     </div>
@@ -225,15 +303,37 @@
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
+                                    <div class="w3-threequarter">
+                                        <label>Produzione</label>
+                                        <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Data Lav</label>
+                                        <asp:TextBox ID="tbMod_DataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA" Text="" ></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
                                         <label>Cliente</label>
                                         <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+
+<%--                                        <div class="w3-row-padding w3-center w3-text-center">
+                                            <div class="w3-threequarter">
+                                                <label>Cliente</label>
+                                                <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                            </div>
+                                            <div class="w3-quarter">
+                                                <label>&nbsp;</label>
+                                                <asp:ImageButton ID="imbCercaCliente" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" Text="->" ToolTip="Cerca Cliente" OnClientClick="cercaCliente();" />
+                                            </div>
+                                        </div>--%>
                                     </div>
                                     <div class="w3-half">
                                         <label>Descrizione</label>
                                         <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
                                 </div>
+                                
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
                                         <label>Tipo</label>
@@ -283,6 +383,79 @@
                     </div>
             </asp:Panel>
         </asp:Panel>
+        <!-- POPUP RICERCA LAVORAZIONI -->
+        <asp:Panel  runat="server" ID="PanelLavorazioni" visible="false">
+            <div class="modalBackground"></div>
+            <asp:Panel  runat="server" ID="Panel3" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                <div class="w3-container">
+                    <!-- RICERCA LAVORAZIONI -->
+                    <div class="w3-bar w3-yellow w3-round">
+                        <div class="w3-bar-item w3-button w3-yellow">Ricerca Lavorazioni</div>
+                        <div class="w3-bar-item w3-button w3-yellow w3-right">
+                            <div id="btnChiudiPopupLavorazioni" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopupLavorazioni();">Chiudi</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="w3-row-padding">
+                    <div class="w3-quarter">
+                        <label>Codice Lavoro</label>
+                        <asp:TextBox ID="tbSearch_CodiceLavoro" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    </div>
+                    <div class="w3-quarter">
+                        <label>Cliente/Fornitore</label>
+                        <asp:TextBox ID="tbSearch_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    </div>
+                    <div class="w3-quarter">
+                        <label>Luogo</label>
+                        <asp:TextBox ID="tbSearch_Luogo" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    </div>
+                    <div class="w3-quarter">
+                        <label>Produzione</label>
+                        <asp:TextBox ID="tbSearch_Produzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    </div>
+                </div>
+                <div class="w3-row-padding">
+                    <div class="w3-quarter">
+                        <label>Lavorazione</label>
+                        <asp:TextBox ID="tbSearch_Lavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    </div>
+                    <div class="w3-quarter">
+                        <label>Data da</label>
+                        <asp:TextBox ID="tbSearch_DataInizio" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
+                    </div>
+                    <div class="w3-quarter">
+                        <label>Data a</label>
+                        <asp:TextBox ID="tbSearch_DataFine" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
+                    </div>
+                    <div class="w3-quarter">
+                        <label>&nbsp;</label>
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width:50%;">                    
+                                    <asp:Button ID="btnRicercaLavorazioni" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaLavorazioni_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
+                                </td>
+                                <td style="width:50%;">
+                                    <asp:Button ID="btnAzzeraCampiRicercaLavorazioni" runat="server" class="w3-btn w3-circle w3-red" Text="&times;"  OnClientClick="azzeraCampiRicercaLavorazione();" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="round">
+                    <asp:GridView ID="gvLavorazioni" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gvLavorazioni_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvLavorazioni_PageIndexChanging" PageSize="20">
+                        <Columns>
+                            <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
+                                <ItemTemplate>
+                                    <asp:ImageButton ID="imgSelect" runat="server" CausesValidation="false"  Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Lavorazione" ImageAlign="AbsMiddle" Height="30px" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </div>
+            </asp:Panel>
+        </asp:Panel>
+
     </ContentTemplate>
     <Triggers>
         <asp:AsyncPostBackTrigger ControlID="btnInserisciProtocollo" EventName="Click" />
@@ -290,5 +463,41 @@
         <asp:AsyncPostBackTrigger ControlID="btnEliminaProtocollo" EventName="Click" />
     </Triggers>
 
+</asp:UpdatePanel>
+
+
+
+
+<asp:UpdatePanel ID="upClienti" runat="server">
+    <ContentTemplate>
+        <asp:Panel  runat="server" ID="PanelClienti" visible="false">
+            <div class="modalBackground"></div>
+            <asp:Panel  runat="server" ID="Panel2" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                <div class="w3-container">
+                    <!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
+                    <div class="w3-bar w3-yellow w3-round">
+                        <div class="w3-bar-item w3-button w3-yellow">Ricerca Clienti/Fornitori</div>
+                        <div class="w3-bar-item w3-button w3-yellow w3-right">
+                            <div id="btnChiudiPopupClienti" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopupClienti();">Chiudi</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-row" style="margin-bottom: 5px;">
+                    <div class="w3-third">
+                        <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente" class="label"></asp:Label>
+                    </div>
+                    <div class="w3-twothird">
+                        <div id="divClienti" class="dropdown ">
+                            <asp:HiddenField ID="hf_Clienti" runat="server" Value="" />
+                            <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
+                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto">
+                                <input class="form-control" id="filtroClienti" type="text" placeholder="Cerca..">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </asp:Panel>
+        </asp:Panel>
+    </ContentTemplate>
 </asp:UpdatePanel>
 </asp:Content>

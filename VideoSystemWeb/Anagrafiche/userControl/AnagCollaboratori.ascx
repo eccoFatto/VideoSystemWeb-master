@@ -6,7 +6,7 @@
     $(document).ready(function () {
         $('.loader').hide();
         
-            $(window).keydown(function(e){
+        $(window).keydown(function(e){
             if(e.keyCode == 13) {
                 $("#<%=btnRicercaCollaboratori.ClientID%>").click();
             }

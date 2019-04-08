@@ -29,8 +29,12 @@ namespace VideoSystemWeb.Protocollo
             if (!Page.IsPostBack)
             {
                 Session["NOME_FILE"] = "";
-                BasePage p = new BasePage();
-                Esito esito = p.CaricaListeTipologiche();
+                //BasePage p = new BasePage();
+                Esito esito = basePage.CaricaListeTipologiche();
+
+                basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
+                ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
+                basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
 
                 // CARICO LE COMBO
                 if (string.IsNullOrEmpty(esito.descrizione))
@@ -38,7 +42,7 @@ namespace VideoSystemWeb.Protocollo
                     ddlTipoProtocollo.Items.Clear();
                     cmbMod_Tipologia.Items.Clear();
                     ddlTipoProtocollo.Items.Add("");
-                    foreach (Tipologica tipologiaProtocollo in p.listaTipiProtocolli)
+                    foreach (Tipologica tipologiaProtocollo in basePage.listaTipiProtocolli)
                     {
                         ListItem item = new ListItem();
                         item.Text = tipologiaProtocollo.nome;
@@ -54,7 +58,7 @@ namespace VideoSystemWeb.Protocollo
                     }
 
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                    abilitaBottoni(p.AbilitazioneInScrittura());
+                    abilitaBottoni(basePage.AbilitazioneInScrittura());
 
 
                 }
@@ -102,10 +106,15 @@ namespace VideoSystemWeb.Protocollo
                     {
                         btnGestisciProtocollo.Visible = true;
                     }
-                    imgbtnCreateNewCodLav.Attributes.Add("disabled","");
+                    //imgbtnCreateNewCodLav.Attributes.Add("disabled","");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
-                    btnAnnullaCaricamento.Attributes.Add("disabled", "");
-                    fuFileProt.Attributes.Add("disabled", "");
+                    //imbCercaCliente.Attributes.Add("disabled", "");
+                    //btnAnnullaCaricamento.Attributes.Add("disabled", "");
+                    //fuFileProt.Attributes.Add("disabled", "");
+                    //fuFileProt.Enabled = false;
+                    btnAnnullaCaricamento.Visible = false;
+                    fuFileProt.Visible = false;
+                    lblStatus.Visible = fuFileProt.Visible;
 
                     break;
                 case "INSERIMENTO":
@@ -115,10 +124,15 @@ namespace VideoSystemWeb.Protocollo
                     btnAnnullaProtocollo.Visible = false;
                     btnGestisciProtocollo.Visible = false;
 
-                    imgbtnCreateNewCodLav.Attributes.Remove("disabled");
+                    //imgbtnCreateNewCodLav.Attributes.Remove("disabled");
                     imgbtnSelectCodLav.Attributes.Remove("disabled");
-                    btnAnnullaCaricamento.Attributes.Remove("disabled");
-                    fuFileProt.Attributes.Remove("disabled");
+                    //imbCercaCliente.Attributes.Remove("disabled");
+                    //btnAnnullaCaricamento.Attributes.Remove("disabled");
+                    //fuFileProt.Attributes.Remove("disabled");
+                    //fuFileProt.Enabled = true;
+                    btnAnnullaCaricamento.Visible = true;
+                    fuFileProt.Visible = true;
+                    lblStatus.Visible = fuFileProt.Visible;
                     break;
                 case "MODIFICA":
                     btnInserisciProtocollo.Visible = false;
@@ -127,10 +141,15 @@ namespace VideoSystemWeb.Protocollo
                     btnAnnullaProtocollo.Visible = true;
                     btnGestisciProtocollo.Visible = false;
 
-                    imgbtnCreateNewCodLav.Attributes.Remove("disabled");
+                    //imgbtnCreateNewCodLav.Attributes.Remove("disabled");
                     imgbtnSelectCodLav.Attributes.Remove("disabled");
-                    btnAnnullaCaricamento.Attributes.Remove("disabled");
-                    fuFileProt.Attributes.Remove("disabled");
+                    //imbCercaCliente.Attributes.Remove("disabled");
+                    //btnAnnullaCaricamento.Attributes.Remove("disabled");
+                    //fuFileProt.Attributes.Remove("disabled");
+                    //fuFileProt.Enabled = true;
+                    btnAnnullaCaricamento.Visible = true;
+                    fuFileProt.Visible = true;
+                    lblStatus.Visible = fuFileProt.Visible;
 
                     break;
                 case "ANNULLAMENTO":
@@ -140,10 +159,15 @@ namespace VideoSystemWeb.Protocollo
                     btnAnnullaProtocollo.Visible = false;
                     btnGestisciProtocollo.Visible = true;
 
-                    imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
+                    //imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
-                    btnAnnullaCaricamento.Attributes.Add("disabled", "");
-                    fuFileProt.Attributes.Add("disabled", "");
+                    //imbCercaCliente.Attributes.Add("disabled","");
+                    //btnAnnullaCaricamento.Attributes.Add("disabled", "");
+                    //fuFileProt.Attributes.Add("disabled", "");
+                    //fuFileProt.Enabled = false;
+                    btnAnnullaCaricamento.Visible = false;
+                    fuFileProt.Visible = false;
+                    lblStatus.Visible = fuFileProt.Visible;
 
                     break;
                 default:
@@ -153,10 +177,16 @@ namespace VideoSystemWeb.Protocollo
                     btnAnnullaProtocollo.Visible = false;
                     btnGestisciProtocollo.Visible = true;
 
-                    imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
+                    //imgbtnCreateNewCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
-                    btnAnnullaCaricamento.Attributes.Add("disabled", "");
-                    fuFileProt.Attributes.Add("disabled", "");
+                    //imbCercaCliente.Attributes.Add("disabled","");
+
+                    //btnAnnullaCaricamento.Attributes.Add("disabled", "");
+                    //fuFileProt.Attributes.Add("disabled", "");
+                    //fuFileProt.Enabled = false;
+                    btnAnnullaCaricamento.Visible = false;
+                    fuFileProt.Visible = false;
+                    lblStatus.Visible = fuFileProt.Visible;
                     break;
             }
 
@@ -271,8 +301,10 @@ namespace VideoSystemWeb.Protocollo
 
             queryRicerca = queryRicerca.Replace("@numeroProtocollo", tbNumeroProtocollo.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@dataProtocollo", tbDataProtocollo.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@dataLavorazione", tbDataLavorazione.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@tipoProtocollo", ddlTipoProtocollo.SelectedValue.ToString().Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@protocolloRiferimento", tbProtocolloRiferimento.Text.Trim().Replace("'","''"));
 
@@ -322,6 +354,8 @@ namespace VideoSystemWeb.Protocollo
             tbMod_NumeroProtocollo.Text = "";
             tbMod_ProtocolloRiferimento.Text = "";
             tbMod_DataProtocollo.Text = "";
+            tbMod_DataLavorazione.Text = "";
+            tbMod_Produzione.Text = "";
             tbMod_Cliente.Text = "";
             tbMod_NomeFile.Text = "";
             tbMod_Descrizione.Text = "";
@@ -335,7 +369,8 @@ namespace VideoSystemWeb.Protocollo
             tbMod_NumeroProtocollo.ReadOnly = true;
             tbMod_ProtocolloRiferimento.ReadOnly = attivaModifica;
             tbMod_DataProtocollo.ReadOnly = true;
-            tbMod_Cliente.ReadOnly = attivaModifica;
+            tbMod_DataLavorazione.ReadOnly = attivaModifica;
+            tbMod_Produzione.ReadOnly = attivaModifica;
             tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Descrizione.ReadOnly = attivaModifica;
             tbMod_NomeFile.ReadOnly = true;
@@ -377,6 +412,12 @@ namespace VideoSystemWeb.Protocollo
                     {
                         tbMod_DataProtocollo.Text = ((DateTime)protocollo.Data_protocollo).ToString("dd/MM/yyyy");
                     }
+                    tbMod_DataLavorazione.Text = "";
+                    if (protocollo.Data_inizio_lavorazione != null)
+                    {
+                        tbMod_DataLavorazione.Text = ((DateTime)protocollo.Data_inizio_lavorazione).ToString("dd/MM/yyyy");
+                    }
+                    tbMod_Produzione.Text = protocollo.Produzione;
                     tbMod_ProtocolloRiferimento.Text = protocollo.Protocollo_riferimento;
                     tbMod_Cliente.Text = protocollo.Cliente;
                     tbMod_NomeFile.Text = protocollo.PathDocumento;
@@ -433,6 +474,8 @@ namespace VideoSystemWeb.Protocollo
             protocollo.PathDocumento = (string)Session["NOME_FILE"];
             protocollo.Protocollo_riferimento = BasePage.ValidaCampo(tbMod_ProtocolloRiferimento, "", false, ref esito);
             protocollo.Cliente = BasePage.ValidaCampo(tbMod_Cliente, "", false, ref esito);
+            protocollo.Produzione = BasePage.ValidaCampo(tbMod_Produzione, "", false, ref esito);
+            protocollo.Data_inizio_lavorazione = BasePage.ValidaCampo(tbMod_DataLavorazione, DateTime.Now, true, ref esito);
             protocollo.Codice_lavoro = BasePage.ValidaCampo(tbMod_CodiceLavoro, "", false, ref esito);
             protocollo.Descrizione = BasePage.ValidaCampo(tbMod_Descrizione,"", false, ref esito);
             protocollo.Attivo = true;
@@ -503,6 +546,8 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Cliente.CssClass = tbMod_Cliente.CssClass.Replace("erroreValidazione", "");
             tbMod_CodiceLavoro.CssClass = tbMod_CodiceLavoro.CssClass.Replace("erroreValidazione", "");
             tbMod_DataProtocollo.CssClass = tbMod_DataProtocollo.CssClass.Replace("erroreValidazione", "");
+            tbMod_DataLavorazione.CssClass = tbMod_DataLavorazione.CssClass.Replace("erroreValidazione", "");
+            tbMod_Produzione.CssClass = tbMod_Produzione.CssClass.Replace("erroreValidazione", "");
             tbMod_Descrizione.CssClass = tbMod_Descrizione.CssClass.Replace("erroreValidazione", "");
             tbMod_NomeFile.CssClass = tbMod_NomeFile.CssClass.Replace("erroreValidazione", "");
             tbMod_NumeroProtocollo.CssClass = tbMod_NumeroProtocollo.CssClass.Replace("erroreValidazione", "");
@@ -536,5 +581,115 @@ namespace VideoSystemWeb.Protocollo
             }
         }
 
+        protected void btnCercaCliente_Click(object sender, EventArgs e)
+        {
+            PanelClienti.Visible = true;
+        }
+
+        protected void btnChiudiPopupClientiServer_Click(object sender, EventArgs e)
+        {
+            PanelClienti.Visible = false;
+        }
+
+        protected void imgbtnSelectCodLav_Click(object sender, ImageClickEventArgs e)
+        {
+
+        }
+
+        protected void btnChiudiPopupLavorazioniServer_Click(object sender, EventArgs e)
+        {
+            PanelLavorazioni.Visible = false;
+        }
+
+        protected void btnCercaLavorazione_Click(object sender, EventArgs e)
+        {
+            PanelLavorazioni.Visible = true;
+        }
+
+        protected void btnRicercaLavorazioni_Click(object sender, EventArgs e)
+        {
+            string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_LAVORAZIONI"];
+
+            queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_Cliente.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@codiceLavorazione", tbSearch_CodiceLavoro.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@lavorazione", tbSearch_Lavorazione.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@luogo", tbSearch_Luogo.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@produzione", tbSearch_Produzione.Text.Trim().Replace("'", "''"));
+
+            // SE DATA DA E' VALORIZZATA 
+            if (!string.IsNullOrEmpty(tbSearch_DataInizio.Text.Trim()))
+            {
+                // CONTROLLO SE E' UNA DATA VALIDA
+                try
+                {
+                    DateTime dataPartenza = Convert.ToDateTime(tbSearch_DataInizio.Text.Trim());
+                    // SE DATA DA E' VALIDA CONTROLLO DATA A 
+                    if (!string.IsNullOrEmpty(tbSearch_DataFine.Text.Trim()))
+                    {
+                        // CONTROLLO SE E' UNA DATA VALIDA
+                        try
+                        {
+                            DateTime dataArrivo = Convert.ToDateTime(tbSearch_DataFine.Text.Trim());
+                            // E' UNA DATA VALIDA, FACCIO BETWEEN TRA DATA DA E DATA A 
+                            string sDataPartenza = dataPartenza.ToString("yyyy-MM-ddTHH:mm:ss");
+                            string sDataArrivo = dataArrivo.ToString("yyyy-MM-ddTHH:mm:ss");
+                            queryRicerca = queryRicerca.Replace("@queryRangeDate", " and data_inizio_lavorazione between '" + sDataPartenza + "' and '" + dataArrivo + "' ");
+                        }
+                        catch (Exception)
+                        {
+                            // NON E' UNA DATA VALIDA, FACCIO CONTROLLO SU DATA DA PRECISA
+                            queryRicerca = queryRicerca.Replace("@queryRangeDate", " and convert(varchar, data_inizio_lavorazione, 103) = '" + dataPartenza.ToString("dd/MM/yyyy") + "' ");
+                            
+                        }
+                    }
+                    else
+                    {
+                        // FACCIO CONTROLLO SU DATA PRECISA SE DATA A NON E' VALIDA
+                        queryRicerca = queryRicerca.Replace("@queryRangeDate", " and convert(varchar, data_inizio_lavorazione, 103) = '" + dataPartenza.ToString("dd/MM/yyyy") + "' ");
+                    }
+
+                }
+                catch (Exception)
+                {
+                    // NON E' UNA DATA VALIDA QUINDI TENTO DI FARE LA LIKE CON IL TESTO INSERITO ED IGNORO tbSearch_DataFine
+                    queryRicerca = queryRicerca.Replace("@queryRangeDate", " and (isnull(convert(varchar, data_inizio_lavorazione, 103), '') like '%" + tbSearch_DataInizio.Text.Trim() + "%') ");
+                    
+                }
+            }
+            else
+            {
+                queryRicerca = queryRicerca.Replace("@queryRangeDate", "");
+            }
+            
+            
+            Esito esito = new Esito();
+            DataTable dtLavorazioni = Base_DAL.getDatiBySql(queryRicerca, ref esito);
+            gvLavorazioni.DataSource = dtLavorazioni;
+            gvLavorazioni.DataBind();
+
+
+        }
+
+        protected void gvLavorazioni_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+
+
+                // PRENDO CODICE LAVORAZIONE E CLIENTE/FORNITORE E LI PASSO ALLA FUNZIONE
+                string codLavSelezionato = e.Row.Cells[2].Text;
+                string clienteFornitoreSelezionato = e.Row.Cells[3].Text;
+                ImageButton myButtonEdit = e.Row.FindControl("imgSelect") as ImageButton;
+                myButtonEdit.Attributes.Add("onclick", "associaCodiceLavorazione('" + codLavSelezionato.Replace("&nbsp;","") + "','" + clienteFornitoreSelezionato.Replace("&nbsp;", "") + "');");
+            }
+
+            //associaCodiceLavorazione(codLav, cliente)
+        }
+
+        protected void gvLavorazioni_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvLavorazioni.PageIndex = e.NewPageIndex;
+            btnRicercaLavorazioni_Click(null, null);
+        }
     }
 }

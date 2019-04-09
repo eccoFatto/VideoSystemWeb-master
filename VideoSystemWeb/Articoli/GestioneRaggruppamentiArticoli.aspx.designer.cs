@@ -31,22 +31,13 @@ namespace VideoSystemWeb.Articoli {
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
         
         /// <summary>
-        /// Controllo lbMod_Raggruppamenti.
+        /// Controllo gvMod_Raggruppamenti.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbMod_Raggruppamenti;
-        
-        /// <summary>
-        /// Controllo divSelRaggruppamento.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSelRaggruppamento;
+        protected global::System.Web.UI.WebControls.GridView gvMod_Raggruppamenti;
         
         /// <summary>
         /// Controllo divBtnInserisciRaggruppamento.
@@ -184,13 +175,13 @@ namespace VideoSystemWeb.Articoli {
         protected global::System.Web.UI.WebControls.Button btnEliminaRaggruppamento;
         
         /// <summary>
-        /// Controllo lbMod_Articoli.
+        /// Controllo gvMod_Articoli.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbMod_Articoli;
+        protected global::System.Web.UI.WebControls.GridView gvMod_Articoli;
         
         /// <summary>
         /// Controllo btnApriArticoli.

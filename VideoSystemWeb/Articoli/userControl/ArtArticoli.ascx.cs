@@ -80,7 +80,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         foreach (Art_Gruppi gruppoMain in listaGruppiMain)
                         {
                             ListItem item = new ListItem();
-                            string stringaVisualizzata = gruppoMain.Nome.Trim();
+                            string stringaVisualizzata = gruppoMain.Nome.Trim().PadRight(50);
                             if (!string.IsNullOrEmpty(gruppoMain.Descrizione)) stringaVisualizzata += " | " + gruppoMain.Descrizione.Trim();
                             item.Text = stringaVisualizzata;
                             item.Value = gruppoMain.Id.ToString();
@@ -217,26 +217,37 @@ namespace VideoSystemWeb.Articoli.userControl
                     }
 
                     // GRUPPI
-                    lbMod_Gruppi.Items.Clear();
-                    List<Art_Gruppi> listaGruppi = Art_Gruppi_Articoli_BLL.Instance.getGruppiByIdArticolo(articolo.Id, ref esito);
+                    gvMod_Gruppi.DataSource = null;
+                    esito = new Esito();
+                    DataTable dtGruppi = Base_DAL.getDatiBySql("SELECT gruppi.id,nome,descrizione FROM art_gruppi_articoli artgruppi " +
+                    "join art_articoli articoli " +
+                    "on artgruppi.idArtArticoli = articoli.id " +
+                    "join art_gruppi gruppi " +
+                    "on idArtGruppi = gruppi.id " +
+                    "where idArtArticoli = " + articolo.Id.ToString(), ref esito);
+
+                    //lbMod_Gruppi.Items.Clear();
+                    //List<Art_Gruppi> listaGruppi = Art_Gruppi_Articoli_BLL.Instance.getGruppiByIdArticolo(articolo.Id, ref esito);
                     if (esito.codice == 0)
                     {
-                        if (listaGruppi!=null && listaGruppi.Count>0) {
-                            lbMod_Gruppi.Rows = listaGruppi.Count;
-                            foreach (Art_Gruppi gruppo in listaGruppi)
-                            {
-                                ListItem item = new ListItem();
-                                string stringaVisualizzata = gruppo.Nome.Trim();
-                                if (!string.IsNullOrEmpty(gruppo.Descrizione)) stringaVisualizzata += " | " + gruppo.Descrizione.Trim();
-                                item.Text = stringaVisualizzata;
-                                item.Value = gruppo.Id.ToString();
-                                lbMod_Gruppi.Items.Add(item);
-                            }
-                        }
-                        else
-                        {
-                            lbMod_Gruppi.Rows = 1;
-                        }
+                        gvMod_Gruppi.DataSource = dtGruppi;
+                        gvMod_Gruppi.DataBind();
+                        //    if (listaGruppi!=null && listaGruppi.Count>0) {
+                        //        lbMod_Gruppi.Rows = listaGruppi.Count;
+                        //        foreach (Art_Gruppi gruppo in listaGruppi)
+                        //        {
+                        //            ListItem item = new ListItem();
+                        //            string stringaVisualizzata = gruppo.Nome.Trim();
+                        //            if (!string.IsNullOrEmpty(gruppo.Descrizione)) stringaVisualizzata += " | " + gruppo.Descrizione.Trim();
+                        //            item.Text = stringaVisualizzata;
+                        //            item.Value = gruppo.Id.ToString();
+                        //            lbMod_Gruppi.Items.Add(item);
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        lbMod_Gruppi.Rows = 1;
+                        //    }
                     }
                     else
                     {
@@ -650,15 +661,17 @@ namespace VideoSystemWeb.Articoli.userControl
         protected void btnEliminaGruppo_Click(object sender, EventArgs e)
         {
             //ELIMINO IL GRUPPO ARTICOLO SE SELEZIONATO
-            if (lbMod_Gruppi.SelectedIndex >= 0)
+            //if (lbMod_Gruppi.SelectedIndex >= 0)
+            if (gvMod_Gruppi.SelectedRow != null && gvMod_Gruppi.SelectedRow.RowIndex >= 0)
             {
                 try
                 {
                     NascondiErroriValidazione();
-                    ListItem item = lbMod_Gruppi.Items[lbMod_Gruppi.SelectedIndex];
-                    string value = item.Value;
-                    string gruppoSelezionato = item.Text;
+                    //ListItem item = lbMod_Gruppi.Items[lbMod_Gruppi.SelectedIndex];
+                    //string value = item.Value;
+                    //string gruppoSelezionato = item.Text;
 
+                    string value = gvMod_Gruppi.SelectedRow.Cells[0].Text.Trim();
                     // DEVO TROVARE PRIMA IL GRUPPO ARTICOLO FORMATO DA ID GRUPPO E ID ARTICOLO
 
                     Esito esito = new Esito();
@@ -724,6 +737,59 @@ namespace VideoSystemWeb.Articoli.userControl
 
         protected void gvMod_Gruppi_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+
+        }
+
+        protected void imgElimina_Command(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "EliminaGruppo"  && basePage.AbilitazioneInScrittura())
+            {
+                string value = e.CommandArgument.ToString();
+                try
+                {
+                    NascondiErroriValidazione();
+                    // DEVO TROVARE PRIMA IL GRUPPO ARTICOLO FORMATO DA ID GRUPPO E ID ARTICOLO
+
+                    Esito esito = new Esito();
+                    string query = "SELECT id FROM art_gruppi_articoli where idArtGruppi = " + value + " AND idArtArticoli = " + ViewState["idArticolo"].ToString();
+                    DataTable dtGruppiArticoli = Base_DAL.getDatiBySql(query, ref esito);
+
+                    if (dtGruppiArticoli == null || dtGruppiArticoli.Rows == null)
+                    {
+                        esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                        esito.descrizione = "imgElimina_Command - Nessun risultato restituito dalla query " + query;
+                    }
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        log.Error(esito.descrizione);
+                        basePage.ShowError(esito.descrizione);
+                    }
+                    else
+                    {
+                        foreach (DataRow riga in dtGruppiArticoli.Rows)
+                        {
+                            int idGruppoArticolo = Convert.ToInt16(riga["id"]);
+                            esito = Art_Gruppi_Articoli_BLL.Instance.EliminaGruppoArticolo(idGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
+                        }
+                        if (esito.codice != Esito.ESITO_OK)
+                        {
+                            log.Error(esito.descrizione);
+                            basePage.ShowError(esito.descrizione);
+                        }
+                        else
+                        {
+                            editArticolo();
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error("imgElimina_Command", ex);
+                    basePage.ShowError(ex.Message);
+                }
+            }
 
         }
     }

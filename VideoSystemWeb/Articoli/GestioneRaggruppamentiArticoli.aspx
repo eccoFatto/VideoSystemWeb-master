@@ -7,9 +7,9 @@
     });
 
     // APRO POPUP VISUALIZZAZIONE/MODIFICA RAGGRUPPAMENTO
-    function mostraRaggruppamento() {
+    function mostraRaggruppamento(row) {
         $('.loader').show();
-        //$("#<%=hf_idRagg.ClientID%>").val(row);
+        $("#<%=hf_idRagg.ClientID%>").val(row);
         $("#<%=hf_tipoOperazione.ClientID%>").val('MODIFICA');
         $("#<%=btnEditRaggruppamento.ClientID%>").click();
     }
@@ -44,19 +44,21 @@
 <Label><asp:Label ID="lblRaggruppamenti" runat="server" Text="ARTICOLI COMPOSTI" ForeColor="Teal"></asp:Label></Label>
 <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
     <ContentTemplate> 
-<%--        <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
-            <span onclick="this.parentElement.style.display='none'"
-            class="w3-button w3-large w3-display-topright">&times;</span>
-            <p><asp:Label ID="lbl_MessaggioErrore" runat="server" ></asp:Label></p>
-        </div>--%>
         <div class="w3-cell-row" style="width:100%">
             <div class="w3-container w3-cell w3-cell-middle">
-                <asp:ListBox ID="lbMod_Raggruppamenti" runat="server" class="w3-input w3-border w3-margin" Width="100%" ></asp:ListBox>
-            </div>
-            <div class="w3-container w3-cell w3-cell-middle">
-                <div id="divSelRaggruppamento" runat="server"> 
-                    <div id="selRaggruppamento" class="w3-btn w3-border w3-green w3-round w3-margin" onclick="mostraRaggruppamento();" style="width:100px">Seleziona</div>
+                <div class="round" style="overflow:auto;height:400px;min-height:300px;">
+                    <asp:GridView ID="gvMod_Raggruppamenti" AutoGenerateColumns="true" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gvMod_Raggruppamenti_RowDataBound"  >
+                        <Columns>
+                            <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
+                                <ItemTemplate>
+                                    <asp:ImageButton ID="imgSeleziona" runat="server" CausesValidation="false"  Text="Seleziona" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Raggruppamento" ImageAlign="AbsMiddle" Height="30px" />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
                 </div>
+            </div>
+            <div class="w3-container w3-cell w3-cell-top">
                 <div id="divBtnInserisciRaggruppamento" runat="server"> 
                     <div id="insRaggruppamento" class="w3-btn w3-border w3-green w3-round w3-margin" onclick="inserisciRaggruppamento();" style="width:100px">Inserisci</div>
                 </div>
@@ -85,13 +87,6 @@
                     GESTIONE ARTICOLI COMPOSTI
                 </div>
                 <br />
-                
-                <!-- DIV MESSAGGI DI ERRORE -->        
-<%--                <div id="Div1" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
-                  <span onclick="this.parentElement.style.display='none'"
-                  class="w3-button w3-large w3-display-topright">&times;</span>
-                  <p><asp:Label ID="Label1" runat="server" ></asp:Label></p>
-                </div>                             --%>
                 <div class="w3-container">
                     <!-- ELENCO TAB DETTAGLI COLLABORATORE -->
                     <div class="w3-bar w3-yellow w3-round">
@@ -122,7 +117,6 @@
                                     <asp:Button ID="btnInserisciRaggruppamento" runat="server" Text="Inserisci Ragruppamento" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoRaggruppamento_Click" OnClientClick="return confirm('Confermi inserimento Raggruppamento?')" />
                                     <asp:Button ID="btnModificaRaggruppamento" runat="server" Text="Modifica Raggruppamento" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaRaggruppamento_Click" OnClientClick="return confirm('Confermi modifica Raggruppamento?')" Visible="false" />
                                     <asp:Button ID="btnEliminaRaggruppamento" runat="server" Text="Elimina Raggruppamento" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaRaggruppamento_Click" OnClientClick="return confirm('Confermi eliminazione Raggruppamento?')" Visible="false" />
-                                    <%--<asp:Button ID="btnAnnullaRaggruppamento" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnullaRaggruppamento_Click" />--%>
                                 </div>
                             </p>
                         </div>
@@ -130,7 +124,20 @@
                 <!-- TAB ARTICOLI -->
                     <div id="Articoli" class="w3-container w3-border ragg" style="display:none">
                         <label>Articoli Associati</label>
-                        <asp:ListBox ID="lbMod_Articoli" runat="server" class="w3-input w3-border " Rows="3" ></asp:ListBox>
+                        <div class="round">
+                            <asp:GridView ID="gvMod_Articoli" AutoGenerateColumns="false" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid">
+                                <Columns>
+                                    <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="imgElimina" runat="server" CausesValidation="false"  Text="Elimina" ImageUrl="~/Images/delete.png" ToolTip="Elimina Articolo" ImageAlign="AbsMiddle" Height="30px" CommandName="EliminaArticolo" CommandArgument='<%#Eval("id")%>' OnCommand="imgElimina_Command" OnClientClick="return confirm('Confermi eliminazione articolo?');" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
+                                    <asp:BoundField DataField="Desc. Lunga" HeaderText="Desc. Lunga" />
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+
                         <div class="w3-container w3-center">
                             <asp:Button ID="btnApriArticoli" runat="server" OnClick="btnApriArticoli_Click" Text="Gestione Articoli" class="w3-panel w3-green w3-border w3-round" />
                             <asp:PlaceHolder ID="phArticoli" runat="server" Visible="false">                                
@@ -150,7 +157,6 @@
                                 <asp:Button ID="btnEliminaArticolo" runat="server" Text="Elimina Articolo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaArticolo_Click" OnClientClick="return confirm('Confermi eliminazione Articolo?')" />
                             </asp:PlaceHolder>
                         </div>
-                        <%--<ajaxToolkit:AsyncFileUpload ID="AsyncFileUpload1" runat="server" UploaderStyle="Traditional" />--%>
                     </div>
             </asp:Panel>
         </asp:Panel>

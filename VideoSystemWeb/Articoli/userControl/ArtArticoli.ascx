@@ -253,7 +253,20 @@
                     <!-- TAB GRUPPI -->
                     <div id="Gruppi" class="w3-container w3-border articolo" style="display:none">
                         <label>Raggruppamenti</label>
-                        <asp:ListBox ID="lbMod_Gruppi" runat="server" class="w3-input w3-border " Rows="3" ></asp:ListBox>
+                        <%--<asp:ListBox ID="lbMod_Gruppi" runat="server" class="w3-input w3-border " Rows="3" ></asp:ListBox>--%>
+                        <div class="round">
+                            <asp:GridView ID="gvMod_Gruppi" AutoGenerateColumns="false" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid">
+                                <Columns>
+                                    <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
+                                        <ItemTemplate>
+                                            <asp:ImageButton ID="imgElimina" runat="server" CausesValidation="false"  Text="Elimina" ImageUrl="~/Images/delete.png" ToolTip="Elimina Gruppo" ImageAlign="AbsMiddle" Height="30px" CommandName="EliminaGruppo" CommandArgument='<%#Eval("id")%>' OnCommand="imgElimina_Command" OnClientClick="return confirm('Confermi eliminazione gruppo?');" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="nome" HeaderText="Nome" />
+                                    <asp:BoundField DataField="descrizione" HeaderText="Descrizione" />
+                                </Columns>
+                            </asp:GridView>
+                        </div>
                         <div class="w3-container w3-center">
                             <asp:Button ID="btnApriGruppi" runat="server" OnClick="btnApriGruppi_Click" Text="Gestione Gruppi" class="w3-panel w3-green w3-border w3-round" />
                             <asp:PlaceHolder ID="phGruppi" runat="server" Visible="false">                                
@@ -263,7 +276,7 @@
                                     </asp:DropDownList>                                                
                                 </div>
                                 <asp:Button ID="btnInserisciGruppo" runat="server" Text="Inserisci Gruppo" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoGruppo_Click" OnClientClick="return confirm('Confermi inserimento Gruppo?')" />
-                                <asp:Button ID="btnEliminaGruppo" runat="server" Text="Elimina Gruppo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaGruppo_Click" OnClientClick="return confirm('Confermi eliminazione Gruppo?')" />
+                                <%--<asp:Button ID="btnEliminaGruppo" runat="server" Text="Elimina Gruppo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaGruppo_Click" OnClientClick="return confirm('Confermi eliminazione Gruppo?')" />--%>
                             </asp:PlaceHolder>
                         </div>
                     </div>
@@ -279,7 +292,7 @@
         <asp:AsyncPostBackTrigger ControlID="btnElimina" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnAnnulla" EventName="Click" />
         
-        <asp:AsyncPostBackTrigger ControlID="btnEliminaGruppo" EventName="Click" />
+        <%--<asp:AsyncPostBackTrigger ControlID="btnEliminaGruppo" EventName="Click" />--%>
         <asp:AsyncPostBackTrigger ControlID="btnInserisciGruppo" EventName="Click" />
     </Triggers>
 </asp:UpdatePanel>

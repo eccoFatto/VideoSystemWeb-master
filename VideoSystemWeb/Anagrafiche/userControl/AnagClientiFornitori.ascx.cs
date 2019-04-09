@@ -94,6 +94,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 btnAnnulla.Visible = false;
                 btnSalva.Visible = false;
                 btnElimina.Visible = false;
+                btnApriReferenti.Visible = false;
 
             }
             else
@@ -103,7 +104,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 btnAnnulla.Visible = true;
                 btnSalva.Visible = true;
                 btnElimina.Visible = true;
-
+                btnApriReferenti.Visible = true;
             }
         }
 

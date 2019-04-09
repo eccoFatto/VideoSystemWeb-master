@@ -60,11 +60,11 @@ namespace VideoSystemWeb.DAL
                             cmd.Connection = con;
                             sda.SelectCommand = cmd;
                             sda.Fill(dtReturn);
-                            if (dtReturn == null || dtReturn.Rows == null || dtReturn.Rows.Count == 0)
-                            {
-                                esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                esito.descrizione = "Nessun dato trovato nella ricerca generica " + querySql;
-                            }
+                            //if (dtReturn == null || dtReturn.Rows == null || dtReturn.Rows.Count == 0)
+                            //{
+                            //    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                            //    esito.descrizione = "Nessun dato trovato nella ricerca generica " + querySql;
+                            //}
                         }
                     }
                 }

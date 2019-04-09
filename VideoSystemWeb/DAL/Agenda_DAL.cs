@@ -363,7 +363,8 @@ namespace VideoSystemWeb.DAL
                                     protocolloOfferta.Cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
                                     protocolloOfferta.Id_tipo_protocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
                                     protocolloOfferta.Protocollo_riferimento = "";
-                                    protocolloOfferta.PathDocumento = "";
+                                    string nomeFile = "Offerta_" + evento.codice_lavoro + ".pdf";
+                                    protocolloOfferta.PathDocumento = nomeFile;
                                     protocolloOfferta.Descrizione = evento.lavorazione.Trim();
                                     protocolloOfferta.Produzione = evento.produzione.Trim();
                                     protocolloOfferta.Data_inizio_lavorazione = evento.data_inizio_lavorazione;
@@ -675,7 +676,8 @@ namespace VideoSystemWeb.DAL
                                         protocolloOfferta.Cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
                                         protocolloOfferta.Id_tipo_protocollo = idTipoProtocollo;
                                         protocolloOfferta.Protocollo_riferimento = "";
-                                        protocolloOfferta.PathDocumento = "";
+                                        string nomeFile = "Offerta_" + evento.codice_lavoro + ".pdf";
+                                        protocolloOfferta.PathDocumento = nomeFile;
                                         protocolloOfferta.Descrizione = evento.lavorazione.Trim();
                                         protocolloOfferta.Produzione = evento.produzione.Trim();
                                         protocolloOfferta.Data_inizio_lavorazione = evento.data_inizio_lavorazione;

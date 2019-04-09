@@ -337,13 +337,13 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.WebControls.Button btnAnnulla;
         
         /// <summary>
-        /// Controllo lbMod_Gruppi.
+        /// Controllo gvMod_Gruppi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbMod_Gruppi;
+        protected global::System.Web.UI.WebControls.GridView gvMod_Gruppi;
         
         /// <summary>
         /// Controllo btnApriGruppi.
@@ -380,14 +380,5 @@ namespace VideoSystemWeb.Articoli.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInserisciGruppo;
-        
-        /// <summary>
-        /// Controllo btnEliminaGruppo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminaGruppo;
     }
 }

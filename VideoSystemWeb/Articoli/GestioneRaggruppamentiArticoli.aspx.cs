@@ -34,34 +34,45 @@ namespace VideoSystemWeb.Articoli
         }
         private void caricaRaggruppamenti()
         {
-            List<Art_Gruppi> lista;
             Esito esito = new Esito();
-            lista = Art_Gruppi_BLL.Instance.CaricaListaGruppi(ref esito);
+            gvMod_Raggruppamenti.DataSource = null;
+            esito = new Esito();
+            DataTable dtGruppi = Base_DAL.getDatiBySql("SELECT id,Nome,Descrizione FROM art_gruppi"+
+            " WHERE ATTIVO = 1"+
+            " ORDER BY nome", ref esito);
+
+
+            //List<Art_Gruppi> lista;
+            
+            //lista = Art_Gruppi_BLL.Instance.CaricaListaGruppi(ref esito);
 
             BasePage p = new BasePage();
 
             // CARICO LA LISTA RAGGRUPPAMENTI
             if (string.IsNullOrEmpty(esito.descrizione))
             {
-                lbMod_Raggruppamenti.Items.Clear();
-                foreach (Art_Gruppi raggruppamento in lista)
-                {
-                    ListItem item = new ListItem();
-                    string stringaVisualizzata = raggruppamento.Nome.Trim();
-                    if (!string.IsNullOrEmpty(raggruppamento.Descrizione)) stringaVisualizzata += " | " + raggruppamento.Descrizione.Trim();
-                    item.Text = stringaVisualizzata;
-                    item.Value = raggruppamento.Id.ToString();
-                    lbMod_Raggruppamenti.Items.Add(item);
-                }
+                gvMod_Raggruppamenti.DataSource = dtGruppi;
+                gvMod_Raggruppamenti.DataBind();
 
-                if (lbMod_Raggruppamenti.Items.Count > 10)
-                {
-                    lbMod_Raggruppamenti.Rows = 10;
-                }
-                else
-                {
-                    lbMod_Raggruppamenti.Rows = lbMod_Raggruppamenti.Items.Count;
-                }
+                //lbMod_Raggruppamenti.Items.Clear();
+                //foreach (Art_Gruppi raggruppamento in lista)
+                //{
+                //    ListItem item = new ListItem();
+                //    string stringaVisualizzata = raggruppamento.Nome.Trim();
+                //    if (!string.IsNullOrEmpty(raggruppamento.Descrizione)) stringaVisualizzata += " | " + raggruppamento.Descrizione.Trim();
+                //    item.Text = stringaVisualizzata;
+                //    item.Value = raggruppamento.Id.ToString();
+                //    lbMod_Raggruppamenti.Items.Add(item);
+                //}
+
+                //if (lbMod_Raggruppamenti.Items.Count > 10)
+                //{
+                //    lbMod_Raggruppamenti.Rows = 10;
+                //}
+                //else
+                //{
+                //    lbMod_Raggruppamenti.Rows = lbMod_Raggruppamenti.Items.Count;
+                //}
 
                 //ARTICOLI
                 ddlArticoliDaAggiungere.Items.Clear();
@@ -94,14 +105,14 @@ namespace VideoSystemWeb.Articoli
             {
                 //btnInserisciRaggruppamento.Visible = false;
                 divBtnInserisciRaggruppamento.Visible = false;
-                divSelRaggruppamento.Visible = false;
+                //divSelRaggruppamento.Visible = false;
                 //btnAnnullaRaggruppamento.Visible = false;
             }
             else
             {
                 //btnInserisciRaggruppamento.Visible = true;
                 divBtnInserisciRaggruppamento.Visible = true;
-                divSelRaggruppamento.Visible = true;
+                //divSelRaggruppamento.Visible = true;
                 //btnAnnullaRaggruppamento.Visible = true;
             }
         }
@@ -174,7 +185,7 @@ namespace VideoSystemWeb.Articoli
                         tbInsDescrizioneRaggruppamento.Text = "";
                         tbIdRaggruppamentoDaModificare.Text = "";
 
-                        btnModificaRaggruppamento.Visible =false;
+                        btnModificaRaggruppamento.Visible = false;
                         btnInserisciRaggruppamento.Visible = true;
                         btnEliminaRaggruppamento.Visible = false;
 
@@ -282,84 +293,66 @@ namespace VideoSystemWeb.Articoli
 
         protected void btnEditRaggruppamento_Click(object sender, EventArgs e)
         {
-            //SCARICO IL RAGGRUPPAMENTO SELEZIONATO
-            if (lbMod_Raggruppamenti.SelectedIndex >= 0)
+            //CARICO IL RAGGRUPPAMENTO SELEZIONATO
+            try
             {
-                try
+                NascondiErroriValidazione();
+
+                string gruppoSelezionato = hf_idRagg.Value;
+                Esito esito = new Esito();
+                Art_Gruppi gruppo = Art_Gruppi_BLL.Instance.getGruppiById(Convert.ToInt32(gruppoSelezionato), ref esito);
+
+                if (esito.codice != Esito.ESITO_OK)
                 {
-                    NascondiErroriValidazione();
+                    btnInserisciRaggruppamento.Visible = true;
+                    ShowError(esito.descrizione);
+                }
+                else
+                {
+                    btnInserisciRaggruppamento.Visible = false;
+                    btnModificaRaggruppamento.Visible = true;
+                    btnEliminaRaggruppamento.Visible = true;
+                    tbInsDescrizioneRaggruppamento.Text = gruppo.Descrizione;
+                    tbInsNomeRaggruppamento.Text = gruppo.Nome;
 
-                    string gruppoSelezionato = lbMod_Raggruppamenti.SelectedValue;
-                    Esito esito = new Esito();
-                    Art_Gruppi gruppo = Art_Gruppi_BLL.Instance.getGruppiById(Convert.ToInt32(gruppoSelezionato), ref esito);
+                    tbIdRaggruppamentoDaModificare.Text = gruppoSelezionato;
 
-                    if (esito.codice != Esito.ESITO_OK)
+
+                    // Articoli Associati
+                    gvMod_Articoli.DataSource = null;
+                    esito = new Esito();
+                    DataTable dtArticoli = Base_DAL.getDatiBySql("SELECT articoli.id,articoli.defaultDescrizione as Descrizione,articoli.defaultDescrizioneLunga as [Desc. Lunga] " +
+                    " FROM art_gruppi_articoli artgruppi " +
+                    " join art_articoli articoli " +
+                    " on artgruppi.idArtArticoli = articoli.id " +
+                    " join art_gruppi gruppi " +
+                    " on idArtGruppi = gruppi.id " +
+                    " where idArtGruppi = " + gruppo.Id.ToString(), ref esito);
+
+
+                    if (esito.codice == 0)
                     {
-                        btnInserisciRaggruppamento.Visible = true;
-                        //panelErrore.Style.Remove("display");
-                        //lbl_MessaggioErrore.Text = esito.descrizione;
-                        ShowError(esito.descrizione);
+                        gvMod_Articoli.DataSource = dtArticoli;
+                        gvMod_Articoli.DataBind();
+
                     }
                     else
                     {
-                        btnInserisciRaggruppamento.Visible = false;
-                        btnModificaRaggruppamento.Visible = true;
-                        btnEliminaRaggruppamento.Visible = true;
-                        tbInsDescrizioneRaggruppamento.Text = gruppo.Descrizione;
-                        tbInsNomeRaggruppamento.Text = gruppo.Nome;
-
-                        tbIdRaggruppamentoDaModificare.Text = lbMod_Raggruppamenti.SelectedValue;
-
-
-                        // ARTICOLI ASSOCIATI
-                        lbMod_Articoli.Items.Clear();
-                        List<Art_Articoli> listaArticoli = Art_Gruppi_Articoli_BLL.Instance.getArticoliByIdGruppo(gruppo.Id, ref esito);
-                        if (esito.codice == 0)
-                        {
-                            if (listaArticoli != null && listaArticoli.Count > 0)
-                            {
-                                lbMod_Articoli.Rows = listaArticoli.Count;
-                                foreach (Art_Articoli articolo in listaArticoli)
-                                {
-                                    ListItem item = new ListItem();
-                                    item.Text = articolo.DefaultDescrizione + " | " + articolo.DefaultDescrizioneLunga;
-                                    item.Value = articolo.Id.ToString();
-                                    lbMod_Articoli.Items.Add(item);
-                                }
-                                if(listaArticoli.Count > 10)
-                                {
-                                    lbMod_Articoli.Rows = 10;
-                                }
-                                else
-                                {
-                                    lbMod_Articoli.Rows = listaArticoli.Count;
-                                }
-                            }
-                            else
-                            {
-                                lbMod_Articoli.Rows = 1;
-                            }
-                        }
-                        else
-                        {
-                            Session["ErrorPageText"] = esito.descrizione;
-                            string url = String.Format("~/pageError.aspx");
-                            Response.Redirect(url, true);
-                        }
-
-                        pnlContainer.Visible = true;
+                        Session["ErrorPageText"] = esito.descrizione;
+                        string url = String.Format("~/pageError.aspx");
+                        Response.Redirect(url, true);
                     }
+
+                    pnlContainer.Visible = true;
                 }
-                catch (Exception ex)
-                {
-                    log.Error("btnSeleziona_Click", ex);
-                    btnInserisciRaggruppamento.Visible = true;
-                    btnModificaRaggruppamento.Visible = false;
-                    btnEliminaRaggruppamento.Visible = false;
-                    //panelErrore.Style.Add("display", "block");
-                    //lbl_MessaggioErrore.Text = ex.Message;
-                    ShowError(ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("btnSeleziona_Click", ex);
+                btnInserisciRaggruppamento.Visible = true;
+                btnModificaRaggruppamento.Visible = false;
+                btnEliminaRaggruppamento.Visible = false;
+                ShowError(ex.Message);
             }
 
         }
@@ -370,8 +363,9 @@ namespace VideoSystemWeb.Articoli
             tbIdRaggruppamentoDaModificare.Text = "";
             tbInsNomeRaggruppamento.Text = "";
             tbInsDescrizioneRaggruppamento.Text = "";
-            lbMod_Articoli.Items.Clear();
-            lbMod_Articoli.Rows = 1;
+            //lbMod_Articoli.Items.Clear();
+            //lbMod_Articoli.Rows = 1;
+            gvMod_Articoli.DataSource = null;
             pnlContainer.Visible = true;
         }
 
@@ -405,7 +399,7 @@ namespace VideoSystemWeb.Articoli
                         catch (Exception)
                         {
                         }
-                        
+
                     }
 
                     for (int i = 0; i < nArtDaInserire; i++)
@@ -416,7 +410,7 @@ namespace VideoSystemWeb.Articoli
                             break;
                         }
                     }
-                    
+
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -450,14 +444,92 @@ namespace VideoSystemWeb.Articoli
         protected void btnEliminaArticolo_Click(object sender, EventArgs e)
         {
             //ELIMINO L'ARTICOLO DAL GRUPPO SE SELEZIONATO
-            if (lbMod_Articoli.SelectedIndex >= 0)
+            //if (lbMod_Articoli.SelectedIndex >= 0)
+            //{
+            //    try
+            //    {
+            //        NascondiErroriValidazione();
+            //        ListItem item = lbMod_Articoli.Items[lbMod_Articoli.SelectedIndex];
+            //        string value = item.Value;
+            //        string gruppoSelezionato = item.Text;
+
+            //        // DEVO TROVARE PRIMA IL GRUPPO ARTICOLO FORMATO DA ID GRUPPO E ID ARTICOLO
+
+            //        Esito esito = new Esito();
+            //        string query = "SELECT id FROM art_gruppi_articoli where idArtGruppi = " + tbIdRaggruppamentoDaModificare.Text.Trim() + " AND idArtArticoli = " + value;
+            //        DataTable dtGruppiArticoli = Base_DAL.getDatiBySql(query, ref esito);
+
+            //        if (dtGruppiArticoli == null || dtGruppiArticoli.Rows == null)
+            //        {
+            //            esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+            //            esito.descrizione = "btnEliminaArticolo_Click - Nessun risultato restituito dalla query " + query;
+            //        }
+
+            //        if (esito.codice != Esito.ESITO_OK)
+            //        {
+            //            log.Error(esito.descrizione);
+            //            //panelErrore.Style.Remove("display");
+            //            //lbl_MessaggioErrore.Text = esito.descrizione;
+            //            ShowError(esito.descrizione);
+            //        }
+            //        else
+            //        {
+            //            foreach (DataRow riga in dtGruppiArticoli.Rows)
+            //            {
+            //                int idGruppoArticolo = Convert.ToInt16(riga["id"]);
+            //                esito = Art_Gruppi_Articoli_BLL.Instance.EliminaGruppoArticolo(idGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
+            //            }
+            //            if (esito.codice != Esito.ESITO_OK)
+            //            {
+            //                log.Error(esito.descrizione);
+            //                //panelErrore.Style.Remove("display");
+            //                //lbl_MessaggioErrore.Text = esito.descrizione;
+            //                ShowError(esito.descrizione);
+            //            }
+            //            else
+            //            {
+            //                btnEditRaggruppamento_Click(null, null);
+            //            }
+
+            //        }
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        log.Error("btnEliminaArticolo_Click", ex);
+            //        //panelErrore.Style.Add("display", "block");
+            //        //lbl_MessaggioErrore.Text = ex.Message;
+            //        ShowError(ex.Message);
+            //    }
+            //}
+            //else
+            //{
+            //    //panelErrore.Style.Add("display", "block");
+            //    //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+            //    ShowError("Verificare il corretto inserimento dei campi!");
+            //}
+
+        }
+
+        protected void btnApriArticoli_Click(object sender, EventArgs e)
+        {
+            if (phArticoli.Visible)
             {
+                phArticoli.Visible = false;
+            }
+            else
+            {
+                phArticoli.Visible = true;
+            }
+        }
+
+        protected void imgElimina_Command(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "EliminaArticolo" && basePage.AbilitazioneInScrittura())
+            {
+                string value = e.CommandArgument.ToString();
                 try
                 {
                     NascondiErroriValidazione();
-                    ListItem item = lbMod_Articoli.Items[lbMod_Articoli.SelectedIndex];
-                    string value = item.Value;
-                    string gruppoSelezionato = item.Text;
 
                     // DEVO TROVARE PRIMA IL GRUPPO ARTICOLO FORMATO DA ID GRUPPO E ID ARTICOLO
 
@@ -474,8 +546,6 @@ namespace VideoSystemWeb.Articoli
                     if (esito.codice != Esito.ESITO_OK)
                     {
                         log.Error(esito.descrizione);
-                        //panelErrore.Style.Remove("display");
-                        //lbl_MessaggioErrore.Text = esito.descrizione;
                         ShowError(esito.descrizione);
                     }
                     else
@@ -488,8 +558,6 @@ namespace VideoSystemWeb.Articoli
                         if (esito.codice != Esito.ESITO_OK)
                         {
                             log.Error(esito.descrizione);
-                            //panelErrore.Style.Remove("display");
-                            //lbl_MessaggioErrore.Text = esito.descrizione;
                             ShowError(esito.descrizione);
                         }
                         else
@@ -498,34 +566,103 @@ namespace VideoSystemWeb.Articoli
                         }
 
                     }
+
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaArticolo_Click", ex);
-                    //panelErrore.Style.Add("display", "block");
-                    //lbl_MessaggioErrore.Text = ex.Message;
                     ShowError(ex.Message);
                 }
             }
-            else
-            {
-                //panelErrore.Style.Add("display", "block");
-                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
-                ShowError("Verificare il corretto inserimento dei campi!");
-            }
-
         }
 
-        protected void btnApriArticoli_Click(object sender, EventArgs e)
+        protected void imgSeleziona_Command(object sender, CommandEventArgs e)
         {
-            if (phArticoli.Visible)
+            if (e.CommandName == "SelezionaRaggruppamento" && basePage.AbilitazioneInScrittura())
             {
-                phArticoli.Visible = false;
-            }
-            else
-            {
-                phArticoli.Visible = true;
+                string value = e.CommandArgument.ToString();
+
+                try
+                {
+                    NascondiErroriValidazione();
+
+                    string gruppoSelezionato = value;
+                    Esito esito = new Esito();
+                    Art_Gruppi gruppo = Art_Gruppi_BLL.Instance.getGruppiById(Convert.ToInt32(gruppoSelezionato), ref esito);
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        btnInserisciRaggruppamento.Visible = true;
+                        ShowError(esito.descrizione);
+                    }
+                    else
+                    {
+                        btnInserisciRaggruppamento.Visible = false;
+                        btnModificaRaggruppamento.Visible = true;
+                        btnEliminaRaggruppamento.Visible = true;
+                        tbInsDescrizioneRaggruppamento.Text = gruppo.Descrizione;
+                        tbInsNomeRaggruppamento.Text = gruppo.Nome;
+
+                        tbIdRaggruppamentoDaModificare.Text = gruppoSelezionato;
+
+
+                        // Articoli Associati
+                        gvMod_Articoli.DataSource = null;
+                        esito = new Esito();
+                        DataTable dtArticoli = Base_DAL.getDatiBySql("SELECT articoli.id,articoli.defaultDescrizione as Descrizione,articoli.defaultDescrizioneLunga as [Desc. Lunga] " +
+                        " FROM art_gruppi_articoli artgruppi " +
+                        " join art_articoli articoli " +
+                        " on artgruppi.idArtArticoli = articoli.id " +
+                        " join art_gruppi gruppi " +
+                        " on idArtGruppi = gruppi.id " +
+                        " where idArtGruppi = " + gruppo.Id.ToString(), ref esito);
+
+                        if (esito.codice == 0)
+                        {
+                            gvMod_Articoli.DataSource = dtArticoli;
+                            gvMod_Articoli.DataBind();
+
+                        }
+                        else
+                        {
+                            Session["ErrorPageText"] = esito.descrizione;
+                            string url = String.Format("~/pageError.aspx");
+                            Response.Redirect(url, true);
+                        }
+
+                        pnlContainer.Visible = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error("btnSeleziona_Click", ex);
+                    btnInserisciRaggruppamento.Visible = true;
+                    btnModificaRaggruppamento.Visible = false;
+                    btnEliminaRaggruppamento.Visible = false;
+                    ShowError(ex.Message);
+                }
             }
         }
+
+        protected void gvMod_Raggruppamenti_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[1].Visible = false;
+            }
+                if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Cells[1].Visible = false;
+                
+                if (basePage.AbilitazioneInScrittura()) { 
+                    // PRENDO L'ID DEL PROTOCOLLO SELEZIONATO
+                    string idSelezionato = e.Row.Cells[1].Text;
+                    ImageButton myButtonEdit = e.Row.FindControl("imgSeleziona") as ImageButton;
+                    myButtonEdit.Attributes.Add("onclick", "mostraRaggruppamento('" + idSelezionato + "');");
+                }
+            }
+        }
+
+
     }
 }

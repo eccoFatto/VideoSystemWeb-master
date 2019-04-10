@@ -727,6 +727,7 @@ namespace VideoSystemWeb.Agenda
 
             if (esito.codice == Esito.ESITO_OK)
             {
+                
                 if (eventoSelezionato.id == 0)
                 {
                     esito = Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender);

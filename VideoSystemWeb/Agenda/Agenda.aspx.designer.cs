@@ -571,22 +571,22 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Label totaleEuroStampa;
         
         /// <summary>
-        /// Controllo datiClienteSchermo.
+        /// Controllo footerSchermo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl datiClienteSchermo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerSchermo;
         
         /// <summary>
-        /// Controllo datiClienteStampa.
+        /// Controllo footerStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl datiClienteStampa;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerStampa;
         
         /// <summary>
         /// Controllo btnStampaOfferta.

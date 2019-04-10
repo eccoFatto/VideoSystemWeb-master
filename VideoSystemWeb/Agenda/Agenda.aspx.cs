@@ -137,14 +137,7 @@ namespace VideoSystemWeb.Agenda
         {
             Esito esito = new Esito();
 
-            #region Switch visualizzazione schermo
-            gvArticoli.Columns[4].Visible = true;
-            intestazioneSchermo.Visible = true;
-            protocolloSchermo.Visible = true;
-            totaliSchermo.Visible = true;
-            intestazioneStampa.Visible = false;
-            totaliStampa.Visible = false;
-            #endregion
+            AbilitaVisualizzazioneStampa(false);
 
             lbl_Data.Text = lbl_DataStampa.Text = DateTime.Now.ToString("dd/MM/yyyy");
             lbl_Produzione.Text = lbl_ProduzioneStampa.Text = eventoSelezionato.produzione;
@@ -769,16 +762,8 @@ namespace VideoSystemWeb.Agenda
             string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
             imgLogo.ImageUrl = prefissoUrl + "/Images/logoVSP_trim.png";
 
-            #region Switch visualizzazione stampa
-            gvArticoli.Columns[4].Visible = false;
+            AbilitaVisualizzazioneStampa(true);
 
-            intestazioneSchermo.Visible = false;
-            protocolloSchermo.Visible = false;
-            totaliSchermo.Visible = false;
-
-            intestazioneStampa.Visible = true;
-            totaliStampa.Visible = true;
-            #endregion
 
             StringWriter sw = new StringWriter();
             HtmlTextWriter hw = new HtmlTextWriter(sw);
@@ -941,8 +926,22 @@ namespace VideoSystemWeb.Agenda
             }
             return innerPanel;
         }
-        
+
         #endregion
+
+        private void AbilitaVisualizzazioneStampa(bool isVisualizzazioneStampa)
+        {
+            gvArticoli.Columns[4].Visible = !isVisualizzazioneStampa;
+
+            intestazioneSchermo.Visible = !isVisualizzazioneStampa;
+            protocolloSchermo.Visible = !isVisualizzazioneStampa;
+            totaliSchermo.Visible = !isVisualizzazioneStampa;
+            footerSchermo.Visible = !isVisualizzazioneStampa;
+
+            intestazioneStampa.Visible = isVisualizzazioneStampa;
+            totaliStampa.Visible = isVisualizzazioneStampa;
+            footerStampa.Visible = isVisualizzazioneStampa;
+        }
 
         public override void VerifyRenderingInServerForm(Control control)
         {

@@ -241,13 +241,13 @@
             </div>
 
             <div id="modalRiepilogoOfferta" class="w3-modal">
-                <div class="w3-modal-content w3-card-4 w3-animate-zoom " style="position: fixed; top: 5%; width: 70%; left: 20%; overflow: auto; height: 90%">
+                <div class="w3-modal-content  w3-animate-zoom " style="position: fixed; top: 5%; width: 70%; left: 20%; overflow: auto; height: 90%; background-color:transparent ">
 
-                    <div class="w3-center">
-                        <br>
-                        <span onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+                    <div class="w3-center" style="background-color:white">
+                        <br/>
+                        <span onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi" style="top:22px;">&times;</span>
                     </div>
-                    <div id="modalRiepilogoContent" runat="server">
+                    <div id="modalRiepilogoContent" runat="server" style="background-color:white;">
                         <div class="w3-row  w3-padding-large w3-small">
                             <div class="w3-col">
                                 <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/logoVSP_trim.png" Style="height: 120px" />
@@ -453,7 +453,7 @@
                         <div class="w3-row w3-section w3-padding w3-small">
 
                             <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False"
-                                Style="font-size: 8pt; width: 100%; position: relative; background-color: #FFF; text-align: center"
+                                Style="font-size: 8pt;max-height:200px;  width: 100%; position: relative; background-color: #FFF; text-align: center"
                                 HeaderStyle-BackColor="#2196F3" HeaderStyle-Font-Bold="true" HeaderStyle-ForeColor="White" BorderWidth="0"
                                 GridLines="None" OnRowDataBound="gvArticoli_RowDataBound" HeaderStyle-HorizontalAlign="Right">
                                 <Columns>
@@ -563,19 +563,25 @@
                                                         <asp:Label ID="totaleEuroStampa" runat="server" /></b>
                                                 </td>
                                             </tr>
+                                            <tr><td colspan="2">&nbsp;</td></tr>
+                                            <tr><td colspan="2">&nbsp;</td></tr>
+                                            <tr><td colspan="2">&nbsp;</td></tr>
+                                            <tr><td colspan="2">&nbsp;</td></tr>
+                                            <tr><td colspan="2">&nbsp;</td></tr>
+                                            <tr><td colspan="2">&nbsp;</td></tr>
                                         </table>
                                     </td>
                                 </tr>
                             </table>
                         </div>
 
-                        <div id="datiClienteSchermo" runat="server" style="margin:10px; margin-top:25px;position:relative; width:98%">
+                        <%--<div id="datiClienteSchermo" runat="server" style="margin:10px; margin-top:25px;position:relative; width:98%">
                             <div class="w3-row w3-small">
                                 <div class="w3-twothird">
                                     <div class="w3-quarter w3-center" style="background-color: #2196F3; color: white; border: solid 1px #fff">
                                         <label>Banca</label>
                                     </div>
-                                    <div class="w3-threequarter w3-left" style="background-color: #CCC; border: solid 1px #fff; padding-left: 5px">
+                                    <div class="w3-threequarter w3-left" style="background-color: #DDD; border: solid 1px #fff; padding-left: 5px">
                                         Unicredit Banca: IBAN: IT39H0200805198000103515620
                                     </div>
                                 </div>
@@ -591,7 +597,7 @@
                                         <div class="w3-quarter w3-center" style="background-color: #2196F3; color: white; border: solid 1px #fff">
                                             <label>Pagamento</label>
                                         </div>
-                                        <div class="w3-threequarter w3-left" style="background-color: #CCC; border: solid 1px #fff; padding-left: 5px">
+                                        <div class="w3-threequarter w3-left" style="background-color: #DDD; border: solid 1px #fff; padding-left: 5px">
                                             30 gg DFFM
                                         </div>
                                     </div>
@@ -599,7 +605,7 @@
                                         <div class="w3-quarter w3-center" style="background-color: #2196F3; color: white; border: solid 1px #fff">
                                             <label>Consegna</label>
                                         </div>
-                                        <div class="w3-threequarter w3-left" style="background-color: #CCC; border: solid 1px #fff; padding-left: 5px">
+                                        <div class="w3-threequarter w3-left" style="background-color: #DDD; border: solid 1px #fff; padding-left: 5px">
                                             Via Aurelia, 796 00165 Roma
                                         </div>
                                     </div>
@@ -608,18 +614,59 @@
                                     &nbsp;<br />&nbsp;
                                 </div>
                             </div>
+                        </div>--%>
+
+                        <div id="footerSchermo" style="margin-left:10px; margin-right:10px;margin-top:25px;position:relative; width:98%; font-size:8pt" runat="server" >
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Banca</td>
+                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">Unicredit Banca: IBAN: IT39H0200805198000103515620</td>
+                                    <td style="width:34%;background-color:#2196F3;color: white; border: solid 1px #fff"><b>Timbro e firma per accettazione</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Pagamento</td>
+                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">30 gg DFFM</td>
+                                    <td style="width:34%;background-color:#DDD;color: white; border: solid 1px #fff" rowspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Consegna</td>
+                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">Via Aurelia, 796 00165 Roma</td>
+                                </tr>
+                            </table>
+
+                            <div style="padding:10px; position:relative;font-size:8pt; text-align:center;">
+                                <b>Videosystem Production srl&nbsp;&nbsp;P.IVA 13121341005<br />
+                                Sede legale:  Via T. Val di Pesa 34 - 00148 Roma&nbsp;&nbsp;e-mail: info@vsproduction.it</b>
+                            </div>
+
                         </div>
 
-                        <div id="datiClienteStampa" style="width: 100%; font-size: 8pt" runat="server" visible="false">
-                        </div>
+                        <div id="footerStampa" style="margin:10px; margin-top:25px;position:absolute; bottom: 0px; width:98%; font-size:8pt" runat="server" Visible="false">
+                            <table style="width:100%;">
+                                <tr>
+                                    <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Banca</td>
+                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">Unicredit Banca: IBAN: IT39H0200805198000103515620</td>
+                                    <td style="width:34%;background-color:#2196F3;color: white; border: solid 1px #fff"><b>Timbro e firma per accettazione</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Pagamento</td>
+                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">30 gg DFFM</td>
+                                    <td style="width:34%;background-color:#DDD;color: white; border: solid 1px #fff" rowspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Consegna</td>
+                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">Via Aurelia, 796 00165 Roma</td>
+                                </tr>
+                            </table>
 
-                        <div id="footer" style="margin:10px; position:relative; width:98%; font-size:8pt; text-align:center;">
-                            <b>Videosystem Production srl&nbsp;&nbsp;P.IVA 13121341005<br />
-                            Sede legale:  Via T. Val di Pesa 34 - 00148 Roma&nbsp;&nbsp;e-mail: info@vsproduction.it</b>
+                            <div style="padding:10px; position:relative;font-size:8pt; text-align:center;">
+                                <b>Videosystem Production srl&nbsp;&nbsp;P.IVA 13121341005<br />
+                                Sede legale:  Via T. Val di Pesa 34 - 00148 Roma&nbsp;&nbsp;e-mail: info@vsproduction.it</b>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="w3-center w3-padding-small" style="margin: 10px; position: relative; width: 98%; ">
+                    <div class="w3-center w3-padding-small" style="position: relative;background-color:white ">
                         <asp:Button ID="btnStampaOfferta" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-orange w3-round-large " Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampa_Click" />
                         <button onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Chiudi</button>
                     </div>

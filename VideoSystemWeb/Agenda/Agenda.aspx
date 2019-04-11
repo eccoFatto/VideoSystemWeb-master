@@ -625,12 +625,16 @@
                                 </tr>
                                 <tr>
                                     <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Pagamento</td>
-                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">30 gg DFFM</td>
+                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">
+                                        <asp:label id="val_pagamentoSchermo" runat="server" />
+                                    </td>
                                     <td style="width:34%;background-color:#DDD;color: white; border: solid 1px #fff" rowspan="2">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Consegna</td>
-                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">Via Aurelia, 796 00165 Roma</td>
+                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">
+                                        <asp:label id="val_consegnaSchermo" runat="server" />
+                                    </td>
                                 </tr>
                             </table>
 
@@ -650,12 +654,16 @@
                                 </tr>
                                 <tr>
                                     <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Pagamento</td>
-                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">30 gg DFFM</td>
+                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">
+                                        <asp:label id="val_pagamentoStampa" runat="server" />
+                                    </td>
                                     <td style="width:34%;background-color:#DDD;color: white; border: solid 1px #fff" rowspan="2">&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Consegna</td>
-                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">Via Aurelia, 796 00165 Roma</td>
+                                    <td style="width:50%;background-color:#DDD;border: solid 1px #fff">
+                                        <asp:label id="val_consegnaStampa" runat="server" />
+                                    </td>
                                 </tr>
                             </table>
 

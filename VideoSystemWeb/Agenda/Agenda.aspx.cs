@@ -158,7 +158,7 @@ namespace VideoSystemWeb.Agenda
 
             decimal totPrezzo = 0;
             decimal totIVA = 0;
-            decimal totEuro = 0;
+           
             foreach (DatiArticoli art in listaDatiArticoli)
             {
                 totPrezzo += art.Prezzo * art.Quantita;
@@ -173,6 +173,9 @@ namespace VideoSystemWeb.Agenda
             List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
             string protocollo = listaProtocolli.Count == 0 ? "N.D." : eventoSelezionato.codice_lavoro + " - " + listaProtocolli.First().Numero_protocollo;
             lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
+
+            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = cliente.Pagamento + " gg DFFM";
+            val_consegnaSchermo.Text = val_consegnaStampa.Text = cliente.IndirizzoLegale + " " + cliente.ComuneLegale;
 
             return esito;
         }

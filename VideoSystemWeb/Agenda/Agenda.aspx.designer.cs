@@ -580,6 +580,24 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerSchermo;
         
         /// <summary>
+        /// Controllo val_pagamentoSchermo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_pagamentoSchermo;
+        
+        /// <summary>
+        /// Controllo val_consegnaSchermo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_consegnaSchermo;
+        
+        /// <summary>
         /// Controllo footerStampa.
         /// </summary>
         /// <remarks>
@@ -587,6 +605,24 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerStampa;
+        
+        /// <summary>
+        /// Controllo val_pagamentoStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_pagamentoStampa;
+        
+        /// <summary>
+        /// Controllo val_consegnaStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_consegnaStampa;
         
         /// <summary>
         /// Controllo btnStampaOfferta.

@@ -103,6 +103,7 @@
             $("#<%=tbDataLavorazione.ClientID%>").val('');
             $("#<%=tbProduzione.ClientID%>").val('');
             $("#<%=tbProtocolloRiferimento.ClientID%>").val('');
+            $("#<%=tbLavorazione.ClientID%>").val('');
             $("#<%=ddlTipoProtocollo.ClientID%>").val('');
         }
 
@@ -114,6 +115,7 @@
             $("#<%=tbSearch_Lavorazione.ClientID%>").val('');
             $("#<%=tbSearch_Luogo.ClientID%>").val('');
             $("#<%=tbSearch_Produzione.ClientID%>").val('');
+
         }
 
         function uploadError(sender, args)
@@ -174,11 +176,15 @@
             </div>
         </div>
         <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-threequarter">
+            <div class="w3-third">
                 <label>Produzione</label>
                 <asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
-            <div class="w3-quarter">
+            <div class="w3-third">
+                <label>Lavorazione</label>
+                <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder=""></asp:TextBox>
+            </div>            
+            <div class="w3-third">
                 <label>Data Lav.</label>
                 <asp:TextBox ID="tbDataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
             </div>
@@ -304,8 +310,8 @@
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-threequarter">
-                                        <label>Produzione</label>
-                                        <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        <label>Lavorazione</label>
+                                        <asp:TextBox ID="tbMod_Lavorazione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Data Lav</label>
@@ -329,8 +335,8 @@
                                         </div>--%>
                                     </div>
                                     <div class="w3-half">
-                                        <label>Descrizione</label>
-                                        <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        <label>Produzione</label>
+                                        <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                                     </div>
                                 </div>
                                 

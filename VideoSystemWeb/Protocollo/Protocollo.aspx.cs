@@ -305,6 +305,7 @@ namespace VideoSystemWeb.Protocollo
             queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@lavorazione", tbLavorazione.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@tipoProtocollo", ddlTipoProtocollo.SelectedValue.ToString().Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@protocolloRiferimento", tbProtocolloRiferimento.Text.Trim().Replace("'","''"));
 
@@ -358,7 +359,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Produzione.Text = "";
             tbMod_Cliente.Text = "";
             tbMod_NomeFile.Text = "";
-            tbMod_Descrizione.Text = "";
+            tbMod_Lavorazione.Text = "";
             cmbMod_Tipologia.SelectedIndex = 0;
 
         }
@@ -372,7 +373,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_DataLavorazione.ReadOnly = attivaModifica;
             tbMod_Produzione.ReadOnly = attivaModifica;
             tbMod_Cliente.ReadOnly = attivaModifica;
-            tbMod_Descrizione.ReadOnly = attivaModifica;
+            tbMod_Lavorazione.ReadOnly = attivaModifica;
             tbMod_NomeFile.ReadOnly = true;
             //tbMod_NomeFile.ReadOnly = attivaModifica;
 
@@ -422,7 +423,7 @@ namespace VideoSystemWeb.Protocollo
                     tbMod_Cliente.Text = protocollo.Cliente;
                     tbMod_NomeFile.Text = protocollo.PathDocumento;
                     Session["NOME_FILE"] = protocollo.PathDocumento;
-                    tbMod_Descrizione.Text = protocollo.Descrizione;
+                    tbMod_Lavorazione.Text = protocollo.Descrizione;
 
                     //TIPI PROTOCOLLO
                     ListItem trovati = cmbMod_Tipologia.Items.FindByValue(protocollo.Id_tipo_protocollo.ToString());
@@ -477,7 +478,7 @@ namespace VideoSystemWeb.Protocollo
             protocollo.Produzione = BasePage.ValidaCampo(tbMod_Produzione, "", false, ref esito);
             protocollo.Data_inizio_lavorazione = BasePage.ValidaCampo(tbMod_DataLavorazione, DateTime.Now, true, ref esito);
             protocollo.Codice_lavoro = BasePage.ValidaCampo(tbMod_CodiceLavoro, "", false, ref esito);
-            protocollo.Descrizione = BasePage.ValidaCampo(tbMod_Descrizione,"", false, ref esito);
+            protocollo.Descrizione = BasePage.ValidaCampo(tbMod_Lavorazione, "", false, ref esito);
             protocollo.Attivo = true;
 
             return protocollo;
@@ -548,7 +549,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_DataProtocollo.CssClass = tbMod_DataProtocollo.CssClass.Replace("erroreValidazione", "");
             tbMod_DataLavorazione.CssClass = tbMod_DataLavorazione.CssClass.Replace("erroreValidazione", "");
             tbMod_Produzione.CssClass = tbMod_Produzione.CssClass.Replace("erroreValidazione", "");
-            tbMod_Descrizione.CssClass = tbMod_Descrizione.CssClass.Replace("erroreValidazione", "");
+            tbMod_Lavorazione.CssClass = tbMod_Lavorazione.CssClass.Replace("erroreValidazione", "");
             tbMod_NomeFile.CssClass = tbMod_NomeFile.CssClass.Replace("erroreValidazione", "");
             tbMod_NumeroProtocollo.CssClass = tbMod_NumeroProtocollo.CssClass.Replace("erroreValidazione", "");
             tbMod_ProtocolloRiferimento.CssClass = tbMod_ProtocolloRiferimento.CssClass.Replace("erroreValidazione", "");

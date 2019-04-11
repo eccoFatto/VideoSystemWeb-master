@@ -76,6 +76,15 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbProduzione;
         
         /// <summary>
+        /// Controllo tbLavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbLavorazione;
+        
+        /// <summary>
         /// Controllo tbDataLavorazione.
         /// </summary>
         /// <remarks>
@@ -310,13 +319,13 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbMod_ProtocolloRiferimento;
         
         /// <summary>
-        /// Controllo tbMod_Produzione.
+        /// Controllo tbMod_Lavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Produzione;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Lavorazione;
         
         /// <summary>
         /// Controllo tbMod_DataLavorazione.
@@ -337,13 +346,13 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbMod_Cliente;
         
         /// <summary>
-        /// Controllo tbMod_Descrizione.
+        /// Controllo tbMod_Produzione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Descrizione;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Produzione;
         
         /// <summary>
         /// Controllo cmbMod_Tipologia.

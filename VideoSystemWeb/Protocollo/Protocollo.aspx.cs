@@ -371,6 +371,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_ProtocolloRiferimento.ReadOnly = attivaModifica;
             tbMod_DataProtocollo.ReadOnly = true;
             tbMod_DataLavorazione.ReadOnly = attivaModifica;
+            CalendarExtender_DataLavorazione.Enabled = !attivaModifica;
             tbMod_Produzione.ReadOnly = attivaModifica;
             tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Lavorazione.ReadOnly = attivaModifica;

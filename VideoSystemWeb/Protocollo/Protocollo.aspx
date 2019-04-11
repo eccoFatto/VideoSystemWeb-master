@@ -187,6 +187,7 @@
             <div class="w3-third">
                 <label>Data Lav.</label>
                 <asp:TextBox ID="tbDataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
+                <ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="tbDataLavorazione" Animated="true" Format="dd/MM/yyyy"></ajaxToolkit:CalendarExtender>
             </div>
         </div>
         <div class="w3-row-padding w3-margin-bottom">
@@ -197,6 +198,7 @@
             <div class="w3-quarter">
                 <label>Data Prot.</label>
                 <asp:TextBox ID="tbDataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
+                <ajaxToolkit:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="tbDataProtocollo" Animated="true" Format="dd/MM/yyyy"></ajaxToolkit:CalendarExtender>
             </div>
             <div class="w3-quarter">
                 <label>&nbsp;</label>
@@ -316,6 +318,7 @@
                                     <div class="w3-quarter">
                                         <label>Data Lav</label>
                                         <asp:TextBox ID="tbMod_DataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA" Text="" ></asp:TextBox>
+                                        <ajaxToolkit:CalendarExtender ID="CalendarExtender_DataLavorazione" runat="server" TargetControlID="tbMod_DataLavorazione" Animated="true" Format="dd/MM/yyyy" Enabled="false"></ajaxToolkit:CalendarExtender>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
@@ -429,10 +432,12 @@
                     <div class="w3-quarter">
                         <label>Data da</label>
                         <asp:TextBox ID="tbSearch_DataInizio" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
+                        <ajaxToolkit:CalendarExtender ID="CalendarExtender3" runat="server" TargetControlID="tbSearch_DataInizio" Animated="true" Format="dd/MM/yyyy"></ajaxToolkit:CalendarExtender>
                     </div>
                     <div class="w3-quarter">
                         <label>Data a</label>
                         <asp:TextBox ID="tbSearch_DataFine" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
+                        <ajaxToolkit:CalendarExtender ID="CalendarExtender4" runat="server" TargetControlID="tbSearch_DataFine" Animated="true" Format="dd/MM/yyyy"></ajaxToolkit:CalendarExtender>
                     </div>
                     <div class="w3-quarter">
                         <label>&nbsp;</label>

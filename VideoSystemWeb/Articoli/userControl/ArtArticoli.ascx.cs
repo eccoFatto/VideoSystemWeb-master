@@ -18,6 +18,7 @@ namespace VideoSystemWeb.Articoli.userControl
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         BasePage basePage = new BasePage();
+        public string dettaglioModifica = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             // FUNZIONA SE NELLA PAGINA ASPX CHIAMANTE C'E' UN CAMPO HIDDENFIELD COL TIPO ARTICOLO (GENERI/GRUPPI/SOTTOGRUPPI/ARTICOLI)
@@ -151,6 +152,7 @@ namespace VideoSystemWeb.Articoli.userControl
                 {
                     pulisciCampiDettaglio();
 
+                    dettaglioModifica = articolo.DefaultDescrizione.Trim();
                     // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
                     tbMod_Descrizione.Text = articolo.DefaultDescrizioneLunga;
                     tbMod_DescrizioneBreve.Text = articolo.DefaultDescrizione;
@@ -226,28 +228,10 @@ namespace VideoSystemWeb.Articoli.userControl
                     "on idArtGruppi = gruppi.id " +
                     "where idArtArticoli = " + articolo.Id.ToString(), ref esito);
 
-                    //lbMod_Gruppi.Items.Clear();
-                    //List<Art_Gruppi> listaGruppi = Art_Gruppi_Articoli_BLL.Instance.getGruppiByIdArticolo(articolo.Id, ref esito);
                     if (esito.codice == 0)
                     {
                         gvMod_Gruppi.DataSource = dtGruppi;
                         gvMod_Gruppi.DataBind();
-                        //    if (listaGruppi!=null && listaGruppi.Count>0) {
-                        //        lbMod_Gruppi.Rows = listaGruppi.Count;
-                        //        foreach (Art_Gruppi gruppo in listaGruppi)
-                        //        {
-                        //            ListItem item = new ListItem();
-                        //            string stringaVisualizzata = gruppo.Nome.Trim();
-                        //            if (!string.IsNullOrEmpty(gruppo.Descrizione)) stringaVisualizzata += " | " + gruppo.Descrizione.Trim();
-                        //            item.Text = stringaVisualizzata;
-                        //            item.Value = gruppo.Id.ToString();
-                        //            lbMod_Gruppi.Items.Add(item);
-                        //        }
-                        //    }
-                        //    else
-                        //    {
-                        //        lbMod_Gruppi.Rows = 1;
-                        //    }
                     }
                     else
                     {
@@ -281,13 +265,6 @@ namespace VideoSystemWeb.Articoli.userControl
             cmbMod_Sottogruppo.Text = "";
 
             cbMod_Stampa.Checked = false;
-            //cbMod_Attivo.Checked = true;
-
-            //lbMod_Referenti.Items.Clear();
-            //lbMod_Referenti.Rows = 1;
-
-            //gvMod_Referenti.DataSource = null;
-
         }
 
         protected void InserisciArticoli_Click(object sendere, EventArgs e)
@@ -308,6 +285,7 @@ namespace VideoSystemWeb.Articoli.userControl
         private void editArticoloVuoto()
         {
             Esito esito = new Esito();
+            dettaglioModifica = "";
             pulisciCampiDettaglio();
         }
         protected void btnRicercaArticoli_Click(object sender, EventArgs e)

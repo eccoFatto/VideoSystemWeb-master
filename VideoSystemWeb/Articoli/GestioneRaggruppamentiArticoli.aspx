@@ -83,10 +83,14 @@
         <asp:Panel  runat="server" ID="pnlContainer" visible="false">
             <div class="modalBackground"></div>
             <asp:Panel  runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto">
-                <div class="w3-container w3-center w3-xlarge">
-                    GESTIONE ARTICOLI COMPOSTI
-                </div>
-                <br />
+                <div class="w3-row-padding w3-margin w3-center w3-large w3-yellow w3-round" >
+                    <div class="w3-half">
+                        GESTIONE ARTICOLI COMPOSTI
+                    </div>
+                    <div class="w3-half">
+                        <%=dettaglioModifica%>
+                    </div>
+                </div> 
                 <div class="w3-container">
                     <!-- ELENCO TAB DETTAGLI COLLABORATORE -->
                     <div class="w3-bar w3-yellow w3-round">

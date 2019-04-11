@@ -162,19 +162,15 @@
         <asp:Panel  runat="server" ID="pnlContainer" visible="false">
             <div class="modalBackground"></div>
             <asp:Panel  runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto">
-                <div class="w3-container w3-center w3-xlarge">
-                    GESTIONE ARTICOLI
-                </div>
-                <br />
-                
-                <!-- DIV MESSAGGI DI ERRORE -->        
+                <div class="w3-row-padding w3-margin w3-center w3-large w3-amber w3-round" >
+                    <div class="w3-quarter">
+                        GESTIONE ARTICOLI
+                    </div>
+                    <div class="w3-rest">
+                        <%=dettaglioModifica%>
+                    </div>
+                </div> 
 
-<%--                <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
-                  <span onclick="this.parentElement.style.display='none'"
-                  class="w3-button w3-large w3-display-topright">&times;</span>
-                  <p><asp:Label ID="lbl_MessaggioErrore" runat="server" ></asp:Label></p>
-                </div>                --%>
-                
                 <div class="w3-container">
                     <!-- ELENCO TAB DETTAGLI ARTICOLO -->
                     <div class="w3-bar w3-amber w3-round">

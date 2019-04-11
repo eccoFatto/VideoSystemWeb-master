@@ -17,6 +17,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
     public partial class AnagClientiFornitori : System.Web.UI.UserControl
     {
         BasePage basePage = new BasePage();
+        public string dettaglioModifica = "";
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -133,6 +134,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     pulisciCampiDettaglio();
 
+                    dettaglioModifica = azienda.RagioneSociale;
                     // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
                     tbMod_CF.Text = azienda.CodiceFiscale;
                     tbMod_PartitaIva.Text = azienda.PartitaIva;
@@ -342,6 +344,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         private void editAziendaVuota()
         {
             Esito esito = new Esito();
+            dettaglioModifica = "";
             pulisciCampiDettaglio();
         }
         protected void btnRicercaAziende_Click(object sender, EventArgs e)
@@ -676,8 +679,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         }
         private void NascondiErroriValidazione()
         {
-            panelErrore.Style.Add("display", "none");
-
             tbMod_CF.CssClass = tbMod_CF.CssClass.Replace("erroreValidazione", "");
             tbMod_CodiceIdentificativo.CssClass = tbMod_CodiceIdentificativo.CssClass.Replace("erroreValidazione", "");
             tbMod_Iban.CssClass = tbMod_Iban.CssClass.Replace("erroreValidazione", "");

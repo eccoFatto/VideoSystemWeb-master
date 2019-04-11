@@ -13,6 +13,7 @@ namespace VideoSystemWeb.Articoli
     public partial class GestioneRaggruppamentiArticoli : BasePage
     {
         BasePage basePage = new BasePage();
+        public string dettaglioModifica = "";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected void Page_PreInit(object sender, EventArgs e)
@@ -53,26 +54,6 @@ namespace VideoSystemWeb.Articoli
             {
                 gvMod_Raggruppamenti.DataSource = dtGruppi;
                 gvMod_Raggruppamenti.DataBind();
-
-                //lbMod_Raggruppamenti.Items.Clear();
-                //foreach (Art_Gruppi raggruppamento in lista)
-                //{
-                //    ListItem item = new ListItem();
-                //    string stringaVisualizzata = raggruppamento.Nome.Trim();
-                //    if (!string.IsNullOrEmpty(raggruppamento.Descrizione)) stringaVisualizzata += " | " + raggruppamento.Descrizione.Trim();
-                //    item.Text = stringaVisualizzata;
-                //    item.Value = raggruppamento.Id.ToString();
-                //    lbMod_Raggruppamenti.Items.Add(item);
-                //}
-
-                //if (lbMod_Raggruppamenti.Items.Count > 10)
-                //{
-                //    lbMod_Raggruppamenti.Rows = 10;
-                //}
-                //else
-                //{
-                //    lbMod_Raggruppamenti.Rows = lbMod_Raggruppamenti.Items.Count;
-                //}
 
                 //ARTICOLI
                 ddlArticoliDaAggiungere.Items.Clear();
@@ -226,7 +207,7 @@ namespace VideoSystemWeb.Articoli
                 try
                 {
                     NascondiErroriValidazione();
-
+                    
                     Esito esito = new Esito();
                     Art_Gruppi nuovoGruppo = new Art_Gruppi();
                     nuovoGruppo.Id = Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text);
@@ -309,6 +290,7 @@ namespace VideoSystemWeb.Articoli
                 }
                 else
                 {
+                    dettaglioModifica = gruppo.Nome.Trim();
                     btnInserisciRaggruppamento.Visible = false;
                     btnModificaRaggruppamento.Visible = true;
                     btnEliminaRaggruppamento.Visible = true;
@@ -360,6 +342,7 @@ namespace VideoSystemWeb.Articoli
         protected void btnInsRaggruppamento_Click(object sender, EventArgs e)
         {
             // ARTICOLI ASSOCIATI
+            dettaglioModifica = "";
             tbIdRaggruppamentoDaModificare.Text = "";
             tbInsNomeRaggruppamento.Text = "";
             tbInsDescrizioneRaggruppamento.Text = "";

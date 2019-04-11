@@ -18,6 +18,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
     {
 
         BasePage basePage = new BasePage();
+        public string dettaglioModifica = "";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected void Page_Load(object sender, EventArgs e)
@@ -494,6 +495,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     pulisciCampiDettaglio();
 
+                    dettaglioModifica = collaboratore.Cognome.Trim() + " " + collaboratore.Nome.Trim();
                     // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
                     tbMod_CF.Text = collaboratore.CodiceFiscale;
                     tbMod_Cognome.Text = collaboratore.Cognome;
@@ -747,6 +749,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         private void editCollaboratoreVuoto()
         {
             Esito esito = new Esito();
+            dettaglioModifica = "";
             pulisciCampiDettaglio();
             // IMMAGINE COLLABORATORE
             imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + ConfigurationManager.AppSettings["IMMAGINE_DUMMY_COLLABORATORE"];
@@ -781,7 +784,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         private void NascondiErroriValidazione()
         {
-            panelErrore.Style.Add("display", "none");
+            //panelErrore.Style.Add("display", "none");
 
             tbMod_CF.CssClass = tbMod_CF.CssClass.Replace("erroreValidazione", "");
             tbMod_Cognome.CssClass = tbMod_Cognome.CssClass.Replace("erroreValidazione", "");

@@ -174,21 +174,18 @@
         <asp:Panel  runat="server" ID="pnlContainer" visible="false">
             <div class="modalBackground"></div>
             <asp:Panel  runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto">
-                <div class="w3-container w3-center w3-xlarge">
+                <div class="w3-row-padding w3-margin w3-center w3-large w3-red w3-round" >
+                    <div class="w3-quarter">
+                        GESTIONE COLLABORATORI
+                    </div>
+                    <div class="w3-rest">
+                        <%=dettaglioModifica%>
+                    </div>
+                </div>
+<%--                <div class="w3-container w3-center w3-xlarge">
                     GESTIONE COLLABORATORI
                 </div>
-                <br />
-                
-                <!-- DIV MESSAGGI DI ERRORE -->        
-<%--                <div class="alert alert-danger alert-dismissible fade in" role="alert" runat="server" id="panelErrore" style="display: none">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <asp:Label ID="lbl_MessaggioErrore" runat="server" CssClass="form-control-sm"></asp:Label>
-                </div>--%>
-                <div id="panelErrore" class="w3-panel w3-red w3-display-container" runat="server" style="display:none;">
-                  <span onclick="this.parentElement.style.display='none'"
-                  class="w3-button w3-large w3-display-topright">&times;</span>
-                  <p><asp:Label ID="lbl_MessaggioErrore" runat="server" ></asp:Label></p>
-                </div>                             
+                <br />--%>
                 <div class="w3-container">
                     <!-- ELENCO TAB DETTAGLI COLLABORATORE -->
                     <div class="w3-bar w3-red w3-round">

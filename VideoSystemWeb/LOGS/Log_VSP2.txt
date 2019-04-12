@@ -3484,3 +3484,5 @@ L'istruzione è stata interrotta.
 2019-04-08 20:38:51,700 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-04-08 20:38:53,305 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-04-08 20:41:30,502 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-12 22:19:15,104 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-12 22:19:17,215 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

@@ -558,6 +558,7 @@
     <Compile Include="BLL\Anag_Clienti_Fornitori_BLL.cs" />
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
+    <Compile Include="BLL\Config_BLL.cs" />
     <Compile Include="BLL\Protocolli_BLL.cs" />
     <Compile Include="BLL\Articoli_BLL.cs" />
     <Compile Include="BLL\Dati_Tender_BLL.cs" />
@@ -586,6 +587,7 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\Agenda_DAL.cs" />
+    <Compile Include="DAL\Config_DAL.cs" />
     <Compile Include="DAL\Protocolli_DAL.cs" />
     <Compile Include="DAL\Dati_Tender_DAL.cs" />
     <Compile Include="DAL\Art_Gruppi_Articoli_DAL.cs" />
@@ -629,6 +631,7 @@
     <Compile Include="Entity\Evento.cs" />
     <Compile Include="Entity\Json\Evento_Json.cs" />
     <Compile Include="Entity\Tipologica.cs" />
+    <Compile Include="Entity\Config.cs" />
     <Compile Include="Entity\Tipo_Evento.cs" />
     <Compile Include="Entity\Tipologie.cs" />
     <Compile Include="Entity\Tipo_Utente.cs" />

@@ -1,11 +1,12 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Protocollo.aspx.cs" Inherits="VideoSystemWeb.Protocollo.Protocollo" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script>
         $(document).ready(function () {
             $('.loader').hide();
 
-            $(window).keydown(function(e){
+            $(window).keydown(function (e) {
                 if (e.keyCode == 13) {
                     //alert($("#<=hf_tipoOperazione.ClientID%>").val());
                     if ($("#<%=hf_tipoOperazione.ClientID%>").val() != 'MODIFICA' && $("#<%=hf_tipoOperazione.ClientID%>").val() != 'INSERIMENTO') {
@@ -15,6 +16,18 @@
                         $("#<%=btnRicercaLavorazioni.ClientID%>").click();
                     }
                 }
+            });
+
+            $('.calendar').datetimepicker({
+                locale: 'it',
+                format: 'DD/MM/YYYY'
+            });
+
+            Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+                $('.calendar').datetimepicker({
+                    locale: 'it',
+                    format: 'DD/MM/YYYY'
+                });
             });
 
 <%--            Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
@@ -69,9 +82,9 @@
                 var i;
                 var x = document.getElementsByClassName("prot");
                 for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";  
+                    x[i].style.display = "none";
                 }
-                document.getElementById(tipoName).style.display = "block";  
+                document.getElementById(tipoName).style.display = "block";
             }
         }
 
@@ -118,29 +131,25 @@
 
         }
 
-        function uploadError(sender, args)
-        {
+        function uploadError(sender, args) {
             //alert('errore ');
             $('.loader').hide();
-            document.getElementById('<%=lblStatus.ClientID%>').innerText = 'Errore sul file ' + args.get_fileName() + ' - ' +  args.get_errorMessage();
+            document.getElementById('<%=lblStatus.ClientID%>').innerText = 'Errore sul file ' + args.get_fileName() + ' - ' + args.get_errorMessage();
         }
 
-        function StartUpload(sender,args)
-        {
+        function StartUpload(sender, args) {
             //alert('start upload');
             $('.loader').show();
             document.getElementById('<%=lblStatus.ClientID%>').innerText = 'Caricamento Iniziato.';
         }
 
-        function UploadComplete(sender,args)
-        {
+        function UploadComplete(sender, args) {
             $('.loader').hide();
             //alert('Caricamento Completato');
             var filename = args.get_fileName();
             var contentType = args.get_contentType();
             var text = "La dimensione del file " + filename + " è " + args.get_length() + " bytes";
-            if (contentType.length > 0)
-            {
+            if (contentType.length > 0) {
                 text += " e la tipologia è '" + contentType + "'.";
             }
             document.getElementById('<%=lblStatus.ClientID%>').innerText = '';
@@ -153,131 +162,130 @@
             chiudiPopupLavorazioni();
         }
     </script>
-<Label><asp:Label ID="lblProtocolli" runat="server" Text="PROTOCOLLI" ForeColor="Teal"></asp:Label></Label>
-<asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
-    <ContentTemplate> 
-        <div class="w3-row-padding">
-            <div class="w3-quarter">
-                <label>Codice Lavoro</label>
-                <asp:TextBox ID="tbCodiceLavoro" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
-            </div>
-            <div class="w3-quarter">
-                <label>Numero Protocollo</label>
-                <asp:TextBox ID="tbNumeroProtocollo" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
-            </div>
-            <div class="w3-quarter">
-                <label>Riferimento Documento</label>
-                <asp:TextBox ID="tbProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
-            </div>
-            <div class="w3-quarter">
-                <label>Tipo</label>
-                <asp:DropDownList ID="ddlTipoProtocollo" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
-                </asp:DropDownList>
-            </div>
-        </div>
-        <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-third">
-                <label>Produzione</label>
-                <asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
-            </div>
-            <div class="w3-third">
-                <label>Lavorazione</label>
-                <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder=""></asp:TextBox>
-            </div>            
-            <div class="w3-third">
-                <label>Data Lav.</label>
-                <asp:TextBox ID="tbDataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
-                <ajaxToolkit:CalendarExtender ID="CalendarExtender1" runat="server" TargetControlID="tbDataLavorazione" Animated="true" Format="dd/MM/yyyy"></ajaxToolkit:CalendarExtender>
-            </div>
-        </div>
-        <div class="w3-row-padding w3-margin-bottom">
-            <div class="w3-half">
-                <label>Cliente</label>
-                <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
-            </div>
-            <div class="w3-quarter">
-                <label>Data Prot.</label>
-                <asp:TextBox ID="tbDataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
-                <ajaxToolkit:CalendarExtender ID="CalendarExtender2" runat="server" TargetControlID="tbDataProtocollo" Animated="true" Format="dd/MM/yyyy"></ajaxToolkit:CalendarExtender>
-            </div>
-            <div class="w3-quarter">
-                <label>&nbsp;</label>
-                <table style="width:100%;">
-                    <tr>
-                        <td style="width:40%;">                    
-                            <asp:Button ID="btnRicercaProtocollo" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaProtocollo_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
-                        </td>
-                        <td style="width:40%;">                    
-                            <div id="divBtnInserisciProtocollo" runat="server"> 
-                                <div id="clbtnInserisciProtocollo" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciProtocollo();">Inserisci</div>
-                            </div>
-
-                        </td>
-                        <td style="width:20%;">
-                            <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;"  OnClientClick="azzeraCampiRicerca();" />
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>   
-
-        <div class="round">
-            <asp:GridView ID="gv_protocolli" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" PageSize="20">
-                <Columns>
-                    <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
-                        <ItemTemplate>
-                            <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false"  Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza Protocollo" ImageAlign="AbsMiddle" Height="30px" />
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
-                        <ItemTemplate>
-                            <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false"  Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Allegato" ImageAlign="AbsMiddle" Height="30px" />
-                        </ItemTemplate>
-                    </asp:TemplateField>                                
-                </Columns>
-            </asp:GridView>
-        </div>
-        
-    </ContentTemplate>
-    <Triggers>
-        <asp:AsyncPostBackTrigger ControlID="btnRicercaProtocollo" EventName="Click" />
-    </Triggers>
-</asp:UpdatePanel>
-
-<asp:Button runat="server" ID="btnEditProtocollo" Style="display: none" OnClick="btnEditProtocollo_Click"/>
-<asp:Button runat="server" ID="btnInsProtocollo" Style="display: none" OnClick="btnInsProtocollo_Click"/>
-<asp:Button runat="server" ID="btnCercaCliente" Style="display: none" OnClick="btnCercaCliente_Click"/>
-<asp:Button runat="server" ID="btnCercaLavorazione" Style="display: none" OnClick="btnCercaLavorazione_Click"/>
-    
-<asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopup_Click"/>
-<asp:Button runat="server" ID="btnChiudiPopupClientiServer" Style="display: none" OnClick="btnChiudiPopupClientiServer_Click"/>
-<asp:Button runat="server" ID="btnChiudiPopupLavorazioniServer" Style="display: none" OnClick="btnChiudiPopupLavorazioniServer_Click"/>
-
-<asp:HiddenField ID="hf_idProt" runat="server" EnableViewState="true" />
-<asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
-<asp:HiddenField ID="hf_tabChiamata" runat="server" EnableViewState="true" Value="Protocollo" />
-
-<asp:UpdatePanel ID="upColl" runat="server">
-    <ContentTemplate>
-        <asp:Panel  runat="server" ID="pnlContainer" visible="false">
-            <div class="modalBackground"></div>
-            <asp:Panel  runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto">
-                <div class="w3-container w3-center w3-xlarge">
-                    GESTIONE PROTOCOLLI
+    <label>
+        <asp:Label ID="lblProtocolli" runat="server" Text="PROTOCOLLI" ForeColor="Teal"></asp:Label></label>
+    <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
+        <ContentTemplate>
+            <div class="w3-row-padding">
+                <div class="w3-quarter">
+                    <label>Codice Lavoro</label>
+                    <asp:TextBox ID="tbCodiceLavoro" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-                <br />
+                <div class="w3-quarter">
+                    <label>Numero Protocollo</label>
+                    <asp:TextBox ID="tbNumeroProtocollo" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                </div>
+                <div class="w3-quarter">
+                    <label>Riferimento Documento</label>
+                    <asp:TextBox ID="tbProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                </div>
+                <div class="w3-quarter">
+                    <label>Tipo</label>
+                    <asp:DropDownList ID="ddlTipoProtocollo" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                    </asp:DropDownList>
+                </div>
+            </div>
+            <div class="w3-row-padding w3-margin-bottom">
+                <div class="w3-third">
+                    <label>Produzione</label>
+                    <asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                </div>
+                <div class="w3-third">
+                    <label>Lavorazione</label>
+                    <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                </div>
+                <div class="w3-third" style="position: relative">
+                    <label>Data Lav.</label>
+                    <asp:TextBox ID="tbDataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                </div>
+            </div>
+            <div class="w3-row-padding w3-margin-bottom">
+                <div class="w3-half">
+                    <label>Cliente</label>
+                    <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                </div>
+                <div class="w3-quarter" style="position: relative">
+                    <label>Data Prot.</label>
+                    <asp:TextBox ID="tbDataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                </div>
+                <div class="w3-quarter">
+                    <label>&nbsp;</label>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 40%;">
+                                <asp:Button ID="btnRicercaProtocollo" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaProtocollo_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
+                            </td>
+                            <td style="width: 40%;">
+                                <div id="divBtnInserisciProtocollo" runat="server">
+                                    <div id="clbtnInserisciProtocollo" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciProtocollo();">Inserisci</div>
+                                </div>
 
-                <div class="w3-container">
-                    <!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
-                    <div class="w3-bar w3-yellow w3-round">
-                        <div class="w3-bar-item w3-button w3-yellow" onclick="openDettaglioProtocollo('Protocollo')">Protocollo</div>
-                        <div class="w3-bar-item w3-button w3-yellow w3-right">
-                            <div id="btnChiudiPopup" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
+                            </td>
+                            <td style="width: 20%;">
+                                <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicerca();" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="round">
+                <asp:GridView ID="gv_protocolli" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" PageSize="20">
+                    <Columns>
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
+                            <ItemTemplate>
+                                <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza Protocollo" ImageAlign="AbsMiddle" Height="30px" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
+                            <ItemTemplate>
+                                <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Allegato" ImageAlign="AbsMiddle" Height="30px" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+            </div>
+
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="btnRicercaProtocollo" EventName="Click" />
+        </Triggers>
+    </asp:UpdatePanel>
+
+    <asp:Button runat="server" ID="btnEditProtocollo" Style="display: none" OnClick="btnEditProtocollo_Click" />
+    <asp:Button runat="server" ID="btnInsProtocollo" Style="display: none" OnClick="btnInsProtocollo_Click" />
+    <asp:Button runat="server" ID="btnCercaCliente" Style="display: none" OnClick="btnCercaCliente_Click" />
+    <asp:Button runat="server" ID="btnCercaLavorazione" Style="display: none" OnClick="btnCercaLavorazione_Click" />
+
+    <asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopup_Click" />
+    <asp:Button runat="server" ID="btnChiudiPopupClientiServer" Style="display: none" OnClick="btnChiudiPopupClientiServer_Click" />
+    <asp:Button runat="server" ID="btnChiudiPopupLavorazioniServer" Style="display: none" OnClick="btnChiudiPopupLavorazioniServer_Click" />
+
+    <asp:HiddenField ID="hf_idProt" runat="server" EnableViewState="true" />
+    <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
+    <asp:HiddenField ID="hf_tabChiamata" runat="server" EnableViewState="true" Value="Protocollo" />
+
+    <asp:UpdatePanel ID="upColl" runat="server">
+        <ContentTemplate>
+            <asp:Panel runat="server" ID="pnlContainer" Visible="false">
+                <div class="modalBackground"></div>
+                <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                    <div class="w3-container w3-center w3-xlarge">
+                        GESTIONE PROTOCOLLI
+                    </div>
+                    <br />
+
+                    <div class="w3-container">
+                        <!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
+                        <div class="w3-bar w3-yellow w3-round">
+                            <div class="w3-bar-item w3-button w3-yellow" onclick="openDettaglioProtocollo('Protocollo')">Protocollo</div>
+                            <div class="w3-bar-item w3-button w3-yellow w3-right">
+                                <div id="btnChiudiPopup" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
+                            </div>
                         </div>
                     </div>
-                </div>
                     <!-- TAB PROTOCOLLI -->
-                    <div id="Protocollo" class="w3-container w3-border prot" style="display:block" >
+                    <div id="Protocollo" class="w3-container w3-border prot" style="display: block">
                         <%--<label>Protocolli</label>--%>
                         <div class="w3-container w3-center">
                             <p>
@@ -286,47 +294,46 @@
                                         <label>Codice Lavorazione</label>
                                         <div class="w3-row-padding w3-center w3-text-center">
                                             <div class="w3-threequarter">
-                                                <asp:TextBox ID="tbMod_CodiceLavoro" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                                <asp:TextBox ID="tbMod_CodiceLavoro" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                             </div>
-<%--                                            <div class="w3-quarter">
+                                            <%--                                            <div class="w3-quarter">
                                                 <asp:ImageButton ID="imgbtnCreateNewCodLav" ImageUrl="~/Images/detail-icon.png" runat="server" class="w3-input  w3-round " Height="40px" Width="40px" Text="+" ToolTip="Crea Nuovo Codice Lavorazione" OnClick="imgbtnCreateNewCodLav_Click" />
                                             </div>--%>
                                             <div class="w3-quarter">
-                                                <asp:ImageButton ID="imgbtnSelectCodLav" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" ToolTip="Cerca Codice Lavorazione" OnClick="imgbtnSelectCodLav_Click" OnClientClick="cercaLavorazione()"  />
+                                                <asp:ImageButton ID="imgbtnSelectCodLav" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" ToolTip="Cerca Codice Lavorazione" OnClick="imgbtnSelectCodLav_Click" OnClientClick="cercaLavorazione()" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Numero Protocollo</label>
-                                        <asp:TextBox ID="tbMod_NumeroProtocollo" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
-                                        <asp:TextBox ID ="tbIdProtocolloDaModificare"  runat="server" Visible ="false"></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_NumeroProtocollo" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbIdProtocolloDaModificare" runat="server" Visible="false"></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Data Prot</label>
-                                        <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA" Text="" ></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Riferimento Documento</label>
-                                        <asp:TextBox ID="tbMod_ProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_ProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-threequarter">
                                         <label>Lavorazione</label>
-                                        <asp:TextBox ID="tbMod_Lavorazione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_Lavorazione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
-                                    <div class="w3-quarter">
+                                    <div class="w3-quarter" style="position: relative">
                                         <label>Data Lav</label>
-                                        <asp:TextBox ID="tbMod_DataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA" Text="" ></asp:TextBox>
-                                        <ajaxToolkit:CalendarExtender ID="CalendarExtender_DataLavorazione" runat="server" TargetControlID="tbMod_DataLavorazione" Animated="true" Format="dd/MM/yyyy" Enabled="false"></ajaxToolkit:CalendarExtender>
+                                        <asp:TextBox ID="tbMod_DataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
                                         <label>Cliente</label>
-                                        <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
 
-<%--                                        <div class="w3-row-padding w3-center w3-text-center">
+                                        <%--                                        <div class="w3-row-padding w3-center w3-text-center">
                                             <div class="w3-threequarter">
                                                 <label>Cliente</label>
                                                 <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
@@ -339,10 +346,10 @@
                                     </div>
                                     <div class="w3-half">
                                         <label>Produzione</label>
-                                        <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>
-                                
+
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
                                         <label>Tipo</label>
@@ -351,24 +358,23 @@
                                     </div>
                                     <div class="w3-half">
                                         <label>Nome File</label>
-                                        <asp:TextBox ID="tbMod_NomeFile" runat="server" MaxLength="100" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_NomeFile" runat="server" MaxLength="100" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-threequarter">
                                         <label>&nbsp;</label>
-                                        <ajaxToolkit:AsyncFileUpload ID="fuFileProt" 
-                                        runat="server" 
-                                        OnClientUploadError="uploadError" 
-                                        OnClientUploadStarted="StartUpload" 
-                                        OnClientUploadComplete="UploadComplete" 
-                                        UploaderStyle="Traditional" 
-                                        onuploadedcomplete="AsyncFileUpload1_UploadedComplete" 
-                                        OnUploadedFileError="AsyncFileUpload1_UploadedFileError"
-                                        clientIdMode="AutoID"
-                                        Width="600px"
-                                        class="w3-input w3-border w3-round"
-                                        />
+                                        <ajaxToolkit:AsyncFileUpload ID="fuFileProt"
+                                            runat="server"
+                                            OnClientUploadError="uploadError"
+                                            OnClientUploadStarted="StartUpload"
+                                            OnClientUploadComplete="UploadComplete"
+                                            UploaderStyle="Traditional"
+                                            OnUploadedComplete="AsyncFileUpload1_UploadedComplete"
+                                            OnUploadedFileError="AsyncFileUpload1_UploadedFileError"
+                                            ClientIDMode="AutoID"
+                                            Width="600px"
+                                            class="w3-input w3-border w3-round" />
                                     </div>
                                     <div class="w3-quarter">
                                         <label>&nbsp;</label>
@@ -382,7 +388,7 @@
                                     <asp:Button ID="btnGestisciProtocollo" runat="server" Text="Gestisci Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnGestisciProtocollo_Click" />
                                     <asp:Button ID="btnInserisciProtocollo" runat="server" Text="Inserisci Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciProtocollo_Click" OnClientClick="return confirm('Confermi inserimento Protocollo?')" />
                                     <asp:Button ID="btnModificaProtocollo" runat="server" Text="Modifica Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaProtocollo_Click" OnClientClick="return confirm('Confermi modifica Protocollo?')" Visible="false" />
-                                    <asp:Button ID="btnEliminaProtocollo" runat="server" Text="Elimina Protocollo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaProtocollo_Click" OnClientClick="return confirm('Confermi eliminazione Protocollo?')" Visible="false" />
+                                    <asp:Button ID="btnEliminaProtocollo" runat="server" Text="Elimina Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnEliminaProtocollo_Click" OnClientClick="return confirm('Confermi eliminazione Protocollo?')" Visible="false" />
                                     <asp:Button ID="btnAnnullaProtocollo" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnullaProtocollo_Click" />
                                 </div>
                                 <p>
@@ -390,125 +396,123 @@
                             </p>
                         </div>
                     </div>
+                </asp:Panel>
             </asp:Panel>
-        </asp:Panel>
-        <!-- POPUP RICERCA LAVORAZIONI -->
-        <asp:Panel  runat="server" ID="PanelLavorazioni" visible="false">
-            <div class="modalBackground"></div>
-            <asp:Panel  runat="server" ID="Panel3" CssClass="containerPopupStandard round" ScrollBars="Auto">
-                <div class="w3-container">
-                    <!-- RICERCA LAVORAZIONI -->
-                    <div class="w3-bar w3-yellow w3-round">
-                        <div class="w3-bar-item w3-button w3-yellow">Ricerca Lavorazioni</div>
-                        <div class="w3-bar-item w3-button w3-yellow w3-right">
-                            <div id="btnChiudiPopupLavorazioni" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopupLavorazioni();">Chiudi</div>
+            <!-- POPUP RICERCA LAVORAZIONI -->
+            <asp:Panel runat="server" ID="PanelLavorazioni" Visible="false">
+                <div class="modalBackground"></div>
+                <asp:Panel runat="server" ID="Panel3" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                    <div class="w3-container">
+                        <!-- RICERCA LAVORAZIONI -->
+                        <div class="w3-bar w3-yellow w3-round">
+                            <div class="w3-bar-item w3-button w3-yellow">Ricerca Lavorazioni</div>
+                            <div class="w3-bar-item w3-button w3-yellow w3-right">
+                                <div id="btnChiudiPopupLavorazioni" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopupLavorazioni();">Chiudi</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="w3-row-padding">
-                    <div class="w3-quarter">
-                        <label>Codice Lavoro</label>
-                        <asp:TextBox ID="tbSearch_CodiceLavoro" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                    </div>
-                    <div class="w3-quarter">
-                        <label>Cliente/Fornitore</label>
-                        <asp:TextBox ID="tbSearch_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                    </div>
-                    <div class="w3-quarter">
-                        <label>Luogo</label>
-                        <asp:TextBox ID="tbSearch_Luogo" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                    </div>
-                    <div class="w3-quarter">
-                        <label>Produzione</label>
-                        <asp:TextBox ID="tbSearch_Produzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                    </div>
-                </div>
-                <div class="w3-row-padding">
-                    <div class="w3-quarter">
-                        <label>Lavorazione</label>
-                        <asp:TextBox ID="tbSearch_Lavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                    </div>
-                    <div class="w3-quarter">
-                        <label>Data da</label>
-                        <asp:TextBox ID="tbSearch_DataInizio" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
-                        <ajaxToolkit:CalendarExtender ID="CalendarExtender3" runat="server" TargetControlID="tbSearch_DataInizio" Animated="true" Format="dd/MM/yyyy"></ajaxToolkit:CalendarExtender>
-                    </div>
-                    <div class="w3-quarter">
-                        <label>Data a</label>
-                        <asp:TextBox ID="tbSearch_DataFine" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA"></asp:TextBox>
-                        <ajaxToolkit:CalendarExtender ID="CalendarExtender4" runat="server" TargetControlID="tbSearch_DataFine" Animated="true" Format="dd/MM/yyyy"></ajaxToolkit:CalendarExtender>
-                    </div>
-                    <div class="w3-quarter">
-                        <label>&nbsp;</label>
-                        <table style="width:100%;">
-                            <tr>
-                                <td style="width:50%;">                    
-                                    <asp:Button ID="btnRicercaLavorazioni" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaLavorazioni_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
-                                </td>
-                                <td style="width:50%;">
-                                    <asp:Button ID="btnAzzeraCampiRicercaLavorazioni" runat="server" class="w3-btn w3-circle w3-red" Text="&times;"  OnClientClick="azzeraCampiRicercaLavorazione();" />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="round">
-                    <asp:GridView ID="gvLavorazioni" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gvLavorazioni_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvLavorazioni_PageIndexChanging" PageSize="20">
-                        <Columns>
-                            <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
-                                <ItemTemplate>
-                                    <asp:ImageButton ID="imgSelect" runat="server" CausesValidation="false"  Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Lavorazione" ImageAlign="AbsMiddle" Height="30px" />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-                </div>
-            </asp:Panel>
-        </asp:Panel>
 
-    </ContentTemplate>
-    <Triggers>
-        <asp:AsyncPostBackTrigger ControlID="btnInserisciProtocollo" EventName="Click" />
-        <asp:AsyncPostBackTrigger ControlID="btnModificaProtocollo" EventName="Click" />
-        <asp:AsyncPostBackTrigger ControlID="btnEliminaProtocollo" EventName="Click" />
-    </Triggers>
-
-</asp:UpdatePanel>
-
-
-
-
-<asp:UpdatePanel ID="upClienti" runat="server">
-    <ContentTemplate>
-        <asp:Panel  runat="server" ID="PanelClienti" visible="false">
-            <div class="modalBackground"></div>
-            <asp:Panel  runat="server" ID="Panel2" CssClass="containerPopupStandard round" ScrollBars="Auto">
-                <div class="w3-container">
-                    <!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
-                    <div class="w3-bar w3-yellow w3-round">
-                        <div class="w3-bar-item w3-button w3-yellow">Ricerca Clienti/Fornitori</div>
-                        <div class="w3-bar-item w3-button w3-yellow w3-right">
-                            <div id="btnChiudiPopupClienti" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopupClienti();">Chiudi</div>
+                    <div class="w3-row-padding">
+                        <div class="w3-quarter">
+                            <label>Codice Lavoro</label>
+                            <asp:TextBox ID="tbSearch_CodiceLavoro" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>Cliente/Fornitore</label>
+                            <asp:TextBox ID="tbSearch_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>Luogo</label>
+                            <asp:TextBox ID="tbSearch_Luogo" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>Produzione</label>
+                            <asp:TextBox ID="tbSearch_Produzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
                         </div>
                     </div>
-                </div>
-                <div class="w3-row" style="margin-bottom: 5px;">
-                    <div class="w3-third">
-                        <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente" class="label"></asp:Label>
-                    </div>
-                    <div class="w3-twothird">
-                        <div id="divClienti" class="dropdown ">
-                            <asp:HiddenField ID="hf_Clienti" runat="server" Value="" />
-                            <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
-                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto">
-                                <input class="form-control" id="filtroClienti" type="text" placeholder="Cerca..">
-                            </ul>
+                    <div class="w3-row-padding">
+                        <div class="w3-quarter">
+                            <label>Lavorazione</label>
+                            <asp:TextBox ID="tbSearch_Lavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter" style="position: relative">
+                            <label>Data da</label>
+                            <asp:TextBox ID="tbSearch_DataInizio" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter" style="position: relative">
+                            <label>Data a</label>
+                            <asp:TextBox ID="tbSearch_DataFine" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>&nbsp;</label>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 50%;">
+                                        <asp:Button ID="btnRicercaLavorazioni" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaLavorazioni_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
+                                    </td>
+                                    <td style="width: 50%;">
+                                        <asp:Button ID="btnAzzeraCampiRicercaLavorazioni" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicercaLavorazione();" />
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
-                </div>
+                    <div class="round">
+                        <asp:GridView ID="gvLavorazioni" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvLavorazioni_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvLavorazioni_PageIndexChanging" PageSize="20">
+                            <Columns>
+                                <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="imgSelect" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Lavorazione" ImageAlign="AbsMiddle" Height="30px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                </asp:Panel>
             </asp:Panel>
-        </asp:Panel>
-    </ContentTemplate>
-</asp:UpdatePanel>
+
+        </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="btnInserisciProtocollo" EventName="Click" />
+            <asp:AsyncPostBackTrigger ControlID="btnModificaProtocollo" EventName="Click" />
+            <asp:AsyncPostBackTrigger ControlID="btnEliminaProtocollo" EventName="Click" />
+        </Triggers>
+
+    </asp:UpdatePanel>
+
+
+
+
+    <asp:UpdatePanel ID="upClienti" runat="server">
+        <ContentTemplate>
+            <asp:Panel runat="server" ID="PanelClienti" Visible="false">
+                <div class="modalBackground"></div>
+                <asp:Panel runat="server" ID="Panel2" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                    <div class="w3-container">
+                        <!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
+                        <div class="w3-bar w3-yellow w3-round">
+                            <div class="w3-bar-item w3-button w3-yellow">Ricerca Clienti/Fornitori</div>
+                            <div class="w3-bar-item w3-button w3-yellow w3-right">
+                                <div id="btnChiudiPopupClienti" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopupClienti();">Chiudi</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-row" style="margin-bottom: 5px;">
+                        <div class="w3-third">
+                            <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente" class="label"></asp:Label>
+                        </div>
+                        <div class="w3-twothird">
+                            <div id="divClienti" class="dropdown ">
+                                <asp:HiddenField ID="hf_Clienti" runat="server" Value="" />
+                                <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
+                                <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto">
+                                    <input class="form-control" id="filtroClienti" type="text" placeholder="Cerca..">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </asp:Panel>
+            </asp:Panel>
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>

@@ -94,15 +94,6 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbDataLavorazione;
         
         /// <summary>
-        /// Controllo CalendarExtender1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalendarExtender1;
-        
-        /// <summary>
         /// Controllo tbRagioneSociale.
         /// </summary>
         /// <remarks>
@@ -119,15 +110,6 @@ namespace VideoSystemWeb.Protocollo {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDataProtocollo;
-        
-        /// <summary>
-        /// Controllo CalendarExtender2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalendarExtender2;
         
         /// <summary>
         /// Controllo btnRicercaProtocollo.
@@ -355,15 +337,6 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbMod_DataLavorazione;
         
         /// <summary>
-        /// Controllo CalendarExtender_DataLavorazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalendarExtender_DataLavorazione;
-        
-        /// <summary>
         /// Controllo tbMod_Cliente.
         /// </summary>
         /// <remarks>
@@ -544,15 +517,6 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbSearch_DataInizio;
         
         /// <summary>
-        /// Controllo CalendarExtender3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalendarExtender3;
-        
-        /// <summary>
         /// Controllo tbSearch_DataFine.
         /// </summary>
         /// <remarks>
@@ -560,15 +524,6 @@ namespace VideoSystemWeb.Protocollo {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearch_DataFine;
-        
-        /// <summary>
-        /// Controllo CalendarExtender4.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::AjaxControlToolkit.CalendarExtender CalendarExtender4;
         
         /// <summary>
         /// Controllo btnRicercaLavorazioni.

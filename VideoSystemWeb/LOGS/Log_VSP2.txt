@@ -3484,3 +3484,16 @@ L'istruzione è stata interrotta.
 2019-04-08 20:38:51,700 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-04-08 20:38:53,305 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-04-08 20:41:30,502 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-12 21:03:57,844 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-12 21:04:05,655 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-12 21:04:32,045 [8] INFO VideoSystemWeb.Anagrafiche.userControl.AnagCollaboratori - PAGE AnagCollaboratori
+2019-04-12 21:05:40,719 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-12 21:09:53,971 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-12 21:16:10,986 [22] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-12 21:16:12,156 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-12 21:56:40,751 [47] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-12 21:56:41,888 [42] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-12 21:57:27,879 [45] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-12 21:57:27,891 [47] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-12 22:08:22,216 [45] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-12 22:08:24,359 [48] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

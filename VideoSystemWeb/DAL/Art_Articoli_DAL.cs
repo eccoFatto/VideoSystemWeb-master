@@ -57,7 +57,7 @@ namespace VideoSystemWeb.DAL
                                     articolo.DefaultIdTipoGruppo = dt.Rows[0].Field<int>("defaultIdTipoGruppo");
                                     articolo.DefaultIdTipoSottogruppo = dt.Rows[0].Field<int>("defaultIdTipoSottogruppo");
                                     articolo.DefaultCosto = dt.Rows[0].Field<decimal>("defaultCosto");
-                                    articolo.DefaultIva = dt.Rows[0].Field<int>("defaultIva");
+                                    //articolo.DefaultIva = dt.Rows[0].Field<int>("defaultIva");
                                     articolo.DefaultPrezzo = dt.Rows[0].Field<decimal>("defaultPrezzo");
                                     articolo.DefaultStampa = dt.Rows[0].Field<bool>("defaultStampa");
                                     articolo.DefaultDescrizione = dt.Rows[0].Field<string>("defaultDescrizione");
@@ -115,7 +115,7 @@ namespace VideoSystemWeb.DAL
                                         Art_Articoli articolo = new Art_Articoli();
                                         articolo.Id = riga.Field<int>("id");
                                         articolo.DefaultCosto = riga.Field<decimal>("defaultCosto");
-                                        articolo.DefaultIva = riga.Field<int>("defaultIva");
+                                        //articolo.DefaultIva = riga.Field<int>("defaultIva");
                                         articolo.DefaultPrezzo = riga.Field<decimal>("defaultPrezzo");
                                         articolo.DefaultStampa = riga.Field<bool>("defaultStampa");
                                         articolo.DefaultDescrizione = riga.Field<string>("defaultDescrizione");
@@ -178,9 +178,9 @@ namespace VideoSystemWeb.DAL
                             defaultCosto.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(defaultCosto);
 
-                            SqlParameter defaultIva = new SqlParameter("@defaultIva", articolo.DefaultIva);
-                            defaultIva.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(defaultIva);
+                            //SqlParameter defaultIva = new SqlParameter("@defaultIva", articolo.DefaultIva);
+                            //defaultIva.Direction = ParameterDirection.Input;
+                            //StoreProc.Parameters.Add(defaultIva);
 
                             SqlParameter defaultPrezzo = new SqlParameter("@defaultPrezzo", articolo.DefaultPrezzo);
                             defaultPrezzo.Direction = ParameterDirection.Input;
@@ -271,9 +271,9 @@ namespace VideoSystemWeb.DAL
                             defaultCosto.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(defaultCosto);
 
-                            SqlParameter defaultIva = new SqlParameter("@defaultIva", articolo.DefaultIva);
-                            defaultIva.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(defaultIva);
+                            //SqlParameter defaultIva = new SqlParameter("@defaultIva", articolo.DefaultIva);
+                            //defaultIva.Direction = ParameterDirection.Input;
+                            //StoreProc.Parameters.Add(defaultIva);
 
                             SqlParameter defaultPrezzo = new SqlParameter("@defaultPrezzo", articolo.DefaultPrezzo);
                             defaultPrezzo.Direction = ParameterDirection.Input;

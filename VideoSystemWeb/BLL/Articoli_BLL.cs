@@ -149,6 +149,8 @@ namespace VideoSystemWeb.BLL
             List<DatiArticoli> listaArticoliDelGruppo = new List<DatiArticoli>();
 
             List<int> listaIDArticoli = CaricaListaGruppiArticoliByIDgruppo(idGruppo, ref esito).Select(x => x.IdArtArticoli).ToList<int>();
+            int iva = int.Parse(Config_DAL.Instance.getConfig(ref esito, SessionManager.CFG_IVA).valore);
+
             
             foreach (int idArticolo in listaIDArticoli)
             {
@@ -166,7 +168,7 @@ namespace VideoSystemWeb.BLL
                 articolo.Stampa = articoloTemplate.DefaultStampa;
                 articolo.Prezzo = articoloTemplate.DefaultPrezzo;
                 articolo.Costo = articoloTemplate.DefaultCosto;
-                articolo.Iva = articoloTemplate.DefaultIva;
+                articolo.Iva = iva;// articoloTemplate.DefaultIva;
                 articolo.IdTipoGenere = articoloTemplate.DefaultIdTipoGenere;
                 articolo.IdTipoGruppo = articoloTemplate.DefaultIdTipoGruppo;
                 articolo.IdTipoSottogruppo = articoloTemplate.DefaultIdTipoSottogruppo;
@@ -181,6 +183,7 @@ namespace VideoSystemWeb.BLL
         public DatiArticoli CaricaArticoloByID(int idEvento, int idArticolo, ref Esito esito, bool soloAttivi = true)
         {
             Art_Articoli articoloTemplate = getArticoloById(idArticolo, ref esito);
+            int iva = int.Parse(Config_DAL.Instance.getConfig(ref esito, SessionManager.CFG_IVA).valore);
 
             DatiArticoli articolo = new DatiArticoli();
 
@@ -194,7 +197,7 @@ namespace VideoSystemWeb.BLL
             articolo.Stampa = articoloTemplate.DefaultStampa;
             articolo.Prezzo = articoloTemplate.DefaultPrezzo;
             articolo.Costo = articoloTemplate.DefaultCosto;
-            articolo.Iva = articoloTemplate.DefaultIva;
+            articolo.Iva = iva;// articoloTemplate.DefaultIva;
             articolo.IdTipoGenere = articoloTemplate.DefaultIdTipoGenere;
             articolo.IdTipoGruppo = articoloTemplate.DefaultIdTipoGruppo;
             articolo.IdTipoSottogruppo = articoloTemplate.DefaultIdTipoSottogruppo;

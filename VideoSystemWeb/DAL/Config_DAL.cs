@@ -80,7 +80,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM tab_config WHERE chiave = " + chiave;
+                    string query = "SELECT * FROM tab_config WHERE chiave = '" + chiave + "'";
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())

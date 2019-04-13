@@ -10,7 +10,18 @@
             if(e.keyCode == 13) {
                 $("#<%=btnRicercaCollaboratori.ClientID%>").click();
             }
-        }); 
+        });
+        $('.calendar').datetimepicker({
+            locale: 'it',
+            format: 'DD/MM/YYYY'
+        });
+
+        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+            $('.calendar').datetimepicker({
+                locale: 'it',
+                format: 'DD/MM/YYYY'
+            });
+        });        
     });
 
     // APRO POPUP VISUALIZZAZIONE/MODIFICA COLLABORATORE
@@ -112,6 +123,7 @@
             <div class="w3-quarter">
                 <label>Partita Iva</label>
                 <asp:TextBox ID="TbPiva" runat="server" MaxLength="11" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                <ajaxToolkit:MaskedEditExtender ID="TbPiva_MaskedEditExtender" runat="server" TargetControlID="TbPiva" MaskType="None" Mask="99999999999" ></ajaxToolkit:MaskedEditExtender>
             </div>
             <div class="w3-quarter">
                 <label>Regione</label>
@@ -235,9 +247,9 @@
                                 </div>
                                         
                                 <div class="w3-row-padding">
-                                    <div class="w3-quarter">
+                                    <div class="w3-quarter"  style="position: relative">
                                         <label>Data Nascita</label>
-                                        <asp:TextBox ID="tbMod_DataNascita" runat="server" class="w3-input w3-border" placeholder="gg/mm/aaaa" MaxLength="10" ReadOnly="true"></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_DataNascita" runat="server" class="w3-input w3-border calendar" placeholder="gg/mm/aaaa" MaxLength="10" ReadOnly="true"></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Comune Riferimento</label>
@@ -246,6 +258,7 @@
                                     <div class="w3-quarter">
                                         <label>Partita Iva</label>
                                         <asp:TextBox ID="tbMod_PartitaIva" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="11"></asp:TextBox>
+                                        <ajaxToolkit:MaskedEditExtender ID="tbMod_PartitaIvaMaskedEditExtender1" runat="server" TargetControlID="tbMod_PartitaIva" MaskType="None" Mask="99999999999" ></ajaxToolkit:MaskedEditExtender>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Società</label>
@@ -350,6 +363,7 @@
                                         <div class="w3-half">
                                             <label>Priorità</label>
                                             <asp:TextBox ID="tbInsPrioritaQualifica" runat="server" MaxLength="1" class="w3-input w3-border" placeholder="" Text="1" TextMode="Number"></asp:TextBox>
+                                            <ajaxToolkit:MaskedEditExtender ID="tbInsPrioritaQualifica_MaskedEditExtender" runat="server" TargetControlID="tbInsPrioritaQualifica" MaskType="None" Mask="9" ></ajaxToolkit:MaskedEditExtender>
                                         </div>
                                     </div>
                                     <asp:Button ID="btnInserisciQualifica" runat="server" Text="Inserisci Qualifica" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoQualifica_Click" OnClientClick="return confirm('Confermi inserimento Qualifica?')" />
@@ -419,6 +433,7 @@
                                         <div class="w3-quarter">
                                             <label>Priorità</label>
                                             <asp:TextBox ID="tbInsPrioritaIndirizzo" runat="server" MaxLength="1" class="w3-input w3-border" placeholder="" Text="1" ></asp:TextBox>
+                                            <ajaxToolkit:MaskedEditExtender ID="MaskedEditExtender1" runat="server" TargetControlID="tbInsPrioritaIndirizzo" MaskType="None" Mask="9" ></ajaxToolkit:MaskedEditExtender>
                                             <asp:TextBox ID="tbIdIndirizzoDaModificare" runat="server" Visible="false"></asp:TextBox>
                                         </div>
                                     </div>
@@ -482,6 +497,7 @@
                                         <div class="w3-quarter">
                                             <label>Priorità</label>
                                             <asp:TextBox ID="tbInsPrioritaTelefono" runat="server" MaxLength="1" class="w3-input w3-border" placeholder="" Text="1" ></asp:TextBox>
+                                            <ajaxToolkit:MaskedEditExtender ID="tbInsPrioritaTelefono_MaskedEditExtender" runat="server" TargetControlID="tbInsPrioritaTelefono" MaskType="None" Mask="9" ></ajaxToolkit:MaskedEditExtender>
                                         </div>
                                         <div class="w3-rest">
                                             <label>Descrizione</label>
@@ -522,6 +538,7 @@
                                         <div class="w3-quarter">
                                             <label>Priorità</label>
                                             <asp:TextBox ID="tbInsPrioritaEmail" runat="server" MaxLength="1" class="w3-input w3-border" placeholder="" Text="1"></asp:TextBox>
+                                            <ajaxToolkit:MaskedEditExtender ID="tbInsPrioritaEmail_MaskedEditExtender" runat="server" TargetControlID="tbInsPrioritaEmail" MaskType="None" Mask="9" ></ajaxToolkit:MaskedEditExtender>
                                         </div>
                                         <div class="w3-quarter">
                                             <label>Tipo</label>

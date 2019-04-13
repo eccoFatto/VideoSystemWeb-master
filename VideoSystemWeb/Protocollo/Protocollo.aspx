@@ -185,18 +185,21 @@
                     </asp:DropDownList>
                 </div>
             </div>
-            <div class="w3-row-padding w3-margin-bottom">
-                <div class="w3-third">
+            <div class="w3-row-padding">
+                <div class="w3-quarter">
                     <label>Produzione</label>
                     <asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-                <div class="w3-third">
+                <div class="w3-quarter">
                     <label>Lavorazione</label>
                     <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-                <div class="w3-third" style="position: relative">
+                <div class="w3-quarter" style="position:relative;">
                     <label>Data Lav.</label>
                     <asp:TextBox ID="tbDataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                </div>
+                <div class="w3-quarter">
+                    &nbsp;
                 </div>
             </div>
             <div class="w3-row-padding w3-margin-bottom">
@@ -204,7 +207,7 @@
                     <label>Cliente</label>
                     <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-                <div class="w3-quarter" style="position: relative">
+                <div class="w3-quarter" style="position:relative;">
                     <label>Data Prot.</label>
                     <asp:TextBox ID="tbDataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                 </div>
@@ -217,7 +220,7 @@
                             </td>
                             <td style="width: 40%;">
                                 <div id="divBtnInserisciProtocollo" runat="server">
-                                    <div id="clbtnInserisciProtocollo" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciProtocollo();">Inserisci</div>
+                                    <div id="clbtnInserisciProtocollo" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciProtocollo();" >Inserisci</div>
                                 </div>
 
                             </td>

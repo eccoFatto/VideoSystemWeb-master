@@ -158,7 +158,7 @@ namespace VideoSystemWeb.Articoli.userControl
                     tbMod_DescrizioneBreve.Text = articolo.DefaultDescrizione;
                     tbMod_Prezzo.Text = articolo.DefaultPrezzo.ToString();
                     tbMod_Costo.Text = articolo.DefaultCosto.ToString();
-                    tbMod_IVA.Text = articolo.DefaultIva.ToString();
+                    //tbMod_IVA.Text = articolo.DefaultIva.ToString();
                     tbMod_Note.Text = articolo.Note;
 
 
@@ -257,7 +257,7 @@ namespace VideoSystemWeb.Articoli.userControl
             tbMod_DescrizioneBreve.Text = "";
             tbMod_Prezzo.Text = "";
             tbMod_Costo.Text = "";
-            tbMod_IVA.Text = "";
+            //tbMod_IVA.Text = "";
             tbMod_Note.Text = "";
 
             cmbMod_Genere.Text = "";
@@ -346,7 +346,7 @@ namespace VideoSystemWeb.Articoli.userControl
             tbMod_Descrizione.ReadOnly = attivaModifica;
             tbMod_DescrizioneBreve.ReadOnly = attivaModifica;
             tbMod_Costo.ReadOnly = attivaModifica;
-            tbMod_IVA.ReadOnly = attivaModifica;
+            //tbMod_IVA.ReadOnly = attivaModifica;
             tbMod_Note.ReadOnly = attivaModifica;
             tbMod_Prezzo.ReadOnly = attivaModifica;
 
@@ -494,7 +494,8 @@ namespace VideoSystemWeb.Articoli.userControl
                 articolo.DefaultIdTipoGenere = Convert.ToInt16(cmbMod_Genere.SelectedValue);
                 articolo.DefaultIdTipoGruppo = Convert.ToInt16(cmbMod_Gruppo.SelectedValue);
                 articolo.DefaultIdTipoSottogruppo = Convert.ToInt16(cmbMod_Sottogruppo.SelectedValue);
-                articolo.DefaultIva = Convert.ToInt16(BasePage.ValidaCampo(tbMod_IVA, "0", false, ref esito));
+                //articolo.DefaultIva = Convert.ToInt16(BasePage.ValidaCampo(tbMod_IVA, "0", false, ref esito));
+                articolo.DefaultIva = 0;
                 articolo.DefaultPrezzo = Convert.ToDecimal(BasePage.ValidaCampo(tbMod_Prezzo, "0", false, ref esito));
                 articolo.DefaultCosto = Convert.ToDecimal(BasePage.ValidaCampo(tbMod_Costo, "0", false, ref esito));
                 articolo.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
@@ -569,7 +570,7 @@ namespace VideoSystemWeb.Articoli.userControl
 
             tbMod_Descrizione.CssClass = tbMod_Descrizione.CssClass.Replace("erroreValidazione", "");
             tbMod_DescrizioneBreve.CssClass = tbMod_DescrizioneBreve.CssClass.Replace("erroreValidazione", "");
-            tbMod_IVA.CssClass = tbMod_IVA.CssClass.Replace("erroreValidazione", "");
+            //tbMod_IVA.CssClass = tbMod_IVA.CssClass.Replace("erroreValidazione", "");
             tbMod_Costo.CssClass = tbMod_Costo.CssClass.Replace("erroreValidazione", "");
             tbMod_Prezzo.CssClass = tbMod_Prezzo.CssClass.Replace("erroreValidazione", "");
             tbMod_Note.CssClass = tbMod_Note.CssClass.Replace("erroreValidazione", "");

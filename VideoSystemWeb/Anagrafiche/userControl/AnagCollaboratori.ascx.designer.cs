@@ -94,6 +94,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox TbPiva;
         
         /// <summary>
+        /// Controllo TbPiva_MaskedEditExtender.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender TbPiva_MaskedEditExtender;
+        
+        /// <summary>
         /// Controllo tbRegione.
         /// </summary>
         /// <remarks>
@@ -292,6 +301,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbMod_PartitaIva;
         
         /// <summary>
+        /// Controllo tbMod_PartitaIvaMaskedEditExtender1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender tbMod_PartitaIvaMaskedEditExtender1;
+        
+        /// <summary>
         /// Controllo tbMod_NomeSocieta.
         /// </summary>
         /// <remarks>
@@ -463,6 +481,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbInsPrioritaQualifica;
         
         /// <summary>
+        /// Controllo tbInsPrioritaQualifica_MaskedEditExtender.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender tbInsPrioritaQualifica_MaskedEditExtender;
+        
+        /// <summary>
         /// Controllo btnInserisciQualifica.
         /// </summary>
         /// <remarks>
@@ -578,6 +605,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsPrioritaIndirizzo;
+        
+        /// <summary>
+        /// Controllo MaskedEditExtender1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender MaskedEditExtender1;
         
         /// <summary>
         /// Controllo tbIdIndirizzoDaModificare.
@@ -706,6 +742,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbInsPrioritaTelefono;
         
         /// <summary>
+        /// Controllo tbInsPrioritaTelefono_MaskedEditExtender.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender tbInsPrioritaTelefono_MaskedEditExtender;
+        
+        /// <summary>
         /// Controllo tbInsDescrizioneTelefono.
         /// </summary>
         /// <remarks>
@@ -803,6 +848,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsPrioritaEmail;
+        
+        /// <summary>
+        /// Controllo tbInsPrioritaEmail_MaskedEditExtender.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender tbInsPrioritaEmail_MaskedEditExtender;
         
         /// <summary>
         /// Controllo tbInsTipoEmail.

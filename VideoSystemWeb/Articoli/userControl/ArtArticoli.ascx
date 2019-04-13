@@ -192,18 +192,18 @@
                         </div>
                                         
                         <div class="w3-row-padding">
-                            <div class="w3-third">
+                            <div class="w3-half">
                                 <label>Prezzo</label>
                                 <asp:TextBox ID="tbMod_Prezzo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="18"></asp:TextBox>
                             </div>
-                            <div class="w3-third">
+                            <div class="w3-half">
                                 <label>Costo</label>
                                 <asp:TextBox ID="tbMod_Costo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="18" ></asp:TextBox>
                             </div>
-                            <div class="w3-third">
+<%--                            <div class="w3-third">
                                 <label>IVA</label>
                                 <asp:TextBox ID="tbMod_IVA" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="2"></asp:TextBox>
-                            </div>
+                            </div>--%>
                         </div>
 
                         <div class="w3-row-padding">

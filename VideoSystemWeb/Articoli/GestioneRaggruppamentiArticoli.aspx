@@ -154,6 +154,7 @@
                                     <div class="w3-quarter">
                                         <label>Qta</label>
                                         <asp:TextBox ID="tbQtaArticoliDaAggiungere" class="w3-input w3-border" runat="server" MaxLength="2" Text="1"></asp:TextBox>
+                                        <ajaxToolkit:MaskedEditExtender ID="tbQtaArticoliDaAggiungere_MaskedEditExtender" runat="server" TargetControlID="tbQtaArticoliDaAggiungere" MaskType="None" Mask="99" ></ajaxToolkit:MaskedEditExtender>
                                         <%--<ajaxToolkit:NumericUpDownExtender ID="nudeArticoli" Width="200" runat="server" Minimum="1" Maximum="20" Step="1" TargetControlID="tbQtaArticoliDaAggiungere" ></ajaxToolkit:NumericUpDownExtender>--%>
                                     </div>
                                 </div>

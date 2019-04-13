@@ -59,6 +59,11 @@ namespace VideoSystemWeb.Protocollo
 
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                     abilitaBottoni(basePage.AbilitazioneInScrittura());
+                    // DA CONFIGURAZIONE SCELGO SE VISUALIZZARE SUBITO GLI ULTIMI PROTOCOLLI
+                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["VISUALIZZA_ULTIMI_PROTOCOLLI"]))
+                    {
+                        btnRicercaProtocollo_Click(null, null);
+                    }
 
 
                 }

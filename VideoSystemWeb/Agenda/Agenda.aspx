@@ -540,29 +540,27 @@
                                     <td style="width: 30%">
                                         <table style="width: 100%">
                                             <tr>
-                                                <td style="width: 60%; padding-left: 70%;">
+                                                <td style="width: 60%;" >
                                                     <label><b>Totale</b></label></td>
                                                 <td style="width: 40%; text-align: right; padding-right: 20px;">
-                                                    <b>
-                                                        <asp:Label ID="totaleStampa" runat="server" /></b>
+                                                    <b><asp:Label ID="totaleStampa" runat="server" /></b>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 60%; padding-left: 70%;">
+                                                <td style="width: 60%;">
                                                     <label><b>Totale i.v.a.</b></label></td>
                                                 <td style="width: 40%; text-align: right; padding-right: 20px;">
-                                                    <b>
-                                                        <asp:Label ID="totaleIVAStampa" runat="server" /><b>
+                                                    <b><asp:Label ID="totaleIVAStampa" runat="server" /><b>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 60%; padding-left: 70%;">
-                                                    <label><b>Totale</b></label></td>
+                                                <td style="width: 60%;">
+                                                    <label><b>Totale Euro</b></label></td>
                                                 <td style="width: 40%; text-align: right; padding-right: 20px;">
-                                                    <b>
-                                                        <asp:Label ID="totaleEuroStampa" runat="server" /></b>
+                                                    <b><asp:Label ID="totaleEuroStampa" runat="server" /></b>
                                                 </td>
                                             </tr>
+                                            <tr><td colspan="2">&nbsp;</td></tr>
                                             <tr><td colspan="2">&nbsp;</td></tr>
                                             <tr><td colspan="2">&nbsp;</td></tr>
                                             <tr><td colspan="2">&nbsp;</td></tr>
@@ -645,7 +643,7 @@
 
                         </div>
 
-                        <div id="footerStampa" style="margin:10px; margin-top:25px;position:absolute; bottom: 0px; width:98%; font-size:8pt" runat="server" Visible="false">
+                        <div id="footerStampa" style="margin:10px; margin-top:25px;position:absolute; bottom: -30px; width:98%; font-size:8pt" runat="server" Visible="false">
                             <table style="width:100%;">
                                 <tr>
                                     <td style="width:16%;background-color:#2196F3;color: white; border: solid 1px #fff; text-align:center">Banca</td>
@@ -667,10 +665,20 @@
                                 </tr>
                             </table>
 
-                            <div style="padding:10px; position:relative;font-size:8pt; text-align:center;">
-                                <b>Videosystem Production srl&nbsp;&nbsp;P.IVA 13121341005<br />
-                                Sede legale:  Via T. Val di Pesa 34 - 00148 Roma&nbsp;&nbsp;e-mail: info@vsproduction.it</b>
-                            </div>
+                            <table style="padding:10px; position:relative;">
+                                <tr>
+                                    <td style="width:90%;text-align:center;font-size:8pt;">
+                                        <b>Videosystem Production srl&nbsp;&nbsp;P.IVA 13121341005<br />
+                                        Sede legale:  Via T. Val di Pesa 34 - 00148 Roma&nbsp;&nbsp;e-mail: info@vsproduction.it</b>
+
+                                    </td>
+                                    <td style="width:10%">
+                                        <asp:Image ID="imgDNV" runat="server" ImageUrl="~/Images/DNV_2008_ITA2.jpg" Style="height: 80px" />
+                                    </td>
+
+                                </tr>
+
+                            </table>
                         </div>
                     </div>
 

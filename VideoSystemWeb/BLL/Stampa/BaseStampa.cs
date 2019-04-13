@@ -51,26 +51,6 @@ namespace VideoSystemWeb.BLL.Stampa
             {
                 pdfWriter.SetCloseStream(false);
 
-                //PdfDocument pdfDoc = new PdfDocument(pdfWriter);
-                //pdfDoc.SetTagged();
-                //Document document = new Document(pdfDoc);
-
-                //IList<IElement> elements = HtmlConverter.ConvertToElements(htmlCompleto);
-
-                
-                //document.SetMargins(400, 250, 250, 400);
-                //FontSet fontSet = new FontSet();
-                
-                //FontProvider fontProvider = new FontProvider(fontSet);
-                
-                //document.SetFontProvider(fontProvider);
-
-                //foreach (IElement element in elements)
-                //{
-                //    document.Add((IBlockElement)element);
-                //}
-
-
                 var document = HtmlConverter.ConvertToDocument(htmlCompleto, pdfWriter);
 
                 document.Close();

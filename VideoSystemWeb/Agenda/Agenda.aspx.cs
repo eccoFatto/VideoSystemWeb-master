@@ -765,6 +765,7 @@ namespace VideoSystemWeb.Agenda
         {
             string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
             imgLogo.ImageUrl = prefissoUrl + "/Images/logoVSP_trim.png";
+            imgDNV.ImageUrl = prefissoUrl + "/Images/DNV_2008_ITA2.jpg";
 
             AbilitaVisualizzazioneStampa(true);
 

@@ -88,7 +88,7 @@
                         GESTIONE ARTICOLI COMPOSTI
                     </div>
                     <div class="w3-half">
-                        <%=dettaglioModifica%>
+                        <asp:Label runat="server" ID="lblDettaglioModifica" Text=""></asp:Label>
                     </div>
                 </div> 
                 <div class="w3-container">

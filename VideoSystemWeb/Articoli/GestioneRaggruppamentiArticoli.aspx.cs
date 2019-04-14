@@ -291,6 +291,7 @@ namespace VideoSystemWeb.Articoli
                 else
                 {
                     dettaglioModifica = gruppo.Nome.Trim();
+                    lblDettaglioModifica.Text = dettaglioModifica;
                     btnInserisciRaggruppamento.Visible = false;
                     btnModificaRaggruppamento.Visible = true;
                     btnEliminaRaggruppamento.Visible = true;
@@ -343,6 +344,7 @@ namespace VideoSystemWeb.Articoli
         {
             // ARTICOLI ASSOCIATI
             dettaglioModifica = "";
+            lblDettaglioModifica.Text = dettaglioModifica;
             tbIdRaggruppamentoDaModificare.Text = "";
             tbInsNomeRaggruppamento.Text = "";
             tbInsDescrizioneRaggruppamento.Text = "";

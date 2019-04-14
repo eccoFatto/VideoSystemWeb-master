@@ -220,6 +220,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Panel innerContainer;
         
         /// <summary>
+        /// Controllo lblDettaglioModifica.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDettaglioModifica;
+        
+        /// <summary>
         /// Controllo tbMod_Cognome.
         /// </summary>
         /// <remarks>

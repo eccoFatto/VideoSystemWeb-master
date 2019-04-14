@@ -135,6 +135,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     pulisciCampiDettaglio();
 
                     dettaglioModifica = azienda.RagioneSociale;
+                    lblDettaglioModifica.Text = dettaglioModifica;
                     // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
                     tbMod_CF.Text = azienda.CodiceFiscale;
                     tbMod_PartitaIva.Text = azienda.PartitaIva;
@@ -345,6 +346,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         {
             Esito esito = new Esito();
             dettaglioModifica = "";
+            lblDettaglioModifica.Text = dettaglioModifica;
             pulisciCampiDettaglio();
         }
         protected void btnRicercaAziende_Click(object sender, EventArgs e)

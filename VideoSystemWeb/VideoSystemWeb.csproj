@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -560,6 +559,7 @@
     <Compile Include="BLL\Anag_Clienti_Fornitori_BLL.cs" />
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
+    <Compile Include="BLL\NoteOfferta_BLL.cs" />
     <Compile Include="BLL\Config_BLL.cs" />
     <Compile Include="BLL\Protocolli_BLL.cs" />
     <Compile Include="BLL\Articoli_BLL.cs" />
@@ -590,6 +590,7 @@
     </Compile>
     <Compile Include="DAL\Agenda_DAL.cs" />
     <Compile Include="DAL\Config_DAL.cs" />
+    <Compile Include="DAL\NoteOfferta_DAL.cs" />
     <Compile Include="DAL\Protocolli_DAL.cs" />
     <Compile Include="DAL\Dati_Tender_DAL.cs" />
     <Compile Include="DAL\Art_Gruppi_Articoli_DAL.cs" />
@@ -620,6 +621,7 @@
     <Compile Include="Entity\Anag_Indirizzi_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Qualifiche_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
+    <Compile Include="Entity\NoteOfferta.cs" />
     <Compile Include="Entity\Protocolli.cs" />
     <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />
     <Compile Include="Entity\ArticoliGruppi.cs" />

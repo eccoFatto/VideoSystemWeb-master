@@ -59,10 +59,6 @@ namespace VideoSystemWeb.Agenda
             {
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento(event,'" + hf_tabSelezionata.Value + "')", addScriptTags: true);
-
-                // Registrazione pulsante di stampa
-                //ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
-                //scriptManager.RegisterPostBackControl(this.btnStampaOfferta);
             }
         }
 
@@ -122,7 +118,6 @@ namespace VideoSystemWeb.Agenda
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(eventoSelezionato);
 
-            //upEvento.Update();
             upRiepilogoOfferta.Update();
 
             if (esito.codice == Esito.ESITO_OK)
@@ -137,53 +132,6 @@ namespace VideoSystemWeb.Agenda
                 UpdatePopup();
             }
         }
-
-        //private Esito popolaPannelloRiepilogo(DatiAgenda eventoSelezionato)
-        //{
-        //    Esito esito = new Esito();
-
-        //    AbilitaVisualizzazioneStampa(false);
-
-        //    lbl_Data.Text = lbl_DataStampa.Text = DateTime.Now.ToString("dd/MM/yyyy");
-        //    lbl_Produzione.Text = lbl_ProduzioneStampa.Text = eventoSelezionato.produzione;
-        //    lbl_Lavorazione.Text = lbl_LavorazioneStampa.Text = eventoSelezionato.lavorazione;
-        //    lbl_DataLavorazione.Text = lbl_DataLavorazioneStampa.Text = eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
-
-        //    Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
-        //    lbl_Cliente.Text = lbl_ClienteStampa.Text = cliente.RagioneSociale;
-        //    lbl_IndirizzoCliente.Text = lbl_IndirizzoClienteStampa.Text = cliente.IndirizzoOperativo;
-        //    lbl_PIvaCliente.Text = lbl_PIvaClienteStampa.Text = string.IsNullOrEmpty(cliente.PartitaIva) ? cliente.CodiceFiscale : cliente.PartitaIva;
-
-        //    lbl_CodLavorazione.Text = lbl_CodLavorazioneStampa.Text = eventoSelezionato.codice_lavoro;
-
-        //    List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
-
-        //    gvArticoli.DataSource = listaDatiArticoli;
-        //    gvArticoli.DataBind();
-
-        //    decimal totPrezzo = 0;
-        //    decimal totIVA = 0;
-
-        //    foreach (DatiArticoli art in listaDatiArticoli)
-        //    {
-        //        totPrezzo += art.Prezzo * art.Quantita;
-        //        totIVA += (art.Prezzo * art.Iva / 100) * art.Quantita;
-        //    }
-
-        //    totale.Text = totaleStampa.Text = string.Format("{0:N2}", totPrezzo);
-        //    totaleIVA.Text = totaleIVAStampa.Text = string.Format("{0:N2}", totIVA);
-        //    totaleEuro.Text = totaleEuroStampa.Text = string.Format("{0:N2}", totPrezzo+totIVA);
-
-        //    int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
-        //    List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
-        //    string protocollo = listaProtocolli.Count == 0 ? "N.D." : eventoSelezionato.codice_lavoro + " - " + listaProtocolli.First().Numero_protocollo;
-        //    lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
-
-        //    val_pagamentoSchermo.Text = val_pagamentoStampa.Text = cliente.Pagamento + " gg DFFM";
-        //    val_consegnaSchermo.Text = val_consegnaStampa.Text = cliente.IndirizzoLegale + " " + cliente.ComuneLegale;
-
-        //    return esito;
-        //}
 
         protected void btnElimina_Click(object sender, EventArgs e)
         {
@@ -266,9 +214,7 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnModificaNote_Click(object sender, EventArgs e)
         {
-            //panelModificaNote.Style.Add("display", "none");
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
-            //RichiediOperazionePopup("UPDATE");
         }
 
         protected void btnOKModificaNote_Click(object sender, EventArgs e)
@@ -572,9 +518,6 @@ namespace VideoSystemWeb.Agenda
                 case "CLOSE":
                     ChiudiPopup();
                     break;
-                case "UPDATE_RIEPILOGO":
-                    UpdateRiepilogo();
-                    break;
             }
         }
 
@@ -598,16 +541,6 @@ namespace VideoSystemWeb.Agenda
             upEvento.Update();
         }
 
-        private void UpdateRiepilogo()
-        {
-            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            //popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
-            //popupAppuntamento.PopolaPopup(eventoSelezionato);
-            //AbilitaComponentiPopup();
-
-            upRiepilogoOfferta.Update();
-        }
-
         private void AbilitaComponentiPopup()
         {
             Esito esito = new Esito();
@@ -629,7 +562,6 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = eventoSelezionato.id != 0;
-                    //btnSalva.Visible = true;
                     btnRiepilogo.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_PREVISIONE_IMPEGNO);
@@ -643,7 +575,6 @@ namespace VideoSystemWeb.Agenda
                     tab_Lavorazione.Style.Add("cursor", "not-allowed;");
 
                     btnOfferta.Visible = false;
-                    //btnSalva.Visible = true;
                     btnRiepilogo.Visible = true;
                     btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnElimina.Visible = true;
@@ -662,7 +593,6 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = false;
-                    //btnSalva.Visible = true;
                     btnRiepilogo.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
@@ -678,7 +608,6 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = false;
-                    //btnSalva.Visible = true;
                     btnRiepilogo.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_FATTURA);
@@ -694,7 +623,6 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = eventoSelezionato.id != 0;
-                    //btnSalva.Visible = true;
                     btnRiepilogo.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_RIPOSO);
@@ -769,9 +697,13 @@ namespace VideoSystemWeb.Agenda
             if (esito.codice == Esito.ESITO_OK)
             {
                 
+
                 if (eventoSelezionato.id == 0)
                 {
-                    esito = Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender);
+                    Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
+                    NoteOfferta noteOfferta = new NoteOfferta { Banca = "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+
+                    esito = Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender, noteOfferta);
                 }
                 else
                 {
@@ -782,13 +714,16 @@ namespace VideoSystemWeb.Agenda
 
                 ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
 
-                esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(eventoSelezionato);
+                if (!string.IsNullOrEmpty(eventoSelezionato.codice_lavoro))
+                {
+                    esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(eventoSelezionato);
 
-                string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
-                MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
+                    string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
+                    MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
 
-                string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
-                File.WriteAllBytes(pathOfferta, workStream.ToArray());
+                    string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
+                    File.WriteAllBytes(pathOfferta, workStream.ToArray());
+                }
             }
             else
             {
@@ -798,28 +733,6 @@ namespace VideoSystemWeb.Agenda
 
             return esito;
         }
-
-        //private MemoryStream GeneraPdf()
-        //{
-        //    string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
-        //    imgLogo.ImageUrl = prefissoUrl + "/Images/logoVSP_trim.png";
-        //    imgDNV.ImageUrl = prefissoUrl + "/Images/DNV_2008_ITA2.jpg";
-
-        //    AbilitaVisualizzazioneStampa(true);
-
-
-        //    StringWriter sw = new StringWriter();
-        //    HtmlTextWriter hw = new HtmlTextWriter(sw);
-        //    modalRiepilogoContent.RenderControl(hw);
-            
-
-        //    MemoryStream workStream =  BaseStampa.Instance.GeneraPdf(sw.ToString());
-
-        //    sw.Flush();
-        //    hw.Flush();
-
-        //    return workStream;
-        //}
 
         private Esito ValidazioneSalvataggio(DatiAgenda eventoSelezionato, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
         {
@@ -971,20 +884,6 @@ namespace VideoSystemWeb.Agenda
         }
 
         #endregion
-
-        //private void AbilitaVisualizzazioneStampa(bool isVisualizzazioneStampa)
-        //{
-        //    gvArticoli.Columns[4].Visible = !isVisualizzazioneStampa;
-
-        //    intestazioneSchermo.Visible = !isVisualizzazioneStampa;
-        //    protocolloSchermo.Visible = !isVisualizzazioneStampa;
-        //    totaliSchermo.Visible = !isVisualizzazioneStampa;
-        //    footerSchermo.Visible = !isVisualizzazioneStampa;
-
-        //    intestazioneStampa.Visible = isVisualizzazioneStampa;
-        //    totaliStampa.Visible = isVisualizzazioneStampa;
-        //    footerStampa.Visible = isVisualizzazioneStampa;
-        //}
 
         public override void VerifyRenderingInServerForm(Control control)
         {

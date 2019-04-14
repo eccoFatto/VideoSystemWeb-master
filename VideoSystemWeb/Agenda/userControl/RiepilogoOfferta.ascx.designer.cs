@@ -310,6 +310,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerSchermo;
         
         /// <summary>
+        /// Controllo val_bancaSchermo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_bancaSchermo;
+        
+        /// <summary>
         /// Controllo val_pagamentoSchermo.
         /// </summary>
         /// <remarks>
@@ -335,6 +344,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerStampa;
+        
+        /// <summary>
+        /// Controllo val_bancaStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_bancaStampa;
         
         /// <summary>
         /// Controllo val_pagamentoStampa.
@@ -391,13 +409,13 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.TextBox txt_Banca;
         
         /// <summary>
-        /// Controllo txt_Pagamento.
+        /// Controllo cmbMod_Pagamento.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_Pagamento;
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Pagamento;
         
         /// <summary>
         /// Controllo txt_Consegna.

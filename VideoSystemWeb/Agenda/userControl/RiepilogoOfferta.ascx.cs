@@ -22,8 +22,6 @@ namespace VideoSystemWeb.Agenda.userControl
         public delegate string CodiceLavoroHandler(); // delegato per l'evento
         public event CodiceLavoroHandler RichiediCodiceLavoro; //evento
 
-        // public List<DatiArticoli> listaDatiArticoli { get; set; }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)
@@ -75,8 +73,24 @@ namespace VideoSystemWeb.Agenda.userControl
             string protocollo = listaProtocolli.Count == 0 ? "N.D." : eventoSelezionato.codice_lavoro + " - " + listaProtocolli.First().Numero_protocollo;
             lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
 
-            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = cliente.Pagamento + " gg DFFM";
-            val_consegnaSchermo.Text = val_consegnaStampa.Text = cliente.IndirizzoLegale + " " + cliente.ComuneLegale;
+            NoteOfferta noteOfferta = NoteOfferta_BLL.Instance.getNoteOffertaByIdDatiAgenda(eventoSelezionato.id, ref esito);
+
+            // se non viene trovata una notaOfferta (vecchi eventi) viene creata e salvata
+            if (noteOfferta.Id == 0)
+            {
+                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+                NoteOfferta_BLL.Instance.CreaNoteOfferta(noteOfferta, ref esito);
+            }
+
+            ViewState["NoteOfferta"] = noteOfferta;
+
+            val_bancaSchermo.Text = val_bancaStampa.Text = noteOfferta.Banca;// "Unicredit Banca: IBAN: IT39H0200805198000103515620";
+            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = noteOfferta.Pagamento + " gg DFFM";
+            val_consegnaSchermo.Text = val_consegnaStampa.Text = noteOfferta.Consegna;
+
+            txt_Banca.Text = noteOfferta.Banca;// "Unicredit Banca: IBAN: IT39H0200805198000103515620";
+            txt_Consegna.Text = noteOfferta.Consegna;
+            cmbMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
 
             return esito;
         }
@@ -138,20 +152,23 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnModificaNote_Click(object sender, EventArgs e)
         {
-            //panelModificaNote.Style.Add("display", "none");
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
-            //ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelRecuperaOfferta.ClientID + "').style.display='block'", addScriptTags: true);
-            //RichiediOperazionePopup("UPDATE");
         }
 
         protected void btnOKModificaNote_Click(object sender, EventArgs e)
         {
-            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = txt_Pagamento.Text;
-            val_consegnaSchermo.Text = val_consegnaStampa.Text = txt_Consegna.Text;
+            NoteOfferta noteOfferta = (NoteOfferta) ViewState["NoteOfferta"];
+            noteOfferta.Banca = txt_Banca.Text;
+            noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); //int.Parse(txt_Pagamento.Text);
+            noteOfferta.Consegna = txt_Consegna.Text;
+            NoteOfferta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
 
+            val_bancaStampa.Text = noteOfferta.Banca;
+            val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
+            val_consegnaStampa.Text = noteOfferta.Consegna;
 
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='none'", addScriptTags: true);
-            //RichiediOperazionePopup("UPDATE_RIEPILOGO");
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaNote", script: "javascript: aggiornaRiepilogo()", addScriptTags: true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='none'", addScriptTags: true);
         }
 
         protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)

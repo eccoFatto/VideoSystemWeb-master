@@ -224,7 +224,7 @@ namespace VideoSystemWeb.DAL
             return listaIdTender;
         }
 
-        public Esito CreaEvento(DatiAgenda evento, List<string> listaIdTender)
+        public Esito CreaEvento(DatiAgenda evento, List<string> listaIdTender, NoteOfferta noteOfferta)
         {
             Esito esito = new Esito();
             try
@@ -263,6 +263,17 @@ namespace VideoSystemWeb.DAL
                                         iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
                                     }
                                 }
+
+                                // SE E' ANDATO TUTTO BENE FACCIO INSERT DELLA NOTA OFFERTA
+                                if (noteOfferta != null)
+                                {
+                                    
+                                        CostruisciSP_InsertNoteOfferta(StoreProc, sda, iDatiAgendaReturn, noteOfferta);
+                                        StoreProc.ExecuteNonQuery();
+
+                                        iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+                                }
+
                                 // Attempt to commit the transaction.
                                 transaction.Commit();
                                 evento.id = iDatiAgendaReturn; // setto l'id generato x salvataggio dovuto a riepilogo (non viene chiuso il popup e un successivo salvataggio genera errore validazione)
@@ -299,7 +310,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public Esito creaEventoConArticoli(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
+        public Esito creaEventoConArticoli(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender, NoteOfferta noteOfferta)
         {
             Esito esito = new Esito();
             using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -375,6 +386,16 @@ namespace VideoSystemWeb.DAL
 
                                     int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
                                 }
+                            }
+
+                            // SE E' ANDATO TUTTO BENE FACCIO INSERT DELLA NOTA OFFERTA
+                            if (noteOfferta != null)
+                            {
+
+                                CostruisciSP_InsertNoteOfferta(StoreProc, sda, iDatiAgendaReturn, noteOfferta);
+                                StoreProc.ExecuteNonQuery();
+
+                                int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
                             }
 
                             // Attempt to commit the transaction.
@@ -690,7 +711,7 @@ namespace VideoSystemWeb.DAL
                                         int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
                                     }
                                 }
-
+                                
                                 // Attempt to commit the transaction.
                                 transaction.Commit();
 
@@ -1309,6 +1330,46 @@ namespace VideoSystemWeb.DAL
             StoreProc.Parameters.Add(nomeUtente);
             // FINE PARAMETRI PER LOG UTENTE
 
+        }
+
+        private static void CostruisciSP_InsertNoteOfferta(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, NoteOfferta noteOfferta)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "InsertNoteOfferta";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+
+            // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+            SqlParameter idDatiAgenda = new SqlParameter("@id_dati_agenda", iDatiAgendaReturn);
+            idDatiAgenda.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idDatiAgenda);
+
+            SqlParameter parBanca = new SqlParameter("@banca", noteOfferta.Banca);
+            parBanca.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parBanca);
+
+            SqlParameter parPagamento = new SqlParameter("@pagamento", noteOfferta.Pagamento);
+            parPagamento.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parPagamento);
+
+            SqlParameter parConsegna = new SqlParameter("@consegna", noteOfferta.Consegna);
+            parConsegna.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parConsegna);
         }
     }
 }

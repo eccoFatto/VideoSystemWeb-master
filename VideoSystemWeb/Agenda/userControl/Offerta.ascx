@@ -125,7 +125,7 @@
 
                 <div class="w3-center">
                     <br>
-                    <span onclick="document.getElementById('<%= panelModificaArticolo.ClientID%>').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+                    <span onclick="document.getElementById('<%= panelModificaArticolo.ClientID%>').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
                 </div>
 
                 <div class="w3-center">

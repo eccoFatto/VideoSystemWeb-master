@@ -104,22 +104,22 @@ namespace VideoSystemWeb.BLL
             return listaDatiAgenda.Where(x => x.data_inizio_impegno.Date <= data.Date && x.data_fine_impegno.Date >= data.Date && x.id_colonne_agenda == id_risorsa).FirstOrDefault();
         }
 
-        public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
+        public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender, NoteOfferta noteOfferta)
         {
             Esito esito = new Esito();
 
 
             if (evento.id_stato == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
             {
-                esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender);
+                esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender, noteOfferta);
             }
             else if (evento.id_stato == Stato.Instance.STATO_OFFERTA)
             {
-                esito = Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
+                esito = Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli, listaIdTender, noteOfferta);
             }
             else if (evento.id_stato == Stato.Instance.STATO_RIPOSO)
             {
-                esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender);
+                esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender, noteOfferta);
             }
 
             return esito;

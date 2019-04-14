@@ -94,18 +94,7 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
             articoloSelezionato.Quantita = int.Parse(txt_Quantita.Text);
 
-            //if (index != -1)
-            //{
-            //    listaDatiArticoli[index] = articoloSelezionato;
-            //}
-
-            //listaDatiArticoli = listaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
             ViewState["listaDatiArticoli"] = listaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
-
-            //gvArticoli.DataSource = listaDatiArticoli;
-            //gvArticoli.DataBind();
-
-            //AggiornaTotali();
 
             resetPanelOfferta();
 

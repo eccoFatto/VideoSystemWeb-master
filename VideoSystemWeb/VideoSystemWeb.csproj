@@ -179,6 +179,7 @@
     <Content Include="Agenda\userControl\Appuntamento.ascx" />
     <Content Include="Agenda\userControl\Lavorazione.ascx" />
     <Content Include="Agenda\userControl\Offerta.ascx" />
+    <Content Include="Agenda\userControl\RiepilogoOfferta.ascx" />
     <Content Include="Anagrafiche\AnagClientiFornitori.aspx" />
     <Content Include="Anagrafiche\AnagCollaboratori.aspx" />
     <Content Include="Anagrafiche\userControl\AnagClientiFornitori.ascx" />
@@ -490,6 +491,13 @@
     </Compile>
     <Compile Include="Agenda\userControl\Offerta.ascx.designer.cs">
       <DependentUpon>Offerta.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\userControl\RiepilogoOfferta.ascx.cs">
+      <DependentUpon>RiepilogoOfferta.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\userControl\RiepilogoOfferta.ascx.designer.cs">
+      <DependentUpon>RiepilogoOfferta.ascx</DependentUpon>
     </Compile>
     <Compile Include="Anagrafiche\AnagClientiFornitori.aspx.cs">
       <DependentUpon>AnagClientiFornitori.aspx</DependentUpon>

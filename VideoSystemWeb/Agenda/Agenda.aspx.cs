@@ -29,6 +29,10 @@ namespace VideoSystemWeb.Agenda
 
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
+            popupRiepilogoOfferta.RichiediOperazionePopup += OperazioniPopup;
+
+            popupRiepilogoOfferta.RichiediCodiceLavoro += GetCodiceLavoro;
+            popupRiepilogoOfferta.RichiediListaArticoli += GetListaArticoli;
 
             isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
             Tipologica viaggio  = UtilityTipologiche.getElementByID(listaStati, Stato.Instance.STATO_VIAGGIO, ref esito);
@@ -57,8 +61,8 @@ namespace VideoSystemWeb.Agenda
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento(event,'" + hf_tabSelezionata.Value + "')", addScriptTags: true);
 
                 // Registrazione pulsante di stampa
-                ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
-                scriptManager.RegisterPostBackControl(this.btnStampaOfferta);
+                //ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
+                //scriptManager.RegisterPostBackControl(this.btnStampaOfferta);
             }
         }
 
@@ -116,9 +120,10 @@ namespace VideoSystemWeb.Agenda
             Esito esito = SalvaEvento(); // l'apertura del riepilogo comporta il salvataggio dell'offerta per la generazione del protocollo
 
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            esito = popolaPannelloRiepilogo(eventoSelezionato);
+            esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(eventoSelezionato);
 
-            upEvento.Update();
+            //upEvento.Update();
+            upRiepilogoOfferta.Update();
 
             if (esito.codice == Esito.ESITO_OK)
             {
@@ -133,52 +138,52 @@ namespace VideoSystemWeb.Agenda
             }
         }
 
-        private Esito popolaPannelloRiepilogo(DatiAgenda eventoSelezionato)
-        {
-            Esito esito = new Esito();
+        //private Esito popolaPannelloRiepilogo(DatiAgenda eventoSelezionato)
+        //{
+        //    Esito esito = new Esito();
 
-            AbilitaVisualizzazioneStampa(false);
+        //    AbilitaVisualizzazioneStampa(false);
 
-            lbl_Data.Text = lbl_DataStampa.Text = DateTime.Now.ToString("dd/MM/yyyy");
-            lbl_Produzione.Text = lbl_ProduzioneStampa.Text = eventoSelezionato.produzione;
-            lbl_Lavorazione.Text = lbl_LavorazioneStampa.Text = eventoSelezionato.lavorazione;
-            lbl_DataLavorazione.Text = lbl_DataLavorazioneStampa.Text = eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
+        //    lbl_Data.Text = lbl_DataStampa.Text = DateTime.Now.ToString("dd/MM/yyyy");
+        //    lbl_Produzione.Text = lbl_ProduzioneStampa.Text = eventoSelezionato.produzione;
+        //    lbl_Lavorazione.Text = lbl_LavorazioneStampa.Text = eventoSelezionato.lavorazione;
+        //    lbl_DataLavorazione.Text = lbl_DataLavorazioneStampa.Text = eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
 
-            Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
-            lbl_Cliente.Text = lbl_ClienteStampa.Text = cliente.RagioneSociale;
-            lbl_IndirizzoCliente.Text = lbl_IndirizzoClienteStampa.Text = cliente.IndirizzoOperativo;
-            lbl_PIvaCliente.Text = lbl_PIvaClienteStampa.Text = string.IsNullOrEmpty(cliente.PartitaIva) ? cliente.CodiceFiscale : cliente.PartitaIva;
+        //    Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
+        //    lbl_Cliente.Text = lbl_ClienteStampa.Text = cliente.RagioneSociale;
+        //    lbl_IndirizzoCliente.Text = lbl_IndirizzoClienteStampa.Text = cliente.IndirizzoOperativo;
+        //    lbl_PIvaCliente.Text = lbl_PIvaClienteStampa.Text = string.IsNullOrEmpty(cliente.PartitaIva) ? cliente.CodiceFiscale : cliente.PartitaIva;
 
-            lbl_CodLavorazione.Text = lbl_CodLavorazioneStampa.Text = eventoSelezionato.codice_lavoro;
+        //    lbl_CodLavorazione.Text = lbl_CodLavorazioneStampa.Text = eventoSelezionato.codice_lavoro;
 
-            List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
+        //    List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
 
-            gvArticoli.DataSource = listaDatiArticoli;
-            gvArticoli.DataBind();
+        //    gvArticoli.DataSource = listaDatiArticoli;
+        //    gvArticoli.DataBind();
 
-            decimal totPrezzo = 0;
-            decimal totIVA = 0;
-           
-            foreach (DatiArticoli art in listaDatiArticoli)
-            {
-                totPrezzo += art.Prezzo * art.Quantita;
-                totIVA += (art.Prezzo * art.Iva / 100) * art.Quantita;
-            }
+        //    decimal totPrezzo = 0;
+        //    decimal totIVA = 0;
 
-            totale.Text = totaleStampa.Text = string.Format("{0:N2}", totPrezzo);
-            totaleIVA.Text = totaleIVAStampa.Text = string.Format("{0:N2}", totIVA);
-            totaleEuro.Text = totaleEuroStampa.Text = string.Format("{0:N2}", totPrezzo+totIVA);
+        //    foreach (DatiArticoli art in listaDatiArticoli)
+        //    {
+        //        totPrezzo += art.Prezzo * art.Quantita;
+        //        totIVA += (art.Prezzo * art.Iva / 100) * art.Quantita;
+        //    }
 
-            int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
-            List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
-            string protocollo = listaProtocolli.Count == 0 ? "N.D." : eventoSelezionato.codice_lavoro + " - " + listaProtocolli.First().Numero_protocollo;
-            lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
+        //    totale.Text = totaleStampa.Text = string.Format("{0:N2}", totPrezzo);
+        //    totaleIVA.Text = totaleIVAStampa.Text = string.Format("{0:N2}", totIVA);
+        //    totaleEuro.Text = totaleEuroStampa.Text = string.Format("{0:N2}", totPrezzo+totIVA);
 
-            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = cliente.Pagamento + " gg DFFM";
-            val_consegnaSchermo.Text = val_consegnaStampa.Text = cliente.IndirizzoLegale + " " + cliente.ComuneLegale;
+        //    int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
+        //    List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
+        //    string protocollo = listaProtocolli.Count == 0 ? "N.D." : eventoSelezionato.codice_lavoro + " - " + listaProtocolli.First().Numero_protocollo;
+        //    lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
 
-            return esito;
-        }
+        //    val_pagamentoSchermo.Text = val_pagamentoStampa.Text = cliente.Pagamento + " gg DFFM";
+        //    val_consegnaSchermo.Text = val_consegnaStampa.Text = cliente.IndirizzoLegale + " " + cliente.ComuneLegale;
+
+        //    return esito;
+        //}
 
         protected void btnElimina_Click(object sender, EventArgs e)
         {
@@ -234,7 +239,6 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnLavorazione_Click(object sender, EventArgs e)
         {
-            //popupAppuntamento.SetStato(Stato.Instance.STATO_LAVORAZIONE);
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             eventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
             eventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
@@ -246,7 +250,7 @@ namespace VideoSystemWeb.Agenda
         protected void btnStampa_Click(object sender, EventArgs e)
         {
             string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
-            MemoryStream workStream = GeneraPdf();
+            MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
 
             Response.Clear();
             Response.ClearContent();
@@ -260,6 +264,17 @@ namespace VideoSystemWeb.Agenda
             Response.End();
         }
 
+        protected void btnModificaNote_Click(object sender, EventArgs e)
+        {
+            //panelModificaNote.Style.Add("display", "none");
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
+            //RichiediOperazionePopup("UPDATE");
+        }
+
+        protected void btnOKModificaNote_Click(object sender, EventArgs e)
+        {
+
+        }
         #endregion
 
         #region OPERAZIONI AGENDA
@@ -557,7 +572,20 @@ namespace VideoSystemWeb.Agenda
                 case "CLOSE":
                     ChiudiPopup();
                     break;
+                case "UPDATE_RIEPILOGO":
+                    UpdateRiepilogo();
+                    break;
             }
+        }
+
+        public List<DatiArticoli> GetListaArticoli()
+        {
+            return popupOfferta.listaDatiArticoli;
+        }
+
+        public string GetCodiceLavoro()
+        {
+            return val_CodiceLavoro.Text;
         }
 
         private void UpdatePopup()
@@ -568,6 +596,16 @@ namespace VideoSystemWeb.Agenda
             AbilitaComponentiPopup();
 
             upEvento.Update();
+        }
+
+        private void UpdateRiepilogo()
+        {
+            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            //popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
+            //popupAppuntamento.PopolaPopup(eventoSelezionato);
+            //AbilitaComponentiPopup();
+
+            upRiepilogoOfferta.Update();
         }
 
         private void AbilitaComponentiPopup()
@@ -744,10 +782,10 @@ namespace VideoSystemWeb.Agenda
 
                 ViewState["listaDatiAgenda"] = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
 
-                esito = popolaPannelloRiepilogo(eventoSelezionato);
+                esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(eventoSelezionato);
 
                 string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
-                MemoryStream workStream = GeneraPdf();
+                MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
 
                 string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
                 File.WriteAllBytes(pathOfferta, workStream.ToArray());
@@ -761,27 +799,27 @@ namespace VideoSystemWeb.Agenda
             return esito;
         }
 
-        private MemoryStream GeneraPdf()
-        {
-            string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
-            imgLogo.ImageUrl = prefissoUrl + "/Images/logoVSP_trim.png";
-            imgDNV.ImageUrl = prefissoUrl + "/Images/DNV_2008_ITA2.jpg";
+        //private MemoryStream GeneraPdf()
+        //{
+        //    string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+        //    imgLogo.ImageUrl = prefissoUrl + "/Images/logoVSP_trim.png";
+        //    imgDNV.ImageUrl = prefissoUrl + "/Images/DNV_2008_ITA2.jpg";
 
-            AbilitaVisualizzazioneStampa(true);
+        //    AbilitaVisualizzazioneStampa(true);
 
 
-            StringWriter sw = new StringWriter();
-            HtmlTextWriter hw = new HtmlTextWriter(sw);
-            modalRiepilogoContent.RenderControl(hw);
+        //    StringWriter sw = new StringWriter();
+        //    HtmlTextWriter hw = new HtmlTextWriter(sw);
+        //    modalRiepilogoContent.RenderControl(hw);
             
 
-            MemoryStream workStream =  BaseStampa.Instance.GeneraPdf(sw.ToString());
+        //    MemoryStream workStream =  BaseStampa.Instance.GeneraPdf(sw.ToString());
 
-            sw.Flush();
-            hw.Flush();
+        //    sw.Flush();
+        //    hw.Flush();
 
-            return workStream;
-        }
+        //    return workStream;
+        //}
 
         private Esito ValidazioneSalvataggio(DatiAgenda eventoSelezionato, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
         {
@@ -934,19 +972,19 @@ namespace VideoSystemWeb.Agenda
 
         #endregion
 
-        private void AbilitaVisualizzazioneStampa(bool isVisualizzazioneStampa)
-        {
-            gvArticoli.Columns[4].Visible = !isVisualizzazioneStampa;
+        //private void AbilitaVisualizzazioneStampa(bool isVisualizzazioneStampa)
+        //{
+        //    gvArticoli.Columns[4].Visible = !isVisualizzazioneStampa;
 
-            intestazioneSchermo.Visible = !isVisualizzazioneStampa;
-            protocolloSchermo.Visible = !isVisualizzazioneStampa;
-            totaliSchermo.Visible = !isVisualizzazioneStampa;
-            footerSchermo.Visible = !isVisualizzazioneStampa;
+        //    intestazioneSchermo.Visible = !isVisualizzazioneStampa;
+        //    protocolloSchermo.Visible = !isVisualizzazioneStampa;
+        //    totaliSchermo.Visible = !isVisualizzazioneStampa;
+        //    footerSchermo.Visible = !isVisualizzazioneStampa;
 
-            intestazioneStampa.Visible = isVisualizzazioneStampa;
-            totaliStampa.Visible = isVisualizzazioneStampa;
-            footerStampa.Visible = isVisualizzazioneStampa;
-        }
+        //    intestazioneStampa.Visible = isVisualizzazioneStampa;
+        //    totaliStampa.Visible = isVisualizzazioneStampa;
+        //    footerStampa.Visible = isVisualizzazioneStampa;
+        //}
 
         public override void VerifyRenderingInServerForm(Control control)
         {

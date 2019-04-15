@@ -212,15 +212,7 @@ namespace VideoSystemWeb.Agenda
             Response.End();
         }
 
-        protected void btnModificaNote_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
-        }
-
-        protected void btnOKModificaNote_Click(object sender, EventArgs e)
-        {
-
-        }
+       
         #endregion
 
         #region OPERAZIONI AGENDA
@@ -518,6 +510,9 @@ namespace VideoSystemWeb.Agenda
                 case "CLOSE":
                     ChiudiPopup();
                     break;
+                case "SAVE_PDF":
+                    SalvaPdfSuFile();
+                    break;
             }
         }
 
@@ -716,13 +711,7 @@ namespace VideoSystemWeb.Agenda
 
                 if (!string.IsNullOrEmpty(eventoSelezionato.codice_lavoro))
                 {
-                    esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(eventoSelezionato);
-
-                    string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
-                    MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
-
-                    string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
-                    File.WriteAllBytes(pathOfferta, workStream.ToArray());
+                    SalvaPdfSuFile();
                 }
             }
             else
@@ -732,6 +721,18 @@ namespace VideoSystemWeb.Agenda
             }
 
             return esito;
+        }
+
+        private void SalvaPdfSuFile()
+        {
+            DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            Esito esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(eventoSelezionato);
+
+            string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
+            MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
+
+            string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
+            File.WriteAllBytes(pathOfferta, workStream.ToArray());
         }
 
         private Esito ValidazioneSalvataggio(DatiAgenda eventoSelezionato, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)

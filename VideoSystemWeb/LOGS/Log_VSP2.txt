@@ -3629,3 +3629,13 @@ L'istruzione è stata interrotta.
 2019-04-14 17:06:03,553 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-04-14 17:06:09,611 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-04-14 17:06:11,252 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-15 17:31:59,278 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-15 17:32:05,231 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-15 17:35:30,680 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-15 17:35:55,147 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-15 17:35:55,976 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-15 17:48:38,904 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-15 17:48:40,537 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-15 17:48:50,012 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-15 17:49:04,231 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-15 17:50:44,945 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

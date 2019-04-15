@@ -167,6 +167,8 @@ namespace VideoSystemWeb.Agenda.userControl
             val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
             val_consegnaStampa.Text = noteOfferta.Consegna;
 
+            RichiediOperazionePopup("SAVE_PDF");
+
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaNote", script: "javascript: aggiornaRiepilogo()", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='none'", addScriptTags: true);
         }

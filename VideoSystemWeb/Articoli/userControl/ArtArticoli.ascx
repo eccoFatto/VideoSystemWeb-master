@@ -87,7 +87,7 @@
             </div>
         </div>
         
-        <div class="w3-row-padding w3-margin-bottom">
+        <div class="w3-row-padding">
             <div class="w3-third">
                 <label>Genere</label>
                 <asp:DropDownList ID="ddlGenere" runat="server" class="w3-input w3-border" ></asp:DropDownList>
@@ -97,7 +97,7 @@
                 <asp:DropDownList ID="ddlGruppo" runat="server" class="w3-input w3-border" ></asp:DropDownList>
             </div>
             <div class="w3-third">
-                <label>Gruppo</label>
+                <label>Sottogruppo</label>
                 <asp:DropDownList ID="ddlSottoGruppo" runat="server" class="w3-input w3-border" ></asp:DropDownList>
             </div>
         </div>
@@ -167,7 +167,7 @@
                         GESTIONE ARTICOLI
                     </div>
                     <div class="w3-rest">
-                        <%=dettaglioModifica%>
+                        <asp:Label runat="server" ID="lblDettaglioModifica" Text=""></asp:Label>
                     </div>
                 </div> 
 

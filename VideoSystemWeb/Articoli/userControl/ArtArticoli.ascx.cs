@@ -153,6 +153,7 @@ namespace VideoSystemWeb.Articoli.userControl
                     pulisciCampiDettaglio();
 
                     dettaglioModifica = articolo.DefaultDescrizione.Trim();
+                    lblDettaglioModifica.Text = dettaglioModifica;
                     // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
                     tbMod_Descrizione.Text = articolo.DefaultDescrizioneLunga;
                     tbMod_DescrizioneBreve.Text = articolo.DefaultDescrizione;
@@ -274,6 +275,11 @@ namespace VideoSystemWeb.Articoli.userControl
             AttivaDisattivaModificaArticolo(false);
             gestisciPulsantiArticolo("INSERIMENTO");
 
+            // SVUOTO IL DATAGRID DEI GRUPPI
+            DataTable dt = new DataTable();
+            gvMod_Gruppi.DataSource = dt;
+            gvMod_Gruppi.DataBind();
+            
             // PULISCO I PH DI MODIFICA
 
             phGruppi.Visible = false;
@@ -286,6 +292,7 @@ namespace VideoSystemWeb.Articoli.userControl
         {
             Esito esito = new Esito();
             dettaglioModifica = "";
+            lblDettaglioModifica.Text = dettaglioModifica;
             pulisciCampiDettaglio();
         }
         protected void btnRicercaArticoli_Click(object sender, EventArgs e)

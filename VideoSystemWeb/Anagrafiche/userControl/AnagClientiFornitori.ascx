@@ -178,7 +178,7 @@
                         GESTIONE AZIENDE
                     </div>
                     <div class="w3-rest">
-                        <%=dettaglioModifica%>
+                        <asp:Label runat="server" ID="lblDettaglioModifica" Text=""></asp:Label>
                     </div>
                 </div>                
                 <div class="w3-container">

@@ -496,6 +496,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     pulisciCampiDettaglio();
 
                     dettaglioModifica = collaboratore.Cognome.Trim() + " " + collaboratore.Nome.Trim();
+                    lblDettaglioModifica.Text = dettaglioModifica;
                     // RIEMPIO I CAMPI DEL DETTAGLIO COLLABORATORE
                     tbMod_CF.Text = collaboratore.CodiceFiscale;
                     tbMod_Cognome.Text = collaboratore.Cognome;
@@ -750,6 +751,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         {
             Esito esito = new Esito();
             dettaglioModifica = "";
+            lblDettaglioModifica.Text = dettaglioModifica;
             pulisciCampiDettaglio();
             // IMMAGINE COLLABORATORE
             imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + ConfigurationManager.AppSettings["IMMAGINE_DUMMY_COLLABORATORE"];

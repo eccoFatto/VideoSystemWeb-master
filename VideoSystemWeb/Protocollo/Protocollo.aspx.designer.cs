@@ -265,6 +265,15 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.Panel innerContainer;
         
         /// <summary>
+        /// Controllo btnViewAttachement.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnViewAttachement;
+        
+        /// <summary>
         /// Controllo tbMod_CodiceLavoro.
         /// </summary>
         /// <remarks>

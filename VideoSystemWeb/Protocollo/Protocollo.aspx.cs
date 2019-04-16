@@ -397,6 +397,8 @@ namespace VideoSystemWeb.Protocollo
         {
             Esito esito = new Esito();
             pulisciCampiDettaglio();
+            //btnViewAttachement.Attributes.Add("disabled", "true");
+            btnViewAttachement.Enabled = false;
         }
         private void editProtocollo()
         {
@@ -440,6 +442,18 @@ namespace VideoSystemWeb.Protocollo
                     else
                     {
                         cmbMod_Tipologia.Text = "";
+                    }
+
+                    if (!string.IsNullOrEmpty(protocollo.PathDocumento))
+                    {
+                        string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "") + protocollo.PathDocumento;
+                        btnViewAttachement.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
+                        btnViewAttachement.Enabled = true;
+                    }
+                    else
+                    {
+                        //btnViewAttachement.Attributes.Add("disabled", "true");
+                        btnViewAttachement.Enabled = false;
                     }
 
                 }

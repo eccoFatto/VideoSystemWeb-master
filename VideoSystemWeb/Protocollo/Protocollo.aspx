@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Protocollo.aspx.cs" Inherits="VideoSystemWeb.Protocollo.Protocollo" %>
-
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script>
@@ -284,6 +283,9 @@
                             <div class="w3-bar-item w3-button w3-yellow" onclick="openDettaglioProtocollo('Protocollo')">Protocollo</div>
                             <div class="w3-bar-item w3-button w3-yellow w3-right">
                                 <div id="btnChiudiPopup" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
+                            </div>
+                            <div class="w3-bar-item w3-button w3-yellow w3-right">
+                                <asp:ImageButton ID="btnViewAttachement" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Allegato" ImageAlign="AbsMiddle" Height="30px" />
                             </div>
                         </div>
                     </div>

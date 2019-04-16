@@ -187,6 +187,7 @@
     <Content Include="Articoli\GestioneRaggruppamentiArticoli.aspx" />
     <Content Include="Articoli\userControl\ArtArticoli.ascx" />
     <Content Include="Articoli\userControl\ArtTipologie.ascx" />
+    <Content Include="CONFIG\gestConfig.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -589,6 +590,13 @@
     <Compile Include="BLL\Stampa\BaseStampa.cs" />
     <Compile Include="BLL\Stato.cs" />
     <Compile Include="BLL\UtilityTipologiche.cs" />
+    <Compile Include="CONFIG\gestConfig.aspx.cs">
+      <DependentUpon>gestConfig.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CONFIG\gestConfig.aspx.designer.cs">
+      <DependentUpon>gestConfig.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

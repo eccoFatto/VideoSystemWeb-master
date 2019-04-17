@@ -146,6 +146,7 @@
                   <a class="w3-bar-item w3-button w3-disabled">Gruppi</a>
                   <a class="w3-bar-item w3-button w3-disabled">Sottogruppi</a>--%>
                         <a href="/Agenda/GestioneColonneAgenda.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Colonne Agenda</a>
+                        <a href="/CONFIG/gestConfig.aspx" class="w3-bar-item w3-button">Gestione Configurazione</a>
                         
                     </div>
                 </div>

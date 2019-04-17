@@ -38,7 +38,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM tab_config";
+                    string query = "SELECT * FROM tab_config order by ordinamento";
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -56,6 +56,7 @@ namespace VideoSystemWeb.DAL
                                         config.Chiave = riga.Field<string>("chiave");
                                         config.Valore = riga.Field<string>("valore");
                                         config.Descrizione = riga.Field<string>("descrizione");
+                                        config.Ordinamento = riga.Field<int>("ordinamento");
                                         listaConfig.Add(config);
                                     }
                                 }
@@ -95,6 +96,7 @@ namespace VideoSystemWeb.DAL
                                     config.Chiave = dt.Rows[0].Field<string>("chiave");
                                     config.Valore = dt.Rows[0].Field<string>("valore");
                                     config.Descrizione = dt.Rows[0].Field<string>("descrizione");
+                                    config.Ordinamento = dt.Rows[0].Field<int>("ordinamento");
                                 }
                             }
                         }
@@ -137,6 +139,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter descrizione = new SqlParameter("@descrizione", config.Descrizione);
                             descrizione.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter ordinamento = new SqlParameter("@ordinamento", config.Ordinamento);
+                            ordinamento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(ordinamento);
 
                             StoreProc.Connection.Open();
 
@@ -185,6 +191,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter descrizione = new SqlParameter("@descrizione", config.Descrizione);
                             descrizione.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter ordinamento = new SqlParameter("@ordinamento", config.Ordinamento);
+                            ordinamento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(ordinamento);
 
                             StoreProc.Connection.Open();
 

@@ -13,15 +13,6 @@ namespace VideoSystemWeb.CONFIG {
     public partial class gestConfig {
         
         /// <summary>
-        /// Controllo lblConfigurazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblConfigurazione;
-        
-        /// <summary>
         /// Controllo UpdatePanelRicerca.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,33 @@ namespace VideoSystemWeb.CONFIG {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
+        
+        /// <summary>
+        /// Controllo btnModificaUp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModificaUp;
+        
+        /// <summary>
+        /// Controllo btnSalvaUp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSalvaUp;
+        
+        /// <summary>
+        /// Controllo btnAnnullaUp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAnnullaUp;
         
         /// <summary>
         /// Controllo phCampiConfig.

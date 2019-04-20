@@ -242,7 +242,7 @@
                                     <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
                                     <asp:ListItem Value="Largo">Largo</asp:ListItem>
                                     <asp:ListItem Value="Vicolo">Vicolo</asp:ListItem>
-                                    <asp:ListItem Value="Circonvallazione">Circ.ne</asp:ListItem>
+                                    <asp:ListItem Value="Circ.ne">Circ.ne</asp:ListItem>
                                     <asp:ListItem Value="Altro">Altro</asp:ListItem>                                            
                                 </asp:DropDownList>
                             </div>
@@ -289,7 +289,7 @@
                                     <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
                                     <asp:ListItem Value="Largo">Largo</asp:ListItem>
                                     <asp:ListItem Value ="Vicolo">Vicolo</asp:ListItem>
-                                    <asp:ListItem Value="Circonvallazione">Circ.ne</asp:ListItem>
+                                    <asp:ListItem Value="Circ.ne">Circ.ne</asp:ListItem>
                                     <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
                                 </asp:DropDownList>
                             </div>

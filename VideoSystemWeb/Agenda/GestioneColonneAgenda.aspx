@@ -45,9 +45,14 @@
                 <div class="w3-quarter">
                     <label>Colore Colonna</label>
                     <asp:DropDownList ID="cmbInsParametriTipologia" runat="server" class="w3-input w3-border">
+                        <asp:ListItem Value="COLOR=#ffa500">ARANCIONE</asp:ListItem>
+                        <asp:ListItem Value="COLOR=#add8e6">AZZURRO</asp:ListItem>
+                        <asp:ListItem Value="COLOR=#ffffff">BIANCO</asp:ListItem>
+                        <asp:ListItem Value="COLOR=#9991CC">BLU</asp:ListItem>
+                        <asp:ListItem Value="COLOR=#ffff00">GIALLO</asp:ListItem>
+                        <asp:ListItem Value="COLOR=#800000">MARRONE</asp:ListItem>
                         <asp:ListItem Value="COLOR=#D7868E">ROSSO</asp:ListItem>
                         <asp:ListItem Value="COLOR=#89D38D">VERDE</asp:ListItem>
-                        <asp:ListItem Value="COLOR=#9991CC">BLU</asp:ListItem>
                     </asp:DropDownList>
                     <asp:TextBox ID ="tbIdTipologiaDaModificare"  runat="server" Visible ="false"></asp:TextBox>
                 </div>

@@ -23,13 +23,17 @@ namespace VideoSystemWeb.CONFIG
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Esito esito = new Esito();
             if (!Page.IsPostBack) {
                 if (!AbilitazioneInScrittura())
                 {
                     btnModifica.Visible = false;
                 }
+
+                //List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
+                //List<GiorniPagamentoFatture> listaGPF = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
             }
-            Esito esito = new Esito();
+            
             List<Config> listaConf = BLL.Config_BLL.Instance.getListaConfig(ref esito);
             if (esito.codice == 0)
             {
@@ -148,6 +152,10 @@ namespace VideoSystemWeb.CONFIG
         protected void btnAnnulla_Click(object sender, EventArgs e)
         {
             abilitaTextBoxes(this, true);
+            btnSalva.Visible = false;
+            btnAnnulla.Visible = false;
+            btnModifica.Visible = true;
+
             btnSalvaUp.Visible = false;
             btnAnnullaUp.Visible = false;
             btnModificaUp.Visible = true;

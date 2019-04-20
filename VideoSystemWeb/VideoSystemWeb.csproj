@@ -637,6 +637,8 @@
     <Compile Include="Entity\Anag_Indirizzi_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Qualifiche_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
+    <Compile Include="Entity\GiorniPagamentoFatture.cs" />
+    <Compile Include="Entity\DatiBancari.cs" />
     <Compile Include="Entity\NoteOfferta.cs" />
     <Compile Include="Entity\Protocolli.cs" />
     <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />

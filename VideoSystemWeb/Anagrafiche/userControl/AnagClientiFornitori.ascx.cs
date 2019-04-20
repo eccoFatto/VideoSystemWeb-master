@@ -52,10 +52,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                 BasePage p = new BasePage();
                 Esito esito = p.CaricaListeTipologiche();
+                // CARICO L'ELENCO DEI GIORNI PAGAMENTO
+                List<GiorniPagamentoFatture> listaGPF = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
 
                 // CARICO LE COMBO
-                if (string.IsNullOrEmpty(esito.descrizione))
+                if (esito.codice==0)
                 {
+                    // COMBO TIPO AZIENDA
                     ddlTipoAzienda.Items.Clear();
                     ddlTipoAzienda.Items.Add("");
                     cmbMod_TipoAzienda.Items.Clear();
@@ -69,10 +72,20 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         cmbMod_TipoAzienda.Items.Add(item);
                     }
 
+                    // COMBO GIORNI PAGAMENTO
+                    cmbMod_Pagamento.Items.Clear();
+                    cmbMod_Pagamento.Items.Add("");
+                    foreach (GiorniPagamentoFatture gpf in listaGPF)
+                    {
+                        ListItem item = new ListItem();
+                        item.Text = gpf.Descrizione;
+                        item.Value = gpf.Giorni;
+                        cmbMod_Pagamento.Items.Add(item);
+                    }
+
+
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                     abilitaBottoni(p.AbilitazioneInScrittura());
-
-
                 }
                 else
                 {

@@ -34,18 +34,18 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        public List<Tipologica> CaricaColonne(ref Esito esito)
+        public List<ColonneAgenda> CaricaColonne(ref Esito esito)
         {
-            List<Tipologica> listaColonne = new List<Tipologica>();
+            List<ColonneAgenda> listaColonne = new List<ColonneAgenda>();
 
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
-            {
+            //if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
+            //{
                 listaColonne = Agenda_DAL.Instance.CaricaColonne(ref esito);
-            }
-            else
-            {
-                listaColonne = Tipologie.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
-            }
+            //}
+            //else
+            //{
+            //    listaColonne = Tipologie.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
+            //}
 
             return listaColonne;
         }
@@ -70,14 +70,14 @@ namespace VideoSystemWeb.BLL
         {
             List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();
 
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
-            {
+            //if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
+            //{
                 listaDatiAgenda = Agenda_DAL.Instance.CaricaDatiAgenda(dataInizio, dataInizio.AddDays(31), ref esito);
-            }
-            else
-            {
-                listaDatiAgenda = Tipologie.getListaDatiAgenda();
-            }
+            //}
+            //else
+            //{
+            //    listaDatiAgenda = Tipologie.getListaDatiAgenda();
+            //}
 
             log.Error(esito.descrizione);
 

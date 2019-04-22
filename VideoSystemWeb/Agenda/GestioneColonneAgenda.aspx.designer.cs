@@ -112,6 +112,24 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.TextBox tbIdTipologiaDaModificare;
         
         /// <summary>
+        /// Controllo tbInsOrdinamento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInsOrdinamento;
+        
+        /// <summary>
+        /// Controllo tbInsOrdinamento_MaskedEditExtender.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::AjaxControlToolkit.MaskedEditExtender tbInsOrdinamento_MaskedEditExtender;
+        
+        /// <summary>
         /// Controllo btnInserisciTipologia.
         /// </summary>
         /// <remarks>

@@ -652,6 +652,7 @@
     <Compile Include="Entity\DatiAgenda.cs" />
     <Compile Include="Entity\Evento.cs" />
     <Compile Include="Entity\Json\Evento_Json.cs" />
+    <Compile Include="Entity\ColonneAgenda.cs" />
     <Compile Include="Entity\Tipologica.cs" />
     <Compile Include="Entity\Config.cs" />
     <Compile Include="Entity\Tipo_Evento.cs" />

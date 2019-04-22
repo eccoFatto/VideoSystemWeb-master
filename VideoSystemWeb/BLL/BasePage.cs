@@ -13,8 +13,8 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "1.23";
-        public static string dataVersione = "18/04/2019";
+        public static string versione = "1.24";
+        public static string dataVersione = "22/04/2019";
 
         public List<Tipologica> listaRisorse
         {
@@ -22,6 +22,17 @@ namespace VideoSystemWeb.BLL
             {
                 List<Tipologica> _listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
                 _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<Tipologica>();
+                return _listaRisorse;
+            }
+        }
+
+        public List<ColonneAgenda> listaRisorseColonneAgenda
+        {
+            get
+            {
+                Esito esito = new Esito();
+                List<ColonneAgenda> _listaRisorse = UtilityTipologiche.CaricaColonneAgenda(true,ref esito);
+                _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<ColonneAgenda>();
                 return _listaRisorse;
             }
         }

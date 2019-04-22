@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master"  AutoEventWireup="true" CodeBehind="GestioneColonneAgenda.aspx.cs" Inherits="VideoSystemWeb.Agenda.GestioneColonneAgenda" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <script>
     $(document).ready(function () {
@@ -14,7 +15,7 @@
             class="w3-button w3-large w3-display-topright">&times;</span>
             <p><asp:Label ID="lbl_MessaggioErrore" runat="server" ></asp:Label></p>
         </div>
-        <div class="w3-container w3-center" style="width:50%;">
+        <div class="w3-container w3-center" style="width:75%;">
             <div class="w3-row-padding w3-center w3-text-center">
                 <div class="w3-threequarter">
                     <asp:DropDownList ID="lbMod_Tipologia" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" ></asp:DropDownList>
@@ -26,15 +27,17 @@
         </div>
         <div class="w3-panel w3-center">
             <div class="w3-row-padding w3-center w3-text-center">
-                <div class="w3-quarter">
+                <div class="w3-half">
                     <label>Nome Colonna</label>
                     <asp:TextBox ID="tbInsNomeTipologia" runat="server" MaxLength="50" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
                 </div>
-                <div class="w3-quarter">
+                <div class="w3-half">
                     <label>Descrizione</label>
                     <asp:TextBox ID="tbInsDescrizioneTipologia" runat="server" MaxLength="100" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                 </div>
-                <div class="w3-quarter">
+            </div>
+            <div class="w3-row-padding w3-center w3-text-center">
+                <div class="w3-third">
                     <label>Tipo Colonna</label>
                     <asp:DropDownList ID="cmbInsSottotipoTipologia" runat="server" class="w3-input w3-border">
                         <asp:ListItem Value="dipendenti">Dipendenti</asp:ListItem>
@@ -42,7 +45,7 @@
                         <asp:ListItem Value="extra">Extra</asp:ListItem>
                     </asp:DropDownList>
                 </div>
-                <div class="w3-quarter">
+                <div class="w3-third">
                     <label>Colore Colonna</label>
                     <asp:DropDownList ID="cmbInsParametriTipologia" runat="server" class="w3-input w3-border">
                         <asp:ListItem Value="COLOR=#ffa500">ARANCIONE</asp:ListItem>
@@ -55,6 +58,11 @@
                         <asp:ListItem Value="COLOR=#89D38D">VERDE</asp:ListItem>
                     </asp:DropDownList>
                     <asp:TextBox ID ="tbIdTipologiaDaModificare"  runat="server" Visible ="false"></asp:TextBox>
+                </div>
+                <div class="w3-third">
+                    <label>Ordinamento</label>
+                    <asp:TextBox ID="tbInsOrdinamento" class="w3-input w3-border" runat="server" MaxLength="2" Text="1"></asp:TextBox>
+                    <ajaxToolkit:MaskedEditExtender ID="tbInsOrdinamento_MaskedEditExtender" runat="server" TargetControlID="tbInsOrdinamento" MaskType="None" Mask="99" ></ajaxToolkit:MaskedEditExtender>
                 </div>
             </div>
             <div style="text-align: center;">

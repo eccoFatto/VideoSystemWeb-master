@@ -13,8 +13,8 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "1.24";
-        public static string dataVersione = "22/04/2019";
+        public static string versione = "1.25";
+        public static string dataVersione = "24/04/2019";
 
         public List<Tipologica> listaRisorse
         {
@@ -234,6 +234,29 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public static string validaIndirizzoEmail(TextBox t,bool isRequired, ref Esito esito)
+        {
+            if (string.IsNullOrEmpty(t.Text.Trim()) && !isRequired){
+                t.CssClass = t.CssClass.Replace("erroreValidazione", "");
+                return "";
+            }
+            else { 
+                Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
+                Match match = regex.Match(t.Text);
+                if (match.Success)
+                {
+                    t.CssClass = t.CssClass.Replace("erroreValidazione", "");
+                    return t.Text;
+                }
+                else
+                {
+                    t.CssClass += " erroreValidazione";
+                    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.descrizione = "Campo obbligatorio";
+                    return t.Text;
+                }
+            }
+        }
         public bool AbilitazioneInScrittura()
         {
             Esito esito = new Esito();

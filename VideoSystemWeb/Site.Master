@@ -116,7 +116,16 @@
                         <div class="w3-panel w3-yellow w3-border w3-round">
                             GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp;
                             <asp:Label ID="lbl_benvenuto" runat="server"></asp:Label>&nbsp;&nbsp;  Ver.<a href="/DOCUMENTI/HELP/HELP VIDEOSYSTEM.docx"><asp:Label ID="lblVersione" runat="server" ForeColor="Blue"></asp:Label>&nbsp; del
-                            <asp:Label ID="lblDataVersione" runat="server" ForeColor="Blue"></asp:Label></a><a href="/Utente/GestionePassword.aspx" class="w3-bar-item w3-right">Gestione Password</a>
+                            <asp:Label ID="lblDataVersione" runat="server" ForeColor="Blue"></asp:Label></a>
+                            
+                            <div class="w3-dropdown-hover w3-right">
+                                <button class="w3-button w3-yellow" onclick="return false;">Gestione Utenze</button>
+                                <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
+                                    <a href="/Utente/GestionePassword.aspx" class="w3-bar-item">Password</a>
+                                    <a href="/Utente/GestioneUtenti.aspx" class="w3-bar-item">Utenti</a>
+                                </div>
+                            </div>
+                            
                         </div>
                     </td>
                 </tr>

@@ -435,6 +435,7 @@
     <Content Include="Site.Master" />
     <Content Include="TEMPLATE\testWord.aspx" />
     <Content Include="Utente\GestionePassword.aspx" />
+    <Content Include="Utente\GestioneUtenti.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -566,6 +567,7 @@
     </Compile>
     <Compile Include="BLL\Agenda_BLL.cs" />
     <Compile Include="BLL\Anag_Clienti_Fornitori_BLL.cs" />
+    <Compile Include="BLL\Anag_Utenti_BLL.cs" />
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
     <Compile Include="BLL\NoteOfferta_BLL.cs" />
@@ -605,6 +607,7 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\Agenda_DAL.cs" />
+    <Compile Include="DAL\Anag_Utenti_DAL.cs" />
     <Compile Include="DAL\Config_DAL.cs" />
     <Compile Include="DAL\NoteOfferta_DAL.cs" />
     <Compile Include="DAL\Protocolli_DAL.cs" />
@@ -640,6 +643,7 @@
     <Compile Include="Entity\GiorniPagamentoFatture.cs" />
     <Compile Include="Entity\DatiBancari.cs" />
     <Compile Include="Entity\NoteOfferta.cs" />
+    <Compile Include="Entity\Utenti.cs" />
     <Compile Include="Entity\Protocolli.cs" />
     <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />
     <Compile Include="Entity\ArticoliGruppi.cs" />
@@ -711,6 +715,13 @@
     </Compile>
     <Compile Include="Utente\GestionePassword.aspx.designer.cs">
       <DependentUpon>GestionePassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Utente\GestioneUtenti.aspx.cs">
+      <DependentUpon>GestioneUtenti.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Utente\GestioneUtenti.aspx.designer.cs">
+      <DependentUpon>GestioneUtenti.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

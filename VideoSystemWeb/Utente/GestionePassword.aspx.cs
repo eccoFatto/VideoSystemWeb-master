@@ -24,6 +24,12 @@ namespace VideoSystemWeb.Utente
             if (esito.codice == Esito.ESITO_OK)
             {
                 // AGGIORNO LA NUOVA PASSWORD SU ANAG_UTENTI
+
+                MD5 md5Hash = MD5.Create();
+                string pwdEncrypted = GetMd5Hash(md5Hash, tbNewPassword.Text.Trim());
+                md5Hash.Dispose();
+                utente.password = pwdEncrypted;
+
                 esito = Login_BLL.Instance.AggiornaUtente(utente);
                 if (esito.codice != Esito.ESITO_OK)
                 {

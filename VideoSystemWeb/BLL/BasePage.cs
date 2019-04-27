@@ -9,12 +9,15 @@ using VideoSystemWeb.Entity;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using System.Text;
+using MailKit;
+using MimeKit;
+using System.Configuration;
 namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "1.25";
-        public static string dataVersione = "24/04/2019";
+        public static string versione = "1.26";
+        public static string dataVersione = "27/04/2019";
 
         public List<Tipologica> listaRisorse
         {
@@ -348,6 +351,54 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public static Esito SendEmail(List<string> receivers, string subject, string body, List<string> attachments)
+        {
+            Esito esito = new Esito();
+            var message = new MimeMessage();
+
+            message.From.Add(new MailboxAddress(ConfigurationManager.AppSettings["EMAIL_FROM"], ConfigurationManager.AppSettings["EMAIL_FROM"]));
+
+            foreach (string receiver in receivers)
+            {
+                message.To.Add(new MailboxAddress(receiver, receiver));
+            }
+            
+
+            message.Subject = subject;
+
+            var builder = new BodyBuilder();
+
+
+            if (attachments != null) { 
+                foreach (string attachment in attachments)
+                {
+                    builder.Attachments.Add(attachment);
+                }
+            }
+            //builder.TextBody = tbBody.Text.Trim();
+            builder.HtmlBody = body;
+            message.Body = builder.ToMessageBody();
+            //message.HtmlBody = builder.ToMessageBody();
+            //message.HtmlBody = builder.HtmlBody;
+
+            try
+            {
+                var client = new MailKit.Net.Smtp.SmtpClient();
+
+                client.Connect(ConfigurationManager.AppSettings["EMAIL_CLIENT"], Convert.ToInt32(ConfigurationManager.AppSettings["EMAIL_PORT"]), Convert.ToBoolean(ConfigurationManager.AppSettings["EMAIL_SSL"]));
+                client.Authenticate(ConfigurationManager.AppSettings["EMAIL_USER"], ConfigurationManager.AppSettings["EMAIL_PASSWORD"]);
+                client.Send(message);
+                client.Disconnect(true);
+
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
         public void ShowSuccess(string messaggio)
         {
             messaggio = messaggio.Replace("'", "\\'");

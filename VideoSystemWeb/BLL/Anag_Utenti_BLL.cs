@@ -47,10 +47,20 @@ namespace VideoSystemWeb.BLL
 
             return esito;
         }
+        public Esito AggiornaPassword(int idUtenteToUpdate, string nuovaPassword)
+        {
+            Esito esito = Anag_Utenti_DAL.Instance.AggiornaPassword(idUtenteToUpdate, nuovaPassword);
+            return esito;
+        }
 
         public Utenti getUtenteById(int idUtente,ref Esito esito)
         {
             Utenti utente = Anag_Utenti_DAL.Instance.getUtenteById(idUtente, ref esito);
+            return utente;
+        }
+        public Utenti getUtenteByUserAndEmail(string username, string email, ref Esito esito)
+        {
+            Utenti utente = Anag_Utenti_DAL.Instance.getUtenteByUserAndEmail(username, email, ref esito);
             return utente;
         }
     }

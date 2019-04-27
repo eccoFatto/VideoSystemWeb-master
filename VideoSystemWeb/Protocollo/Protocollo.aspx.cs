@@ -28,6 +28,7 @@ namespace VideoSystemWeb.Protocollo
 
             if (!Page.IsPostBack)
             {
+
                 Session["NOME_FILE"] = "";
                 //BasePage p = new BasePage();
                 Esito esito = basePage.CaricaListeTipologiche();

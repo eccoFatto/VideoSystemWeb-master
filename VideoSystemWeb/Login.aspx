@@ -39,6 +39,9 @@
                                 <input id="cbStayLogged" class="w3-check" type="checkbox" checked="checked" />
                                 <label>Rimani Connesso</label>
                             </p>
+                            <div class="w3-bar ">
+                                <a href="resetPassword.aspx" class="w3-bar-item w3-button">Password dimenticata?</a>
+                            </div>
                             <p>
                                 <asp:Button ID="btnLogin" runat="server" OnClick="btnLogIn_Click" class="w3-btn w3-section w3-teal w3-ripple" Text="Log in"></asp:Button>
                             </p>
@@ -57,7 +60,7 @@
         <br />
         <hr />
         <footer class="w3-container w3-teal">
-            <h5 style="text-align: center">&copy; <%: DateTime.Now.Year %>- VIDEOSYSTEM</h5>
+            <h5 style="text-align: center">&copy; <%: DateTime.Now.Year %> - VIDEOSYSTEM</h5>
         </footer>
     </form>
 </body>

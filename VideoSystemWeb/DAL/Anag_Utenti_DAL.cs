@@ -75,6 +75,48 @@ namespace VideoSystemWeb.DAL
             return utente;
         }
 
+        public Utenti getUtenteByUserAndEmail(string username, string email, ref Esito esito)
+        {
+            Utenti utente = new Utenti();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM ANAG_UTENTI WHERE USERNAME = '" + username.Replace("'", "''") + "' AND EMAIL = '" + email.Replace("'", "''") + "'";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    utente.Id = dt.Rows[0].Field<int>("id");
+                                    utente.Cognome = dt.Rows[0].Field<string>("cognome");
+                                    utente.Nome = dt.Rows[0].Field<string>("nome");
+                                    utente.Descrizione = dt.Rows[0].Field<string>("descrizione");
+                                    utente.Username = dt.Rows[0].Field<string>("username");
+                                    utente.Password = dt.Rows[0].Field<string>("password");
+                                    utente.Id_tipoUtente = dt.Rows[0].Field<int>("id_tipoUtente");
+                                    utente.Email = dt.Rows[0].Field<string>("email");
+                                    utente.Attivo = dt.Rows[0].Field<bool>("attivo");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+            return utente;
+        }
+
         public List<Utenti> CaricaListaUtenti(ref Esito esito, bool soloAttivi = true)
         {
             List<Utenti> listaUtenti = new List<Utenti>();
@@ -332,6 +374,47 @@ namespace VideoSystemWeb.DAL
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
                 esito.descrizione = "Anag_Utenti_DAL.cs - EliminaUtente " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
+        public Esito AggiornaPassword(int idUtenteToUpdate, string nuovaPassword)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("UpdatePasswordUtente"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                            id.Direction = ParameterDirection.Input;
+                            id.Value = idUtenteToUpdate;
+
+                            SqlParameter password = new SqlParameter("@password", nuovaPassword);
+                            password.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(password);
+
+                            StoreProc.Parameters.Add(id);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Anag_Utenti_DAL.cs - AggiornaPassword " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

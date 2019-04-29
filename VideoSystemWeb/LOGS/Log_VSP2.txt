@@ -3639,3 +3639,341 @@ L'istruzione è stata interrotta.
 2019-04-15 17:48:50,012 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-04-15 17:49:04,231 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-04-15 17:50:44,945 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-17 14:36:53,583 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-17 14:36:59,176 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:04:01,900 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 19:04:10,948 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:05:10,007 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:05:24,453 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:05:28,306 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:05:28,774 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:06:07,980 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:06:11,271 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:06:42,504 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:06:43,316 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:06:59,807 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:07:00,618 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:07:16,985 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:07:17,843 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:09:43,117 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:09:44,459 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:14:07,867 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:15:13,779 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:16:33,987 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:23:46,443 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:24:48,063 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:25:14,654 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:26:02,534 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:26:37,614 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:27:53,420 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:29:36,961 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:37:17,771 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 19:37:23,231 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:42:50,510 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 19:42:51,835 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:43:06,164 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:43:06,602 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:43:34,442 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:43:36,640 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:44:06,165 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:44:21,782 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:44:32,329 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:44:32,775 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:45:03,524 [4] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:45:03,932 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:45:23,240 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:45:24,333 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:46:57,926 [24] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 19:46:59,165 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:47:15,389 [24] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:53:51,539 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 19:53:52,784 [24] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:54:13,820 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:54:16,012 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:54:26,561 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:54:26,974 [22] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:54:37,860 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:54:38,255 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:56:25,624 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 19:56:26,797 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 19:58:21,655 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 19:58:22,966 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:02:00,503 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:02:33,277 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:02:37,821 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:06:58,636 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:07:17,426 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:07:19,431 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:08:08,036 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:08:09,323 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:08:34,772 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:08:35,077 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:09:51,507 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:10:13,832 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:10:24,641 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:10:26,663 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:17:45,691 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 20:17:46,912 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:18:05,564 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:18:07,372 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:18:38,843 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:18:39,241 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:18:57,986 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:19:12,224 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:28:15,298 [19] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 20:28:16,621 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:31:25,116 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:32:01,660 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:33:17,711 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 20:33:19,505 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:43:16,910 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 20:43:18,114 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:45:50,358 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 20:45:51,637 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:49:26,559 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 20:49:27,751 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:49:28,860 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 20:49:28,884 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:49:59,839 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:53:57,565 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 20:54:00,092 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:54:58,126 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:57:42,860 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:57:45,687 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:58:19,695 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 20:59:37,209 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 21:02:16,213 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 21:02:18,836 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 21:05:42,322 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 21:05:45,520 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 21:09:49,987 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 21:15:45,887 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 21:15:47,053 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 21:16:09,589 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-21 21:17:50,686 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-21 21:17:51,843 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:37:41,273 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-22 09:37:43,020 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:38:22,288 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:38:36,449 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:38:38,853 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:55:04,296 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:55:11,282 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:55:12,785 [27] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:57:27,442 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:57:38,357 [22] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:57:39,800 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:58:40,030 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:58:46,971 [28] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 09:58:48,547 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:01:51,790 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:02:08,923 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:02:11,896 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:02:13,458 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:04:55,384 [26] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:05:02,607 [23] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:05:04,204 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:09:36,517 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:09:45,171 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:09:46,584 [26] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:12:07,127 [30] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:12:22,676 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:12:24,040 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:16:00,183 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-22 10:16:01,555 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:16:09,771 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:16:12,257 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:18:26,142 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:18:34,385 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:18:35,841 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:19:59,629 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:20:05,149 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:20:06,526 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:23:35,053 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:23:43,147 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 10:23:44,613 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:40:26,519 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-22 11:40:33,180 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:40:44,800 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:40:47,356 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:44:05,666 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:44:14,529 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:44:15,968 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:46:02,797 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:46:08,985 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:46:10,405 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:47:02,290 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:47:07,966 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:47:09,492 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:52:06,234 [19] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-22 11:52:07,599 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:52:20,438 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:52:22,692 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:53:31,763 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:53:36,484 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:53:37,857 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:54:28,777 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:54:33,011 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:54:34,461 [18] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:57:43,232 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:57:51,420 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:57:52,769 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:59:26,329 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:59:33,012 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 11:59:34,388 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:05:57,353 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:08:15,823 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-22 12:08:17,161 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:08:25,599 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:08:27,949 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:09:58,931 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:10:03,542 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:10:05,290 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:12:08,450 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:12:16,590 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:12:18,006 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:14:16,417 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:14:28,802 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:14:30,206 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:16:28,749 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:16:33,980 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:16:35,464 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:17:04,955 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:17:09,869 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:17:11,215 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:20:56,505 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:21:54,948 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:21:56,390 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:24:23,715 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:24:32,184 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:24:33,725 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:26:41,160 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:26:42,488 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:26:51,060 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:26:52,502 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:27:31,632 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:27:32,850 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:28:06,631 [20] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:28:07,792 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:29:05,385 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 12:29:06,566 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:03:04,842 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-22 19:03:12,556 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:04:05,131 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:04:12,424 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:04:52,438 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:12:00,026 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:12:03,057 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:12:06,180 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:12:12,877 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:12:31,777 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:12:53,011 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-22 19:13:22,888 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 12:13:49,995 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-23 12:13:52,164 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 12:24:47,340 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 12:24:57,969 [27] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 12:26:19,098 [28] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 12:29:01,401 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 12:30:42,843 [35] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 12:34:19,047 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 12:37:57,237 [27] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 13:39:31,692 [78] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-23 13:39:33,189 [75] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 13:53:38,796 [27] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 13:54:05,430 [27] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 13:56:13,275 [24] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 13:57:08,281 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 13:58:50,233 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 14:19:02,261 [62] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-23 14:19:03,684 [62] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 14:20:06,280 [27] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 14:22:46,168 [63] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 14:26:22,533 [62] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 14:29:29,820 [70] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 14:30:05,644 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 16:11:49,714 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-23 16:11:51,156 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-23 16:12:36,521 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:31:10,876 [70] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-24 09:31:12,300 [93] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:31:17,390 [94] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:32:05,971 [93] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:32:09,570 [93] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:32:35,776 [93] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:32:39,798 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:33:23,949 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:33:27,792 [71] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:33:54,667 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:33:58,213 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:36:09,421 [71] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:36:13,391 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:38:03,595 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:38:08,403 [65] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:39:09,479 [70] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:39:13,889 [70] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:42:08,666 [70] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-24 09:42:10,241 [94] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:42:14,987 [93] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:54:20,491 [21] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-24 09:54:22,424 [94] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 09:54:31,420 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:03:14,776 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:03:22,843 [94] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:04:44,691 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:04:48,031 [95] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:13:31,494 [71] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-24 10:13:33,359 [94] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:13:37,839 [94] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:14:43,376 [93] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-24 10:14:44,847 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:14:48,820 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:18:39,093 [94] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:18:42,940 [21] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:20:46,378 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-24 10:20:48,939 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:21:27,433 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:25:26,447 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:25:34,156 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:29:00,313 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-24 10:29:03,566 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:29:18,041 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:36:04,855 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-24 10:36:06,378 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:36:10,421 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:36:58,925 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:37:03,962 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:38:45,344 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:38:46,916 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:38:50,206 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:39:44,546 [3] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:39:47,936 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:40:03,361 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:40:34,108 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:42:03,293 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:44:10,987 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:45:36,271 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:45:40,456 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:45:43,968 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:49:14,302 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:49:17,980 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:53:17,699 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:53:21,766 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:55:12,255 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:55:16,326 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:56:18,339 [3] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:56:21,398 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:57:11,869 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:57:15,781 [3] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:58:37,909 [3] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:58:42,969 [3] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:59:24,816 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 10:59:52,583 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 11:08:16,219 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 11:09:08,906 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 11:09:50,990 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 11:09:54,431 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-24 11:10:21,359 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-29 18:25:51,071 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-04-29 18:25:56,047 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-04-29 18:27:32,322 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

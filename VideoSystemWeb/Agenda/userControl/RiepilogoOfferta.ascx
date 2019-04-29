@@ -10,6 +10,15 @@
         $("#<%=val_consegnaSchermo.ClientID%>").text($("#<%=txt_Consegna.ClientID%>").val());
     }
 </script>
+
+<style>
+    .cella {
+        padding-top:8px;
+        vertical-align:top;
+    }
+
+
+</style>
 <div id="modalRiepilogoOfferta" class="w3-modal">
     <div class="w3-modal-content  w3-animate-zoom " style="position: fixed; top: 5%; width: 70%; left: 15%; overflow: auto; height: 90%; background-color: transparent">
 
@@ -131,12 +140,22 @@
                 <table style="width: 100%">
                     <tr>
                         <td style="width: 50%">
-                            <table>
+                            <table style="width:70%">
                                 <tr>
-                                    <td style="width: 33%">
-                                        <label><b>Roma</b></label></td>
-                                    <td style="width: 66%">
-                                        <asp:Label ID="lbl_DataStampa" runat="server"></asp:Label></td>
+                                    <td colspan="2">
+                                        <table  border="1" style="width: 100%;border-collapse:collapse;border-width:thin;">
+                                            <tr>
+                                                <td style="width: 33%; text-align:center">
+                                                    <label><b>Roma</b></label></td>
+                                                </td>
+                                                <td style="width: 66%; text-align:center">
+                                                    <asp:Label ID="lbl_DataStampa" runat="server"></asp:Label></td>
+                                                </td>
+                                        </table>
+                                        <br />
+                                    </td>
+                                    
+                                        
                                 </tr>
 
                                 <tr>
@@ -164,25 +183,25 @@
                         </td>
 
                         <td style="width: 50%">
-                            <table>
+                            <table  border="1" style="width:100%;border-collapse:collapse">
                                 <tr>
-                                    <td style="width: 33%">
+                                    <td style="width: 33%;height:50px;vertical-align:top;padding:5px;">
                                         <label><b>Spettabile</b></label></td>
-                                    <td style="width: 66%">
+                                    <td style="width: 66%; vertical-align:top;padding:5px;">
                                         <asp:Label ID="lbl_ClienteStampa" runat="server"></asp:Label></td>
                                 </tr>
 
                                 <tr>
-                                    <td style="width: 33%">
+                                    <td style="width: 33%;padding:5px;">
                                         <label><b>Indirizzo</b></label></td>
-                                    <td style="width: 66%">
+                                    <td style="width: 66%;padding:5px;">
                                         <asp:Label ID="lbl_IndirizzoClienteStampa" runat="server"></asp:Label></td>
                                 </tr>
 
                                 <tr>
-                                    <td style="width: 33%">
+                                    <td style="width: 33%;padding:5px;">
                                         <label><b>P. Iva / C.F.</b></label></td>
-                                    <td style="width: 66%">
+                                    <td style="width: 66%;padding:5px;">
                                         <asp:Label ID="lbl_PIvaClienteStampa" runat="server"></asp:Label></td>
                                 </tr>
                             </table>
@@ -194,22 +213,22 @@
                 <table style="width: 100%">
                     <tr>
                         <td style="width: 50%">
-                            <table>
+                            <table border="1" style="border-collapse:collapse;width: 100%">
                                 <tr>
-                                    <td style="width: 33%">
+                                    <td style="width: 33%;padding:5px;">
                                         <label><b>Offerta numero</b></label></td>
-                                    <td style="width: 66%">
+                                    <td style="width: 66%;padding:5px;">
                                         <asp:Label ID="lbl_CodLavorazioneStampa" runat="server"></asp:Label></td>
                                 </tr>
                             </table>
                         </td>
 
                         <td style="width: 50%">
-                            <table>
+                            <table border="1" style="border-collapse:collapse;width: 100%">
                                 <tr>
-                                    <td style="width: 33%">
+                                    <td style="width: 33%;padding:5px;">
                                         <label><b>Rif. prot.</b></label></td>
-                                    <td style="width: 66%">
+                                    <td style="width: 66%;padding:5px;">
                                         <asp:Label ID="lbl_ProtocolloStampa" runat="server"></asp:Label></td>
                                 </tr>
                             </table>
@@ -227,7 +246,7 @@
                     HeaderStyle-BackColor="#2196F3" HeaderStyle-Font-Bold="true" HeaderStyle-ForeColor="White" BorderWidth="0"
                     GridLines="None" OnRowDataBound="gvArticoli_RowDataBound" HeaderStyle-HorizontalAlign="Right">
                     <Columns>
-                        <asp:TemplateField HeaderStyle-Width="20%" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
+                        <asp:TemplateField HeaderStyle-Width="20%" ItemStyle-HorizontalAlign="Left" ItemStyle-CssClass="cella">
                             <HeaderTemplate>
                                 <div style="text-align: left;">Codice</div>
                             </HeaderTemplate>
@@ -235,7 +254,7 @@
                                 <asp:Label runat="server" ID="lblCodice" Text='<%# Eval("Descrizione") %>' />
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Descrizione" HeaderStyle-Width="40%" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top">
+                        <asp:TemplateField HeaderText="Descrizione" HeaderStyle-Width="40%" ItemStyle-HorizontalAlign="Left" ItemStyle-CssClass="cella">
                             <HeaderTemplate>
                                 <div style="text-align: left;">Descrizione</div>
                             </HeaderTemplate>
@@ -244,11 +263,11 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" />
-                        <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" />
-                        <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" />
-                        <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" />
-                        <asp:TemplateField HeaderText="Totale" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top">
+                        <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right" ItemStyle-CssClass="cella" />
+                        <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right" ItemStyle-CssClass="cella" />
+                        <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right" ItemStyle-CssClass="cella" />
+                        <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right" ItemStyle-CssClass="cella" />
+                        <asp:TemplateField HeaderText="Totale" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right" ItemStyle-CssClass="cella">
                             <ItemTemplate>
                                 <asp:Label ID="totaleRiga" runat="server" />
                             </ItemTemplate>

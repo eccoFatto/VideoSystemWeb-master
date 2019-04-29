@@ -96,7 +96,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             ViewState["listaDatiArticoli"] = listaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
 
-            resetPanelOfferta();
+            ResetPanelOfferta();
 
             RichiediOperazionePopup("UPDATE");
         }
@@ -131,7 +131,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 AggiornaTotali();
 
-                resetPanelOfferta();
+                ResetPanelOfferta();
 
                 RichiediOperazionePopup("UPDATE");
             }
@@ -142,6 +142,7 @@ namespace VideoSystemWeb.Agenda.userControl
             decimal totPrezzo = 0;
             decimal totCosto = 0;
             decimal totIva = 0;
+            decimal percRicavo = 0;
 
             if (listaDatiArticoli !=null && listaDatiArticoli.Count > 0)
             {
@@ -152,17 +153,16 @@ namespace VideoSystemWeb.Agenda.userControl
                     totIva += (art.Prezzo * art.Iva / 100) * art.Quantita;
                 }
 
-                decimal percRicavo = 0;
                 if (totPrezzo != 0)
                 {
                     percRicavo = ((totPrezzo- totCosto) / totPrezzo) * 100;
                 }
-
-                txt_TotPrezzo.Text = string.Format("{0:N2}", totPrezzo);
-                txt_TotCosto.Text = string.Format("{0:N2}", totCosto);
-                txt_TotIva.Text = string.Format("{0:N2}", totIva);
-                txt_PercRicavo.Text = string.Format("{0:N2}", percRicavo);
             }
+
+            txt_TotPrezzo.Text = string.Format("{0:N2}", totPrezzo);
+            txt_TotCosto.Text = string.Format("{0:N2}", totCosto);
+            txt_TotIva.Text = string.Format("{0:N2}", totIva);
+            txt_PercRicavo.Text = string.Format("{0:N2}", percRicavo);
         }
 
         protected void gvArticoli_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -206,7 +206,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     gvArticoli.DataBind();
 
                     AggiornaTotali();
-                    resetPanelOfferta();
+                    ResetPanelOfferta();
 
                     break;
                 case "moveUp":
@@ -243,7 +243,7 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             listaDatiArticoli = null;
 
-            resetPanelOfferta();
+            ResetPanelOfferta();
 
             RichiediOperazionePopup("UPDATE");
         }
@@ -262,7 +262,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_TotIva.Text = "";
             txt_PercRicavo.Text = "";
 
-            resetPanelOfferta();
+            ResetPanelOfferta();
         }
 
         private void ClearModificaArticoli()
@@ -276,7 +276,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Quantita.Text = "";
         }
 
-        private void resetPanelOfferta()
+        private void ResetPanelOfferta()
         {
             ClearModificaArticoli();
 
@@ -302,7 +302,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 AggiornaTotali();
             }
-            resetPanelOfferta();
+            ResetPanelOfferta();
         }
 
        

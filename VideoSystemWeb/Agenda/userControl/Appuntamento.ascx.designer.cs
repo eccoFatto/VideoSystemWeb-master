@@ -193,24 +193,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoRisorse;
         
         /// <summary>
-        /// Controllo lbl_tender.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_tender;
-        
-        /// <summary>
-        /// Controllo check_tender.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList check_tender;
-        
-        /// <summary>
         /// Controllo lbl_Tipologia.
         /// </summary>
         /// <remarks>
@@ -245,6 +227,24 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoTipologie;
+        
+        /// <summary>
+        /// Controllo lbl_tender.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_tender;
+        
+        /// <summary>
+        /// Controllo check_tender.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList check_tender;
         
         /// <summary>
         /// Controllo lbl_Cliente.

@@ -211,18 +211,6 @@
 
                 <div class="w3-row" style="margin-bottom: 5px;">
                     <div class="w3-third">
-                        <asp:Label ID="lbl_tender" runat="server" Text="Unità appoggio" class="label"></asp:Label>
-                    </div>
-                    <div class="w3-twothird">
-                        <div class=" w3-white w3-border w3-round w3-padding w3-hover-shadow" style="height: 80px; width: 95%; position: relative; overflow: auto;">
-                            <asp:CheckBoxList ID="check_tender" AutoPostBack="True" runat="server" Height="50px" OnSelectedIndexChanged="check_tender_SelectedIndexChanged">
-                            </asp:CheckBoxList>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="w3-row" style="margin-bottom: 5px;">
-                    <div class="w3-third">
                         <asp:Label ID="lbl_Tipologia" runat="server" Text="Tipologia" class="label"></asp:Label>
                     </div>
                     <div class="w3-twothird">
@@ -232,6 +220,18 @@
                             <ul id="elencoTipologie" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto">
                                 <input class="form-control" id="filtroTipologie" type="text" placeholder="Cerca..">
                             </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-row" style="margin-bottom: 5px;">
+                    <div class="w3-third">
+                        <asp:Label ID="lbl_tender" runat="server" Text="Unità appoggio" class="label"></asp:Label>
+                    </div>
+                    <div class="w3-twothird">
+                        <div class=" w3-white w3-border w3-round w3-padding w3-hover-shadow" style="height: 80px; width: 95%; position: relative; overflow: auto;">
+                            <asp:CheckBoxList ID="check_tender" AutoPostBack="True" runat="server" Height="50px" OnSelectedIndexChanged="check_tender_SelectedIndexChanged">
+                            </asp:CheckBoxList>
                         </div>
                     </div>
                 </div>

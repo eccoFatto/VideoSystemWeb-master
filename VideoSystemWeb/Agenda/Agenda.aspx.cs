@@ -30,6 +30,7 @@ namespace VideoSystemWeb.Agenda
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
             popupRiepilogoOfferta.RichiediOperazionePopup += OperazioniPopup;
+            popupLavorazione.RichiediOperazionePopup += OperazioniPopup;
 
             popupRiepilogoOfferta.RichiediCodiceLavoro += GetCodiceLavoro;
             popupRiepilogoOfferta.RichiediListaArticoli += GetListaArticoli;
@@ -187,7 +188,38 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnLavorazione_Click(object sender, EventArgs e)
         {
+            Esito esito = new Esito();
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
+            List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli;
+            List<string> listaIdTender = popupAppuntamento.listaIdTender;
+
+            esito = ValidazioneSalvataggio(eventoSelezionato, listaDatiArticoli, listaIdTender);
+            if (esito.codice == Esito.ESITO_OK)
+            {
+                eventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
+                eventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
+                ViewState["eventoSelezionato"] = eventoSelezionato;
+
+                val_Stato.Text = UtilityTipologiche.getElementByID(listaStati, eventoSelezionato.id_stato, ref esito).nome;
+                val_CodiceLavoro.Text = eventoSelezionato.codice_lavoro;
+
+                btnLavorazione.Visible = false;
+
+                UpdatePopup();
+
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "passaALavorazione", "openTabEvento(event,'Lavorazione');", true);
+            }
+            else
+            {
+                ShowWarning(esito.descrizione);
+                popupAppuntamento.PopolaPopup(eventoSelezionato);
+                UpdatePopup();
+            }
+
+
+
+
+
             eventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
             eventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
             ViewState["eventoSelezionato"] = eventoSelezionato;
@@ -638,6 +670,9 @@ namespace VideoSystemWeb.Agenda
 
             popupOfferta.ClearOfferta();
             popupOfferta.PopolaOfferta(eventoSelezionato.id);
+
+            popupLavorazione.ClearLavorazione();
+            popupLavorazione.PopolaLavorazione(eventoSelezionato.id);
         }
 
         private void ChiudiPopup()
@@ -691,8 +726,6 @@ namespace VideoSystemWeb.Agenda
 
             if (esito.codice == Esito.ESITO_OK)
             {
-                
-
                 if (eventoSelezionato.id == 0)
                 {
                     Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
@@ -874,7 +907,7 @@ namespace VideoSystemWeb.Agenda
                     tender = tender.Substring(0, tender.Length - 2);
                 }
 
-                string contenuto = "<p style='text-align:center;font-weight:bold; background-color:white'>Anteprima appuntamento</p><p style='text-align:left;font-weight:normal;background-color:white'><b>Tipo impegno:</b> " + stato + "<br/><b>Cliente:</b> " + cliente + "<br/><b>Lavorazione:</b> " + lavorazione + "<br/><b>Produzione:</b> " + produzione + "<br/><b>Tipologia:</b> " + tipologia + "<br/><b>Data inizio:</b> " + dataInizio + "&nbsp;&nbsp;<b>Data fine:</b> " + datatFine + "<br/><b>Luogo:</b> " + luogo + "<br/><b>Tender:</b> " + tender + "</p>";
+                string contenuto = "<p style='text-align:center;font-weight:bold; background-color:white;color:black;'>Anteprima appuntamento</p><p style='text-align:left;font-weight:normal;background-color:white;color:black;'><b>Tipo impegno:</b> " + stato + "<br/><b>Cliente:</b> " + cliente + "<br/><b>Lavorazione:</b> " + lavorazione + "<br/><b>Produzione:</b> " + produzione + "<br/><b>Tipologia:</b> " + tipologia + "<br/><b>Data inizio:</b> " + dataInizio + "&nbsp;&nbsp;<b>Data fine:</b> " + datatFine + "<br/><b>Luogo:</b> " + luogo + "<br/><b>Tender:</b> " + tender + "</p>";
                 LiteralControl anteprima = new LiteralControl(contenuto);
 
                 innerPanel.Controls.Add(anteprima);

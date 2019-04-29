@@ -25,10 +25,10 @@
 .containerPopup {
     background-color: #EEF1F7;
     border: solid 3px #5377A9;
-    width: 47%;
+    width: 98%;
     position: fixed;
     top: 1%;
-    left: 50%;
+    right: 1%;
     bottom:1%
 }
 

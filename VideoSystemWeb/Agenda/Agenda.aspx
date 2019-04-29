@@ -97,6 +97,12 @@
 
         function openTabEvento(evt, tipoName) {
 
+            var velocita = 0;
+            if ($("#<%=hf_tabSelezionata.ClientID%>").val() != tipoName) {
+                velocita = 300;
+            }
+
+
             $("#<%=hf_tabSelezionata.ClientID%>").val(tipoName);
 
             var i, x, tablinks;
@@ -123,17 +129,34 @@
                 else {
                     $("#<%=btnElimina.ClientID%>").removeClass("w3-disabled");
                 }
+
+
+                $("#<%=innerContainer.ClientID%>").animate({
+                    width: "47%"
+                }, velocita);
+
+
             } else if (tipoName == 'Offerta') {
                 nomeElemento = '<%=tab_Offerta.ClientID%>';
                 $("#<%=btnElimina.ClientID%>").removeClass("w3-disabled");
+
+                $("#<%=innerContainer.ClientID%>").animate({
+                    width: "47%"
+                }, velocita);
+
             } else if (tipoName == 'Lavorazione') {
                 nomeElemento = '<%=tab_Lavorazione.ClientID%>';
+
+                $("#<%=innerContainer.ClientID%>").animate({
+                    width: "98%"
+                }, velocita);
+
+
+
             }
             if (document.getElementById(nomeElemento).className.indexOf("w3-red") == -1)
                 document.getElementById(nomeElemento).className += " w3-red";
         }
-
-
 
         function confermaChiusura() {
             return confirm("Le modifiche non salvate verranno perse. Confermare la chiusura?");
@@ -190,7 +213,7 @@
                 <div class="modalBackground"></div>
                 <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopup round" Style="font-size: 13px;">
 
-                    <div class="w3-container" style="width: 100%; height: 95%; position: absolute">
+                    <div style="width: 100%; height: 95%; position: absolute">
                         <div class="w3-bar w3-blue w3-round">
                             <div class="w3-row">
                                 <div class="w3-col" style="width: 60%">
@@ -228,7 +251,7 @@
                         </div>
                     </div>
 
-                    <div style="position: absolute; width: 100%; bottom: 5px; text-align: center; height: 7%">
+                    <div style="position: absolute; width: 100%; bottom: 0px; text-align: center; height: 7%">
                         <asp:Button ID="btnRiepilogo" runat="server" Text="Visualizza riepilogo" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); $('.loader').show();" Style="padding: 7px 10px" />
@@ -240,16 +263,7 @@
 
                 </asp:Panel>
             </div>
-
-
-
-            
         </ContentTemplate>
-
-
-
-
-
 
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="btnEditEvent" EventName="Click" />

@@ -117,6 +117,10 @@ namespace VideoSystemWeb.BLL
             {
                 esito = Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli, listaIdTender, noteOfferta);
             }
+            else if (evento.id_stato == Stato.Instance.STATO_LAVORAZIONE)
+            {
+                esito = Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli, listaIdTender, noteOfferta);
+            }
             else if (evento.id_stato == Stato.Instance.STATO_RIPOSO)
             {
                 esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender, noteOfferta);
@@ -135,6 +139,10 @@ namespace VideoSystemWeb.BLL
                 esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
             }
             else if (evento.id_stato == Stato.Instance.STATO_OFFERTA)
+            {
+                esito = Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
+            }
+            else if (evento.id_stato == Stato.Instance.STATO_LAVORAZIONE)
             {
                 esito = Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
             }

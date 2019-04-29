@@ -7,162 +7,144 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.Agenda {
+namespace VideoSystemWeb {
     
     
-    public partial class GestioneColonneAgenda {
+    public partial class testMail {
         
         /// <summary>
-        /// Controllo lblColonneAgenda.
+        /// Controllo form1.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblColonneAgenda;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Controllo UpdatePanelRicerca.
+        /// Controllo ScriptManager1.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
+        protected global::AjaxControlToolkit.ToolkitScriptManager ScriptManager1;
         
         /// <summary>
-        /// Controllo panelErrore.
+        /// Controllo Label1.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelErrore;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// Controllo lbl_MessaggioErrore.
+        /// Controllo tbClient.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_MessaggioErrore;
+        protected global::System.Web.UI.WebControls.TextBox tbClient;
         
         /// <summary>
-        /// Controllo lbMod_Tipologia.
+        /// Controllo tbMailFrom.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList lbMod_Tipologia;
+        protected global::System.Web.UI.WebControls.TextBox tbMailFrom;
         
         /// <summary>
-        /// Controllo btnSeleziona.
+        /// Controllo tbMailTo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSeleziona;
+        protected global::System.Web.UI.WebControls.TextBox tbMailTo;
         
         /// <summary>
-        /// Controllo tbInsNomeTipologia.
+        /// Controllo tbUser.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsNomeTipologia;
+        protected global::System.Web.UI.WebControls.TextBox tbUser;
         
         /// <summary>
-        /// Controllo tbInsDescrizioneTipologia.
+        /// Controllo tbPassword.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsDescrizioneTipologia;
+        protected global::System.Web.UI.WebControls.TextBox tbPassword;
         
         /// <summary>
-        /// Controllo cmbInsSottotipoTipologia.
+        /// Controllo tbPorta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbInsSottotipoTipologia;
+        protected global::System.Web.UI.WebControls.TextBox tbPorta;
         
         /// <summary>
-        /// Controllo cmbInsParametriTipologia.
+        /// Controllo tbPorta_MaskedEditExtender.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbInsParametriTipologia;
+        protected global::AjaxControlToolkit.MaskedEditExtender tbPorta_MaskedEditExtender;
         
         /// <summary>
-        /// Controllo tbIdTipologiaDaModificare.
+        /// Controllo ddlSSL.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbIdTipologiaDaModificare;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSSL;
         
         /// <summary>
-        /// Controllo tbInsOrdinamento.
+        /// Controllo tbSubject.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbInsOrdinamento;
+        protected global::System.Web.UI.WebControls.TextBox tbSubject;
         
         /// <summary>
-        /// Controllo tbInsOrdinamento_MaskedEditExtender.
+        /// Controllo tbBody.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::AjaxControlToolkit.MaskedEditExtender tbInsOrdinamento_MaskedEditExtender;
+        protected global::System.Web.UI.WebControls.TextBox tbBody;
         
         /// <summary>
-        /// Controllo btnInserisciTipologia.
+        /// Controllo btnSendMail.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnInserisciTipologia;
+        protected global::System.Web.UI.WebControls.Button btnSendMail;
         
         /// <summary>
-        /// Controllo btnModificaTipologia.
+        /// Controllo lblInfo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificaTipologia;
-        
-        /// <summary>
-        /// Controllo btnEliminaTipologia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEliminaTipologia;
-        
-        /// <summary>
-        /// Controllo btnAnnullaTipologia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAnnullaTipologia;
+        protected global::System.Web.UI.WebControls.Label lblInfo;
     }
 }

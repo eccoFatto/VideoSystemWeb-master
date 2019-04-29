@@ -12,7 +12,10 @@ namespace VideoSystemWeb.Agenda
     {
         BasePage basePage = new BasePage();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            CheckIsMobile();
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -26,9 +29,9 @@ namespace VideoSystemWeb.Agenda
         }
         private void caricaTipologia()
         {
-            List<Tipologica> lista;
+            List<ColonneAgenda> lista;
             Esito esito = new Esito();
-            lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA, true, ref esito);
+            lista = UtilityTipologiche.CaricaColonneAgenda(true, ref esito);
 
 
             BasePage p = new BasePage();
@@ -37,7 +40,7 @@ namespace VideoSystemWeb.Agenda
             if (string.IsNullOrEmpty(esito.descrizione))
             {
                 lbMod_Tipologia.Items.Clear();
-                foreach (Tipologica tipologia in lista)
+                foreach (ColonneAgenda tipologia in lista)
                 {
                     ListItem item = new ListItem();
                     item.Text = tipologia.nome;
@@ -78,7 +81,7 @@ namespace VideoSystemWeb.Agenda
         {
             // INSERISCO TIPOLOGIA
             Esito esito = new Esito();
-            Tipologica tipologia = new Tipologica();
+            ColonneAgenda tipologia = new ColonneAgenda();
 
             tipologia.nome = tbInsNomeTipologia.Text.Trim();
             tipologia.descrizione = tbInsDescrizioneTipologia.Text.Trim();
@@ -88,7 +91,7 @@ namespace VideoSystemWeb.Agenda
 
             tipologia.parametri = cmbInsParametriTipologia.SelectedValue;
             tipologia.sottotipo = cmbInsSottotipoTipologia.SelectedValue;
-
+            tipologia.Ordinamento = Convert.ToInt16(tbInsOrdinamento.Text);
             tipologia.attivo = true;
 
             if (esito.codice != Esito.ESITO_OK)
@@ -100,7 +103,7 @@ namespace VideoSystemWeb.Agenda
             {
                 NascondiErroriValidazione();
 
-                int iRet = UtilityTipologiche.CreaTipologia(EnumTipologiche.TIPO_COLONNE_AGENDA, tipologia, ref esito);
+                int iRet = UtilityTipologiche.CreaColonneAgenda(tipologia, ref esito);
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     panelErrore.Style.Add("display", "block");
@@ -151,6 +154,7 @@ namespace VideoSystemWeb.Agenda
 
                         cmbInsParametriTipologia.SelectedIndex = 0;
                         cmbInsSottotipoTipologia.SelectedIndex = 0;
+                        tbInsOrdinamento.Text = "0";
 
                         btnModificaTipologia.Visible =false;
                         btnInserisciTipologia.Visible = true;
@@ -163,7 +167,7 @@ namespace VideoSystemWeb.Agenda
                 }
                 catch (Exception ex)
                 {
-                    log.Error("btnEliminaDocumento_Click", ex);
+                    log.Error("btnEliminaTipologia_Click", ex);
                     panelErrore.Style.Add("display", "block");
                     lbl_MessaggioErrore.Text = ex.Message;
                 }
@@ -199,7 +203,7 @@ namespace VideoSystemWeb.Agenda
 
                     string tipologiaSelezionata = lbMod_Tipologia.SelectedValue;
                     Esito esito = new Esito();
-                    Tipologica tipologica = UtilityTipologiche.getTipologicaById(EnumTipologiche.TIPO_COLONNE_AGENDA, Convert.ToInt32(tipologiaSelezionata), ref esito);
+                    ColonneAgenda tipologica = UtilityTipologiche.getColonneAgendaById(Convert.ToInt32(tipologiaSelezionata), ref esito);
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
@@ -214,7 +218,7 @@ namespace VideoSystemWeb.Agenda
                         btnEliminaTipologia.Visible = true;
                         tbInsDescrizioneTipologia.Text = tipologica.descrizione;
                         tbInsNomeTipologia.Text = tipologica.nome;
-
+                        tbInsOrdinamento.Text = tipologica.Ordinamento.ToString();
                         if (!string.IsNullOrEmpty(tipologica.parametri))
                         {
                             ListItem itemTrovato = cmbInsParametriTipologia.Items.FindByValue(tipologica.parametri);
@@ -277,17 +281,17 @@ namespace VideoSystemWeb.Agenda
                     NascondiErroriValidazione();
 
                     Esito esito = new Esito();
-                    Tipologica nuovaTipologia = new Tipologica();
+                    ColonneAgenda nuovaTipologia = new ColonneAgenda();
                     nuovaTipologia.id = Convert.ToInt32(tbIdTipologiaDaModificare.Text);
                     nuovaTipologia.nome = tbInsNomeTipologia.Text.Trim();
                     nuovaTipologia.descrizione = tbInsDescrizioneTipologia.Text.Trim();
 
                     nuovaTipologia.parametri = cmbInsParametriTipologia.SelectedValue;
                     nuovaTipologia.sottotipo = cmbInsSottotipoTipologia.SelectedValue;
-
+                    nuovaTipologia.Ordinamento = Convert.ToInt32(tbInsOrdinamento.Text);
 
                     nuovaTipologia.attivo = true;
-                    esito = UtilityTipologiche.AggiornaTipologia(EnumTipologiche.TIPO_COLONNE_AGENDA, nuovaTipologia);
+                    esito = UtilityTipologiche.AggiornaColonneAgenda(nuovaTipologia);
 
                     btnModificaTipologia.Visible = false;
                     btnInserisciTipologia.Visible = true;
@@ -335,6 +339,7 @@ namespace VideoSystemWeb.Agenda
 
             cmbInsParametriTipologia.SelectedIndex = 0;
             cmbInsSottotipoTipologia.SelectedIndex = 0;
+            tbInsOrdinamento.Text = "0";
 
             tbIdTipologiaDaModificare.Text = "";
 

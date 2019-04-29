@@ -28,6 +28,7 @@ namespace VideoSystemWeb.Protocollo
 
             if (!Page.IsPostBack)
             {
+
                 Session["NOME_FILE"] = "";
                 //BasePage p = new BasePage();
                 Esito esito = basePage.CaricaListeTipologiche();
@@ -480,7 +481,7 @@ namespace VideoSystemWeb.Protocollo
 
             if (string.IsNullOrEmpty((string)ViewState["idProtocollo"]))
             {
-                ViewState["idProtocollo"] = 0;
+                ViewState["idProtocollo"] = "0";
             }
 
             protocollo.Id = Convert.ToInt16(ViewState["idProtocollo"].ToString());

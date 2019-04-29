@@ -133,6 +133,60 @@ namespace VideoSystemWeb.DAL
             return listaTipologiche;
         }
 
+        public static List<ColonneAgenda> CaricaColonneAgenda(bool soloElemAttivi, ref Esito esito)
+        {
+            List<ColonneAgenda> listaColonneAgenda = new List<ColonneAgenda>();
+            string soloAttivi = soloElemAttivi ? " WHERE attivo = 1 " : "";
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM tipo_colonne_agenda " + soloAttivi + " ORDER BY sottotipo,ordinamento,nome"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        ColonneAgenda tipologicaCorrente = new ColonneAgenda();
+                                        tipologicaCorrente.id = int.Parse(riga["id"].ToString());
+                                        tipologicaCorrente.nome = riga["nome"].ToString();
+                                        tipologicaCorrente.descrizione = riga["descrizione"].ToString();
+                                        tipologicaCorrente.sottotipo = riga["sottotipo"].ToString();
+                                        tipologicaCorrente.Ordinamento = (Int32)riga["ordinamento"];
+                                        tipologicaCorrente.parametri = riga["parametri"].ToString();
+                                        tipologicaCorrente.attivo = bool.Parse(riga["attivo"].ToString());
+
+                                        listaColonneAgenda.Add(tipologicaCorrente);
+                                    }
+                                }
+                                else
+                                {
+                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.descrizione = "Nessun dato trovato nella ricerca della tipologica tipo_colonne_agenda";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = "Base_DAL.cs - CaricaColonneAgenda " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return listaColonneAgenda;
+        }
+
         public static Tipologica getTipologicaById(EnumTipologiche tipoTipologica,int idTipologica, ref Esito esito)
         {
             Tipologica tipologica = new Tipologica();
@@ -181,6 +235,54 @@ namespace VideoSystemWeb.DAL
             return tipologica;
         }
 
+        public static ColonneAgenda getColonneAgendaById(int idColonnaAgenda, ref Esito esito)
+        {
+            ColonneAgenda tipologica = new ColonneAgenda();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM tipo_colonne_agenda where id =" + idColonnaAgenda.ToString()))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count == 1)
+                                {
+                                    tipologica.id = int.Parse(dt.Rows[0]["id"].ToString());
+                                    tipologica.nome = dt.Rows[0]["nome"].ToString();
+                                    tipologica.descrizione = dt.Rows[0]["descrizione"].ToString();
+                                    tipologica.sottotipo = dt.Rows[0]["sottotipo"].ToString();
+                                    tipologica.Ordinamento = (Int32)dt.Rows[0]["ordinamento"];
+                                    tipologica.parametri = dt.Rows[0]["parametri"].ToString();
+                                    tipologica.attivo = bool.Parse(dt.Rows[0]["attivo"].ToString());
+
+                                }
+                                else
+                                {
+                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.descrizione = "Nessun dato trovato nella ricerca della tipologica tipo_colonne_agenda";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = "Base_DAL.cs - getColonneAgendaById " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return tipologica;
+        }
+
         public static int CreaTipologia(EnumTipologiche tipoTipologica, Tipologica tipologica, ref Esito esito)
         {
             string nomeSP = "";
@@ -202,6 +304,18 @@ namespace VideoSystemWeb.DAL
                     break;
                 case EnumTipologiche.TIPO_TENDER:
                     nomeSP = "InsertTipoTender";
+                    break;
+                case EnumTipologiche.TIPO_QUALIFICHE:
+                    nomeSP = "InsertTipoQualifiche";
+                    break;
+                case EnumTipologiche.TIPO_CLIENTI_FORNITORI:
+                    nomeSP = "InsertTipoClientiFornitori";
+                    break;
+                case EnumTipologiche.TIPO_PROTOCOLLO:
+                    nomeSP = "InsertTipoProtocollo";
+                    break;
+                case EnumTipologiche.TIPO_TIPOLOGIE:
+                    nomeSP = "InsertTipoTipologie";
                     break;
 
                 default:
@@ -281,6 +395,83 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
+        public static int CreaColonneAgenda(ColonneAgenda colonnaAgenda, ref Esito esito)
+        {
+            string nomeSP = "InsertTipoColonneAgenda";
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand(nomeSP))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            SqlParameter nome = new SqlParameter("@nome", colonnaAgenda.nome);
+                            nome.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nome);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", colonnaAgenda.descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter sottotipo = new SqlParameter("@sottotipo", colonnaAgenda.sottotipo);
+                            sottotipo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(sottotipo);
+
+                            SqlParameter ordinamento = new SqlParameter("@ordinamento", colonnaAgenda.Ordinamento);
+                            ordinamento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(ordinamento);
+
+                            SqlParameter parametri = new SqlParameter("@parametri", colonnaAgenda.parametri);
+                            parametri.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(parametri);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", colonnaAgenda.attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            StoreProc.Connection.Open();
+
+                            StoreProc.ExecuteNonQuery();
+
+                            int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+
+                            return iReturn;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Base_DAL.cs - CreaColonneAgenda " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+
+            return 0;
+        }
+
         public static Esito AggiornaTipologia(EnumTipologiche tipoTipologica, Tipologica tipologica)
         {
             string nomeSP = "";
@@ -303,6 +494,19 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_TENDER:
                     nomeSP = "UpdateTipoTender";
                     break;
+                case EnumTipologiche.TIPO_QUALIFICHE:
+                    nomeSP = "UpdateTipoQualifiche";
+                    break;
+                case EnumTipologiche.TIPO_CLIENTI_FORNITORI:
+                    nomeSP = "UpdateTipoClientiFornitori";
+                    break;
+                case EnumTipologiche.TIPO_PROTOCOLLO:
+                    nomeSP = "UpdateTipoProtocollo";
+                    break;
+                case EnumTipologiche.TIPO_TIPOLOGIE:
+                    nomeSP = "UpdateTipoTipologie";
+                    break;
+
                 default:
                     break;
             }
@@ -380,6 +584,80 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
+        public static Esito AggiornaColonneAgenda(ColonneAgenda colonnaAgenda)
+        {
+            string nomeSP = "UpdateTipoColonneAgenda";
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            Esito esito = new Esito();
+            try
+            {
+                using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
+                {
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand(nomeSP))
+                    {
+                        using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", colonnaAgenda.id);
+                            id.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            SqlParameter nome = new SqlParameter("@nome", colonnaAgenda.nome);
+                            nome.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nome);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", colonnaAgenda.descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter sottotipo = new SqlParameter("@sottotipo", colonnaAgenda.sottotipo);
+                            sottotipo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(sottotipo);
+
+                            SqlParameter ordinamento = new SqlParameter("@ordinamento", colonnaAgenda.Ordinamento);
+                            ordinamento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(ordinamento);
+
+                            SqlParameter parametri = new SqlParameter("@parametri", colonnaAgenda.parametri);
+                            parametri.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(parametri);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", colonnaAgenda.attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Base_DAL.cs - AggiornaColonneAgenda " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+            return esito;
+        }
+
         public static Esito EliminaTipologia(EnumTipologiche tipoTipologica, int idTipologica)
         {
             string nomeSP = "";
@@ -402,6 +680,19 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_TENDER:
                     nomeSP = "DeleteTipoTender";
                     break;
+                case EnumTipologiche.TIPO_QUALIFICHE:
+                    nomeSP = "DeleteTipoQualifiche";
+                    break;
+                case EnumTipologiche.TIPO_CLIENTI_FORNITORI:
+                    nomeSP = "DeleteTipoClientiFornitori";
+                    break;
+                case EnumTipologiche.TIPO_PROTOCOLLO:
+                    nomeSP = "DeleteTipoProtocollo";
+                    break;
+                case EnumTipologiche.TIPO_TIPOLOGIE:
+                    nomeSP = "DeleteTipoTipologie";
+                    break;
+
 
                 default:
                     break;

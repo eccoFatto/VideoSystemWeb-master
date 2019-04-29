@@ -5,6 +5,7 @@ using System.Web;
 using VideoSystemWeb.DAL;
 using VideoSystemWeb.Entity;
 using System.Configuration;
+using System.Data;
 namespace VideoSystemWeb.BLL
 {
     public class Config_BLL
@@ -62,6 +63,52 @@ namespace VideoSystemWeb.BLL
             Esito esito = Config_DAL.Instance.EliminaConfig(chiave);
 
             return esito;
+        }
+
+        public List<DatiBancari> getListaDatiBancari(ref Esito esito)
+        {
+            List<DatiBancari> listaDatiBancari = new List<DatiBancari>();
+            string query = "select * from tab_config"+
+            " where chiave like 'BANCA%' AND valore <> '' AND valore is not null"+
+            " order by ordinamento";
+            DataTable dtBanche = Base_DAL.getDatiBySql(query, ref esito);
+            if (esito.codice==0 && dtBanche!=null && dtBanche.Rows!=null && dtBanche.Rows.Count > 0)
+            {
+                foreach (DataRow rigaBanca in dtBanche.Rows)
+                {
+                    DatiBancari datiBancari = new DatiBancari();
+                    datiBancari.Banca = rigaBanca["valore"].ToString();
+                    Config cfg = getConfig(ref esito, "Iban" + rigaBanca["chiave"].ToString().Substring(rigaBanca["chiave"].ToString().Length-2));
+                    if (esito.codice == 0)
+                    {
+                        datiBancari.Iban = cfg.valore;
+                        listaDatiBancari.Add(datiBancari);
+                    }
+                }
+            }
+            return listaDatiBancari;
+        }
+
+        public List<GiorniPagamentoFatture> getListaGiorniPagamentoFatture(ref Esito esito)
+        {
+            List<GiorniPagamentoFatture> listaGiorniPagamentoFatture = new List<GiorniPagamentoFatture>();
+
+            Config cfg = getConfig(ref esito, "GIORNI_PAGAMENTO");
+
+            if (esito.codice == 0) { 
+                string sGiorniEsito = cfg.valore;
+                char[] separator = { '-' };
+                string[] arGiorniEsito = sGiorniEsito.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < arGiorniEsito.Length; i++)
+                {
+                    GiorniPagamentoFatture gpf = new GiorniPagamentoFatture();
+                    gpf.Giorni = arGiorniEsito[i];
+                    gpf.Descrizione = gpf.Giorni + " Giorni";
+                    listaGiorniPagamentoFatture.Add(gpf);
+                }
+            }
+
+            return listaGiorniPagamentoFatture;
         }
 
     }

@@ -128,6 +128,12 @@ namespace VideoSystemWeb.BLL
             return lista;
         }
 
+        public static List<ColonneAgenda> CaricaColonneAgenda(bool soloElemAttivi, ref Esito esito)
+        {
+            List<ColonneAgenda> lista = Base_DAL.CaricaColonneAgenda(soloElemAttivi, ref esito);
+            return lista;
+        }
+
         public static Tipologica getTipologicaById(EnumTipologiche eTipo, int idTipologica, ref Esito esito)
         {
             Tipologica tipologica = Base_DAL.getTipologicaById(eTipo, idTipologica, ref esito);
@@ -151,7 +157,26 @@ namespace VideoSystemWeb.BLL
             Esito esito = Base_DAL.EliminaTipologia(tipoTipologica, idTipologica);
             return esito;
         }
- }
+
+
+        public static ColonneAgenda getColonneAgendaById(int idColonnaAgenda, ref Esito esito)
+        {
+            ColonneAgenda colonnaAgenda = Base_DAL.getColonneAgendaById(idColonnaAgenda, ref esito);
+            return colonnaAgenda;
+        }
+        public static int CreaColonneAgenda(ColonneAgenda colonnaAgenda, ref Esito esito)
+        {
+            int iRet = Base_DAL.CreaColonneAgenda(colonnaAgenda, ref esito);
+            return iRet;
+        }
+
+        public static Esito AggiornaColonneAgenda(ColonneAgenda colonnaAgenda)
+        {
+            Esito esito = Base_DAL.AggiornaColonneAgenda(colonnaAgenda);
+            return esito;
+        }
+
+    }
 
 
 

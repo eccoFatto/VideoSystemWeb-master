@@ -36,9 +36,10 @@ namespace VideoSystemWeb.DAL
             }
         }
 
-        public List<Tipologica> CaricaColonne(ref Esito esito)
+        public List<ColonneAgenda> CaricaColonne(ref Esito esito)
         {
-            return CaricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA, true, ref esito);
+            //return CaricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA, true, ref esito);
+            return CaricaColonneAgenda(true, ref esito);
         }
 
         public List<DatiAgenda> CaricaDatiAgenda(ref Esito esito)

@@ -116,40 +116,59 @@
                         <div class="w3-panel w3-yellow w3-border w3-round">
                             GESTIONALE VIDEOSYSTEM  &nbsp;&nbsp;
                             <asp:Label ID="lbl_benvenuto" runat="server"></asp:Label>&nbsp;&nbsp;  Ver.<a href="/DOCUMENTI/HELP/HELP VIDEOSYSTEM.docx"><asp:Label ID="lblVersione" runat="server" ForeColor="Blue"></asp:Label>&nbsp; del
-                            <asp:Label ID="lblDataVersione" runat="server" ForeColor="Blue"></asp:Label></a><a href="/Utente/GestionePassword.aspx" class="w3-bar-item w3-right">Gestione Password</a>
+                            <asp:Label ID="lblDataVersione" runat="server" ForeColor="Blue"></asp:Label></a>
+                            
+                            <div class="w3-dropdown-hover w3-right">
+                                <button class="w3-button w3-yellow" onclick="return false;">Gestione Utenze</button>
+                                <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
+                                    <a href="/Utente/GestionePassword.aspx" class="w3-bar-item">Password</a>
+                                    <a href="/Utente/GestioneUtenti.aspx" class="w3-bar-item">Utenti</a>
+                                </div>
+                            </div>
+                            
                         </div>
                     </td>
                 </tr>
             </table>
             <div class="w3-bar w3-yellow w3-round w3-margin-bottom">
                 <a href="/Agenda/Agenda.aspx" class="w3-bar-item w3-button">Agenda</a>
-                <a class="w3-bar-item w3-button w3-disabled">Report</a>
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-yellow" onclick="return false;">Anagrafiche</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                         <a href="/Anagrafiche/AnagCollaboratori.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Collaboratori</a>
                         <a href="/Anagrafiche/AnagClientiFornitori.aspx?TIPO=CLIENTI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Clienti</a>
                         <a href="/Anagrafiche/AnagClientiFornitori.aspx?TIPO=FORNITORI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Fornitori</a>
+                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=QUALIFICHE" class="w3-bar-item w3-button " onclick="$('.loader').show();">Qualifiche Personale</a>
+                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=CLIENTI/FORNITORI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologie Clienti/Fornitori</a>
                     </div>
                 </div>
-
                 <div class="w3-dropdown-hover">
-                    <button class="w3-button w3-yellow" onclick="return false;">Tabelle</button>
+                    <button class="w3-button w3-yellow" onclick="return false;">Gest.Articoli</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=ARTICOLI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Articoli</a>
                         <a href="/Articoli/GestioneRaggruppamentiArticoli.aspx" class="w3-bar-item w3-button">Articoli Composti</a>
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=GENERI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Generi</a>
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=GRUPPI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Gruppi</a>
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=SOTTOGRUPPI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Sottogruppi</a>
-                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=TENDER" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tender</a>
-                        <%--                  <a class="w3-bar-item w3-button w3-disabled">Generi</a>
-                  <a class="w3-bar-item w3-button w3-disabled">Gruppi</a>
-                  <a class="w3-bar-item w3-button w3-disabled">Sottogruppi</a>--%>
-                        <a href="/Agenda/GestioneColonneAgenda.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Colonne Agenda</a>
-                        
                     </div>
                 </div>
-                <a href="/Protocollo/Protocollo.aspx" class="w3-bar-item w3-button">Protocolli</a>
+                <div class="w3-dropdown-hover">
+                    <button class="w3-button w3-yellow" onclick="return false;">Gest. Protocolli</button>
+                    <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
+                        <a href="/Protocollo/Protocollo.aspx" class="w3-bar-item w3-button">Protocolli</a>
+                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=PROTOCOLLI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipi Protocollo</a>
+                    </div>
+                </div>
+                <div class="w3-dropdown-hover">
+                    <button class="w3-button w3-yellow" onclick="return false;">Tabelle</button>
+                    <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
+                        <a href="/CONFIG/gestConfig.aspx" class="w3-bar-item w3-button">Configurazione</a>
+                        <a href="/Agenda/GestioneColonneAgenda.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Colonne Agenda</a>
+                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=LAVORAZIONI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Lavorazioni</a>
+                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=TENDER" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tender</a>
+                    </div>
+                </div>
+                <a class="w3-bar-item w3-button w3-disabled">Report</a>
                 <asp:Button runat="server" ID="btnExit" OnClick="btnExit_Click" class="w3-bar-item w3-button w3-right w3-yellow" Text="Esci" />
                 <%--<a href="/Login.aspx" class="w3-bar-item w3-button w3-right" onclick="exitApplication();">Esci</a>--%>
             </div>

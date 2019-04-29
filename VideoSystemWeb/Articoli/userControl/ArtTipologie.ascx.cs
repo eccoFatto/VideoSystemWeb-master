@@ -71,6 +71,26 @@ namespace VideoSystemWeb.Articoli.userControl
                     lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TENDER, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_TENDER;
                     break;
+                case "QUALIFICHE":
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.Yellow;
+                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_QUALIFICHE, true, ref esito);
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_QUALIFICHE;
+                    break;
+                case "CLIENTI/FORNITORI":
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.OrangeRed;
+                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_CLIENTI_FORNITORI, true, ref esito);
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_CLIENTI_FORNITORI;
+                    break;
+                case "PROTOCOLLI":
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.Orange;
+                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO, true, ref esito);
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_PROTOCOLLO;
+                    break;
+                case "LAVORAZIONI":
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.LightSkyBlue;
+                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, true, ref esito);
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_TIPOLOGIE;
+                    break;
                 default:
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Red;
                     lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);

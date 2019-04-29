@@ -9,12 +9,15 @@ using VideoSystemWeb.Entity;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using System.Text;
+using MailKit;
+using MimeKit;
+using System.Configuration;
 namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "1.22";
-        public static string dataVersione = "14/04/2019";
+        public static string versione = "1.26";
+        public static string dataVersione = "27/04/2019";
 
         public List<Tipologica> listaRisorse
         {
@@ -22,6 +25,17 @@ namespace VideoSystemWeb.BLL
             {
                 List<Tipologica> _listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
                 _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<Tipologica>();
+                return _listaRisorse;
+            }
+        }
+
+        public List<ColonneAgenda> listaRisorseColonneAgenda
+        {
+            get
+            {
+                Esito esito = new Esito();
+                List<ColonneAgenda> _listaRisorse = UtilityTipologiche.CaricaColonneAgenda(true,ref esito);
+                _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<ColonneAgenda>();
                 return _listaRisorse;
             }
         }
@@ -223,6 +237,29 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public static string validaIndirizzoEmail(TextBox t,bool isRequired, ref Esito esito)
+        {
+            if (string.IsNullOrEmpty(t.Text.Trim()) && !isRequired){
+                t.CssClass = t.CssClass.Replace("erroreValidazione", "");
+                return "";
+            }
+            else { 
+                Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
+                Match match = regex.Match(t.Text);
+                if (match.Success)
+                {
+                    t.CssClass = t.CssClass.Replace("erroreValidazione", "");
+                    return t.Text;
+                }
+                else
+                {
+                    t.CssClass += " erroreValidazione";
+                    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.descrizione = "Campo obbligatorio";
+                    return t.Text;
+                }
+            }
+        }
         public bool AbilitazioneInScrittura()
         {
             Esito esito = new Esito();
@@ -314,6 +351,54 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public static Esito SendEmail(List<string> receivers, string subject, string body, List<string> attachments)
+        {
+            Esito esito = new Esito();
+            var message = new MimeMessage();
+
+            message.From.Add(new MailboxAddress(ConfigurationManager.AppSettings["EMAIL_FROM"], ConfigurationManager.AppSettings["EMAIL_FROM"]));
+
+            foreach (string receiver in receivers)
+            {
+                message.To.Add(new MailboxAddress(receiver, receiver));
+            }
+            
+
+            message.Subject = subject;
+
+            var builder = new BodyBuilder();
+
+
+            if (attachments != null) { 
+                foreach (string attachment in attachments)
+                {
+                    builder.Attachments.Add(attachment);
+                }
+            }
+            //builder.TextBody = tbBody.Text.Trim();
+            builder.HtmlBody = body;
+            message.Body = builder.ToMessageBody();
+            //message.HtmlBody = builder.ToMessageBody();
+            //message.HtmlBody = builder.HtmlBody;
+
+            try
+            {
+                var client = new MailKit.Net.Smtp.SmtpClient();
+
+                client.Connect(ConfigurationManager.AppSettings["EMAIL_CLIENT"], Convert.ToInt32(ConfigurationManager.AppSettings["EMAIL_PORT"]), Convert.ToBoolean(ConfigurationManager.AppSettings["EMAIL_SSL"]));
+                client.Authenticate(ConfigurationManager.AppSettings["EMAIL_USER"], ConfigurationManager.AppSettings["EMAIL_PASSWORD"]);
+                client.Send(message);
+                client.Disconnect(true);
+
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
         public void ShowSuccess(string messaggio)
         {
             messaggio = messaggio.Replace("'", "\\'");

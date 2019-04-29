@@ -219,12 +219,12 @@
                             </div>
                             <div class="w3-quarter">
                                 <label>Pagamento</label><br />
-                                <asp:DropDownList ID="cmbMod_Pagamento" runat="server" class="w3-input w3-border" disabled>
-                                    <asp:ListItem Value=""></asp:ListItem>
+                                <asp:DropDownList ID="cmbMod_Pagamento" runat="server" class="w3-input w3-border" disabled />
+<%--                                    <asp:ListItem Value=""></asp:ListItem>
                                     <asp:ListItem Value="30">30 Giorni</asp:ListItem>
                                     <asp:ListItem Value="60">60 Giorni</asp:ListItem>
                                     <asp:ListItem Value="90">90 Giorni</asp:ListItem>
-                                </asp:DropDownList>
+                                </asp:DropDownList>--%>
                             </div>
                         </div>
                         <div class="w3-panel w3-blue w3-center w3-round">
@@ -241,8 +241,9 @@
                                     <asp:ListItem Value="Piazza">Piazza</asp:ListItem>
                                     <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
                                     <asp:ListItem Value="Largo">Largo</asp:ListItem>
-                                    <asp:ListItem Value ="Vicolo">Vicolo</asp:ListItem>
-                                    <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
+                                    <asp:ListItem Value="Vicolo">Vicolo</asp:ListItem>
+                                    <asp:ListItem Value="Circ.ne">Circ.ne</asp:ListItem>
+                                    <asp:ListItem Value="Altro">Altro</asp:ListItem>                                            
                                 </asp:DropDownList>
                             </div>
                             <div class="w3-quarter">
@@ -288,6 +289,7 @@
                                     <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
                                     <asp:ListItem Value="Largo">Largo</asp:ListItem>
                                     <asp:ListItem Value ="Vicolo">Vicolo</asp:ListItem>
+                                    <asp:ListItem Value="Circ.ne">Circ.ne</asp:ListItem>
                                     <asp:ListItem Value ="Altro">Altro</asp:ListItem>                                            
                                 </asp:DropDownList>
                             </div>

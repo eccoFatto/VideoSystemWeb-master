@@ -104,52 +104,52 @@ namespace VideoSystemWeb.BLL
             return listaDatiAgenda.Where(x => x.data_inizio_impegno.Date <= data.Date && x.data_fine_impegno.Date >= data.Date && x.id_colonne_agenda == id_risorsa).FirstOrDefault();
         }
 
-        public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender, NoteOfferta noteOfferta)
+        public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender, NoteOfferta noteOfferta, DatiLavorazione datilavorazione)
         {
             Esito esito = new Esito();
+            esito = Agenda_DAL.Instance.CreaEvento(evento, listaDatiArticoli, listaIdTender, noteOfferta, datilavorazione);
 
-
-            if (evento.id_stato == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
-            {
-                esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender, noteOfferta);
-            }
-            else if (evento.id_stato == Stato.Instance.STATO_OFFERTA)
-            {
-                esito = Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli, listaIdTender, noteOfferta);
-            }
-            else if (evento.id_stato == Stato.Instance.STATO_LAVORAZIONE)
-            {
-                esito = Agenda_DAL.Instance.creaEventoConArticoli(evento, listaDatiArticoli, listaIdTender, noteOfferta);
-            }
-            else if (evento.id_stato == Stato.Instance.STATO_RIPOSO)
-            {
-                esito = Agenda_DAL.Instance.CreaEvento(evento, listaIdTender, noteOfferta);
-            }
+            //if (evento.id_stato == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
+            //{
+            //    esito = Agenda_DAL.Instance.CreaEvento(evento, listaDatiArticoli, listaIdTender, noteOfferta);
+            //}
+            //else if (evento.id_stato == Stato.Instance.STATO_OFFERTA)
+            //{
+            //    esito = Agenda_DAL.Instance.CreaEvento(evento, listaDatiArticoli, listaIdTender, noteOfferta);
+            //}
+            //else if (evento.id_stato == Stato.Instance.STATO_LAVORAZIONE)
+            //{
+            //    esito = Agenda_DAL.Instance.CreaEvento(evento, listaDatiArticoli, listaIdTender, noteOfferta);
+            //}
+            //else if (evento.id_stato == Stato.Instance.STATO_RIPOSO)
+            //{
+            //    esito = Agenda_DAL.Instance.CreaEvento(evento, listaDatiArticoli, listaIdTender, noteOfferta);
+            //}
 
             return esito;
         }
 
-        public Esito AggiornaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
+        public Esito AggiornaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender, DatiLavorazione datiLavorazione)
         {
             Esito esito = new Esito();
+            esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaDatiArticoli, listaIdTender, datiLavorazione);
 
-
-            if (evento.id_stato == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
-            {
-                esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
-            }
-            else if (evento.id_stato == Stato.Instance.STATO_OFFERTA)
-            {
-                esito = Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
-            }
-            else if (evento.id_stato == Stato.Instance.STATO_LAVORAZIONE)
-            {
-                esito = Agenda_DAL.Instance.AggiornaEventoConArticoli(evento, listaDatiArticoli, listaIdTender);
-            }
-            else if (evento.id_stato == Stato.Instance.STATO_RIPOSO)
-            {
-                esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaIdTender);
-            }
+            //if (evento.id_stato == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
+            //{
+            //    esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaDatiArticoli, listaIdTender);
+            //}
+            //else if (evento.id_stato == Stato.Instance.STATO_OFFERTA)
+            //{
+            //    esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaDatiArticoli, listaIdTender);
+            //}
+            //else if (evento.id_stato == Stato.Instance.STATO_LAVORAZIONE)
+            //{
+            //    esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaDatiArticoli, listaIdTender);
+            //}
+            //else if (evento.id_stato == Stato.Instance.STATO_RIPOSO)
+            //{
+            //    esito = Agenda_DAL.Instance.AggiornaEvento(evento, listaDatiArticoli, listaIdTender);
+            //}
 
             return esito;
         }

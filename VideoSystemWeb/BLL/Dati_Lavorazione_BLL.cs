@@ -35,6 +35,19 @@ namespace VideoSystemWeb.BLL
             return datiLavorazione;
         }
 
+        public DatiLavorazione getDatiLavorazioneByIdEvento(int idEvento, ref Esito esito)
+        {
+            DatiLavorazione datiLavorazione = Dati_Lavorazione_DAL.Instance.getDatiLavorazioneByIdEvento(idEvento, ref esito);
+
+            if (datiLavorazione != null)
+            {
+                List<DatiArticoliLavorazione> listaDatiLavorazione = Dati_Articoli_Lavorazione_DAL.Instance.getDatiArticoliLavorazioneByIdDatiLavorazione(ref esito, datiLavorazione.Id);
+                datiLavorazione.ListaArticoliLavorazione = listaDatiLavorazione;
+            }
+
+            return datiLavorazione;
+        }
+
         public int CreaDatiLavorazione(DatiLavorazione datiLavorazione, ref Esito esito)
         {
             int iREt = Dati_Lavorazione_DAL.Instance.CreaDatiLavorazione(datiLavorazione, ref esito);

@@ -27,6 +27,12 @@ namespace VideoSystemWeb.BLL
                 return instance;
             }
         }
+
+        public List<Anag_Qualifiche_Collaboratori> getAllQualifiche(ref Esito esito, bool soloAttivi = true)
+        {
+            return Anag_Qualifiche_Collaboratori_DAL.Instance.getAllQualifiche(ref esito, true);
+        }
+
         public int CreaQualificaCollaboratore(Anag_Qualifiche_Collaboratori qualificaCollaboratore, Anag_Utenti utente, ref Esito esito)
         {
             int iREt = Anag_Qualifiche_Collaboratori_DAL.Instance.CreaQualificaCollaboratore(qualificaCollaboratore, utente, ref esito);

@@ -82,6 +82,21 @@ namespace VideoSystemWeb.BLL
             return tipologica;
         }
 
+        // solo per le colonne dell'agenda
+        public static ColonneAgenda getElementByID(List<ColonneAgenda> listaColonne, int id, ref Esito esito)
+        {
+            ColonneAgenda colonna = new ColonneAgenda();
+
+            colonna = listaColonne.Where(x => x.id == id).FirstOrDefault();
+            if (colonna == null)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                esito.descrizione = "Nessuna Colonna Agenda trovata per id = '" + id + "'";
+            }
+
+            return colonna;
+        }
+
         public static Tipologica getElementByNome(List<Tipologica> listaTipologiche, string nome, ref Esito esito)
         {
             Tipologica tipologica = new Tipologica();

@@ -35,6 +35,11 @@ namespace VideoSystemWeb.BLL
             return referenteREt;
         }
 
+        public List<Anag_Referente_Clienti_Fornitori> getReferentiByIdAzienda(ref Esito esito, int idCliente)
+        {
+            return Anag_Referente_Clienti_Fornitori_DAL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
+        }
+
         public int CreaReferente(Anag_Referente_Clienti_Fornitori referente, Anag_Utenti utente, ref Esito esito)
         {
             int iREt = Anag_Referente_Clienti_Fornitori_DAL.Instance.CreaReferente(referente, utente, ref esito);

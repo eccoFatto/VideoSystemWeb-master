@@ -150,9 +150,6 @@
                 $("#<%=innerContainer.ClientID%>").animate({
                     width: "98%"
                 }, velocita);
-
-
-
             }
             if (document.getElementById(nomeElemento).className.indexOf("w3-red") == -1)
                 document.getElementById(nomeElemento).className += " w3-red";

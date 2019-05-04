@@ -29,6 +29,7 @@ namespace VideoSystemWeb.Agenda
 
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
+
             popupRiepilogoOfferta.RichiediOperazionePopup += OperazioniPopup;
             popupLavorazione.RichiediOperazionePopup += OperazioniPopup;
 
@@ -38,7 +39,6 @@ namespace VideoSystemWeb.Agenda
             isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
             Tipologica viaggio  = UtilityTipologiche.getElementByID(listaStati, Stato.Instance.STATO_VIAGGIO, ref esito);
             coloreViaggio = UtilityTipologiche.getParametroDaTipologica(viaggio, "color", ref esito);
-
 
             if (!IsPostBack)
             {
@@ -126,7 +126,8 @@ namespace VideoSystemWeb.Agenda
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriRiepilogo", script: "javascript: document.getElementById('modalRiepilogoOfferta').style.display='block'", addScriptTags: true);
 
-                ShowSuccess("L'evento è stato salvato automaticamente");
+                //temporaneamente eliminato perché è una gran rottura di cazzo
+                //ShowSuccess("L'evento è stato salvato automaticamente");
             }
             else
             {
@@ -181,7 +182,7 @@ namespace VideoSystemWeb.Agenda
             else
             {
                 ShowWarning(esito.descrizione);
-                popupAppuntamento.PopolaPopup(eventoSelezionato);
+                popupAppuntamento.PopolaAppuntamento(eventoSelezionato);
                 UpdatePopup();
             }
         }
@@ -200,6 +201,36 @@ namespace VideoSystemWeb.Agenda
                 eventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
                 ViewState["eventoSelezionato"] = eventoSelezionato;
 
+                // COSTRUISCO LISTA DATI ARTICOLI LAVORAZIONE
+                List<DatiArticoliLavorazione> listaDatiArticoliLavorazione = new List<DatiArticoliLavorazione>();
+                foreach (DatiArticoli datoArticolo in listaDatiArticoli)
+                {
+                    for (int i = 0; i < datoArticolo.Quantita; i++)
+                    {
+                        DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
+                        datoArticoloLavorazione.Id = 0;
+                        datoArticoloLavorazione.IdDatiLavorazione = 0;
+                        datoArticoloLavorazione.IdArtArticoli = datoArticolo.IdArtArticoli;
+                        datoArticoloLavorazione.IdTipoGenere = datoArticolo.IdTipoGenere;
+                        datoArticoloLavorazione.IdTipoGruppo = datoArticolo.IdTipoGruppo;
+                        datoArticoloLavorazione.IdTipoSottogruppo = datoArticolo.IdTipoSottogruppo;
+
+                        datoArticoloLavorazione.IdCollaboratori = null;
+                        datoArticoloLavorazione.IdFornitori = null;
+                        datoArticoloLavorazione.IdTipoPagamento = null;
+
+                        datoArticoloLavorazione.Descrizione = datoArticolo.Descrizione;
+                        datoArticoloLavorazione.DescrizioneLunga = datoArticolo.DescrizioneLunga;
+                        datoArticoloLavorazione.Stampa = datoArticolo.Stampa;
+                        datoArticoloLavorazione.Prezzo = datoArticolo.Prezzo;
+                        datoArticoloLavorazione.Costo = datoArticolo.Costo;
+                        datoArticoloLavorazione.Iva = datoArticolo.Iva;
+
+                        listaDatiArticoliLavorazione.Add(datoArticoloLavorazione);
+                    }
+                }
+                popupLavorazione.CreaNuovaLavorazione(eventoSelezionato, listaDatiArticoliLavorazione);
+
                 val_Stato.Text = UtilityTipologiche.getElementByID(listaStati, eventoSelezionato.id_stato, ref esito).nome;
                 val_CodiceLavoro.Text = eventoSelezionato.codice_lavoro;
 
@@ -212,19 +243,10 @@ namespace VideoSystemWeb.Agenda
             else
             {
                 ShowWarning(esito.descrizione);
-                popupAppuntamento.PopolaPopup(eventoSelezionato);
+                popupAppuntamento.PopolaAppuntamento(eventoSelezionato);
                 UpdatePopup();
             }
-
-
-
-
-
-            eventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
-            eventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
-            ViewState["eventoSelezionato"] = eventoSelezionato;
-
-            UpdatePopup();
+            
         }
 
         protected void btnStampa_Click(object sender, EventArgs e)
@@ -244,58 +266,6 @@ namespace VideoSystemWeb.Agenda
             Response.End();
         }
 
-       
-        #endregion
-
-        #region OPERAZIONI AGENDA
-        private DataTable CreateDataTable(DateTime data)
-        {
-            DataTable table = new DataTable();
-
-            #region intestazione tabella
-            DataColumn column;
-            column = new DataColumn();
-            column.DataType = typeof(string);
-            column.ColumnName = " ";
-
-            table.Columns.Add(column);
-
-            foreach (Tipologica risorsa in listaRisorse)
-            {
-                column = new DataColumn();
-                column.DataType = typeof(string);
-                column.ColumnName = risorsa.id.ToString(); // inserisco id risorsa per poi formattare la cella in RowDataBound 
-                table.Columns.Add(column);
-            }
-            #endregion
-
-            #region dati agenda
-            for (int indiceRiga = 0; indiceRiga < 31; indiceRiga++)
-            {
-                DataRow row = table.NewRow();
-                DateTime dataRiga = data.AddDays(indiceRiga);
-                row[0] = dataRiga.ToString("dd/MM/yyyy");
-
-                int indiceColonna = 1;
-                foreach (Tipologica risorsa in listaRisorse)
-                {
-                    DatiAgenda datiAgendaFiltrati = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(listaDatiAgenda, dataRiga, risorsa.id);
-                    if (datiAgendaFiltrati != null)
-                    {
-                        row[indiceColonna++] = datiAgendaFiltrati.id.ToString(); // inserisco id datoAgenda per poi formattare la cella in RowDataBound 
-                    }
-                    else
-                    {
-                        row[indiceColonna++] = " ";
-                    }
-                }
-                table.Rows.Add(row);
-            }
-            #endregion
-
-            return table;
-        }
-
         protected void gv_scheduler_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             Esito esito = new Esito();
@@ -307,8 +277,8 @@ namespace VideoSystemWeb.Agenda
                 for (int indiceColonna = 1; indiceColonna <= listaRisorse.Count; indiceColonna++)
                 {
                     string idRisorsa = (e.Row.Cells[indiceColonna].Text.Trim());
-                    Tipologica risorsaCorrente = UtilityTipologiche.getElementByID(listaRisorse, int.Parse(idRisorsa), ref esito);
-                   
+                    ColonneAgenda risorsaCorrente = UtilityTipologiche.getElementByID(listaRisorse, int.Parse(idRisorsa), ref esito);
+
                     string colore = UtilityTipologiche.getParametroDaTipologica(risorsaCorrente, "color", ref esito);
 
                     e.Row.Cells[indiceColonna].Attributes.Add("class", risorsaCorrente.sottotipo);
@@ -323,7 +293,7 @@ namespace VideoSystemWeb.Agenda
             {
                 e.Row.Cells[0].Attributes.Add("class", "first");
 
-                if ((int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 0 || (int) DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 6)
+                if ((int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 0 || (int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 6)
                 {
                     e.Row.Cells[0].Attributes.Add("class", "first festivo");
                 }
@@ -331,8 +301,8 @@ namespace VideoSystemWeb.Agenda
                 for (int indiceColonna = 1; indiceColonna <= listaRisorse.Count; indiceColonna++)
                 {
                     string data = e.Row.Cells[0].Text;
-                    Tipologica risorsa = ((Tipologica)listaRisorse.ElementAt(indiceColonna - 1));
-                    int id_risorsa = ((Tipologica)listaRisorse.ElementAt(indiceColonna - 1)).id;
+                    ColonneAgenda risorsa = ((ColonneAgenda)listaRisorse.ElementAt(indiceColonna - 1));
+                    int id_risorsa = risorsa.id;// ((ColonneAgenda)listaRisorse.ElementAt(indiceColonna - 1)).id;
 
                     e.Row.Cells[indiceColonna].Attributes.Add("class", risorsa.sottotipo);
 
@@ -352,11 +322,11 @@ namespace VideoSystemWeb.Agenda
 
                         #region TITOLO EVENTO
                         string tipologia = "";
-                        if (datoAgendaCorrente.id_tipologia != null && datoAgendaCorrente.id_tipologia!= 0)
+                        if (datoAgendaCorrente.id_tipologia != null && datoAgendaCorrente.id_tipologia != 0)
                         {
                             tipologia = UtilityTipologiche.getTipologicaById(EnumTipologiche.TIPO_TIPOLOGIE, (int)datoAgendaCorrente.id_tipologia, ref esito).nome;
                         }
-                        string titoloEvento = datoAgendaCorrente.id_stato == Stato.Instance.STATO_RIPOSO ? "Riposo" : datoAgendaCorrente.produzione.PadRight(10,' ').Substring(0,10) + "<br/>" + tipologia.PadRight(10, ' ').Substring(0, 10);
+                        string titoloEvento = datoAgendaCorrente.id_stato == Stato.Instance.STATO_RIPOSO ? "Riposo" : datoAgendaCorrente.produzione.PadRight(10, ' ').Substring(0, 10) + "<br/>" + tipologia.PadRight(10, ' ').Substring(0, 10);
                         #endregion
 
                         // EVENTO GIORNO SINGOLO
@@ -365,8 +335,8 @@ namespace VideoSystemWeb.Agenda
                             Panel mainPanel = new Panel();
                             mainPanel.Controls.Add(new LiteralControl(titoloEvento));
                             mainPanel.CssClass = "round-corners-6px w3-tooltip";
-                            mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore+";color:" +coloreFont);
-                            
+                            mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
+
                             mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
                             e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
@@ -390,7 +360,7 @@ namespace VideoSystemWeb.Agenda
                                 {
                                     mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
                                 }
-                                
+
                                 mainPanel.CssClass = "round-corners-6px unround-bottom-corners w3-tooltip";
                                 mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
@@ -415,13 +385,13 @@ namespace VideoSystemWeb.Agenda
                                 {
                                     mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
                                 }
-                                
+
                                 mainPanel.CssClass = "round-corners-6px unround-top-corners w3-tooltip";
                                 mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
-                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; vertical-align: top");                                
+                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; vertical-align: top");
                             }
                             else if (!IsPrimoGiorno(datoAgendaCorrente, DateTime.Parse(data)) && !IsUltimoGiorno(datoAgendaCorrente, DateTime.Parse(data)))
                             {
@@ -440,7 +410,7 @@ namespace VideoSystemWeb.Agenda
                                 {
                                     mainPanel.Controls.Add(new LiteralControl("&nbsp;"));
                                 }
-                                
+
                                 mainPanel.CssClass = "w3-tooltip";
                                 mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
@@ -459,19 +429,69 @@ namespace VideoSystemWeb.Agenda
             #endregion
         }
 
-        protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
+        //protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
+        //{
+        //    if (e.Row.RowType == DataControlRowType.DataRow)
+        //    {
+        //        Label lblDescrizione = (Label)e.Row.FindControl("lblDescrizione");
+        //        lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
+
+        //        Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
+        //        totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[3].Text)));
+
+        //        e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
+        //        e.Row.Cells[4].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[4].Text)));
+        //    }
+        //}
+        #endregion
+
+        #region OPERAZIONI AGENDA
+        private DataTable CreateDataTable(DateTime data)
         {
-            if (e.Row.RowType == DataControlRowType.DataRow)
+            DataTable table = new DataTable();
+
+            #region intestazione tabella
+            DataColumn column;
+            column = new DataColumn();
+            column.DataType = typeof(string);
+            column.ColumnName = " ";
+
+            table.Columns.Add(column);
+
+            foreach (ColonneAgenda risorsa in listaRisorse)
             {
-                Label lblDescrizione = (Label)e.Row.FindControl("lblDescrizione");
-                lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
-
-                Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
-                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[3].Text)));
-
-                e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
-                e.Row.Cells[4].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[4].Text)));
+                column = new DataColumn();
+                column.DataType = typeof(string);
+                column.ColumnName = risorsa.id.ToString(); // inserisco id risorsa per poi formattare la cella in RowDataBound 
+                table.Columns.Add(column);
             }
+            #endregion
+
+            #region dati agenda
+            for (int indiceRiga = 0; indiceRiga < 31; indiceRiga++)
+            {
+                DataRow row = table.NewRow();
+                DateTime dataRiga = data.AddDays(indiceRiga);
+                row[0] = dataRiga.ToString("dd/MM/yyyy");
+
+                int indiceColonna = 1;
+                foreach (ColonneAgenda risorsa in listaRisorse)
+                {
+                    DatiAgenda datiAgendaFiltrati = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(listaDatiAgenda, dataRiga, risorsa.id);
+                    if (datiAgendaFiltrati != null)
+                    {
+                        row[indiceColonna++] = datiAgendaFiltrati.id.ToString(); // inserisco id datoAgenda per poi formattare la cella in RowDataBound 
+                    }
+                    else
+                    {
+                        row[indiceColonna++] = " ";
+                    }
+                }
+                table.Rows.Add(row);
+            }
+            #endregion
+
+            return table;
         }
 
         private void AggiornaAgenda()
@@ -490,41 +510,78 @@ namespace VideoSystemWeb.Agenda
             ScriptManager.RegisterStartupScript(this, typeof(Page), "passaggioMouse", "registraPassaggioMouse();", true);
         }
 
-        private bool IsDisponibileDataRisorsa(DatiAgenda eventoDaControllare)
+        private string CreaLegenda()
         {
-            listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"];
-            DatiAgenda eventoEsistente = listaDatiAgenda.FirstOrDefault(x => x.id != eventoDaControllare.id &&
-                                                         x.id_colonne_agenda == eventoDaControllare.id_colonne_agenda &&
-                                                        ((x.data_inizio_impegno <= eventoDaControllare.data_inizio_impegno && x.data_fine_impegno >= eventoDaControllare.data_inizio_impegno) ||
-                                                        (x.data_inizio_impegno <= eventoDaControllare.data_fine_impegno && x.data_fine_impegno >= eventoDaControllare.data_fine_impegno) ||
-                                                        (x.data_inizio_impegno >= eventoDaControllare.data_inizio_impegno && x.data_fine_impegno <= eventoDaControllare.data_fine_impegno)
-                                                        ));
+            Esito esito = new Esito();
 
-            return eventoEsistente == null;
+            string legenda = "<ul style='list-style-type: none;padding-left:0px;'>";
+
+            foreach (Tipologica stato in listaStati)
+            {
+                string colore = UtilityTipologiche.getParametroDaTipologica(stato, "COLOR", ref esito);
+
+                legenda += "<li><div class='boxLegenda' style='background:" + colore + "'/>&nbsp;</div>&nbsp;- " + stato.nome + "</li>";
+            }
+
+            legenda += "</ul>";
+
+            return legenda;
         }
 
-        private bool IsDisponibileTender(DatiAgenda eventoDaControllare, ref List<string> listaTenderNonDisponibili, List<string> listaIdTenderSelezionati)
+        private string CreaFiltriColonneAgenda()
         {
-            if (listaIdTenderSelezionati == null)
+            List<ColonneAgenda> listaSottotipiColonne = listaRisorse.GroupBy(x => x.sottotipo).Select(x => x.FirstOrDefault()).ToList<ColonneAgenda>();
+
+            string check = "";
+            foreach (Tipologica colonna in listaSottotipiColonne)
             {
-                return true;
+                check += "<div class='checkbox'><label><input type='checkbox' class='filtroColonna' value='" + colonna.sottotipo + "' checked onchange=\"filtraColonna(this,'" + colonna.sottotipo + "');\">&nbsp;" + colonna.sottotipo + "</label></div>";
             }
-            else
+
+            return check;
+        }
+
+        private Panel AnteprimaEvento(DatiAgenda evento)
+        {
+            Panel innerPanel = new Panel();
+            if (evento.id_stato != Stato.Instance.STATO_RIPOSO)
             {
                 Esito esito = new Esito();
-                List<int> listaIdTenderImpiegatiInPeriodo = Agenda_BLL.Instance.getTenderImpiegatiInPeriodo(eventoDaControllare, ref esito);
 
-
-                foreach (string idTenderCorrente in listaIdTenderSelezionati)
+                string cliente = "";
+                if (evento.id_cliente != 0)
                 {
-                    if (listaIdTenderImpiegatiInPeriodo.Contains(int.Parse(idTenderCorrente)))
+                    cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
+                }
+                string stato = listaStati.Where(x => x.id == evento.id_stato).FirstOrDefault().nome;
+                string tipologia = listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
+                string produzione = evento.produzione;
+                string dataInizio = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
+                string datatFine = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
+                string lavorazione = evento.lavorazione;
+                string luogo = evento.luogo;
+
+                string tender = "-";
+                List<DatiTender> listaTenderEvento = Dati_Tender_BLL.Instance.getDatiAgendaTenderByIdAgenda(evento.id, ref esito);
+                if (listaTenderEvento != null && listaTenderEvento.Count > 0)
+                {
+                    tender = "";
+                    foreach (DatiTender tenderCurr in listaTenderEvento)
                     {
-                        listaTenderNonDisponibili.Add(listaTender.Where(x => x.id == int.Parse(idTenderCorrente)).FirstOrDefault<Tipologica>().nome);
+                        string nomeTenderCurr = listaTender.Where(x => x.id == tenderCurr.IdTender).Select(y => y.nome).FirstOrDefault();
+                        tender += nomeTenderCurr + "; ";
                     }
+                    tender = tender.Substring(0, tender.Length - 2);
                 }
 
-                return listaTenderNonDisponibili.Count == 0;
+                string contenuto = "<p style='text-align:center;font-weight:bold; background-color:white;color:black;'>Anteprima appuntamento</p><p style='text-align:left;font-weight:normal;background-color:white;color:black;'><b>Tipo impegno:</b> " + stato + "<br/><b>Cliente:</b> " + cliente + "<br/><b>Lavorazione:</b> " + lavorazione + "<br/><b>Produzione:</b> " + produzione + "<br/><b>Tipologia:</b> " + tipologia + "<br/><b>Data inizio:</b> " + dataInizio + "&nbsp;&nbsp;<b>Data fine:</b> " + datatFine + "<br/><b>Luogo:</b> " + luogo + "<br/><b>Tender:</b> " + tender + "</p>";
+                LiteralControl anteprima = new LiteralControl(contenuto);
+
+                innerPanel.Controls.Add(anteprima);
+                innerPanel.CssClass = "round-corners-6px w3-text innerPanel";
+
             }
+            return innerPanel;
         }
 
         #endregion
@@ -546,23 +603,13 @@ namespace VideoSystemWeb.Agenda
                     SalvaPdfSuFile();
                     break;
             }
-        }
-
-        public List<DatiArticoli> GetListaArticoli()
-        {
-            return popupOfferta.listaDatiArticoli;
-        }
-
-        public string GetCodiceLavoro()
-        {
-            return val_CodiceLavoro.Text;
-        }
+        }     
 
         private void UpdatePopup()
         {
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             popupAppuntamento.CreaOggettoSalvataggio(ref eventoSelezionato);
-            popupAppuntamento.PopolaPopup(eventoSelezionato);
+            popupAppuntamento.PopolaAppuntamento(eventoSelezionato);
             AbilitaComponentiPopup();
 
             upEvento.Update();
@@ -620,7 +667,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = false;
-                    btnRiepilogo.Visible = false;
+                    btnRiepilogo.Visible = true;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
                 }
@@ -666,13 +713,13 @@ namespace VideoSystemWeb.Agenda
             val_CodiceLavoro.Text = string.IsNullOrEmpty(eventoSelezionato.codice_lavoro) ? "-" : eventoSelezionato.codice_lavoro;
 
             popupAppuntamento.ClearAppuntamento();
-            popupAppuntamento.PopolaPopup(eventoSelezionato);
+            popupAppuntamento.PopolaAppuntamento(eventoSelezionato);
 
             popupOfferta.ClearOfferta();
             popupOfferta.PopolaOfferta(eventoSelezionato.id);
 
             popupLavorazione.ClearLavorazione();
-            popupLavorazione.PopolaLavorazione(eventoSelezionato.id);
+            popupLavorazione.PopolaLavorazione(eventoSelezionato.id, eventoSelezionato.id_cliente);
         }
 
         private void ChiudiPopup()
@@ -718,9 +765,12 @@ namespace VideoSystemWeb.Agenda
             popupAppuntamento.NascondiErroriValidazione();
 
             Esito esito = new Esito();
+
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            List<DatiArticoli> listaDatiArticoli = popupOfferta.listaDatiArticoli;
             List<string> listaIdTender = popupAppuntamento.listaIdTender;
+            List<DatiArticoli> listaDatiArticoli = (eventoSelezionato.id_stato != Stato.Instance.STATO_OFFERTA &&
+                                                    eventoSelezionato.id_stato != Stato.Instance.STATO_LAVORAZIONE) ? null : popupOfferta.listaDatiArticoli;
+            DatiLavorazione datiLavorazione = eventoSelezionato.id_stato != Stato.Instance.STATO_LAVORAZIONE ? null :  popupLavorazione.CreaDatiLavorazione();
 
             esito = ValidazioneSalvataggio(eventoSelezionato, listaDatiArticoli, listaIdTender);
 
@@ -729,13 +779,14 @@ namespace VideoSystemWeb.Agenda
                 if (eventoSelezionato.id == 0)
                 {
                     Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
-                    NoteOfferta noteOfferta = new NoteOfferta { Banca = "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+                    List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
+                    NoteOfferta noteOfferta = new NoteOfferta { Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
 
-                    esito = Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender, noteOfferta);
+                    esito = Agenda_BLL.Instance.CreaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender, noteOfferta, datiLavorazione);
                 }
                 else
                 {
-                    esito = Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender);
+                    esito = Agenda_BLL.Instance.AggiornaEvento(eventoSelezionato, listaDatiArticoli, listaIdTender, datiLavorazione);
                 }
 
                 GestisciErrore(esito);
@@ -750,7 +801,7 @@ namespace VideoSystemWeb.Agenda
             else
             {
                 ShowWarning(esito.descrizione);
-                popupAppuntamento.PopolaPopup(eventoSelezionato);
+                popupAppuntamento.PopolaAppuntamento(eventoSelezionato);
             }
 
             return esito;
@@ -766,6 +817,57 @@ namespace VideoSystemWeb.Agenda
 
             string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
             File.WriteAllBytes(pathOfferta, workStream.ToArray());
+        }
+
+        
+        #endregion
+
+        #region OPERAZIONI SUI DATI
+        private bool IsDisponibileDataRisorsa(DatiAgenda eventoDaControllare)
+        {
+            listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"];
+            DatiAgenda eventoEsistente = listaDatiAgenda.FirstOrDefault(x => x.id != eventoDaControllare.id &&
+                                                         x.id_colonne_agenda == eventoDaControllare.id_colonne_agenda &&
+                                                        ((x.data_inizio_impegno <= eventoDaControllare.data_inizio_impegno && x.data_fine_impegno >= eventoDaControllare.data_inizio_impegno) ||
+                                                        (x.data_inizio_impegno <= eventoDaControllare.data_fine_impegno && x.data_fine_impegno >= eventoDaControllare.data_fine_impegno) ||
+                                                        (x.data_inizio_impegno >= eventoDaControllare.data_inizio_impegno && x.data_fine_impegno <= eventoDaControllare.data_fine_impegno)
+                                                        ));
+
+            return eventoEsistente == null;
+        }
+
+        private bool IsDisponibileTender(DatiAgenda eventoDaControllare, ref List<string> listaTenderNonDisponibili, List<string> listaIdTenderSelezionati)
+        {
+            if (listaIdTenderSelezionati == null)
+            {
+                return true;
+            }
+            else
+            {
+                Esito esito = new Esito();
+                List<int> listaIdTenderImpiegatiInPeriodo = Agenda_BLL.Instance.getTenderImpiegatiInPeriodo(eventoDaControllare, ref esito);
+
+
+                foreach (string idTenderCorrente in listaIdTenderSelezionati)
+                {
+                    if (listaIdTenderImpiegatiInPeriodo.Contains(int.Parse(idTenderCorrente)))
+                    {
+                        listaTenderNonDisponibili.Add(listaTender.Where(x => x.id == int.Parse(idTenderCorrente)).FirstOrDefault<Tipologica>().nome);
+                    }
+                }
+
+                return listaTenderNonDisponibili.Count == 0;
+            }
+        }
+
+        public List<DatiArticoli> GetListaArticoli()
+        {
+            return popupOfferta.listaDatiArticoli;
+        }
+
+        public string GetCodiceLavoro()
+        {
+            return val_CodiceLavoro.Text;
         }
 
         private Esito ValidazioneSalvataggio(DatiAgenda eventoSelezionato, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
@@ -797,7 +899,7 @@ namespace VideoSystemWeb.Agenda
                 esito.descrizione += "</ul>";
 
             }
-            else if (eventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA && (listaDatiArticoli==null || listaDatiArticoli.Count==0))
+            else if (eventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA && (listaDatiArticoli == null || listaDatiArticoli.Count == 0))
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
                 esito.descrizione = "Non è possibile salvare senza aver associato gli articoli";
@@ -840,83 +942,6 @@ namespace VideoSystemWeb.Agenda
         {
             return evento.data_inizio_lavorazione.Date == data.Date;
         }
-        #endregion
-
-        #region COSTRUZIONE PAGINA
-        private string CreaLegenda()
-        {
-            Esito esito = new Esito();
-
-            string legenda = "<ul style='list-style-type: none;padding-left:0px;'>";
-
-            foreach (Tipologica stato in listaStati)
-            {
-                string colore = UtilityTipologiche.getParametroDaTipologica(stato, "COLOR", ref esito);
-
-                legenda += "<li><div class='boxLegenda' style='background:" + colore + "'/>&nbsp;</div>&nbsp;- " + stato.nome + "</li>";
-            }
-
-            legenda += "</ul>";
-
-            return legenda;
-        }
-
-        private string CreaFiltriColonneAgenda()
-        {
-            List<Tipologica> listaSottotipiColonne = listaRisorse.GroupBy(x => x.sottotipo).Select(x => x.FirstOrDefault()).ToList<Tipologica>();
-
-            string check = "";
-            foreach (Tipologica colonna in listaSottotipiColonne)
-            {
-                check += "<div class='checkbox'><label><input type='checkbox' class='filtroColonna' value='" + colonna.sottotipo + "' checked onchange=\"filtraColonna(this,'" + colonna.sottotipo + "');\">&nbsp;" + colonna.sottotipo + "</label></div>";
-            }
-
-            return check;
-        }
-
-        private Panel AnteprimaEvento(DatiAgenda evento)
-        {
-            Panel innerPanel = new Panel();
-            if (evento.id_stato != Stato.Instance.STATO_RIPOSO)
-            {
-                Esito esito = new Esito();
-
-                string cliente = "";
-                if (evento.id_cliente != 0)
-                {
-                    cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
-                }
-                string stato = listaStati.Where(x => x.id == evento.id_stato).FirstOrDefault().nome;
-                string tipologia = listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
-                string produzione = evento.produzione;
-                string dataInizio = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
-                string datatFine = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
-                string lavorazione = evento.lavorazione;
-                string luogo = evento.luogo;
-
-                string tender = "-";
-                List<DatiTender> listaTenderEvento = Dati_Tender_BLL.Instance.getDatiAgendaTenderByIdAgenda(evento.id, ref esito);
-                if (listaTenderEvento != null && listaTenderEvento.Count > 0)
-                {
-                    tender = "";
-                    foreach (DatiTender tenderCurr in listaTenderEvento)
-                    {
-                        string nomeTenderCurr = listaTender.Where(x => x.id == tenderCurr.IdTender).Select(y => y.nome).FirstOrDefault();
-                        tender += nomeTenderCurr + "; ";
-                    }
-                    tender = tender.Substring(0, tender.Length - 2);
-                }
-
-                string contenuto = "<p style='text-align:center;font-weight:bold; background-color:white;color:black;'>Anteprima appuntamento</p><p style='text-align:left;font-weight:normal;background-color:white;color:black;'><b>Tipo impegno:</b> " + stato + "<br/><b>Cliente:</b> " + cliente + "<br/><b>Lavorazione:</b> " + lavorazione + "<br/><b>Produzione:</b> " + produzione + "<br/><b>Tipologia:</b> " + tipologia + "<br/><b>Data inizio:</b> " + dataInizio + "&nbsp;&nbsp;<b>Data fine:</b> " + datatFine + "<br/><b>Luogo:</b> " + luogo + "<br/><b>Tender:</b> " + tender + "</p>";
-                LiteralControl anteprima = new LiteralControl(contenuto);
-
-                innerPanel.Controls.Add(anteprima);
-                innerPanel.CssClass = "round-corners-6px w3-text innerPanel";
-                
-            }
-            return innerPanel;
-        }
-
         #endregion
 
         public override void VerifyRenderingInServerForm(Control control)

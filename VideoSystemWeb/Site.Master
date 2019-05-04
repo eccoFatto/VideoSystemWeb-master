@@ -35,7 +35,7 @@
             $('#textSuccess').html(messaggio);
             setTimeout(function () {
                 $('#modalSuccess').fadeOut();
-            }, 3000);
+            }, 1000);
         }
 
         function openWarning(messaggio) {

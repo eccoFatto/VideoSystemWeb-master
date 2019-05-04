@@ -29,11 +29,100 @@ namespace VideoSystemWeb.Agenda.userControl
                 ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
                 scriptManager.RegisterPostBackControl(this.btnStampaOfferta);
             }
+            //else
+            //{
+            //    Esito esito = new Esito();
+            //    List<GiorniPagamentoFatture> listaGPF = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
+
+            //    foreach (GiorniPagamentoFatture gpf in listaGPF)
+            //    {
+            //        cmbMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione,gpf.Giorni));
+            //    }
+
+            //    List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
+            //    foreach (DatiBancari datiBancari in listaDatiBancari)
+            //    {
+            //        ddl_Banca.Items.Add(new ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
+            //    }
+            //}
         }
 
+        #region COMPORTAMENTO ELEMENTI PAGINA
+        protected void btnStampa_Click(object sender, EventArgs e)
+        {
+            string codiceLavoro = RichiediCodiceLavoro();
+
+            string nomeFile = "Offerta_" + codiceLavoro + ".pdf";
+            MemoryStream workStream = GeneraPdf();
+
+            Response.Clear();
+            Response.ClearContent();
+            Response.ClearHeaders();
+            Response.ContentType = "application/pdf";
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile);
+            Response.AddHeader("Content-Length", workStream.Length.ToString());
+            Response.BinaryWrite(workStream.ToArray());
+            Response.Flush();
+            Response.Close();
+            Response.End();
+        }
+
+        protected void btnModificaNote_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
+        }
+
+        protected void btnOKModificaNote_Click(object sender, EventArgs e)
+        {
+            NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
+            noteOfferta.Banca = ddl_Banca.SelectedValue;// txt_Banca.Text;
+            noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); //int.Parse(txt_Pagamento.Text);
+            noteOfferta.Consegna = txt_Consegna.Text;
+            NoteOfferta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
+
+            val_bancaStampa.Text = noteOfferta.Banca;
+            val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
+            val_consegnaStampa.Text = noteOfferta.Consegna;
+
+            RichiediOperazionePopup("SAVE_PDF");
+
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaNote", script: "javascript: aggiornaRiepilogo()", addScriptTags: true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='none'", addScriptTags: true);
+        }
+
+        protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                Label lblDescrizione = (Label)e.Row.FindControl("lblDescrizione");
+                lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
+
+                Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
+                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[3].Text)));
+
+                e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
+                e.Row.Cells[4].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[4].Text)));
+            }
+        }
+        #endregion
+
+        #region OPERAZIONI POPUP
         public Esito popolaPannelloRiepilogo(DatiAgenda eventoSelezionato)
         {
             Esito esito = new Esito();
+
+            List<GiorniPagamentoFatture> listaGPF = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
+            cmbMod_Pagamento.Items.Clear();
+            foreach (GiorniPagamentoFatture gpf in listaGPF)
+            {
+                cmbMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione, gpf.Giorni));
+            }
+            List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
+            ddl_Banca.Items.Clear();
+            foreach (DatiBancari datiBancari in listaDatiBancari)
+            {
+                ddl_Banca.Items.Add(new ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
+            }
 
             AbilitaVisualizzazioneStampa(false);
 
@@ -78,7 +167,9 @@ namespace VideoSystemWeb.Agenda.userControl
             // se non viene trovata una notaOfferta (vecchi eventi) viene creata e salvata
             if (noteOfferta.Id == 0)
             {
-                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+                List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
+                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+
                 NoteOfferta_BLL.Instance.CreaNoteOfferta(noteOfferta, ref esito);
             }
 
@@ -88,7 +179,7 @@ namespace VideoSystemWeb.Agenda.userControl
             val_pagamentoSchermo.Text = val_pagamentoStampa.Text = noteOfferta.Pagamento + " gg DFFM";
             val_consegnaSchermo.Text = val_consegnaStampa.Text = noteOfferta.Consegna;
 
-            txt_Banca.Text = noteOfferta.Banca;// "Unicredit Banca: IBAN: IT39H0200805198000103515620";
+            //ddl_Banca.SelectedValue = noteOfferta.Banca;// commentato perché se non trova l'elemento (e può succedere) schioda
             txt_Consegna.Text = noteOfferta.Consegna;
             cmbMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
 
@@ -130,62 +221,7 @@ namespace VideoSystemWeb.Agenda.userControl
             totaliStampa.Visible = isVisualizzazioneStampa;
             footerStampa.Visible = isVisualizzazioneStampa;
         }
+        #endregion
 
-        protected void btnStampa_Click(object sender, EventArgs e)
-        {
-            string codiceLavoro = RichiediCodiceLavoro();
-
-            string nomeFile = "Offerta_" + codiceLavoro + ".pdf";
-            MemoryStream workStream = GeneraPdf();
-
-            Response.Clear();
-            Response.ClearContent();
-            Response.ClearHeaders();
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile);
-            Response.AddHeader("Content-Length", workStream.Length.ToString());
-            Response.BinaryWrite(workStream.ToArray());
-            Response.Flush();
-            Response.Close();
-            Response.End();
-        }
-
-        protected void btnModificaNote_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
-        }
-
-        protected void btnOKModificaNote_Click(object sender, EventArgs e)
-        {
-            NoteOfferta noteOfferta = (NoteOfferta) ViewState["NoteOfferta"];
-            noteOfferta.Banca = txt_Banca.Text;
-            noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); //int.Parse(txt_Pagamento.Text);
-            noteOfferta.Consegna = txt_Consegna.Text;
-            NoteOfferta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
-
-            val_bancaStampa.Text = noteOfferta.Banca;
-            val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
-            val_consegnaStampa.Text = noteOfferta.Consegna;
-
-            RichiediOperazionePopup("SAVE_PDF");
-
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaNote", script: "javascript: aggiornaRiepilogo()", addScriptTags: true);
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='none'", addScriptTags: true);
-        }
-
-        protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                Label lblDescrizione = (Label)e.Row.FindControl("lblDescrizione");
-                lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
-
-                Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
-                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[3].Text)));
-
-                e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
-                e.Row.Cells[4].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[4].Text)));
-            }
-        }
     }
 }

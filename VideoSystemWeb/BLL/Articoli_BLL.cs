@@ -180,6 +180,42 @@ namespace VideoSystemWeb.BLL
             return listaArticoliDelGruppo;
         }
 
+        public List<DatiArticoliLavorazione> CaricaListaArticoliLavorazioneByIDGruppo(int idDatiLavorazione, int idGruppo, ref Esito esito, bool soloAttivi = true)
+        {
+            List<DatiArticoliLavorazione> listaArticoliDelGruppo = new List<DatiArticoliLavorazione>();
+
+            List<int> listaIDArticoli = CaricaListaGruppiArticoliByIDgruppo(idGruppo, ref esito).Select(x => x.IdArtArticoli).ToList<int>();
+            int iva = int.Parse(Config_DAL.Instance.getConfig(ref esito, SessionManager.CFG_IVA).valore);
+
+
+            foreach (int idArticolo in listaIDArticoli)
+            {
+                Art_Articoli articoloTemplate = getArticoloById(idArticolo, ref esito);
+
+                DatiArticoliLavorazione articoloLavorazione = new DatiArticoliLavorazione();
+
+                bool firstTime;
+                articoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(articoloLavorazione, out firstTime);
+
+                articoloLavorazione.IdDatiLavorazione = idDatiLavorazione;
+                articoloLavorazione.IdArtArticoli = articoloTemplate.Id;
+                articoloLavorazione.IdTipoGenere = articoloTemplate.DefaultIdTipoGenere;
+                articoloLavorazione.IdTipoGruppo = articoloTemplate.DefaultIdTipoGruppo;
+                articoloLavorazione.IdTipoSottogruppo = articoloTemplate.DefaultIdTipoSottogruppo;
+
+                articoloLavorazione.Descrizione = articoloTemplate.DefaultDescrizione;
+                articoloLavorazione.DescrizioneLunga = articoloTemplate.DefaultDescrizioneLunga;
+                articoloLavorazione.Stampa = articoloTemplate.DefaultStampa;
+                articoloLavorazione.Prezzo = articoloTemplate.DefaultPrezzo;
+                articoloLavorazione.Costo = articoloTemplate.DefaultCosto;
+                articoloLavorazione.Iva = iva;
+                
+                listaArticoliDelGruppo.Add(articoloLavorazione);
+            }
+
+            return listaArticoliDelGruppo;
+        }
+
         public DatiArticoli CaricaArticoloByID(int idEvento, int idArticolo, ref Esito esito, bool soloAttivi = true)
         {
             Art_Articoli articoloTemplate = getArticoloById(idArticolo, ref esito);
@@ -205,6 +241,31 @@ namespace VideoSystemWeb.BLL
 
 
             return articolo;
+        }
+
+        public DatiArticoliLavorazione CaricaArticoloLavorazioneByID(int idDatiLavorazione, int idArticolo, ref Esito esito, bool soloAttivi = true)
+        {
+            Art_Articoli articoloTemplate = getArticoloById(idArticolo, ref esito);
+            int iva = int.Parse(Config_DAL.Instance.getConfig(ref esito, SessionManager.CFG_IVA).valore);
+
+            DatiArticoliLavorazione articoloLavorazione = new DatiArticoliLavorazione();
+
+            bool firstTime;
+            articoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(articoloLavorazione, out firstTime);
+
+            articoloLavorazione.IdDatiLavorazione= idDatiLavorazione;
+            articoloLavorazione.IdArtArticoli = articoloTemplate.Id;
+            articoloLavorazione.IdTipoGenere = articoloTemplate.DefaultIdTipoGenere;
+            articoloLavorazione.IdTipoGruppo = articoloTemplate.DefaultIdTipoGruppo;
+            articoloLavorazione.IdTipoSottogruppo = articoloTemplate.DefaultIdTipoSottogruppo;
+            articoloLavorazione.Descrizione = articoloTemplate.DefaultDescrizione;
+            articoloLavorazione.DescrizioneLunga = articoloTemplate.DefaultDescrizioneLunga;
+            articoloLavorazione.Stampa = articoloTemplate.DefaultStampa;
+            articoloLavorazione.Prezzo = articoloTemplate.DefaultPrezzo;
+            articoloLavorazione.Costo = articoloTemplate.DefaultCosto;
+            articoloLavorazione.Iva = iva;// articoloTemplate.DefaultIva;
+
+            return articoloLavorazione;
         }
 
         public List<DatiArticoli> CaricaListaArticoliByIDEvento(int idDatiAgenda, ref Esito esito)

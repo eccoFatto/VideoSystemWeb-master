@@ -400,13 +400,13 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Button btnModificaNote;
         
         /// <summary>
-        /// Controllo txt_Banca.
+        /// Controllo ddl_Banca.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_Banca;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Banca;
         
         /// <summary>
         /// Controllo cmbMod_Pagamento.

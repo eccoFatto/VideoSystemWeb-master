@@ -81,6 +81,54 @@ namespace VideoSystemWeb.DAL
             return listaQUalifiche;
         }
 
+        public List<Anag_Qualifiche_Collaboratori> getAllQualifiche(ref Esito esito, bool soloAttivi = true)
+        {
+            List<Anag_Qualifiche_Collaboratori> listaQUalifiche = new List<Anag_Qualifiche_Collaboratori>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM anag_qualifiche_collaboratori WHERE ATTIVO = 1";
+                    query += " ORDER BY priorita,qualifica";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+
+                                        Anag_Qualifiche_Collaboratori qualifica = new Anag_Qualifiche_Collaboratori();
+                                        qualifica.Id = riga.Field<int>("id");
+                                        qualifica.Descrizione = riga.Field<string>("Descrizione");
+                                        qualifica.Id_collaboratore = riga.Field<int>("id_Collaboratore");
+                                        qualifica.Qualifica = riga.Field<string>("Qualifica");
+                                        qualifica.Priorita = riga.Field<int>("priorita");
+                                        qualifica.Attivo = riga.Field<bool>("attivo");
+
+                                        listaQUalifiche.Add(qualifica);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaQUalifiche;
+        }
+
         public int CreaQualificaCollaboratore(Anag_Qualifiche_Collaboratori qualificaCollaboratore, Anag_Utenti utente, ref Esito esito)
         {
             //@id int,

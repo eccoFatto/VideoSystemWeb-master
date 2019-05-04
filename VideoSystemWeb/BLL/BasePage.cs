@@ -19,17 +19,17 @@ namespace VideoSystemWeb.BLL
         public static string versione = "1.26";
         public static string dataVersione = "27/04/2019";
 
-        public List<Tipologica> listaRisorse
-        {
-            get
-            {
-                List<Tipologica> _listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
-                _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<Tipologica>();
-                return _listaRisorse;
-            }
-        }
+        //public List<Tipologica> listaRisorse
+        //{
+        //    get
+        //    {
+        //        List<Tipologica> _listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
+        //        _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<Tipologica>();
+        //        return _listaRisorse;
+        //    }
+        //}
 
-        public List<ColonneAgenda> listaRisorseColonneAgenda
+        public List<ColonneAgenda> listaRisorse
         {
             get
             {
@@ -277,6 +277,16 @@ namespace VideoSystemWeb.BLL
         {
             string elementi = listaDaPopolare.InnerHtml;
             foreach (Tipologica tipologica in listaTipologica)
+            {
+                elementi += "<li class='dropdown-item'><a class='elemLista' href='#' val='" + tipologica.id.ToString() + "'>" + tipologica.nome + "</a></li>";
+            }
+            listaDaPopolare.InnerHtml = elementi;
+        }
+
+        public void PopolaDDLTipologica(HtmlGenericControl listaDaPopolare, List<ColonneAgenda> listaColonne)
+        {
+            string elementi = listaDaPopolare.InnerHtml;
+            foreach (ColonneAgenda tipologica in listaColonne)
             {
                 elementi += "<li class='dropdown-item'><a class='elemLista' href='#' val='" + tipologica.id.ToString() + "'>" + tipologica.nome + "</a></li>";
             }

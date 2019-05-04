@@ -93,12 +93,17 @@
             });
 
             // AUTOCOMPLETAMENTO
-            $("#<%=txt_Produzione.ClientID%>").easyAutocomplete(produzioni);
-            $("#<%=txt_Lavorazione.ClientID%>").easyAutocomplete(lavorazioni);
+            <%--$("#<%=txt_Produzione.ClientID%>").easyAutocomplete(produzioni);
+            $("#<%=txt_Lavorazione.ClientID%>").easyAutocomplete(lavorazioni);--%>
 
         });
 
     });
+
+    function autocompletamento() {
+        $("#<%=txt_Produzione.ClientID%>").easyAutocomplete(produzioni);
+        $("#<%=txt_Lavorazione.ClientID%>").easyAutocomplete(lavorazioni);
+    }
 
     function confermaEliminazione() {
         return confirm("Eliminare l'appuntamento corrente?");

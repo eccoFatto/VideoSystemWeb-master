@@ -11,6 +11,9 @@ namespace VideoSystemWeb.Agenda.userControl
 {
     public partial class Offerta : System.Web.UI.UserControl
     {
+        public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
+        public event PopupHandler RichiediOperazionePopup; //evento
+
         public List<DatiArticoli> listaDatiArticoli
         {
             get
@@ -22,9 +25,6 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState["listaDatiArticoli"] = value;
             }
         }
-
-        public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
-        public event PopupHandler RichiediOperazionePopup; //evento
 
         List<ArticoliGruppi> listaArticoliGruppi
         {
@@ -42,30 +42,17 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState["listaArticoliGruppi"] = value;
             }
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                gvGruppi.DataSource = listaArticoliGruppi;
-                gvGruppi.DataBind();
-            }
+            //spostato in popolaOfferta
+            //if (!IsPostBack)
+            //{
+            //    gvGruppi.DataSource = listaArticoliGruppi;
+            //    gvGruppi.DataBind();
+            //}
         }
-
-        private void aggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
-        {
-            Esito esito = new Esito();
-            int idEvento = 0;
-            listaDatiArticoli.AddRange(Articoli_BLL.Instance.CaricaListaArticoliByIDGruppo(idEvento, idGruppo, ref esito));
-            listaDatiArticoli = listaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
-        }
-
-        private void aggiungiArticoloAListaArticoli(int idArticolo)
-        {
-            Esito esito = new Esito();
-            int idEvento = 0;
-            listaDatiArticoli.Add(Articoli_BLL.Instance.CaricaArticoloByID(idEvento, idArticolo, ref esito));
-            listaDatiArticoli = listaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
-        }
+        
 
         #region COMPORTAMENTO ELEMENTI PAGINA
         protected void btnOK_Click(object sender, EventArgs e)
@@ -135,34 +122,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 RichiediOperazionePopup("UPDATE");
             }
-        }
-
-        private void AggiornaTotali()
-        {
-            decimal totPrezzo = 0;
-            decimal totCosto = 0;
-            decimal totIva = 0;
-            decimal percRicavo = 0;
-
-            if (listaDatiArticoli !=null && listaDatiArticoli.Count > 0)
-            {
-                foreach (DatiArticoli art in listaDatiArticoli)
-                {
-                    totPrezzo += art.Prezzo * art.Quantita;
-                    totCosto += art.Costo * art.Quantita;
-                    totIva += (art.Prezzo * art.Iva / 100) * art.Quantita;
-                }
-
-                if (totPrezzo != 0)
-                {
-                    percRicavo = ((totPrezzo- totCosto) / totPrezzo) * 100;
-                }
-            }
-
-            txt_TotPrezzo.Text = string.Format("{0:N2}", totPrezzo);
-            txt_TotCosto.Text = string.Format("{0:N2}", totCosto);
-            txt_TotIva.Text = string.Format("{0:N2}", totIva);
-            txt_PercRicavo.Text = string.Format("{0:N2}", percRicavo);
         }
 
         protected void gvArticoli_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -249,6 +208,35 @@ namespace VideoSystemWeb.Agenda.userControl
         }
         #endregion
 
+        #region OPERAZIONI OFFERTA
+        private void AggiornaTotali()
+        {
+            decimal totPrezzo = 0;
+            decimal totCosto = 0;
+            decimal totIva = 0;
+            decimal percRicavo = 0;
+
+            if (listaDatiArticoli != null && listaDatiArticoli.Count > 0)
+            {
+                foreach (DatiArticoli art in listaDatiArticoli)
+                {
+                    totPrezzo += art.Prezzo * art.Quantita;
+                    totCosto += art.Costo * art.Quantita;
+                    totIva += (art.Prezzo * art.Iva / 100) * art.Quantita;
+                }
+
+                if (totPrezzo != 0)
+                {
+                    percRicavo = ((totPrezzo - totCosto) / totPrezzo) * 100;
+                }
+            }
+
+            txt_TotPrezzo.Text = string.Format("{0:N2}", totPrezzo);
+            txt_TotCosto.Text = string.Format("{0:N2}", totCosto);
+            txt_TotIva.Text = string.Format("{0:N2}", totIva);
+            txt_PercRicavo.Text = string.Format("{0:N2}", percRicavo);
+        }
+
         public void ClearOfferta()
         {
             ClearModificaArticoli();
@@ -293,6 +281,10 @@ namespace VideoSystemWeb.Agenda.userControl
         public void PopolaOfferta(int idDatiAgenda)
         {
             Esito esito = new Esito();
+
+            gvGruppi.DataSource = listaArticoliGruppi;
+            gvGruppi.DataBind();
+
             listaDatiArticoli = Articoli_BLL.Instance.CaricaListaArticoliByIDEvento(idDatiAgenda, ref esito);
             if (listaDatiArticoli != null && listaDatiArticoli.Count > 0)
             {
@@ -305,6 +297,21 @@ namespace VideoSystemWeb.Agenda.userControl
             ResetPanelOfferta();
         }
 
-       
+        private void aggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
+        {
+            Esito esito = new Esito();
+            int idEvento = 0;
+            listaDatiArticoli.AddRange(Articoli_BLL.Instance.CaricaListaArticoliByIDGruppo(idEvento, idGruppo, ref esito));
+            listaDatiArticoli = listaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
+        }
+
+        private void aggiungiArticoloAListaArticoli(int idArticolo)
+        {
+            Esito esito = new Esito();
+            int idEvento = 0;
+            listaDatiArticoli.Add(Articoli_BLL.Instance.CaricaArticoloByID(idEvento, idArticolo, ref esito));
+            listaDatiArticoli = listaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
+        }
+        #endregion
     }
 }

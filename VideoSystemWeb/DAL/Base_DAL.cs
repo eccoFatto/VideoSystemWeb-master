@@ -159,7 +159,7 @@ namespace VideoSystemWeb.DAL
                                         tipologicaCorrente.nome = riga["nome"].ToString();
                                         tipologicaCorrente.descrizione = riga["descrizione"].ToString();
                                         tipologicaCorrente.sottotipo = riga["sottotipo"].ToString();
-                                        tipologicaCorrente.Ordinamento = (Int32)riga["ordinamento"];
+                                        tipologicaCorrente.Ordinamento = int.Parse(riga["ordinamento"].ToString());
                                         tipologicaCorrente.parametri = riga["parametri"].ToString();
                                         tipologicaCorrente.attivo = bool.Parse(riga["attivo"].ToString());
 

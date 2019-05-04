@@ -58,13 +58,13 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.DropDownList ddl_Contratto;
         
         /// <summary>
-        /// Controllo ddl_Cliente.
+        /// Controllo ddl_Referente.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_Cliente;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Referente;
         
         /// <summary>
         /// Controllo ddl_Capotecnico.
@@ -103,13 +103,13 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Label lbl_selezionareArticolo;
         
         /// <summary>
-        /// Controllo gvArticoli.
+        /// Controllo gvArticoliLavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvArticoli;
+        protected global::System.Web.UI.WebControls.GridView gvArticoliLavorazione;
         
         /// <summary>
         /// Controllo txt_TotPrezzo.

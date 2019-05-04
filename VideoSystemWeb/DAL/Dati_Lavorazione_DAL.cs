@@ -74,6 +74,50 @@ namespace VideoSystemWeb.DAL
             return datiLavorazione;
         }
 
+        public DatiLavorazione getDatiLavorazioneByIdEvento(int idDatiAgenda, ref Esito esito)
+        {
+            DatiLavorazione datiLavorazione = new DatiLavorazione();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM dati_lavorazione where idDatiAgenda = " + idDatiAgenda.ToString();
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    datiLavorazione.Id = dt.Rows[0].Field<int>("id");
+                                    datiLavorazione.IdDatiAgenda = dt.Rows[0].Field<int>("idDatiAgenda");
+                                    datiLavorazione.IdContratto = dt.Rows[0].Field<int?>("idContratto");
+                                    datiLavorazione.IdReferente = dt.Rows[0].Field<int?>("idReferente");
+                                    datiLavorazione.IdCapoTecnico = dt.Rows[0].Field<int?>("idCapoTecnico");
+                                    datiLavorazione.IdProduttore = dt.Rows[0].Field<int?>("idProduttore");
+                                    datiLavorazione.Fattura = dt.Rows[0].Field<string>("fattura");
+                                    datiLavorazione.Ordine = dt.Rows[0].Field<string>("ordine");
+                                }
+                                else
+                                {
+                                    datiLavorazione = null;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+            return datiLavorazione;
+        }
 
         public int CreaDatiLavorazione(DatiLavorazione datiLavorazione, ref Esito esito)
         {

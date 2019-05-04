@@ -3,7 +3,7 @@
 <script>
 
     function aggiornaRiepilogo() {
-        $("#<%=val_bancaSchermo.ClientID%>").text($("#<%=txt_Banca.ClientID%>").val());
+        $("#<%=val_bancaSchermo.ClientID%>").text($("#<%=ddl_Banca.ClientID%>").val());
 
         $("#<%=val_pagamentoSchermo.ClientID%>").text($("#<%=cmbMod_Pagamento.ClientID%>").find('option:selected').val() + " gg DFFM");
 
@@ -481,7 +481,8 @@
                     <label style="margin-bottom: 0.2rem;">Banca</label>
                 </div>
                 <div class="w3-threequarter">
-                    <asp:TextBox ID="txt_Banca" runat="server" class="w3-input w3-border" MaxLength="60" placeholder="Banca" Style="padding: 2px;"></asp:TextBox>
+                    <%--<asp:TextBox ID="txt_Banca" runat="server" class="w3-input w3-border" MaxLength="60" placeholder="Banca" Style="padding: 2px;"></asp:TextBox>--%>
+                    <asp:DropDownList ID="ddl_Banca" runat="server"></asp:DropDownList>
                 </div>
             </div>
             <div class="w3-row" style="padding: 5px;">
@@ -490,12 +491,7 @@
                 </div>
                 <div class="w3-threequarter">
                     <%--<asp:TextBox ID="txt_Pagamento" runat="server" class="w3-input w3-border" placeholder="Pagamento" Style="padding: 2px;"></asp:TextBox>--%>
-                    <asp:DropDownList ID="cmbMod_Pagamento" runat="server" class="w3-input w3-border">
-                        <asp:ListItem Value=""></asp:ListItem>
-                        <asp:ListItem Value="30">30 Giorni</asp:ListItem>
-                        <asp:ListItem Value="60">60 Giorni</asp:ListItem>
-                        <asp:ListItem Value="90">90 Giorni</asp:ListItem>
-                    </asp:DropDownList>
+                    <asp:DropDownList ID="cmbMod_Pagamento" runat="server" class="w3-input w3-border"></asp:DropDownList>
                 </div>
             </div>
             <div class="w3-row" style="padding: 5px;">

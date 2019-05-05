@@ -655,6 +655,7 @@
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
     <Compile Include="Entity\DatiLavorazione.cs" />
     <Compile Include="Entity\DatiArticoliLavorazione.cs" />
+    <Compile Include="Entity\FiguraProfessionale.cs" />
     <Compile Include="Entity\GiorniPagamentoFatture.cs" />
     <Compile Include="Entity\DatiBancari.cs" />
     <Compile Include="Entity\NoteOfferta.cs" />

@@ -153,7 +153,7 @@
                             <div class="w3-third" style="padding: 5px">
                                 <label style="margin-bottom: 0.2rem;">Quantità</label>
 
-                                <asp:TextBox ID="txt_Quantita" runat="server" class="w3-input w3-border" placeholder="iva" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                <asp:TextBox ID="txt_Quantita" runat="server" class="w3-input w3-border" placeholder="Quantità" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                             </div>
                         </div>
                         <div class="w3-half">

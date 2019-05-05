@@ -39,6 +39,20 @@ namespace VideoSystemWeb.BLL
             return Anag_Clienti_Fornitori_DAL.Instance.CaricaListaAziende(ref esito, soloAttivi);
         }
 
+        public List<Anag_Clienti_Fornitori> CaricaListaClienti(ref Esito esito, bool soloAttivi = true)
+        {
+            List<Anag_Clienti_Fornitori> listaClienti = Anag_Clienti_Fornitori_DAL.Instance.CaricaListaAziende(ref esito, soloAttivi);
+
+            return listaClienti.Where(x => x.Cliente).ToList<Anag_Clienti_Fornitori>();
+        }
+
+        public List<Anag_Clienti_Fornitori> CaricaListaFornitori(ref Esito esito, bool soloAttivi = true)
+        {
+            List<Anag_Clienti_Fornitori> listaAziende = Anag_Clienti_Fornitori_DAL.Instance.CaricaListaAziende(ref esito, soloAttivi);
+
+            return listaAziende.Where(x => x.Cliente).ToList<Anag_Clienti_Fornitori>();
+        }
+
         public int CreaAzienda(Anag_Clienti_Fornitori azienda, Anag_Utenti utente, ref Esito esito)
         {
             return Anag_Clienti_Fornitori_DAL.Instance.CreaAzienda(azienda, utente, ref esito);

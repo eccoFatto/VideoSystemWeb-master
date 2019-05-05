@@ -754,8 +754,6 @@ namespace VideoSystemWeb.DAL
                                     StoreProc.ExecuteNonQuery();
 
                                     int iDatiLavorazioneReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
-
-
                                     
                                     foreach (DatiArticoliLavorazione datoArticoloLavorazione in datiLavorazione.ListaArticoliLavorazione)
                                     {
@@ -1608,6 +1606,23 @@ namespace VideoSystemWeb.DAL
             SqlParameter iva = new SqlParameter("@iva", datoArticoloLavorazione.Iva);
             iva.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(iva);
+
+            SqlParameter data = new SqlParameter("@data", DBNull.Value);
+            if (datoArticoloLavorazione.Data != null)
+            {
+                data = new SqlParameter("@data", datoArticoloLavorazione.Data);
+            }
+            data.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(data);
+
+            SqlParameter tv = new SqlParameter("@tv", DBNull.Value);
+            if (datoArticoloLavorazione.Tv != null)
+            {
+                tv = new SqlParameter("@tv", datoArticoloLavorazione.Tv);
+            }
+            tv.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(tv);
+
         }
 
         private static void CostruisciSP_DeleteDatiArticoliLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiLavorazione)

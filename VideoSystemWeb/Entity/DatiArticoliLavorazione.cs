@@ -35,6 +35,8 @@ namespace VideoSystemWeb.Entity
         private decimal prezzo;
         private decimal costo;
         private int iva;
+        private DateTime? data;
+        private int? tv;
 
         private long identificatoreOggetto;
 
@@ -54,6 +56,8 @@ namespace VideoSystemWeb.Entity
         public decimal Prezzo { get => prezzo; set => prezzo = value; }
         public decimal Costo { get => costo; set => costo = value; }
         public int Iva { get => iva; set => iva = value; }
+        public DateTime? Data { get => data; set => data = value; }
+        public int? Tv { get => tv; set => tv = value; }
 
         public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
     }

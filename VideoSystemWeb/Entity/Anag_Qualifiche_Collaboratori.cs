@@ -12,6 +12,7 @@ namespace VideoSystemWeb.Entity
 //[descrizione] [varchar] (60) NULL,
 //[attivo][bit] NOT NULL,
 
+    [Serializable]
     public class Anag_Qualifiche_Collaboratori
     {
         private int id;

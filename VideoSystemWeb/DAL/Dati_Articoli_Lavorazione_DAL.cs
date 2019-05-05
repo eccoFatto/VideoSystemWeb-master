@@ -72,6 +72,8 @@ namespace VideoSystemWeb.DAL
                                         datiArticoliLavorazione.Prezzo = riga.Field<decimal>("prezzo");
                                         datiArticoliLavorazione.Costo = riga.Field<decimal>("costo");
                                         datiArticoliLavorazione.Iva = riga.Field<int>("iva");
+                                        datiArticoliLavorazione.Data = riga.Field<DateTime?>("data");
+                                        datiArticoliLavorazione.Tv = riga.Field<int?>("tv");
 
                                         listaDatiArticoli.Add(datiArticoliLavorazione);
                                     }

@@ -18,14 +18,7 @@ namespace VideoSystemWeb.BLL
 
             if (HttpContext.Current.Session[tipologica.ToString()] == null)
             {
-                if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
-                {
-                    listaTipologiche = Base_DAL.CaricaTipologica(tipologica, true, ref esito);
-                }
-                else
-                {
-                    listaTipologiche = Tipologie.caricaTipologica(tipologica);
-                }
+                listaTipologiche = Base_DAL.CaricaTipologica(tipologica, true, ref esito);
 
                 HttpContext.Current.Session[tipologica.ToString()] = listaTipologiche;
             }
@@ -63,6 +56,8 @@ namespace VideoSystemWeb.BLL
                     return "tipo_tender";
                 case EnumTipologiche.TIPO_PROTOCOLLO:
                     return "tipo_protocollo";
+                case EnumTipologiche.TIPO_PAGAMENTO:
+                    return "tipo_pagamento";
                 default:
                     return string.Empty;
             }
@@ -195,7 +190,18 @@ namespace VideoSystemWeb.BLL
 
 
 
-    public enum EnumTipologiche { TIPO_COLONNE_AGENDA, TIPO_QUALIFICHE, TIPO_UTENTE, TIPO_STATO, TIPO_TIPOLOGIE, TIPO_CLIENTI_FORNITORI, TIPO_GENERE, TIPO_GRUPPO, TIPO_SOTTOGRUPPO, TIPO_TENDER, TIPO_PROTOCOLLO }
+    public enum EnumTipologiche { TIPO_COLONNE_AGENDA,
+                                    TIPO_QUALIFICHE,
+                                    TIPO_UTENTE,
+                                    TIPO_STATO,
+                                    TIPO_TIPOLOGIE,
+                                    TIPO_CLIENTI_FORNITORI,
+                                    TIPO_GENERE,
+                                    TIPO_GRUPPO,
+                                    TIPO_SOTTOGRUPPO,
+                                    TIPO_TENDER,
+                                    TIPO_PROTOCOLLO,
+                                    TIPO_PAGAMENTO}
 
     public enum EnumSottotipiRisorse {DIPENDENTI, REGIE, EXTRA}
 }

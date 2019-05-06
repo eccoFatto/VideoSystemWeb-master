@@ -31,22 +31,22 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            //spostato in popolaAppuntamento
-            //if (!IsPostBack)
-            //{
+            
+            if (!IsPostBack)
+            {
 
-                //basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
-                //ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
+                basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
+                ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
 
-                //basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
-                //basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
+                basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
+                basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
 
-                //List<Tipologica> listaTender = basePage.listaTender;
-                //foreach (Tipologica tender in listaTender)
-                //{
-                //    check_tender.Items.Add(new ListItem(tender.nome, tender.id.ToString()));
-                //}
-            //}
+                List<Tipologica> listaTender = basePage.listaTender;
+                foreach (Tipologica tender in listaTender)
+                {
+                    check_tender.Items.Add(new ListItem(tender.nome, tender.id.ToString()));
+                }
+            }
 
             //string[] elencoProduzioni = Agenda_BLL.Instance.CaricaElencoProduzioni(ref esito);
             //string[] elencoLavorazioni = Agenda_BLL.Instance.CaricaElencoLavorazioni(ref esito);
@@ -71,9 +71,9 @@ namespace VideoSystemWeb.Agenda.userControl
                 idStato = Stato.Instance.STATO_RIPOSO;
 
                 hf_Tipologie.Value = "";
-                ddl_Tipologie.Text = "<Seleziona>";
+                ddl_Tipologie.Text = "<seleziona>";
                 hf_Clienti.Value = "";
-                ddl_Clienti.Text = "<Seleziona>";
+                ddl_Clienti.Text = "<seleziona>";
                 txt_DurataViaggioAndata.Text = "0";
                 txt_DurataViaggioRitorno.Text = "0";
                 txt_DataInizioImpegno.Text = txt_DataInizioLavorazione.Text;
@@ -189,15 +189,15 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
-            ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
-            basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
-            basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
-            List<Tipologica> listaTender = basePage.listaTender;
-            foreach (Tipologica tender in listaTender)
-            {
-                check_tender.Items.Add(new ListItem(tender.nome, tender.id.ToString()));
-            }
+            //basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
+            //ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
+            //basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
+            //basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
+            //List<Tipologica> listaTender = basePage.listaTender;
+            //foreach (Tipologica tender in listaTender)
+            //{
+            //    check_tender.Items.Add(new ListItem(tender.nome, tender.id.ToString()));
+            //}
 
             string[] elencoProduzioni = Agenda_BLL.Instance.CaricaElencoProduzioni(ref esito);
             string[] elencoLavorazioni = Agenda_BLL.Instance.CaricaElencoLavorazioni(ref esito);
@@ -215,7 +215,7 @@ namespace VideoSystemWeb.Agenda.userControl
             if (evento.id_tipologia == 0 || evento.id_tipologia == null)
             {
                 hf_Tipologie.Value = "";
-                ddl_Tipologie.Text = "<Seleziona>";
+                ddl_Tipologie.Text = "<seleziona>";
             }
             else
             {
@@ -226,7 +226,7 @@ namespace VideoSystemWeb.Agenda.userControl
             if (evento.id_cliente == 0)
             {
                 hf_Clienti.Value = "";
-                ddl_Clienti.Text = "<Seleziona>";
+                ddl_Clienti.Text = "<seleziona>";
             }
             else
             {
@@ -243,18 +243,13 @@ namespace VideoSystemWeb.Agenda.userControl
                 elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
                 basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseNoDipendenti);
             }
-            else if (evento.id_stato == Stato.Instance.STATO_RIPOSO)
+            else 
             {
                 List<ColonneAgenda> listaRisorseSoloDipendenti = basePage.listaRisorse.Where(x => x.sottotipo.ToUpper() == EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<ColonneAgenda>();
 
                 elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
                 basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseSoloDipendenti);
             }
-            //else
-            //{
-            //    elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
-            //    basePage.PopolaDDLTipologica(elencoRisorse, basePage.listaRisorse);
-            //}
 
             txt_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();
             txt_DurataViaggioRitorno.Text = evento.durata_viaggio_ritorno.ToString();
@@ -264,7 +259,6 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Lavorazione.Text = evento.lavorazione;
             txt_Indirizzo.Text = evento.indirizzo;
             txt_Luogo.Text = evento.luogo;
-            //txt_CodiceLavoro.Text = evento.codice_lavoro;
             tb_Nota.Text = evento.nota;
 
             List<DatiTender> listaDatiTender = Dati_Tender_BLL.Instance.getDatiAgendaTenderByIdAgenda(evento.id, ref esito);
@@ -273,12 +267,10 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 if (listaDatiTender.Where(x => x.IdTender == int.Parse(check_tender.Items[i].Value)).ToList<DatiTender>().Count > 0)
                 {
-                    check_tender.Items[i].Selected = true;// .SetItemChecked(i, true);
+                    check_tender.Items[i].Selected = true;
                 }
             }
 
-            //hf_IdStato.Value = evento.id_stato.ToString();
-            //txt_Stato.Text = UtilityTipologiche.getElementByID(basePage.listaStati, evento.id_stato, ref esito).nome;
         }
 
         public void AbilitaComponentiPopup(int statoEvento)
@@ -322,7 +314,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 }
                 else if (statoEvento == Stato.Instance.STATO_LAVORAZIONE)
-                { }
+                {
+                    panelAppuntamenti.Enabled = false;
+                }
                 else if (statoEvento == Stato.Instance.STATO_FATTURA)
                 { }
                 else if (statoEvento == Stato.Instance.STATO_RIPOSO)

@@ -229,7 +229,7 @@ namespace VideoSystemWeb.Agenda
                         listaDatiArticoliLavorazione.Add(datoArticoloLavorazione);
                     }
                 }
-                popupLavorazione.CreaNuovaLavorazione(eventoSelezionato, listaDatiArticoliLavorazione);
+                popupLavorazione.CreaNuovaLavorazione(listaDatiArticoliLavorazione);
 
                 val_Stato.Text = UtilityTipologiche.getElementByID(listaStati, eventoSelezionato.id_stato, ref esito).nome;
                 val_CodiceLavoro.Text = eventoSelezionato.codice_lavoro;
@@ -670,6 +670,7 @@ namespace VideoSystemWeb.Agenda
                     btnRiepilogo.Visible = true;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
+                    popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
                 }
                 else if (eventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
                 {

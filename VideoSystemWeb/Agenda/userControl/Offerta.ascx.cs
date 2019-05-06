@@ -13,6 +13,7 @@ namespace VideoSystemWeb.Agenda.userControl
     {
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
         public event PopupHandler RichiediOperazionePopup; //evento
+        BasePage basePage = new BasePage();
 
         public List<DatiArticoli> listaDatiArticoli
         {
@@ -45,19 +46,19 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //spostato in popolaOfferta
-            //if (!IsPostBack)
-            //{
-            //    gvGruppi.DataSource = listaArticoliGruppi;
-            //    gvGruppi.DataBind();
-            //}
+
+            if (!IsPostBack)
+            {
+                gvGruppi.DataSource = listaArticoliGruppi;
+                gvGruppi.DataBind();
+            }
         }
-        
+
 
         #region COMPORTAMENTO ELEMENTI PAGINA
         protected void btnOK_Click(object sender, EventArgs e)
         {
-            List<DatiArticoli> listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
+            //List<DatiArticoli> listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
             DatiArticoli articoloSelezionato;
 
             if (ViewState["idArticolo"]==null)
@@ -92,7 +93,7 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             long idSelezione = Convert.ToInt64(e.CommandArgument);
 
-            listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
+            //listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
             if (listaDatiArticoli == null)
             {
                 listaDatiArticoli = new List<DatiArticoli>();
@@ -108,7 +109,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 aggiungiArticoloAListaArticoli(articoloGruppo.IdOggetto);
             }
 
-            ViewState["listaDatiArticoli"] = listaDatiArticoli;
+            //ViewState["listaDatiArticoli"] = listaDatiArticoli;
 
             if (listaDatiArticoli != null && listaDatiArticoli.Count > 0)
             {
@@ -282,9 +283,6 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            gvGruppi.DataSource = listaArticoliGruppi;
-            gvGruppi.DataBind();
-
             listaDatiArticoli = Articoli_BLL.Instance.CaricaListaArticoliByIDEvento(idDatiAgenda, ref esito);
             if (listaDatiArticoli != null && listaDatiArticoli.Count > 0)
             {
@@ -311,6 +309,35 @@ namespace VideoSystemWeb.Agenda.userControl
             int idEvento = 0;
             listaDatiArticoli.Add(Articoli_BLL.Instance.CaricaArticoloByID(idEvento, idArticolo, ref esito));
             listaDatiArticoli = listaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
+        }
+
+        public void AbilitaComponentiPopup(int statoEvento)
+        {
+            panelOfferta.Enabled = basePage.AbilitazioneInScrittura();
+
+            if (basePage.AbilitazioneInScrittura())
+            {
+                if (statoEvento == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
+                {
+                    panelOfferta.Enabled  = false;
+                }
+                else if (statoEvento == Stato.Instance.STATO_OFFERTA)
+                {
+                    panelOfferta.Enabled = true;
+                }
+                else if (statoEvento == Stato.Instance.STATO_LAVORAZIONE)
+                {
+                    panelOfferta.Enabled = false;
+                }
+                else if (statoEvento == Stato.Instance.STATO_FATTURA)
+                {
+                    panelOfferta.Enabled = false;
+                }
+                else if (statoEvento == Stato.Instance.STATO_RIPOSO)
+                {
+                    panelOfferta.Enabled = false;
+                }
+            }
         }
         #endregion
     }

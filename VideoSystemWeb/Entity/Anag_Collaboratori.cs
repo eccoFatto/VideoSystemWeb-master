@@ -23,6 +23,7 @@ namespace VideoSystemWeb.Entity
 //  [note] [varchar](max) NULL,
 //  [attivo] [bit] NOT NULL,
 
+    [Serializable]
     public class Anag_Collaboratori
     {
         private int id;

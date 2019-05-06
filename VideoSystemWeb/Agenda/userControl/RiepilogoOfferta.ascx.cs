@@ -13,6 +13,7 @@ namespace VideoSystemWeb.Agenda.userControl
 {
     public partial class RiepilogoOfferta : System.Web.UI.UserControl
     {
+        BasePage basePage = new BasePage();
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
         public event PopupHandler RichiediOperazionePopup; //evento
 
@@ -29,22 +30,22 @@ namespace VideoSystemWeb.Agenda.userControl
                 ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
                 scriptManager.RegisterPostBackControl(this.btnStampaOfferta);
             }
-            //else
-            //{
-            //    Esito esito = new Esito();
-            //    List<GiorniPagamentoFatture> listaGPF = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
+            else
+            {
+                //Esito esito = new Esito();
+                //List<GiorniPagamentoFatture> listaGPF = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
 
-            //    foreach (GiorniPagamentoFatture gpf in listaGPF)
-            //    {
-            //        cmbMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione,gpf.Giorni));
-            //    }
+                foreach (GiorniPagamentoFatture gpf in basePage.listaGPF)
+                {
+                    cmbMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione, gpf.Giorni));
+                }
 
-            //    List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
-            //    foreach (DatiBancari datiBancari in listaDatiBancari)
-            //    {
-            //        ddl_Banca.Items.Add(new ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
-            //    }
-            //}
+                //List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
+                foreach (DatiBancari datiBancari in basePage.listaDatiBancari)
+                {
+                    ddl_Banca.Items.Add(new ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
+                }
+            }
         }
 
         #region COMPORTAMENTO ELEMENTI PAGINA
@@ -111,19 +112,6 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            List<GiorniPagamentoFatture> listaGPF = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
-            cmbMod_Pagamento.Items.Clear();
-            foreach (GiorniPagamentoFatture gpf in listaGPF)
-            {
-                cmbMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione, gpf.Giorni));
-            }
-            List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
-            ddl_Banca.Items.Clear();
-            foreach (DatiBancari datiBancari in listaDatiBancari)
-            {
-                ddl_Banca.Items.Add(new ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
-            }
-
             AbilitaVisualizzazioneStampa(false);
 
             lbl_Data.Text = lbl_DataStampa.Text = DateTime.Now.ToString("dd/MM/yyyy");
@@ -139,7 +127,6 @@ namespace VideoSystemWeb.Agenda.userControl
             lbl_CodLavorazione.Text = lbl_CodLavorazioneStampa.Text = eventoSelezionato.codice_lavoro;
 
             List<DatiArticoli> listaDatiArticoli = RichiediListaArticoli().Where(x => x.Stampa).ToList<DatiArticoli>();  //listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();  //popupOfferta.listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
-
 
             gvArticoli.DataSource = listaDatiArticoli;
             gvArticoli.DataBind();
@@ -175,7 +162,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             ViewState["NoteOfferta"] = noteOfferta;
 
-            val_bancaSchermo.Text = val_bancaStampa.Text = noteOfferta.Banca;// "Unicredit Banca: IBAN: IT39H0200805198000103515620";
+            val_bancaSchermo.Text = val_bancaStampa.Text = noteOfferta.Banca;// 
             val_pagamentoSchermo.Text = val_pagamentoStampa.Text = noteOfferta.Pagamento + " gg DFFM";
             val_consegnaSchermo.Text = val_consegnaStampa.Text = noteOfferta.Consegna;
 

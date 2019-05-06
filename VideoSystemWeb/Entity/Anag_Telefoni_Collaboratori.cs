@@ -16,6 +16,7 @@ namespace VideoSystemWeb.Entity
     //[whatsapp][bit]NOT NULL,
     //[attivo] [bit]NOT NULL,
 
+    [Serializable]
     public class Anag_Telefoni_Collaboratori
     {
         private int id;

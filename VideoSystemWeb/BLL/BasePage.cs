@@ -19,15 +19,270 @@ namespace VideoSystemWeb.BLL
         public static string versione = "1.26";
         public static string dataVersione = "27/04/2019";
 
-        //public List<Tipologica> listaRisorse
+
+
+        #region ELEMENTI COMUNI IN VIEWSTATE
+        
+        //public List<ArticoliGruppi> listaArticoliGruppi
         //{
         //    get
         //    {
-        //        List<Tipologica> _listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA);
-        //        _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<Tipologica>();
-        //        return _listaRisorse;
+        //        if (ViewState["listaArticoliGruppi"] == null || ((List<ArticoliGruppi>)ViewState["listaArticoliGruppi"]).Count == 0)
+        //        {
+        //            ViewState["listaArticoliGruppi"] = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
+        //        }
+        //        return (List<ArticoliGruppi>)ViewState["listaArticoliGruppi"];
+        //    }
+        //    set
+        //    {
+        //        ViewState["listaArticoliGruppi"] = value;
         //    }
         //}
+        public List<FiguraProfessionale> listaCompletaFigProf
+        {
+            get
+            {
+                if (ViewState["listaCompletaFigProf"] == null || ((List<FiguraProfessionale>)ViewState["listaCompletaFigProf"]).Count() == 0)
+                {
+                    List<FiguraProfessionale> _listaCompletaFigProf = new List<FiguraProfessionale>();
+                    foreach (Anag_Collaboratori collaboratore in listaAnagraficheCollaboratori)
+                    {
+                        _listaCompletaFigProf.Add(new FiguraProfessionale()
+                        {
+                            Id = collaboratore.Id,
+                            Nome = collaboratore.Nome,
+                            Cognome = collaboratore.Cognome,
+                            Citta = collaboratore.ComuneRiferimento.Trim().ToLower(),
+                            Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Pref_naz + collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Numero,
+                            Qualifiche = collaboratore.Qualifiche,
+                            Tipo = 0,
+                            Nota = collaboratore.Note
+                        });
+                    }
+
+                    foreach (Anag_Clienti_Fornitori fornitore in listaAnagraficheFornitori)
+                    {
+                        _listaCompletaFigProf.Add(new FiguraProfessionale()
+                        {
+                            Id = fornitore.Id,
+                            Cognome = fornitore.RagioneSociale,
+                            Citta = fornitore.ComuneLegale.Trim().ToLower(),
+                            Telefono = fornitore.Telefono,
+                            Tipo = 1,
+                            Nota = fornitore.Note
+                        });
+                    }
+                    ViewState["listaCompletaFigProf"] = _listaCompletaFigProf.OrderBy(x => x.Cognome).ToList<FiguraProfessionale>();
+
+                    //return new List<FiguraProfessionale>();
+                }
+                return (List<FiguraProfessionale>)ViewState["listaCompletaFigProf"];
+            }
+
+            set
+            {
+                ViewState["listaCompletaFigProf"] = value;
+            }
+        }
+        public List<Anag_Qualifiche_Collaboratori> listaQualificheCollaboratori
+        {
+            get
+            {
+                if (ViewState["listaQualificheCollaboratori"] == null || ((List<Anag_Qualifiche_Collaboratori>)ViewState["listaQualificheCollaboratori"]).Count() == 0)
+                {
+                    Esito esito = new Esito();
+                    ViewState["listaQualificheCollaboratori"] = Anag_Qualifiche_Collaboratori_BLL.Instance.getAllQualifiche(ref esito, true);
+                }
+                return (List<Anag_Qualifiche_Collaboratori>)ViewState["listaQualificheCollaboratori"];
+            }
+
+            set
+            {
+                ViewState["listaQualificheCollaboratori"] = value;
+            }
+        }
+        public List<Anag_Collaboratori> listaAnagraficheCollaboratori
+        {
+            get
+            {
+                if (ViewState["listaAnagraficheCollaboratori"] == null || ((List<Anag_Collaboratori>)ViewState["listaAnagraficheCollaboratori"]).Count() == 0)
+                {
+                    Esito esito = new Esito();
+                    ViewState["listaAnagraficheCollaboratori"] = Anag_Collaboratori_BLL.Instance.getAllCollaboratori(ref esito);
+                    //return new List<Anag_Collaboratori>();
+                }
+                return (List<Anag_Collaboratori>)ViewState["listaAnagraficheCollaboratori"];
+            }
+
+            set
+            {
+                ViewState["listaAnagraficheCollaboratori"] = value;
+            }
+        }
+        public List<Anag_Clienti_Fornitori> listaAnagraficheFornitori
+        {
+            get
+            {
+                if (ViewState["listaAnagraficheFornitori"] == null || ((List<Anag_Clienti_Fornitori>)ViewState["listaAnagraficheFornitori"]).Count() == 0)
+                {
+                    Esito esito = new Esito();
+                    ViewState["listaAnagraficheFornitori"] = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaFornitori(ref esito);
+                    //return new List<Anag_Clienti_Fornitori>();
+                }
+                return (List<Anag_Clienti_Fornitori>)ViewState["listaAnagraficheFornitori"];
+            }
+
+            set
+            {
+                ViewState["listaAnagraficheFornitori"] = value;
+            }
+        }
+        public List<Tipologica> listaTipiPagamento
+        {
+            get
+            {
+                if (ViewState["listaTipiPagamento"] == null || ((List<Tipologica>)ViewState["listaTipiPagamento"]).Count() == 0)
+                {
+                    ViewState["listaTipiPagamento"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO);
+                }
+                return (List<Tipologica>)ViewState["listaTipiPagamento"];
+            }
+            set
+            {
+                ViewState["listaTipiPagamento"] = value;
+            }
+        }
+        public List<string> listaCittaCollaboratori
+        {
+            get
+            {
+                if (ViewState["listaCittaCollaboratori"] == null || ((List<string>)ViewState["listaCittaCollaboratori"]).Count() == 0)
+                {
+                    List<string> listaCittaCollaboratori = (from record in listaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList();
+                    ViewState["listaCittaCollaboratori"] = listaCittaCollaboratori.Distinct().ToList<string>();
+                }
+                return (List<string>)ViewState["listaCittaCollaboratori"];
+            }
+            set
+            {
+                ViewState["listaCittaCollaboratori"] = value;
+            }
+        }
+        public List<string> listaCittaFornitori
+        {
+            get
+            {
+                if (ViewState["listaCittaFornitori"] == null || ((List<string>)ViewState["listaCittaFornitori"]).Count() == 0)
+                {
+                    List<string> _listaCittaFornitori = (from record in listaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList();
+                    ViewState["listaCittaFornitori"] = _listaCittaFornitori.Distinct().ToList<string>();
+                }
+                return (List<string>)ViewState["listaCittaFornitori"];
+            }
+            set
+            {
+                ViewState["listaCittaFornitori"] = value;
+            }
+        }
+        public List<Anag_Referente_Clienti_Fornitori> listaReferenti
+        {
+            get
+            {
+                if (ViewState["listaReferenti"] == null || ((List<Anag_Referente_Clienti_Fornitori>)ViewState["listaReferenti"]).Count() == 0)
+                {
+                    ViewState["listaReferenti"] = new List<Anag_Referente_Clienti_Fornitori>();
+                }
+                return (List<Anag_Referente_Clienti_Fornitori>)ViewState["listaReferenti"];
+            }
+            set
+            {
+                ViewState["listaReferenti"] = value;
+            }
+        }
+        public List<GiorniPagamentoFatture> listaGPF
+        {
+            get
+            {
+                Esito esito = new Esito();
+                if (ViewState["listaGPF"] == null || ((List<GiorniPagamentoFatture>)ViewState["listaGPF"]).Count() == 0)
+                {
+                    ViewState["listaGPF"] = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
+                }
+                return (List<GiorniPagamentoFatture>)ViewState["listaGPF"];
+            }
+            set
+            {
+                ViewState["listaGPF"] = value;
+            }
+        }
+        public List<DatiBancari> listaDatiBancari
+        {
+            get
+            {
+                Esito esito = new Esito();
+                if (ViewState["listaDatiBancari"] == null || ((List<DatiBancari>)ViewState["listaDatiBancari"]).Count() == 0)
+                {
+                    ViewState["listaDatiBancari"] = Config_BLL.Instance.getListaDatiBancari(ref esito);
+                }
+                return (List<DatiBancari>)ViewState["listaDatiBancari"];
+            }
+            set
+            {
+                ViewState["listaDatiBancari"] = value;
+            }
+        }
+        //public List<string> listaIdTender
+        //{
+        //    get
+        //    {
+                
+        //        if (ViewState["listaIdTender"] == null || ((List<string>)ViewState["listaIdTender"]).Count() == 0)
+        //        {
+        //            ViewState["listaIdTender"] = Config_BLL.Instance.getListaDatiBancari(ref esito);
+        //        }
+        //        return (List<string>)ViewState["listaIdTender"];
+        //    }
+        //    set
+        //    {
+        //        ViewState["listaIdTender"] = value;
+        //    }
+        //}
+        public List<Tipologica> listaTender
+        {
+            get
+            {
+                if (ViewState["listaTender"] == null || ((List<Tipologica>)ViewState["listaTender"]).Count() == 0)
+                {
+                    ViewState["listaTender"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TENDER);
+                }
+                return (List<Tipologica>)ViewState["listaTender"];
+            }
+            set
+            {
+                ViewState["listaTender"] = value;
+            }
+        }
+
+        //public List<DatiArticoli> listaDatiArticoli
+        //{
+        //    get
+        //    {
+        //        if (ViewState["listaDatiArticoli"] == null || ((List<ArticoliGruppi>)ViewState["listaDatiArticoli"]).Count == 0)
+        //        {
+        //            ViewState["listaDatiArticoli"] = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
+        //        }
+        //        return (List<DatiArticoli>)ViewState["listaDatiArticoli"];
+        //    }
+        //    set
+        //    {
+        //        ViewState["listaDatiArticoli"] = value;
+        //    }
+        //}
+
+
+        #endregion
+
+
 
         public List<ColonneAgenda> listaRisorse
         {
@@ -56,7 +311,6 @@ namespace VideoSystemWeb.BLL
                 return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_UTENTE);
             }
         }
-
         public List<Tipologica> listaTipiTipologie
         {
             get
@@ -64,7 +318,6 @@ namespace VideoSystemWeb.BLL
                 return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE);
             }
         }
-
         public List<Tipologica> listaQualifiche
         {
             get
@@ -72,7 +325,6 @@ namespace VideoSystemWeb.BLL
                 return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_QUALIFICHE);
             }
         }
-
         public List<Tipologica> listaTipiClientiFornitori
         {
             get
@@ -80,7 +332,6 @@ namespace VideoSystemWeb.BLL
                 return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_CLIENTI_FORNITORI);
             }
         }
-
         public List<Tipologica> listaTipiGeneri
         {
             get
@@ -102,17 +353,8 @@ namespace VideoSystemWeb.BLL
                 return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO);
             }
         }
-
-        public List<Tipologica> listaTender
-        {
-            get
-            {
-                return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TENDER);
-            }
-        }
-
+        
         public List<Anag_Clienti_Fornitori> listaClientiFornitori;
-
         public List<Tipologica> listaTipiProtocolli
         {
             get
@@ -120,10 +362,12 @@ namespace VideoSystemWeb.BLL
                 return UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO);
             }
         }
+
         public Esito CaricaListeTipologiche()
         {
             Esito esito = new Esito();
 
+            
             List<Tipologica> listaRisorse = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA); //Agenda_BLL.Instance.CaricaColonne(ref esito);
             //UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_COLONNE_AGENDA, ref esito); //Tipologie.getListaRisorse();
 

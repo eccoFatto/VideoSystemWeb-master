@@ -16,10 +16,14 @@ namespace VideoSystemWeb.Agenda.userControl
         public event PopupHandler RichiediOperazionePopup; //evento
         BasePage basePage = new BasePage();
 
-        public List<DatiArticoliLavorazione> listaDatiArticoliLavorazione
+        List<DatiArticoliLavorazione> listaDatiArticoliLavorazione
         {
             get
             {
+                if (ViewState["listaDatiArticoliLavorazione"] == null || ((List<DatiArticoliLavorazione>)ViewState["listaDatiArticoliLavorazione"]).Count() == 0)
+                {
+                    return new List<DatiArticoliLavorazione>();
+                }
                 return (List<DatiArticoliLavorazione>)ViewState["listaDatiArticoliLavorazione"];
             }
             set
@@ -27,10 +31,14 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState["listaDatiArticoliLavorazione"] = value;
             }
         }
-        public DatiLavorazione lavorazioneCorrente
+        DatiLavorazione lavorazioneCorrente
         {
             get
             {
+                if (ViewState["lavorazioneCorrente"] == null)
+                {
+                    return new DatiLavorazione();
+                }
                 return (DatiLavorazione)ViewState["lavorazioneCorrente"];
             }
             set
@@ -38,49 +46,189 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState["lavorazioneCorrente"] = value;
             }
         }
-        List<ArticoliGruppi> listaArticoliGruppi
+        List<ArticoliGruppi> listaArticoliGruppiLavorazione
         {
             get
             {
-                if (ViewState["listaArticoliGruppi"] == null || ((List<ArticoliGruppi>)ViewState["listaArticoliGruppi"]).Count == 0)
+                if (ViewState["listaArticoliGruppiLavorazione"] == null || ((List<ArticoliGruppi>)ViewState["listaArticoliGruppiLavorazione"]).Count == 0)
                 {
-                    ViewState["listaArticoliGruppi"] = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
+                    ViewState["listaArticoliGruppiLavorazione"] = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
                 }
-
-                return (List<ArticoliGruppi>)ViewState["listaArticoliGruppi"];
+                return (List<ArticoliGruppi>)ViewState["listaArticoliGruppiLavorazione"];
             }
             set
             {
-                ViewState["listaArticoliGruppi"] = value;
+                ViewState["listaArticoliGruppiLavorazione"] = value;
             }
         }
+        //List<FiguraProfessionale> listaCompletaFigProf
+        //{
+        //    get
+        //    {
+        //        if (ViewState["listaCompletaFigProf"] == null || ((List<FiguraProfessionale>)ViewState["listaCompletaFigProf"]).Count() == 0)
+        //        {
+        //            List<FiguraProfessionale> _listaCompletaFigProf = new List<FiguraProfessionale>();
+        //            foreach (Anag_Collaboratori collaboratore in listaAnagraficheCollaboratori)
+        //            {
+        //                _listaCompletaFigProf.Add(new FiguraProfessionale()
+        //                {
+        //                    Id = collaboratore.Id,
+        //                    Nome = collaboratore.Nome,
+        //                    Cognome = collaboratore.Cognome,
+        //                    Citta = collaboratore.ComuneRiferimento.Trim().ToLower(),
+        //                    Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Pref_naz + collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Numero,
+        //                    Qualifiche = collaboratore.Qualifiche,
+        //                    Tipo = 0,
+        //                    Nota = collaboratore.Note
+        //                });
+        //            }
 
-        List<FiguraProfessionale> listaCompletaFigProf
-        {
-            get
-            {
-                if (ViewState["listaCompletaFigProf"] == null || ((List<FiguraProfessionale>)ViewState["listaCompletaFigProf"]).Count() == 0)
-                {
-                    return new List<FiguraProfessionale>();
-                }
-                return (List<FiguraProfessionale>)ViewState["listaCompletaFigProf"];
-            }
+        //            foreach (Anag_Clienti_Fornitori fornitore in listaAnagraficheFornitori)
+        //            {
+        //                _listaCompletaFigProf.Add(new FiguraProfessionale()
+        //                {
+        //                    Id = fornitore.Id,
+        //                    Cognome = fornitore.RagioneSociale,
+        //                    Citta = fornitore.ComuneLegale.Trim().ToLower(),
+        //                    Telefono = fornitore.Telefono,
+        //                    Tipo = 1,
+        //                    Nota = fornitore.Note
+        //                });
+        //            }
+        //            ViewState["listaCompletaFigProf"] = _listaCompletaFigProf.OrderBy(x => x.Cognome).ToList<FiguraProfessionale>();
 
-            set
-            {
-                ViewState["listaCompletaFigProf"] = value;
-            }
-        }
+        //            //return new List<FiguraProfessionale>();
+        //        }
+        //        return (List<FiguraProfessionale>)ViewState["listaCompletaFigProf"];
+        //    }
+
+        //    set
+        //    {
+        //        ViewState["listaCompletaFigProf"] = value;
+        //    }
+        //}
+        //List<Anag_Qualifiche_Collaboratori> listaQualificheCollaboratori
+        //{
+        //    get
+        //    {
+        //        if (ViewState["listaQualificheCollaboratori"] == null || ((List<Anag_Qualifiche_Collaboratori>)ViewState["listaQualificheCollaboratori"]).Count() == 0)
+        //        {
+        //            Esito esito = new Esito();
+        //            ViewState["listaQualificheCollaboratori"] = Anag_Qualifiche_Collaboratori_BLL.Instance.getAllQualifiche(ref esito, true);
+        //        }
+        //        return (List<Anag_Qualifiche_Collaboratori>)ViewState["listaQualificheCollaboratori"];
+        //    }
+
+        //    set
+        //    {
+        //        ViewState["listaQualificheCollaboratori"] = value;
+        //    }
+        //}
+        //List<Anag_Collaboratori> listaAnagraficheCollaboratori
+        //{
+        //    get
+        //    {
+        //        if (ViewState["listaAnagraficheCollaboratori"] == null || ((List<Anag_Collaboratori>)ViewState["listaAnagraficheCollaboratori"]).Count() == 0)
+        //        {
+        //            Esito esito = new Esito();
+        //            ViewState["listaAnagraficheCollaboratori"] = Anag_Collaboratori_BLL.Instance.getAllCollaboratori(ref esito);
+        //            //return new List<Anag_Collaboratori>();
+        //        }
+        //        return (List<Anag_Collaboratori>)ViewState["listaAnagraficheCollaboratori"];
+        //    }
+
+        //    set
+        //    {
+        //        ViewState["listaAnagraficheCollaboratori"] = value;
+        //    }
+        //}
+        //List<Anag_Clienti_Fornitori> listaAnagraficheFornitori
+        //{
+        //    get
+        //    {
+        //        if (ViewState["listaAnagraficheFornitori"] == null || ((List<Anag_Clienti_Fornitori>)ViewState["listaAnagraficheFornitori"]).Count() == 0)
+        //        {
+        //            Esito esito = new Esito();
+        //            ViewState["listaAnagraficheFornitori"] = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaFornitori(ref esito);
+        //            //return new List<Anag_Clienti_Fornitori>();
+        //        }
+        //        return (List<Anag_Clienti_Fornitori>)ViewState["listaAnagraficheFornitori"];
+        //    }
+
+        //    set
+        //    {
+        //        ViewState["listaAnagraficheFornitori"] = value;
+        //    }
+        //}
+        //List<Tipologica> listaTipiPagamento
+        //{
+        //    get
+        //    {
+        //        if (ViewState["listaTipiPagamento"] == null || ((List<Tipologica>)ViewState["listaTipiPagamento"]).Count() == 0)
+        //        {
+        //            ViewState["listaTipiPagamento"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO);
+        //        }
+        //        return (List<Tipologica>)ViewState["listaTipiPagamento"];
+        //    }
+        //    set
+        //    {
+        //        ViewState["listaTipiPagamento"] = value;
+        //    }
+        //}
+        //List<string> listaCittaCollaboratori
+        //{
+        //    get
+        //    {
+        //        if (ViewState["listaCittaCollaboratori"] == null || ((List<string>)ViewState["listaCittaCollaboratori"]).Count() == 0)
+        //        {
+        //            ViewState["listaCittaCollaboratori"] = (from record in listaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList();
+        //        }
+        //        return (List<string>)ViewState["listaCittaCollaboratori"];
+        //    }
+        //    set
+        //    {
+        //        ViewState["listaCittaCollaboratori"] = value;
+        //    }
+        //}
+        //List<string> listaCittaFornitori
+        //{
+        //    get
+        //    {
+        //        if (ViewState["listaCittaFornitori"] == null || ((List<string>)ViewState["listaCittaFornitori"]).Count() == 0)
+        //        {
+        //            ViewState["listaCittaFornitori"] = (from record in listaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList();
+        //        }
+        //        return (List<string>)ViewState["listaCittaFornitori"];
+        //    }
+        //    set
+        //    {
+        //        ViewState["listaCittaFornitori"] = value;
+        //    }
+        //}
+        //List<Anag_Referente_Clienti_Fornitori> listaReferenti
+        //{
+        //    get
+        //    {
+        //        if (ViewState["listaReferenti"] == null || ((List<Anag_Referente_Clienti_Fornitori>)ViewState["listaReferenti"]).Count() == 0)
+        //        {
+        //            ViewState["listaReferenti"] = new List<Anag_Referente_Clienti_Fornitori>();
+        //        }
+        //        return (List<Anag_Referente_Clienti_Fornitori>)ViewState["listaReferenti"];
+        //    }
+        //    set
+        //    {
+        //        ViewState["listaReferenti"] = value;
+        //    }
+        //}
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                //spostato in popolaLavorazione
-                //gvGruppi.DataSource = listaArticoliGruppi;
-                //gvGruppi.DataBind();
+                gvGruppi.DataSource = listaArticoliGruppiLavorazione;
+                gvGruppi.DataBind();
 
-                //PopolaCombo();
+                PopolaCombo();
             }
             else
             {
@@ -97,134 +245,24 @@ namespace VideoSystemWeb.Agenda.userControl
             //    {
             //        ddl_Referente.Items.Add(new ListItem(referente.Nome + " " + referente.Cognome, referente.Id.ToString()));
             //    }
-            //    ddl_Referente.Items.Insert(0, new ListItem("<selezionare>", "0"));
+            //    ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", "0"));
             //}
         }
 
         #region COMPORTAMENTO ELEMENTI PAGINA
-
-        private void PopolaCombo()
+        private void AbilitaComponentiModificaArticolo(int tipoFiguraProfessionale)
         {
-            Esito esito = new Esito();
-
-            List<Anag_Qualifiche_Collaboratori> listaQualificheCollaboratori = Anag_Qualifiche_Collaboratori_BLL.Instance.getAllQualifiche(ref esito, true);
-            List<Anag_Collaboratori> listaAnagraficheCollaboratori = Anag_Collaboratori_BLL.Instance.getAllCollaboratori(ref esito);
-            List<Anag_Clienti_Fornitori> listaAnagraficheFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaFornitori(ref esito);
-
-
-            #region CAPITECNICI
-            List<Anag_Qualifiche_Collaboratori> listaCapiTecnici = listaQualificheCollaboratori.Where(x => x.Qualifica == "Capo Tecnico").ToList<Anag_Qualifiche_Collaboratori>();
-
-            List<Anag_Collaboratori> listaAnagraficheCapiTecnici = (from Item1 in listaAnagraficheCollaboratori
-                                                                    join Item2 in listaCapiTecnici
-                                                                    on Item1.Id equals Item2.Id_collaboratore
-                                                                    select Item1).ToList();
-            ddl_Capotecnico.Items.Clear();
-            foreach (Anag_Collaboratori capoTecnico in listaAnagraficheCapiTecnici)
+            if (tipoFiguraProfessionale == 0)
             {
-                ddl_Capotecnico.Items.Add(new ListItem(capoTecnico.Nome + " " + capoTecnico.Cognome, capoTecnico.Id.ToString()));
+                ddl_FPqualifica.CssClass = "w3-input w3-border";
+                ddl_FPqualifica.Style.Remove("cursor");
+                ddl_FPqualifica.Enabled = true;
+
+                ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
+                ddl_FPtipoPagamento.Style.Remove("cursor");
+                ddl_FPtipoPagamento.Enabled = true;
             }
-            ddl_Capotecnico.Items.Insert(0, new ListItem("<selezionare>", "0"));
-            #endregion
-
-            #region PRODUTTORI
-            List<Anag_Qualifiche_Collaboratori> listaProduttori = listaQualificheCollaboratori.Where(x => x.Qualifica == "Produttore").ToList<Anag_Qualifiche_Collaboratori>();
-
-            List<Anag_Collaboratori> listaAnagraficheProduttori = (from Item1 in listaAnagraficheCollaboratori
-                                                                   join Item2 in listaProduttori on Item1.Id equals Item2.Id_collaboratore
-                                                                   select Item1).ToList();
-            ddl_Produttore.Items.Clear();
-            foreach (Anag_Collaboratori produttore in listaAnagraficheProduttori)
-            {
-                ddl_Produttore.Items.Add(new ListItem(produttore.Nome + " " + produttore.Cognome, produttore.Id.ToString()));
-            }
-            ddl_Produttore.Items.Insert(0, new ListItem("<selezionare>", "0"));
-            #endregion
-
-            #region TIPOPAGAMENTO
-            List<Tipologica> listaTipiPagamento = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO);
-            
-            ddl_FPtipoPagamento.Items.Clear();
-            foreach (Tipologica tipoPagamento in listaTipiPagamento)
-            {
-                ddl_FPtipoPagamento.Items.Add(new ListItem(tipoPagamento.nome, tipoPagamento.id.ToString()));
-            }
-            ddl_FPtipoPagamento.Items.Insert(0, new ListItem("<selezionare>", "0"));
-            #endregion
-
-            #region QUALIFICHE
-            List<Tipologica> listaQualifiche = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_QUALIFICHE);
-
-            ddl_FPqualifica.Items.Clear();
-            foreach (Tipologica qualifica in listaQualifiche)
-            {
-                ddl_FPqualifica.Items.Add(new ListItem(qualifica.nome, qualifica.id.ToString()));
-            }
-            ddl_FPqualifica.Items.Insert(0, new ListItem("<selezionare>", "0"));
-            #endregion
-
-            #region CITTA'
-            List<string> listaCompletaCitta = new List<string>();
-            listaCompletaCitta.AddRange((from record in listaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList());
-            //listaCompletaCitta.AddRange((from record in listaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList());
-            listaCompletaCitta = listaCompletaCitta.Distinct().ToList<string>();
-            listaCompletaCitta.Sort();
-
-            ddl_FPcitta.Items.Clear();
-            foreach (string citta in listaCompletaCitta)
-            {
-                ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
-            }
-            ddl_FPcitta.Items.Insert(0, new ListItem("<selezionare>", "0"));
-            #endregion
-
-            #region NOMINATIVO
-            //List<FiguraProfessionale> listaCompletaFigProf = new List<FiguraProfessionale>();
-
-            List<FiguraProfessionale> _listaCompletaFigProf = new List<FiguraProfessionale>();
-            foreach (Anag_Collaboratori collaboratore in listaAnagraficheCollaboratori)
-            {
-                _listaCompletaFigProf.Add(new FiguraProfessionale()
-                {
-                    Id = collaboratore.Id,
-                    Nome = collaboratore.Nome,
-                    Cognome = collaboratore.Cognome,
-                    Citta = collaboratore.ComuneRiferimento.Trim().ToLower(),
-
-                    Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Pref_naz + collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Numero,
-                    Qualifiche = collaboratore.Qualifiche,
-                    Tipo = 0,
-                    Nota = collaboratore.Note
-                });
-
-            }
-
-            foreach (Anag_Clienti_Fornitori fornitore in listaAnagraficheFornitori)
-            {
-                _listaCompletaFigProf.Add(new FiguraProfessionale()
-                {
-                    Id = fornitore.Id,
-                    Cognome = fornitore.RagioneSociale,
-                    Citta = fornitore.ComuneLegale.Trim().ToLower(),
-                    Telefono = fornitore.Telefono,
-                    Tipo = 1,
-                    Nota = fornitore.Note
-                });
-            }
-            listaCompletaFigProf = _listaCompletaFigProf.OrderBy(x => x.Cognome).ToList<FiguraProfessionale>();
-            PopolaNominativi(listaCompletaFigProf.Where(x => x.Tipo == 0).ToList());
-            #endregion
-        }
-
-        protected void filtraFP(object sender, EventArgs e)
-        {
-            Esito esito = new Esito();
-
-            int tipoFP = int.Parse(ddl_FPtipo.SelectedValue);
-            int qualificaFP = int.Parse(ddl_FPqualifica.SelectedValue);
-            string cittaFP = ddl_FPcitta.SelectedValue;
-            
-            if (tipoFP == 1)
+            else
             {
                 ddl_FPqualifica.SelectedValue = "0";
                 ddl_FPqualifica.CssClass = "w3-input w3-border";
@@ -235,95 +273,9 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
                 ddl_FPtipoPagamento.Style.Add("cursor", "not-allowed;");
                 ddl_FPtipoPagamento.Enabled = false;
-
-
-                List<Anag_Clienti_Fornitori> listaAnagraficheFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaFornitori(ref esito);
-
-                List<string> listaCompletaCitta = new List<string>();
-                //listaCompletaCitta.AddRange((from record in listaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList());
-                listaCompletaCitta.AddRange((from record in listaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList());
-                listaCompletaCitta = listaCompletaCitta.Distinct().ToList<string>();
-                listaCompletaCitta.Sort();
-
-                ddl_FPcitta.Items.Clear();
-                foreach (string citta in listaCompletaCitta)
-                {
-                    ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
-                }
-                ddl_FPcitta.Items.Insert(0, new ListItem("<selezionare>", "0"));
             }
-            else
-            {
-                ddl_FPqualifica.CssClass = "w3-input w3-border";
-                ddl_FPqualifica.Style.Remove("cursor");
-                ddl_FPqualifica.Enabled = true;
-
-                ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
-                ddl_FPtipoPagamento.Style.Remove("cursor");
-                ddl_FPtipoPagamento.Enabled = true;
-
-                List<Anag_Collaboratori> listaAnagraficheCollaboratori = Anag_Collaboratori_BLL.Instance.getAllCollaboratori(ref esito);
-
-                List<string> listaCompletaCitta = new List<string>();
-                listaCompletaCitta.AddRange((from record in listaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList());
-                //listaCompletaCitta.AddRange((from record in listaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList());
-                listaCompletaCitta = listaCompletaCitta.Distinct().ToList<string>();
-                listaCompletaCitta.Sort();
-
-                ddl_FPcitta.Items.Clear();
-                foreach (string citta in listaCompletaCitta)
-                {
-                    ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
-                }
-                ddl_FPcitta.Items.Insert(0, new ListItem("<selezionare>", "0"));
-            }
-
-            List<FiguraProfessionale> listaFPfiltrata = listaCompletaFigProf.Where(x => x.Tipo == tipoFP).ToList();
-
-            if (tipoFP == 0 && qualificaFP != 0)
-            {
-                listaFPfiltrata = listaFPfiltrata.Where(x => x.Qualifiche.Where(y=> y.Id == qualificaFP).Count()>0).ToList();
-            }
-
-            if (cittaFP != "0")
-            {
-                listaFPfiltrata = listaFPfiltrata.Where(x => x.Citta.ToLower().Trim().Contains(cittaFP)).ToList();
-            }
-
-            PopolaNominativi(listaFPfiltrata);
-
-            upModificaArticolo.Update();
         }
-
-        protected void visualizzaFP(object sender, EventArgs e)
-        {
-            FiguraProfessionale fpSelezionata = new FiguraProfessionale();
-            if (ddl_FPnominativo.SelectedValue != "0")
-            {
-                fpSelezionata = listaCompletaFigProf.FirstOrDefault(x => x.Id == int.Parse(ddl_FPnominativo.SelectedValue));
-            }
-
-            PopolaDettagliFP(fpSelezionata);
-            
-            upModificaArticolo.Update();
-        }
-
-        private void PopolaNominativi(List<FiguraProfessionale> listaNominativi)
-        {
-            ddl_FPnominativo.Items.Clear();
-            foreach (FiguraProfessionale figPro in listaNominativi)
-            {
-                ddl_FPnominativo.Items.Add(new ListItem(figPro.Cognome + " " + figPro.Nome, figPro.Id.ToString()));
-            }
-            ddl_FPnominativo.Items.Insert(0, new ListItem("<selezionare>", "0"));
-        }
-
-        private void PopolaDettagliFP(FiguraProfessionale figuraProfessionale)
-        {
-            txt_FPtelefono.Text = figuraProfessionale.Telefono;
-            txt_FPnotaCollaboratore.Text = figuraProfessionale.Nota;
-        }
-
+       
         protected void btn_SwitchArtPers_Click(object sender, EventArgs e)
         {
             if (btn_SwitchArtPers.Text == "Inserimento articoli")
@@ -342,12 +294,13 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             long idSelezione = Convert.ToInt64(e.CommandArgument);
 
-            listaDatiArticoliLavorazione = (List<DatiArticoliLavorazione>)ViewState["listaDatiArticoliLavorazione"];
-            if (listaDatiArticoliLavorazione == null)
-            {
-                listaDatiArticoliLavorazione = new List<DatiArticoliLavorazione>();
-            }
-            ArticoliGruppi articoloGruppo = listaArticoliGruppi.FirstOrDefault(X => X.Id == idSelezione);
+            //listaDatiArticoliLavorazione = (List<DatiArticoliLavorazione>)ViewState["listaDatiArticoliLavorazione"];
+            //if (listaDatiArticoliLavorazione == null)
+            //{
+            //    listaDatiArticoliLavorazione = new List<DatiArticoliLavorazione>();
+            //}
+
+            ArticoliGruppi articoloGruppo = listaArticoliGruppiLavorazione.FirstOrDefault(X => X.Id == idSelezione);
 
             if (articoloGruppo.Isgruppo)
             {
@@ -358,7 +311,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 aggiungiArticoloAListaArticoli(articoloGruppo.IdOggetto);
             }
 
-            ViewState["listaDatiArticoliLavorazione"] = listaDatiArticoliLavorazione;
+            //ViewState["listaDatiArticoliLavorazione"] = listaDatiArticoliLavorazione;
 
             if (listaDatiArticoliLavorazione != null && listaDatiArticoliLavorazione.Count > 0)
             {
@@ -405,37 +358,39 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_Prezzo.Text = articoloSelezionato.Prezzo.ToString();
                     txt_Iva.Text = articoloSelezionato.Iva.ToString();
 
-                    FiguraProfessionale figuraProfessionale = listaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdCollaboratori);
+                    FiguraProfessionale figuraProfessionale = basePage.listaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdCollaboratori);
                     if (figuraProfessionale == null)
                     {
-                        figuraProfessionale = listaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdFornitori);
+                        figuraProfessionale = basePage.listaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdFornitori);
                     }
                     if (figuraProfessionale != null)
                     {
-                        if (figuraProfessionale.Tipo == 1)
-                        {
-                            ddl_FPqualifica.SelectedValue = "0";
-                            ddl_FPqualifica.CssClass = "w3-input w3-border";
-                            ddl_FPqualifica.Style.Add("cursor", "not-allowed;");
-                            ddl_FPqualifica.Enabled = false;
+                        AbilitaComponentiModificaArticolo(figuraProfessionale.Tipo);
 
-                            ddl_FPtipoPagamento.SelectedValue = "0";
-                            ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
-                            ddl_FPtipoPagamento.Style.Add("cursor", "not-allowed;");
-                            ddl_FPtipoPagamento.Enabled = false;
-                        }
-                        else
-                        {
-                            ddl_FPqualifica.CssClass = "w3-input w3-border";
-                            ddl_FPqualifica.Style.Remove("cursor");
-                            ddl_FPqualifica.Enabled = true;
+                        //if (figuraProfessionale.Tipo == 1)
+                        //{
+                        //    ddl_FPqualifica.SelectedValue = "0";
+                        //    ddl_FPqualifica.CssClass = "w3-input w3-border";
+                        //    ddl_FPqualifica.Style.Add("cursor", "not-allowed;");
+                        //    ddl_FPqualifica.Enabled = false;
 
-                            ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
-                            ddl_FPtipoPagamento.Style.Remove("cursor");
-                            ddl_FPtipoPagamento.Enabled = true;
-                        }
+                        //    ddl_FPtipoPagamento.SelectedValue = "0";
+                        //    ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
+                        //    ddl_FPtipoPagamento.Style.Add("cursor", "not-allowed;");
+                        //    ddl_FPtipoPagamento.Enabled = false;
+                        //}
+                        //else
+                        //{
+                        //    ddl_FPqualifica.CssClass = "w3-input w3-border";
+                        //    ddl_FPqualifica.Style.Remove("cursor");
+                        //    ddl_FPqualifica.Enabled = true;
 
-                        PopolaNominativi(listaCompletaFigProf.Where(x => x.Tipo == figuraProfessionale.Tipo).ToList());
+                        //    ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
+                        //    ddl_FPtipoPagamento.Style.Remove("cursor");
+                        //    ddl_FPtipoPagamento.Enabled = true;
+                        //}
+
+                        PopolaNominativi(basePage.listaCompletaFigProf.Where(x => x.Tipo == figuraProfessionale.Tipo).ToList());
                         ddl_FPtipo.SelectedValue = figuraProfessionale.Tipo.ToString();
                         txt_FPnotaCollaboratore.Text = figuraProfessionale.Nota;
                         ddl_FPnominativo.SelectedValue = figuraProfessionale.Id.ToString();
@@ -443,28 +398,31 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
                     else
                     {
-                        PopolaNominativi(listaCompletaFigProf.Where(x => x.Tipo == 0).ToList());
-                        ddl_FPtipo.SelectedValue = "0";
+                        int tipoCollaboratore = 0;
 
-                        ddl_FPqualifica.SelectedValue = "0";
-                        ddl_FPqualifica.CssClass = "w3-input w3-border";
-                        ddl_FPqualifica.Style.Remove("cursor");
-                        ddl_FPqualifica.Enabled = true;
+                        PopolaNominativi(basePage.listaCompletaFigProf.Where(x => x.Tipo == tipoCollaboratore).ToList());
 
-                        ddl_FPtipoPagamento.SelectedValue = "0";
-                        ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
-                        ddl_FPtipoPagamento.Style.Remove("cursor");
-                        ddl_FPtipoPagamento.Enabled = true;
+                        ddl_FPtipo.SelectedValue = tipoCollaboratore.ToString();
+
+                        AbilitaComponentiModificaArticolo(tipoCollaboratore);
+
+                        //ddl_FPqualifica.SelectedValue = "0";
+                        //ddl_FPqualifica.CssClass = "w3-input w3-border";
+                        //ddl_FPqualifica.Style.Remove("cursor");
+                        //ddl_FPqualifica.Enabled = true;
+
+                        //ddl_FPtipoPagamento.SelectedValue = "0";
+                        //ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
+                        //ddl_FPtipoPagamento.Style.Remove("cursor");
+                        //ddl_FPtipoPagamento.Enabled = true;
 
                         ddl_FPnominativo.SelectedValue = "0";
 
                         txt_FPnotaCollaboratore.Text = "";
                         txt_FPtelefono.Text = "";
-
                     }
 
-
-                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelModificaArticolo.ClientID + "').style.display='block'", addScriptTags: true);
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelModificaArticolo.ClientID + "').style.display='block'", addScriptTags: true);
 
                     break;
                 case "elimina":
@@ -551,29 +509,24 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 DatiArticoliLavorazione rigaCorrente = (DatiArticoliLavorazione)e.Row.DataItem;
 
-                if (rigaCorrente.IdCollaboratori.HasValue && rigaCorrente.IdCollaboratori != null)
+                if (rigaCorrente.IdCollaboratori != null && rigaCorrente.IdCollaboratori.HasValue)
                 {
-                    FiguraProfessionale figuraProfessionale = listaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdCollaboratori);
+                    FiguraProfessionale figuraProfessionale = basePage.listaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdCollaboratori);
                     ((Label)e.Row.FindControl("lbl_Riferimento")).Text = figuraProfessionale.Nome + " " + figuraProfessionale.Cognome;
                 }
 
-                if (rigaCorrente.IdFornitori.HasValue && rigaCorrente.IdFornitori != null)
+                if (rigaCorrente.IdFornitori != null && rigaCorrente.IdFornitori.HasValue)
                 {
-                    FiguraProfessionale figuraProfessionale = listaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdFornitori);
+                    FiguraProfessionale figuraProfessionale = basePage.listaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdFornitori);
                     ((Label)e.Row.FindControl("lbl_Riferimento")).Text = figuraProfessionale.Nome + " " + figuraProfessionale.Cognome;
                 }
 
-                if (rigaCorrente.IdTipoPagamento.HasValue && rigaCorrente.IdTipoPagamento != null)
+                if (rigaCorrente.IdTipoPagamento != null && rigaCorrente.IdTipoPagamento.HasValue)
                 {
-                    List<Tipologica> listaTipiPagamento = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO);
-
-                    ((Label)e.Row.FindControl("lbl_TipoPagamento")).Text = listaTipiPagamento.FirstOrDefault(x => x.id == rigaCorrente.IdTipoPagamento).nome;
+                    //List<Tipologica> listaTipiPagamento = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO);
+                    ((Label)e.Row.FindControl("lbl_TipoPagamento")).Text = basePage.listaTipiPagamento.FirstOrDefault(x => x.id == rigaCorrente.IdTipoPagamento).nome;
                 }
-
-                
             }
-
-
         }
 
         protected void btnImporta_Click(object sender, EventArgs e)
@@ -581,6 +534,230 @@ namespace VideoSystemWeb.Agenda.userControl
         #endregion
 
         #region OPERAZIONI LAVORAZIONE
+        private void PopolaCombo()
+        {
+            Esito esito = new Esito();
+
+
+            //List<Anag_Qualifiche_Collaboratori> listaQualificheCollaboratori = Anag_Qualifiche_Collaboratori_BLL.Instance.getAllQualifiche(ref esito, true);
+            //List<Anag_Collaboratori> listaAnagraficheCollaboratori = Anag_Collaboratori_BLL.Instance.getAllCollaboratori(ref esito);
+            //List<Anag_Clienti_Fornitori> listaAnagraficheFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaFornitori(ref esito);
+
+
+            #region CAPITECNICI
+            List<Anag_Qualifiche_Collaboratori> listaCapiTecnici = basePage.listaQualificheCollaboratori.Where(x => x.Qualifica == "Capo Tecnico").ToList<Anag_Qualifiche_Collaboratori>();
+
+            List<Anag_Collaboratori> listaAnagraficheCapiTecnici = (from Item1 in basePage.listaAnagraficheCollaboratori
+                                                                    join Item2 in listaCapiTecnici
+                                                                    on Item1.Id equals Item2.Id_collaboratore
+                                                                    select Item1).ToList();
+            ddl_Capotecnico.Items.Clear();
+            foreach (Anag_Collaboratori capoTecnico in listaAnagraficheCapiTecnici)
+            {
+                ddl_Capotecnico.Items.Add(new ListItem(capoTecnico.Nome + " " + capoTecnico.Cognome, capoTecnico.Id.ToString()));
+            }
+            ddl_Capotecnico.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            #endregion
+
+            #region PRODUTTORI
+            List<Anag_Qualifiche_Collaboratori> listaProduttori = basePage.listaQualificheCollaboratori.Where(x => x.Qualifica == "Produttore").ToList<Anag_Qualifiche_Collaboratori>();
+
+            List<Anag_Collaboratori> listaAnagraficheProduttori = (from Item1 in basePage.listaAnagraficheCollaboratori
+                                                                   join Item2 in listaProduttori on Item1.Id equals Item2.Id_collaboratore
+                                                                   select Item1).ToList();
+            ddl_Produttore.Items.Clear();
+            foreach (Anag_Collaboratori produttore in listaAnagraficheProduttori)
+            {
+                ddl_Produttore.Items.Add(new ListItem(produttore.Nome + " " + produttore.Cognome, produttore.Id.ToString()));
+            }
+            ddl_Produttore.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            #endregion
+
+            #region TIPOPAGAMENTO
+            //List<Tipologica> listaTipiPagamento = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO);
+
+            ddl_FPtipoPagamento.Items.Clear();
+            foreach (Tipologica tipoPagamento in basePage.listaTipiPagamento)
+            {
+                ddl_FPtipoPagamento.Items.Add(new ListItem(tipoPagamento.nome, tipoPagamento.id.ToString()));
+            }
+            ddl_FPtipoPagamento.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            #endregion
+
+            #region QUALIFICHE
+            List<Tipologica> listaQualifiche = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_QUALIFICHE);
+
+            ddl_FPqualifica.Items.Clear();
+            foreach (Tipologica qualifica in listaQualifiche)
+            {
+                ddl_FPqualifica.Items.Add(new ListItem(qualifica.nome, qualifica.id.ToString()));
+            }
+            ddl_FPqualifica.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            #endregion
+
+            #region CITTA'
+            //List<string> listaCompletaCitta = new List<string>();
+            //listaCompletaCitta.AddRange((from record in listaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList());
+            //listaCompletaCitta = listaCompletaCitta.Distinct().ToList<string>();
+            //listaCompletaCitta.Sort();
+
+            basePage.listaCittaCollaboratori.Sort();
+
+            ddl_FPcitta.Items.Clear();
+            foreach (string citta in basePage.listaCittaCollaboratori)
+            {
+                ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
+            }
+            ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            #endregion
+
+            #region NOMINATIVO
+            //List<FiguraProfessionale> listaCompletaFigProf = new List<FiguraProfessionale>();
+
+            //List<FiguraProfessionale> _listaCompletaFigProf = new List<FiguraProfessionale>();
+            //foreach (Anag_Collaboratori collaboratore in listaAnagraficheCollaboratori)
+            //{
+            //    _listaCompletaFigProf.Add(new FiguraProfessionale()
+            //    {
+            //        Id = collaboratore.Id,
+            //        Nome = collaboratore.Nome,
+            //        Cognome = collaboratore.Cognome,
+            //        Citta = collaboratore.ComuneRiferimento.Trim().ToLower(),
+            //        Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Pref_naz + collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Numero,
+            //        Qualifiche = collaboratore.Qualifiche,
+            //        Tipo = 0,
+            //        Nota = collaboratore.Note
+            //    });
+            //}
+
+            //foreach (Anag_Clienti_Fornitori fornitore in listaAnagraficheFornitori)
+            //{
+            //    _listaCompletaFigProf.Add(new FiguraProfessionale()
+            //    {
+            //        Id = fornitore.Id,
+            //        Cognome = fornitore.RagioneSociale,
+            //        Citta = fornitore.ComuneLegale.Trim().ToLower(),
+            //        Telefono = fornitore.Telefono,
+            //        Tipo = 1,
+            //        Nota = fornitore.Note
+            //    });
+            //}
+            //listaCompletaFigProf = _listaCompletaFigProf.OrderBy(x => x.Cognome).ToList<FiguraProfessionale>();
+            PopolaNominativi(basePage.listaCompletaFigProf.Where(x => x.Tipo == 0).ToList());
+            #endregion
+        }
+
+        protected void filtraFP(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+
+            int tipoFP = int.Parse(ddl_FPtipo.SelectedValue);
+            int qualificaFP = int.Parse(ddl_FPqualifica.SelectedValue);
+            string cittaFP = ddl_FPcitta.SelectedValue;
+
+            AbilitaComponentiModificaArticolo(tipoFP);
+
+            if (tipoFP == 1) // FORNITORI
+            {
+                //ddl_FPqualifica.SelectedValue = "0";
+                //ddl_FPqualifica.CssClass = "w3-input w3-border";
+                //ddl_FPqualifica.Style.Add("cursor", "not-allowed;");
+                //ddl_FPqualifica.Enabled = false;
+
+                //ddl_FPtipoPagamento.SelectedValue = "0";
+                //ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
+                //ddl_FPtipoPagamento.Style.Add("cursor", "not-allowed;");
+                //ddl_FPtipoPagamento.Enabled = false;
+
+
+                //List<Anag_Clienti_Fornitori> listaAnagraficheFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaFornitori(ref esito);
+
+                //List<string> listaCompletaCitta = new List<string>();
+                //listaCompletaCitta.AddRange((from record in listaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList());
+                //listaCompletaCitta = listaCompletaCitta.Distinct().ToList<string>();
+                //listaCompletaCitta.Sort();
+
+                basePage.listaCittaFornitori.Sort();
+
+                ddl_FPcitta.Items.Clear();
+                foreach (string citta in basePage.listaCittaFornitori)
+                {
+                    ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
+                }
+                ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            }
+            else // COLLABORATORI
+            {
+                //ddl_FPqualifica.CssClass = "w3-input w3-border";
+                //ddl_FPqualifica.Style.Remove("cursor");
+                //ddl_FPqualifica.Enabled = true;
+
+                //ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
+                //ddl_FPtipoPagamento.Style.Remove("cursor");
+                //ddl_FPtipoPagamento.Enabled = true;
+
+                //List<Anag_Collaboratori> listaAnagraficheCollaboratori = Anag_Collaboratori_BLL.Instance.getAllCollaboratori(ref esito);
+
+                //List<string> listaCompletaCitta = new List<string>();
+                //listaCompletaCitta.AddRange((from record in listaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList());
+                //listaCompletaCitta = listaCompletaCitta.Distinct().ToList<string>();
+                //listaCompletaCitta.Sort();
+                basePage.listaCittaCollaboratori.Sort();
+
+                ddl_FPcitta.Items.Clear();
+                foreach (string citta in basePage.listaCittaCollaboratori)
+                {
+                    ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
+                }
+                ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            }
+
+            List<FiguraProfessionale> listaFPfiltrata = basePage.listaCompletaFigProf.Where(x => x.Tipo == tipoFP).ToList();
+
+            if (tipoFP == 0 && qualificaFP != 0)
+            {
+                listaFPfiltrata = listaFPfiltrata.Where(x => x.Qualifiche.Where(y => y.Id == qualificaFP).Count() > 0).ToList();
+            }
+
+            if (cittaFP != "0")
+            {
+                listaFPfiltrata = listaFPfiltrata.Where(x => x.Citta.ToLower().Trim().Contains(cittaFP)).ToList();
+            }
+
+            PopolaNominativi(listaFPfiltrata);
+
+            upModificaArticolo.Update();
+        }
+
+        protected void visualizzaFP(object sender, EventArgs e)
+        {
+            FiguraProfessionale fpSelezionata = new FiguraProfessionale();
+            if (ddl_FPnominativo.SelectedValue != "0")
+            {
+                fpSelezionata = basePage.listaCompletaFigProf.FirstOrDefault(x => x.Id == int.Parse(ddl_FPnominativo.SelectedValue));
+            }
+
+            PopolaDettagliFP(fpSelezionata);
+
+            upModificaArticolo.Update();
+        }
+
+        private void PopolaNominativi(List<FiguraProfessionale> listaNominativi)
+        {
+            ddl_FPnominativo.Items.Clear();
+            foreach (FiguraProfessionale figPro in listaNominativi)
+            {
+                ddl_FPnominativo.Items.Add(new ListItem(figPro.Cognome + " " + figPro.Nome, figPro.Id.ToString()));
+            }
+            ddl_FPnominativo.Items.Insert(0, new ListItem("<seleziona>", "0"));
+        }
+
+        private void PopolaDettagliFP(FiguraProfessionale figuraProfessionale)
+        {
+            txt_FPtelefono.Text = figuraProfessionale.Telefono;
+            txt_FPnotaCollaboratore.Text = figuraProfessionale.Nota;
+        }
+
         private void aggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
         {
             Esito esito = new Esito();
@@ -629,8 +806,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void ResetPanelLavorazione()
         {
-            // ClearModificaArticoli();
-
             gvArticoliLavorazione.DataSource = listaDatiArticoliLavorazione;
             gvArticoliLavorazione.DataBind();
 
@@ -643,23 +818,27 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            gvGruppi.DataSource = listaArticoliGruppi;
-            gvGruppi.DataBind();
-            PopolaCombo();
-
+            #region INIZIALIZZAZIONE OGGETTI LAVORAZIONE CORRENTE
             DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            if (eventoSelezionato != null)
-            {
-                //Esito esito = new Esito();
-                List<Anag_Referente_Clienti_Fornitori> listaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, eventoSelezionato.id_cliente);
-                foreach (Anag_Referente_Clienti_Fornitori referente in listaReferenti)
-                {
-                    ddl_Referente.Items.Add(new ListItem(referente.Nome + " " + referente.Cognome, referente.Id.ToString()));
-                }
-                ddl_Referente.Items.Insert(0, new ListItem("<selezionare>", "0"));
-            }
-
             lavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
+            basePage.listaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
+            #endregion
+
+
+            //gvGruppi.DataSource = listaArticoliGruppi;
+            //gvGruppi.DataBind();
+
+            //PopolaCombo();
+
+            //if (eventoSelezionato != null)
+            //{
+            //    List<Anag_Referente_Clienti_Fornitori> listaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, eventoSelezionato.id_cliente);
+            //    foreach (Anag_Referente_Clienti_Fornitori referente in listaReferenti)
+            //    {
+            //        ddl_Referente.Items.Add(new ListItem(referente.Nome + " " + referente.Cognome, referente.Id.ToString()));
+            //    }
+            //    ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            //}
 
             if (esito.codice != Esito.ESITO_OK)
             {
@@ -667,14 +846,15 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                ddl_Referente.Items.Clear();
-                List<Anag_Referente_Clienti_Fornitori> listaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
-                foreach (Anag_Referente_Clienti_Fornitori referente in listaReferenti)
-                {
-                    ddl_Referente.Items.Add(new ListItem(referente.Nome + " " + referente.Cognome, referente.Id.ToString()));
-                }
-                ddl_Referente.Items.Insert(0, new ListItem("<selezionare>", "0"));
+                //ddl_Referente.Items.Clear();
 
+                //foreach (Anag_Referente_Clienti_Fornitori referente in listaReferenti)
+                //{
+                //    ddl_Referente.Items.Add(new ListItem(referente.Nome + " " + referente.Cognome, referente.Id.ToString()));
+                //}
+                //ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", "0"));
+
+                CreaNuovaLavorazione(listaDatiArticoliLavorazione);
 
                 if (lavorazioneCorrente != null)
                 {
@@ -690,22 +870,21 @@ namespace VideoSystemWeb.Agenda.userControl
                     gvArticoliLavorazione.DataSource = listaDatiArticoliLavorazione;
                     gvArticoliLavorazione.DataBind();
                 }
-                //ResetPanelLavorazione();
                 AggiornaTotali();
             }
         }
 
-        public void CreaNuovaLavorazione(DatiAgenda eventoSelezionato, List<DatiArticoliLavorazione> listaArticoliLavorazione)
+        public void CreaNuovaLavorazione(List<DatiArticoliLavorazione> listaArticoliLavorazione)
         {
             Esito esito = new Esito();
 
             ddl_Referente.Items.Clear();
-            List<Anag_Referente_Clienti_Fornitori> listaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, eventoSelezionato.id_cliente);
-            foreach (Anag_Referente_Clienti_Fornitori referente in listaReferenti)
+           // List<Anag_Referente_Clienti_Fornitori> listaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, eventoSelezionato.id_cliente);
+            foreach (Anag_Referente_Clienti_Fornitori referente in basePage.listaReferenti)
             {
                 ddl_Referente.Items.Add(new ListItem(referente.Nome + " " + referente.Cognome, referente.Id.ToString()));
             }
-            ddl_Referente.Items.Insert(0, new ListItem("<selezionare>", "0"));
+            ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", "0"));
 
 
             listaDatiArticoliLavorazione = listaArticoliLavorazione;

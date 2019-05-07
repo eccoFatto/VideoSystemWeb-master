@@ -11,6 +11,8 @@ namespace VideoSystemWeb.Entity
     //[numeroDocumento] [varchar] (20) NOT NULL,
     //[pathDocumento] [varchar] (50) NULL,
     //[attivo] [bit] NOT NULL,
+
+    [Serializable]
     public class Anag_Documenti_Collaboratori
     {
         private int id;

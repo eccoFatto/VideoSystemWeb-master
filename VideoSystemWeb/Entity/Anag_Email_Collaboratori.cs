@@ -11,6 +11,7 @@ namespace VideoSystemWeb.Entity
     //[indirizzoEmail] [varchar] (60) NOT NULL,
     //[descrizione] [varchar] (60) NULL,
     //[attivo]    [bit]    NOT NULL,
+    [Serializable]
     public class Anag_Email_Collaboratori
     {
         private int id;

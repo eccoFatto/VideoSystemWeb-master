@@ -17,7 +17,7 @@ namespace VideoSystemWeb.Entity
     //[nazione] [varchar] (20) NULL,
     //[descrizione] [varchar] (60) NULL,
     //[attivo] [bit]NOT NULL,
-
+    [Serializable]
     public class Anag_Indirizzi_Collaboratori
     {
         private int id;

@@ -264,12 +264,12 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                ddl_FPqualifica.SelectedValue = "0";
+                ddl_FPqualifica.SelectedValue = "";
                 ddl_FPqualifica.CssClass = "w3-input w3-border";
                 ddl_FPqualifica.Style.Add("cursor", "not-allowed;");
                 ddl_FPqualifica.Enabled = false;
 
-                ddl_FPtipoPagamento.SelectedValue = "0";
+                ddl_FPtipoPagamento.SelectedValue = "";
                 ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
                 ddl_FPtipoPagamento.Style.Add("cursor", "not-allowed;");
                 ddl_FPtipoPagamento.Enabled = false;
@@ -357,7 +357,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_Costo.Text = articoloSelezionato.Costo.ToString();
                     txt_Prezzo.Text = articoloSelezionato.Prezzo.ToString();
                     txt_Iva.Text = articoloSelezionato.Iva.ToString();
-                    ddl_FPtipoPagamento.SelectedValue = articoloSelezionato.IdTipoPagamento.ToString();
+                    ddl_FPtipoPagamento.SelectedValue = articoloSelezionato.IdTipoPagamento != null ? articoloSelezionato.IdTipoPagamento.ToString() : "";
 
                     FiguraProfessionale figuraProfessionale = SessionManager.listaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdCollaboratori);
                     if (figuraProfessionale == null)
@@ -367,29 +367,6 @@ namespace VideoSystemWeb.Agenda.userControl
                     if (figuraProfessionale != null)
                     {
                         AbilitaComponentiModificaArticolo(figuraProfessionale.Tipo);
-
-                        //if (figuraProfessionale.Tipo == 1)
-                        //{
-                        //    ddl_FPqualifica.SelectedValue = "0";
-                        //    ddl_FPqualifica.CssClass = "w3-input w3-border";
-                        //    ddl_FPqualifica.Style.Add("cursor", "not-allowed;");
-                        //    ddl_FPqualifica.Enabled = false;
-
-                        //    ddl_FPtipoPagamento.SelectedValue = "0";
-                        //    ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
-                        //    ddl_FPtipoPagamento.Style.Add("cursor", "not-allowed;");
-                        //    ddl_FPtipoPagamento.Enabled = false;
-                        //}
-                        //else
-                        //{
-                        //    ddl_FPqualifica.CssClass = "w3-input w3-border";
-                        //    ddl_FPqualifica.Style.Remove("cursor");
-                        //    ddl_FPqualifica.Enabled = true;
-
-                        //    ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
-                        //    ddl_FPtipoPagamento.Style.Remove("cursor");
-                        //    ddl_FPtipoPagamento.Enabled = true;
-                        //}
 
                         
                         ddl_FPcitta.Items.Clear();
@@ -409,7 +386,7 @@ namespace VideoSystemWeb.Agenda.userControl
                                 ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
                             }
                         }
-                        ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", "0"));
+                        ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
 
                         PopolaNominativi(SessionManager.listaCompletaFigProf.Where(x => x.Tipo == figuraProfessionale.Tipo).ToList());
                         ddl_FPtipo.SelectedValue = figuraProfessionale.Tipo.ToString();
@@ -427,7 +404,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         {
                             ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
                         }
-                        ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", "0"));
+                        ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
 
 
                         PopolaNominativi(SessionManager.listaCompletaFigProf.Where(x => x.Tipo == tipoCollaboratore).ToList());
@@ -436,17 +413,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         AbilitaComponentiModificaArticolo(tipoCollaboratore);
 
-                        //ddl_FPqualifica.SelectedValue = "0";
-                        //ddl_FPqualifica.CssClass = "w3-input w3-border";
-                        //ddl_FPqualifica.Style.Remove("cursor");
-                        //ddl_FPqualifica.Enabled = true;
-
-                        //ddl_FPtipoPagamento.SelectedValue = "0";
-                        //ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
-                        //ddl_FPtipoPagamento.Style.Remove("cursor");
-                        //ddl_FPtipoPagamento.Enabled = true;
-
-                        ddl_FPnominativo.SelectedValue = "0";
+                        ddl_FPnominativo.SelectedValue = "";
 
                         txt_FPnotaCollaboratore.Text = "";
                         txt_FPtelefono.Text = "";
@@ -516,14 +483,14 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (ddl_FPtipo.SelectedValue == "0") //COLLABORATORI
             {
-                articoloSelezionato.IdCollaboratori = ddl_FPnominativo.SelectedValue == "0" ? null : (int?)int.Parse(ddl_FPnominativo.SelectedValue);
+                articoloSelezionato.IdCollaboratori = ddl_FPnominativo.SelectedValue == "" ? null : (int?)int.Parse(ddl_FPnominativo.SelectedValue);
             }
             else //FORNITORI
             {
-                articoloSelezionato.IdFornitori = ddl_FPnominativo.SelectedValue == "0" ? null : (int?)int.Parse(ddl_FPnominativo.SelectedValue);
+                articoloSelezionato.IdFornitori = ddl_FPnominativo.SelectedValue == "" ? null : (int?)int.Parse(ddl_FPnominativo.SelectedValue);
             }
 
-            articoloSelezionato.IdTipoPagamento = ddl_FPtipoPagamento.SelectedValue == "0" ? null : (int?)int.Parse(ddl_FPtipoPagamento.SelectedValue);
+            articoloSelezionato.IdTipoPagamento = ddl_FPtipoPagamento.SelectedValue == "" ? null : (int?)int.Parse(ddl_FPtipoPagamento.SelectedValue);
            
 
 
@@ -587,7 +554,7 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 ddl_Capotecnico.Items.Add(new ListItem(capoTecnico.Nome + " " + capoTecnico.Cognome, capoTecnico.Id.ToString()));
             }
-            ddl_Capotecnico.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            ddl_Capotecnico.Items.Insert(0, new ListItem("<seleziona>", ""));
             #endregion
 
             #region PRODUTTORI
@@ -601,7 +568,7 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 ddl_Produttore.Items.Add(new ListItem(produttore.Nome + " " + produttore.Cognome, produttore.Id.ToString()));
             }
-            ddl_Produttore.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            ddl_Produttore.Items.Insert(0, new ListItem("<seleziona>", ""));
             #endregion
 
             #region TIPOPAGAMENTO
@@ -612,7 +579,7 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 ddl_FPtipoPagamento.Items.Add(new ListItem(tipoPagamento.nome, tipoPagamento.id.ToString()));
             }
-            ddl_FPtipoPagamento.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            ddl_FPtipoPagamento.Items.Insert(0, new ListItem("<seleziona>", ""));
             #endregion
 
             #region QUALIFICHE
@@ -623,60 +590,11 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 ddl_FPqualifica.Items.Add(new ListItem(qualifica.nome, qualifica.id.ToString()));
             }
-            ddl_FPqualifica.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            ddl_FPqualifica.Items.Insert(0, new ListItem("<seleziona>", ""));
             #endregion
 
-            #region CITTA'
-            //List<string> listaCompletaCitta = new List<string>(); 
-            //listaCompletaCitta.AddRange((from record in listaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList());
-            //listaCompletaCitta = listaCompletaCitta.Distinct().ToList<string>();
-            //listaCompletaCitta.Sort();
-
-           // basePage.listaCittaCollaboratori = basePage.listaCittaCollaboratori.Distinct().ToList();
-            //SessionManager.listaCittaCollaboratori.Sort();
-            //ddl_FPcitta.Items.Clear();
-            //foreach (string citta in SessionManager.listaCittaCollaboratori)
-            //{
-            //    ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
-            //}
-            //ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", "0"));
-
-            #endregion
-
-            #region NOMINATIVO
-            //List<FiguraProfessionale> listaCompletaFigProf = new List<FiguraProfessionale>();
-
-            //List<FiguraProfessionale> _listaCompletaFigProf = new List<FiguraProfessionale>();
-            //foreach (Anag_Collaboratori collaboratore in listaAnagraficheCollaboratori)
-            //{
-            //    _listaCompletaFigProf.Add(new FiguraProfessionale()
-            //    {
-            //        Id = collaboratore.Id,
-            //        Nome = collaboratore.Nome,
-            //        Cognome = collaboratore.Cognome,
-            //        Citta = collaboratore.ComuneRiferimento.Trim().ToLower(),
-            //        Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Pref_naz + collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Numero,
-            //        Qualifiche = collaboratore.Qualifiche,
-            //        Tipo = 0,
-            //        Nota = collaboratore.Note
-            //    });
-            //}
-
-            //foreach (Anag_Clienti_Fornitori fornitore in listaAnagraficheFornitori)
-            //{
-            //    _listaCompletaFigProf.Add(new FiguraProfessionale()
-            //    {
-            //        Id = fornitore.Id,
-            //        Cognome = fornitore.RagioneSociale,
-            //        Citta = fornitore.ComuneLegale.Trim().ToLower(),
-            //        Telefono = fornitore.Telefono,
-            //        Tipo = 1,
-            //        Nota = fornitore.Note
-            //    });
-            //}
-            //listaCompletaFigProf = _listaCompletaFigProf.OrderBy(x => x.Cognome).ToList<FiguraProfessionale>();
-           // PopolaNominativi(SessionManager.listaCompletaFigProf.Where(x => x.Tipo == 0).ToList());
-            #endregion
+      
+            
         }
 
         protected void filtraFP(object sender, EventArgs e)
@@ -684,7 +602,7 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
 
             int tipoFP = int.Parse(ddl_FPtipo.SelectedValue);
-            int qualificaFP = int.Parse(ddl_FPqualifica.SelectedValue);
+            string qualificaFP = ddl_FPqualifica.SelectedValue;
             string cittaFP = ddl_FPcitta.SelectedValue;
 
             AbilitaComponentiModificaArticolo(tipoFP);
@@ -715,7 +633,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
                     ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
                 }
-                ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", "0"));
+                ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
             }
             else // COLLABORATORI
             {
@@ -741,17 +659,17 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
                     ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
                 }
-                ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", "0"));
+                ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
             }
 
             List<FiguraProfessionale> listaFPfiltrata = SessionManager.listaCompletaFigProf.Where(x => x.Tipo == tipoFP).ToList();
 
-            if (tipoFP == 0 && qualificaFP != 0)
+            if (tipoFP == 0 &&  !string.IsNullOrEmpty(qualificaFP))
             {
-                listaFPfiltrata = listaFPfiltrata.Where(x => x.Qualifiche.Where(y => y.Id == qualificaFP).Count() > 0).ToList();
+                listaFPfiltrata = listaFPfiltrata.Where(x => x.Qualifiche.Where(y => y.Id == int.Parse(qualificaFP)).Count() > 0).ToList();
             }
 
-            if (cittaFP != "0")
+            if (cittaFP != "")
             {
                 listaFPfiltrata = listaFPfiltrata.Where(x => x.Citta.ToLower().Trim().Contains(cittaFP)).ToList();
             }
@@ -764,7 +682,7 @@ namespace VideoSystemWeb.Agenda.userControl
         protected void visualizzaFP(object sender, EventArgs e)
         {
             FiguraProfessionale fpSelezionata = new FiguraProfessionale();
-            if (ddl_FPnominativo.SelectedValue != "0")
+            if (ddl_FPnominativo.SelectedValue != "")
             {
                 fpSelezionata = SessionManager.listaCompletaFigProf.FirstOrDefault(x => x.Id == int.Parse(ddl_FPnominativo.SelectedValue));
             }
@@ -781,7 +699,7 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 ddl_FPnominativo.Items.Add(new ListItem(figPro.Cognome + " " + figPro.Nome, figPro.Id.ToString()));
             }
-            ddl_FPnominativo.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            ddl_FPnominativo.Items.Insert(0, new ListItem("<seleziona>", ""));
         }
 
         private void PopolaDettagliFP(FiguraProfessionale figuraProfessionale)
@@ -892,10 +810,10 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
                     txt_Ordine.Text = lavorazioneCorrente.Ordine;
                     txt_Fattura.Text = lavorazioneCorrente.Fattura;
-                    ddl_Contratto.SelectedValue = lavorazioneCorrente.IdContratto == null ? "0": lavorazioneCorrente.IdContratto.ToString();
-                    ddl_Referente.SelectedValue = lavorazioneCorrente.IdReferente == null ? "0" : lavorazioneCorrente.IdReferente.ToString();
-                    ddl_Capotecnico.SelectedValue = lavorazioneCorrente.IdCapoTecnico == null ? "0" : lavorazioneCorrente.IdCapoTecnico.ToString();
-                    ddl_Produttore.SelectedValue = lavorazioneCorrente.IdProduttore == null ? "0" : lavorazioneCorrente.IdProduttore.ToString();
+                    ddl_Contratto.SelectedValue = lavorazioneCorrente.IdContratto == null ? "": lavorazioneCorrente.IdContratto.ToString();
+                    ddl_Referente.SelectedValue = lavorazioneCorrente.IdReferente == null ? "" : lavorazioneCorrente.IdReferente.ToString();
+                    ddl_Capotecnico.SelectedValue = lavorazioneCorrente.IdCapoTecnico == null ? "" : lavorazioneCorrente.IdCapoTecnico.ToString();
+                    ddl_Produttore.SelectedValue = lavorazioneCorrente.IdProduttore == null ? "" : lavorazioneCorrente.IdProduttore.ToString();
 
                     listaDatiArticoliLavorazione = lavorazioneCorrente.ListaArticoliLavorazione;
 
@@ -916,7 +834,7 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 ddl_Referente.Items.Add(new ListItem(referente.Nome + " " + referente.Cognome, referente.Id.ToString()));
             }
-            ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", "0"));
+            ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", ""));
 
 
             listaDatiArticoliLavorazione = listaArticoliLavorazione;
@@ -945,6 +863,8 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             DatiLavorazione datiLavorazione = new DatiLavorazione();
             datiLavorazione.Id = lavorazioneCorrente == null ? 0 : lavorazioneCorrente.Id;
+
+            //BasePage.ValidaCampo(txt_DurataLavorazione, 0, campoObbligatorio, ref esito);
 
             datiLavorazione.Ordine = txt_Ordine.Text;
             datiLavorazione.Fattura = txt_Fattura.Text;

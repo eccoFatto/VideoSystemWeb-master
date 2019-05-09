@@ -41,7 +41,8 @@ namespace VideoSystemWeb.BLL
 
             if (datiLavorazione != null)
             {
-                List<DatiArticoliLavorazione> listaDatiLavorazione = Dati_Articoli_Lavorazione_DAL.Instance.getDatiArticoliLavorazioneByIdDatiLavorazione(ref esito, datiLavorazione.Id);
+                Esito esito2 = new Esito(); // uso un'altra variabile per non sovrascrivere l'esito sopra
+                List<DatiArticoliLavorazione> listaDatiLavorazione = Dati_Articoli_Lavorazione_DAL.Instance.getDatiArticoliLavorazioneByIdDatiLavorazione(ref esito2, datiLavorazione.Id);
                 datiLavorazione.ListaArticoliLavorazione = listaDatiLavorazione;
             }
 

@@ -16,7 +16,7 @@ namespace VideoSystemWeb.BLL
             Esito esito = new Esito();
             List<Tipologica> listaTipologiche = new List<Tipologica>();
 
-            if (HttpContext.Current.Session[tipologica.ToString()] == null)
+            if (HttpContext.Current.Session[tipologica.ToString()] == null || ((List<Tipologica>)HttpContext.Current.Session[tipologica.ToString()]).Count()==0)
             {
                 listaTipologiche = Base_DAL.CaricaTipologica(tipologica, true, ref esito);
 

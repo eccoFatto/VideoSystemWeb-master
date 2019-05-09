@@ -25,13 +25,14 @@ namespace VideoSystemWeb.Protocollo
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
             if (!Page.IsPostBack)
             {
+                Esito esito = new Esito();
 
                 Session["NOME_FILE"] = "";
                 //BasePage p = new BasePage();
-                Esito esito = basePage.CaricaListeTipologiche();
+                //Esito esito = basePage.CaricaListeTipologiche();
 
                 //basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
                 //ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
@@ -43,7 +44,7 @@ namespace VideoSystemWeb.Protocollo
                     ddlTipoProtocollo.Items.Clear();
                     cmbMod_Tipologia.Items.Clear();
                     ddlTipoProtocollo.Items.Add("");
-                    foreach (Tipologica tipologiaProtocollo in basePage.listaTipiProtocolli)
+                    foreach (Tipologica tipologiaProtocollo in SessionManager.listaTipiProtocolli)
                     {
                         ListItem item = new ListItem();
                         item.Text = tipologiaProtocollo.nome;

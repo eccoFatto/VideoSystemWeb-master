@@ -35,13 +35,15 @@ namespace VideoSystemWeb.Agenda.userControl
             if (!IsPostBack)
             {
 
-                basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
-                ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
+                //basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
+                //ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
 
-                basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
-                basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
+                List<Anag_Clienti_Fornitori> listaClienti = SessionManager.listaClientiFornitori.Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
 
-                List<Tipologica> listaTender = basePage.listaTender;
+                basePage.PopolaDDLTipologica(elencoTipologie, SessionManager.listaTipiTipologie);
+                basePage.PopolaDDLGenerico(elencoClienti, listaClienti);
+
+                List<Tipologica> listaTender = SessionManager.listaTender;
                 foreach (Tipologica tender in listaTender)
                 {
                     check_tender.Items.Add(new ListItem(tender.nome, tender.id.ToString()));
@@ -63,7 +65,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             int idStato;
 
-            string sottotipoRisorsa = UtilityTipologiche.getElementByID(basePage.listaRisorse, int.Parse(hf_Risorse.Value), ref esito).sottotipo.ToUpper();
+            string sottotipoRisorsa = UtilityTipologiche.getElementByID(SessionManager.listaRisorse, int.Parse(hf_Risorse.Value), ref esito).sottotipo.ToUpper();
 
             if (sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString())
             {
@@ -210,7 +212,7 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DurataLavorazione.Text = evento.durata_lavorazione.ToString();
 
             hf_Risorse.Value = evento.id_colonne_agenda.ToString();
-            ddl_Risorse.Text = ddl_Risorse.ToolTip = basePage.listaRisorse.Where(x => x.id == evento.id_colonne_agenda).FirstOrDefault().nome;
+            ddl_Risorse.Text = ddl_Risorse.ToolTip = SessionManager.listaRisorse.Where(x => x.id == evento.id_colonne_agenda).FirstOrDefault().nome;
 
             if (evento.id_tipologia == 0 || evento.id_tipologia == null)
             {
@@ -220,7 +222,7 @@ namespace VideoSystemWeb.Agenda.userControl
             else
             {
                 hf_Tipologie.Value = evento.id_tipologia.ToString();
-                ddl_Tipologie.Text = ddl_Tipologie.ToolTip = basePage.listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
+                ddl_Tipologie.Text = ddl_Tipologie.ToolTip = SessionManager.listaTipiTipologie.Where(x => x.id == evento.id_tipologia).FirstOrDefault().nome;
             }
 
             if (evento.id_cliente == 0)
@@ -231,21 +233,21 @@ namespace VideoSystemWeb.Agenda.userControl
             else
             {
                 hf_Clienti.Value = evento.id_cliente.ToString();
-                ddl_Clienti.Text = ddl_Clienti.ToolTip = ((List<Anag_Clienti_Fornitori>)ViewState["listaClientiFornitori"]).Where(x => x.Id == evento.id_cliente).FirstOrDefault().RagioneSociale;
+                ddl_Clienti.Text = ddl_Clienti.ToolTip = SessionManager.listaClientiFornitori.Where(x => x.Id == evento.id_cliente).FirstOrDefault().RagioneSociale;
             }
 
             //Inibito il cambiamento tra sottotipi (dipendente o unità esterna) per evitare di entrare in stato inconsistente
             //if (evento.id_stato != Stato.Instance.STATO_PREVISIONE_IMPEGNO && evento.id_stato != Stato.Instance.STATO_RIPOSO)
             if (evento.id_stato != Stato.Instance.STATO_RIPOSO)
             {
-                List<ColonneAgenda> listaRisorseNoDipendenti = basePage.listaRisorse.Where(x => x.sottotipo.ToUpper() != EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<ColonneAgenda>();
+                List<ColonneAgenda> listaRisorseNoDipendenti = SessionManager.listaRisorse.Where(x => x.sottotipo.ToUpper() != EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<ColonneAgenda>();
 
                 elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
                 basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseNoDipendenti);
             }
             else 
             {
-                List<ColonneAgenda> listaRisorseSoloDipendenti = basePage.listaRisorse.Where(x => x.sottotipo.ToUpper() == EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<ColonneAgenda>();
+                List<ColonneAgenda> listaRisorseSoloDipendenti = SessionManager.listaRisorse.Where(x => x.sottotipo.ToUpper() == EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<ColonneAgenda>();
 
                 elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
                 basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseSoloDipendenti);

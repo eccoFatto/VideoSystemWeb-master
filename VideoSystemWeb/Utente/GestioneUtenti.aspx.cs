@@ -29,14 +29,15 @@ namespace VideoSystemWeb.Utente
         {
             if (!Page.IsPostBack)
             {
-                Esito esito = basePage.CaricaListeTipologiche();
+                Esito esito = new Esito();
+                //Esito esito = basePage.CaricaListeTipologiche();
                 // CARICO LE COMBO
                 if (string.IsNullOrEmpty(esito.descrizione))
                 {
                     ddlTipoUtente.Items.Clear();
                     cmbMod_TipoUtente.Items.Clear();
                     ddlTipoUtente.Items.Add("");
-                    foreach (Tipologica tipologiaUtente in basePage.listaTipiUtente)
+                    foreach (Tipologica tipologiaUtente in SessionManager.listaTipiUtente)
                     {
                         ListItem item = new ListItem();
                         item.Text = tipologiaUtente.nome;

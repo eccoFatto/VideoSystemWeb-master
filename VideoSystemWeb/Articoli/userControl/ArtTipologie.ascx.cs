@@ -38,62 +38,99 @@ namespace VideoSystemWeb.Articoli.userControl
                 {
 
                     lblTipoArticolo.Text = ViewState["TIPO_ARTICOLO"].ToString();
-                    caricaTipologia();
+                    caricaTipologia(false);
 
                 }
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
             }
         }
 
-        private List<Tipologica> caricaTipologia()
+        private List<Tipologica> caricaTipologia(bool clearLista)
         {
             List<Tipologica> lista;
             Esito esito = new Esito();
             switch (ViewState["TIPO_ARTICOLO"].ToString())
             {
                 case "GENERI":
+                    if (clearLista)
+                    {
+                        SessionManager.listaTipiGeneri.Clear();
+                    }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Red;
-                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);
+                    lista = SessionManager.listaTipiGeneri;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GENERE;
                     break;
                 case "GRUPPI":
+                    if (clearLista)
+                    {
+                        SessionManager.listaTipiGruppi.Clear();
+                    }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Green;
-                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GRUPPO, true, ref esito);
+                    lista = SessionManager.listaTipiGruppi;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GRUPPO, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GRUPPO;
                     break;
                 case "SOTTOGRUPPI":
+                    if (clearLista)
+                    {
+                        SessionManager.listaTipiSottogruppi.Clear();
+                    }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Blue;
-                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO, true, ref esito);
+                    lista = SessionManager.listaTipiSottogruppi; // UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_SOTTOGRUPPO;
                     break;
                 case "TENDER":
+                    if (clearLista)
+                    {
+                        SessionManager.listaTender.Clear();
+                    }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Brown;
-                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TENDER, true, ref esito);
+                    //lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TENDER, true, ref esito);
+                    lista = SessionManager.listaTender;
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_TENDER;
                     break;
                 case "QUALIFICHE":
+                    if (clearLista)
+                    {
+                        SessionManager.listaQualifiche.Clear();
+                    }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Yellow;
-                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_QUALIFICHE, true, ref esito);
+                    lista = SessionManager.listaQualifiche;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_QUALIFICHE, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_QUALIFICHE;
                     break;
                 case "CLIENTI/FORNITORI":
+                    if (clearLista)
+                    {
+                        SessionManager.listaClientiFornitori.Clear();
+                    }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.OrangeRed;
-                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_CLIENTI_FORNITORI, true, ref esito);
+                    lista = SessionManager.listaTipiClientiFornitori;   //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_CLIENTI_FORNITORI, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_CLIENTI_FORNITORI;
                     break;
                 case "PROTOCOLLI":
+                    if (clearLista)
+                    {
+                        SessionManager.listaTipiProtocolli.Clear();
+                    }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Orange;
-                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO, true, ref esito);
+                    lista = SessionManager.listaTipiProtocolli; //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_PROTOCOLLO;
                     break;
                 case "LAVORAZIONI":
+                    if (clearLista)
+                    {
+                        SessionManager.listaTipiTipologie.Clear();
+                    }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.LightSkyBlue;
-                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, true, ref esito);
+                    lista = SessionManager.listaTipiTipologie;  //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_TIPOLOGIE;
                     break;
                 default:
+                    if (clearLista)
+                    {
+                        SessionManager.listaTipiGeneri.Clear();
+                    }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Red;
-                    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);
+                    lista = SessionManager.listaTipiGeneri;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GENERE;
                     break;
             }
@@ -165,6 +202,7 @@ namespace VideoSystemWeb.Articoli.userControl
                 NascondiErroriValidazione();
 
                 int iRet = UtilityTipologiche.CreaTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], tipologia, ref esito);
+                
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Add("display", "block");
@@ -177,16 +215,16 @@ namespace VideoSystemWeb.Articoli.userControl
                     tbInsDescrizioneTipologia.Text = "1";
                     tbInsParametriTipologia.Text = "";
                     tbInsSottotipoTipologia.Text = "";
-                    List<Tipologica> lista = caricaTipologia();
+                    List<Tipologica> lista = caricaTipologia(true);
                     HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
                 }
                 
             }
         }
+        
 
         protected void btnEliminaTipologia_Click(object sender, EventArgs e)
         {
-
             //ELIMINO LA TIPOLOGIA SELEZIONATA
             if (!string.IsNullOrEmpty(tbIdTipologiaDaModificare.Text.Trim()))
             {
@@ -214,7 +252,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         btnInserisciTipologia.Visible = true;
                         btnEliminaTipologia.Visible = false;
 
-                        List<Tipologica> lista = caricaTipologia();
+                        List<Tipologica> lista = caricaTipologia(true);
                         HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
 
                     }
@@ -288,7 +326,6 @@ namespace VideoSystemWeb.Articoli.userControl
                     basePage.ShowError(ex.Message);
                 }
             }
-
         }
 
         protected void btnModificaTipologia_Click(object sender, EventArgs e)
@@ -326,7 +363,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         tbInsDescrizioneTipologia.Text = "";
                         tbInsParametriTipologia.Text = "";
                         tbInsSottotipoTipologia.Text = "";
-                        List<Tipologica> lista = caricaTipologia();
+                        List<Tipologica> lista = caricaTipologia(true);
                         HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
 
                     }
@@ -348,7 +385,6 @@ namespace VideoSystemWeb.Articoli.userControl
                 //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
                 basePage.ShowError("Verificare il corretto inserimento dei campi");
             }
-
         }
 
         protected void btnAnnullaTipologia_Click(object sender, EventArgs e)

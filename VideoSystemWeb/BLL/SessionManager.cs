@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.BLL
 {
@@ -24,5 +25,383 @@ namespace VideoSystemWeb.BLL
         public static string CFG_CITTA = "CITTA";
         public static string CFG_PROVINCIA = "PROVINCIA";
 
+
+        public static List<FiguraProfessionale> listaCompletaFigProf
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaCompletaFigProf"] == null || ((List<FiguraProfessionale>)HttpContext.Current.Session["listaCompletaFigProf"]).Count() == 0)
+                {
+                    List<FiguraProfessionale> _listaCompletaFigProf = new List<FiguraProfessionale>();
+                    foreach (Anag_Collaboratori collaboratore in listaAnagraficheCollaboratori)
+                    {
+                        _listaCompletaFigProf.Add(new FiguraProfessionale()
+                        {
+                            Id = collaboratore.Id,
+                            Nome = collaboratore.Nome,
+                            Cognome = collaboratore.Cognome,
+                            Citta = collaboratore.ComuneRiferimento.Trim().ToLower(),
+                            Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Pref_naz + collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Numero,
+                            Qualifiche = collaboratore.Qualifiche,
+                            Tipo = 0,
+                            Nota = collaboratore.Note
+                        });
+                    }
+
+                    foreach (Anag_Clienti_Fornitori fornitore in listaAnagraficheFornitori)
+                    {
+                        _listaCompletaFigProf.Add(new FiguraProfessionale()
+                        {
+                            Id = fornitore.Id,
+                            Cognome = fornitore.RagioneSociale,
+                            Citta = fornitore.ComuneLegale.Trim().ToLower(),
+                            Telefono = fornitore.Telefono,
+                            Tipo = 1,
+                            Nota = fornitore.Note
+                        });
+                    }
+                    HttpContext.Current.Session["listaCompletaFigProf"] = _listaCompletaFigProf.OrderBy(x => x.Cognome).ToList<FiguraProfessionale>();
+                }
+                return (List<FiguraProfessionale>)HttpContext.Current.Session["listaCompletaFigProf"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaCompletaFigProf"] = value;
+            }
+        }
+        public static List<Anag_Qualifiche_Collaboratori> listaQualificheCollaboratori
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaQualificheCollaboratori"] == null || ((List<Anag_Qualifiche_Collaboratori>)HttpContext.Current.Session["listaQualificheCollaboratori"]).Count() == 0)
+                {
+                    Esito esito = new Esito();
+                    HttpContext.Current.Session["listaQualificheCollaboratori"] = Anag_Qualifiche_Collaboratori_BLL.Instance.getAllQualifiche(ref esito, true);
+                }
+                return (List<Anag_Qualifiche_Collaboratori>)HttpContext.Current.Session["listaQualificheCollaboratori"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaQualificheCollaboratori"] = value;
+            }
+        }
+        public static List<Anag_Collaboratori> listaAnagraficheCollaboratori
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaAnagraficheCollaboratori"] == null || ((List<Anag_Collaboratori>)HttpContext.Current.Session["listaAnagraficheCollaboratori"]).Count() == 0)
+                {
+                    Esito esito = new Esito();
+                    HttpContext.Current.Session["listaAnagraficheCollaboratori"] = Anag_Collaboratori_BLL.Instance.getAllCollaboratori(ref esito);
+                }
+                return (List<Anag_Collaboratori>)HttpContext.Current.Session["listaAnagraficheCollaboratori"];
+            }
+
+            set
+            {
+                HttpContext.Current.Session["listaAnagraficheCollaboratori"] = value;
+            }
+        }
+        public static List<Anag_Clienti_Fornitori> listaAnagraficheFornitori
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaAnagraficheFornitori"] == null || ((List<Anag_Clienti_Fornitori>)HttpContext.Current.Session["listaAnagraficheFornitori"]).Count() == 0)
+                {
+                    Esito esito = new Esito();
+                    HttpContext.Current.Session["listaAnagraficheFornitori"] = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaFornitori(ref esito);
+                }
+                return (List<Anag_Clienti_Fornitori>)HttpContext.Current.Session["listaAnagraficheFornitori"];
+            }
+
+            set
+            {
+                HttpContext.Current.Session["listaAnagraficheFornitori"] = value;
+            }
+        }
+        public static List<Tipologica> listaTipiPagamento
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTipiPagamento"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiPagamento"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTipiPagamento"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTipiPagamento"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTipiPagamento"] = value;
+            }
+        }
+        public static List<string> listaCittaCollaboratori
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaCittaCollaboratori"] == null || ((List<string>)HttpContext.Current.Session["listaCittaCollaboratori"]).Count() == 0)
+                {
+                    List<string> listaCittaCollaboratori = (from record in listaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList();
+                    HttpContext.Current.Session["listaCittaCollaboratori"] = listaCittaCollaboratori.Distinct().ToList<string>();
+                }
+                return (List<string>)HttpContext.Current.Session["listaCittaCollaboratori"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaCittaCollaboratori"] = value;
+            }
+        }
+        public static List<string> listaCittaFornitori
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaCittaFornitori"] == null || ((List<string>)HttpContext.Current.Session["listaCittaFornitori"]).Count() == 0)
+                {
+                    List<string> _listaCittaFornitori = (from record in listaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList();
+                    HttpContext.Current.Session["listaCittaFornitori"] = _listaCittaFornitori.Distinct().ToList<string>();
+                }
+                return (List<string>)HttpContext.Current.Session["listaCittaFornitori"];
+                }
+            set
+            {
+                HttpContext.Current.Session["listaCittaFornitori"] = value;
+            }
+        }
+        public static List<Anag_Referente_Clienti_Fornitori> listaReferenti
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaReferenti"] == null || ((List<Anag_Referente_Clienti_Fornitori>)HttpContext.Current.Session["listaReferenti"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaReferenti"] = new List<Anag_Referente_Clienti_Fornitori>();
+                }
+                return (List<Anag_Referente_Clienti_Fornitori>)HttpContext.Current.Session["listaReferenti"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaReferenti"] = value;
+            }
+        }
+        public static List<GiorniPagamentoFatture> listaGPF
+        {
+            get
+            {
+                Esito esito = new Esito();
+                if (HttpContext.Current.Session["listaGPF"] == null || ((List<GiorniPagamentoFatture>)HttpContext.Current.Session["listaGPF"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaGPF"] = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
+                }
+                return (List<GiorniPagamentoFatture>)HttpContext.Current.Session["listaGPF"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaGPF"] = value;
+            }
+        }
+        public static List<DatiBancari> listaDatiBancari
+        {
+            get
+            {
+                Esito esito = new Esito();
+                if (HttpContext.Current.Session["listaDatiBancari"] == null || ((List<DatiBancari>)HttpContext.Current.Session["listaDatiBancari"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaDatiBancari"] = Config_BLL.Instance.getListaDatiBancari(ref esito);
+                }
+                return (List<DatiBancari>)HttpContext.Current.Session["listaDatiBancari"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaDatiBancari"] = value;
+            }
+        }
+        public static List<Tipologica> listaTender
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTender"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTender"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTender"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TENDER);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTender"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTender"] = value;
+            }
+        }
+        public static List<Tipologica> listaQualifiche
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaQualifiche"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaQualifiche"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaQualifiche"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_QUALIFICHE);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaQualifiche"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaQualifiche"] = value;
+            }
+        }
+        public static List<Tipologica> listaTipiGeneri
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTipiGeneri"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiGeneri"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTipiGeneri"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GENERE);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTipiGeneri"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTipiGeneri"] = value;
+            }
+        }
+        public static List<Tipologica> listaTipiGruppi
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTipiGruppi"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiGruppi"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTipiGruppi"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GRUPPO);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTipiGruppi"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTipiGruppi"] = value;
+            }
+        }
+        public static List<Tipologica> listaTipiSottogruppi
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTipiSottogruppi"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiSottogruppi"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTipiSottogruppi"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTipiSottogruppi"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTipiSottogruppi"] = value;
+            }
+        }
+        public static List<Tipologica> listaTipiProtocolli
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTipiProtocolli"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiProtocolli"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTipiProtocolli"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTipiProtocolli"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTipiProtocolli"] = value;
+            }
+        }
+        public static List<Tipologica> listaTipiUtente
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTipiUtente"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiUtente"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTipiUtente"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_UTENTE);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTipiUtente"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTipiUtente"] = value;
+            }
+        }
+        public static List<Tipologica> listaTipiClientiFornitori
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTipiClientiFornitori"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiClientiFornitori"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTipiClientiFornitori"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_CLIENTI_FORNITORI);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTipiClientiFornitori"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTipiClientiFornitori"] = value;
+            }
+        }
+        public static List<Tipologica> listaTipiTipologie
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTipiTipologie"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiTipologie"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTipiTipologie"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTipiTipologie"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTipiTipologie"] = value;
+            }
+        }
+        public static List<ColonneAgenda> listaRisorse
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaRisorse"] == null || ((List<ColonneAgenda>)HttpContext.Current.Session["listaRisorse"]).Count() == 0)
+                {
+                    Esito esito = new Esito();
+                    List<ColonneAgenda> _listaRisorse = UtilityTipologiche.CaricaColonneAgenda(true, ref esito);
+                    _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<ColonneAgenda>();
+                    HttpContext.Current.Session["listaRisorse"] = _listaRisorse;
+                }
+                return (List<ColonneAgenda>)HttpContext.Current.Session["listaRisorse"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaRisorse"] = value;
+            }
+        }
+        public static List<Tipologica> listaStati
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaStati"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaStati"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaStati"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_STATO);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaStati"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaStati"] = value;
+            }
+        }
+        public static List<Anag_Clienti_Fornitori> listaClientiFornitori
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaClientiFornitori"] == null || ((List<Anag_Clienti_Fornitori>)HttpContext.Current.Session["listaClientiFornitori"]).Count() == 0)
+                {
+                    Esito esito = new Esito();
+                   
+                    HttpContext.Current.Session["listaClientiFornitori"] = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito);
+                }
+                return (List<Anag_Clienti_Fornitori>)HttpContext.Current.Session["listaClientiFornitori"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaClientiFornitori"] = value;
+            }
+        }
+
+        public static void ClearSession()
+        {
+            HttpContext.Current.Session.Clear();
+        }
     }
 }

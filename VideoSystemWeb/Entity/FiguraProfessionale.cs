@@ -16,7 +16,7 @@ namespace VideoSystemWeb.Entity
         private List<Anag_Qualifiche_Collaboratori> qualifiche;
         private int tipo;
         private string nota;
-
+       
         public int Id { get => id; set => id = value; }
         public string Nome { get => nome; set => nome = value; }
         public string Cognome { get => cognome; set => cognome = value; }

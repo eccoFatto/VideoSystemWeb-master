@@ -22,11 +22,8 @@
 
         var nomeElemento = '';
 
-        //var statoCorrente = $("#< % = val_Stato.ClientID %>").text();
-
         if (tipoName == 'Lavoraz') {
             nomeElemento = '<%=tab_Lavorazione.ClientID%>';
-
 
         } else if (tipoName == 'DettEconomico') {
             nomeElemento = '<%=tab_DettEconomico.ClientID%>';

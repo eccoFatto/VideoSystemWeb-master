@@ -48,13 +48,15 @@ namespace VideoSystemWeb
 
         protected void btnExit_Click(object sender, EventArgs e)
         {
-            Session[VideoSystemWeb.BLL.SessionManager.LISTA_RISORSE] = null;
-            Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_QUALIFICA] = null;
-            Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_STATO] = null;
-            Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_TIPOLOGIA] = null;
-            Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_UTENTE] = null;
-            Session[VideoSystemWeb.BLL.EnumTipologiche.TIPO_COLONNE_AGENDA.ToString()] = null;
-            Session[VideoSystemWeb.BLL.SessionManager.UTENTE] = null;
+            //Session[VideoSystemWeb.BLL.SessionManager.LISTA_RISORSE] = null;
+            //Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_QUALIFICA] = null;
+            //Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_STATO] = null;
+            //Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_TIPOLOGIA] = null;
+            //Session[VideoSystemWeb.BLL.SessionManager.LISTA_TIPI_UTENTE] = null;
+            //Session[VideoSystemWeb.BLL.EnumTipologiche.TIPO_COLONNE_AGENDA.ToString()] = null;
+            //Session[VideoSystemWeb.BLL.SessionManager.UTENTE] = null;
+
+            SessionManager.ClearSession();
             Response.Redirect("~/Login.aspx");
         }
     }

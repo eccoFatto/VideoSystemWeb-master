@@ -23,14 +23,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (!Page.IsPostBack)
             {
-                // GLI ASCX POSSONO LEGGERE LA QUERYSTRING DELLA PAGINA CONTENITRICE
-                //if (!string.IsNullOrEmpty(Request.QueryString["TIPO"]))
-                //{
-                //    ViewState["TIPO_AZIENDA"] = Request.QueryString["TIPO"];
-                //}
+                Esito esito = new Esito();
 
-                // FUNZIONA SE NELLA PAGINA ASPX CHIAMANTE C'E' UN CAMPO HIDDENFIELD COL TIPO AZIENDA (CLIENTI/FORNITORI)
-                HiddenField tipoAzienda = this.Parent.FindControl("HF_TIPO_AZIENDA") as HiddenField;
+               // GLI ASCX POSSONO LEGGERE LA QUERYSTRING DELLA PAGINA CONTENITRICE
+               //if (!string.IsNullOrEmpty(Request.QueryString["TIPO"]))
+               //{
+               //    ViewState["TIPO_AZIENDA"] = Request.QueryString["TIPO"];
+               //}
+
+               // FUNZIONA SE NELLA PAGINA ASPX CHIAMANTE C'E' UN CAMPO HIDDENFIELD COL TIPO AZIENDA (CLIENTI/FORNITORI)
+               HiddenField tipoAzienda = this.Parent.FindControl("HF_TIPO_AZIENDA") as HiddenField;
                 if (tipoAzienda != null) { 
                     ViewState["TIPO_AZIENDA"] = tipoAzienda.Value;
                 }
@@ -50,8 +52,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
 
 
-                BasePage p = new BasePage();
-                Esito esito = p.CaricaListeTipologiche();
+                //BasePage p = new BasePage();
+                //Esito esito = SessionManager.CaricaListeTipologiche();
                 // CARICO L'ELENCO DEI GIORNI PAGAMENTO
                 List<GiorniPagamentoFatture> listaGPF = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
 
@@ -63,7 +65,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     ddlTipoAzienda.Items.Add("");
                     cmbMod_TipoAzienda.Items.Clear();
                     cmbMod_TipoAzienda.Items.Add("");
-                    foreach (Tipologica tipologiaAzienda in p.listaTipiClientiFornitori)
+                    foreach (Tipologica tipologiaAzienda in SessionManager.listaTipiClientiFornitori)
                     {
                         ListItem item = new ListItem();
                         item.Text = tipologiaAzienda.nome;
@@ -85,7 +87,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
 
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                    abilitaBottoni(p.AbilitazioneInScrittura());
+                    abilitaBottoni(basePage.AbilitazioneInScrittura());
                 }
                 else
                 {
@@ -109,7 +111,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 btnSalva.Visible = false;
                 btnElimina.Visible = false;
                 btnApriReferenti.Visible = false;
-
             }
             else
             {

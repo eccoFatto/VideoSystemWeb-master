@@ -391,17 +391,19 @@ namespace VideoSystemWeb.DAL
 
                                     int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
                                 }
+
+                                // SE E' ANDATO TUTTO BENE FACCIO INSERT DELLA NOTA OFFERTA
+                                if (noteOfferta != null)
+                                {
+
+                                    CostruisciSP_InsertNoteOfferta(StoreProc, sda, iDatiAgendaReturn, noteOfferta);
+                                    StoreProc.ExecuteNonQuery();
+
+                                    int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+                                }
                             }
 
-                            // SE E' ANDATO TUTTO BENE FACCIO INSERT DELLA NOTA OFFERTA
-                            if (noteOfferta != null)
-                            {
-
-                                CostruisciSP_InsertNoteOfferta(StoreProc, sda, iDatiAgendaReturn, noteOfferta);
-                                StoreProc.ExecuteNonQuery();
-
-                                int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
-                            }
+                            
                             #endregion
 
                             #region LAVORAZIONE

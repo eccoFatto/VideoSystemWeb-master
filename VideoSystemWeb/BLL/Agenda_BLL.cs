@@ -53,15 +53,16 @@ namespace VideoSystemWeb.BLL
         public List<DatiAgenda> CaricaDatiAgenda(ref Esito esito)
         {
             List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();
+            listaDatiAgenda = Agenda_DAL.Instance.CaricaDatiAgenda(ref esito);
 
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
-            {
-                listaDatiAgenda = Agenda_DAL.Instance.CaricaDatiAgenda(ref esito);
-            }
-            else
-            {
-                listaDatiAgenda = Tipologie.getListaDatiAgenda();
-            }
+            //if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
+            //{
+            //    listaDatiAgenda = Agenda_DAL.Instance.CaricaDatiAgenda(ref esito);
+            //}
+            //else
+            //{
+            //    listaDatiAgenda = Tipologie.getListaDatiAgenda();
+            //}
 
             return listaDatiAgenda;
         }

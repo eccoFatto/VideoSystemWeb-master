@@ -61,7 +61,6 @@
             //alert('tutto ok');
         }
     </script>
-    <%--<input type="button" onclick="openError('prova')" />--%>
     <div class="loader"></div>
     <form runat="server" autocomplete="off" enctype="multipart/form-data">
         <div id="modalError" class="w3-modal" style="z-index:10000">

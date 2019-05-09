@@ -23,24 +23,25 @@ namespace VideoSystemWeb.Articoli.userControl
         {
             // FUNZIONA SE NELLA PAGINA ASPX CHIAMANTE C'E' UN CAMPO HIDDENFIELD COL TIPO ARTICOLO (GENERI/GRUPPI/SOTTOGRUPPI/ARTICOLI)
             HiddenField tipoArticolo = this.Parent.FindControl("HF_TIPO_ARTICOLO") as HiddenField;
-            if (tipoArticolo.Value.ToUpper().Equals("ARTICOLI")) { 
+            if (tipoArticolo.Value.ToUpper().Equals("ARTICOLI")) {
+                Esito esito = new Esito();
 
                 if (!Page.IsPostBack)
                 {
                     lblIntestazionePagina.Text = "ARTICOLI";
 
-                    BasePage p = new BasePage();
-                    Esito esito = p.CaricaListeTipologiche();
+                    //BasePage p = new BasePage();
+                    //Esito esito = p.CaricaListeTipologiche();
 
                     // CARICO LE COMBO
-                    if (string.IsNullOrEmpty(esito.descrizione))
-                    {
+                    //if (string.IsNullOrEmpty(esito.descrizione))
+                    //{
                         // GENERI
                         cmbMod_Genere.Items.Clear();
                         cmbMod_Genere.Items.Add("");
                         ddlGenere.Items.Clear();
                         ddlGenere.Items.Add("");
-                        foreach (Tipologica tipologiaGenere in p.listaTipiGeneri)
+                        foreach (Tipologica tipologiaGenere in SessionManager.listaTipiGeneri)
                         {
                             ListItem item = new ListItem();
                             item.Text = tipologiaGenere.nome;
@@ -53,7 +54,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         cmbMod_Gruppo.Items.Add("");
                         ddlGruppo.Items.Clear();
                         ddlGruppo.Items.Add("");
-                        foreach (Tipologica tipologiaGruppo in p.listaTipiGruppi)
+                        foreach (Tipologica tipologiaGruppo in SessionManager.listaTipiGruppi)
                         {
                             ListItem item = new ListItem();
                             item.Text = tipologiaGruppo.nome;
@@ -66,7 +67,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         cmbMod_Sottogruppo.Items.Add("");
                         ddlSottoGruppo.Items.Clear();
                         ddlSottoGruppo.Items.Add("");
-                        foreach (Tipologica tipologiaSottogruppo in p.listaTipiSottogruppi)
+                        foreach (Tipologica tipologiaSottogruppo in SessionManager.listaTipiSottogruppi)
                         {
                             ListItem item = new ListItem();
                             item.Text = tipologiaSottogruppo.nome;
@@ -89,15 +90,15 @@ namespace VideoSystemWeb.Articoli.userControl
                         }
 
                         // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                        abilitaBottoni(p.AbilitazioneInScrittura());
+                        abilitaBottoni(basePage.AbilitazioneInScrittura());
 
-                    }
-                    else
-                    {
-                        Session["ErrorPageText"] = esito.descrizione;
-                        string url = String.Format("~/pageError.aspx");
-                        Response.Redirect(url, true);
-                    }
+                    //}
+                    //else
+                    //{
+                    //    Session["ErrorPageText"] = esito.descrizione;
+                    //    string url = String.Format("~/pageError.aspx");
+                    //    Response.Redirect(url, true);
+                    //}
 
                 }
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioArticolo('" + hf_tabChiamata.Value + "');", addScriptTags: true);

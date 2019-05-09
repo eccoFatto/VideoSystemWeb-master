@@ -52,16 +52,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
 
                 log.Info("PAGE AnagCollaboratori");
-                BasePage p = new BasePage();
-                Esito esito = p.CaricaListeTipologiche();
+                //BasePage p = new BasePage();
+                //Esito esito = p.CaricaListeTipologiche();
 
-                if (string.IsNullOrEmpty(esito.descrizione))
-                {
+                //if (string.IsNullOrEmpty(esito.descrizione))
+                //{
                     ddlQualifiche.Items.Clear();
                     ddlQualifiche.Items.Add("");
 
                     ddlQualificheDaAggiungere.Items.Clear();
-                    foreach (Tipologica qualifica in p.listaQualifiche)
+                    foreach (Tipologica qualifica in SessionManager.listaQualifiche)
                     {
                         ListItem item = new ListItem();
                         ListItem itemDaAggiungere = new ListItem();
@@ -79,14 +79,14 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     abilitaBottoni(basePage.AbilitazioneInScrittura());
 
 
-                }
-                else
-                {
-                    log.Error(esito.descrizione);
-                    Session["ErrorPageText"] = esito.descrizione;
-                    string url = String.Format("~/pageError.aspx");
-                    Response.Redirect(url, true);
-                }
+                //}
+                //else
+                //{
+                //    log.Error(esito.descrizione);
+                //    Session["ErrorPageText"] = esito.descrizione;
+                //    string url = String.Format("~/pageError.aspx");
+                //    Response.Redirect(url, true);
+                //}
 
 
             }

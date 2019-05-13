@@ -252,7 +252,7 @@ namespace VideoSystemWeb.Agenda.userControl
         #region COMPORTAMENTO ELEMENTI PAGINA
         private void AbilitaComponentiModificaArticolo(int tipoFiguraProfessionale)
         {
-            if (tipoFiguraProfessionale == 0)
+            if (tipoFiguraProfessionale == 0)//COLLABORATORE
             {
                 ddl_FPqualifica.CssClass = "w3-input w3-border";
                 ddl_FPqualifica.Style.Remove("cursor");
@@ -262,7 +262,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_FPtipoPagamento.Style.Remove("cursor");
                 ddl_FPtipoPagamento.Enabled = true;
             }
-            else
+            else//FORNITORE
             {
                 ddl_FPqualifica.SelectedValue = "";
                 ddl_FPqualifica.CssClass = "w3-input w3-border";
@@ -358,17 +358,34 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_Prezzo.Text = articoloSelezionato.Prezzo.ToString();
                     txt_Iva.Text = articoloSelezionato.Iva.ToString();
                     ddl_FPtipoPagamento.SelectedValue = articoloSelezionato.IdTipoPagamento != null ? articoloSelezionato.IdTipoPagamento.ToString() : "";
-
+                    //chk_ModCosto.Checked = articoloSelezionato.UsaCostoFP != null && (bool)articoloSelezionato.UsaCostoFP;
+                    
+                    //Cerco tra Collaboratori o Fornitori
                     FiguraProfessionale figuraProfessionale = SessionManager.listaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdCollaboratori);
                     if (figuraProfessionale == null)
                     {
                         figuraProfessionale = SessionManager.listaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdFornitori);
                     }
+
+                    //Valori de Default
+                    chk_ModCosto.Checked = false;
+
+                    txt_Costo.Attributes.Remove("readonly");
+                    txt_Costo.CssClass = "w3-input w3-border";
+
+                    txt_FPnetto.Attributes.Add("readonly", "readonly");
+                    txt_FPnetto.CssClass = "w3-input w3-border w3-disabled";
+
+                    txt_FPnetto.Text = "";
+                    txt_FPlordo.Text = "";
+
+                    ddl_FPcitta.Items.Clear();
+                    //
+
                     if (figuraProfessionale != null)
                     {
                         AbilitaComponentiModificaArticolo(figuraProfessionale.Tipo);
 
-                        
                         ddl_FPcitta.Items.Clear();
                         if (figuraProfessionale.Tipo == 0)
                         {
@@ -390,10 +407,23 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         PopolaNominativi(SessionManager.listaCompletaFigProf.Where(x => x.Tipo == figuraProfessionale.Tipo).ToList());
                         ddl_FPtipo.SelectedValue = figuraProfessionale.Tipo.ToString();
-                        txt_FPnotaCollaboratore.Text = figuraProfessionale.Nota;
+                        txt_FPnotaCollaboratore.Text = articoloSelezionato.Nota;
                         ddl_FPnominativo.SelectedValue = figuraProfessionale.Id.ToString();
                         txt_FPtelefono.Text = figuraProfessionale.Telefono;
-                        
+
+                        // GESTIONE COSTO FIG PROF
+                        if (articoloSelezionato.UsaCostoFP != null && (bool)articoloSelezionato.UsaCostoFP)
+                        {
+                            chk_ModCosto.Checked = true;
+                            txt_Costo.Attributes.Add("readonly", "readonly");
+                            txt_Costo.CssClass = "w3-input w3-border w3-disabled";
+
+                            txt_FPnetto.Text = articoloSelezionato.FP_netto.ToString();
+                            txt_FPlordo.Text = articoloSelezionato.FP_lordo.ToString();
+                            //txt_FPnetto.ReadOnly = false;
+                            txt_FPnetto.Attributes.Remove("readonly");
+                            txt_FPnetto.CssClass = "w3-input w3-border";
+                        }
                     }
                     else
                     {
@@ -415,8 +445,21 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         ddl_FPnominativo.SelectedValue = "";
 
-                        txt_FPnotaCollaboratore.Text = "";
+                        
                         txt_FPtelefono.Text = "";
+
+                        ddl_FPtipoPagamento.Attributes.Add("readonly", "readonly");
+                        ddl_FPtipoPagamento.CssClass = "w3-input w3-border w3-disabled";
+
+                        chk_ModCosto.Attributes.Add("readonly", "readonly");
+                        chk_ModCosto.CssClass = "w3-input w3-border w3-disabled";
+
+                        txt_FPnetto.Attributes.Add("readonly", "readonly");
+                        txt_FPnetto.CssClass = "w3-input w3-border w3-disabled";
+
+                        txt_FPnotaCollaboratore.Text = "";
+                        txt_FPnotaCollaboratore.Attributes.Add("readonly", "readonly");
+                        txt_FPnotaCollaboratore.CssClass = "w3-input w3-border w3-disabled";
                     }
 
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelModificaArticolo.ClientID + "').style.display='block'", addScriptTags: true);
@@ -474,7 +517,22 @@ namespace VideoSystemWeb.Agenda.userControl
 
             articoloSelezionato.Descrizione = txt_Descrizione.Text;
             articoloSelezionato.DescrizioneLunga = txt_DescrizioneLunga.Text;
-            articoloSelezionato.Costo = decimal.Parse(txt_Costo.Text);
+
+            articoloSelezionato.UsaCostoFP = chk_ModCosto.Checked;
+
+            if (articoloSelezionato.UsaCostoFP != null && (bool)articoloSelezionato.UsaCostoFP)
+            {
+                articoloSelezionato.FP_netto = string.IsNullOrEmpty(txt_FPnetto.Text) ? 0 : decimal.Parse(txt_FPnetto.Text);
+                articoloSelezionato.FP_lordo = string.IsNullOrEmpty(txt_FPlordo.Text) ? 0 : decimal.Parse(txt_FPlordo.Text);
+                articoloSelezionato.Costo = 0;
+            }
+            else
+            {
+                articoloSelezionato.Costo = decimal.Parse(txt_Costo.Text);
+                articoloSelezionato.FP_netto = 0;
+                articoloSelezionato.FP_lordo = 0;
+            }
+
             articoloSelezionato.Prezzo = decimal.Parse(txt_Prezzo.Text);
             articoloSelezionato.Iva = int.Parse(txt_Iva.Text);
             articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
@@ -491,7 +549,7 @@ namespace VideoSystemWeb.Agenda.userControl
             }
 
             articoloSelezionato.IdTipoPagamento = ddl_FPtipoPagamento.SelectedValue == "" ? null : (int?)int.Parse(ddl_FPtipoPagamento.SelectedValue);
-           
+            articoloSelezionato.Nota = txt_FPnotaCollaboratore.Text;
 
 
             listaDatiArticoliLavorazione = listaDatiArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
@@ -521,8 +579,16 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 if (rigaCorrente.IdTipoPagamento != null && rigaCorrente.IdTipoPagamento.HasValue)
                 {
-                    //List<Tipologica> listaTipiPagamento = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO);
                     ((Label)e.Row.FindControl("lbl_TipoPagamento")).Text = SessionManager.listaTipiPagamento.FirstOrDefault(x => x.id == rigaCorrente.IdTipoPagamento).nome;
+                }
+
+                if (rigaCorrente.UsaCostoFP != null && (bool)rigaCorrente.UsaCostoFP)
+                {
+                    ((Label)e.Row.FindControl("lbl_Costo")).Text = string.Format("{0:N2}", rigaCorrente.FP_netto);
+                }
+                else
+                {
+                    ((Label)e.Row.FindControl("lbl_Costo")).Text = string.Format("{0:N2}", rigaCorrente.Costo);
                 }
             }
         }
@@ -685,6 +751,32 @@ namespace VideoSystemWeb.Agenda.userControl
             if (ddl_FPnominativo.SelectedValue != "")
             {
                 fpSelezionata = SessionManager.listaCompletaFigProf.FirstOrDefault(x => x.Id == int.Parse(ddl_FPnominativo.SelectedValue));
+
+                ddl_FPtipoPagamento.Attributes.Remove("readonly");
+                ddl_FPtipoPagamento.CssClass = "w3-input w3-border";
+
+                chk_ModCosto.Attributes.Remove("readonly");
+                chk_ModCosto.CssClass = "w3-input w3-border";
+
+                txt_FPnetto.Attributes.Remove("readonly");
+                txt_FPnetto.CssClass = "w3-input w3-border";
+
+                txt_FPnotaCollaboratore.Attributes.Remove("readonly");
+                txt_FPnotaCollaboratore.CssClass = "w3-input w3-border";
+            }
+            else
+            {
+                ddl_FPtipoPagamento.Attributes.Add("readonly", "readonly");
+                ddl_FPtipoPagamento.CssClass = "w3-input w3-border w3-disabled";
+
+                chk_ModCosto.Attributes.Add("readonly", "readonly");
+                chk_ModCosto.CssClass = "w3-input w3-border w3-disabled";
+
+                txt_FPnetto.Attributes.Add("readonly", "readonly");
+                txt_FPnetto.CssClass = "w3-input w3-border w3-disabled";
+
+                txt_FPnotaCollaboratore.Attributes.Add("readonly", "readonly");
+                txt_FPnotaCollaboratore.CssClass = "w3-input w3-border w3-disabled";
             }
 
             PopolaDettagliFP(fpSelezionata);
@@ -737,8 +829,24 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 foreach (DatiArticoliLavorazione art in listaDatiArticoliLavorazione)
                 {
+                    if (art.UsaCostoFP != null )
+                    {
+                        if ((bool)art.UsaCostoFP)
+                        {
+                            totCosto += art.FP_netto != null ? (decimal)art.FP_netto : 0;
+                        }
+                        else
+                        {
+                            totCosto +=  (decimal)art.Costo ;
+                        }
+                    }
+                    else
+                    {
+                        totCosto += (decimal)art.Costo;
+                    }
+
                     totPrezzo += art.Prezzo;
-                    totCosto += art.Costo;
+                    //totCosto += (art.UsaCostoFP != null && (bool)art.UsaCostoFP) ? (decimal)art.FP_netto : art.Costo;
                     totIva += (art.Prezzo * art.Iva / 100);
                 }
 
@@ -788,7 +896,7 @@ namespace VideoSystemWeb.Agenda.userControl
             //        ddl_Referente.Items.Add(new ListItem(referente.Nome + " " + referente.Cognome, referente.Id.ToString()));
             //    }
             //    ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", "0"));
-            //}
+            //}listaDatiArticoliLavorazione
 
             if (esito.codice != Esito.ESITO_OK)
             {
@@ -820,6 +928,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     gvArticoliLavorazione.DataSource = listaDatiArticoliLavorazione;
                     gvArticoliLavorazione.DataBind();
                 }
+                lbl_selezionareArticolo.Visible = (listaDatiArticoliLavorazione == null || listaDatiArticoliLavorazione.Count == 0);
                 AggiornaTotali();
             }
         }
@@ -847,7 +956,8 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             //ClearModificaArticoli();
             lbl_selezionareArticolo.Visible = true;
-            ViewState["listaDatiArticoliLavorazione"] = null;
+            //ViewState["listaDatiArticoliLavorazione"] = null;
+            listaDatiArticoliLavorazione = null;
             gvArticoliLavorazione.DataSource = null;
             gvArticoliLavorazione.DataBind();
 

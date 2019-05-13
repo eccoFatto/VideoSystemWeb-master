@@ -74,6 +74,10 @@ namespace VideoSystemWeb.DAL
                                         datiArticoliLavorazione.Iva = riga.Field<int>("iva");
                                         datiArticoliLavorazione.Data = riga.Field<DateTime?>("data");
                                         datiArticoliLavorazione.Tv = riga.Field<int?>("tv");
+                                        datiArticoliLavorazione.Nota = riga.Field<string>("nota");
+                                        datiArticoliLavorazione.FP_netto = riga.Field<decimal?>("fp_netto");
+                                        datiArticoliLavorazione.FP_lordo = riga.Field<decimal?>("fp_lordo");
+                                        datiArticoliLavorazione.UsaCostoFP = riga.Field<bool?>("usaCostoFP");
 
                                         listaDatiArticoli.Add(datiArticoliLavorazione);
                                     }

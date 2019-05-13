@@ -319,6 +319,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.DropDownList ddl_FPtipoPagamento;
         
         /// <summary>
+        /// Controllo chk_ModCosto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chk_ModCosto;
+        
+        /// <summary>
         /// Controllo txt_FPnetto.
         /// </summary>
         /// <remarks>

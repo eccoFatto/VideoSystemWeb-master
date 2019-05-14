@@ -1625,6 +1625,37 @@ namespace VideoSystemWeb.DAL
             tv.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(tv);
 
+            SqlParameter nota = new SqlParameter("@nota", DBNull.Value);
+            if (datoArticoloLavorazione.Nota != null)
+            {
+                nota = new SqlParameter("@nota", datoArticoloLavorazione.Nota);
+            }
+            nota.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nota);
+
+            SqlParameter fp_netto = new SqlParameter("@fp_netto", DBNull.Value);
+            if (datoArticoloLavorazione.FP_netto != null)
+            {
+                fp_netto = new SqlParameter("@fp_netto", datoArticoloLavorazione.FP_netto);
+            }
+            fp_netto.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(fp_netto);
+
+            SqlParameter fp_lordo = new SqlParameter("@fp_lordo", DBNull.Value);
+            if (datoArticoloLavorazione.FP_lordo != null)
+            {
+                fp_lordo = new SqlParameter("@fp_lordo", datoArticoloLavorazione.FP_lordo);
+            }
+            fp_lordo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(fp_lordo);
+
+            SqlParameter usaCostoFP = new SqlParameter("@usaCostoFP", DBNull.Value);
+            if (datoArticoloLavorazione.UsaCostoFP != null)
+            {
+                usaCostoFP = new SqlParameter("@usaCostoFP", datoArticoloLavorazione.UsaCostoFP);
+            }
+            fp_lordo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(usaCostoFP);
         }
 
         private static void CostruisciSP_DeleteDatiArticoliLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiLavorazione)

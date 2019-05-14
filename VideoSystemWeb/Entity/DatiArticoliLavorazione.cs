@@ -37,6 +37,10 @@ namespace VideoSystemWeb.Entity
         private int iva;
         private DateTime? data;
         private int? tv;
+        private string nota;
+        private decimal? fp_netto;
+        private decimal? fp_lordo;
+        private bool? usaCostoFP;
 
         private long identificatoreOggetto;
 
@@ -58,6 +62,10 @@ namespace VideoSystemWeb.Entity
         public int Iva { get => iva; set => iva = value; }
         public DateTime? Data { get => data; set => data = value; }
         public int? Tv { get => tv; set => tv = value; }
+        public string Nota { get => nota; set => nota = value; }
+        public decimal? FP_netto { get => fp_netto; set => fp_netto = value; }
+        public decimal? FP_lordo { get => fp_lordo; set => fp_lordo = value; }
+        public bool? UsaCostoFP { get => usaCostoFP; set => usaCostoFP = value; }
 
         public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
     }

@@ -3,6 +3,35 @@
 
 <script>
 
+    $(document).ready(function () {
+
+        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+            $('#<%=chk_ModCosto.ClientID%>').click(function () {
+
+                if (this.checked) {
+                    $("#<%=txt_FPnetto.ClientID%>").attr("readonly", false);
+                    $("#<%=txt_FPnetto.ClientID%>").removeClass(" w3-disabled");
+
+                    $("#<%=txt_Costo.ClientID%>").attr("readonly", true);
+                    $("#<%=txt_Costo.ClientID%>").addClass(" w3-disabled");
+                    $("#<%=txt_Costo.ClientID%>").val("0");
+
+                }
+                else {
+                    $("#<%=txt_FPnetto.ClientID%>").attr("readonly", true);
+                    $("#<%=txt_FPnetto.ClientID%>").addClass(" w3-disabled");
+                    $("#<%=txt_FPnetto.ClientID%>").val("0");
+
+                    $("#<%=txt_FPnetto.ClientID%>").val("0");
+
+                    $("#<%=txt_Costo.ClientID%>").attr("readonly", false);
+                    $("#<%=txt_Costo.ClientID%>").removeClass(" w3-disabled");
+
+                }
+            });
+        });
+    });
+
     function openTabEventoLavorazione(evt, tipoName) {
 
 
@@ -95,7 +124,12 @@
                                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
                                 <asp:BoundField DataField="TV" HeaderText="TV" />
                                 <asp:BoundField DataField="Prezzo" HeaderText="Listino" DataFormatString="{0:N2}" />
-                                <asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:N2}" />
+                                <%--<asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:N2}" />--%>
+                                <asp:TemplateField HeaderText="Costo">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbl_Costo" runat="server"/>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:BoundField DataField="Stampa" HeaderText="Stampa" />
                                 <asp:TemplateField HeaderText="Riferimento">
                                     <ItemTemplate>
@@ -107,7 +141,7 @@
                                         <asp:Label ID="lbl_TipoPagamento" runat="server" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                
+
                                 <asp:TemplateField HeaderText="Seleziona">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
@@ -266,35 +300,42 @@
                                     </div>
 
                                     <div class="w3-row">
-                                        <div class="w3-half" style="padding: 5px">
+                                        <div class="w3-third" style="padding: 5px">
                                             <label style="margin-bottom: 0.2rem;">Nota Collaboratore</label>
                                             <asp:TextBox ID="txt_FPnotaCollaboratore" runat="server" Rows="5" TextMode="MultiLine" class="w3-input w3-border" MaxLength="100" placeholder="Nota collaboratore" Style="padding: 2px;"></asp:TextBox>
                                         </div>
 
-                                        <div class="w3-half" style="padding: 5px">
+                                        <div class="w3-twothird" style="padding: 5px">
                                             <div class="w3-row">
                                                 <div class="w3-half" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Nominativo</label>
                                                     <asp:DropDownList ID="ddl_FPnominativo" class="w3-input w3-border" runat="server" Style="padding: 2px;" OnSelectedIndexChanged="visualizzaFP" AutoPostBack="true"></asp:DropDownList>
                                                 </div>
                                                 <div class="w3-half" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Telefono</label>
-                                                    <asp:TextBox ID="txt_FPtelefono" class="w3-input w3-border" runat="server" Style="padding: 2px;"></asp:TextBox>
+                                                    <label style="margin-bottom: 0.2rem;">Telefono</label><br />
+                                                    <asp:TextBox ID="txt_FPtelefono" class="w3-input w3-border w3-disabled" ReadOnly runat="server" Style="padding: 2px;"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="w3-row">
                                                 <div class="w3-half" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Tipo pagamento</label>
-                                                    <asp:DropDownList ID="ddl_FPtipoPagamento" class="w3-input w3-border" runat="server" Style="padding: 2px;"></asp:DropDownList>
+                                                    <div class="w3-threequarter" style="padding: 5px">
+                                                        <label style="margin-bottom: 0.2rem;">Tipo pagamento</label>
+                                                        <asp:DropDownList ID="ddl_FPtipoPagamento" class="w3-input w3-border" runat="server" Style="padding: 2px;"></asp:DropDownList>
+                                                    </div>
+                                                    <div class="w3-quarter" style="padding: 5px">
+                                                        <label style="margin-bottom: 0.2rem;">Mod.Costo</label>
+                                                        <asp:CheckBox ID="chk_ModCosto" runat="server" Style="padding: 2px;"></asp:CheckBox>
+                                                    </div>
                                                 </div>
-
-                                                <div class="w3-quarter" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Netto</label>
-                                                    <asp:TextBox ID="txt_FPnetto" runat="server" class="w3-input w3-border" placeholder="Netto" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
-                                                </div>
-                                                <div class="w3-quarter" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Lordo</label>
-                                                    <asp:TextBox ID="txt_FPlordo" runat="server" class="w3-input w3-border" placeholder="Lordo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                                <div class="w3-half" style="padding: 5px">
+                                                    <div class="w3-half" style="padding: 5px">
+                                                        <label style="margin-bottom: 0.2rem;">Netto</label>
+                                                        <asp:TextBox ID="txt_FPnetto" runat="server" class="w3-input w3-border "  placeholder="Netto" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                                    </div>
+                                                    <div class="w3-half" style="padding: 5px">
+                                                        <label style="margin-bottom: 0.2rem;">Lordo</label>
+                                                        <asp:TextBox ID="txt_FPlordo" runat="server" class="w3-input w3-border " ReadOnly placeholder="Lordo" Style="padding: 2px;"></asp:TextBox>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -302,7 +343,7 @@
                                 </div>
                             </ContentTemplate>
                         </asp:UpdatePanel>
-                        
+
                     </div>
 
                     <div class="w3-center" style="margin: 10px">

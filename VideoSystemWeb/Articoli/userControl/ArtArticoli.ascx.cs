@@ -41,7 +41,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         cmbMod_Genere.Items.Add("");
                         ddlGenere.Items.Clear();
                         ddlGenere.Items.Add("");
-                        foreach (Tipologica tipologiaGenere in SessionManager.listaTipiGeneri)
+                        foreach (Tipologica tipologiaGenere in SessionManager.ListaTipiGeneri)
                         {
                             ListItem item = new ListItem();
                             item.Text = tipologiaGenere.nome;
@@ -54,7 +54,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         cmbMod_Gruppo.Items.Add("");
                         ddlGruppo.Items.Clear();
                         ddlGruppo.Items.Add("");
-                        foreach (Tipologica tipologiaGruppo in SessionManager.listaTipiGruppi)
+                        foreach (Tipologica tipologiaGruppo in SessionManager.ListaTipiGruppi)
                         {
                             ListItem item = new ListItem();
                             item.Text = tipologiaGruppo.nome;
@@ -67,7 +67,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         cmbMod_Sottogruppo.Items.Add("");
                         ddlSottoGruppo.Items.Clear();
                         ddlSottoGruppo.Items.Add("");
-                        foreach (Tipologica tipologiaSottogruppo in SessionManager.listaTipiSottogruppi)
+                        foreach (Tipologica tipologiaSottogruppo in SessionManager.ListaTipiSottogruppi)
                         {
                             ListItem item = new ListItem();
                             item.Text = tipologiaSottogruppo.nome;

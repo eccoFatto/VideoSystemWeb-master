@@ -37,7 +37,7 @@ namespace VideoSystemWeb.Utente
                     ddlTipoUtente.Items.Clear();
                     cmbMod_TipoUtente.Items.Clear();
                     ddlTipoUtente.Items.Add("");
-                    foreach (Tipologica tipologiaUtente in SessionManager.listaTipiUtente)
+                    foreach (Tipologica tipologiaUtente in SessionManager.ListaTipiUtente)
                     {
                         ListItem item = new ListItem();
                         item.Text = tipologiaUtente.nome;

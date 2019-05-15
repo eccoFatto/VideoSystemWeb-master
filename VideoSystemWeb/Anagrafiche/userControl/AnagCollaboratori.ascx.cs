@@ -61,7 +61,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     ddlQualifiche.Items.Add("");
 
                     ddlQualificheDaAggiungere.Items.Clear();
-                    foreach (Tipologica qualifica in SessionManager.listaQualifiche)
+                    foreach (Tipologica qualifica in SessionManager.ListaQualifiche)
                     {
                         ListItem item = new ListItem();
                         ListItem itemDaAggiungere = new ListItem();

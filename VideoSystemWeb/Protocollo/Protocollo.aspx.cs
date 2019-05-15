@@ -44,7 +44,7 @@ namespace VideoSystemWeb.Protocollo
                     ddlTipoProtocollo.Items.Clear();
                     cmbMod_Tipologia.Items.Clear();
                     ddlTipoProtocollo.Items.Add("");
-                    foreach (Tipologica tipologiaProtocollo in SessionManager.listaTipiProtocolli)
+                    foreach (Tipologica tipologiaProtocollo in SessionManager.ListaTipiProtocolli)
                     {
                         ListItem item = new ListItem();
                         item.Text = tipologiaProtocollo.nome;

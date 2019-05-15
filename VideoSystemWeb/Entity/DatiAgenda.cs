@@ -28,10 +28,11 @@ namespace VideoSystemWeb.Entity
         public string indirizzo { get; set; }
         public string luogo { get; set; }
         public string codice_lavoro { get; set; }
-
         public string nota { get; set; }
-
         public int id_stato { get; set; }
+
+        //public List<DatiArticoli> ListaDatiArticoli { get; set; }
+        //public List<DatiLavorazione> DatiLavorazione { get; set; }
 
         public DatiAgenda() { }
 

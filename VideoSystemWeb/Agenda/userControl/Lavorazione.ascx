@@ -6,6 +6,11 @@
     $(document).ready(function () {
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+            $("#<%=txt_FiltroGruppi.ClientID%>").val("");
+            $("#<%=txt_FiltroGruppi.ClientID%>").keyup(function () {
+                filter(2);
+            });
+
             $('#<%=chk_ModCosto.ClientID%>').click(function () {
 
                 if (this.checked) {
@@ -32,9 +37,24 @@
         });
     });
 
+    function filter(columnIndex) {
+        var filterText = $("#<%=txt_FiltroGruppi.ClientID%>").val().toLowerCase();
+        var cellText = "";
+
+        $("#<%=gvGruppi.ClientID%> tr:has(td)").each(function () {
+            cellText = $(this).find("td:eq(" + columnIndex + ")").text().toLowerCase();
+            cellText = $.trim(cellText);
+
+            if (cellText.indexOf(filterText) == -1) {
+                $(this).css('display', 'none');
+            }
+            else {
+                $(this).css('display', '');
+            }
+        });
+    }
+
     function openTabEventoLavorazione(evt, tipoName) {
-
-
         $("#<%=hf_tabSelezionataLavorazione.ClientID%>").val(tipoName);
 
         var i, x, tablinks;
@@ -64,6 +84,10 @@
         }
         if (document.getElementById(nomeElemento).className.indexOf("w3-red") == -1)
             document.getElementById(nomeElemento).className += " w3-red";
+    }
+
+    function confermaEliminazioneArticolo() {
+        return confirm("Eliminare l'articolo corrente?");
     }
 
 </script>

@@ -54,83 +54,83 @@ namespace VideoSystemWeb.Articoli.userControl
                 case "GENERI":
                     if (clearLista)
                     {
-                        SessionManager.listaTipiGeneri.Clear();
+                        SessionManager.ListaTipiGeneri.Clear();
                     }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Red;
-                    lista = SessionManager.listaTipiGeneri;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);
+                    lista = SessionManager.ListaTipiGeneri;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GENERE;
                     break;
                 case "GRUPPI":
                     if (clearLista)
                     {
-                        SessionManager.listaTipiGruppi.Clear();
+                        SessionManager.ListaTipiGruppi.Clear();
                     }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Green;
-                    lista = SessionManager.listaTipiGruppi;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GRUPPO, true, ref esito);
+                    lista = SessionManager.ListaTipiGruppi;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GRUPPO, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GRUPPO;
                     break;
                 case "SOTTOGRUPPI":
                     if (clearLista)
                     {
-                        SessionManager.listaTipiSottogruppi.Clear();
+                        SessionManager.ListaTipiSottogruppi.Clear();
                     }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Blue;
-                    lista = SessionManager.listaTipiSottogruppi; // UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO, true, ref esito);
+                    lista = SessionManager.ListaTipiSottogruppi; // UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_SOTTOGRUPPO;
                     break;
                 case "TENDER":
                     if (clearLista)
                     {
-                        SessionManager.listaTender.Clear();
+                        SessionManager.ListaTender.Clear();
                     }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Brown;
                     //lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TENDER, true, ref esito);
-                    lista = SessionManager.listaTender;
+                    lista = SessionManager.ListaTender;
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_TENDER;
                     break;
                 case "QUALIFICHE":
                     if (clearLista)
                     {
-                        SessionManager.listaQualifiche.Clear();
+                        SessionManager.ListaQualifiche.Clear();
                     }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Yellow;
-                    lista = SessionManager.listaQualifiche;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_QUALIFICHE, true, ref esito);
+                    lista = SessionManager.ListaQualifiche;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_QUALIFICHE, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_QUALIFICHE;
                     break;
                 case "CLIENTI/FORNITORI":
                     if (clearLista)
                     {
-                        SessionManager.listaClientiFornitori.Clear();
+                        SessionManager.ListaClientiFornitori.Clear();
                     }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.OrangeRed;
-                    lista = SessionManager.listaTipiClientiFornitori;   //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_CLIENTI_FORNITORI, true, ref esito);
+                    lista = SessionManager.ListaTipiClientiFornitori;   //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_CLIENTI_FORNITORI, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_CLIENTI_FORNITORI;
                     break;
                 case "PROTOCOLLI":
                     if (clearLista)
                     {
-                        SessionManager.listaTipiProtocolli.Clear();
+                        SessionManager.ListaTipiProtocolli.Clear();
                     }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Orange;
-                    lista = SessionManager.listaTipiProtocolli; //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO, true, ref esito);
+                    lista = SessionManager.ListaTipiProtocolli; //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_PROTOCOLLO;
                     break;
                 case "LAVORAZIONI":
                     if (clearLista)
                     {
-                        SessionManager.listaTipiTipologie.Clear();
+                        SessionManager.ListaTipiTipologie.Clear();
                     }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.LightSkyBlue;
-                    lista = SessionManager.listaTipiTipologie;  //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, true, ref esito);
+                    lista = SessionManager.ListaTipiTipologie;  //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_TIPOLOGIE;
                     break;
                 default:
                     if (clearLista)
                     {
-                        SessionManager.listaTipiGeneri.Clear();
+                        SessionManager.ListaTipiGeneri.Clear();
                     }
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Red;
-                    lista = SessionManager.listaTipiGeneri;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);
+                    lista = SessionManager.ListaTipiGeneri;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GENERE;
                     break;
             }

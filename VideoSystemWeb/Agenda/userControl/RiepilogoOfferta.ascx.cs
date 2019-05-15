@@ -32,16 +32,12 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                //Esito esito = new Esito();
-                //List<GiorniPagamentoFatture> listaGPF = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
-
-                foreach (GiorniPagamentoFatture gpf in SessionManager.listaGPF)
+                foreach (GiorniPagamentoFatture gpf in SessionManager.ListaGPF)
                 {
                     cmbMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione, gpf.Giorni));
                 }
 
-                //List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
-                foreach (DatiBancari datiBancari in SessionManager.listaDatiBancari)
+                foreach (DatiBancari datiBancari in SessionManager.ListaDatiBancari)
                 {
                     ddl_Banca.Items.Add(new ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
                 }

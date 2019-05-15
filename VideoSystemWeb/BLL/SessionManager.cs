@@ -26,14 +26,14 @@ namespace VideoSystemWeb.BLL
         public static string CFG_PROVINCIA = "PROVINCIA";
 
 
-        public static List<FiguraProfessionale> listaCompletaFigProf
+        public static List<FiguraProfessionale> ListaCompletaFigProf
         {
             get
             {
                 if (HttpContext.Current.Session["listaCompletaFigProf"] == null || ((List<FiguraProfessionale>)HttpContext.Current.Session["listaCompletaFigProf"]).Count() == 0)
                 {
                     List<FiguraProfessionale> _listaCompletaFigProf = new List<FiguraProfessionale>();
-                    foreach (Anag_Collaboratori collaboratore in listaAnagraficheCollaboratori)
+                    foreach (Anag_Collaboratori collaboratore in ListaAnagraficheCollaboratori)
                     {
                         _listaCompletaFigProf.Add(new FiguraProfessionale()
                         {
@@ -48,7 +48,7 @@ namespace VideoSystemWeb.BLL
                         });
                     }
 
-                    foreach (Anag_Clienti_Fornitori fornitore in listaAnagraficheFornitori)
+                    foreach (Anag_Clienti_Fornitori fornitore in ListaAnagraficheFornitori)
                     {
                         _listaCompletaFigProf.Add(new FiguraProfessionale()
                         {
@@ -69,7 +69,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaCompletaFigProf"] = value;
             }
         }
-        public static List<Anag_Qualifiche_Collaboratori> listaQualificheCollaboratori
+        public static List<Anag_Qualifiche_Collaboratori> ListaQualificheCollaboratori
         {
             get
             {
@@ -85,7 +85,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaQualificheCollaboratori"] = value;
             }
         }
-        public static List<Anag_Collaboratori> listaAnagraficheCollaboratori
+        public static List<Anag_Collaboratori> ListaAnagraficheCollaboratori
         {
             get
             {
@@ -102,7 +102,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaAnagraficheCollaboratori"] = value;
             }
         }
-        public static List<Anag_Clienti_Fornitori> listaAnagraficheFornitori
+        public static List<Anag_Clienti_Fornitori> ListaAnagraficheFornitori
         {
             get
             {
@@ -119,7 +119,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaAnagraficheFornitori"] = value;
             }
         }
-        public static List<Tipologica> listaTipiPagamento
+        public static List<Tipologica> ListaTipiPagamento
         {
             get
             {
@@ -134,13 +134,13 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiPagamento"] = value;
             }
         }
-        public static List<string> listaCittaCollaboratori
+        public static List<string> ListaCittaCollaboratori
         {
             get
             {
                 if (HttpContext.Current.Session["listaCittaCollaboratori"] == null || ((List<string>)HttpContext.Current.Session["listaCittaCollaboratori"]).Count() == 0)
                 {
-                    List<string> listaCittaCollaboratori = (from record in listaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList();
+                    List<string> listaCittaCollaboratori = (from record in ListaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList();
                     HttpContext.Current.Session["listaCittaCollaboratori"] = listaCittaCollaboratori.Distinct().ToList<string>();
                 }
                 return (List<string>)HttpContext.Current.Session["listaCittaCollaboratori"];
@@ -150,13 +150,13 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaCittaCollaboratori"] = value;
             }
         }
-        public static List<string> listaCittaFornitori
+        public static List<string> ListaCittaFornitori
         {
             get
             {
                 if (HttpContext.Current.Session["listaCittaFornitori"] == null || ((List<string>)HttpContext.Current.Session["listaCittaFornitori"]).Count() == 0)
                 {
-                    List<string> _listaCittaFornitori = (from record in listaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList();
+                    List<string> _listaCittaFornitori = (from record in ListaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList();
                     HttpContext.Current.Session["listaCittaFornitori"] = _listaCittaFornitori.Distinct().ToList<string>();
                 }
                 return (List<string>)HttpContext.Current.Session["listaCittaFornitori"];
@@ -166,7 +166,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaCittaFornitori"] = value;
             }
         }
-        public static List<Anag_Referente_Clienti_Fornitori> listaReferenti
+        public static List<Anag_Referente_Clienti_Fornitori> ListaReferenti
         {
             get
             {
@@ -181,7 +181,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaReferenti"] = value;
             }
         }
-        public static List<GiorniPagamentoFatture> listaGPF
+        public static List<GiorniPagamentoFatture> ListaGPF
         {
             get
             {
@@ -197,7 +197,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaGPF"] = value;
             }
         }
-        public static List<DatiBancari> listaDatiBancari
+        public static List<DatiBancari> ListaDatiBancari
         {
             get
             {
@@ -213,7 +213,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaDatiBancari"] = value;
             }
         }
-        public static List<Tipologica> listaTender
+        public static List<Tipologica> ListaTender
         {
             get
             {
@@ -228,7 +228,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTender"] = value;
             }
         }
-        public static List<Tipologica> listaQualifiche
+        public static List<Tipologica> ListaQualifiche
         {
             get
             {
@@ -243,7 +243,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaQualifiche"] = value;
             }
         }
-        public static List<Tipologica> listaTipiGeneri
+        public static List<Tipologica> ListaTipiGeneri
         {
             get
             {
@@ -258,7 +258,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiGeneri"] = value;
             }
         }
-        public static List<Tipologica> listaTipiGruppi
+        public static List<Tipologica> ListaTipiGruppi
         {
             get
             {
@@ -273,7 +273,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiGruppi"] = value;
             }
         }
-        public static List<Tipologica> listaTipiSottogruppi
+        public static List<Tipologica> ListaTipiSottogruppi
         {
             get
             {
@@ -288,7 +288,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiSottogruppi"] = value;
             }
         }
-        public static List<Tipologica> listaTipiProtocolli
+        public static List<Tipologica> ListaTipiProtocolli
         {
             get
             {
@@ -303,7 +303,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiProtocolli"] = value;
             }
         }
-        public static List<Tipologica> listaTipiUtente
+        public static List<Tipologica> ListaTipiUtente
         {
             get
             {
@@ -318,7 +318,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiUtente"] = value;
             }
         }
-        public static List<Tipologica> listaTipiClientiFornitori
+        public static List<Tipologica> ListaTipiClientiFornitori
         {
             get
             {
@@ -333,7 +333,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiClientiFornitori"] = value;
             }
         }
-        public static List<Tipologica> listaTipiTipologie
+        public static List<Tipologica> ListaTipiTipologie
         {
             get
             {
@@ -348,7 +348,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiTipologie"] = value;
             }
         }
-        public static List<ColonneAgenda> listaRisorse
+        public static List<ColonneAgenda> ListaRisorse
         {
             get
             {
@@ -366,7 +366,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaRisorse"] = value;
             }
         }
-        public static List<Tipologica> listaStati
+        public static List<Tipologica> ListaStati
         {
             get
             {
@@ -381,7 +381,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaStati"] = value;
             }
         }
-        public static List<Anag_Clienti_Fornitori> listaClientiFornitori
+        public static List<Anag_Clienti_Fornitori> ListaClientiFornitori
         {
             get
             {

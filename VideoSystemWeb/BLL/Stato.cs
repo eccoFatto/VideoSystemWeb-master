@@ -35,42 +35,42 @@ namespace VideoSystemWeb.BLL
         {
             get
             {
-                return (SessionManager.listaStati.Where(x => x.nome.ToUpper() == "previsione impegno".ToUpper()).FirstOrDefault()).id;
+                return (SessionManager.ListaStati.Where(x => x.nome.ToUpper() == "previsione impegno".ToUpper()).FirstOrDefault()).id;
             }
         }
         public int STATO_OFFERTA
         {
             get
             {
-                return (SessionManager.listaStati.Where(x => x.nome.ToUpper() == "Offerta".ToUpper()).FirstOrDefault()).id;
+                return (SessionManager.ListaStati.Where(x => x.nome.ToUpper() == "Offerta".ToUpper()).FirstOrDefault()).id;
             }
         }
         public int STATO_LAVORAZIONE
         {
             get
             {
-                return (SessionManager.listaStati.Where(x => x.nome.ToUpper() == "Lavorazione".ToUpper()).FirstOrDefault()).id;
+                return (SessionManager.ListaStati.Where(x => x.nome.ToUpper() == "Lavorazione".ToUpper()).FirstOrDefault()).id;
             }
         }
         public int STATO_FATTURA
         {
             get
             {
-                return (SessionManager.listaStati.Where(x => x.nome.ToUpper() == "Fattura".ToUpper()).FirstOrDefault()).id;
+                return (SessionManager.ListaStati.Where(x => x.nome.ToUpper() == "Fattura".ToUpper()).FirstOrDefault()).id;
             }
         }
         public int STATO_RIPOSO
         {
             get
             {
-                return (SessionManager.listaStati.Where(x => x.nome.ToUpper() == "Riposo".ToUpper()).FirstOrDefault()).id;
+                return (SessionManager.ListaStati.Where(x => x.nome.ToUpper() == "Riposo".ToUpper()).FirstOrDefault()).id;
             }
         }
         public int STATO_VIAGGIO
         {
             get
             {
-                return (SessionManager.listaStati.Where(x => x.nome.ToUpper() == "Viaggio / Installazione".ToUpper()).FirstOrDefault()).id;
+                return (SessionManager.ListaStati.Where(x => x.nome.ToUpper() == "Viaggio / Installazione".ToUpper()).FirstOrDefault()).id;
             }
         }
     }

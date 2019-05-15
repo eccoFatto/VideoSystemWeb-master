@@ -65,7 +65,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     ddlTipoAzienda.Items.Add("");
                     cmbMod_TipoAzienda.Items.Clear();
                     cmbMod_TipoAzienda.Items.Add("");
-                    foreach (Tipologica tipologiaAzienda in SessionManager.listaTipiClientiFornitori)
+                    foreach (Tipologica tipologiaAzienda in SessionManager.ListaTipiClientiFornitori)
                     {
                         ListItem item = new ListItem();
                         item.Text = tipologiaAzienda.nome;

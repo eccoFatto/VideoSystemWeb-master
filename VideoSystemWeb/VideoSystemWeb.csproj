@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -259,6 +258,7 @@
     <Content Include="Images\Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" />
     <Content Include="Images\Search.ico" />
     <Content Include="Images\switch.png" />
+    <Content Include="Images\user-add-icon.png" />
     <Content Include="index.html" />
     <Content Include="Login.aspx" />
     <Content Include="Images\logoVSP.png" />

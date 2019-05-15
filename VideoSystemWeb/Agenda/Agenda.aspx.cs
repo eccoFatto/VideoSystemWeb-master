@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using VideoSystemWeb.BLL;
@@ -14,6 +15,8 @@ namespace VideoSystemWeb.Agenda
 {
     public partial class Agenda : BasePage
     {
+        ObjectIDGenerator IDGenerator = new ObjectIDGenerator();
+
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         bool isUtenteAbilitatoInScrittura;
         string coloreViaggio;
@@ -215,12 +218,20 @@ namespace VideoSystemWeb.Agenda
 
                 // COSTRUISCO LISTA DATI ARTICOLI LAVORAZIONE
                 List<DatiArticoliLavorazione> listaDatiArticoliLavorazione = new List<DatiArticoliLavorazione>();
+
+                
+                
                 foreach (DatiArticoli datoArticolo in listaDatiArticoli)
                 {
                     for (int i = 0; i < datoArticolo.Quantita; i++)
                     {
+                        bool firstTime;
+                        
+
                         DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
                         datoArticoloLavorazione.Id = 0;
+                        //datoArticoloLavorazione.IdentificatoreOggetto = datoArticolo.IdentificatoreOggetto;
+                        datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out firstTime);
                         datoArticoloLavorazione.IdDatiLavorazione = 0;
                         datoArticoloLavorazione.IdArtArticoli = datoArticolo.IdArtArticoli;
                         datoArticoloLavorazione.IdTipoGenere = datoArticolo.IdTipoGenere;

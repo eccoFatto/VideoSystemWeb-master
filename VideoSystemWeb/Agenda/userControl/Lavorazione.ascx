@@ -124,7 +124,6 @@
                                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
                                 <asp:BoundField DataField="TV" HeaderText="TV" />
                                 <asp:BoundField DataField="Prezzo" HeaderText="Listino" DataFormatString="{0:N2}" />
-                                <%--<asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:N2}" />--%>
                                 <asp:TemplateField HeaderText="Costo">
                                     <ItemTemplate>
                                         <asp:Label ID="lbl_Costo" runat="server"/>
@@ -194,25 +193,13 @@
                     </asp:GridView>
                 </asp:Panel>
 
-                <div class="w3-half">
-
+                <div class="w3-col">
                     <asp:TextBox ID="txt_FiltroGruppi" runat="server" CssClass="w3-round" placeholder="Cerca.." Style="width: 100%; padding: 5px; margin-top: 10px;"></asp:TextBox>
-                </div>
-                <div class="w3-quarter">
-                    spazio1
-        
-                </div>
-                <div class="w3-quarter">
-                    <asp:Button ID="btn_SwitchArtPers" runat="server" Text="Inserimento personale/fornitore" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btn_SwitchArtPers_Click" Style="padding: 7px 10px" />
                 </div>
             </div>
 
-
-
             <div id="panelModificaArticolo" class="w3-modal " style="position: fixed;" runat="server">
-
                 <div class="w3-modal-content w3-card-4 round" style="position: relative; width: 80%; background-color: white; overflow: auto;">
-
                     <div class="w3-row-padding">
 
                         <div class="w3-center">
@@ -355,10 +342,6 @@
             </div>
 
         </div>
-
-
-
-
 
 
         <div id="PianoEsterno" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 90%; overflow: auto; display: none">

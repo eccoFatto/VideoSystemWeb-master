@@ -4341,3 +4341,32 @@ La procedura o funzione 'InsertDatiArticoliLavorazione' prevede il parametro '@f
 2019-05-14 00:07:41,894 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-05-14 00:08:48,523 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-05-14 00:08:51,483 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-14 13:19:14,550 [24] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-05-14 13:19:17,862 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-14 13:21:41,680 [25] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-14 13:22:38,173 [27] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 13:33:26,305 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-05-15 13:33:31,709 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 13:35:37,695 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-05-15 13:35:50,965 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 13:39:25,594 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-05-15 13:39:25,753 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-05-15 13:39:33,649 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:01:57,919 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-05-15 14:02:00,849 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:03:00,742 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:03:15,976 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:03:19,311 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:04:22,804 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:04:24,344 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:10:42,871 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-05-15 14:10:48,075 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:10:57,493 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:13:27,437 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:13:30,688 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:15:39,476 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:16:14,772 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:16:15,314 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 14:17:45,431 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-15 23:31:30,342 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2019-05-15 23:31:33,313 [9] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

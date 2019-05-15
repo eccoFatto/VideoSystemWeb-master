@@ -29,6 +29,8 @@
     <link rel='stylesheet' href='/Css/Style.css' />
 </head>
 <body>
+    <iframe src="StretchSession.aspx" width="0" height="0" style="display:none;" ></iframe>
+
     <script>
         function openSuccess(messaggio) {
             document.getElementById('modalSuccess').style.display = 'block';
@@ -61,6 +63,7 @@
             //alert('tutto ok');
         }
     </script>
+    <%--<iframe src="<%=Page.ResolveClientUrl("~/StretchSession.aspx")%>" width="0" height="0" style="display:none;" />--%>
     <div class="loader"></div>
     <form runat="server" autocomplete="off" enctype="multipart/form-data">
         <div id="modalError" class="w3-modal" style="z-index:10000">

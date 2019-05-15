@@ -442,6 +442,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="StretchSession.aspx" />
     <Content Include="TEMPLATE\testWord.aspx" />
     <Content Include="testMail.aspx" />
     <Content Include="Utente\GestionePassword.aspx" />
@@ -724,6 +725,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="StretchSession.aspx.cs">
+      <DependentUpon>StretchSession.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StretchSession.aspx.designer.cs">
+      <DependentUpon>StretchSession.aspx</DependentUpon>
     </Compile>
     <Compile Include="TEMPLATE\testWord.aspx.cs">
       <DependentUpon>testWord.aspx</DependentUpon>

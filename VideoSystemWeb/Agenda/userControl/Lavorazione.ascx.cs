@@ -627,6 +627,11 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", ""));
 
+            if (SessionManager.EventoSelezionato.LavorazioneCorrente == null)
+            {
+                SessionManager.EventoSelezionato.LavorazioneCorrente = new DatiLavorazione();
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = new List<DatiArticoliLavorazione>();
+            }
 
             SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = listaArticoliLavorazione;
 

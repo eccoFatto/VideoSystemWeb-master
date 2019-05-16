@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -12,6 +13,8 @@ namespace VideoSystemWeb.Agenda.userControl
     
     public partial class Lavorazione : System.Web.UI.UserControl
     {
+        ObjectIDGenerator IDGenerator = new ObjectIDGenerator();
+
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
         public event PopupHandler RichiediOperazionePopup; //evento
         BasePage basePage = new BasePage();
@@ -34,21 +37,21 @@ namespace VideoSystemWeb.Agenda.userControl
         //        ViewState["listaDatiArticoliLavorazione"] = value;
         //    }
         //}
-        DatiLavorazione LavorazioneCorrente
-        {
-            get
-            {
-                if (ViewState["lavorazioneCorrente"] == null)
-                {
-                    ViewState["lavorazioneCorrente"] = new DatiLavorazione();
-                }
-                return (DatiLavorazione)ViewState["lavorazioneCorrente"];
-            }
-            set
-            {
-                ViewState["lavorazioneCorrente"] = value;
-            }
-        }
+        //DatiLavorazione LavorazioneCorrente
+        //{
+        //    get
+        //    {
+        //        if (ViewState["lavorazioneCorrente"] == null)
+        //        {
+        //            ViewState["lavorazioneCorrente"] = new DatiLavorazione();
+        //        }
+        //        return (DatiLavorazione)ViewState["lavorazioneCorrente"];
+        //    }
+        //    set
+        //    {
+        //        ViewState["lavorazioneCorrente"] = value;
+        //    }
+        //}
         List<ArticoliGruppi> ListaArticoliGruppiLavorazione
         {
             get
@@ -69,8 +72,8 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             if (!IsPostBack)
             {
-                gvGruppi.DataSource = ListaArticoliGruppiLavorazione;
-                gvGruppi.DataBind();
+                gvGruppiLavorazione.DataSource = ListaArticoliGruppiLavorazione;
+                gvGruppiLavorazione.DataBind();
 
                 PopolaCombo();
             }
@@ -84,7 +87,7 @@ namespace VideoSystemWeb.Agenda.userControl
         #region COMPORTAMENTO ELEMENTI PAGINA
         
 
-        protected void gvGruppi_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void gvGruppiLavorazione_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             long idSelezione = Convert.ToInt64(e.CommandArgument);
 
@@ -99,11 +102,11 @@ namespace VideoSystemWeb.Agenda.userControl
                 aggiungiArticoloAListaArticoli(articoloGruppo.IdOggetto);
             }
 
-            if (LavorazioneCorrente.ListaArticoliLavorazione != null && LavorazioneCorrente.ListaArticoliLavorazione.Count > 0)
+            if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione != null && SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count > 0)
             {
-                lbl_selezionareArticolo.Visible = false;
-                gvArticoliLavorazione.DataSource = LavorazioneCorrente.ListaArticoliLavorazione;
-                gvArticoliLavorazione.DataBind();
+                //lbl_selezionareArticolo.Visible = false;
+                //gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+                //gvArticoliLavorazione.DataBind();
 
                 AggiornaTotali();
                 ResetPanelLavorazione();
@@ -121,15 +124,15 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 long identificatoreOggetto = Convert.ToInt64(commandArgs[1]);
                 ViewState["identificatoreArticoloLavorazione"] = identificatoreOggetto;
-                articoloSelezionato = LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
+                articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
             }
             else
             {
                 ViewState["idArticoloLavorazione"] = id;
-                articoloSelezionato = LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.Id == id);
+                articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.Id == id);
             }
 
-            int indexArticolo = LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(articoloSelezionato);
+            int indexArticolo = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(articoloSelezionato);
 
             switch (e.CommandName)
             {
@@ -183,8 +186,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     break;
                 case "elimina":
-                    LavorazioneCorrente.ListaArticoliLavorazione.Remove(articoloSelezionato);
-                    gvArticoliLavorazione.DataSource = LavorazioneCorrente.ListaArticoliLavorazione;
+                    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Remove(articoloSelezionato);
+                    gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
                     gvArticoliLavorazione.DataBind();
 
                     AggiornaTotali();
@@ -194,18 +197,18 @@ namespace VideoSystemWeb.Agenda.userControl
                 case "moveUp":
                     if (indexArticolo > 0)
                     {
-                        LavorazioneCorrente.ListaArticoliLavorazione.Remove(articoloSelezionato);
-                        LavorazioneCorrente.ListaArticoliLavorazione.Insert(indexArticolo - 1, articoloSelezionato);
-                        gvArticoliLavorazione.DataSource = LavorazioneCorrente.ListaArticoliLavorazione;
+                        SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Remove(articoloSelezionato);
+                        SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Insert(indexArticolo - 1, articoloSelezionato);
+                        gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
                         gvArticoliLavorazione.DataBind();
                     }
                     break;
                 case "moveDown":
-                    if (indexArticolo < LavorazioneCorrente.ListaArticoliLavorazione.Count - 1)
+                    if (indexArticolo < SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count - 1)
                     {
-                        LavorazioneCorrente.ListaArticoliLavorazione.Remove(articoloSelezionato);
-                        LavorazioneCorrente.ListaArticoliLavorazione.Insert(indexArticolo + 1, articoloSelezionato);
-                        gvArticoliLavorazione.DataSource = LavorazioneCorrente.ListaArticoliLavorazione;
+                        SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Remove(articoloSelezionato);
+                        SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Insert(indexArticolo + 1, articoloSelezionato);
+                        gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
                         gvArticoliLavorazione.DataBind();
                     }
                     break;
@@ -221,15 +224,15 @@ namespace VideoSystemWeb.Agenda.userControl
             if (ViewState["idArticoloLavorazione"] == null)
             {
                 long identificatoreOggetto = (long)ViewState["identificatoreArticoloLavorazione"];
-                articoloSelezionato = LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
+                articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
             }
             else
             {
                 int idArticolo = (int)ViewState["idArticoloLavorazione"];
-                articoloSelezionato = LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.Id == idArticolo);
+                articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.Id == idArticolo);
             }
 
-            var index = LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(articoloSelezionato);
+            var index = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(articoloSelezionato);
 
             articoloSelezionato.Descrizione = txt_Descrizione.Text;
             articoloSelezionato.DescrizioneLunga = txt_DescrizioneLunga.Text;
@@ -268,7 +271,7 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.Nota = txt_FPnotaCollaboratore.Text;
 
 
-            LavorazioneCorrente.ListaArticoliLavorazione = LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
+            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
 
             ResetPanelLavorazione();
 
@@ -310,7 +313,76 @@ namespace VideoSystemWeb.Agenda.userControl
         }
 
         protected void btnImporta_Click(object sender, EventArgs e)
-        { }
+        {
+            List<DatiArticoliLavorazione> _listaCollaboratoriFornitori;
+            if (SessionManager.EventoSelezionato.LavorazioneCorrente == null ||
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null ||
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0 ||
+                (_listaCollaboratoriFornitori = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.IdCollaboratori != null || x.IdFornitori != null).ToList()).Count() == 0)
+            {
+
+                basePage.ShowWarning("Nessuna Figura Professionale da importare");
+            }
+            else
+            {
+                List<FiguraProfessionale> _listaFigureProfessionali = new List<FiguraProfessionale>();
+                foreach (DatiArticoliLavorazione collabForn in _listaCollaboratoriFornitori)
+                {
+                    FiguraProfessionale figProf = new FiguraProfessionale();
+                    if (collabForn.IdCollaboratori != null) //COLLABORATORI
+                    {
+                        bool firstTime;
+
+                        Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == collabForn.IdCollaboratori);
+                        figProf.Id = 0;
+                        figProf.IdentificatoreOggetto= IDGenerator.GetId(figProf, out firstTime);
+                        figProf.Nome = "";
+                        figProf.Cognome = collaboratore.Cognome + " " + collaboratore.Nome; //per uniformare al fornitore
+                        figProf.Citta = collaboratore.ComuneRiferimento;
+                        figProf.Qualifiche = collaboratore.Qualifiche;
+                        figProf.Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni[0].NumeroCompleto;
+                        
+                        figProf.Tipo = COLLABORATORE;
+                    }
+                    else //FORNITORI
+                    {
+                        bool firstTime;
+
+                        Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == collabForn.IdFornitori);
+                        figProf.Id = 0;
+                        figProf.IdentificatoreOggetto = IDGenerator.GetId(figProf, out firstTime);
+                        figProf.Nome = "";
+                        figProf.Cognome = fornitore.RagioneSociale;
+                        figProf.Citta = fornitore.ComuneOperativo;
+                        figProf.Qualifiche = null;
+                        figProf.Telefono = fornitore.Telefono;
+
+                        figProf.Tipo = FORNITORE;
+                    }
+
+                    figProf.Nota = collabForn.Nota;
+                    figProf.Netto = collabForn.FP_netto;
+                    figProf.Lordo = collabForn.FP_lordo;
+
+                    _listaFigureProfessionali.Add(figProf);
+                }
+
+                if (_listaFigureProfessionali.Count > 0)
+                {
+                    lbl_nessunaFiguraProf.Visible = false;
+
+                    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali = _listaFigureProfessionali;
+
+                    gvFigProfessionali.DataSource = _listaFigureProfessionali;
+                    gvFigProfessionali.DataBind();
+                    
+                    RichiediOperazionePopup("UPDATE");
+                }
+            }
+
+            
+
+        }
         #endregion
 
         #region OPERAZIONI LAVORAZIONE
@@ -434,25 +506,25 @@ namespace VideoSystemWeb.Agenda.userControl
         private void aggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
         {
             Esito esito = new Esito();
-            int idLavorazione = LavorazioneCorrente == null ? 0 : LavorazioneCorrente.Id;
+            int idLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
 
-            LavorazioneCorrente.ListaArticoliLavorazione.AddRange(Articoli_BLL.Instance.CaricaListaArticoliLavorazioneByIDGruppo(idLavorazione, idGruppo, ref esito));
-            LavorazioneCorrente.ListaArticoliLavorazione = LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
+            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.AddRange(Articoli_BLL.Instance.CaricaListaArticoliLavorazioneByIDGruppo(idLavorazione, idGruppo, ref esito));
+            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
 
-            lbl_selezionareArticolo.Visible = LavorazioneCorrente.ListaArticoliLavorazione == null || LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
+            lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
         }
 
         private void aggiungiArticoloAListaArticoli(int idArticolo)
         {
             Esito esito = new Esito();
-            int idLavorazione = LavorazioneCorrente == null ? 0 : LavorazioneCorrente.Id;
+            int idLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
 
             DatiArticoliLavorazione articoloLavorazione = Articoli_BLL.Instance.CaricaArticoloLavorazioneByID(idLavorazione, idArticolo, ref esito);
 
-            LavorazioneCorrente.ListaArticoliLavorazione.Add(articoloLavorazione);
-            LavorazioneCorrente.ListaArticoliLavorazione = LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
+            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Add(articoloLavorazione);
+            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
 
-            lbl_selezionareArticolo.Visible = LavorazioneCorrente.ListaArticoliLavorazione == null || LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
+            lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
         }
 
         private void AggiornaTotali()
@@ -462,9 +534,9 @@ namespace VideoSystemWeb.Agenda.userControl
             decimal totIva = 0;
             decimal percRicavo = 0;
 
-            if (LavorazioneCorrente.ListaArticoliLavorazione != null && LavorazioneCorrente.ListaArticoliLavorazione.Count > 0)
+            if (SessionManager.EventoSelezionato.LavorazioneCorrente != null && SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione != null && SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count > 0)
             {
-                foreach (DatiArticoliLavorazione art in LavorazioneCorrente.ListaArticoliLavorazione)
+                foreach (DatiArticoliLavorazione art in SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione)
                 {
                     if (art.UsaCostoFP != null )
                     {
@@ -500,10 +572,10 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void ResetPanelLavorazione()
         {
-            gvArticoliLavorazione.DataSource = LavorazioneCorrente.ListaArticoliLavorazione;
+            gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? null : SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
             gvArticoliLavorazione.DataBind();
 
-            lbl_selezionareArticolo.Visible = (LavorazioneCorrente.ListaArticoliLavorazione == null || LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
+            lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
 
             AggiornaTotali();
         }
@@ -513,7 +585,7 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
 
             #region INIZIALIZZAZIONE OGGETTI LAVORAZIONE CORRENTE
-            LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
+            SessionManager.EventoSelezionato.LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
             SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
             #endregion
 
@@ -523,23 +595,23 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                CreaNuovaLavorazione(LavorazioneCorrente.ListaArticoliLavorazione);
+                CreaNuovaLavorazione(SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione);
 
-                if (LavorazioneCorrente != null)
+                if (SessionManager.EventoSelezionato.LavorazioneCorrente != null)
                 {
-                    txt_Ordine.Text = LavorazioneCorrente.Ordine;
-                    txt_Fattura.Text = LavorazioneCorrente.Fattura;
-                    ddl_Contratto.SelectedValue = LavorazioneCorrente.IdContratto == null ? "": LavorazioneCorrente.IdContratto.ToString();
-                    ddl_Referente.SelectedValue = LavorazioneCorrente.IdReferente == null ? "" : LavorazioneCorrente.IdReferente.ToString();
-                    ddl_Capotecnico.SelectedValue = LavorazioneCorrente.IdCapoTecnico == null ? "" : LavorazioneCorrente.IdCapoTecnico.ToString();
-                    ddl_Produttore.SelectedValue = LavorazioneCorrente.IdProduttore == null ? "" : LavorazioneCorrente.IdProduttore.ToString();
+                    txt_Ordine.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Ordine;
+                    txt_Fattura.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Fattura;
+                    ddl_Contratto.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto == null ? "": SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto.ToString();
+                    ddl_Referente.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente.ToString();
+                    ddl_Capotecnico.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico.ToString();
+                    ddl_Produttore.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore.ToString();
 
-                    LavorazioneCorrente.ListaArticoliLavorazione = LavorazioneCorrente.ListaArticoliLavorazione;
+                    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
 
-                    gvArticoliLavorazione.DataSource = LavorazioneCorrente.ListaArticoliLavorazione;
+                    gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
                     gvArticoliLavorazione.DataBind();
                 }
-                lbl_selezionareArticolo.Visible = (LavorazioneCorrente.ListaArticoliLavorazione == null || LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
+                lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
                 AggiornaTotali();
             }
         }
@@ -556,20 +628,27 @@ namespace VideoSystemWeb.Agenda.userControl
             ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", ""));
 
 
-            LavorazioneCorrente.ListaArticoliLavorazione = listaArticoliLavorazione;
+            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = listaArticoliLavorazione;
 
-            lbl_selezionareArticolo.Visible = LavorazioneCorrente.ListaArticoliLavorazione == null || LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
+            lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
 
-            gvArticoliLavorazione.DataSource = LavorazioneCorrente.ListaArticoliLavorazione;
+            gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
             gvArticoliLavorazione.DataBind();
         }
 
         public void ClearLavorazione()
         {
             lbl_selezionareArticolo.Visible = true;
-            LavorazioneCorrente.ListaArticoliLavorazione = null;
+            lbl_nessunaFiguraProf.Visible = true;
+            if (SessionManager.EventoSelezionato.LavorazioneCorrente != null)
+            {
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = null;
+            }
             gvArticoliLavorazione.DataSource = null;
             gvArticoliLavorazione.DataBind();
+
+            gvFigProfessionali.DataSource = null;
+            gvFigProfessionali.DataBind();
 
             txt_TotPrezzo.Text = "";
             txt_TotCosto.Text = "";
@@ -582,7 +661,7 @@ namespace VideoSystemWeb.Agenda.userControl
         public DatiLavorazione CreaDatiLavorazione()
         {
             DatiLavorazione datiLavorazione = new DatiLavorazione();
-            datiLavorazione.Id = LavorazioneCorrente == null ? 0 : LavorazioneCorrente.Id;
+            datiLavorazione.Id = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
 
             datiLavorazione.Ordine = txt_Ordine.Text;
             datiLavorazione.Fattura = txt_Fattura.Text;
@@ -590,7 +669,7 @@ namespace VideoSystemWeb.Agenda.userControl
             datiLavorazione.IdReferente = string.IsNullOrEmpty(ddl_Referente.SelectedValue) ? null : (int?)int.Parse(ddl_Referente.SelectedValue); //int.Parse(ddl_Referente.SelectedValue);
             datiLavorazione.IdCapoTecnico = string.IsNullOrEmpty(ddl_Capotecnico.SelectedValue) ? null : (int?)int.Parse(ddl_Capotecnico.SelectedValue); //int.Parse(ddl_Capotecnico.SelectedValue);
             datiLavorazione.IdProduttore = string.IsNullOrEmpty(ddl_Produttore.SelectedValue) ? null : (int?)int.Parse(ddl_Produttore.SelectedValue); //int.Parse(ddl_Produttore.SelectedValue);
-            datiLavorazione.ListaArticoliLavorazione = LavorazioneCorrente.ListaArticoliLavorazione;
+            datiLavorazione.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
             return datiLavorazione;
         }
 
@@ -636,6 +715,10 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 chk_ModCosto.Attributes.Add("readonly", "readonly");
                 chk_ModCosto.CssClass = "w3-input w3-border w3-disabled";
+                chk_ModCosto.Checked = false;
+
+                txt_Costo.Attributes.Remove("readonly");
+                txt_Costo.CssClass = "w3-input w3-border";
 
                 txt_FPnetto.Attributes.Add("readonly", "readonly");
                 txt_FPnetto.CssClass = "w3-input w3-border w3-disabled";

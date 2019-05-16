@@ -15,17 +15,17 @@ namespace VideoSystemWeb.Agenda.userControl
         public event PopupHandler RichiediOperazionePopup; //evento
         BasePage basePage = new BasePage();
 
-        public List<DatiArticoli> ListaDatiArticoli
-        {
-            get
-            {
-                return (List<DatiArticoli>)ViewState["listaDatiArticoli"];
-            }
-            set
-            {
-                ViewState["listaDatiArticoli"] = value;
-            }
-        }
+        //public List<DatiArticoli> ListaDatiArticoli
+        //{
+        //    get
+        //    {
+        //        return (List<DatiArticoli>)ViewState["listaDatiArticoli"];
+        //    }
+        //    set
+        //    {
+        //        ViewState["listaDatiArticoli"] = value;
+        //    }
+        //}
 
         List<ArticoliGruppi> ListaArticoliGruppi
         {
@@ -64,15 +64,15 @@ namespace VideoSystemWeb.Agenda.userControl
             if (ViewState["idArticolo"]==null)
             {
                 long identificatoreOggetto = (long)ViewState["identificatoreArticolo"];
-                articoloSelezionato = ListaDatiArticoli.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
+                articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
             }
             else
             {
                 int idArticolo = (int)ViewState["idArticolo"];
-                articoloSelezionato = ListaDatiArticoli.FirstOrDefault(x => x.Id == idArticolo);
+                articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.Id == idArticolo);
             }
             
-            var index = ListaDatiArticoli.IndexOf(articoloSelezionato);
+            var index = SessionManager.EventoSelezionato.ListaDatiArticoli.IndexOf(articoloSelezionato);
 
             articoloSelezionato.Descrizione = txt_Descrizione.Text;
             articoloSelezionato.DescrizioneLunga = txt_DescrizioneLunga.Text;
@@ -82,7 +82,8 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
             articoloSelezionato.Quantita = int.Parse(txt_Quantita.Text);
 
-            ViewState["listaDatiArticoli"] = ListaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
+            //ViewState["listaDatiArticoli"] = SessionManager.EventoSelezionato.ListaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
+            SessionManager.EventoSelezionato.ListaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
 
             ResetPanelOfferta();
 
@@ -94,9 +95,9 @@ namespace VideoSystemWeb.Agenda.userControl
             long idSelezione = Convert.ToInt64(e.CommandArgument);
 
             //listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
-            if (ListaDatiArticoli == null)
+            if (SessionManager.EventoSelezionato.ListaDatiArticoli == null)
             {
-                ListaDatiArticoli = new List<DatiArticoli>();
+                SessionManager.EventoSelezionato.ListaDatiArticoli = new List<DatiArticoli>();
             }
             ArticoliGruppi articoloGruppo = ListaArticoliGruppi.FirstOrDefault(X => X.Id == idSelezione);
 
@@ -111,10 +112,10 @@ namespace VideoSystemWeb.Agenda.userControl
 
             //ViewState["listaDatiArticoli"] = listaDatiArticoli;
 
-            if (ListaDatiArticoli != null && ListaDatiArticoli.Count > 0)
+            if (SessionManager.EventoSelezionato.ListaDatiArticoli != null && SessionManager.EventoSelezionato.ListaDatiArticoli.Count > 0)
             {
                 lbl_selezionareArticolo.Visible = false;
-                gvArticoli.DataSource = ListaDatiArticoli;
+                gvArticoli.DataSource = SessionManager.EventoSelezionato.ListaDatiArticoli;
                 gvArticoli.DataBind();
 
                 AggiornaTotali();
@@ -136,16 +137,16 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 long identificatoreOggetto = Convert.ToInt64(commandArgs[1]);
                 ViewState["identificatoreArticolo"] = identificatoreOggetto;
-                articoloSelezionato = ListaDatiArticoli.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
+                articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
 
             }
             else
             {
                 ViewState["idArticolo"] = id;
-                articoloSelezionato = ListaDatiArticoli.FirstOrDefault(x => x.Id == id);
+                articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.Id == id);
             }
 
-            int indexArticolo = ListaDatiArticoli.IndexOf(articoloSelezionato);
+            int indexArticolo = SessionManager.EventoSelezionato.ListaDatiArticoli.IndexOf(articoloSelezionato);
 
             switch (e.CommandName)
             {
@@ -161,8 +162,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     break;
                 case "elimina":
-                    ListaDatiArticoli.Remove(articoloSelezionato);
-                    gvArticoli.DataSource = ListaDatiArticoli;
+                    SessionManager.EventoSelezionato.ListaDatiArticoli.Remove(articoloSelezionato);
+                    gvArticoli.DataSource = SessionManager.EventoSelezionato.ListaDatiArticoli;
                     gvArticoli.DataBind();
 
                     AggiornaTotali();
@@ -172,18 +173,18 @@ namespace VideoSystemWeb.Agenda.userControl
                 case "moveUp":
                     if (indexArticolo > 0)
                     {
-                        ListaDatiArticoli.Remove(articoloSelezionato);
-                        ListaDatiArticoli.Insert(indexArticolo - 1, articoloSelezionato);
-                        gvArticoli.DataSource = ListaDatiArticoli;
+                        SessionManager.EventoSelezionato.ListaDatiArticoli.Remove(articoloSelezionato);
+                        SessionManager.EventoSelezionato.ListaDatiArticoli.Insert(indexArticolo - 1, articoloSelezionato);
+                        gvArticoli.DataSource = SessionManager.EventoSelezionato.ListaDatiArticoli;
                         gvArticoli.DataBind();
                     }
                     break;
                 case "moveDown":
-                    if (indexArticolo < ListaDatiArticoli.Count-1)
+                    if (indexArticolo < SessionManager.EventoSelezionato.ListaDatiArticoli.Count-1)
                     {
-                        ListaDatiArticoli.Remove(articoloSelezionato);
-                        ListaDatiArticoli.Insert(indexArticolo + 1, articoloSelezionato);
-                        gvArticoli.DataSource = ListaDatiArticoli;
+                        SessionManager.EventoSelezionato.ListaDatiArticoli.Remove(articoloSelezionato);
+                        SessionManager.EventoSelezionato.ListaDatiArticoli.Insert(indexArticolo + 1, articoloSelezionato);
+                        gvArticoli.DataSource = SessionManager.EventoSelezionato.ListaDatiArticoli;
                         gvArticoli.DataBind();
                     }
                     break;
@@ -201,7 +202,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnEliminaArticoli_Click(object sender, EventArgs e)
         {
-            ListaDatiArticoli = null;
+            SessionManager.EventoSelezionato.ListaDatiArticoli = null;
 
             ResetPanelOfferta();
 
@@ -217,9 +218,9 @@ namespace VideoSystemWeb.Agenda.userControl
             decimal totIva = 0;
             decimal percRicavo = 0;
 
-            if (ListaDatiArticoli != null && ListaDatiArticoli.Count > 0)
+            if (SessionManager.EventoSelezionato.ListaDatiArticoli != null && SessionManager.EventoSelezionato.ListaDatiArticoli.Count > 0)
             {
-                foreach (DatiArticoli art in ListaDatiArticoli)
+                foreach (DatiArticoli art in SessionManager.EventoSelezionato.ListaDatiArticoli)
                 {
                     totPrezzo += art.Prezzo * art.Quantita;
                     totCosto += art.Costo * art.Quantita;
@@ -242,7 +243,9 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             ClearModificaArticoli();
             lbl_selezionareArticolo.Visible = true;
-            ViewState["listaDatiArticoli"] = null;
+            //ViewState["listaDatiArticoli"] = null;
+            SessionManager.EventoSelezionato.ListaDatiArticoli = null;
+
             gvArticoli.DataSource = null;
             gvArticoli.DataBind();
 
@@ -269,12 +272,12 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             ClearModificaArticoli();
 
-            gvArticoli.DataSource = ListaDatiArticoli;
+            gvArticoli.DataSource = SessionManager.EventoSelezionato.ListaDatiArticoli;
             gvArticoli.DataBind();
 
             btnRecuperaOfferta.Visible = true;
-            btnEliminaArticoli.Visible = (ListaDatiArticoli != null && ListaDatiArticoli.Count > 0);
-            lbl_selezionareArticolo.Visible = (ListaDatiArticoli == null || ListaDatiArticoli.Count == 0);
+            btnEliminaArticoli.Visible = (SessionManager.EventoSelezionato.ListaDatiArticoli != null && SessionManager.EventoSelezionato.ListaDatiArticoli.Count > 0);
+            lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.ListaDatiArticoli == null || SessionManager.EventoSelezionato.ListaDatiArticoli.Count == 0);
 
             AggiornaTotali();
         }
@@ -283,11 +286,11 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            ListaDatiArticoli = Articoli_BLL.Instance.CaricaListaArticoliByIDEvento(idDatiAgenda, ref esito);
-            if (ListaDatiArticoli != null && ListaDatiArticoli.Count > 0)
+            SessionManager.EventoSelezionato.ListaDatiArticoli = Articoli_BLL.Instance.CaricaListaArticoliByIDEvento(idDatiAgenda, ref esito);
+            if (SessionManager.EventoSelezionato.ListaDatiArticoli != null && SessionManager.EventoSelezionato.ListaDatiArticoli.Count > 0)
             {
                 lbl_selezionareArticolo.Visible = false;
-                gvArticoli.DataSource = ListaDatiArticoli;
+                gvArticoli.DataSource = SessionManager.EventoSelezionato.ListaDatiArticoli;
                 gvArticoli.DataBind();
 
                 AggiornaTotali();
@@ -299,16 +302,16 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
             int idEvento = 0;
-            ListaDatiArticoli.AddRange(Articoli_BLL.Instance.CaricaListaArticoliByIDGruppo(idEvento, idGruppo, ref esito));
-            ListaDatiArticoli = ListaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
+            SessionManager.EventoSelezionato.ListaDatiArticoli.AddRange(Articoli_BLL.Instance.CaricaListaArticoliByIDGruppo(idEvento, idGruppo, ref esito));
+            SessionManager.EventoSelezionato.ListaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
         }
 
         private void aggiungiArticoloAListaArticoli(int idArticolo)
         {
             Esito esito = new Esito();
             int idEvento = 0;
-            ListaDatiArticoli.Add(Articoli_BLL.Instance.CaricaArticoloByID(idEvento, idArticolo, ref esito));
-            ListaDatiArticoli = ListaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
+            SessionManager.EventoSelezionato.ListaDatiArticoli.Add(Articoli_BLL.Instance.CaricaArticoloByID(idEvento, idArticolo, ref esito));
+            SessionManager.EventoSelezionato.ListaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
         }
 
         public void AbilitaComponentiPopup(int statoEvento)

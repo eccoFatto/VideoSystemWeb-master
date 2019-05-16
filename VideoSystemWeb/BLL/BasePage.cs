@@ -21,18 +21,18 @@ namespace VideoSystemWeb.BLL
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         #region ELEMENTI COMUNI IN VIEWSTATE
-        public DatiAgenda EventoSelezionato
-        {
-            get
-            {
-                return (DatiAgenda)ViewState["eventoSelezionato"];
-            }
+        //public DatiAgenda EventoSelezionato
+        //{
+        //    get
+        //    {
+        //        return (DatiAgenda)ViewState["eventoSelezionato"];
+        //    }
 
-            set
-            {
-                ViewState["eventoSelezionato"] = value;
-            }
-        }
+        //    set
+        //    {
+        //        ViewState["eventoSelezionato"] = value;
+        //    }
+        //}
 
         #endregion
 

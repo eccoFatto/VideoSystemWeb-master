@@ -40,5 +40,13 @@ namespace VideoSystemWeb.Entity
         public string Descrizione { get => descrizione; set => descrizione = value; }
         public bool Whatsapp { get => whatsapp; set => whatsapp = value; }
         public bool Attivo { get => attivo; set => attivo = value; }
+
+        public string NumeroCompleto
+        {
+            get
+            {
+                return pref_int + pref_naz + numero;
+            }
+        }
     }
 }

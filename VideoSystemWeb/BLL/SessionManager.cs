@@ -25,7 +25,18 @@ namespace VideoSystemWeb.BLL
         public static string CFG_CITTA = "CITTA";
         public static string CFG_PROVINCIA = "PROVINCIA";
 
+        public static DatiAgenda EventoSelezionato
+        {
+            get
+            {
+                return (DatiAgenda)HttpContext.Current.Session["eventoSelezionato"];
+            }
 
+            set
+            {
+                HttpContext.Current.Session["eventoSelezionato"] = value;
+            }
+        }
         public static List<FiguraProfessionale> ListaCompletaFigProf
         {
             get
@@ -402,6 +413,13 @@ namespace VideoSystemWeb.BLL
         public static void ClearSession()
         {
             HttpContext.Current.Session.Clear();
+        }
+
+        public static void ClearEventoSelezionato()
+        {
+            EventoSelezionato.ListaDatiArticoli = null;
+            EventoSelezionato.LavorazioneCorrente = null;
+            EventoSelezionato = null;
         }
     }
 }

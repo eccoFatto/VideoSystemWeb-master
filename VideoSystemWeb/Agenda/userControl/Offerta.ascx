@@ -5,7 +5,7 @@
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
             $("#<%=txt_FiltroGruppi.ClientID%>").val("");
             $("#<%=txt_FiltroGruppi.ClientID%>").keyup(function () {
-                filter(2);
+                filterOfferta(2);
             });
         });
     });
@@ -18,7 +18,7 @@
         return confirm("Eliminare tutti gli articoli inseriti?");
     }
 
-    function filter(columnIndex) {
+    function filterOfferta(columnIndex) {
         var filterText = $("#<%=txt_FiltroGruppi.ClientID%>").val().toLowerCase();
         var cellText = "";
 

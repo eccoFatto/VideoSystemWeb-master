@@ -157,22 +157,22 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Panel panelGruppi;
         
         /// <summary>
-        /// Controllo gvGruppi.
+        /// Controllo gvGruppiLavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvGruppi;
+        protected global::System.Web.UI.WebControls.GridView gvGruppiLavorazione;
         
         /// <summary>
-        /// Controllo txt_FiltroGruppi.
+        /// Controllo txt_FiltroGruppiLavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_FiltroGruppi;
+        protected global::System.Web.UI.WebControls.TextBox txt_FiltroGruppiLavorazione;
         
         /// <summary>
         /// Controllo panelModificaArticolo.
@@ -182,6 +182,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelModificaArticolo;
+        
+        /// <summary>
+        /// Controllo upModificaArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upModificaArticolo;
         
         /// <summary>
         /// Controllo txt_Descrizione.
@@ -236,15 +245,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_DescrizioneLunga;
-        
-        /// <summary>
-        /// Controllo upModificaArticolo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upModificaArticolo;
         
         /// <summary>
         /// Controllo ddl_FPtipo.
@@ -355,13 +355,13 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Panel panel1;
         
         /// <summary>
-        /// Controllo Label1.
+        /// Controllo lbl_nessunaFiguraProf.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lbl_nessunaFiguraProf;
         
         /// <summary>
         /// Controllo gvFigProfessionali.

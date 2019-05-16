@@ -31,8 +31,8 @@ namespace VideoSystemWeb.Entity
         public string nota { get; set; }
         public int id_stato { get; set; }
 
-        //public List<DatiArticoli> ListaDatiArticoli { get; set; }
-        //public List<DatiLavorazione> DatiLavorazione { get; set; }
+        public List<DatiArticoli> ListaDatiArticoli { get; set; }
+        public DatiLavorazione LavorazioneCorrente { get; set; }
 
         public DatiAgenda() { }
 

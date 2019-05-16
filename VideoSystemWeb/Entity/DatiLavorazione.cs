@@ -18,6 +18,7 @@ namespace VideoSystemWeb.Entity
         private string ordine;
         private string fattura;
         private List<DatiArticoliLavorazione> listaArticoliLavorazione;
+        private List<FiguraProfessionale> listaFigureProfessionali;
 
         public int Id { get => id; set => id = value; }
         public int IdDatiAgenda { get => idDatiAgenda; set => idDatiAgenda = value; }
@@ -28,5 +29,6 @@ namespace VideoSystemWeb.Entity
         public string Ordine { get => ordine; set => ordine = value; }
         public string Fattura { get => fattura; set => fattura = value; }
         public List<DatiArticoliLavorazione> ListaArticoliLavorazione { get => listaArticoliLavorazione; set => listaArticoliLavorazione = value; }
+        public List<FiguraProfessionale> ListaFigureProfessionali { get => listaFigureProfessionali; set => listaFigureProfessionali = value; }
     }
 }

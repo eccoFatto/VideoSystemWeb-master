@@ -8,6 +8,8 @@ namespace VideoSystemWeb.BLL
 {
     public static class SessionManager
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public static string UTENTE = "Utente";
         public static string LISTA_TIPI_UTENTE = "listaTipiUtente";
         public static string LISTA_RISORSE = "listaRisorse";
@@ -46,30 +48,48 @@ namespace VideoSystemWeb.BLL
                     List<FiguraProfessionale> _listaCompletaFigProf = new List<FiguraProfessionale>();
                     foreach (Anag_Collaboratori collaboratore in ListaAnagraficheCollaboratori)
                     {
-                        _listaCompletaFigProf.Add(new FiguraProfessionale()
+                        try
                         {
-                            Id = collaboratore.Id,
-                            Nome = collaboratore.Nome,
-                            Cognome = collaboratore.Cognome,
-                            Citta = collaboratore.ComuneRiferimento.Trim().ToLower(),
-                            Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Pref_naz + collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Numero,
-                            Qualifiche = collaboratore.Qualifiche,
-                            Tipo = 0,
-                            Nota = collaboratore.Note
-                        });
+                            _listaCompletaFigProf.Add(new FiguraProfessionale()
+                            {
+
+                                Id = collaboratore.Id,
+                                Nome = collaboratore.Nome,
+                                Cognome = collaboratore.Cognome,
+                                Citta = collaboratore.ComuneRiferimento.Trim().ToLower(),
+                                //Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Pref_naz + collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Numero,
+                                Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.OrderBy(x => x.Priorita).ToList()[0].NumeroCompleto,
+                                Qualifiche = collaboratore.Qualifiche,
+                                Tipo = 0,
+                                Nota = collaboratore.Note
+                            });
+
+                        }
+                        catch (Exception ex)
+                        {
+                            log.Error("ListaCompletaFigProf FORNITORE - " + collaboratore.Id.ToString(), ex);
+                        }
                     }
 
                     foreach (Anag_Clienti_Fornitori fornitore in ListaAnagraficheFornitori)
                     {
-                        _listaCompletaFigProf.Add(new FiguraProfessionale()
+                        try
                         {
-                            Id = fornitore.Id,
-                            Cognome = fornitore.RagioneSociale,
-                            Citta = fornitore.ComuneLegale.Trim().ToLower(),
-                            Telefono = fornitore.Telefono,
-                            Tipo = 1,
-                            Nota = fornitore.Note
-                        });
+                            _listaCompletaFigProf.Add(new FiguraProfessionale()
+                            {
+                                Id = fornitore.Id,
+                                Cognome = fornitore.RagioneSociale,
+                                Citta = fornitore.ComuneLegale.Trim().ToLower(),
+                                Telefono = fornitore.Telefono,
+                                Tipo = 1,
+                                Nota = fornitore.Note
+                            });
+
+                        }
+                        catch (Exception ex)
+                        {
+                            log.Error("ListaCompletaFigProf FORNITORE - " + fornitore.Id.ToString(), ex);
+                        }
                     }
                     HttpContext.Current.Session["listaCompletaFigProf"] = _listaCompletaFigProf.OrderBy(x => x.Cognome).ToList<FiguraProfessionale>();
                 }

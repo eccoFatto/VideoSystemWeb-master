@@ -26,7 +26,7 @@ namespace VideoSystemWeb
             //Response.Redirect(url, true);
             Application.Set("IS_AUTHENTICATED", "false");
         }
-        void Session_Start(object sender, EventArgs e)
+        protected void Session_Start(Object sender, EventArgs e)
         {
             Session.Timeout = 50;
         }

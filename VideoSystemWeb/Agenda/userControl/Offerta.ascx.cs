@@ -15,18 +15,6 @@ namespace VideoSystemWeb.Agenda.userControl
         public event PopupHandler RichiediOperazionePopup; //evento
         BasePage basePage = new BasePage();
 
-        //public List<DatiArticoli> ListaDatiArticoli
-        //{
-        //    get
-        //    {
-        //        return (List<DatiArticoli>)ViewState["listaDatiArticoli"];
-        //    }
-        //    set
-        //    {
-        //        ViewState["listaDatiArticoli"] = value;
-        //    }
-        //}
-
         List<ArticoliGruppi> ListaArticoliGruppi
         {
             get
@@ -282,9 +270,10 @@ namespace VideoSystemWeb.Agenda.userControl
             AggiornaTotali();
         }
 
-        public void PopolaOfferta(int idDatiAgenda)
+        public void PopolaOfferta()
         {
             Esito esito = new Esito();
+            int idDatiAgenda = SessionManager.EventoSelezionato.id;
 
             SessionManager.EventoSelezionato.ListaDatiArticoli = Articoli_BLL.Instance.CaricaListaArticoliByIDEvento(idDatiAgenda, ref esito);
             if (SessionManager.EventoSelezionato.ListaDatiArticoli != null && SessionManager.EventoSelezionato.ListaDatiArticoli.Count > 0)

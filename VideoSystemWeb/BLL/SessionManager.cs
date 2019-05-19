@@ -52,7 +52,7 @@ namespace VideoSystemWeb.BLL
                             Nome = collaboratore.Nome,
                             Cognome = collaboratore.Cognome,
                             Citta = collaboratore.ComuneRiferimento.Trim().ToLower(),
-                            Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Pref_naz + collaboratore.Telefoni.FirstOrDefault(x => x.Priorita == 1).Numero,
+                            Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.OrderBy(x => x.Priorita).ToList()[0].NumeroCompleto,
                             Qualifiche = collaboratore.Qualifiche,
                             Tipo = 0,
                             Nota = collaboratore.Note

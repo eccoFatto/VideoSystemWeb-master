@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -623,6 +624,7 @@
     <Compile Include="DAL\Config_DAL.cs" />
     <Compile Include="DAL\Dati_Articoli_Lavorazione_DAL.cs" />
     <Compile Include="DAL\Dati_Lavorazione_DAL.cs" />
+    <Compile Include="DAL\Dati_PianoEsterno_Lavorazione_DAL.cs" />
     <Compile Include="DAL\NoteOfferta_DAL.cs" />
     <Compile Include="DAL\Protocolli_DAL.cs" />
     <Compile Include="DAL\Dati_Tender_DAL.cs" />
@@ -656,6 +658,7 @@
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
     <Compile Include="Entity\DatiLavorazione.cs" />
     <Compile Include="Entity\DatiArticoliLavorazione.cs" />
+    <Compile Include="Entity\DatiPianoEsternoLavorazione.cs" />
     <Compile Include="Entity\FiguraProfessionale.cs" />
     <Compile Include="Entity\GiorniPagamentoFatture.cs" />
     <Compile Include="Entity\DatiBancari.cs" />

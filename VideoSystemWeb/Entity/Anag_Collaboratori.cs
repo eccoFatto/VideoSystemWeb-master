@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace VideoSystemWeb.Entity
@@ -26,6 +27,7 @@ namespace VideoSystemWeb.Entity
     [Serializable]
     public class Anag_Collaboratori
     {
+
         private int id;
         private string cognome;
         private string nome;
@@ -71,5 +73,21 @@ namespace VideoSystemWeb.Entity
         public List<Anag_Telefoni_Collaboratori> Telefoni { get => telefoni; set => telefoni = value; }
         public List<Anag_Documenti_Collaboratori> Documenti { get => documenti; set => documenti = value; }
         public string Iban { get => iban; set => iban = value; }
+
+        public FiguraProfessionale CreaFiguraProfessionale()
+        {
+            FiguraProfessionale figProf = new FiguraProfessionale();
+
+            figProf.Id = 0;
+            figProf.Nome = "";
+            figProf.Cognome = this.Cognome + " " + this.Nome; //per uniformare al fornitore
+            figProf.Citta = this.ComuneRiferimento;
+            figProf.Qualifiche = this.Qualifiche;
+            figProf.Telefono = this.Telefoni.Count == 0 ? "" : this.Telefoni[0].NumeroCompleto;
+
+            figProf.Tipo = 0;
+
+            return figProf;
+        }
     }
 }

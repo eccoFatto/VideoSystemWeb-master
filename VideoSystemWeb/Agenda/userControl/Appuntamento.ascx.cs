@@ -179,19 +179,10 @@ namespace VideoSystemWeb.Agenda.userControl
         #endregion
 
         #region OPERAZIONI POPUP
-        public void PopolaAppuntamento(DatiAgenda evento)
+        public void PopolaAppuntamento()
         {
             Esito esito = new Esito();
-
-            //basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
-            //ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
-            //basePage.PopolaDDLTipologica(elencoTipologie, basePage.listaTipiTipologie);
-            //basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
-            //List<Tipologica> listaTender = basePage.listaTender;
-            //foreach (Tipologica tender in listaTender)
-            //{
-            //    check_tender.Items.Add(new ListItem(tender.nome, tender.id.ToString()));
-            //}
+            DatiAgenda evento = SessionManager.EventoSelezionato;
 
             string[] elencoProduzioni = Agenda_BLL.Instance.CaricaElencoProduzioni(ref esito);
             string[] elencoLavorazioni = Agenda_BLL.Instance.CaricaElencoLavorazioni(ref esito);

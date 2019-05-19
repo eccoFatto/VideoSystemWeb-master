@@ -21,6 +21,7 @@ namespace VideoSystemWeb.Entity
         //[quantita] [int] NOT NULL,
 
         private int id;
+        private long identificatoreOggetto;
         private int idDatiLavorazione;
         private int idArtArticoli;
         private int idTipoGenere;
@@ -42,10 +43,11 @@ namespace VideoSystemWeb.Entity
         private decimal? fp_lordo;
         private bool? usaCostoFP;
 
-        private long identificatoreOggetto;
+        
 
 
         public int Id { get => id; set => id = value; }
+        public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
         public int IdDatiLavorazione { get => idDatiLavorazione; set => idDatiLavorazione = value; }
         public int IdArtArticoli { get => idArtArticoli; set => idArtArticoli = value; }
         public int IdTipoGenere { get => idTipoGenere; set => idTipoGenere = value; }
@@ -67,6 +69,6 @@ namespace VideoSystemWeb.Entity
         public decimal? FP_lordo { get => fp_lordo; set => fp_lordo = value; }
         public bool? UsaCostoFP { get => usaCostoFP; set => usaCostoFP = value; }
 
-        public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
+        
     }
 }

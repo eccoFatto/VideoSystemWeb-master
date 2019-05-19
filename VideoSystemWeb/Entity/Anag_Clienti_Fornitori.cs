@@ -105,5 +105,21 @@ namespace VideoSystemWeb.Entity
         public string Tipo { get => tipo; set => tipo = value; }
         public bool Attivo { get => attivo; set => attivo = value; }
         public List<Anag_Referente_Clienti_Fornitori> Referenti { get => referenti; set => referenti = value; }
+
+        public FiguraProfessionale CreaFiguraProfessionale()
+        {
+            FiguraProfessionale figProf = new FiguraProfessionale();
+
+            figProf.Id = 0;
+            figProf.Nome = "";
+            figProf.Cognome = this.RagioneSociale;
+            figProf.Citta = this.ComuneOperativo;
+            figProf.Qualifiche = null;
+            figProf.Telefono = this.Telefono;
+
+            figProf.Tipo = 1;
+
+            return figProf;
+        }
     }
 }

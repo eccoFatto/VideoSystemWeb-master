@@ -311,7 +311,7 @@ namespace VideoSystemWeb.DAL
         //    return esito;
         //}
 
-        public Esito CreaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender, NoteOfferta noteOfferta, DatiLavorazione datiLavorazione)
+        public Esito CreaEvento(DatiAgenda evento, List<string> listaIdTender, NoteOfferta noteOfferta)
         {
             Esito esito = new Esito();
             using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -355,9 +355,9 @@ namespace VideoSystemWeb.DAL
 
                             #region OFFERTA
                             // SE E' ANDATO TUTTO BENE FACCIO INSERT DEGLI ARTICOLI EVENTO DELLA LISTA IN INPUT
-                            if (listaDatiArticoli != null)
+                            if (evento.ListaDatiArticoli != null)
                             {
-                                foreach (DatiArticoli datoArticolo in listaDatiArticoli)
+                                foreach (DatiArticoli datoArticolo in evento.ListaDatiArticoli)
                                 {
                                     CostruisciSP_InsertDatiArticoli(StoreProc, sda, iDatiAgendaReturn, datoArticolo);
                                     StoreProc.ExecuteNonQuery();
@@ -408,16 +408,22 @@ namespace VideoSystemWeb.DAL
 
                             #region LAVORAZIONE
                             // SE E' ANDATO TUTTO BENE FACCIO INSERT DATI LAVORAZIONE
-                            if (datiLavorazione != null)
+                            if (evento.LavorazioneCorrente != null)
                             {
-                                CostruisciSP_InsertDatiLavorazione(StoreProc, sda, iDatiAgendaReturn, datiLavorazione);
+                                CostruisciSP_InsertDatiLavorazione(StoreProc, sda, iDatiAgendaReturn, evento.LavorazioneCorrente);
                                 StoreProc.ExecuteNonQuery();
 
                                 int iDatiLavorazioneReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
 
-                                foreach (DatiArticoliLavorazione datoArticoloLavorazione in datiLavorazione.ListaArticoliLavorazione)
+                                foreach (DatiArticoliLavorazione datoArticoloLavorazione in evento.LavorazioneCorrente.ListaArticoliLavorazione)
                                 {
                                     CostruisciSP_InsertDatiArticoliLavorazione(StoreProc, sda, iDatiLavorazioneReturn, datoArticoloLavorazione);
+                                    StoreProc.ExecuteNonQuery();
+                                }
+
+                                foreach (DatiPianoEsternoLavorazione datoPianoEsternoLavorazione in evento.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione)
+                                {
+                                    CostruisciSP_InsertDatiPianoEsternoLavorazione(StoreProc, sda, iDatiLavorazioneReturn, datoPianoEsternoLavorazione);
                                     StoreProc.ExecuteNonQuery();
                                 }
                             }
@@ -653,7 +659,7 @@ namespace VideoSystemWeb.DAL
         //    return esito;
         //}
 
-        public Esito AggiornaEvento(DatiAgenda evento, List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender, DatiLavorazione datiLavorazione)
+        public Esito AggiornaEvento(DatiAgenda evento, List<string> listaIdTender)
         {
             Esito esito = new Esito();
             try
@@ -699,9 +705,9 @@ namespace VideoSystemWeb.DAL
                                 StoreProc.ExecuteNonQuery();
 
                                 // SE E' ANDATO TUTTO BENE FACCIO INSERT DEGLI ARTICOLI EVENTO DELLA LISTA IN INPUT
-                                if (listaDatiArticoli != null)
+                                if (evento.ListaDatiArticoli != null)
                                 {
-                                    foreach (DatiArticoli datoArticolo in listaDatiArticoli)
+                                    foreach (DatiArticoli datoArticolo in evento.ListaDatiArticoli)
                                     {
                                         CostruisciSP_InsertDatiArticoli(StoreProc, sda, evento.id, datoArticolo);
                                         StoreProc.ExecuteNonQuery();
@@ -743,23 +749,33 @@ namespace VideoSystemWeb.DAL
 
                                 #region LAVORAZIONE
                                 //GESTIONE DATI LAVORAZIONE
-                                if (datiLavorazione != null)
+                                if (evento.LavorazioneCorrente != null)
                                 {
                                     // ELIMINO GLI EVENTUALI DATI LAVORAZIONE ASSOCIATI ALL'EVENTO PER SOSTITUIRLI COI NUOVI
-                                    CostruisciSP_DeleteDatiArticoliLavorazione(StoreProc, sda, datiLavorazione.Id);
+                                    CostruisciSP_DeleteDatiArticoliLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
+                                    StoreProc.ExecuteNonQuery();
+
+                                    CostruisciSP_DeleteDatiPianoEsternoLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
                                     StoreProc.ExecuteNonQuery();
 
                                     CostruisciSP_DeleteDatiLavorazione(StoreProc, sda, evento.id);
                                     StoreProc.ExecuteNonQuery();
 
-                                    CostruisciSP_InsertDatiLavorazione(StoreProc, sda, evento.id, datiLavorazione);
+
+                                    CostruisciSP_InsertDatiLavorazione(StoreProc, sda, evento.id, evento.LavorazioneCorrente);
                                     StoreProc.ExecuteNonQuery();
 
                                     int iDatiLavorazioneReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
                                     
-                                    foreach (DatiArticoliLavorazione datoArticoloLavorazione in datiLavorazione.ListaArticoliLavorazione)
+                                    foreach (DatiArticoliLavorazione datoArticoloLavorazione in evento.LavorazioneCorrente.ListaArticoliLavorazione)
                                     {
                                         CostruisciSP_InsertDatiArticoliLavorazione(StoreProc, sda, iDatiLavorazioneReturn, datoArticoloLavorazione);
+                                        StoreProc.ExecuteNonQuery();
+                                    }
+
+                                    foreach (DatiPianoEsternoLavorazione datoPianoEsternoLavorazione in evento.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione)
+                                    {
+                                        CostruisciSP_InsertDatiPianoEsternoLavorazione(StoreProc, sda, iDatiLavorazioneReturn, datoPianoEsternoLavorazione);
                                         StoreProc.ExecuteNonQuery();
                                     }
                                 }
@@ -1681,6 +1697,131 @@ namespace VideoSystemWeb.DAL
             StoreProc.Parameters.Add(nomeUtente);
             // FINE PARAMETRI PER LOG UTENTE
 
+        }
+
+        private static void CostruisciSP_DeleteDatiPianoEsternoLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiLavorazione)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "DeleteDatiPianoEsternoLavorazioneByIdDatiLavorazione";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            SqlParameter parIdDatiLavorazione = new SqlParameter("@idDatiLavorazione", idDatiLavorazione);
+            parIdDatiLavorazione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parIdDatiLavorazione);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+        }
+
+        private static void CostruisciSP_InsertDatiPianoEsternoLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiLavorazione, DatiPianoEsternoLavorazione datoPianoEsternoLavorazione)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "InsertDatiPianoEsternoLavorazione";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+
+            // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+            SqlParameter par_idDatiLavorazione = new SqlParameter("@idDatiLavorazione", idDatiLavorazione);
+            par_idDatiLavorazione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(par_idDatiLavorazione);
+
+            SqlParameter idCollaboratori = new SqlParameter("@idCollaboratori", DBNull.Value);
+            if (datoPianoEsternoLavorazione.IdCollaboratori != null)
+            {
+                idCollaboratori = new SqlParameter("@idCollaboratori", datoPianoEsternoLavorazione.IdCollaboratori);
+            }
+            idCollaboratori.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idCollaboratori);
+
+            SqlParameter idFornitori = new SqlParameter("@idFornitori", DBNull.Value);
+            if (datoPianoEsternoLavorazione.IdFornitori != null)
+            {
+                idFornitori = new SqlParameter("@idFornitori", datoPianoEsternoLavorazione.IdFornitori);
+            }
+            idFornitori.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idFornitori);
+
+            SqlParameter idIntervento = new SqlParameter("@idIntervento", DBNull.Value);
+            if (datoPianoEsternoLavorazione.IdIntervento != null)
+            {
+                idIntervento = new SqlParameter("@idTipoPagamento", datoPianoEsternoLavorazione.IdIntervento);
+            }
+            idIntervento.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idIntervento);
+
+            SqlParameter diaria = new SqlParameter("@diaria", DBNull.Value);
+            if (datoPianoEsternoLavorazione.Diaria != null)
+            {
+                diaria = new SqlParameter("@diaria", datoPianoEsternoLavorazione.Diaria);
+            }
+            diaria.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(diaria);
+
+            SqlParameter importoDiaria = new SqlParameter("@importoDiaria", DBNull.Value);
+            if (datoPianoEsternoLavorazione.ImportoDiaria != null)
+            {
+                importoDiaria = new SqlParameter("@importoDiaria", datoPianoEsternoLavorazione.ImportoDiaria);
+            }
+            importoDiaria.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(importoDiaria);
+
+            SqlParameter albergo = new SqlParameter("@albergo", DBNull.Value);
+            if (datoPianoEsternoLavorazione.Albergo != null)
+            {
+                albergo = new SqlParameter("@albergo", datoPianoEsternoLavorazione.Albergo);
+            }
+            albergo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(albergo);
+
+            SqlParameter data = new SqlParameter("@data", DBNull.Value);
+            if (datoPianoEsternoLavorazione.Data != null)
+            {
+                data = new SqlParameter("@data", datoPianoEsternoLavorazione.Data);
+            }
+            data.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(data);
+
+            SqlParameter orario = new SqlParameter("@orario", DBNull.Value);
+            if (datoPianoEsternoLavorazione.Orario != null)
+            {
+                orario = new SqlParameter("@orario", datoPianoEsternoLavorazione.Orario);
+            }
+            orario.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(orario);
+
+            SqlParameter nota = new SqlParameter("@nota", DBNull.Value);
+            if (datoPianoEsternoLavorazione.Nota != null)
+            {
+                nota = new SqlParameter("@nota", datoPianoEsternoLavorazione.Nota);
+            }
+            nota.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nota);
         }
     }
 }

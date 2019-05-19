@@ -19,6 +19,7 @@ namespace VideoSystemWeb.Entity
         private string fattura;
         private List<DatiArticoliLavorazione> listaArticoliLavorazione;
         private List<FiguraProfessionale> listaFigureProfessionali;
+        private List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione;
 
         public int Id { get => id; set => id = value; }
         public int IdDatiAgenda { get => idDatiAgenda; set => idDatiAgenda = value; }
@@ -29,6 +30,24 @@ namespace VideoSystemWeb.Entity
         public string Ordine { get => ordine; set => ordine = value; }
         public string Fattura { get => fattura; set => fattura = value; }
         public List<DatiArticoliLavorazione> ListaArticoliLavorazione { get => listaArticoliLavorazione; set => listaArticoliLavorazione = value; }
-        public List<FiguraProfessionale> ListaFigureProfessionali { get => listaFigureProfessionali; set => listaFigureProfessionali = value; }
+        public List<FiguraProfessionale> ListaFigureProfessionali
+        { get
+            {
+                listaFigureProfessionali = new List<FiguraProfessionale>();
+                foreach(DatiPianoEsternoLavorazione datoPianoEsterno in ListaDatiPianoEsternoLavorazione)
+                    if (datoPianoEsterno.IdCollaboratori != null && datoPianoEsterno.IdCollaboratori != 0)
+                    {
+                        Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdCollaboratori);
+                        listaFigureProfessionali.Add(collaboratore.CreaFiguraProfessionale());
+                    }
+                    else
+                    {
+                        Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdFornitori);
+                        listaFigureProfessionali.Add(fornitore.CreaFiguraProfessionale());
+                    }
+                return listaFigureProfessionali;
+            }
+        }
+        public List<DatiPianoEsternoLavorazione> ListaDatiPianoEsternoLavorazione { get => listaDatiPianoEsternoLavorazione; set => listaDatiPianoEsternoLavorazione = value; }
     }
 }

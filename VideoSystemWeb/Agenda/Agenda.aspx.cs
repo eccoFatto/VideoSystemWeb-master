@@ -174,10 +174,10 @@ namespace VideoSystemWeb.Agenda
         {
             Esito esito = new Esito();
             //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            List<DatiArticoli> listaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
+            //List<DatiArticoli> listaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
 
-            esito = ValidazioneSalvataggio( listaDatiArticoli, listaIdTender);
+            esito = ValidazioneSalvataggio( listaIdTender);
             if (esito.codice == Esito.ESITO_OK)
             {
                 SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_OFFERTA;
@@ -196,7 +196,7 @@ namespace VideoSystemWeb.Agenda
             else
             {
                 ShowWarning(esito.descrizione);
-                popupAppuntamento.PopolaAppuntamento(SessionManager.EventoSelezionato);
+                popupAppuntamento.PopolaAppuntamento();
                 UpdatePopup();
             }
         }
@@ -204,10 +204,10 @@ namespace VideoSystemWeb.Agenda
         protected void btnLavorazione_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
-            List<DatiArticoli> listaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
+           // List<DatiArticoli> listaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
 
-            esito = ValidazioneSalvataggio( listaDatiArticoli, listaIdTender);
+            esito = ValidazioneSalvataggio(listaIdTender);
 
             if (esito.codice == Esito.ESITO_OK)
             {
@@ -217,7 +217,7 @@ namespace VideoSystemWeb.Agenda
                 // COSTRUISCO LISTA DATI ARTICOLI LAVORAZIONE
                 List<DatiArticoliLavorazione> listaDatiArticoliLavorazione = new List<DatiArticoliLavorazione>();
                 
-                foreach (DatiArticoli datoArticolo in listaDatiArticoli)
+                foreach (DatiArticoli datoArticolo in SessionManager.EventoSelezionato.ListaDatiArticoli)
                 {
                     for (int i = 0; i < datoArticolo.Quantita; i++)
                     {
@@ -225,7 +225,6 @@ namespace VideoSystemWeb.Agenda
 
                         DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
                         datoArticoloLavorazione.Id = 0;
-                        //datoArticoloLavorazione.IdentificatoreOggetto = datoArticolo.IdentificatoreOggetto;
                         datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out firstTime);
                         datoArticoloLavorazione.IdDatiLavorazione = 0;
                         datoArticoloLavorazione.IdArtArticoli = datoArticolo.IdArtArticoli;
@@ -261,7 +260,7 @@ namespace VideoSystemWeb.Agenda
             else
             {
                 ShowWarning(esito.descrizione);
-                popupAppuntamento.PopolaAppuntamento(SessionManager.EventoSelezionato);
+                popupAppuntamento.PopolaAppuntamento();
                 UpdatePopup();
             }
             
@@ -614,7 +613,7 @@ namespace VideoSystemWeb.Agenda
             DatiAgenda _eventoSelezionato = SessionManager.EventoSelezionato;// (DatiAgenda)ViewState["eventoSelezionato"];
             popupAppuntamento.CreaOggettoSalvataggio(ref _eventoSelezionato);
             SessionManager.EventoSelezionato = _eventoSelezionato;
-            popupAppuntamento.PopolaAppuntamento(SessionManager.EventoSelezionato);
+            popupAppuntamento.PopolaAppuntamento();
             AbilitaComponentiPopup();
 
             upEvento.Update();
@@ -720,18 +719,18 @@ namespace VideoSystemWeb.Agenda
             val_CodiceLavoro.Text = string.IsNullOrEmpty(SessionManager.EventoSelezionato.codice_lavoro) ? "-" : SessionManager.EventoSelezionato.codice_lavoro;
 
             popupAppuntamento.ClearAppuntamento();
-            popupAppuntamento.PopolaAppuntamento(SessionManager.EventoSelezionato);
+            popupAppuntamento.PopolaAppuntamento();
 
             popupOfferta.ClearOfferta();
             if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
             {
-                popupOfferta.PopolaOfferta(SessionManager.EventoSelezionato.id);
+                popupOfferta.PopolaOfferta();
             }
 
             popupLavorazione.ClearLavorazione();
             if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
             {
-                popupLavorazione.PopolaLavorazione(SessionManager.EventoSelezionato.id, SessionManager.EventoSelezionato.id_cliente);
+                popupLavorazione.PopolaLavorazione();
             }
         }
 
@@ -748,6 +747,7 @@ namespace VideoSystemWeb.Agenda
         #endregion
 
         #region OPERAZIONI EVENTO
+        // Crea evento selezionando una cella (può essere nuovo o no)
         private DatiAgenda CreaEventoDaSelezioneAgenda(DateTime dataEvento, int risorsaEvento)
         {
             Esito esito = new Esito();
@@ -771,8 +771,6 @@ namespace VideoSystemWeb.Agenda
                 SessionManager.EventoSelezionato.id_stato = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString() ? Stato.Instance.STATO_RIPOSO : Stato.Instance.STATO_PREVISIONE_IMPEGNO;
             }
 
-            //ViewState["eventoSelezionato"] = eventoSelezionato;
-
             return SessionManager.EventoSelezionato;
         }
 
@@ -784,11 +782,12 @@ namespace VideoSystemWeb.Agenda
 
             //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
-            List<DatiArticoli> listaDatiArticoli = (SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_OFFERTA &&
-                                                    SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_LAVORAZIONE) ? null : SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
+            //List<DatiArticoli> listaDatiArticoli = (SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_OFFERTA &&
+            //                                        SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_LAVORAZIONE) ? null : SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
             DatiLavorazione datiLavorazione = SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_LAVORAZIONE ? null :  popupLavorazione.CreaDatiLavorazione();
+            SessionManager.EventoSelezionato.LavorazioneCorrente = datiLavorazione;
 
-            esito = ValidazioneSalvataggio( listaDatiArticoli, listaIdTender);
+            esito = ValidazioneSalvataggio(listaIdTender);
 
             if (esito.codice == Esito.ESITO_OK)
             {
@@ -798,11 +797,11 @@ namespace VideoSystemWeb.Agenda
                     List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
                     NoteOfferta noteOfferta = new NoteOfferta { Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
 
-                    esito = Agenda_BLL.Instance.CreaEvento(SessionManager.EventoSelezionato, listaDatiArticoli, listaIdTender, noteOfferta, datiLavorazione);
+                    esito = Agenda_BLL.Instance.CreaEvento(SessionManager.EventoSelezionato, listaIdTender, noteOfferta);
                 }
                 else
                 {
-                    esito = Agenda_BLL.Instance.AggiornaEvento(SessionManager.EventoSelezionato, listaDatiArticoli, listaIdTender, datiLavorazione);
+                    esito = Agenda_BLL.Instance.AggiornaEvento(SessionManager.EventoSelezionato, listaIdTender);
                 }
 
                 GestisciErrore(esito);
@@ -817,7 +816,7 @@ namespace VideoSystemWeb.Agenda
             else
             {
                 ShowWarning(esito.descrizione);
-                popupAppuntamento.PopolaAppuntamento(SessionManager.EventoSelezionato);
+                popupAppuntamento.PopolaAppuntamento();
             }
 
             return esito;
@@ -886,7 +885,7 @@ namespace VideoSystemWeb.Agenda
             return val_CodiceLavoro.Text;
         }
 
-        private Esito ValidazioneSalvataggio(List<DatiArticoli> listaDatiArticoli, List<string> listaIdTender)
+        private Esito ValidazioneSalvataggio(List<string> listaIdTender)
         {
             DatiAgenda _eventoSelezionato = SessionManager.EventoSelezionato;
             Esito esito = new Esito();
@@ -916,7 +915,8 @@ namespace VideoSystemWeb.Agenda
                 esito.descrizione += "</ul>";
 
             }
-            else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA && (listaDatiArticoli == null || listaDatiArticoli.Count == 0))
+            else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA && 
+                    (SessionManager.EventoSelezionato.ListaDatiArticoli == null || SessionManager.EventoSelezionato.ListaDatiArticoli.Count == 0))
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
                 esito.descrizione = "Non è possibile salvare senza aver associato gli articoli";

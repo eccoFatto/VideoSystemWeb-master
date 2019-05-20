@@ -212,7 +212,7 @@ namespace VideoSystemWeb.Agenda
             if (esito.codice == Esito.ESITO_OK)
             {
                 SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
-                SessionManager.EventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
+                //SessionManager.EventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
                
                 // COSTRUISCO LISTA DATI ARTICOLI LAVORAZIONE
                 List<DatiArticoliLavorazione> listaDatiArticoliLavorazione = new List<DatiArticoliLavorazione>();

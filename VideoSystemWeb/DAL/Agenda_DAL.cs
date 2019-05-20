@@ -676,6 +676,7 @@ namespace VideoSystemWeb.DAL
                             // Start a local transaction.
                             transaction = con.BeginTransaction("UpdateAgendaTransaction");
 
+                            int iDatiLavorazioneReturn = 0;
                             try
                             {
                                 #region APPUNTAMENTO
@@ -751,12 +752,17 @@ namespace VideoSystemWeb.DAL
                                 //GESTIONE DATI LAVORAZIONE
                                 if (evento.LavorazioneCorrente != null)
                                 {
-                                    // ELIMINO GLI EVENTUALI DATI LAVORAZIONE ASSOCIATI ALL'EVENTO PER SOSTITUIRLI COI NUOVI
-                                    CostruisciSP_DeleteDatiArticoliLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
-                                    StoreProc.ExecuteNonQuery();
 
-                                    CostruisciSP_DeleteDatiPianoEsternoLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
-                                    StoreProc.ExecuteNonQuery();
+
+                                    // ELIMINO GLI EVENTUALI DATI LAVORAZIONE ASSOCIATI ALL'EVENTO PER SOSTITUIRLI COI NUOVI
+                                    if (evento.LavorazioneCorrente.Id != 0) // caso in cui la lavorazione sia stata appena creata ma non salvata (passaggio da offerta a lavorazione)
+                                    { 
+                                        CostruisciSP_DeleteDatiArticoliLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
+                                        StoreProc.ExecuteNonQuery();
+
+                                        CostruisciSP_DeleteDatiPianoEsternoLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
+                                        StoreProc.ExecuteNonQuery();
+                                    }
 
                                     CostruisciSP_DeleteDatiLavorazione(StoreProc, sda, evento.id);
                                     StoreProc.ExecuteNonQuery();
@@ -765,7 +771,7 @@ namespace VideoSystemWeb.DAL
                                     CostruisciSP_InsertDatiLavorazione(StoreProc, sda, evento.id, evento.LavorazioneCorrente);
                                     StoreProc.ExecuteNonQuery();
 
-                                    int iDatiLavorazioneReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+                                    iDatiLavorazioneReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
                                     
                                     foreach (DatiArticoliLavorazione datoArticoloLavorazione in evento.LavorazioneCorrente.ListaArticoliLavorazione)
                                     {
@@ -783,7 +789,11 @@ namespace VideoSystemWeb.DAL
 
                                 // Attempt to commit the transaction.
                                 transaction.Commit();
-
+                                if (iDatiLavorazioneReturn != 0)
+                                {
+                                    // aggiorno id della lavorazione corrente nel caso in cui sia stato modificato in fase di modifica evento
+                                    SessionManager.EventoSelezionato.LavorazioneCorrente.Id = iDatiLavorazioneReturn;
+                                }
                             }
                             catch (Exception ex)
                             {

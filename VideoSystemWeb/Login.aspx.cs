@@ -20,8 +20,6 @@ namespace VideoSystemWeb
         Esito esito = new Esito();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-
             if (!this.IsPostBack)
             {
                 //caricaListeTipologiche();
@@ -34,6 +32,7 @@ namespace VideoSystemWeb
         {
             Esito esito = new Esito();
             lblErrorLogin.Visible = false;
+            lblErrorLogin.Visible = false;
 
             // TROVO IL CODICE MD5 DELLA PASSWORD
             MD5 md5Hash = MD5.Create();
@@ -45,20 +44,25 @@ namespace VideoSystemWeb
 
             if (esito.codice == Esito.ESITO_OK)
             {
+                lbInfoLogin.Text = "Utente autenticato, attendere i caricamenti iniziali...";
+                lbInfoLogin.Visible = true;
                 Application.Set("IS_AUTHENTICATED", "true");
                 log.Info("UTENTE " + tbUser.Text.Trim() + " Loggato!");
+
                 Response.Redirect("~/Agenda/Agenda.aspx");
             }
             else if (esito.codice == Esito.ESITO_KO_ERRORE_UTENTE_NON_RICONOSCIUTO)
             {
                 lblErrorLogin.Text = esito.descrizione;
                 lblErrorLogin.Visible = true;
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loaderLogin').hide();", addScriptTags: true);
             }
             else
             {
                 Session["ErrorPageText"] = esito.descrizione;
                 string url = String.Format("~/pageError.aspx");
                 Response.Redirect(url, true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loaderLogin').hide();", addScriptTags: true);
             }
             
         }

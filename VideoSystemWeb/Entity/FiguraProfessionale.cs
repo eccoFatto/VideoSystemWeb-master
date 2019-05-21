@@ -10,6 +10,8 @@ namespace VideoSystemWeb.Entity
     {
         private int id;
         private long identificatoreOggetto;
+        private int? idCollaboratori;
+        private int? idFornitori;
         private string nome;
         private string cognome;
         private string telefono;
@@ -22,6 +24,8 @@ namespace VideoSystemWeb.Entity
        
         public int Id { get => id; set => id = value; }
         public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
+        public int? IdCollaboratori { get => idCollaboratori; set => idCollaboratori = value; }
+        public int? IdFornitori { get => idFornitori; set => idFornitori = value; }
         public string Nome { get => nome; set => nome = value; }
         public string Cognome { get => cognome; set => cognome = value; }
         public string Telefono { get => telefono; set => telefono = value; }

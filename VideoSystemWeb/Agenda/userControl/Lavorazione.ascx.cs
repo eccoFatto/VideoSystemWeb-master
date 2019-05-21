@@ -43,7 +43,7 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 if (ViewState["listaFigureProfessionali"] == null || ((List<FiguraProfessionale>)ViewState["listaFigureProfessionali"]).Count == 0)
                 {
-                    ViewState["listaFigureProfessionali"] = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
+                    ViewState["listaFigureProfessionali"] = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; // Articoli_BLL.Instance.CaricaListaArticoliGruppi();
                 }
                 return (List<FiguraProfessionale>)ViewState["listaFigureProfessionali"];
             }
@@ -132,17 +132,6 @@ namespace VideoSystemWeb.Agenda.userControl
                         figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdFornitori);
                     }
 
-                    //if (articoloSelezionato.IdCollaboratori != null && articoloSelezionato.IdCollaboratori != 0)
-                    //{
-                    //    Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == articoloSelezionato.IdCollaboratori);
-                    //    figuraProfessionale = collaboratore.CreaFiguraProfessionale();
-                    //}
-                    //else
-                    //{
-                    //    Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == articoloSelezionato.IdFornitori);
-                    //    figuraProfessionale = fornitore.CreaFiguraProfessionale();
-                    //}
-
                     AbilitaComponentiCosto(articoloSelezionato);
                     AbilitaComponentiFiguraProfessionale(figuraProfessionale);
 
@@ -202,6 +191,109 @@ namespace VideoSystemWeb.Agenda.userControl
                         SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Insert(indexArticolo + 1, articoloSelezionato);
                         gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
                         gvArticoliLavorazione.DataBind();
+                    }
+                    break;
+            }
+
+            RichiediOperazionePopup("UPDATE");
+        }
+
+        protected void gvFigProfessionali_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
+            int id = Convert.ToInt32(commandArgs[0]);
+
+            FiguraProfessionale figuraProfessionaleSelezionata;
+            if (id == 0)
+            {
+                long identificatoreOggetto = Convert.ToInt64(commandArgs[1]);
+                ViewState["identificatoreFiguraProfessionale"] = identificatoreOggetto;
+                figuraProfessionaleSelezionata = ListaFigureProfessionali.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
+            }
+            else
+            {
+                ViewState["idFiguraProfessionale"] = id;
+                figuraProfessionaleSelezionata = ListaFigureProfessionali.FirstOrDefault(x => x.Id == id);
+            }
+
+            int indexArticolo = ListaFigureProfessionali.IndexOf(figuraProfessionaleSelezionata);
+
+            switch (e.CommandName)
+            {
+                case "modifica":
+                    //txt_Descrizione.Text = articoloSelezionato.Descrizione;
+                    //txt_DescrizioneLunga.Text = articoloSelezionato.DescrizioneLunga;
+                    //txt_Costo.Text = articoloSelezionato.Costo.ToString();
+                    //txt_Prezzo.Text = articoloSelezionato.Prezzo.ToString();
+                    //txt_Iva.Text = articoloSelezionato.Iva.ToString();
+                    //ddl_FPtipoPagamento.SelectedValue = articoloSelezionato.IdTipoPagamento != null ? articoloSelezionato.IdTipoPagamento.ToString() : "";
+
+                    ////Cerco tra Collaboratori o Fornitori
+                    //FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdCollaboratori);
+                    //if (figuraProfessionale == null)
+                    //{
+                    //    figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdFornitori);
+                    //}
+
+
+                    //AbilitaComponentiCosto(articoloSelezionato);
+                    //AbilitaComponentiFiguraProfessionale(figuraProfessionale);
+
+                    //if (figuraProfessionale != null)
+                    //{
+                    //    PopolaNominativi(SessionManager.ListaCompletaFigProf.Where(x => x.Tipo == figuraProfessionale.Tipo).ToList());
+
+                    //    ddl_FPtipo.SelectedValue = figuraProfessionale.Tipo.ToString();
+                    //    txt_FPnotaCollaboratore.Text = articoloSelezionato.Nota;
+                    //    ddl_FPnominativo.SelectedValue = figuraProfessionale.Id.ToString();
+                    //    txt_FPtelefono.Text = figuraProfessionale.Telefono;
+                    //}
+                    //else
+                    //{
+                    //    AbilitaComponentiFiguraProfessionale(null);
+
+                    //    SessionManager.ListaCittaCollaboratori.Sort();
+                    //    foreach (string citta in SessionManager.ListaCittaCollaboratori)
+                    //    {
+                    //        ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
+                    //    }
+                    //    ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
+
+                    //    PopolaNominativi(SessionManager.ListaCompletaFigProf.Where(x => x.Tipo == COLLABORATORE).ToList());
+                    //    ddl_FPnominativo.SelectedValue = "";
+
+                    //    ddl_FPtipo.SelectedValue = COLLABORATORE.ToString();
+
+                    //    txt_FPtelefono.Text = "";
+                    //}
+
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaFigProf", script: "javascript: document.getElementById('" + panelModificaPianoEsterno.ClientID + "').style.display='block'", addScriptTags: true);
+
+                    break;
+                case "elimina":
+                    ListaFigureProfessionali.Remove(figuraProfessionaleSelezionata);
+                    gvFigProfessionali.DataSource = ListaFigureProfessionali;
+                    gvFigProfessionali.DataBind();
+
+                    ResetPanelLavorazione();
+
+                    break;
+                case "moveUp":
+                    if (indexArticolo > 0)
+                    {
+                        ListaFigureProfessionali.Remove(figuraProfessionaleSelezionata);
+                        ListaFigureProfessionali.Insert(indexArticolo - 1, figuraProfessionaleSelezionata);
+                        gvFigProfessionali.DataSource = ListaFigureProfessionali;
+                        gvFigProfessionali.DataBind();
+                    }
+                    break;
+                case "moveDown":
+                    if (indexArticolo < SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count - 1)
+                    {
+                        ListaFigureProfessionali.Remove(figuraProfessionaleSelezionata);
+                        ListaFigureProfessionali.Insert(indexArticolo + 1, figuraProfessionaleSelezionata);
+                        gvFigProfessionali.DataSource = ListaFigureProfessionali;
+                        gvFigProfessionali.DataBind();
                     }
                     break;
             }
@@ -270,6 +362,11 @@ namespace VideoSystemWeb.Agenda.userControl
             RichiediOperazionePopup("UPDATE");
         }
 
+        protected void btnOKModificaPianoEsterno_Click(object sender, EventArgs e)
+        {
+            
+        }
+
         protected void gvArticoliLavorazione_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -328,6 +425,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == collabForn.IdCollaboratori);
 
                         figProf = collaboratore.CreaFiguraProfessionale();
+                        figProf.IdCollaboratori = collabForn.IdCollaboratori;
 
                         datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
                         datiPianoEsterno.IdCollaboratori = collaboratore.Id;
@@ -337,6 +435,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == collabForn.IdFornitori);
 
                         figProf = fornitore.CreaFiguraProfessionale();
+                        figProf.IdFornitori = collabForn.IdFornitori;
 
                         datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
                         datiPianoEsterno.IdFornitori = fornitore.Id;
@@ -726,6 +825,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 txt_FPnotaCollaboratore.Attributes.Add("readonly", "readonly");
                 txt_FPnotaCollaboratore.CssClass = "w3-input w3-border w3-disabled";
+                txt_FPnotaCollaboratore.Text = string.Empty;
             }
             else
             {

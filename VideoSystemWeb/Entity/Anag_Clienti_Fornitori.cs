@@ -111,6 +111,7 @@ namespace VideoSystemWeb.Entity
             FiguraProfessionale figProf = new FiguraProfessionale();
 
             figProf.Id = 0;
+            figProf.IdFornitori = this.Id;
             figProf.Nome = "";
             figProf.Cognome = this.RagioneSociale;
             figProf.Citta = this.ComuneOperativo;

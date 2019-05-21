@@ -79,6 +79,7 @@ namespace VideoSystemWeb.Entity
             FiguraProfessionale figProf = new FiguraProfessionale();
 
             figProf.Id = 0;
+            figProf.IdCollaboratori = this.Id;
             figProf.Nome = "";
             figProf.Cognome = this.Cognome + " " + this.Nome; //per uniformare al fornitore
             figProf.Citta = this.ComuneRiferimento;

@@ -510,14 +510,14 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     tbMod_DataNascita.Text = collaboratore.DataNascita.ToString("dd/MM/yyyy");
 
                     tbMod_NomeSocieta.Text = collaboratore.NomeSocieta;
-                    tbMod_Iban.Text = collaboratore.Iban.ToUpper();
+                    tbMod_Iban.Text = collaboratore.Iban !=null? collaboratore.Iban.ToUpper() : "";
                     tbMod_PartitaIva.Text = collaboratore.PartitaIva;
                     cbMod_Assunto.Checked = collaboratore.Assunto;
                     //cbMod_Attivo.Checked = collaboratore.Attivo;
                     tbMod_Note.Text = collaboratore.Note;
 
                     //REGIONE RIFERIMENTO
-                    ListItem trovati = cmbMod_RegioneRiferimento.Items.FindByValue(collaboratore.RegioneRiferimento.ToString());
+                    ListItem trovati = cmbMod_RegioneRiferimento.Items.FindByValue(collaboratore.RegioneRiferimento);
                     if (trovati != null)
                     {
                         cmbMod_RegioneRiferimento.SelectedValue = trovati.Value;

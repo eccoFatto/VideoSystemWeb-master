@@ -6,6 +6,10 @@
     $(document).ready(function () {
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+            $('.calendar').datetimepicker({
+                locale: 'it',
+                format: 'DD/MM/YYYY'
+            });
 
             $('#<%=diaria15.ClientID%>').prop('checked', false);
             $('#<%=diaria30.ClientID%>').prop('checked', false);
@@ -448,12 +452,18 @@
                                         <div class="w3-twothird" style="padding: 5px;">
                                             <div class="w3-col">
                                                 <div class="w3-half" style="padding: 5px">
+                                                    <label style="margin-bottom: 0.2rem;">Data convocazione</label>
+                                                    <asp:TextBox ID="txt_data" runat="server" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Style="padding: 2px;"></asp:TextBox>
+                                                </div>
+                                                <div class="w3-half" style="padding: 5px">
+                                                    <label style="margin-bottom: 0.2rem;">Orario convocazione</label>
+                                                    <asp:TextBox ID="txt_orario" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;" ></asp:TextBox>
+                                                </div>
+                                            </div>
+                                            <div class="w3-col">
+                                                <div class="w3-half" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Intervento</label><br />
-                                                    <asp:DropDownList ID="ddl_intervento" runat="server">
-                                                        <asp:ListItem Value="0" Text="Produzione"></asp:ListItem>
-                                                        <asp:ListItem Value="1" Text="Trasferimento"></asp:ListItem>
-                                                        <asp:ListItem Value="2" Text="Prod. + Trasf."></asp:ListItem>
-                                                    </asp:DropDownList>
+                                                    <asp:DropDownList ID="ddl_intervento" runat="server"></asp:DropDownList>
                                                     
                                                 </div>
                                                 <div class="w3-half" style="padding: 5px">
@@ -461,17 +471,6 @@
                                                     <asp:CheckBox ID="chk_albergo" runat="server" />
                                                 </div>
                                             </div>
-                                            <div class="w3-col">
-                                                <div class="w3-half" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Data convocazione</label>
-                                                    <asp:TextBox ID="txt_data" runat="server" class="w3-input w3-border" placeholder="GG/MM/AAAA" Style="padding: 2px;"></asp:TextBox>
-                                                </div>
-                                                <div class="w3-half" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Orario convocazione</label>
-                                                    <asp:TextBox ID="txt_orario" runat="server" class="w3-input w3-border" placeholder="hh:mm" Style="padding: 2px;" ></asp:TextBox>
-                                                </div>
-                                            </div>
-
                                         </div>
 
                                         <div class="w3-third" style="padding: 5px">
@@ -486,7 +485,8 @@
                                 </div>
                                 <br />
                                 <br />
-
+                                <br />
+                                <br />
                                 <div class="w3-center" style="margin: 10px">
                                     <asp:Button ID="btnOKModificaPianoEsterno" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOKModificaPianoEsterno_Click" />
                                     <button onclick="document.getElementById('<%= panelModificaPianoEsterno.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>

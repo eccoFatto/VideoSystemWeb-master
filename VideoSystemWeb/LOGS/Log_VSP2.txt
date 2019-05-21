@@ -4731,3 +4731,24 @@ L'istruzione è stata interrotta.
 2019-05-20 14:10:03,814 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-05-20 14:10:07,465 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-05-20 14:10:08,731 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-21 23:52:36,545 [9] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-21 23:52:38,682 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-21 23:58:39,432 [19] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-21 23:58:40,959 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-21 23:58:49,001 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:00:03,426 [13] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-22 00:00:04,930 [12] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:01:27,551 [9] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-22 00:01:29,005 [16] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:02:05,171 [19] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:04:48,072 [6] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-22 00:04:51,360 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:08:56,412 [9] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-22 00:08:59,910 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:10:19,177 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:11:24,401 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:12:22,490 [7] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:13:25,036 [17] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:15:03,176 [13] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-22 00:19:04,961 [21] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-22 00:19:06,295 [14] ERROR VideoSystemWeb.BLL.Agenda_BLL - 

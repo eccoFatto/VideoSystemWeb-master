@@ -427,24 +427,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.UpdatePanel upModificaPianoEsterno;
         
         /// <summary>
-        /// Controllo ddl_intervento.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_intervento;
-        
-        /// <summary>
-        /// Controllo chk_albergo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk_albergo;
-        
-        /// <summary>
         /// Controllo txt_data.
         /// </summary>
         /// <remarks>
@@ -461,6 +443,24 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_orario;
+        
+        /// <summary>
+        /// Controllo ddl_intervento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_intervento;
+        
+        /// <summary>
+        /// Controllo chk_albergo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chk_albergo;
         
         /// <summary>
         /// Controllo diaria15.

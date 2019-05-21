@@ -58,6 +58,8 @@ namespace VideoSystemWeb.BLL
                     return "tipo_protocollo";
                 case EnumTipologiche.TIPO_PAGAMENTO:
                     return "tipo_pagamento";
+                case EnumTipologiche.TIPO_INTERVENTO:
+                    return "tipo_intervento";
                 default:
                     return string.Empty;
             }
@@ -201,7 +203,8 @@ namespace VideoSystemWeb.BLL
                                     TIPO_SOTTOGRUPPO,
                                     TIPO_TENDER,
                                     TIPO_PROTOCOLLO,
-                                    TIPO_PAGAMENTO}
+                                    TIPO_PAGAMENTO,
+                                    TIPO_INTERVENTO }
 
     public enum EnumSottotipiRisorse {DIPENDENTI, REGIE, EXTRA}
 }

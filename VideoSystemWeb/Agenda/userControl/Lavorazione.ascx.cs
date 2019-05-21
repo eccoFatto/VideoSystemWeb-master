@@ -52,7 +52,21 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState["listaFigureProfessionali"] = value;
             }
         }
-
+        List<Tipologica> ListaTipoIntervento
+        {
+            get
+            {
+                if (ViewState["listaTipoIntervento"] == null || ((List<Tipologica>)ViewState["listaTipoIntervento"]).Count() == 0)
+                {
+                    ViewState["listaTipoIntervento"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_INTERVENTO);
+                }
+                return (List<Tipologica>)ViewState["listaTipoIntervento"];
+            }
+            set
+            {
+                ViewState["listaTipoIntervento"] = value;
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -364,7 +378,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnOKModificaPianoEsterno_Click(object sender, EventArgs e)
         {
-            
+            RichiediOperazionePopup("UPDATE");
         }
 
         protected void gvArticoliLavorazione_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -674,6 +688,11 @@ namespace VideoSystemWeb.Agenda.userControl
             #region INIZIALIZZAZIONE OGGETTI LAVORAZIONE CORRENTE
             SessionManager.EventoSelezionato.LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
             SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
+
+            ddl_intervento.DataSource = ListaTipoIntervento.OrderBy(x=>x.id);
+            ddl_intervento.DataTextField = "nome";
+            ddl_intervento.DataValueField = "id";
+            ddl_intervento.DataBind();
             #endregion
 
             if (esito.codice != Esito.ESITO_OK)

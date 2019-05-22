@@ -168,6 +168,7 @@
                         <a href="/Agenda/GestioneColonneAgenda.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Colonne Agenda</a>
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=LAVORAZIONI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Lavorazioni</a>
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=TENDER" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tender</a>
+                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=INTERVENTO" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologie Interventi</a>
                     </div>
                 </div>
                 <a class="w3-bar-item w3-button w3-disabled">Report</a>

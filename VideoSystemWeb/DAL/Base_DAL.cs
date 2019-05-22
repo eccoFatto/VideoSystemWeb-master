@@ -317,6 +317,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_TIPOLOGIE:
                     nomeSP = "InsertTipoTipologie";
                     break;
+                case EnumTipologiche.TIPO_INTERVENTO:
+                    nomeSP = "InsertTipoIntervento";
+                    break;
 
                 default:
                     break;
@@ -506,6 +509,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_TIPOLOGIE:
                     nomeSP = "UpdateTipoTipologie";
                     break;
+                case EnumTipologiche.TIPO_INTERVENTO:
+                    nomeSP = "UpdateTipoIntervento";
+                    break;
 
                 default:
                     break;
@@ -691,6 +697,9 @@ namespace VideoSystemWeb.DAL
                     break;
                 case EnumTipologiche.TIPO_TIPOLOGIE:
                     nomeSP = "DeleteTipoTipologie";
+                    break;
+                case EnumTipologiche.TIPO_INTERVENTO:
+                    nomeSP = "DeleteTipoIntervento";
                     break;
 
 

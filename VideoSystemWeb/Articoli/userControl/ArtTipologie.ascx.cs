@@ -124,6 +124,15 @@ namespace VideoSystemWeb.Articoli.userControl
                     lista = SessionManager.ListaTipiTipologie;  //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_TIPOLOGIE;
                     break;
+                case "INTERVENTO":
+                    if (clearLista)
+                    {
+                        SessionManager.ListaTipiIntervento.Clear();
+                    }
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.BlueViolet;
+                    lista = SessionManager.ListaTipiIntervento;  //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, true, ref esito);
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_INTERVENTO;
+                    break;
                 default:
                     if (clearLista)
                     {

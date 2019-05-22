@@ -16,8 +16,8 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "1.27";
-        public static string dataVersione = "05/05/2019";
+        public static string versione = "1.28";
+        public static string dataVersione = "22/05/2019";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         #region ELEMENTI COMUNI IN VIEWSTATE

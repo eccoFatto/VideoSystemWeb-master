@@ -379,6 +379,21 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiTipologie"] = value;
             }
         }
+        public static List<Tipologica> ListaTipiIntervento
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTipiIntervento"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiIntervento"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTipiIntervento"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_INTERVENTO);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTipiIntervento"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTipiIntervento"] = value;
+            }
+        }
         public static List<ColonneAgenda> ListaRisorse
         {
             get

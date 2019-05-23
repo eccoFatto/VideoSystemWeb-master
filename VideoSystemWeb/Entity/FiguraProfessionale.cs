@@ -12,6 +12,9 @@ namespace VideoSystemWeb.Entity
         private long identificatoreOggetto;
         private int? idCollaboratori;
         private int? idFornitori;
+        private string intervento;
+        private DateTime? data;
+        private decimal? diaria;
         private string nome;
         private string cognome;
         private string telefono;
@@ -26,6 +29,9 @@ namespace VideoSystemWeb.Entity
         public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
         public int? IdCollaboratori { get => idCollaboratori; set => idCollaboratori = value; }
         public int? IdFornitori { get => idFornitori; set => idFornitori = value; }
+        public string Intervento { get => intervento; set => intervento = value; }
+        public DateTime? Data { get => data; set => data = value; }
+        public decimal? Diaria { get => diaria; set => diaria = value; }
         public string Nome { get => nome; set => nome = value; }
         public string Cognome { get => cognome; set => cognome = value; }
         public string Telefono { get => telefono; set => telefono = value; }
@@ -35,6 +41,6 @@ namespace VideoSystemWeb.Entity
         public string Nota { get => nota; set => nota = value; }
         public decimal? Netto { get => netto; set => netto = value; }
         public decimal? Lordo { get => lordo; set => lordo = value; }
-
+        
     }
 }

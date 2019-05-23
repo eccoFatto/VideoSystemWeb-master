@@ -43,13 +43,24 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 if (ViewState["listaFigureProfessionali"] == null || ((List<FiguraProfessionale>)ViewState["listaFigureProfessionali"]).Count == 0)
                 {
-                    ViewState["listaFigureProfessionali"] = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; // Articoli_BLL.Instance.CaricaListaArticoliGruppi();
+                    ViewState["listaFigureProfessionali"] = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali;
                 }
                 return (List<FiguraProfessionale>)ViewState["listaFigureProfessionali"];
             }
             set
             {
-                ViewState["listaFigureProfessionali"] = value;
+                List<FiguraProfessionale> _listaFigureProfessionali = value;
+                if (_listaFigureProfessionali != null)
+                {
+                    foreach (FiguraProfessionale figuraProfessionale in _listaFigureProfessionali)
+                    {
+                        bool firstTime;
+                        figuraProfessionale.IdentificatoreOggetto = IDGenerator.GetId(figuraProfessionale, out firstTime);
+
+                    }
+                }
+
+                ViewState["listaFigureProfessionali"] = _listaFigureProfessionali;
             }
         }
         List<Tipologica> ListaTipoIntervento
@@ -67,6 +78,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState["listaTipoIntervento"] = value;
             }
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -147,7 +159,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
 
                     AbilitaComponentiCosto(articoloSelezionato);
-                    AbilitaComponentiFiguraProfessionale(figuraProfessionale);
+                    AbilitaComponentiFiguraProfessionale(figuraProfessionale, true);
 
                     if (figuraProfessionale != null)
                     {
@@ -160,7 +172,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
                     else
                     {
-                        AbilitaComponentiFiguraProfessionale(null);
+                        AbilitaComponentiFiguraProfessionale(null, false);
 
                         SessionManager.ListaCittaCollaboratori.Sort();
                         foreach (string citta in SessionManager.ListaCittaCollaboratori)
@@ -235,51 +247,39 @@ namespace VideoSystemWeb.Agenda.userControl
             switch (e.CommandName)
             {
                 case "modifica":
-                    //txt_Descrizione.Text = articoloSelezionato.Descrizione;
-                    //txt_DescrizioneLunga.Text = articoloSelezionato.DescrizioneLunga;
-                    //txt_Costo.Text = articoloSelezionato.Costo.ToString();
-                    //txt_Prezzo.Text = articoloSelezionato.Prezzo.ToString();
-                    //txt_Iva.Text = articoloSelezionato.Iva.ToString();
-                    //ddl_FPtipoPagamento.SelectedValue = articoloSelezionato.IdTipoPagamento != null ? articoloSelezionato.IdTipoPagamento.ToString() : "";
+                    DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione();
+                    // prendo datiPianoEsterno a partire dalla figuraProfessionale selezionata
+                    if (figuraProfessionaleSelezionata.IdCollaboratori != null && figuraProfessionaleSelezionata.IdCollaboratori != 0)
+                    {
+                        datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdCollaboratori == figuraProfessionaleSelezionata.IdCollaboratori);
+                    }
+                    else if (figuraProfessionaleSelezionata.IdFornitori != null && figuraProfessionaleSelezionata.IdFornitori != 0)
+                    {
+                        datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdFornitori == figuraProfessionaleSelezionata.IdFornitori);
+                    }
 
-                    ////Cerco tra Collaboratori o Fornitori
-                    //FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdCollaboratori);
-                    //if (figuraProfessionale == null)
-                    //{
-                    //    figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdFornitori);
-                    //}
+                    txt_data.Text = datiPianoEsterno.Data == null ? "" : ((DateTime)datiPianoEsterno.Data).ToString("dd/MM/yyyy");
+                    txt_orario.Text = datiPianoEsterno.Orario == null ? "" : ((DateTime)datiPianoEsterno.Orario).ToString("HH:mm");
+                    chk_diaria.Checked = datiPianoEsterno.Diaria != null && (bool)datiPianoEsterno.Diaria;
+                    
+                    diaria15.Checked = (datiPianoEsterno.ImportoDiaria != null && datiPianoEsterno.ImportoDiaria == 15);
+                    diaria30.Checked = (datiPianoEsterno.ImportoDiaria != null && datiPianoEsterno.ImportoDiaria == 30);
+                    if (datiPianoEsterno.ImportoDiaria != null &&
+                        datiPianoEsterno.ImportoDiaria != 0 &&
+                        datiPianoEsterno.ImportoDiaria != 15 &&
+                        datiPianoEsterno.ImportoDiaria != 30)
+                    {
+                        diariaLibera.Checked = true;
+                        txt_diaria.Text = ((Decimal)datiPianoEsterno.ImportoDiaria).ToString();
+                    }
+                    else
+                    {
+                        diariaLibera.Checked = false;
+                        txt_diaria.Text = "";
+                    }
 
-
-                    //AbilitaComponentiCosto(articoloSelezionato);
-                    //AbilitaComponentiFiguraProfessionale(figuraProfessionale);
-
-                    //if (figuraProfessionale != null)
-                    //{
-                    //    PopolaNominativi(SessionManager.ListaCompletaFigProf.Where(x => x.Tipo == figuraProfessionale.Tipo).ToList());
-
-                    //    ddl_FPtipo.SelectedValue = figuraProfessionale.Tipo.ToString();
-                    //    txt_FPnotaCollaboratore.Text = articoloSelezionato.Nota;
-                    //    ddl_FPnominativo.SelectedValue = figuraProfessionale.Id.ToString();
-                    //    txt_FPtelefono.Text = figuraProfessionale.Telefono;
-                    //}
-                    //else
-                    //{
-                    //    AbilitaComponentiFiguraProfessionale(null);
-
-                    //    SessionManager.ListaCittaCollaboratori.Sort();
-                    //    foreach (string citta in SessionManager.ListaCittaCollaboratori)
-                    //    {
-                    //        ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
-                    //    }
-                    //    ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
-
-                    //    PopolaNominativi(SessionManager.ListaCompletaFigProf.Where(x => x.Tipo == COLLABORATORE).ToList());
-                    //    ddl_FPnominativo.SelectedValue = "";
-
-                    //    ddl_FPtipo.SelectedValue = COLLABORATORE.ToString();
-
-                    //    txt_FPtelefono.Text = "";
-                    //}
+                    ddl_intervento.SelectedValue = datiPianoEsterno.IdIntervento == null ? "1": ((int)datiPianoEsterno.IdIntervento).ToString();
+                    chk_albergo.Checked = datiPianoEsterno.Albergo !=null && (bool)datiPianoEsterno.Albergo;
 
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaFigProf", script: "javascript: document.getElementById('" + panelModificaPianoEsterno.ClientID + "').style.display='block'", addScriptTags: true);
 
@@ -378,6 +378,61 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnOKModificaPianoEsterno_Click(object sender, EventArgs e)
         {
+            DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione();
+            FiguraProfessionale figuraProfessionale = new FiguraProfessionale();
+            if (ViewState["idFiguraProfessionale"] == null)
+            {
+                long identificatoreOggetto = (long)ViewState["identificatoreFiguraProfessionale"];
+                figuraProfessionale = ListaFigureProfessionali.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
+
+            }
+            else
+            {
+                int idFiguraProfessionale = (int)ViewState["idFiguraProfessionale"];
+                figuraProfessionale = ListaFigureProfessionali.FirstOrDefault(x => x.Id == idFiguraProfessionale);
+            }
+
+            //prendo datiPianoEsterno a partire dalla figuraProfessionale selezionata
+            if (figuraProfessionale.IdCollaboratori != null && figuraProfessionale.IdCollaboratori != 0)
+            {
+                datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdCollaboratori == figuraProfessionale.IdCollaboratori);
+            }
+            else if (figuraProfessionale.IdFornitori != null && figuraProfessionale.IdFornitori != 0)
+            {
+                datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdFornitori == figuraProfessionale.IdFornitori);
+            }
+
+            decimal importoDiaria = 0;
+            if (diaria15.Checked)
+            {
+                importoDiaria = 15;
+            }
+            else if (diaria30.Checked)
+            {
+                importoDiaria = 30;
+            }
+            else if (diariaLibera.Checked && !string.IsNullOrEmpty(txt_diaria.Text))
+            {
+                importoDiaria = decimal.Parse(txt_diaria.Text);
+            }
+
+            datiPianoEsterno.Data = string.IsNullOrEmpty(txt_data.Text) ? null : (DateTime?)DateTime.Parse(txt_data.Text);
+            datiPianoEsterno.Orario = string.IsNullOrEmpty(txt_orario.Text) ? null : (DateTime?)DateTime.Parse(txt_orario.Text);
+            datiPianoEsterno.Diaria = chk_diaria.Checked;
+            datiPianoEsterno.ImportoDiaria = importoDiaria;
+            datiPianoEsterno.IdIntervento = int.Parse(ddl_intervento.SelectedValue);
+            datiPianoEsterno.Albergo = chk_albergo.Checked;
+            datiPianoEsterno.Nota = txt_notaPianoEsterno.Text;
+
+
+            figuraProfessionale.Intervento = ddl_intervento.SelectedItem.Text;
+            figuraProfessionale.Diaria = importoDiaria;
+            figuraProfessionale.Nota = txt_notaPianoEsterno.Text;
+            figuraProfessionale.Data = string.IsNullOrEmpty(txt_data.Text) ? null : (DateTime?)DateTime.Parse(txt_data.Text);
+
+            gvFigProfessionali.DataSource = ListaFigureProfessionali;
+            gvFigProfessionali.DataBind();
+
             RichiediOperazionePopup("UPDATE");
         }
 
@@ -538,24 +593,26 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void filtraFP(object sender, EventArgs e)
         {
+            DropDownList ddlSelezionata = (DropDownList)sender;
+
             Esito esito = new Esito();
 
             int tipoFP = int.Parse(ddl_FPtipo.SelectedValue);
-            string qualificaFP = ddl_FPqualifica.SelectedValue;
-            string cittaFP = ddl_FPcitta.SelectedValue;
+            string qualificaFP = ddl_FPqualifica.SelectedItem.Text;
+            string cittaFP = ddl_FPcitta.SelectedItem.Text.ToLower().Trim();
 
             FiguraProfessionale figuraProfessionaleDummy = new FiguraProfessionale() { Tipo = tipoFP };
 
-            AbilitaComponentiFiguraProfessionale(figuraProfessionaleDummy);
+            AbilitaComponentiFiguraProfessionale(figuraProfessionaleDummy, ddlSelezionata.ID == "ddl_FPtipo");
 
-            List<FiguraProfessionale> listaFPfiltrata = SessionManager.ListaCompletaFigProf.Where(x => x.Tipo == tipoFP).ToList();
+            List <FiguraProfessionale> listaFPfiltrata = SessionManager.ListaCompletaFigProf.Where(x => x.Tipo == tipoFP).ToList();
 
-            if (tipoFP == 0 &&  !string.IsNullOrEmpty(qualificaFP))
+            if (tipoFP == 0 && !string.IsNullOrEmpty(qualificaFP) && qualificaFP != "<seleziona>")
             {
-                listaFPfiltrata = listaFPfiltrata.Where(x => x.Qualifiche.Where(y => y.Id == int.Parse(qualificaFP)).Count() > 0).ToList();
+                listaFPfiltrata = listaFPfiltrata.Where(x => x.Qualifiche.Where(y => y.Qualifica == qualificaFP).Count() > 0).ToList();
             }
 
-            if (cittaFP != "")
+            if (cittaFP != "<seleziona>")
             {
                 listaFPfiltrata = listaFPfiltrata.Where(x => x.Citta.ToLower().Trim().Contains(cittaFP)).ToList();
             }
@@ -572,11 +629,11 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 fpSelezionata = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == int.Parse(ddl_FPnominativo.SelectedValue));
 
-                AbilitaComponentiFiguraProfessionale(fpSelezionata);
+                AbilitaComponentiFiguraProfessionale(fpSelezionata, true);
             }
             else
             {
-                AbilitaComponentiFiguraProfessionale(null);
+                AbilitaComponentiFiguraProfessionale(null, true);
             }
 
             PopolaDettagliFP(fpSelezionata);
@@ -680,6 +737,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         public void PopolaLavorazione()
         {
+
             Esito esito = new Esito();
 
             int idDatiAgenda = SessionManager.EventoSelezionato.id;
@@ -688,6 +746,7 @@ namespace VideoSystemWeb.Agenda.userControl
             #region INIZIALIZZAZIONE OGGETTI LAVORAZIONE CORRENTE
             SessionManager.EventoSelezionato.LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
             SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
+            ListaFigureProfessionali = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; //in questo modo assegno identificatoreOggetto
 
             ddl_intervento.DataSource = ListaTipoIntervento.OrderBy(x=>x.id);
             ddl_intervento.DataTextField = "nome";
@@ -717,7 +776,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
                     gvArticoliLavorazione.DataBind();
 
-                    gvFigProfessionali.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali;
+                    gvFigProfessionali.DataSource = ListaFigureProfessionali;
                     gvFigProfessionali.DataBind();
                 }
                 lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
@@ -749,9 +808,6 @@ namespace VideoSystemWeb.Agenda.userControl
             lbl_nessunaFiguraProf.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali.Count == 0;
             gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
             gvArticoliLavorazione.DataBind();
-
-
-
         }
 
         public void ClearLavorazione()
@@ -823,9 +879,9 @@ namespace VideoSystemWeb.Agenda.userControl
             }
         }
 
-        private void AbilitaComponentiFiguraProfessionale(FiguraProfessionale figuraProfessionale)
+        private void AbilitaComponentiFiguraProfessionale(FiguraProfessionale figuraProfessionale, bool ricaricaCitta)
         {
-            ddl_FPcitta.Items.Clear();
+            
 
             if (figuraProfessionale==null || figuraProfessionale.Id == 0)
             {
@@ -874,10 +930,15 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_FPtipoPagamento.Enabled = true;
                 }
 
-                SessionManager.ListaCittaCollaboratori.Sort();
-                foreach (string citta in SessionManager.ListaCittaCollaboratori)
+                if (ricaricaCitta)
                 {
-                    ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
+                    ddl_FPcitta.Items.Clear();
+                    SessionManager.ListaCittaCollaboratori.Sort();
+                    foreach (string citta in SessionManager.ListaCittaCollaboratori)
+                    {
+                        ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
+                    }
+                    ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
                 }
             }
             else if (figuraProfessionale.Tipo == FORNITORE)
@@ -892,14 +953,16 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_FPtipoPagamento.Style.Add("cursor", "not-allowed;");
                 ddl_FPtipoPagamento.Enabled = false;
 
+                ddl_FPcitta.Items.Clear();
                 SessionManager.ListaCittaFornitori.Sort();
                 foreach (string citta in SessionManager.ListaCittaFornitori)
                 {
                     ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
                 }
+                ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
             }
 
-            ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
+            
         }
         #endregion
     }

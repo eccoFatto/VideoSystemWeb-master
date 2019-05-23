@@ -463,6 +463,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.CheckBox chk_albergo;
         
         /// <summary>
+        /// Controllo chk_diaria.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chk_diaria;
+        
+        /// <summary>
         /// Controllo diaria15.
         /// </summary>
         /// <remarks>
@@ -515,6 +524,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_diaria;
+        
+        /// <summary>
+        /// Controllo txt_notaPianoEsterno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_notaPianoEsterno;
         
         /// <summary>
         /// Controllo btnOKModificaPianoEsterno.

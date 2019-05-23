@@ -34,17 +34,29 @@ namespace VideoSystemWeb.Entity
         { get
             {
                 listaFigureProfessionali = new List<FiguraProfessionale>();
-                foreach(DatiPianoEsternoLavorazione datoPianoEsterno in ListaDatiPianoEsternoLavorazione)
+
+                foreach (DatiPianoEsternoLavorazione datoPianoEsterno in ListaDatiPianoEsternoLavorazione)
+                {
+                    FiguraProfessionale figProf = new FiguraProfessionale();
+                    DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
                     if (datoPianoEsterno.IdCollaboratori != null && datoPianoEsterno.IdCollaboratori != 0)
                     {
                         Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdCollaboratori);
-                        listaFigureProfessionali.Add(collaboratore.CreaFiguraProfessionale());
+                        datoArticoloLavorazione = ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == datoPianoEsterno.IdCollaboratori);
+                        figProf = collaboratore.CreaFiguraProfessionale();
                     }
                     else
                     {
                         Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdFornitori);
-                        listaFigureProfessionali.Add(fornitore.CreaFiguraProfessionale());
+                        datoArticoloLavorazione = ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == datoPianoEsterno.IdFornitori);
+                        figProf = fornitore.CreaFiguraProfessionale();
                     }
+                    figProf.Nota = datoArticoloLavorazione.Nota;
+                    figProf.Lordo = datoArticoloLavorazione.FP_lordo;
+                    figProf.Netto = datoArticoloLavorazione.FP_netto;
+
+                    listaFigureProfessionali.Add(figProf);
+                }
                 return listaFigureProfessionali;
             }
         }

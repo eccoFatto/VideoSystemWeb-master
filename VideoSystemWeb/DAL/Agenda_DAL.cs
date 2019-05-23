@@ -1780,7 +1780,7 @@ namespace VideoSystemWeb.DAL
             SqlParameter idIntervento = new SqlParameter("@idIntervento", DBNull.Value);
             if (datoPianoEsternoLavorazione.IdIntervento != null)
             {
-                idIntervento = new SqlParameter("@idTipoPagamento", datoPianoEsternoLavorazione.IdIntervento);
+                idIntervento = new SqlParameter("@idIntervento", datoPianoEsternoLavorazione.IdIntervento);
             }
             idIntervento.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(idIntervento);

@@ -6,21 +6,32 @@
     $(document).ready(function () {
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
-            $('.calendar').datetimepicker({
-                locale: 'it',
-                format: 'DD/MM/YYYY'
+
+
+            $('#<%=chk_diaria.ClientID%>').click(function () {
+                $('#<%=diaria15.ClientID%>').prop('checked', false);
+                $('#<%=diaria15.ClientID%>').attr("disabled", !this.checked);
+                $('#<%=diaria30.ClientID%>').prop('checked', false);
+                $('#<%=diaria30.ClientID%>').attr("disabled", !this.checked);
+                $('#<%=diariaLibera.ClientID%>').prop('checked', false);
+                $('#<%=diariaLibera.ClientID%>').attr("disabled", !this.checked);
             });
 
-            $('#<%=diaria15.ClientID%>').prop('checked', false);
-            $('#<%=diaria30.ClientID%>').prop('checked', false);
-            $('#<%=diariaLibera.ClientID%>').prop('checked', false);
-            $("#<%=txt_diaria.ClientID%>").attr("readonly", true);
+            //$('#<%=diaria15.ClientID%>').prop('checked', false);
+            $('#<%=diaria15.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
+            //$('#<%=diaria30.ClientID%>').prop('checked', false);
+            $('#<%=diaria30.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
+            //$('#<%=diariaLibera.ClientID%>').prop('checked', false);
+            $('#<%=diariaLibera.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
+            if ($('#<%=diariaLibera.ClientID%>').prop("checked")) {
+                $("#<%=txt_diaria.ClientID%>").attr("readonly", false);
+                $("#<%=txt_diaria.ClientID%>").removeClass(" w3-disabled");
+            } else {
+                $("#<%=txt_diaria.ClientID%>").attr("readonly", true);
+                $("#<%=txt_diaria.ClientID%>").addClass(" w3-disabled");
+            }
 
 
-            $("#<%=txt_FiltroGruppiLavorazione.ClientID%>").val("");
-            $("#<%=txt_FiltroGruppiLavorazione.ClientID%>").keyup(function () {
-                filterLavorazione(2);
-            });
 
             $('#<%=diaria15.ClientID%>').click(function () {
                 $("#<%=txt_diaria.ClientID%>").attr("readonly", true);
@@ -31,10 +42,14 @@
                 $("#<%=txt_diaria.ClientID%>").addClass(" w3-disabled");
             });
             $('#<%=diariaLibera.ClientID%>').click(function () {
-                 $("#<%=txt_diaria.ClientID%>").attr("readonly", false);
-                 $("#<%=txt_diaria.ClientID%>").removeClass(" w3-disabled");
+                $("#<%=txt_diaria.ClientID%>").attr("readonly", false);
+                $("#<%=txt_diaria.ClientID%>").removeClass(" w3-disabled");
             });
 
+            $("#<%=txt_FiltroGruppiLavorazione.ClientID%>").val("");
+            $("#<%=txt_FiltroGruppiLavorazione.ClientID%>").keyup(function () {
+                filterLavorazione(2);
+            });
 
             $('#<%=chk_ModCosto.ClientID%>').click(function () {
 
@@ -402,12 +417,11 @@
                         <asp:Label ID="lbl_nessunaFiguraProf" runat="server" Text="Nessuna figura professionale importata" Style="position: absolute; top: 45%; left: 38%; font-size: large; color: cornflowerblue" />
                         <asp:GridView ID="gvFigProfessionali" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvFigProfessionali_RowCommand" DataMember="IdentificatoreOggetto">
                             <Columns>
-                                <asp:BoundField DataField="Cognome" HeaderText="Nominativo" />
-                                <asp:BoundField DataField="Citta" HeaderText="Località" />
-                                <asp:BoundField DataField="Telefono" HeaderText="Telefono" />
-                                <asp:BoundField DataField="Netto" HeaderText="Netto" DataFormatString="{0:N2}" />
-                                <asp:BoundField DataField="Lordo" HeaderText="Lordo" DataFormatString="{0:N2}" />
-                                <asp:BoundField DataField="Nota" HeaderText="Nota" />
+                                <asp:BoundField DataField="Cognome" HeaderText="Personale" />
+                                <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}"/>
+                                <asp:BoundField DataField="Intervento" HeaderText="Intervento" />
+                                <asp:BoundField DataField="Diaria" HeaderText="Diaria" DataFormatString="{0:N2}"/>
+                                <asp:BoundField DataField="Nota" HeaderText="Note" />
                                 <asp:TemplateField HeaderText="Seleziona">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
@@ -457,14 +471,14 @@
                                                 </div>
                                                 <div class="w3-half" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Orario convocazione</label>
-                                                    <asp:TextBox ID="txt_orario" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;" ></asp:TextBox>
+                                                    <asp:TextBox ID="txt_orario" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;"></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="w3-col">
                                                 <div class="w3-half" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Intervento</label><br />
                                                     <asp:DropDownList ID="ddl_intervento" runat="server"></asp:DropDownList>
-                                                    
+
                                                 </div>
                                                 <div class="w3-half" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Albergo</label>
@@ -475,18 +489,32 @@
 
                                         <div class="w3-third" style="padding: 5px">
                                             <div class="w3-col">
-                                                <label style="margin-bottom: 0.2rem;">Diaria</label><br />
-                                                <div class="w3-row"><asp:RadioButton id="diaria15" runat="server" GroupName="radioDiaria" style="margin:5px"/><asp:Label ID="val_diaria15" runat="server" Text="15€" /></div>
-                                                <div class="w3-row"><asp:RadioButton id="diaria30" runat="server" GroupName="radioDiaria" style="margin:5px"/><asp:Label  ID="val_diaria30" runat="server" Text="30€" /></div>
-                                                <div class="w3-row"><asp:RadioButton id="diariaLibera" runat="server" GroupName="radioDiaria" style="margin:5px; float:left"/><asp:TextBox ID="txt_diaria" runat="server" class="w3-input w3-border w3-disabled" Style="padding: 2px;width:100px"  onkeypress="return onlyNumbers();"></asp:TextBox></div>
+                                                <label style="margin-bottom: 0.2rem;">Diaria</label>
+                                                <asp:CheckBox ID="chk_diaria" runat="server" /><br />
+                                                <div class="w3-row">
+                                                    <asp:RadioButton ID="diaria15" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="val_diaria15" runat="server" Text="15€" />
+                                                </div>
+                                                <div class="w3-row">
+                                                    <asp:RadioButton ID="diaria30" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="val_diaria30" runat="server" Text="30€" />
+                                                </div>
+                                                <div class="w3-row">
+                                                    <asp:RadioButton ID="diariaLibera" runat="server" GroupName="radioDiaria" Style="margin: 5px; float: left" /><asp:TextBox ID="txt_diaria" runat="server" class="w3-input w3-border w3-disabled" Style="padding: 2px; width: 100px" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="w3-row-padding">
+                                            <div class="w3-col" style="padding: 5px">
+                                                <label style="margin-bottom: 0.2rem;">Note</label>
+                                                <asp:TextBox ID="txt_notaPianoEsterno" runat="server" Rows="5" TextMode="MultiLine" class="w3-input w3-border" Style="padding: 2px;"></asp:TextBox>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <br />
                                 <br />
-                                <br />
-                                <br />
+                                
                                 <div class="w3-center" style="margin: 10px">
                                     <asp:Button ID="btnOKModificaPianoEsterno" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOKModificaPianoEsterno_Click" />
                                     <button onclick="document.getElementById('<%= panelModificaPianoEsterno.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>

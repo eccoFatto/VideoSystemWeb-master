@@ -139,10 +139,35 @@
 <asp:HiddenField ID="hf_tabSelezionataLavorazione" runat="server" EnableViewState="true" Value="Lavoraz" />
 
 <asp:Panel runat="server" ID="panelLavorazione" Style="height: 99%">
-    <div class="w3-container w3-center w3-xlarge">LAVORAZIONE</div>
+    <div class="w3-row">
+        <div class="w3-quarter">
+            <div class="w3-container w3-left w3-xlarge">LAVORAZIONE</div>
+        </div>
+        <div class="w3-quarter" style="font-size: smaller;">
+            <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente: "></asp:Label>
+            <asp:Label ID="val_Cliente" runat="server" ></asp:Label>
+            <br />
+            <asp:Label ID="lbl_Produzione" runat="server" Text="Produzione: "></asp:Label>
+            <asp:Label ID="val_Produzione" runat="server" ></asp:Label>
+        </div>
+        <div class="w3-quarter" style="font-size: smaller;">
+            <asp:Label ID="lbl_Lavorazione" runat="server" Text="Lavorazione: "></asp:Label>
+            <asp:Label ID="val_Lavorazione" runat="server" ></asp:Label>
+            <br />
+            <asp:Label ID="lbl_Tipologia" runat="server" Text="Tipologia: "></asp:Label>
+            <asp:Label ID="val_Tipologia" runat="server" ></asp:Label>
+        </div>
+        <div class="w3-quarter" style="font-size: smaller;">
+            <asp:Label ID="lbl_DataInizio" runat="server" Text="Data inizio: "></asp:Label>
+            <asp:Label ID="val_DataInizio" runat="server" ></asp:Label>
+            <br />
+            <asp:Label ID="lbl_DataFine" runat="server" Text="Data fine: "></asp:Label>
+            <asp:Label ID="val_DataFine" runat="server" ></asp:Label>
+        </div>
+    </div>
+
 
     <div class="w3-container" style="width: 100%; height: 99%; position: relative; padding: 0px;">
-
 
         <div id="Lavoraz" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 90%; overflow: auto;">
             <div class="w3-row">
@@ -418,9 +443,9 @@
                         <asp:GridView ID="gvFigProfessionali" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvFigProfessionali_RowCommand" DataMember="IdentificatoreOggetto">
                             <Columns>
                                 <asp:BoundField DataField="Cognome" HeaderText="Personale" />
-                                <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}"/>
+                                <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
                                 <asp:BoundField DataField="Intervento" HeaderText="Intervento" />
-                                <asp:BoundField DataField="Diaria" HeaderText="Diaria" DataFormatString="{0:N2}"/>
+                                <asp:BoundField DataField="Diaria" HeaderText="Diaria" DataFormatString="{0:N2}" />
                                 <asp:BoundField DataField="Nota" HeaderText="Note" />
                                 <asp:TemplateField HeaderText="Seleziona">
                                     <ItemTemplate>
@@ -514,7 +539,7 @@
                                 </div>
                                 <br />
                                 <br />
-                                
+
                                 <div class="w3-center" style="margin: 10px">
                                     <asp:Button ID="btnOKModificaPianoEsterno" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOKModificaPianoEsterno_Click" />
                                     <button onclick="document.getElementById('<%= panelModificaPianoEsterno.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>

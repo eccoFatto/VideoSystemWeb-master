@@ -87,6 +87,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 gvGruppiLavorazione.DataBind();
 
                 PopolaCombo();
+
+                
             }
             else
             {
@@ -175,6 +177,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         AbilitaComponentiFiguraProfessionale(null, false);
 
                         SessionManager.ListaCittaCollaboratori.Sort();
+                        ddl_FPcitta.Items.Clear();
                         foreach (string citta in SessionManager.ListaCittaCollaboratori)
                         {
                             ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
@@ -737,7 +740,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         public void PopolaLavorazione()
         {
-
             Esito esito = new Esito();
 
             int idDatiAgenda = SessionManager.EventoSelezionato.id;
@@ -787,6 +789,22 @@ namespace VideoSystemWeb.Agenda.userControl
         public void CreaNuovaLavorazione(List<DatiArticoliLavorazione> listaArticoliLavorazione)
         {
             Esito esito = new Esito();
+
+            val_Cliente.Text = SessionManager.ListaClientiFornitori.FirstOrDefault(x => x.Id == SessionManager.EventoSelezionato.id_cliente).RagioneSociale;
+            val_Produzione.Text = SessionManager.EventoSelezionato.produzione;
+            val_Lavorazione.Text = SessionManager.EventoSelezionato.lavorazione;
+            val_Tipologia.Text = SessionManager.ListaTipiTipologie.FirstOrDefault(X => X.id == SessionManager.EventoSelezionato.id_tipologia).nome;
+            val_DataInizio.Text = SessionManager.EventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
+            val_DataFine.Text = SessionManager.EventoSelezionato.data_fine_lavorazione.ToString("dd/MM/yyyy");
+
+            txt_Ordine.Text = string.Empty;
+            txt_Fattura.Text = string.Empty;
+            //ddl_Contratto.SelectedValue = 0;  //DA ABILITARE QUANDO SARA' POPOLATO
+            ddl_Referente.SelectedIndex = 0;
+            ddl_Capotecnico.SelectedIndex = 0;
+            ddl_Produttore.SelectedIndex = 0;
+
+
 
             ddl_Referente.Items.Clear();
             foreach (Anag_Referente_Clienti_Fornitori referente in SessionManager.ListaReferenti)
@@ -953,13 +971,16 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_FPtipoPagamento.Style.Add("cursor", "not-allowed;");
                 ddl_FPtipoPagamento.Enabled = false;
 
-                ddl_FPcitta.Items.Clear();
-                SessionManager.ListaCittaFornitori.Sort();
-                foreach (string citta in SessionManager.ListaCittaFornitori)
+                if (ricaricaCitta)
                 {
-                    ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
+                    ddl_FPcitta.Items.Clear();
+                    SessionManager.ListaCittaFornitori.Sort();
+                    foreach (string citta in SessionManager.ListaCittaFornitori)
+                    {
+                        ddl_FPcitta.Items.Add(new ListItem(citta.ToUpper(), citta));
+                    }
+                    ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
                 }
-                ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
             }
 
             

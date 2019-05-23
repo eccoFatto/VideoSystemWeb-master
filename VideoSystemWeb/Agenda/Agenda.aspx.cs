@@ -118,6 +118,7 @@ namespace VideoSystemWeb.Agenda
             if (esito.codice == Esito.ESITO_OK)
             {
                 ChiudiPopup();
+               
                 ShowSuccess("Salvataggio eseguito correttamente");
             }
             else
@@ -204,7 +205,6 @@ namespace VideoSystemWeb.Agenda
         protected void btnLavorazione_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
-           // List<DatiArticoli> listaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
 
             esito = ValidazioneSalvataggio(listaIdTender);
@@ -212,7 +212,6 @@ namespace VideoSystemWeb.Agenda
             if (esito.codice == Esito.ESITO_OK)
             {
                 SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
-                //SessionManager.EventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
                
                 // COSTRUISCO LISTA DATI ARTICOLI LAVORAZIONE
                 List<DatiArticoliLavorazione> listaDatiArticoliLavorazione = new List<DatiArticoliLavorazione>();
@@ -751,7 +750,7 @@ namespace VideoSystemWeb.Agenda
         private DatiAgenda CreaEventoDaSelezioneAgenda(DateTime dataEvento, int risorsaEvento)
         {
             Esito esito = new Esito();
-            //listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"];
+            popupAppuntamento.ListaIdTender = null;
 
             SessionManager.EventoSelezionato = Agenda_BLL.Instance.GetDatiAgendaByDataRisorsa(ListaDatiAgenda, dataEvento, risorsaEvento);
             string sottotipoRisorsa = UtilityTipologiche.getElementByID(SessionManager.ListaRisorse, risorsaEvento, ref esito).sottotipo.ToUpper();

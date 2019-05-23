@@ -20,22 +20,6 @@ namespace VideoSystemWeb.BLL
         public static string dataVersione = "22/05/2019";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        #region ELEMENTI COMUNI IN VIEWSTATE
-        //public DatiAgenda EventoSelezionato
-        //{
-        //    get
-        //    {
-        //        return (DatiAgenda)ViewState["eventoSelezionato"];
-        //    }
-
-        //    set
-        //    {
-        //        ViewState["eventoSelezionato"] = value;
-        //    }
-        //}
-
-        #endregion
-
         public static T ValidaCampo<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito)
         {
             T result = defaultValue;
@@ -311,8 +295,6 @@ namespace VideoSystemWeb.BLL
             messaggio = messaggio.Replace("\r\n", "<br/>");
 
             Page page = HttpContext.Current.Handler as Page;
-
-           // ClientScript.RegisterStartupScript(typeof(Page), "apriModalSuccess", "<script>openSuccess('" + messaggio + "');</script>");
             ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalSuccess", script: "openSuccess('" + messaggio + "')", addScriptTags: true);
         }
 
@@ -322,8 +304,6 @@ namespace VideoSystemWeb.BLL
             messaggio = messaggio.Replace("\r\n", "<br/>");
 
             Page page = HttpContext.Current.Handler as Page;
-
-            //ClientScript.RegisterStartupScript(typeof(Page), "apriModalWarning", "<script>openWarning('" + messaggio + "');</script>");
             ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalWarning", script: "openWarning('" + messaggio + "')", addScriptTags: true);
         }
 
@@ -333,13 +313,9 @@ namespace VideoSystemWeb.BLL
             messaggio = messaggio.Replace("\r\n", "<br/>");
 
             Page page = HttpContext.Current.Handler as Page;
-
-            //ClientScript.RegisterStartupScript(typeof(Page), "apriModalError",  "<script>openError('" + messaggio + "');</script>");
             ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalError", script: "openError('" + messaggio + "')", addScriptTags: true);
             
         }
-
-        
 
         public void GestisciErrore(Esito esito, string messaggioErroreSpecifico = null)
         {

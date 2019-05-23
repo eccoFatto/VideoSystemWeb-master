@@ -10,7 +10,6 @@ namespace VideoSystemWeb.BLL
 {
     public static class UtilityTipologiche
     {
-
         public static List<Tipologica> caricaTipologica(EnumTipologiche tipologica)
         {
             Esito esito = new Esito();

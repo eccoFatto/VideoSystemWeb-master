@@ -20,7 +20,6 @@ namespace VideoSystemWeb.Entity
         private DateTime? orario;
         private string nota;
 
-
         public int Id { get => id; set => id = value; }
         public int IdDatiLavorazione { get => idDatiLavorazione; set => idDatiLavorazione = value; }
         public int? IdCollaboratori { get => idCollaboratori; set => idCollaboratori = value; }
@@ -32,6 +31,5 @@ namespace VideoSystemWeb.Entity
         public DateTime? Data { get => data; set => data = value; }
         public DateTime? Orario { get => orario; set => orario = value; }
         public string Nota { get => nota; set => nota = value; }
-
     }
 }

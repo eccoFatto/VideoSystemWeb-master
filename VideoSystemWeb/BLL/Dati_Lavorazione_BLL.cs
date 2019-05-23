@@ -28,7 +28,6 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-
         public DatiLavorazione getDatiLavorazioneById(int idDatiLavorazione, ref Esito esito)
         {
             DatiLavorazione datiLavorazione = Dati_Lavorazione_DAL.Instance.getDatiLavorazioneById(idDatiLavorazione, ref esito);

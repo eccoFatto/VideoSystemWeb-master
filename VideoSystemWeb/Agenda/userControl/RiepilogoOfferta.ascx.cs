@@ -72,8 +72,8 @@ namespace VideoSystemWeb.Agenda.userControl
         protected void btnOKModificaNote_Click(object sender, EventArgs e)
         {
             NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
-            noteOfferta.Banca = ddl_Banca.SelectedValue;// txt_Banca.Text;
-            noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); //int.Parse(txt_Pagamento.Text);
+            noteOfferta.Banca = ddl_Banca.SelectedValue;
+            noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); 
             noteOfferta.Consegna = txt_Consegna.Text;
             NoteOfferta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
 
@@ -122,7 +122,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             lbl_CodLavorazione.Text = lbl_CodLavorazioneStampa.Text = eventoSelezionato.codice_lavoro;
 
-            List<DatiArticoli> listaDatiArticoli = RichiediListaArticoli().Where(x => x.Stampa).ToList<DatiArticoli>();  //listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();  //popupOfferta.listaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
+            List<DatiArticoli> listaDatiArticoli = RichiediListaArticoli().Where(x => x.Stampa).ToList<DatiArticoli>(); 
 
             gvArticoli.DataSource = listaDatiArticoli;
             gvArticoli.DataBind();

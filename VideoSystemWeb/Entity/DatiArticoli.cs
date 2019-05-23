@@ -36,11 +36,7 @@ namespace VideoSystemWeb.Entity
         private decimal costo;
         private int iva;
         private int quantita;
-
         
-        
-
-
         public int Id { get => id; set => id = value; }
         public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
         public int IdArtArticoli { get => idArtArticoli; set => idArtArticoli = value; }

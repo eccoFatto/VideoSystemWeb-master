@@ -34,7 +34,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
                 gvGruppi.DataSource = ListaArticoliGruppi;
@@ -42,11 +41,9 @@ namespace VideoSystemWeb.Agenda.userControl
             }
         }
 
-
         #region COMPORTAMENTO ELEMENTI PAGINA
         protected void btnOK_Click(object sender, EventArgs e)
         {
-            //List<DatiArticoli> listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
             DatiArticoli articoloSelezionato;
 
             if (ViewState["idArticolo"]==null)
@@ -70,7 +67,6 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
             articoloSelezionato.Quantita = int.Parse(txt_Quantita.Text);
 
-            //ViewState["listaDatiArticoli"] = SessionManager.EventoSelezionato.ListaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
             SessionManager.EventoSelezionato.ListaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
 
             ResetPanelOfferta();
@@ -82,7 +78,6 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             long idSelezione = Convert.ToInt64(e.CommandArgument);
 
-            //listaDatiArticoli = (List<DatiArticoli>)ViewState["listaDatiArticoli"];
             if (SessionManager.EventoSelezionato.ListaDatiArticoli == null)
             {
                 SessionManager.EventoSelezionato.ListaDatiArticoli = new List<DatiArticoli>();
@@ -97,8 +92,6 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 aggiungiArticoloAListaArticoli(articoloGruppo.IdOggetto);
             }
-
-            //ViewState["listaDatiArticoli"] = listaDatiArticoli;
 
             if (SessionManager.EventoSelezionato.ListaDatiArticoli != null && SessionManager.EventoSelezionato.ListaDatiArticoli.Count > 0)
             {
@@ -231,7 +224,6 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             ClearModificaArticoli();
             lbl_selezionareArticolo.Visible = true;
-            //ViewState["listaDatiArticoli"] = null;
             SessionManager.EventoSelezionato.ListaDatiArticoli = null;
 
             gvArticoli.DataSource = null;

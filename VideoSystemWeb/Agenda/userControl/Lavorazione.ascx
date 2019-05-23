@@ -527,8 +527,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                         <div class="w3-row-padding">
                                             <div class="w3-col" style="padding: 5px">
                                                 <label style="margin-bottom: 0.2rem;">Note</label>

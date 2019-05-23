@@ -63,21 +63,6 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState["listaFigureProfessionali"] = _listaFigureProfessionali;
             }
         }
-        List<Tipologica> ListaTipoIntervento
-        {
-            get
-            {
-                if (ViewState["listaTipoIntervento"] == null || ((List<Tipologica>)ViewState["listaTipoIntervento"]).Count() == 0)
-                {
-                    ViewState["listaTipoIntervento"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_INTERVENTO);
-                }
-                return (List<Tipologica>)ViewState["listaTipoIntervento"];
-            }
-            set
-            {
-                ViewState["listaTipoIntervento"] = value;
-            }
-        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -87,8 +72,6 @@ namespace VideoSystemWeb.Agenda.userControl
                 gvGruppiLavorazione.DataBind();
 
                 PopolaCombo();
-
-                
             }
             else
             {
@@ -98,8 +81,6 @@ namespace VideoSystemWeb.Agenda.userControl
         }
 
         #region COMPORTAMENTO ELEMENTI PAGINA
-        
-
         protected void gvGruppiLavorazione_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             long idSelezione = Convert.ToInt64(e.CommandArgument);
@@ -283,6 +264,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     ddl_intervento.SelectedValue = datiPianoEsterno.IdIntervento == null ? "1": ((int)datiPianoEsterno.IdIntervento).ToString();
                     chk_albergo.Checked = datiPianoEsterno.Albergo !=null && (bool)datiPianoEsterno.Albergo;
+                    txt_notaPianoEsterno.Text = datiPianoEsterno.Nota;
 
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaFigProf", script: "javascript: document.getElementById('" + panelModificaPianoEsterno.ClientID + "').style.display='block'", addScriptTags: true);
 
@@ -426,7 +408,6 @@ namespace VideoSystemWeb.Agenda.userControl
             datiPianoEsterno.IdIntervento = int.Parse(ddl_intervento.SelectedValue);
             datiPianoEsterno.Albergo = chk_albergo.Checked;
             datiPianoEsterno.Nota = txt_notaPianoEsterno.Text;
-
 
             figuraProfessionale.Intervento = ddl_intervento.SelectedItem.Text;
             figuraProfessionale.Diaria = importoDiaria;
@@ -631,7 +612,6 @@ namespace VideoSystemWeb.Agenda.userControl
             if (ddl_FPnominativo.SelectedValue != "")
             {
                 fpSelezionata = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == int.Parse(ddl_FPnominativo.SelectedValue));
-
                 AbilitaComponentiFiguraProfessionale(fpSelezionata, true);
             }
             else
@@ -639,7 +619,9 @@ namespace VideoSystemWeb.Agenda.userControl
                 AbilitaComponentiFiguraProfessionale(null, true);
             }
 
-            PopolaDettagliFP(fpSelezionata);
+            txt_FPtelefono.Text = fpSelezionata.Telefono;
+            txt_FPnotaCollaboratore.Text = fpSelezionata.Nota;
+
             upModificaArticolo.Update();
         }
 
@@ -651,12 +633,6 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_FPnominativo.Items.Add(new ListItem(figPro.Cognome + " " + figPro.Nome, figPro.Id.ToString()));
             }
             ddl_FPnominativo.Items.Insert(0, new ListItem("<seleziona>", ""));
-        }
-
-        private void PopolaDettagliFP(FiguraProfessionale figuraProfessionale)
-        {
-            txt_FPtelefono.Text = figuraProfessionale.Telefono;
-            txt_FPnotaCollaboratore.Text = figuraProfessionale.Nota;
         }
 
         private void aggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
@@ -750,7 +726,7 @@ namespace VideoSystemWeb.Agenda.userControl
             SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
             ListaFigureProfessionali = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; //in questo modo assegno identificatoreOggetto
 
-            ddl_intervento.DataSource = ListaTipoIntervento.OrderBy(x=>x.id);
+            ddl_intervento.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x=>x.id);
             ddl_intervento.DataTextField = "nome";
             ddl_intervento.DataValueField = "id";
             ddl_intervento.DataBind();
@@ -781,7 +757,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     gvFigProfessionali.DataSource = ListaFigureProfessionali;
                     gvFigProfessionali.DataBind();
                 }
-                lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
+                lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || 
+                                                   SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
                 AggiornaTotali();
             }
         }
@@ -803,8 +780,6 @@ namespace VideoSystemWeb.Agenda.userControl
             ddl_Referente.SelectedIndex = 0;
             ddl_Capotecnico.SelectedIndex = 0;
             ddl_Produttore.SelectedIndex = 0;
-
-
 
             ddl_Referente.Items.Clear();
             foreach (Anag_Referente_Clienti_Fornitori referente in SessionManager.ListaReferenti)
@@ -850,6 +825,7 @@ namespace VideoSystemWeb.Agenda.userControl
             ResetPanelLavorazione();
         }
 
+        // SPOSTARE ALTROVE
         public DatiLavorazione CreaDatiLavorazione()
         {
             DatiLavorazione datiLavorazione = new DatiLavorazione();
@@ -858,9 +834,9 @@ namespace VideoSystemWeb.Agenda.userControl
             datiLavorazione.Ordine = txt_Ordine.Text;
             datiLavorazione.Fattura = txt_Fattura.Text;
             datiLavorazione.IdContratto = string.IsNullOrEmpty(ddl_Contratto.SelectedValue) ? null : (int?)int.Parse(ddl_Contratto.SelectedValue);
-            datiLavorazione.IdReferente = string.IsNullOrEmpty(ddl_Referente.SelectedValue) ? null : (int?)int.Parse(ddl_Referente.SelectedValue); //int.Parse(ddl_Referente.SelectedValue);
-            datiLavorazione.IdCapoTecnico = string.IsNullOrEmpty(ddl_Capotecnico.SelectedValue) ? null : (int?)int.Parse(ddl_Capotecnico.SelectedValue); //int.Parse(ddl_Capotecnico.SelectedValue);
-            datiLavorazione.IdProduttore = string.IsNullOrEmpty(ddl_Produttore.SelectedValue) ? null : (int?)int.Parse(ddl_Produttore.SelectedValue); //int.Parse(ddl_Produttore.SelectedValue);
+            datiLavorazione.IdReferente = string.IsNullOrEmpty(ddl_Referente.SelectedValue) ? null : (int?)int.Parse(ddl_Referente.SelectedValue); 
+            datiLavorazione.IdCapoTecnico = string.IsNullOrEmpty(ddl_Capotecnico.SelectedValue) ? null : (int?)int.Parse(ddl_Capotecnico.SelectedValue); 
+            datiLavorazione.IdProduttore = string.IsNullOrEmpty(ddl_Produttore.SelectedValue) ? null : (int?)int.Parse(ddl_Produttore.SelectedValue); 
             datiLavorazione.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
             datiLavorazione.ListaDatiPianoEsternoLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
             return datiLavorazione;
@@ -897,10 +873,9 @@ namespace VideoSystemWeb.Agenda.userControl
             }
         }
 
+        // abilita combo e textfield in pannello modifica figura professionale in dettaglio economico
         private void AbilitaComponentiFiguraProfessionale(FiguraProfessionale figuraProfessionale, bool ricaricaCitta)
         {
-            
-
             if (figuraProfessionale==null || figuraProfessionale.Id == 0)
             {
                 ddl_FPtipoPagamento.Attributes.Add("readonly", "readonly");

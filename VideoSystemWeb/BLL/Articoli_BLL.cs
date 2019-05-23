@@ -168,7 +168,7 @@ namespace VideoSystemWeb.BLL
                 articolo.Stampa = articoloTemplate.DefaultStampa;
                 articolo.Prezzo = articoloTemplate.DefaultPrezzo;
                 articolo.Costo = articoloTemplate.DefaultCosto;
-                articolo.Iva = iva;// articoloTemplate.DefaultIva;
+                articolo.Iva = iva;
                 articolo.IdTipoGenere = articoloTemplate.DefaultIdTipoGenere;
                 articolo.IdTipoGruppo = articoloTemplate.DefaultIdTipoGruppo;
                 articolo.IdTipoSottogruppo = articoloTemplate.DefaultIdTipoSottogruppo;
@@ -233,7 +233,7 @@ namespace VideoSystemWeb.BLL
             articolo.Stampa = articoloTemplate.DefaultStampa;
             articolo.Prezzo = articoloTemplate.DefaultPrezzo;
             articolo.Costo = articoloTemplate.DefaultCosto;
-            articolo.Iva = iva;// articoloTemplate.DefaultIva;
+            articolo.Iva = iva;
             articolo.IdTipoGenere = articoloTemplate.DefaultIdTipoGenere;
             articolo.IdTipoGruppo = articoloTemplate.DefaultIdTipoGruppo;
             articolo.IdTipoSottogruppo = articoloTemplate.DefaultIdTipoSottogruppo;
@@ -263,7 +263,7 @@ namespace VideoSystemWeb.BLL
             articoloLavorazione.Stampa = articoloTemplate.DefaultStampa;
             articoloLavorazione.Prezzo = articoloTemplate.DefaultPrezzo;
             articoloLavorazione.Costo = articoloTemplate.DefaultCosto;
-            articoloLavorazione.Iva = iva;// articoloTemplate.DefaultIva;
+            articoloLavorazione.Iva = iva;
             articoloLavorazione.Data = DateTime.Now;
             articoloLavorazione.Tv = 0;
 

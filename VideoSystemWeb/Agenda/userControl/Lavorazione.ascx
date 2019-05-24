@@ -140,30 +140,10 @@
 
 <asp:Panel runat="server" ID="panelLavorazione" Style="height: 99%">
     <div class="w3-row">
-        <div class="w3-quarter">
-            <div class="w3-container w3-left w3-xlarge">LAVORAZIONE</div>
+        <div class="w3-col">
+            <div class="w3-container w3-center w3-xlarge">LAVORAZIONE</div>
         </div>
-        <div class="w3-quarter" style="font-size: smaller;">
-            <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente: "></asp:Label>
-            <asp:Label ID="val_Cliente" runat="server" ></asp:Label>
-            <br />
-            <asp:Label ID="lbl_Produzione" runat="server" Text="Produzione: "></asp:Label>
-            <asp:Label ID="val_Produzione" runat="server" ></asp:Label>
-        </div>
-        <div class="w3-quarter" style="font-size: smaller;">
-            <asp:Label ID="lbl_Lavorazione" runat="server" Text="Lavorazione: "></asp:Label>
-            <asp:Label ID="val_Lavorazione" runat="server" ></asp:Label>
-            <br />
-            <asp:Label ID="lbl_Tipologia" runat="server" Text="Tipologia: "></asp:Label>
-            <asp:Label ID="val_Tipologia" runat="server" ></asp:Label>
-        </div>
-        <div class="w3-quarter" style="font-size: smaller;">
-            <asp:Label ID="lbl_DataInizio" runat="server" Text="Data inizio: "></asp:Label>
-            <asp:Label ID="val_DataInizio" runat="server" ></asp:Label>
-            <br />
-            <asp:Label ID="lbl_DataFine" runat="server" Text="Data fine: "></asp:Label>
-            <asp:Label ID="val_DataFine" runat="server" ></asp:Label>
-        </div>
+        
     </div>
 
 

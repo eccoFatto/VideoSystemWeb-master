@@ -130,8 +130,6 @@ namespace VideoSystemWeb.Agenda
         protected void btnRiepilogo_Click(object sender, EventArgs e)
         {
             Esito esito = SalvaEvento(); // l'apertura del riepilogo comporta il salvataggio dell'offerta per la generazione del protocollo
-
-            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
 
             upRiepilogoOfferta.Update();
@@ -174,24 +172,19 @@ namespace VideoSystemWeb.Agenda
         protected void btnOfferta_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
-            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
-            //List<DatiArticoli> listaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
+
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
 
             esito = ValidazioneSalvataggio( listaIdTender);
             if (esito.codice == Esito.ESITO_OK)
             {
-                SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_OFFERTA;
-                SessionManager.EventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
-               // ViewState["eventoSelezionato"] = eventoSelezionato;
+                popupOfferta.TrasformaInOfferta();
 
                 val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
                 val_CodiceLavoro.Text = SessionManager.EventoSelezionato.codice_lavoro;
 
                 btnLavorazione.Visible = false;
-
                 UpdatePopup();
-
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "passaAOfferta", "openTabEvento(event,'Offerta');", true);
             }
             else
@@ -211,49 +204,13 @@ namespace VideoSystemWeb.Agenda
 
             if (esito.codice == Esito.ESITO_OK)
             {
-                SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
-               
-                // COSTRUISCO LISTA DATI ARTICOLI LAVORAZIONE
-                List<DatiArticoliLavorazione> listaDatiArticoliLavorazione = new List<DatiArticoliLavorazione>();
-                
-                foreach (DatiArticoli datoArticolo in SessionManager.EventoSelezionato.ListaDatiArticoli)
-                {
-                    for (int i = 0; i < datoArticolo.Quantita; i++)
-                    {
-                        bool firstTime;
-
-                        DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
-                        datoArticoloLavorazione.Id = 0;
-                        datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out firstTime);
-                        datoArticoloLavorazione.IdDatiLavorazione = 0;
-                        datoArticoloLavorazione.IdArtArticoli = datoArticolo.IdArtArticoli;
-                        datoArticoloLavorazione.IdTipoGenere = datoArticolo.IdTipoGenere;
-                        datoArticoloLavorazione.IdTipoGruppo = datoArticolo.IdTipoGruppo;
-                        datoArticoloLavorazione.IdTipoSottogruppo = datoArticolo.IdTipoSottogruppo;
-
-                        datoArticoloLavorazione.IdCollaboratori = null;
-                        datoArticoloLavorazione.IdFornitori = null;
-                        datoArticoloLavorazione.IdTipoPagamento = null;
-
-                        datoArticoloLavorazione.Descrizione = datoArticolo.Descrizione;
-                        datoArticoloLavorazione.DescrizioneLunga = datoArticolo.DescrizioneLunga;
-                        datoArticoloLavorazione.Stampa = datoArticolo.Stampa;
-                        datoArticoloLavorazione.Prezzo = datoArticolo.Prezzo;
-                        datoArticoloLavorazione.Costo = datoArticolo.Costo;
-                        datoArticoloLavorazione.Iva = datoArticolo.Iva;
-
-                        listaDatiArticoliLavorazione.Add(datoArticoloLavorazione);
-                    }
-                }
-                popupLavorazione.CreaNuovaLavorazione(listaDatiArticoliLavorazione);
+                popupLavorazione.TrasformaInLavorazione();
 
                 val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
                 val_CodiceLavoro.Text = SessionManager.EventoSelezionato.codice_lavoro;
 
                 btnLavorazione.Visible = false;
-
                 UpdatePopup();
-
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "passaALavorazione", "openTabEvento(event,'Lavorazione');", true);
             }
             else
@@ -730,6 +687,15 @@ namespace VideoSystemWeb.Agenda
             if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
             {
                 popupLavorazione.PopolaLavorazione();
+            }
+            if (SessionManager.EventoSelezionato.produzione != null && SessionManager.EventoSelezionato.lavorazione != null)
+            {
+                val_Cliente.Text = SessionManager.ListaClientiFornitori.FirstOrDefault(x => x.Id == SessionManager.EventoSelezionato.id_cliente).RagioneSociale;
+                val_Produzione.Text = SessionManager.EventoSelezionato.produzione;
+                val_Lavorazione.Text = SessionManager.EventoSelezionato.lavorazione;
+                val_Tipologia.Text = SessionManager.ListaTipiTipologie.FirstOrDefault(X => X.id == SessionManager.EventoSelezionato.id_tipologia).nome;
+                val_DataInizio.Text = SessionManager.EventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
+                val_DataFine.Text = SessionManager.EventoSelezionato.data_fine_lavorazione.ToString("dd/MM/yyyy");
             }
         }
 

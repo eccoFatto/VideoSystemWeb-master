@@ -723,56 +723,61 @@ namespace VideoSystemWeb.Agenda.userControl
 
             #region INIZIALIZZAZIONE OGGETTI LAVORAZIONE CORRENTE
             SessionManager.EventoSelezionato.LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
-            SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
-            ListaFigureProfessionali = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; //in questo modo assegno identificatoreOggetto
-
-            ddl_intervento.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x=>x.id);
-            ddl_intervento.DataTextField = "nome";
-            ddl_intervento.DataValueField = "id";
-            ddl_intervento.DataBind();
-            #endregion
-
             if (esito.codice != Esito.ESITO_OK)
             {
                 basePage.ShowError(esito.descrizione);
             }
+            else if (SessionManager.EventoSelezionato.LavorazioneCorrente == null)
+            {
+                basePage.ShowWarning("La lavorazione corrente non contiene dati.<br/> Verrà creata una nuova lavorazione a partire dai dati dell'offerta.");
+                TrasformaInLavorazione();
+            }
             else
             {
-                CreaNuovaLavorazione(SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione);
+                SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
+                ListaFigureProfessionali = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; //in questo modo assegno identificatoreOggetto
 
-                if (SessionManager.EventoSelezionato.LavorazioneCorrente != null)
+                ddl_intervento.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
+                ddl_intervento.DataTextField = "nome";
+                ddl_intervento.DataValueField = "id";
+                ddl_intervento.DataBind();
+                #endregion
+
+                if (esito.codice != Esito.ESITO_OK)
                 {
-                    txt_Ordine.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Ordine;
-                    txt_Fattura.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Fattura;
-                    ddl_Contratto.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto == null ? "": SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto.ToString();
-                    ddl_Referente.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente.ToString();
-                    ddl_Capotecnico.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico.ToString();
-                    ddl_Produttore.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore.ToString();
-
-                    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
-
-                    gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
-                    gvArticoliLavorazione.DataBind();
-
-                    gvFigProfessionali.DataSource = ListaFigureProfessionali;
-                    gvFigProfessionali.DataBind();
+                    basePage.ShowError(esito.descrizione);
                 }
-                lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || 
-                                                   SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
-                AggiornaTotali();
+                else
+                {
+                    CreaNuovaLavorazione(SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione);
+
+                    if (SessionManager.EventoSelezionato.LavorazioneCorrente != null)
+                    {
+                        txt_Ordine.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Ordine;
+                        txt_Fattura.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Fattura;
+                        ddl_Contratto.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto.ToString();
+                        ddl_Referente.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente.ToString();
+                        ddl_Capotecnico.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico.ToString();
+                        ddl_Produttore.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore.ToString();
+
+                        SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+
+                        gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+                        gvArticoliLavorazione.DataBind();
+
+                        gvFigProfessionali.DataSource = ListaFigureProfessionali;
+                        gvFigProfessionali.DataBind();
+                    }
+                    lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null ||
+                                                       SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
+                    AggiornaTotali();
+                }
             }
         }
 
         public void CreaNuovaLavorazione(List<DatiArticoliLavorazione> listaArticoliLavorazione)
         {
             Esito esito = new Esito();
-
-            val_Cliente.Text = SessionManager.ListaClientiFornitori.FirstOrDefault(x => x.Id == SessionManager.EventoSelezionato.id_cliente).RagioneSociale;
-            val_Produzione.Text = SessionManager.EventoSelezionato.produzione;
-            val_Lavorazione.Text = SessionManager.EventoSelezionato.lavorazione;
-            val_Tipologia.Text = SessionManager.ListaTipiTipologie.FirstOrDefault(X => X.id == SessionManager.EventoSelezionato.id_tipologia).nome;
-            val_DataInizio.Text = SessionManager.EventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
-            val_DataFine.Text = SessionManager.EventoSelezionato.data_fine_lavorazione.ToString("dd/MM/yyyy");
 
             txt_Ordine.Text = string.Empty;
             txt_Fattura.Text = string.Empty;
@@ -825,7 +830,6 @@ namespace VideoSystemWeb.Agenda.userControl
             ResetPanelLavorazione();
         }
 
-        // SPOSTARE ALTROVE
         public DatiLavorazione CreaDatiLavorazione()
         {
             DatiLavorazione datiLavorazione = new DatiLavorazione();
@@ -903,8 +907,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 chk_ModCosto.Attributes.Remove("readonly");
                 chk_ModCosto.CssClass = "w3-input w3-border";
 
-                txt_FPnetto.Attributes.Remove("readonly");
-                txt_FPnetto.CssClass = "w3-input w3-border";
+                //txt_FPnetto.Attributes.Remove("readonly");
+                //txt_FPnetto.CssClass = "w3-input w3-border";
 
                 txt_FPnotaCollaboratore.Attributes.Remove("readonly");
                 txt_FPnotaCollaboratore.CssClass = "w3-input w3-border";
@@ -959,6 +963,45 @@ namespace VideoSystemWeb.Agenda.userControl
             }
 
             
+        }
+
+        public void TrasformaInLavorazione()
+        {
+            SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
+
+            // COSTRUISCO LISTA DATI ARTICOLI LAVORAZIONE
+            List<DatiArticoliLavorazione> listaDatiArticoliLavorazione = new List<DatiArticoliLavorazione>();
+
+            foreach (DatiArticoli datoArticolo in SessionManager.EventoSelezionato.ListaDatiArticoli)
+            {
+                for (int i = 0; i < datoArticolo.Quantita; i++)
+                {
+                    bool firstTime;
+
+                    DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
+                    datoArticoloLavorazione.Id = 0;
+                    datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out firstTime);
+                    datoArticoloLavorazione.IdDatiLavorazione = 0;
+                    datoArticoloLavorazione.IdArtArticoli = datoArticolo.IdArtArticoli;
+                    datoArticoloLavorazione.IdTipoGenere = datoArticolo.IdTipoGenere;
+                    datoArticoloLavorazione.IdTipoGruppo = datoArticolo.IdTipoGruppo;
+                    datoArticoloLavorazione.IdTipoSottogruppo = datoArticolo.IdTipoSottogruppo;
+
+                    datoArticoloLavorazione.IdCollaboratori = null;
+                    datoArticoloLavorazione.IdFornitori = null;
+                    datoArticoloLavorazione.IdTipoPagamento = null;
+
+                    datoArticoloLavorazione.Descrizione = datoArticolo.Descrizione;
+                    datoArticoloLavorazione.DescrizioneLunga = datoArticolo.DescrizioneLunga;
+                    datoArticoloLavorazione.Stampa = datoArticolo.Stampa;
+                    datoArticoloLavorazione.Prezzo = datoArticolo.Prezzo;
+                    datoArticoloLavorazione.Costo = datoArticolo.Costo;
+                    datoArticoloLavorazione.Iva = datoArticolo.Iva;
+
+                    listaDatiArticoliLavorazione.Add(datoArticoloLavorazione);
+                }
+            }
+            CreaNuovaLavorazione(listaDatiArticoliLavorazione);
         }
         #endregion
     }

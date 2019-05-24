@@ -323,6 +323,12 @@ namespace VideoSystemWeb.Agenda.userControl
                 }
             }
         }
+
+        public void TrasformaInOfferta()
+        {
+            SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_OFFERTA;
+            SessionManager.EventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
+        }
         #endregion
     }
 }

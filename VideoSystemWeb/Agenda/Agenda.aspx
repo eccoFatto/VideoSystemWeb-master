@@ -130,26 +130,35 @@
                     $("#<%=btnElimina.ClientID%>").removeClass("w3-disabled");
                 }
 
+                $('.infoEvento').fadeOut(0);
+                $('#infoGenerali').removeClass("w3-quarter");
+                $('#infoGenerali').addClass("w3-col");
 
                 $("#<%=innerContainer.ClientID%>").animate({
                     width: "47%"
                 }, velocita);
-
-
+                $('#div_tabStato').css('width', '60%');
             } else if (tipoName == 'Offerta') {
                 nomeElemento = '<%=tab_Offerta.ClientID%>';
                 $("#<%=btnElimina.ClientID%>").removeClass("w3-disabled");
 
+                $('.infoEvento').fadeOut(0);
+                $('#infoGenerali').removeClass("w3-quarter");
+                $('#infoGenerali').addClass("w3-col");
                 $("#<%=innerContainer.ClientID%>").animate({
                     width: "47%"
                 }, velocita);
-
+                $('#div_tabStato').css('width', '60%');
             } else if (tipoName == 'Lavorazione') {
                 nomeElemento = '<%=tab_Lavorazione.ClientID%>';
 
                 $("#<%=innerContainer.ClientID%>").animate({
                     width: "98%"
                 }, velocita);
+                $('#div_tabStato').css('width', '30%');
+                $('.infoEvento').fadeIn(1000);
+                $('#infoGenerali').removeClass("w3-col");
+                $('#infoGenerali').addClass("w3-quarter");
             }
             if (document.getElementById(nomeElemento).className.indexOf("w3-red") == -1)
                 document.getElementById(nomeElemento).className += " w3-red";
@@ -213,7 +222,7 @@
                     <div style="width: 100%; height: 95%; position: absolute">
                         <div class="w3-bar w3-blue w3-round">
                             <div class="w3-row">
-                                <div class="w3-col" style="width: 60%">
+                                <div id="div_tabStato" class="w3-col" style="width: 60%">
                                     <div class="w3-bar-item w3-button tablink w3-red" runat="server" id="tab_Appuntamento" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
                                     <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Offerta">Offerta</div>
                                     <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Lavorazione">Lavorazione</div>
@@ -221,11 +230,41 @@
                                 <div class="w3-rest">
                                     <div class="w3-row">
                                         <div class="w3-col" style="width: 90%; font-size: smaller;">
-                                            <asp:Label ID="lbl_Stato" runat="server" Text="Stato attuale: "></asp:Label>
-                                            <asp:Label ID="val_Stato" runat="server" Text="previsione impegno"></asp:Label>
-                                            <br />
-                                            <asp:Label ID="lbl_CodiceLavoro" runat="server" Text="Codice lavoro: "></asp:Label>
-                                            <asp:Label ID="val_CodiceLavoro" runat="server"></asp:Label>
+                                            
+
+
+
+                                            <div class="w3-quarter infoEvento" >
+                                                <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente: "></asp:Label>
+                                                <asp:Label ID="val_Cliente" runat="server" ></asp:Label>
+                                                <br />
+                                                <asp:Label ID="lbl_Produzione" runat="server" Text="Produzione: "></asp:Label>
+                                                <asp:Label ID="val_Produzione" runat="server" ></asp:Label>
+                                            </div>
+                                            <div class="w3-quarter infoEvento" >
+                                                <asp:Label ID="lbl_Lavorazione" runat="server" Text="Lavorazione: "></asp:Label>
+                                                <asp:Label ID="val_Lavorazione" runat="server" ></asp:Label>
+                                                <br />
+                                                <asp:Label ID="lbl_Tipologia" runat="server" Text="Tipologia: "></asp:Label>
+                                                <asp:Label ID="val_Tipologia" runat="server" ></asp:Label>
+                                            </div>
+                                            <div class="w3-quarter infoEvento" >
+                                                <asp:Label ID="lbl_DataInizio" runat="server" Text="Data inizio: "></asp:Label>
+                                                <asp:Label ID="val_DataInizio" runat="server" ></asp:Label>
+                                                <br />
+                                                <asp:Label ID="lbl_DataFine" runat="server" Text="Data fine: "></asp:Label>
+                                                <asp:Label ID="val_DataFine" runat="server" ></asp:Label>
+                                            </div>
+                                            <div id="infoGenerali" class="w3-quarter" >
+                                                <asp:Label ID="lbl_Stato" runat="server" Text="Stato attuale: "></asp:Label>
+                                                <asp:Label ID="val_Stato" runat="server" Text="previsione impegno"></asp:Label>
+                                                <br />
+                                                <asp:Label ID="lbl_CodiceLavoro" runat="server" Text="Codice lavoro: "></asp:Label>
+                                                <asp:Label ID="val_CodiceLavoro" runat="server"></asp:Label>
+                                            </div>
+
+
+
                                         </div>
                                         <div class="w3-rest">
                                             <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" />

@@ -312,6 +312,18 @@ namespace VideoSystemWeb.BLL
             messaggio = messaggio.Replace("'", "\\'");
             messaggio = messaggio.Replace("\r\n", "<br/>");
 
+            Anag_Utenti utente = new Anag_Utenti();
+            try
+            {
+                utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+            }
+            catch (Exception)
+            {
+                utente.username = "ANONIMO";
+            }
+            
+            log.Error( utente.username + " - " + messaggio);
+
             Page page = HttpContext.Current.Handler as Page;
             ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalError", script: "openError('" + messaggio + "')", addScriptTags: true);
             

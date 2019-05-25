@@ -549,6 +549,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     AttivaDisattivaModificaAzienda(true);
                     //btn_chiudi_Click(null, null);
                     pnlContainer.Visible = false;
+                    SessionManager.ListaAnagraficheFornitori.Clear();
+                    SessionManager.ListaClientiFornitori.Clear();
+                    SessionManager.ListaCittaFornitori.Clear();
                     btnRicercaAziende_Click(null, null);
                 }
 
@@ -581,7 +584,14 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     //lbl_MessaggioErrore.Text = esito.descrizione;
                     basePage.ShowError(esito.descrizione);
                 }
-                EditAzienda_Click(null, null);
+                else
+                {
+                    SessionManager.ListaAnagraficheFornitori.Clear();
+                    SessionManager.ListaClientiFornitori.Clear();
+                    SessionManager.ListaCittaFornitori.Clear();
+                    EditAzienda_Click(null, null);
+                }
+                
             }
 
         }
@@ -603,7 +613,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 azienda.Cliente = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Cliente, "true", false, ref esito));
                 azienda.Fornitore = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Fornitore, "true", false, ref esito));
 
-                azienda.RagioneSociale = BasePage.ValidaCampo(tbMod_RagioneSociale, "", false, ref esito);
+                azienda.RagioneSociale = BasePage.ValidaCampo(tbMod_RagioneSociale, "", true, ref esito);
                 azienda.CapLegale = BasePage.ValidaCampo(tbMod_CapLegale, "", false, ref esito);
                 azienda.CapOperativo = BasePage.ValidaCampo(tbMod_CapOperativo, "", false, ref esito);
                 azienda.CodiceFiscale = BasePage.ValidaCampo(tbMod_CF, "", false, ref esito);
@@ -620,7 +630,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 azienda.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
                 azienda.NumeroCivicoLegale = BasePage.ValidaCampo(tbMod_CivicoLegale, "", false, ref esito);
                 azienda.NumeroCivicoOperativo = BasePage.ValidaCampo(tbMod_CivicoOperativo, "", false, ref esito);
-                azienda.Pagamento = Convert.ToInt16(cmbMod_Pagamento.SelectedValue);
+
+                string sPagamento = BasePage.ValidaCampo(cmbMod_Pagamento, "30", false, ref esito);
+                azienda.Pagamento = Convert.ToInt16(sPagamento);
+
                 azienda.PartitaIva = BasePage.ValidaCampo(tbMod_PartitaIva, "", false, ref esito);
                 azienda.Pec = BasePage.ValidaCampo(tbMod_Pec, "", false, ref esito);
                 azienda.ProvinciaLegale = BasePage.ValidaCampo(tbMod_ProvinciaLegale, "", false, ref esito);
@@ -653,6 +666,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 //panelErrore.Style.Remove("display");
                 //lbl_MessaggioErrore.Text = esito.descrizione;
                 basePage.ShowError(esito.descrizione);
+                AttivaDisattivaModificaAzienda(false);
             }
             else
             {
@@ -676,6 +690,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 else
                 {
+                    SessionManager.ListaAnagraficheFornitori.Clear();
+                    SessionManager.ListaClientiFornitori.Clear();
+                    SessionManager.ListaCittaFornitori.Clear();
                     EditAzienda_Click(null, null);
                 }
                 

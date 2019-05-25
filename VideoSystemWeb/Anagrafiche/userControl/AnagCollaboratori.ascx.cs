@@ -51,7 +51,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             if (!Page.IsPostBack)
             {
 
-                log.Info("PAGE AnagCollaboratori");
+                //log.Info("PAGE AnagCollaboratori");
                 //BasePage p = new BasePage();
                 //Esito esito = p.CaricaListeTipologiche();
 
@@ -268,13 +268,14 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 //panelErrore.Style.Add("display","block");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
                 basePage.ShowError("Controllare i campi evidenziati!");
+                AttivaDisattivaModificaAnagrafica(false);
             }
             else
             {
                 NascondiErroriValidazione();
 
                 esito = Anag_Collaboratori_BLL.Instance.AggiornaCollaboratore(collaboratore);
-                
+
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     log.Error(esito.descrizione);
@@ -284,7 +285,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     basePage.ShowError(esito.descrizione);
 
                 }
-                EditCollaboratore_Click(null, null);
+                else
+                {
+                    SessionManager.ListaAnagraficheCollaboratori.Clear();
+                    SessionManager.ListaCittaCollaboratori.Clear();
+                    EditCollaboratore_Click(null, null);
+                }
             }
         }
 
@@ -733,7 +739,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             collaboratore.ComuneNascita = BasePage.ValidaCampo(tbMod_ComuneNascita, "", false, ref esito);
             collaboratore.ComuneRiferimento = BasePage.ValidaCampo(tbMod_ComuneRiferimento, "", false, ref esito);
             collaboratore.RegioneRiferimento = BasePage.ValidaCampo(cmbMod_RegioneRiferimento, "", false, ref esito);
-            collaboratore.DataNascita = BasePage.ValidaCampo(tbMod_DataNascita, DateTime.Now, true, ref esito);
+            collaboratore.DataNascita = BasePage.ValidaCampo(tbMod_DataNascita, DateTime.Now, false, ref esito);
             collaboratore.CodiceFiscale = BasePage.ValidaCampo(tbMod_CF, "", true, ref esito);
             collaboratore.Assunto = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Assunto, "false", false, ref esito));
             //collaboratore.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
@@ -778,6 +784,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     AttivaDisattivaModificaAnagrafica(true);
                     //btn_chiudi_Click(null, null);
                     pnlContainer.Visible = false;
+                    SessionManager.ListaAnagraficheCollaboratori.Clear();
+                    SessionManager.ListaCittaCollaboratori.Clear();
+
                     btnRicercaCollaboratori_Click(null, null);
                 }
 
@@ -815,6 +824,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 //panelErrore.Style.Remove("display");
                 //panelErrore.Style.Add("display", "block");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
+                AttivaDisattivaModificaAnagrafica(false);
                 basePage.ShowError("Controllare i campi evidenziati");
             }
             else
@@ -838,7 +848,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     //lbl_MessaggioErrore.Text = esito.descrizione;
                     basePage.ShowError(esito.descrizione);
                 }
-                EditCollaboratore_Click(null, null);
+                else
+                {
+                    SessionManager.ListaAnagraficheCollaboratori.Clear();
+                    SessionManager.ListaCittaCollaboratori.Clear();
+
+                    EditCollaboratore_Click(null, null);
+                }
             }
 
         }
@@ -859,13 +875,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     if (esito.codice != Esito.ESITO_OK)
                     {
                         log.Error(esito.descrizione);
-                        //panelErrore.Style.Remove("display");
-                        //lbl_MessaggioErrore.Text = esito.descrizione;
                         basePage.ShowError(esito.descrizione);
                     }
                     else
                     {
-                        //lbMod_Qualifiche.Items.Remove(item);
+                        SessionManager.ListaQualificheCollaboratori.Clear();
+                        
                         editCollaboratore();
                     }
                 }
@@ -1336,6 +1351,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     }
                     else
                     {
+                        SessionManager.ListaQualificheCollaboratori.Clear();
                         editCollaboratore();
                     }
                 }

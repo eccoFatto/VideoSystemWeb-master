@@ -71,16 +71,7 @@ namespace VideoSystemWeb.BLL
         {
             List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();
 
-            //if (Convert.ToBoolean(ConfigurationManager.AppSettings["USA_DB"]))
-            //{
-                listaDatiAgenda = Agenda_DAL.Instance.CaricaDatiAgenda(dataInizio, dataInizio.AddDays(31), ref esito);
-            //}
-            //else
-            //{
-            //    listaDatiAgenda = Tipologie.getListaDatiAgenda();
-            //}
-
-            log.Error(esito.descrizione);
+            listaDatiAgenda = Agenda_DAL.Instance.CaricaDatiAgenda(dataInizio, dataInizio.AddDays(31), ref esito);
 
             return listaDatiAgenda;
         }

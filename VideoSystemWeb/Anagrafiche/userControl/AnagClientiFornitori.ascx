@@ -220,11 +220,6 @@
                             <div class="w3-quarter">
                                 <label>Pagamento</label><br />
                                 <asp:DropDownList ID="cmbMod_Pagamento" runat="server" CssClass="w3-input w3-border" disabled />
-<%--                                    <asp:ListItem Value=""></asp:ListItem>
-                                    <asp:ListItem Value="30">30 Giorni</asp:ListItem>
-                                    <asp:ListItem Value="60">60 Giorni</asp:ListItem>
-                                    <asp:ListItem Value="90">90 Giorni</asp:ListItem>
-                                </asp:DropDownList>--%>
                             </div>
                         </div>
                         <div class="w3-panel w3-blue w3-center w3-round">

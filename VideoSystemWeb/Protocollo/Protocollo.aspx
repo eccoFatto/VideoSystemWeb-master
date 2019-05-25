@@ -311,32 +311,32 @@
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Numero Protocollo</label>
-                                        <asp:TextBox ID="tbMod_NumeroProtocollo" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_NumeroProtocollo" runat="server" MaxLength="30" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                         <asp:TextBox ID="tbIdProtocolloDaModificare" runat="server" Visible="false"></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Data Prot</label>
-                                        <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" CssClass="w3-input w3-border" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Riferimento Documento</label>
-                                        <asp:TextBox ID="tbMod_ProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_ProtocolloRiferimento" runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-threequarter">
                                         <label>Lavorazione</label>
-                                        <asp:TextBox ID="tbMod_Lavorazione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_Lavorazione" runat="server" MaxLength="200" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
                                         <label>Data Lav</label>
-                                        <asp:TextBox ID="tbMod_DataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_DataLavorazione" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
                                         <label>Cliente</label>
-                                        <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
 
                                         <%--                                        <div class="w3-row-padding w3-center w3-text-center">
                                             <div class="w3-threequarter">
@@ -351,19 +351,19 @@
                                     </div>
                                     <div class="w3-half">
                                         <label>Produzione</label>
-                                        <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>
 
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
                                         <label>Tipo</label>
-                                        <asp:DropDownList ID="cmbMod_Tipologia" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                                        <asp:DropDownList ID="cmbMod_Tipologia" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
                                         </asp:DropDownList>
                                     </div>
                                     <div class="w3-half">
                                         <label>Nome File</label>
-                                        <asp:TextBox ID="tbMod_NomeFile" runat="server" MaxLength="100" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_NomeFile" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">

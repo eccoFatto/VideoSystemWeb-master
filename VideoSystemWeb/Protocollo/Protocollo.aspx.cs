@@ -500,7 +500,7 @@ namespace VideoSystemWeb.Protocollo
             protocollo.Produzione = BasePage.ValidaCampo(tbMod_Produzione, "", false, ref esito);
             protocollo.Data_inizio_lavorazione = BasePage.ValidaCampo(tbMod_DataLavorazione, DateTime.Now, true, ref esito);
             protocollo.Codice_lavoro = BasePage.ValidaCampo(tbMod_CodiceLavoro, "", false, ref esito);
-            protocollo.Descrizione = BasePage.ValidaCampo(tbMod_Lavorazione, "", false, ref esito);
+            protocollo.Descrizione = BasePage.ValidaCampo(tbMod_Lavorazione, "", true, ref esito);
             protocollo.Attivo = true;
 
             return protocollo;

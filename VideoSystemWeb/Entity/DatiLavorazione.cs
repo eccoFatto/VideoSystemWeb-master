@@ -55,7 +55,7 @@ namespace VideoSystemWeb.Entity
                     figProf.Lordo = datoArticoloLavorazione.FP_lordo;
                     figProf.Netto = datoArticoloLavorazione.FP_netto;
                     figProf.Data = datoPianoEsterno.Data;
-                    figProf.Intervento = SessionManager.ListaTipiIntervento.FirstOrDefault(x=>x.id == datoPianoEsterno.IdIntervento).nome;
+                    figProf.Intervento = datoPianoEsterno.IdIntervento == null ? "" : SessionManager.ListaTipiIntervento.FirstOrDefault(x=>x.id == datoPianoEsterno.IdIntervento).nome;
                     figProf.Diaria = datoPianoEsterno.ImportoDiaria;
                     figProf.Nota = datoPianoEsterno.Nota;
 

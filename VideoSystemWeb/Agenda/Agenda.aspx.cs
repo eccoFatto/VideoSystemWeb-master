@@ -117,7 +117,7 @@ namespace VideoSystemWeb.Agenda
             Esito esito = SalvaEvento();
             if (esito.codice == Esito.ESITO_OK)
             {
-                ChiudiPopup();
+               // ChiudiPopup();
                
                 ShowSuccess("Salvataggio eseguito correttamente");
             }
@@ -745,7 +745,6 @@ namespace VideoSystemWeb.Agenda
 
             Esito esito = new Esito();
 
-            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
             //List<DatiArticoli> listaDatiArticoli = (SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_OFFERTA &&
             //                                        SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_LAVORAZIONE) ? null : SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;

@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -586,6 +585,7 @@
     <Compile Include="BLL\Dati_Lavorazione_BLL.cs" />
     <Compile Include="BLL\NoteOfferta_BLL.cs" />
     <Compile Include="BLL\Config_BLL.cs" />
+    <Compile Include="BLL\AttrezzatureMagazzino_BLL.cs" />
     <Compile Include="BLL\Protocolli_BLL.cs" />
     <Compile Include="BLL\Articoli_BLL.cs" />
     <Compile Include="BLL\Dati_Tender_BLL.cs" />
@@ -627,6 +627,7 @@
     <Compile Include="DAL\Dati_Lavorazione_DAL.cs" />
     <Compile Include="DAL\Dati_PianoEsterno_Lavorazione_DAL.cs" />
     <Compile Include="DAL\NoteOfferta_DAL.cs" />
+    <Compile Include="DAL\AttrezzatureMagazzino_DAL.cs" />
     <Compile Include="DAL\Protocolli_DAL.cs" />
     <Compile Include="DAL\Dati_Tender_DAL.cs" />
     <Compile Include="DAL\Art_Gruppi_Articoli_DAL.cs" />
@@ -664,6 +665,7 @@
     <Compile Include="Entity\GiorniPagamentoFatture.cs" />
     <Compile Include="Entity\DatiBancari.cs" />
     <Compile Include="Entity\NoteOfferta.cs" />
+    <Compile Include="Entity\AttrezzatureMagazzino.cs" />
     <Compile Include="Entity\Utenti.cs" />
     <Compile Include="Entity\Protocolli.cs" />
     <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />

@@ -160,9 +160,29 @@
             document.getElementById('<%=tbMod_Cliente.ClientID%>').value = cliente;
             chiudiPopupLavorazioni();
         }
+
+        function popupProt(messaggio) {
+            document.getElementById('popMessage').style.display = 'block';
+            $('#textPopMess').html(messaggio);
+            //setTimeout(function () {
+            //    $('#popMessage').fadeOut();
+            //}, 1000);
+        }
     </script>
-    <label>
-        <asp:Label ID="lblProtocolli" runat="server" Text="PROTOCOLLI" ForeColor="Teal"></asp:Label></label>
+
+        <div id="popMessage" class="w3-modal" style="z-index:10000">
+            <div class="w3-modal-content w3-animate-opacity w3-card-4">
+                <header class="w3-container w3-green">
+                    <span onclick="document.getElementById('popMessage').style.display='none'"
+                        class="w3-button w3-display-topright">&times;</span>
+                    <h2>Operazione completata</h2>
+                </header>
+                <div class="w3-container">
+                    <p id="textPopMess"></p>
+                </div>
+            </div>
+        </div>
+    <label><asp:Label ID="lblProtocolli" runat="server" Text="PROTOCOLLI" ForeColor="Teal"></asp:Label></label>
     <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
         <ContentTemplate>
             <div class="w3-row-padding">

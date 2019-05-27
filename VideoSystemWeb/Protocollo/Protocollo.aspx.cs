@@ -18,6 +18,15 @@ namespace VideoSystemWeb.Protocollo
         BasePage basePage = new BasePage();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public void ShowPopMessage(string messaggio)
+        {
+            messaggio = messaggio.Replace("'", "\\'");
+            messaggio = messaggio.Replace("\r\n", "<br/>");
+
+            Page page = HttpContext.Current.Handler as Page;
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "apripopupProt", script: "popupProt('" + messaggio + "')", addScriptTags: true);
+        }
+
         protected void Page_PreInit(object sender, EventArgs e)
         {
             CheckIsMobile();
@@ -239,7 +248,8 @@ namespace VideoSystemWeb.Protocollo
                     log.Error(esito.descrizione);
                     basePage.ShowError(esito.descrizione);
                 }
-                basePage.ShowSuccess("Inserito Protocollo n. " + protocollo.Numero_protocollo);
+                //basePage.ShowSuccess("Inserito Protocollo n. " + protocollo.Numero_protocollo);
+                ShowPopMessage("Inserito Protocollo n. " + protocollo.Numero_protocollo);
                 btnEditProtocollo_Click(null, null);
             }
         }

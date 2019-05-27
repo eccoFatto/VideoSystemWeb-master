@@ -173,9 +173,9 @@
                 </div>
                 <a class="w3-bar-item w3-button w3-disabled">Report</a>
                 <div class="w3-dropdown-hover">
-                    <button class="w3-button w3-yellow w3-disabled" onclick="return false;">Magazzino</button>
+                    <button class="w3-button w3-yellow" onclick="return false;">Magazzino</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
-                        <a class="w3-bar-item w3-button w3-disabled">Gestione Attrezzature</a>
+                        <a href="/MAGAZZINO/Attrezzature.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Gestione Attrezzature</a>
                         <a class="w3-bar-item w3-button w3-disabled">Carico/Scarico Attrezzature</a>
                         <a class="w3-bar-item w3-button w3-disabled">Gestione Consumo</a>
                         <a class="w3-bar-item w3-button w3-disabled">Carico/Scarico Consumo</a>

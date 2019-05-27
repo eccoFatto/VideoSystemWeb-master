@@ -263,6 +263,7 @@
     <Content Include="index.html" />
     <Content Include="Login.aspx" />
     <Content Include="Images\logoVSP.png" />
+    <Content Include="MAGAZZINO\Attrezzature.aspx" />
     <Content Include="messaggioCambioPassword.html" />
     <Content Include="pageError.aspx" />
     <Content Include="Protocollo\Protocollo.aspx" />
@@ -695,6 +696,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MAGAZZINO\Attrezzature.aspx.cs">
+      <DependentUpon>Attrezzature.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MAGAZZINO\Attrezzature.aspx.designer.cs">
+      <DependentUpon>Attrezzature.aspx</DependentUpon>
     </Compile>
     <Compile Include="pageError.aspx.cs">
       <DependentUpon>pageError.aspx</DependentUpon>

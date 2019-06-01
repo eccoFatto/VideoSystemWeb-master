@@ -7,7 +7,6 @@
 
             $(window).keydown(function (e) {
                 if (e.keyCode == 13) {
-                    //alert($("#<=hf_tipoOperazione.ClientID%>").val());
                     if ($("#<%=hf_tipoOperazione.ClientID%>").val() != 'MODIFICA' && $("#<%=hf_tipoOperazione.ClientID%>").val() != 'INSERIMENTO') {
                         $("#<%=btnRicercaProtocollo.ClientID%>").click();
                     }
@@ -28,23 +27,6 @@
                     format: 'DD/MM/YYYY'
                 });
             });
-
-<%--            Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
-                // GESTIONE DROPDOWN CLIENTI
-                $("#filtroClienti").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#divClienti .dropdown-menu li").filter(function () {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-                });
-
-                $("#<%=elencoClienti.ClientID%> .dropdown-item").on("click", function (e) {
-                    $("#<%=hf_Clienti.ClientID%>").val($(this.firstChild).attr('val'));
-                    $("#<%=ddl_Clienti.ClientID%>").val($(e.target).text());
-                    $("#<%=ddl_Clienti.ClientID%>").attr("title", $(e.target).text());
-                });
-
-            });--%>
         });
 
         // APRO POPUP VISUALIZZAZIONE/MODIFICA PROTOCOLLO
@@ -90,8 +72,6 @@
         function chiudiPopup() {
             // QUANDO APRO IL POPUP RIPARTE SEMPRE DA PROTOCOLLO E NON DALL'ULTIMA TAB APERTA
             $("#<%=hf_tabChiamata.ClientID%>").val('Protocollo');
-            //var pannelloPopup = document.getElementById('<%=pnlContainer.ClientID%>');
-            //pannelloPopup.style.display = "none";
             $("#<%=hf_idProt.ClientID%>").val('');
             $("#<%=hf_tipoOperazione.ClientID%>").val('VISUALIZZAZIONE');
             $("#<%=btnChiudiPopupServer.ClientID%>").click();
@@ -157,16 +137,36 @@
 
         function associaCodiceLavorazione(codLav, cliente) {
             document.getElementById('<%=tbMod_CodiceLavoro.ClientID%>').value = codLav;
-            document.getElementById('<%=tbMod_Cliente.ClientID%>').value = cliente;
+            //document.getElementById('<%=tbMod_Cliente.ClientID%>').value = cliente;
             chiudiPopupLavorazioni();
+        }
+
+        function associaCliente(idCli, cliente) {
+            alert('ASSOCIA CLIENTE prima - CLIENTE ' +  cliente);
+            alert('ASSOCIA CLIENTE prima - ID CLIENTE ' +  idCli);
+
+            var txt1 = $("#<%=tbMod_Cliente.ClientID%>");
+            var txt2 = $("#<%=tbMod_IdCliente.ClientID%>");
+            txt1.val(cliente);
+            txt2.val(idCli);
+            txt1.text = cliente;
+            txt2.text = idCli;
+
+            alert('ASSOCIA CLIENTE dopo - CLIENTE ' + txt1.text);
+            alert('ASSOCIA CLIENTE dopo - ID CLIENTE ' + txt2.text);
+            $("#<%=btnAssociaClienteServer.ClientID%>").click();
+        }
+
+        function inserisciCliente() {
+            alert('' + document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value);
+            if (document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value != '') {
+                associaCliente('', document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value);
+            }
         }
 
         function popupProt(messaggio) {
             document.getElementById('popMessage').style.display = 'block';
             $('#textPopMess').html(messaggio);
-            //setTimeout(function () {
-            //    $('#popMessage').fadeOut();
-            //}, 1000);
         }
     </script>
 
@@ -283,6 +283,9 @@
     <asp:Button runat="server" ID="btnChiudiPopupClientiServer" Style="display: none" OnClick="btnChiudiPopupClientiServer_Click" />
     <asp:Button runat="server" ID="btnChiudiPopupLavorazioniServer" Style="display: none" OnClick="btnChiudiPopupLavorazioniServer_Click" />
 
+
+    <asp:Button runat="server" ID="btnAssociaClienteServer" Style="display: none" OnClick="btnAssociaClienteServer_Click" />
+
     <asp:HiddenField ID="hf_idProt" runat="server" EnableViewState="true" />
     <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
     <asp:HiddenField ID="hf_tabChiamata" runat="server" EnableViewState="true" Value="Protocollo" />
@@ -321,9 +324,6 @@
                                             <div class="w3-threequarter">
                                                 <asp:TextBox ID="tbMod_CodiceLavoro" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                             </div>
-                                            <%--                                            <div class="w3-quarter">
-                                                <asp:ImageButton ID="imgbtnCreateNewCodLav" ImageUrl="~/Images/detail-icon.png" runat="server" class="w3-input  w3-round " Height="40px" Width="40px" Text="+" ToolTip="Crea Nuovo Codice Lavorazione" OnClick="imgbtnCreateNewCodLav_Click" />
-                                            </div>--%>
                                             <div class="w3-quarter">
                                                 <asp:ImageButton ID="imgbtnSelectCodLav" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" ToolTip="Cerca Codice Lavorazione" OnClick="imgbtnSelectCodLav_Click" OnClientClick="cercaLavorazione()" />
                                             </div>
@@ -356,18 +356,15 @@
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
                                         <label>Cliente</label>
-                                        <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
-
-                                        <%--                                        <div class="w3-row-padding w3-center w3-text-center">
+                                        <div class="w3-row-padding w3-center w3-text-center">
                                             <div class="w3-threequarter">
-                                                <label>Cliente</label>
-                                                <asp:TextBox ID="tbMod_Cliente" runat="server" MaxLength="60" class="w3-input w3-border" placeholder="" Text="" ></asp:TextBox>
+                                                <asp:TextBox ID="tbMod_Cliente" runat="server" CssClass="w3-input w3-border" Text=""></asp:TextBox>
+                                                <asp:HiddenField runat="server" ID="tbMod_IdCliente" />
                                             </div>
                                             <div class="w3-quarter">
-                                                <label>&nbsp;</label>
-                                                <asp:ImageButton ID="imbCercaCliente" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" Text="->" ToolTip="Cerca Cliente" OnClientClick="cercaCliente();" />
+                                                <asp:ImageButton ID="imgbtnSelectCliente" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" ToolTip="Cerca Cliente" OnClick="imgbtnSelectCliente_Click" OnClientClick="cercaCliente()" />
                                             </div>
-                                        </div>--%>
+                                        </div>
                                     </div>
                                     <div class="w3-half">
                                         <label>Produzione</label>
@@ -495,6 +492,59 @@
                     </div>
                 </asp:Panel>
             </asp:Panel>
+            <!-- FINE POPUP RICERCA LAVORAZIONI -->
+
+            <!-- POPUP RICERCA CLIENTI -->
+            <asp:Panel runat="server" ID="PanelClienti" Visible="false">
+                <div class="modalBackground"></div>
+                <asp:Panel runat="server" ID="PanelContLavorazioni" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                    <div class="w3-container">
+                        <!-- RICERCA CLIENTI -->
+                        <div class="w3-bar w3-orange w3-round">
+                            <div class="w3-bar-item w3-button w3-orange">Ricerca Clienti</div>
+                            <div class="w3-bar-item w3-button w3-orange w3-right">
+                                <div id="btnChiudiPopupClienti" class="w3-button w3-orange w3-small w3-round" onclick="chiudiPopupClienti();">Chiudi</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-row-padding">
+                        <div class="w3-threequarter">
+                            <label>Ragione Sociale</label>
+                            <asp:TextBox ID="tbSearch_RagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>&nbsp;</label>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td>
+                                        <asp:ImageButton ID="imgInsertCliente" runat="server" CausesValidation="false" Text="Inserisci Cliente" ImageUrl="~/Images/detail-icon.png" ToolTip="Inserisci Cliente" ImageAlign="AbsMiddle" Height="30px" OnClientClick="inserisciCliente();" />
+                                    </td>
+                                    <td style="width: 50%;">
+                                        <asp:Button ID="btnRicercaClienti" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaClienti_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
+                                    </td>
+                                    <td style="width: 50%;">
+                                        <asp:Button ID="btnAzzeraCampiRicercaClienti" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicercaClienti();" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="round">
+                        <asp:GridView ID="gvClienti" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvClienti_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvClienti_PageIndexChanging" PageSize="20">
+                            <Columns>
+                                <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="imgSelect" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Cliente" ImageAlign="AbsMiddle" Height="30px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                </asp:Panel>
+            </asp:Panel>
+            <!-- FINE POPUP RICERCA CLIENTI -->
+
 
         </ContentTemplate>
         <Triggers>
@@ -505,39 +555,4 @@
 
     </asp:UpdatePanel>
 
-
-
-
-    <asp:UpdatePanel ID="upClienti" runat="server">
-        <ContentTemplate>
-            <asp:Panel runat="server" ID="PanelClienti" Visible="false">
-                <div class="modalBackground"></div>
-                <asp:Panel runat="server" ID="Panel2" CssClass="containerPopupStandard round" ScrollBars="Auto">
-                    <div class="w3-container">
-                        <!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
-                        <div class="w3-bar w3-yellow w3-round">
-                            <div class="w3-bar-item w3-button w3-yellow">Ricerca Clienti/Fornitori</div>
-                            <div class="w3-bar-item w3-button w3-yellow w3-right">
-                                <div id="btnChiudiPopupClienti" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopupClienti();">Chiudi</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w3-row" style="margin-bottom: 5px;">
-                        <div class="w3-third">
-                            <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente" class="label"></asp:Label>
-                        </div>
-                        <div class="w3-twothird">
-                            <div id="divClienti" class="dropdown ">
-                                <asp:HiddenField ID="hf_Clienti" runat="server" Value="" />
-                                <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
-                                <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto">
-                                    <input class="form-control" id="filtroClienti" type="text" placeholder="Cerca..">
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </asp:Panel>
-            </asp:Panel>
-        </ContentTemplate>
-    </asp:UpdatePanel>
 </asp:Content>

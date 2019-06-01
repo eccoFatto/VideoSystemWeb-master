@@ -445,6 +445,51 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public static List<Tipologica> ListaTipiCategorieMagazzino
+        {
+            get
+            {
+                if (HttpContext.Current.Session["ListaTipiCategorieMagazzino"] == null || ((List<Tipologica>)HttpContext.Current.Session["ListaTipiCategorieMagazzino"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["ListaTipiCategorieMagazzino"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_CATEGORIE_MAGAZZINO);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["ListaTipiCategorieMagazzino"];
+            }
+            set
+            {
+                HttpContext.Current.Session["ListaTipiCategorieMagazzino"] = value;
+            }
+        }
+        public static List<Tipologica> ListaTipiSubCategorieMagazzino
+        {
+            get
+            {
+                if (HttpContext.Current.Session["ListaTipiSubCategorieMagazzino"] == null || ((List<Tipologica>)HttpContext.Current.Session["ListaTipiSubCategorieMagazzino"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["ListaTipiSubCategorieMagazzino"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_SUB_CATEGORIE_MAGAZZINO);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["ListaTipiSubCategorieMagazzino"];
+            }
+            set
+            {
+                HttpContext.Current.Session["ListaTipiSubCategorieMagazzino"] = value;
+            }
+        }
+        public static List<Tipologica> ListaTipiPosizioniMagazzino
+        {
+            get
+            {
+                if (HttpContext.Current.Session["ListaTipiPosizioniMagazzino"] == null || ((List<Tipologica>)HttpContext.Current.Session["ListaTipiPosizioniMagazzino"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["ListaTipiPosizioniMagazzino"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["ListaTipiPosizioniMagazzino"];
+            }
+            set
+            {
+                HttpContext.Current.Session["ListaTipiPosizioniMagazzino"] = value;
+            }
+        }
         public static void ClearSession()
         {
             HttpContext.Current.Session.Clear();

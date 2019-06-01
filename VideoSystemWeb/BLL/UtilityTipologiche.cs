@@ -59,6 +59,12 @@ namespace VideoSystemWeb.BLL
                     return "tipo_pagamento";
                 case EnumTipologiche.TIPO_INTERVENTO:
                     return "tipo_intervento";
+                case EnumTipologiche.TIPO_CATEGORIE_MAGAZZINO:
+                    return "tipo_categoria_magazzino";
+                case EnumTipologiche.TIPO_SUB_CATEGORIE_MAGAZZINO:
+                    return "tipo_subcategoria_magazzino";
+                case EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO:
+                    return "tipo_posizione_magazzino";
                 default:
                     return string.Empty;
             }
@@ -203,7 +209,10 @@ namespace VideoSystemWeb.BLL
                                     TIPO_TENDER,
                                     TIPO_PROTOCOLLO,
                                     TIPO_PAGAMENTO,
-                                    TIPO_INTERVENTO }
+                                    TIPO_INTERVENTO,
+                                    TIPO_CATEGORIE_MAGAZZINO,
+                                    TIPO_SUB_CATEGORIE_MAGAZZINO,
+                                    TIPO_POSIZIONE_MAGAZZINO}
 
     public enum EnumSottotipiRisorse {DIPENDENTI, REGIE, EXTRA}
 }

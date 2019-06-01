@@ -211,6 +211,15 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.Button btnChiudiPopupLavorazioniServer;
         
         /// <summary>
+        /// Controllo btnAssociaClienteServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAssociaClienteServer;
+        
+        /// <summary>
         /// Controllo hf_idProt.
         /// </summary>
         /// <remarks>
@@ -353,6 +362,24 @@ namespace VideoSystemWeb.Protocollo {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Cliente;
+        
+        /// <summary>
+        /// Controllo tbMod_IdCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField tbMod_IdCliente;
+        
+        /// <summary>
+        /// Controllo imgbtnSelectCliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectCliente;
         
         /// <summary>
         /// Controllo tbMod_Produzione.
@@ -562,15 +589,6 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.GridView gvLavorazioni;
         
         /// <summary>
-        /// Controllo upClienti.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upClienti;
-        
-        /// <summary>
         /// Controllo PanelClienti.
         /// </summary>
         /// <remarks>
@@ -580,48 +598,57 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.Panel PanelClienti;
         
         /// <summary>
-        /// Controllo Panel2.
+        /// Controllo PanelContLavorazioni.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel2;
+        protected global::System.Web.UI.WebControls.Panel PanelContLavorazioni;
         
         /// <summary>
-        /// Controllo lbl_Cliente.
+        /// Controllo tbSearch_RagioneSociale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Cliente;
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_RagioneSociale;
         
         /// <summary>
-        /// Controllo hf_Clienti.
+        /// Controllo imgInsertCliente.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_Clienti;
+        protected global::System.Web.UI.WebControls.ImageButton imgInsertCliente;
         
         /// <summary>
-        /// Controllo ddl_Clienti.
+        /// Controllo btnRicercaClienti.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ddl_Clienti;
+        protected global::System.Web.UI.WebControls.Button btnRicercaClienti;
         
         /// <summary>
-        /// Controllo elencoClienti.
+        /// Controllo btnAzzeraCampiRicercaClienti.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoClienti;
+        protected global::System.Web.UI.WebControls.Button btnAzzeraCampiRicercaClienti;
+        
+        /// <summary>
+        /// Controllo gvClienti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvClienti;
     }
 }

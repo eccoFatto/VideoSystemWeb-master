@@ -9,6 +9,7 @@ namespace VideoSystemWeb.Entity
     //@codice_lavoro varchar(20),
     //@numero_protocollo varchar(20),
     //@cliente varchar(60),
+    //@id_cliente int,
     //@id_tipo_protocollo int,
     //@pathDocumento varchar(100),
     //@descrizione varchar(200),
@@ -21,6 +22,7 @@ namespace VideoSystemWeb.Entity
         private string numero_protocollo;   // OTTENUTO DALLA GET PROTOCOLLO DELLA TABELLA TAB_PROTOCOLLO
         private DateTime? data_protocollo;   // IN AUTOMATICO IN INSERIMENTO METTE LA DATA DEL MOMENTO
         private string cliente;             // DALLA TABELLA ANAG_CLIENTI_FORNITORI, COLONNA ragioneSociale
+        private int id_cliente;             // DALLA TABELLA ANAG_CLIENTI_FORNITORI, COLONNA id
         private int id_tipo_protocollo;           // TIPOLOGIA DEL DOCUMENTO PROTOCOLLATO, EVENTUALMENTE DA PRENDERE DA TIPOLOGICA APPOSITA
         private string protocollo_riferimento;  // EVENTUALE RIFERIMENTO AD UN PRECEDENTE PROTOCOLLO
         private string pathDocumento;       // PATH DEL DOCUMENTO UPLOADATO - NOMENCLATURA = IDPROTOCOLLO_TICK.*
@@ -41,5 +43,6 @@ namespace VideoSystemWeb.Entity
         public DateTime? Data_protocollo { get => data_protocollo; set => data_protocollo = value; }
         public string Produzione { get => produzione; set => produzione = value; }
         public DateTime Data_inizio_lavorazione { get => data_inizio_lavorazione; set => data_inizio_lavorazione = value; }
+        public int Id_cliente { get => id_cliente; set => id_cliente = value; }
     }
 }

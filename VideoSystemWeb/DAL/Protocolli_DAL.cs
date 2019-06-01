@@ -60,6 +60,7 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Numero_protocollo = riga.Field<string>("numero_protocollo");
                                         if (!DBNull.Value.Equals(riga["data_protocollo"])) protocollo.Data_protocollo = riga.Field<DateTime>("data_protocollo");
                                         protocollo.Cliente = riga.Field<string>("cliente");
+                                        if (!DBNull.Value.Equals(riga["id_cliente"])) protocollo.Id_cliente = riga.Field<int>("id_cliente");
                                         protocollo.Id_tipo_protocollo = riga.Field<int>("id_tipo_protocollo");
                                         protocollo.Protocollo_riferimento = riga.Field<string>("protocollo_riferimento");
                                         protocollo.PathDocumento = riga.Field<string>("pathDocumento");
@@ -114,6 +115,7 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Numero_protocollo = riga.Field<string>("numero_protocollo");
                                         if (!DBNull.Value.Equals(riga["data_protocollo"]))protocollo.Data_protocollo = riga.Field<DateTime?>("data_protocollo");
                                         protocollo.Cliente = riga.Field<string>("cliente");
+                                        if (!DBNull.Value.Equals(riga["id_cliente"])) protocollo.Id_cliente = riga.Field<int>("id_cliente");
                                         protocollo.Id_tipo_protocollo = riga.Field<int>("id_tipo_protocollo");
                                         protocollo.Protocollo_riferimento = riga.Field<string>("protocollo_riferimento");
                                         protocollo.PathDocumento = riga.Field<string>("pathDocumento");
@@ -163,6 +165,7 @@ namespace VideoSystemWeb.DAL
                                     //protocollo.Data_protocollo = dt.Rows[0].Field<DateTime>("data_protocollo");
                                     if (!DBNull.Value.Equals(dt.Rows[0]["data_protocollo"]))protocollo.Data_protocollo = dt.Rows[0].Field<DateTime>("data_protocollo");
                                     protocollo.Cliente = dt.Rows[0].Field<string>("cliente");
+                                    if (!DBNull.Value.Equals(dt.Rows[0]["id_cliente"])) protocollo.Id_cliente = dt.Rows[0].Field<int>("id_cliente");
                                     protocollo.Id_tipo_protocollo = dt.Rows[0].Field<int>("id_tipo_protocollo");
                                     protocollo.Protocollo_riferimento = dt.Rows[0].Field<string>("protocollo_riferimento");
                                     protocollo.PathDocumento = dt.Rows[0].Field<string>("pathDocumento");
@@ -232,6 +235,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter cliente = new SqlParameter("@cliente", protocollo.Cliente);
                             cliente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(cliente);
+
+                            SqlParameter id_cliente = new SqlParameter("@id_cliente", protocollo.Id_cliente);
+                            id_cliente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_cliente);
 
                             SqlParameter id_tipo_protocollo = new SqlParameter("@id_tipo_protocollo", protocollo.Id_tipo_protocollo);
                             id_tipo_protocollo.Direction = ParameterDirection.Input;
@@ -323,6 +330,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter cliente = new SqlParameter("@cliente", protocollo.Cliente);
                             cliente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(cliente);
+
+                            SqlParameter id_cliente = new SqlParameter("@id_cliente", protocollo.Id_cliente);
+                            id_cliente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id_cliente);
 
                             SqlParameter id_tipo_protocollo = new SqlParameter("@id_tipo_protocollo", protocollo.Id_tipo_protocollo);
                             id_tipo_protocollo.Direction = ParameterDirection.Input;

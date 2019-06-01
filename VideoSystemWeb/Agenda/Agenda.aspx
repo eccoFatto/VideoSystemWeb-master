@@ -151,6 +151,7 @@
                 $('#div_tabStato').css('width', '60%');
             } else if (tipoName == 'Lavorazione') {
                 nomeElemento = '<%=tab_Lavorazione.ClientID%>';
+                $("#<%=btnElimina.ClientID%>").removeClass("w3-disabled");
 
                 $("#<%=innerContainer.ClientID%>").animate({
                     width: "98%"
@@ -166,6 +167,19 @@
 
         function confermaChiusura() {
             return confirm("Le modifiche non salvate verranno perse. Confermare la chiusura?");
+        }
+
+        function confermaEliminazione() {
+            var statoCorrente = $("#<%=val_Stato.ClientID%>").text();
+            if (statoCorrente == 'Lavorazione') {
+                return confirm("La lavorazione corrente sta per essere eliminata e l'evento tornerà allo stato Offerta. Confermare?");
+            } else {
+                return confirm("Eliminare l'evento corrente?");
+            }
+        }
+
+        function confermaCambioStato() {
+            return confirm("Lo stato dell'evento sta per essere modificato.\n Le modifiche andranno perse se non verrà effettuato il salvataggio");
         }
     </script>
 
@@ -230,10 +244,6 @@
                                 <div class="w3-rest">
                                     <div class="w3-row">
                                         <div class="w3-col" style="width: 90%; font-size: smaller;">
-                                            
-
-
-
                                             <div class="w3-quarter infoEvento" >
                                                 <asp:Label ID="lbl_Cliente" runat="server" Text="Cliente: "></asp:Label>
                                                 <asp:Label ID="val_Cliente" runat="server" ></asp:Label>
@@ -292,7 +302,7 @@
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); $('.loader').show();" Style="padding: 7px 10px" />
 
-                        <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();" Style="padding: 7px 10px" />
+                        <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();$('.loader').show();" OnClick="btnLavorazione_Click" Visible="false" Style="padding: 7px 10px" />
                     </div>

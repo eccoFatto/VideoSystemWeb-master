@@ -126,6 +126,12 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
+        public Esito EliminaLavorazione(DatiAgenda evento)
+        {
+            Esito esito = Agenda_DAL.Instance.EliminaLavorazione(evento);
+            return esito;
+        }
+
         public List<int> getTenderImpiegatiInPeriodo(DatiAgenda eventoDaControllare, ref Esito esito)
         {
             DateTime dataInizio = eventoDaControllare.data_inizio_impegno;

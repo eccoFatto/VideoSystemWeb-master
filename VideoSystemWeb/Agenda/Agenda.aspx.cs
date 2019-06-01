@@ -150,17 +150,54 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnElimina_Click(object sender, EventArgs e)
         {
-            Esito esito = Agenda_BLL.Instance.EliminaEvento(SessionManager.EventoSelezionato.id); // Agenda_BLL.Instance.EliminaEvento(((DatiAgenda)ViewState["eventoSelezionato"]).id);
-
-            if (esito.codice == Esito.ESITO_OK)
+            Esito esito = new Esito();
+            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE) // Torna allo stato Offerta
             {
-                ChiudiPopup();
-                ShowSuccess("Eliminazione eseguita correttamente");
+
+                SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_OFFERTA;
+                esito = Agenda_BLL.Instance.EliminaLavorazione(SessionManager.EventoSelezionato);
+
+                if (esito.codice == Esito.ESITO_OK)
+                {
+                    esito = SalvaEvento();
+                    if (esito.codice == Esito.ESITO_OK)
+                    {
+                        btnLavorazione.Visible = true;
+                        UpdatePopup();
+
+                        ShowSuccess("La lavorazione è stata eliminata e l'evento è stato riportato allo stato Offerta");
+
+
+                        ScriptManager.RegisterStartupScript(this, typeof(Page), "passaALavorazione", "openTabEvento(event,'Offerta');", true);
+                    }
+                    else
+                    {
+                        UpdatePopup();
+                        ShowError(esito.descrizione);
+                    }
+
+                    val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
+                    val_CodiceLavoro.Text = SessionManager.EventoSelezionato.codice_lavoro;
+                }
+                else
+                {
+                    ShowError(esito.descrizione);
+                }
             }
             else
             {
-                ShowError(esito.descrizione);
-                UpdatePopup();
+                esito = Agenda_BLL.Instance.EliminaEvento(SessionManager.EventoSelezionato.id);
+
+                if (esito.codice == Esito.ESITO_OK)
+                {
+                    ChiudiPopup();
+                    ShowSuccess("Eliminazione eseguita correttamente");
+                }
+                else
+                {
+                    ShowError(esito.descrizione);
+                    UpdatePopup();
+                }
             }
         }
 
@@ -208,6 +245,8 @@ namespace VideoSystemWeb.Agenda
 
                 val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
                 val_CodiceLavoro.Text = SessionManager.EventoSelezionato.codice_lavoro;
+
+                RiempiCampiIntestazioneEvento();
 
                 btnLavorazione.Visible = false;
                 UpdatePopup();
@@ -626,7 +665,7 @@ namespace VideoSystemWeb.Agenda
 
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
-                    btnElimina.Visible = false;
+                    btnElimina.Visible = true;
                     btnRiepilogo.Visible = true;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
@@ -688,15 +727,8 @@ namespace VideoSystemWeb.Agenda
             {
                 popupLavorazione.PopolaLavorazione();
             }
-            if (SessionManager.EventoSelezionato.produzione != null && SessionManager.EventoSelezionato.lavorazione != null)
-            {
-                val_Cliente.Text = SessionManager.ListaClientiFornitori.FirstOrDefault(x => x.Id == SessionManager.EventoSelezionato.id_cliente).RagioneSociale;
-                val_Produzione.Text = SessionManager.EventoSelezionato.produzione;
-                val_Lavorazione.Text = SessionManager.EventoSelezionato.lavorazione;
-                val_Tipologia.Text = SessionManager.ListaTipiTipologie.FirstOrDefault(X => X.id == SessionManager.EventoSelezionato.id_tipologia).nome;
-                val_DataInizio.Text = SessionManager.EventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
-                val_DataFine.Text = SessionManager.EventoSelezionato.data_fine_lavorazione.ToString("dd/MM/yyyy");
-            }
+            RiempiCampiIntestazioneEvento();
+            
         }
 
         private void ChiudiPopup()
@@ -922,6 +954,19 @@ namespace VideoSystemWeb.Agenda
         private bool IsPrimoGiornoLavorazione(DatiAgenda evento, DateTime data)
         {
             return evento.data_inizio_lavorazione.Date == data.Date;
+        }
+
+        private void RiempiCampiIntestazioneEvento()
+        {
+            if (SessionManager.EventoSelezionato.produzione != null && SessionManager.EventoSelezionato.lavorazione != null)
+            {
+                val_Cliente.Text = SessionManager.ListaClientiFornitori.FirstOrDefault(x => x.Id == SessionManager.EventoSelezionato.id_cliente).RagioneSociale;
+                val_Produzione.Text = SessionManager.EventoSelezionato.produzione;
+                val_Lavorazione.Text = SessionManager.EventoSelezionato.lavorazione;
+                val_Tipologia.Text = SessionManager.ListaTipiTipologie.FirstOrDefault(X => X.id == SessionManager.EventoSelezionato.id_tipologia).nome;
+                val_DataInizio.Text = SessionManager.EventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
+                val_DataFine.Text = SessionManager.EventoSelezionato.data_fine_lavorazione.ToString("dd/MM/yyyy");
+            }
         }
         #endregion
 

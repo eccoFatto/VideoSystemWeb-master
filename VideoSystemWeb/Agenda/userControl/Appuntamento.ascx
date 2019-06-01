@@ -105,13 +105,7 @@
         $("#<%=txt_Lavorazione.ClientID%>").easyAutocomplete(lavorazioni);
     }
 
-    function confermaEliminazione() {
-        return confirm("Eliminare l'appuntamento corrente?");
-    }
-
-    function confermaCambioStato() {
-        return confirm("Lo stato dell'evento sta per essere modificato.\n Le modifiche andranno perse se non verrà effettuato il salvataggio");
-    }
+    
 
     function setElenchi(elencoProduzioni, elencoLavorazioni) {
         produzioni = { data: elencoProduzioni, list: { match: { enabled: true } } };

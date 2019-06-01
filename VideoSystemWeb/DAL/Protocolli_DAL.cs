@@ -188,6 +188,65 @@ namespace VideoSystemWeb.DAL
             return protocollo;
 
         }
+
+        public List<Protocolli> GetProtocolliByIdCliente(ref Esito esito, int idCliente, bool soloAttivi = true)
+        {
+            List<Protocolli> listaProtocolli = new List<Protocolli>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT a.* FROM dati_protocollo a " +
+                                   "LEFT JOIN anag_clienti_fornitori b on a.cliente = b.ragioneSociale " + //  DA MODIFICARE CON ID
+                                   "WHERE b.id = " + idCliente;
+
+                    if (soloAttivi) query += " AND a.attivo = 1";
+                    query += " ORDER BY a.codice_lavoro, a.numero_protocollo";
+
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        Protocolli protocollo = new Protocolli();
+                                        protocollo.Id = riga.Field<int>("id");
+                                        protocollo.Codice_lavoro = riga.Field<string>("codice_lavoro");
+                                        protocollo.Numero_protocollo = riga.Field<string>("numero_protocollo");
+                                        if (!DBNull.Value.Equals(riga["data_protocollo"])) protocollo.Data_protocollo = riga.Field<DateTime?>("data_protocollo");
+                                        protocollo.Cliente = riga.Field<string>("cliente");
+                                        protocollo.Id_tipo_protocollo = riga.Field<int>("id_tipo_protocollo");
+                                        protocollo.Protocollo_riferimento = riga.Field<string>("protocollo_riferimento");
+                                        protocollo.PathDocumento = riga.Field<string>("pathDocumento");
+                                        protocollo.Descrizione = riga.Field<string>("descrizione");
+                                        protocollo.Produzione = riga.Field<string>("produzione");
+                                        if (!DBNull.Value.Equals(riga["data_inizio_lavorazione"])) protocollo.Data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
+                                        protocollo.Attivo = riga.Field<bool>("attivo");
+                                        listaProtocolli.Add(protocollo);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaProtocolli;
+
+        }
+
         public int CreaProtocollo(Protocolli protocollo, ref Esito esito)
         {
             //@codice_lavoro varchar(20),

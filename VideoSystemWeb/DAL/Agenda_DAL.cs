@@ -876,6 +876,79 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
+        public Esito EliminaLavorazione(DatiAgenda evento)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteDatiArticoliLavorazioneByIdDatiLavorazione"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            SqlTransaction transaction;
+                            StoreProc.Connection = con;
+                            StoreProc.Connection.Open();
+                            // Start a local transaction.
+                            transaction = con.BeginTransaction("DeleteLavorazione");
+
+                            try
+                            {
+                                StoreProc.Transaction = transaction;
+                                if (evento.LavorazioneCorrente != null)
+                                {
+                                    if (evento.LavorazioneCorrente.Id != 0) // caso in cui la lavorazione sia stata appena creata ma non salvata (passaggio da offerta a lavorazione)
+                                    {
+                                        CostruisciSP_DeleteDatiArticoliLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
+                                        StoreProc.ExecuteNonQuery();
+
+                                        CostruisciSP_DeleteDatiPianoEsternoLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
+                                        StoreProc.ExecuteNonQuery();
+                                    }
+
+                                    CostruisciSP_DeleteDatiLavorazione(StoreProc, sda, evento.id);
+                                    StoreProc.ExecuteNonQuery();
+                                }
+
+                                // Attempt to commit the transaction.
+                                transaction.Commit();
+                                
+                                // aggiorno id della lavorazione corrente 
+                                SessionManager.EventoSelezionato.LavorazioneCorrente.Id = 0;
+                            }
+                            catch (Exception ex)
+                            {
+                                esito.codice = Esito.ESITO_KO_ERRORE_UPDATE_TABELLA;
+                                esito.descrizione = "Agenda_DAL.cs - EliminaLavorazione" + Environment.NewLine + ex.Message;
+
+                                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+
+                                try
+                                {
+                                    transaction.Rollback();
+                                }
+                                catch (Exception ex2)
+                                {
+                                    esito.descrizione += Environment.NewLine + "ERRORE ROLLBACK: " + ex2.Message;
+                                    log.Error(ex2.Message + Environment.NewLine + ex2.StackTrace);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Agenda_DAL.cs - Lavorazione " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return esito;
+        }
+
         public List<string> CaricaElencoProduzioni(ref Esito esito)
         {
             List<string> listaProduzioni = new List<string>();

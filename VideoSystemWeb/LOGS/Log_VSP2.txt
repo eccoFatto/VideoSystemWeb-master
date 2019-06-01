@@ -5135,3 +5135,32 @@ Riferimento a un oggetto non impostato su un'istanza di oggetto.
 2019-05-25 16:00:01,078 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2019-05-25 16:00:02,411 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
 2019-05-25 16:01:46,619 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-25 16:23:40,016 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-25 16:23:42,730 [10] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-25 16:30:42,355 [11] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-25 16:33:32,808 [15] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-25 16:40:27,516 [31] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-25 16:40:28,811 [36] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-25 16:40:51,997 [36] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-25 16:41:18,344 [30] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-26 10:05:35,487 [65] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-26 10:05:37,240 [65] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-26 10:07:19,183 [25] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-26 10:07:20,521 [31] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-26 10:17:25,052 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-26 10:17:28,267 [5] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-26 10:43:57,265 [6] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-26 10:43:58,623 [6] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-26 10:46:08,300 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-26 10:46:09,631 [8] ERROR VideoSystemWeb.BLL.Agenda_BLL - 
+2019-05-31 22:02:24,575 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-31 23:11:36,731 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-05-31 23:22:44,891 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-06-01 08:34:10,294 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-06-01 08:39:08,324 [21] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-06-01 09:09:56,915 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-06-01 09:13:51,374 [24] ERROR VideoSystemWeb.BLL.BasePage - nicola - Controllare i campi evidenziati
+2019-06-01 09:16:08,973 [13] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-06-01 09:18:11,925 [13] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-06-01 09:24:37,908 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-06-01 09:29:33,251 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!

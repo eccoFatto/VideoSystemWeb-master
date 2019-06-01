@@ -721,7 +721,6 @@ namespace VideoSystemWeb.Agenda.userControl
             int idDatiAgenda = SessionManager.EventoSelezionato.id;
             int idCliente = SessionManager.EventoSelezionato.id_cliente;
 
-            #region INIZIALIZZAZIONE OGGETTI LAVORAZIONE CORRENTE
             SessionManager.EventoSelezionato.LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
             if (esito.codice != Esito.ESITO_OK)
             {
@@ -734,6 +733,24 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
+                int idContratto = SessionManager.ListaTipiProtocolli.FirstOrDefault(x => x.nome.ToLower() == "contratto").id;
+                List<Protocolli> listaContratti = Protocolli_BLL.Instance.GetProtocolliByIdCliente(ref esito, idCliente).Where(x=>x.Id_tipo_protocollo == idContratto).ToList();
+
+                if (listaContratti.Count() == 0)
+                {
+                    ddl_Contratto.Items.Clear();
+                    ddl_Contratto.Items.Add(new ListItem("<nessun contratto disponibile>", ""));
+                }
+                else
+                {
+                    ddl_Contratto.DataSource = listaContratti;
+                    ddl_Contratto.DataTextField = "numero_protocollo";
+                    ddl_Contratto.DataValueField = "id";
+                    ddl_Contratto.DataBind();
+                    ddl_Contratto.Items.Insert(0, new ListItem("<seleziona>", ""));
+                    
+                }
+
                 SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
                 ListaFigureProfessionali = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; //in questo modo assegno identificatoreOggetto
 
@@ -741,7 +758,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 ddl_intervento.DataTextField = "nome";
                 ddl_intervento.DataValueField = "id";
                 ddl_intervento.DataBind();
-                #endregion
+               
 
                 if (esito.codice != Esito.ESITO_OK)
                 {
@@ -781,7 +798,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             txt_Ordine.Text = string.Empty;
             txt_Fattura.Text = string.Empty;
-            //ddl_Contratto.SelectedValue = 0;  //DA ABILITARE QUANDO SARA' POPOLATO
+            ddl_Contratto.SelectedIndex = 0;  
             ddl_Referente.SelectedIndex = 0;
             ddl_Capotecnico.SelectedIndex = 0;
             ddl_Produttore.SelectedIndex = 0;
@@ -961,8 +978,6 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_FPcitta.Items.Insert(0, new ListItem("<seleziona>", ""));
                 }
             }
-
-            
         }
 
         public void TrasformaInLavorazione()

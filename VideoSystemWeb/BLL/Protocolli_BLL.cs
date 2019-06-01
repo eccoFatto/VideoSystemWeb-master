@@ -43,6 +43,13 @@ namespace VideoSystemWeb.BLL
             return listaProtocolli;
         }
 
+        public List<Protocolli> GetProtocolliByIdCliente(ref Esito esito, int idCliente, bool soloAttivi = true)
+        {
+            List<Protocolli> listaProtocolli = Protocolli_DAL.Instance.GetProtocolliByIdCliente(ref esito, idCliente, soloAttivi);
+
+            return listaProtocolli;
+        }
+
         public int CreaProtocollo(Protocolli protocollo, ref Esito esito)
         {
             int iREt = Protocolli_DAL.Instance.CreaProtocollo(protocollo, ref esito);

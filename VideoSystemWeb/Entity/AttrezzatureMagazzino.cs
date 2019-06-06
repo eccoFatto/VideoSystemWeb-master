@@ -24,7 +24,7 @@ namespace VideoSystemWeb.Entity
         private int id;
         private string cod_vs;
         private int id_categoria;
-        private int id_subcategoria;
+        private int? id_subcategoria;
         private string descrizione;
         private string seriale;
         private DateTime data_acquisto;
@@ -38,7 +38,7 @@ namespace VideoSystemWeb.Entity
         public int Id { get => id; set => id = value; }
         public string Cod_vs { get => cod_vs; set => cod_vs = value; }
         public int Id_categoria { get => id_categoria; set => id_categoria = value; }
-        public int Id_subcategoria { get => id_subcategoria; set => id_subcategoria = value; }
+        public int? Id_subcategoria { get => id_subcategoria; set => id_subcategoria = value; }
         public string Descrizione { get => descrizione; set => descrizione = value; }
         public string Seriale { get => seriale; set => seriale = value; }
         public DateTime Data_acquisto { get => data_acquisto; set => data_acquisto = value; }

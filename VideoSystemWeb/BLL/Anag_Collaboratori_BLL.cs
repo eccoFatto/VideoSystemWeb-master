@@ -58,5 +58,10 @@ namespace VideoSystemWeb.BLL
         {
             return Anag_Collaboratori_DAL.Instance.CaricaListaCollaboratori(ref esito);
         }
+        public Esito RemoveCollaboratore(int idCollaboratore)
+        {
+            return Anag_Collaboratori_DAL.Instance.RemoveCollaboratore(idCollaboratore);
+        }
+
     }
 }

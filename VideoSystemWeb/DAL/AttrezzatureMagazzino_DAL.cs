@@ -61,7 +61,8 @@ namespace VideoSystemWeb.DAL
                                         attrezzature.Disponibile = riga.Field<bool>("disponibile");
                                         attrezzature.Garanzia = riga.Field<bool>("garanzia");
                                         attrezzature.Id_categoria = riga.Field<int>("id_categoria");
-                                        attrezzature.Id_subcategoria = riga.Field<int>("id_subcategoria");
+                                        if (!DBNull.Value.Equals(riga["id_subcategoria"])) attrezzature.Id_subcategoria = riga.Field<int>("id_subcategoria");
+                                        attrezzature.Id_posizione_magazzino = riga.Field<int>("id_posizione_magazzino");
                                         attrezzature.Marca = riga.Field<string>("marca");
                                         attrezzature.Modello = riga.Field<string>("modello");
                                         attrezzature.Note = riga.Field<string>("note");
@@ -110,9 +111,11 @@ namespace VideoSystemWeb.DAL
                                     attrezzatura.Disponibile = dt.Rows[0].Field<bool>("disponibile");
                                     attrezzatura.Garanzia = dt.Rows[0].Field<bool>("garanzia");
                                     attrezzatura.Id_categoria = dt.Rows[0].Field<int>("id_categoria");
-                                    attrezzatura.Id_subcategoria = dt.Rows[0].Field<int>("id_subcategoria");
+                                    if (!DBNull.Value.Equals(dt.Rows[0]["id_subcategoria"])) attrezzatura.Id_subcategoria = dt.Rows[0].Field<int>("id_subcategoria");
+                                    attrezzatura.Id_posizione_magazzino = dt.Rows[0].Field<int>("id_posizione_magazzino");
                                     attrezzatura.Marca = dt.Rows[0].Field<string>("marca");
                                     attrezzatura.Modello = dt.Rows[0].Field<string>("modello");
+                                    attrezzatura.Seriale = dt.Rows[0].Field<string>("seriale");
                                     attrezzatura.Note = dt.Rows[0].Field<string>("note");
                                 }
                             }
@@ -137,7 +140,7 @@ namespace VideoSystemWeb.DAL
                 Anag_Utenti utente = (Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE];
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand StoreProc = new SqlCommand("InsertAttrezzatura"))
+                    using (SqlCommand StoreProc = new SqlCommand("InsertAttrezzature"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -157,51 +160,52 @@ namespace VideoSystemWeb.DAL
                             StoreProc.Parameters.Add(nomeUtente);
                             // FINE PARAMETRI PER LOG UTENTE
 
-                            SqlParameter Cod_vs = new SqlParameter("@Cod_vs", attrezzatura.Cod_vs);
+                            SqlParameter Cod_vs = new SqlParameter("@cod_vs", attrezzatura.Cod_vs);
                             Cod_vs.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Cod_vs);
 
-                            SqlParameter Data_acquisto = new SqlParameter("@Data_acquisto", attrezzatura.Data_acquisto);
+                            SqlParameter Data_acquisto = new SqlParameter("@data_acquisto", attrezzatura.Data_acquisto);
                             Data_acquisto.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Data_acquisto);
 
-                            SqlParameter Descrizione = new SqlParameter("@Descrizione", attrezzatura.Descrizione);
+                            SqlParameter Descrizione = new SqlParameter("@descrizione", attrezzatura.Descrizione);
                             Descrizione.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Descrizione);
 
-                            SqlParameter Disponibile = new SqlParameter("@Disponibile", attrezzatura.Disponibile);
+                            SqlParameter Disponibile = new SqlParameter("@disponibile", attrezzatura.Disponibile);
                             Disponibile.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Disponibile);
 
-                            SqlParameter Garanzia = new SqlParameter("@Garanzia", attrezzatura.Garanzia);
+                            SqlParameter Garanzia = new SqlParameter("@garanzia", attrezzatura.Garanzia);
                             Garanzia.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Garanzia);
 
-                            SqlParameter Id_categoria = new SqlParameter("@Id_categoria", attrezzatura.Id_categoria);
+                            SqlParameter Id_categoria = new SqlParameter("@id_categoria", attrezzatura.Id_categoria);
                             Id_categoria.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Id_categoria);
 
-                            SqlParameter Id_posizione_magazzino = new SqlParameter("@Id_posizione_magazzino", attrezzatura.Id_posizione_magazzino);
+                            SqlParameter Id_posizione_magazzino = new SqlParameter("@id_posizione_magazzino", attrezzatura.Id_posizione_magazzino);
                             Id_posizione_magazzino.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Id_posizione_magazzino);
 
-                            SqlParameter Id_subcategoria = new SqlParameter("@Id_subcategoria", attrezzatura.Id_subcategoria);
+                            SqlParameter Id_subcategoria = new SqlParameter("@id_subcategoria", DBNull.Value);
+                            if (attrezzatura.Id_subcategoria != null && attrezzatura.Id_subcategoria > 0) Id_subcategoria = new SqlParameter("@id_subcategoria", attrezzatura.Id_subcategoria);
                             Id_subcategoria.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Id_subcategoria);
 
-                            SqlParameter Marca = new SqlParameter("@Marca", attrezzatura.Marca);
+                            SqlParameter Marca = new SqlParameter("@marca", attrezzatura.Marca);
                             Marca.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Marca);
 
-                            SqlParameter Modello = new SqlParameter("@Modello", attrezzatura.Modello);
+                            SqlParameter Modello = new SqlParameter("@modello", attrezzatura.Modello);
                             Modello.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Modello);
 
-                            SqlParameter Note = new SqlParameter("@Note", attrezzatura.Note);
+                            SqlParameter Note = new SqlParameter("@note", attrezzatura.Note);
                             Note.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Note);
 
-                            SqlParameter Seriale = new SqlParameter("@Seriale", attrezzatura.Seriale);
+                            SqlParameter Seriale = new SqlParameter("@seriale", attrezzatura.Seriale);
                             Seriale.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Seriale);
 
@@ -234,7 +238,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
                 {
-                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateAttrezzatura"))
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateAttrezzature"))
                     {
                         using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
                         {
@@ -284,7 +288,8 @@ namespace VideoSystemWeb.DAL
                             Id_posizione_magazzino.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Id_posizione_magazzino);
 
-                            SqlParameter Id_subcategoria = new SqlParameter("@Id_subcategoria", attrezzatura.Id_subcategoria);
+                            SqlParameter Id_subcategoria = new SqlParameter("@id_subcategoria", DBNull.Value);
+                            if (attrezzatura.Id_subcategoria != null && attrezzatura.Id_subcategoria > 0) Id_subcategoria = new SqlParameter("@id_subcategoria", attrezzatura.Id_subcategoria);
                             Id_subcategoria.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Id_subcategoria);
 
@@ -329,7 +334,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand StoreProc = new SqlCommand("DeleteAttrezzatura"))
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteAttrezzature"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {

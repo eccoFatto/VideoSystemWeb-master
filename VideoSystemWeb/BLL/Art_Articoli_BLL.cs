@@ -60,5 +60,12 @@ namespace VideoSystemWeb.BLL
 
             return esito;
         }
+        public Esito RemoveArticolo(int idArticolo)
+        {
+            Esito esito = Art_Articoli_DAL.Instance.RemoveArticolo(idArticolo);
+
+            return esito;
+        }
+
     }
 }

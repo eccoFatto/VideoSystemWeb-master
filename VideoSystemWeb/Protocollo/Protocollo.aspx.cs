@@ -235,7 +235,7 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnModificaProtocollo_Click(object sender, EventArgs e)
         {
-            // SALVO MODIFICHE PROTOCOLLO
+            // SALVO MODIFICHE PROTOCOLL
             Esito esito = new Esito();
             Protocolli protocollo = CreaOggettoProtocollo(ref esito);
 
@@ -422,9 +422,13 @@ namespace VideoSystemWeb.Protocollo
                     tbMod_ProtocolloRiferimento.Text = protocollo.Protocollo_riferimento;
                     tbMod_Cliente.Text = protocollo.Cliente;
 
-                    //if (string.IsNullOrEmpty(protocollo.Id_cliente))
-                    tbMod_IdCliente.Value = protocollo.Id_cliente.ToString();
-
+                    if (protocollo.Id_cliente != null) { 
+                        tbMod_IdCliente.Value = protocollo.Id_cliente.ToString();
+                    }
+                    else
+                    {
+                        tbMod_IdCliente.Value = "";
+                    }
                     tbMod_NomeFile.Text = protocollo.PathDocumento;
                     Session["NOME_FILE"] = protocollo.PathDocumento;
                     tbMod_Lavorazione.Text = protocollo.Descrizione;
@@ -493,7 +497,7 @@ namespace VideoSystemWeb.Protocollo
             protocollo.Cliente = BasePage.ValidaCampo(tbMod_Cliente, "", false, ref esito);
             if (string.IsNullOrEmpty(tbMod_IdCliente.Value))
             {
-                protocollo.Id_cliente = 0;
+                protocollo.Id_cliente = null;
             }
             else
             {
@@ -763,7 +767,7 @@ namespace VideoSystemWeb.Protocollo
             if (string.IsNullOrEmpty(tbMod_IdCliente.Value) || tbMod_IdCliente.Value.Equals("0"))
             {
                 tbMod_Cliente.Text = tbSearch_RagioneSociale.Text.Trim();
-                tbMod_IdCliente.Value = "0";
+                tbMod_IdCliente.Value = null;
                 PanelClienti.Visible = false;
             }
             else { 
@@ -780,5 +784,6 @@ namespace VideoSystemWeb.Protocollo
                 }
             }
         }
+
     }
 }

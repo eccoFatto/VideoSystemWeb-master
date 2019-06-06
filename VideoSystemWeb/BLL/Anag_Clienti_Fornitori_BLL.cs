@@ -67,5 +67,9 @@ namespace VideoSystemWeb.BLL
         {
             return Anag_Clienti_Fornitori_DAL.Instance.EliminaAzienda(idAzienda, utente);
         }
+        public Esito RemoveAzienda(int idAzienda)
+        {
+            return Anag_Clienti_Fornitori_DAL.Instance.RemoveAzienda(idAzienda);
+        }
     }
 }

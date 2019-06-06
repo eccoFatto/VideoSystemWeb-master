@@ -50,7 +50,7 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-        public Esito EliminaProtocollo(int idAttrezzatura)
+        public Esito EliminaAttrezzatura(int idAttrezzatura)
         {
             Esito esito = AttrezzatureMagazzino_DAL.Instance.EliminaAttrezzatura(idAttrezzatura);
 

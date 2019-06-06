@@ -152,7 +152,8 @@ namespace VideoSystemWeb.Articoli
                 try
                 {
                     NascondiErroriValidazione();
-                    Esito esito = Art_Gruppi_BLL.Instance.EliminaGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
+                    //Esito esito = Art_Gruppi_BLL.Instance.EliminaGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
+                    Esito esito = Art_Gruppi_BLL.Instance.RemoveGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()));
 
                     if (esito.codice != Esito.ESITO_OK)
                     {

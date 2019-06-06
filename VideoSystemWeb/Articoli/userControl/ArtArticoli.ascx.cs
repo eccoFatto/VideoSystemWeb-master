@@ -431,7 +431,8 @@ namespace VideoSystemWeb.Articoli.userControl
 
             if (!string.IsNullOrEmpty((string)ViewState["idArticolo"]))
             {
-                esito = Art_Articoli_BLL.Instance.EliminaArticolo(Convert.ToInt32(ViewState["idArticolo"].ToString()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
+                //esito = Art_Articoli_BLL.Instance.EliminaArticolo(Convert.ToInt32(ViewState["idArticolo"].ToString()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
+                esito = Art_Articoli_BLL.Instance.RemoveArticolo(Convert.ToInt32(ViewState["idArticolo"].ToString()));
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");

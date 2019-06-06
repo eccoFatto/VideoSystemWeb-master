@@ -60,5 +60,11 @@ namespace VideoSystemWeb.BLL
 
             return esito;
         }
+        public Esito RemoveGruppo(int idGruppo)
+        {
+            Esito esito = Art_Gruppi_DAL.Instance.RemoveGruppo(idGruppo);
+
+            return esito;
+        }
     }
 }

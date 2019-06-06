@@ -295,7 +295,8 @@ namespace VideoSystemWeb.DAL
                             cliente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(cliente);
 
-                            SqlParameter id_cliente = new SqlParameter("@id_cliente", protocollo.Id_cliente);
+                            SqlParameter id_cliente = new SqlParameter("@id_cliente", DBNull.Value);
+                            if (protocollo.Id_cliente>0) id_cliente = new SqlParameter("@id_cliente", protocollo.Id_cliente);
                             id_cliente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id_cliente);
 
@@ -390,7 +391,8 @@ namespace VideoSystemWeb.DAL
                             cliente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(cliente);
 
-                            SqlParameter id_cliente = new SqlParameter("@id_cliente", protocollo.Id_cliente);
+                            SqlParameter id_cliente = new SqlParameter("@id_cliente", DBNull.Value);
+                            if (protocollo.Id_cliente != null) id_cliente = new SqlParameter("@id_cliente", protocollo.Id_cliente);
                             id_cliente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id_cliente);
 

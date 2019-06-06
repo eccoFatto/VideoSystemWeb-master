@@ -21,7 +21,7 @@
     </script>
 </head>
 <body>
-    <div class="loaderLogin"><img alt="" class="loaderImgLogin" src="Images/dribble_camera.gif" /> 
+    <div class="loaderLogin"><img id="imgCamera" alt="" class="loaderImgLogin" src="Images/dribble_camera.gif" /> 
         <label class="loaderTextLogin">Caricamento dati applicazione in corso, Attendere prego...</label>
     </div>
     <form id="form1" runat="server">

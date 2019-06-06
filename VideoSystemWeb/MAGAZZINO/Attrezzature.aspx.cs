@@ -49,6 +49,7 @@ namespace VideoSystemWeb.MAGAZZINO
                     ddlTipoSubCategoria.Items.Clear();
                     cmbMod_SubCategoria.Items.Clear();
                     ddlTipoSubCategoria.Items.Add("");
+                    cmbMod_SubCategoria.Items.Add("");
                     foreach (Tipologica tipologiaSubCategoria in SessionManager.ListaTipiSubCategorieMagazzino)
                     {
                         ListItem item = new ListItem();
@@ -81,6 +82,7 @@ namespace VideoSystemWeb.MAGAZZINO
 
                         cmbMod_Posizione.Items.Add(itemMod);
                     }
+
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                     abilitaBottoni(basePage.AbilitazioneInScrittura());
 
@@ -121,11 +123,20 @@ namespace VideoSystemWeb.MAGAZZINO
 
         protected void gv_attrezzature_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // PRENDO L'ID DELL' ATTREZZATURA SELEZIONATA
+                string idAttrezzaturaSelezionata = e.Row.Cells[1].Text;
+                ImageButton myButtonEdit = e.Row.FindControl("imgEdit") as ImageButton;
+                myButtonEdit.Attributes.Add("onclick", "mostraAttrezzatura('" + idAttrezzaturaSelezionata + "');");
+            }
 
         }
 
         protected void gv_attrezzature_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
+            gv_attrezzature.PageIndex = e.NewPageIndex;
+            btnRicercaAttrezzatura_Click(null, null);
 
         }
 
@@ -143,36 +154,115 @@ namespace VideoSystemWeb.MAGAZZINO
 
         protected void btnInsAttrezzatura_Click(object sender, EventArgs e)
         {
+            // VISUALIZZO FORM INSERIMENTO NUOVA ATTREZZATURA
+            ViewState["idAttrezzatura"] = "";
+            editAttrezzaturaVuota();
+            AttivaDisattivaModificaAttrezzatura(false);
+            gestisciPulsantiAttrezzatura("INSERIMENTO");
 
+            pnlContainer.Visible = true;
         }
 
         protected void btnChiudiPopupServer_Click(object sender, EventArgs e)
         {
-
+            pnlContainer.Visible = false;
         }
 
         protected void btnGestisciAttrezzatura_Click(object sender, EventArgs e)
         {
-
+            AttivaDisattivaModificaAttrezzatura(false);
+            gestisciPulsantiAttrezzatura("MODIFICA");
         }
 
         protected void btnInserisciAttrezzatura_Click(object sender, EventArgs e)
         {
+            // INSERISCO ATTREZZATURA
+            Esito esito = new Esito();
+            AttrezzatureMagazzino attrezzatura = CreaOggettoAttrezzatura(ref esito);
+
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                basePage.ShowError("Controllare i campi evidenziati");
+            }
+            else
+            {
+                NascondiErroriValidazione();
+
+                int iRet = AttrezzatureMagazzino_BLL.Instance.CreaAttrezzatura(attrezzatura,ref esito);
+                if (iRet > 0)
+                {
+                    // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO
+                    hf_idAttrezzatura.Value = iRet.ToString();
+                    ViewState["idAttrezzatura"] = hf_idAttrezzatura.Value;
+                    hf_tipoOperazione.Value = "VISUALIZZAZIONE";
+                }
+
+                if (esito.codice != Esito.ESITO_OK)
+                {
+                    log.Error(esito.descrizione);
+                    basePage.ShowError(esito.descrizione);
+                }
+                else { 
+                    basePage.ShowSuccess("Inserita Attrezzatura " + attrezzatura.Descrizione);
+                    btnEditAttrezzatura_Click(null, null);
+                }
+            }
 
         }
 
         protected void btnModificaAttrezzatura_Click(object sender, EventArgs e)
         {
+            // SALVO MODIFICHE ATTREZZATURA
+            Esito esito = new Esito();
+            AttrezzatureMagazzino attrezzatura = CreaOggettoAttrezzatura(ref esito);
+
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                log.Error(esito.descrizione);
+                basePage.ShowError("Controllare i campi evidenziati!");
+            }
+            else
+            {
+                esito = AttrezzatureMagazzino_BLL.Instance.AggiornaAttrezzatura(attrezzatura);
+
+                if (esito.codice != Esito.ESITO_OK)
+                {
+                    log.Error(esito.descrizione);
+                    basePage.ShowError(esito.descrizione);
+
+                }
+                btnEditAttrezzatura_Click(null, null);
+            }
 
         }
 
         protected void btnEliminaAttrezzatura_Click(object sender, EventArgs e)
         {
+            Esito esito = new Esito();
+
+            if (!string.IsNullOrEmpty((string)ViewState["idAttrezzatura"]))
+            {
+                esito = AttrezzatureMagazzino_BLL.Instance.EliminaAttrezzatura(Convert.ToInt32(ViewState["idAttrezzatura"].ToString()));
+                if (esito.codice != Esito.ESITO_OK)
+                {
+                    basePage.ShowError(esito.descrizione);
+                    AttivaDisattivaModificaAttrezzatura(true);
+                }
+                else
+                {
+                    AttivaDisattivaModificaAttrezzatura(true);
+                    pnlContainer.Visible = false;
+                    btnRicercaAttrezzatura_Click(null, null);
+                }
+
+            }
 
         }
 
         protected void btnAnnullaAttrezzatura_Click(object sender, EventArgs e)
         {
+            AttivaDisattivaModificaAttrezzatura(true);
+            gestisciPulsantiAttrezzatura("ANNULLAMENTO");
 
         }
 
@@ -269,8 +359,8 @@ namespace VideoSystemWeb.MAGAZZINO
                         cmbMod_Posizione.Text = "";
                     }
 
-                    cbDisponibile.Checked = attrezzatura.Disponibile;
-                    cbGaranzia.Checked = attrezzatura.Garanzia;
+                    cbMod_Disponibile.Checked = attrezzatura.Disponibile;
+                    cbMod_Garanzia.Checked = attrezzatura.Garanzia;
                 }
                 else
                 {
@@ -293,8 +383,8 @@ namespace VideoSystemWeb.MAGAZZINO
             cmbMod_Categoria.SelectedIndex = 0;
             cmbMod_SubCategoria.SelectedIndex = 0;
             cmbMod_Posizione.SelectedIndex = 0;
-            cbDisponibile.Checked = false;
-            cbGaranzia.Checked = false;
+            cbMod_Disponibile.Checked = false;
+            cbMod_Garanzia.Checked = false;
 
         }
         private void AttivaDisattivaModificaAttrezzatura(bool attivaModifica)
@@ -322,8 +412,8 @@ namespace VideoSystemWeb.MAGAZZINO
                 cmbMod_Posizione.Attributes.Remove("disabled");
             }
 
-            cbDisponibile.Enabled = attivaModifica;
-            cbGaranzia.Enabled = attivaModifica;
+            cbMod_Disponibile.Enabled = !attivaModifica;
+            cbMod_Garanzia.Enabled = !attivaModifica;
         }
         private void gestisciPulsantiAttrezzatura(string stato)
         {
@@ -378,6 +468,37 @@ namespace VideoSystemWeb.MAGAZZINO
                     break;
             }
 
+        }
+        private void editAttrezzaturaVuota()
+        {
+            Esito esito = new Esito();
+            pulisciCampiDettaglio();
+        }
+        private AttrezzatureMagazzino CreaOggettoAttrezzatura(ref Esito esito)
+        {
+            AttrezzatureMagazzino attrezzatura = new AttrezzatureMagazzino();
+
+            if (string.IsNullOrEmpty((string)ViewState["idAttrezzatura"]))
+            {
+                ViewState["idAttrezzatura"] = "0";
+            }
+
+            attrezzatura.Id = Convert.ToInt16(ViewState["idAttrezzatura"].ToString());
+
+            attrezzatura.Cod_vs = BasePage.ValidaCampo(tbMod_CodiceVideoSystem, "",false, ref esito);
+            attrezzatura.Data_acquisto = BasePage.ValidaCampo(tbMod_DataAcquisto, DateTime.Now, true, ref esito);
+            attrezzatura.Descrizione = BasePage.ValidaCampo(tbMod_Descrizione, "", true, ref esito);
+            attrezzatura.Disponibile = cbMod_Disponibile.Checked;
+            attrezzatura.Garanzia = cbMod_Garanzia.Checked;
+            attrezzatura.Id_categoria = Convert.ToInt32(cmbMod_Categoria.SelectedValue);
+            attrezzatura.Id_posizione_magazzino = Convert.ToInt32(cmbMod_Posizione.SelectedValue);
+            if (!string.IsNullOrEmpty(cmbMod_SubCategoria.SelectedValue)) attrezzatura.Id_subcategoria = Convert.ToInt32(cmbMod_SubCategoria.SelectedValue);
+            attrezzatura.Marca = BasePage.ValidaCampo(tbMod_Marca, "", true, ref esito);
+            attrezzatura.Modello = BasePage.ValidaCampo(tbMod_Modello, "", true, ref esito);
+            attrezzatura.Seriale = BasePage.ValidaCampo(tbMod_Seriale, "", false, ref esito);
+            attrezzatura.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
+
+            return attrezzatura;
         }
 
     }

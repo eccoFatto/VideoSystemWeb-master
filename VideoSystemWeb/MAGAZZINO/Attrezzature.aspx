@@ -45,11 +45,11 @@
         }
 
         // APRO LE TAB DETTAGLIO ATTREZZATURA
-        function openDettaglioProtocollo(tipoName) {
+        function openDettaglioAttrezzatura(tipoName) {
             $("#<%=hf_tabChiamata.ClientID%>").val(tipoName);
             if (document.getElementById(tipoName) != undefined) {
                 var i;
-                var x = document.getElementsByClassName("prot");
+                var x = document.getElementsByClassName("attr");
                 for (i = 0; i < x.length; i++) {
                     x[i].style.display = "none";
                 }
@@ -59,7 +59,7 @@
 
         function chiudiPopup() {
             // QUANDO APRO IL POPUP RIPARTE SEMPRE DA ATTREZZATURA E NON DALL'ULTIMA TAB APERTA
-            $("#<%=hf_tabChiamata.ClientID%>").val('Protocollo');
+            $("#<%=hf_tabChiamata.ClientID%>").val('Attrezzatura');
             $("#<%=hf_idAttrezzatura.ClientID%>").val('');
             $("#<%=hf_tipoOperazione.ClientID%>").val('VISUALIZZAZIONE');
             $("#<%=btnChiudiPopupServer.ClientID%>").click();
@@ -202,7 +202,7 @@
 
                     <div class="w3-container">
                         <!-- ELENCO TAB DETTAGLI ATTREZZATURE -->
-                        <div class="w3-bar w3-yellow w3-round">
+                        <div class="w3-bar w3-red w3-round">
                             <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAttrezzatura('Attrezzatura')">Attrezzatura</div>
                             <div class="w3-bar-item w3-button w3-red w3-right">
                                 <div id="btnChiudiPopup" class="w3-button w3-red w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
@@ -210,7 +210,7 @@
                         </div>
                     </div>
                     <!-- TAB ATTREZZATURE -->
-                    <div id="Attrezzatura" class="w3-container w3-border prot" style="display: block">
+                    <div id="Attrezzatura" class="w3-container w3-border attr" style="display: block">
                         <div class="w3-container w3-center">
                             <p>
                                 <div class="w3-row-padding w3-center w3-text-center">
@@ -225,7 +225,7 @@
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
                                         <label>Data Acquisto</label>
-                                        <asp:TextBox ID="tbMod_DataAcquisto" runat="server" MaxLength="10" CssClass="w3-input w3-border" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_DataAcquisto" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Seriale</label>

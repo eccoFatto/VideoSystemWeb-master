@@ -535,7 +535,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (!string.IsNullOrEmpty((string)ViewState["idAzienda"]))
             {
-                esito = Anag_Clienti_Fornitori_BLL.Instance.EliminaAzienda(Convert.ToInt32(ViewState["idAzienda"].ToString()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
+                //esito = Anag_Clienti_Fornitori_BLL.Instance.EliminaAzienda(Convert.ToInt32(ViewState["idAzienda"].ToString()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
+                esito = Anag_Clienti_Fornitori_BLL.Instance.RemoveAzienda(Convert.ToInt32(ViewState["idAzienda"].ToString()));
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");

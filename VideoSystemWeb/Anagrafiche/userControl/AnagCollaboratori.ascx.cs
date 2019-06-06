@@ -770,7 +770,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (!string.IsNullOrEmpty((string)ViewState["idColl"]))
             {
-                esito = Anag_Collaboratori_BLL.Instance.EliminaCollaboratore(Convert.ToInt32(ViewState["idColl"].ToString()));
+                //esito = Anag_Collaboratori_BLL.Instance.EliminaCollaboratore(Convert.ToInt32(ViewState["idColl"].ToString()));
+                esito = Anag_Collaboratori_BLL.Instance.RemoveCollaboratore(Convert.ToInt32(ViewState["idColl"].ToString()));
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");

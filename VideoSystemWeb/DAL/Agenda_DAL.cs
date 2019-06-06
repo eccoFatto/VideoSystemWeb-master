@@ -377,6 +377,7 @@ namespace VideoSystemWeb.DAL
                                     protocolloOfferta.Codice_lavoro = evento.codice_lavoro;
                                     protocolloOfferta.Numero_protocollo = protocollo;
                                     protocolloOfferta.Cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
+                                    protocolloOfferta.Id_cliente = evento.id_cliente;
                                     protocolloOfferta.Id_tipo_protocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
                                     protocolloOfferta.Protocollo_riferimento = "";
                                     string nomeFile = "Offerta_" + evento.codice_lavoro + ".pdf";
@@ -729,6 +730,7 @@ namespace VideoSystemWeb.DAL
                                         protocolloOfferta.Codice_lavoro = evento.codice_lavoro;
                                         protocolloOfferta.Numero_protocollo = protocollo;
                                         protocolloOfferta.Cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(evento.id_cliente, ref esito).RagioneSociale;
+                                        protocolloOfferta.Id_cliente = evento.id_cliente;
                                         protocolloOfferta.Id_tipo_protocollo = idTipoProtocollo;
                                         protocolloOfferta.Protocollo_riferimento = "";
                                         string nomeFile = "Offerta_" + evento.codice_lavoro + ".pdf";
@@ -752,8 +754,6 @@ namespace VideoSystemWeb.DAL
                                 //GESTIONE DATI LAVORAZIONE
                                 if (evento.LavorazioneCorrente != null)
                                 {
-
-
                                     // ELIMINO GLI EVENTUALI DATI LAVORAZIONE ASSOCIATI ALL'EVENTO PER SOSTITUIRLI COI NUOVI
                                     if (evento.LavorazioneCorrente.Id != 0) // caso in cui la lavorazione sia stata appena creata ma non salvata (passaggio da offerta a lavorazione)
                                     { 
@@ -835,32 +835,100 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand StoreProc = new SqlCommand("DeleteEvento"))
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteNoteOffertaByIdDatiAgenda"))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
+                            SqlTransaction transaction;
                             StoreProc.Connection = con;
-                            sda.SelectCommand = StoreProc;
-                            StoreProc.CommandType = CommandType.StoredProcedure;
-
-                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
-                            id.Direction = ParameterDirection.Input;
-                            id.Value = idEvento;
-                            StoreProc.Parameters.Add(id);
-
-                            // PARAMETRI PER LOG UTENTE
-                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
-                            idUtente.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(idUtente);
-
-                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
-                            nomeUtente.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(nomeUtente);
-                            // FINE PARAMETRI PER LOG UTENTE
-
                             StoreProc.Connection.Open();
+                            // Start a local transaction.
+                            transaction = con.BeginTransaction("DeleteEvento");
 
-                            int iReturn = StoreProc.ExecuteNonQuery();
+                            try
+                            {
+                                StoreProc.Transaction = transaction;
+
+                                #region NOTE_OFFERTA
+                                StoreProc.Parameters.Clear();
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+                                sda.SelectCommand = StoreProc;
+
+                                SqlParameter id_dati_agenda = new SqlParameter("@id_dati_agenda", SqlDbType.Int);
+                                id_dati_agenda.Direction = ParameterDirection.Input;
+                                id_dati_agenda.Value = idEvento;
+                                StoreProc.Parameters.Add(id_dati_agenda);
+
+                                // PARAMETRI PER LOG UTENTE
+                                SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                                idUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idUtente);
+
+                                SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                                nomeUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(nomeUtente);
+                                // FINE PARAMETRI PER LOG UTENTE
+
+                                //StoreProc.Connection.Open();
+
+                                StoreProc.ExecuteNonQuery();
+                                #endregion
+
+
+                                #region EVENTO
+                                StoreProc.CommandText = "DeleteEvento";
+                                StoreProc.Parameters.Clear();
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+                                sda.SelectCommand = StoreProc;
+
+                                SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                                id.Direction = ParameterDirection.Input;
+                                id.Value = idEvento;
+                                StoreProc.Parameters.Add(id);
+
+                                // PARAMETRI PER LOG UTENTE
+                                idUtente = new SqlParameter("@idUtente", utente.id);
+                                idUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idUtente);
+
+                                nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                                nomeUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(nomeUtente);
+                                // FINE PARAMETRI PER LOG UTENTE
+
+                                //StoreProc.Connection.Open();
+
+                                StoreProc.ExecuteNonQuery();
+                                #endregion
+
+
+
+
+
+
+                                // Attempt to commit the transaction.
+                                transaction.Commit();
+                            }
+                            catch (Exception ex)
+                            {
+                                esito.codice = Esito.ESITO_KO_ERRORE_UPDATE_TABELLA;
+                                esito.descrizione = "Agenda_DAL.cs - EliminaEvento" + Environment.NewLine + ex.Message;
+
+                                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+
+                                try
+                                {
+                                    transaction.Rollback();
+                                }
+                                catch (Exception ex2)
+                                {
+                                    esito.descrizione += Environment.NewLine + "ERRORE ROLLBACK: " + ex2.Message;
+                                    log.Error(ex2.Message + Environment.NewLine + ex2.StackTrace);
+                                }
+                            }
+
+                            
+
                         }
                     }
                 }
@@ -876,6 +944,7 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
+        // Elimina tutti i dati della lavorazione quando si elimina un evento in fase Lavorazione (lo riporta in fase Offerta)
         public Esito EliminaLavorazione(DatiAgenda evento)
         {
             Esito esito = new Esito();
@@ -1161,6 +1230,10 @@ namespace VideoSystemWeb.DAL
             SqlParameter cliente = new SqlParameter("@cliente", protocollo.Cliente);
             cliente.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(cliente);
+
+            SqlParameter id_cliente = new SqlParameter("@id_cliente", protocollo.Id_cliente);
+            id_cliente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(id_cliente);
 
             SqlParameter id_tipo_protocollo = new SqlParameter("@id_tipo_protocollo", protocollo.Id_tipo_protocollo);
             id_tipo_protocollo.Direction = ParameterDirection.Input;

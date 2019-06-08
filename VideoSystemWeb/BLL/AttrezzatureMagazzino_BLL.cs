@@ -57,5 +57,12 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
+        public Esito RemoveAttrezzatura(int idAttrezzatura)
+        {
+            Esito esito = AttrezzatureMagazzino_DAL.Instance.RemoveAttrezzatura(idAttrezzatura);
+
+            return esito;
+        }
+
     }
 }

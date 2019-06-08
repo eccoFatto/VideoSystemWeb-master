@@ -7,12 +7,9 @@
 
             $(window).keydown(function (e) {
                 if (e.keyCode == 13) {
-<%--                    if ($("#<%=hf_tipoOperazione.ClientID%>").val() != 'MODIFICA' && $("#<%=hf_tipoOperazione.ClientID%>").val() != 'INSERIMENTO') {
-                        $("#<%=btnRicercaProtocollo.ClientID%>").click();
+                    if ($("#<%=hf_tipoOperazione.ClientID%>").val() != 'MODIFICA' && $("#<%=hf_tipoOperazione.ClientID%>").val() != 'INSERIMENTO') {
+                        $("#<%=btnRicercaAttrezzatura.ClientID%>").click();
                     }
-                    else {
-                        $("#<%=btnRicercaLavorazioni.ClientID%>").click();
-                    }--%>
                 }
             });
 
@@ -76,8 +73,8 @@
             $("#<%=ddlTipoPosizioneMagazzino.ClientID%>").val('');
             $("#<%=tbMarca.ClientID%>").val('');
             $("#<%=tbModello.ClientID%>").val('');
-            $("#<%=cbDisponibile.ClientID%>").val('');
-            $("#<%=cbGaranzia.ClientID%>").val('');
+<%--            $("#<%=cbDisponibile.ClientID%>").val('');
+            $("#<%=cbGaranzia.ClientID%>").val('');--%>
         }
     </script>
     
@@ -100,8 +97,9 @@
                     </asp:DropDownList>
                 </div>
                 <div class="w3-quarter">
-                    <label>Descrizione</label>
-                    <asp:TextBox ID="tbDescrizione" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    <label>Posizione Magazzino</label>
+                    <asp:DropDownList ID="ddlTipoPosizioneMagazzino" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                    </asp:DropDownList>
                 </div>
             </div>
             <div class="w3-row-padding">
@@ -113,29 +111,29 @@
                     <label>Data Acquisto</label>
                     <asp:TextBox ID="tbDataAcquisto" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                 </div>
-                <div class="w3-quarter">
-                    <label>Posizione Magazzino</label>
-                    <asp:DropDownList ID="ddlTipoPosizioneMagazzino" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
-                    </asp:DropDownList>
+                <div class="w3-half">
+                    <label>Descrizione</label>
+                    <asp:TextBox ID="tbDescrizione" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-                <div class="w3-quarter">
+
+            </div>
+            <div class="w3-row-padding">
+                <div class="w3-half">
                     <label>Marca</label>
                     <asp:TextBox ID="tbMarca" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-            </div>
-            <div class="w3-row-padding">
                 <div class="w3-half">
                     <label>Modello</label>
                     <asp:TextBox ID="tbModello" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-                <div class="w3-quarter">
+<%--                <div class="w3-quarter">
                     <label>Garanzia</label><br />
                     <asp:CheckBox ID="cbGaranzia" runat="server" CssClass="w3-check"></asp:CheckBox>
                 </div>
                 <div class="w3-quarter">
                     <label>Disponibile</label><br />
                     <asp:CheckBox ID="cbDisponibile" runat="server" CssClass="w3-check"></asp:CheckBox>
-                </div>
+                </div>--%>
             </div>
             <div class="w3-row-padding w3-margin-bottom">
                 <div class="w3-half">
@@ -219,14 +217,14 @@
                                         <asp:TextBox ID="tbMod_CodiceVideoSystem" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>Descrizione</label>
-                                        <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
-                                        <asp:TextBox ID="tbIdAttrezzaturaDaModificare" runat="server" Visible="false"></asp:TextBox>
+                                        <label>Marca</label>
+                                        <asp:TextBox ID="tbMod_Marca" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
-                                    <div class="w3-quarter" style="position: relative">
-                                        <label>Data Acquisto</label>
-                                        <asp:TextBox ID="tbMod_DataAcquisto" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
+                                    <div class="w3-quarter">
+                                        <label>Modello</label>
+                                        <asp:TextBox ID="tbMod_Modello" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
+
                                     <div class="w3-quarter">
                                         <label>Seriale</label>
                                         <asp:TextBox ID="tbMod_Seriale" runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
@@ -234,12 +232,13 @@
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-threequarter">
-                                        <label>Marca</label>
-                                        <asp:TextBox ID="tbMod_Marca" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <label>Descrizione</label>
+                                        <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbIdAttrezzaturaDaModificare" runat="server" Visible="false"></asp:TextBox>
                                     </div>
-                                    <div class="w3-quarter">
-                                        <label>Modello</label>
-                                        <asp:TextBox ID="tbMod_Modello" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                    <div class="w3-quarter" style="position: relative">
+                                        <label>Data Acquisto</label>
+                                        <asp:TextBox ID="tbMod_DataAcquisto" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">

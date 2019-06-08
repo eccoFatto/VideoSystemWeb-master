@@ -34,6 +34,7 @@ namespace VideoSystemWeb.Entity
         private string marca;
         private string modello;
         private string note;
+        private bool attivo;
 
         public int Id { get => id; set => id = value; }
         public string Cod_vs { get => cod_vs; set => cod_vs = value; }
@@ -48,5 +49,6 @@ namespace VideoSystemWeb.Entity
         public string Marca { get => marca; set => marca = value; }
         public string Modello { get => modello; set => modello = value; }
         public string Note { get => note; set => note = value; }
+        public bool Attivo { get => attivo; set => attivo = value; }
     }
 }

@@ -19,6 +19,11 @@ namespace VideoSystemWeb.MAGAZZINO
         BasePage basePage = new BasePage();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            CheckIsMobile();
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
@@ -243,6 +248,7 @@ namespace VideoSystemWeb.MAGAZZINO
             if (!string.IsNullOrEmpty((string)ViewState["idAttrezzatura"]))
             {
                 esito = AttrezzatureMagazzino_BLL.Instance.EliminaAttrezzatura(Convert.ToInt32(ViewState["idAttrezzatura"].ToString()));
+                //esito = AttrezzatureMagazzino_BLL.Instance.RemoveAttrezzatura(Convert.ToInt32(ViewState["idAttrezzatura"].ToString()));
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     basePage.ShowError(esito.descrizione);
@@ -497,6 +503,7 @@ namespace VideoSystemWeb.MAGAZZINO
             attrezzatura.Modello = BasePage.ValidaCampo(tbMod_Modello, "", true, ref esito);
             attrezzatura.Seriale = BasePage.ValidaCampo(tbMod_Seriale, "", false, ref esito);
             attrezzatura.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
+            attrezzatura.Attivo = true;
 
             return attrezzatura;
         }

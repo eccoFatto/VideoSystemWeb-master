@@ -71,6 +71,13 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
+        public Esito RemoveProtocollo(int idProtocollo)
+        {
+            Esito esito = Protocolli_DAL.Instance.RemoveProtocollo(idProtocollo);
+
+            return esito;
+        }
+
         public int getProtocollo(ref Esito esito)
         {
             int iREt = Base_DAL.getProtocollo(ref esito);

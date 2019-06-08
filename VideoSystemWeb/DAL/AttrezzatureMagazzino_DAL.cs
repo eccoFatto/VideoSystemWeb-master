@@ -67,6 +67,7 @@ namespace VideoSystemWeb.DAL
                                         attrezzature.Modello = riga.Field<string>("modello");
                                         attrezzature.Note = riga.Field<string>("note");
                                         attrezzature.Seriale = riga.Field<string>("seriale");
+                                        attrezzature.Attivo = riga.Field<bool>("attivo");
                                         listaAttrezzature.Add(attrezzature);
                                     }
                                 }
@@ -117,6 +118,7 @@ namespace VideoSystemWeb.DAL
                                     attrezzatura.Modello = dt.Rows[0].Field<string>("modello");
                                     attrezzatura.Seriale = dt.Rows[0].Field<string>("seriale");
                                     attrezzatura.Note = dt.Rows[0].Field<string>("note");
+                                    attrezzatura.Attivo = dt.Rows[0].Field<bool>("attivo");
                                 }
                             }
                         }
@@ -208,6 +210,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter Seriale = new SqlParameter("@seriale", attrezzatura.Seriale);
                             Seriale.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Seriale);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", attrezzatura.Attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
 
                             StoreProc.Connection.Open();
 
@@ -309,6 +315,10 @@ namespace VideoSystemWeb.DAL
                             Seriale.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Seriale);
 
+                            SqlParameter attivo = new SqlParameter("@attivo", attrezzatura.Attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
                             StoreProc.Connection.Open();
 
                             int iReturn = StoreProc.ExecuteNonQuery();
@@ -368,6 +378,52 @@ namespace VideoSystemWeb.DAL
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
                 esito.descrizione = "AttrezzatureMagazzino_DAL.cs - EliminaAttrezzatura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+        public Esito RemoveAttrezzatura(int idAttrezzatura)
+        {
+            Anag_Utenti utente = (Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE];
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("RemoveAttrezzatura"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                            id.Direction = ParameterDirection.Input;
+                            id.Value = idAttrezzatura;
+                            StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "AttrezzatureMagazzino_DAL.cs - RemoveAttrezzatura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

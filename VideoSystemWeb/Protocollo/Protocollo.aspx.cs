@@ -267,7 +267,8 @@ namespace VideoSystemWeb.Protocollo
 
             if (!string.IsNullOrEmpty((string)ViewState["idProtocollo"]))
             {
-                esito = Protocolli_BLL.Instance.EliminaProtocollo(Convert.ToInt32(ViewState["idProtocollo"].ToString()));
+                //esito = Protocolli_BLL.Instance.EliminaProtocollo(Convert.ToInt32(ViewState["idProtocollo"].ToString()));
+                esito = Protocolli_BLL.Instance.RemoveProtocollo(Convert.ToInt32(ViewState["idProtocollo"].ToString()));
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     basePage.ShowError(esito.descrizione);

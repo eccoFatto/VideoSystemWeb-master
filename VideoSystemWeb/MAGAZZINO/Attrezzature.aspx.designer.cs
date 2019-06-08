@@ -58,13 +58,13 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.DropDownList ddlTipoSubCategoria;
         
         /// <summary>
-        /// Controllo tbDescrizione.
+        /// Controllo ddlTipoPosizioneMagazzino.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbDescrizione;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoPosizioneMagazzino;
         
         /// <summary>
         /// Controllo tbSeriale.
@@ -85,13 +85,13 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.TextBox tbDataAcquisto;
         
         /// <summary>
-        /// Controllo ddlTipoPosizioneMagazzino.
+        /// Controllo tbDescrizione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTipoPosizioneMagazzino;
+        protected global::System.Web.UI.WebControls.TextBox tbDescrizione;
         
         /// <summary>
         /// Controllo tbMarca.
@@ -110,24 +110,6 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbModello;
-        
-        /// <summary>
-        /// Controllo cbGaranzia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbGaranzia;
-        
-        /// <summary>
-        /// Controllo cbDisponibile.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbDisponibile;
         
         /// <summary>
         /// Controllo btnRicercaAttrezzatura.
@@ -256,6 +238,33 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.TextBox tbMod_CodiceVideoSystem;
         
         /// <summary>
+        /// Controllo tbMod_Marca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Marca;
+        
+        /// <summary>
+        /// Controllo tbMod_Modello.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Modello;
+        
+        /// <summary>
+        /// Controllo tbMod_Seriale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Seriale;
+        
+        /// <summary>
         /// Controllo tbMod_Descrizione.
         /// </summary>
         /// <remarks>
@@ -281,33 +290,6 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_DataAcquisto;
-        
-        /// <summary>
-        /// Controllo tbMod_Seriale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Seriale;
-        
-        /// <summary>
-        /// Controllo tbMod_Marca.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Marca;
-        
-        /// <summary>
-        /// Controllo tbMod_Modello.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Modello;
         
         /// <summary>
         /// Controllo cmbMod_Categoria.

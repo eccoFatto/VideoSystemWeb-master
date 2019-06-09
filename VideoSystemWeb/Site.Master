@@ -179,6 +179,9 @@
                         <a class="w3-bar-item w3-button w3-disabled">Carico/Scarico Attrezzature</a>
                         <a class="w3-bar-item w3-button w3-disabled">Gestione Consumo</a>
                         <a class="w3-bar-item w3-button w3-disabled">Carico/Scarico Consumo</a>
+                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=CATEGORIE" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologia Categorie</a>
+                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=SUBCATEGORIE" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologia Sub Categorie</a>
+                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=POSIZIONI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologia Posizioni</a>
                     </div>
                 </div>
                 <asp:Button runat="server" ID="btnExit" OnClick="btnExit_Click" class="w3-bar-item w3-button w3-right w3-yellow" Text="Esci" />

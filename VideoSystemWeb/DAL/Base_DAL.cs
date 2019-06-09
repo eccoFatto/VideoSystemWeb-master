@@ -320,6 +320,15 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_INTERVENTO:
                     nomeSP = "InsertTipoIntervento";
                     break;
+                case EnumTipologiche.TIPO_CATEGORIE_MAGAZZINO:
+                    nomeSP = "InsertTipoCategorieMagazzino";
+                    break;
+                case EnumTipologiche.TIPO_SUB_CATEGORIE_MAGAZZINO:
+                    nomeSP = "InsertTipoSubCategorieMagazzino";
+                    break;
+                case EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO:
+                    nomeSP = "InsertTipoPosizioneMagazzino";
+                    break;
 
                 default:
                     break;
@@ -512,6 +521,15 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_INTERVENTO:
                     nomeSP = "UpdateTipoIntervento";
                     break;
+                case EnumTipologiche.TIPO_CATEGORIE_MAGAZZINO:
+                    nomeSP = "UpdateTipoCategorieMagazzino";
+                    break;
+                case EnumTipologiche.TIPO_SUB_CATEGORIE_MAGAZZINO:
+                    nomeSP = "UpdateTipoSubCategorieMagazzino";
+                    break;
+                case EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO:
+                    nomeSP = "UpdateTipoPosizioneMagazzino";
+                    break;
 
                 default:
                     break;
@@ -701,7 +719,15 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_INTERVENTO:
                     nomeSP = "DeleteTipoIntervento";
                     break;
-
+                case EnumTipologiche.TIPO_CATEGORIE_MAGAZZINO:
+                    nomeSP = "DeleteTipoCategorieMagazzino";
+                    break;
+                case EnumTipologiche.TIPO_SUB_CATEGORIE_MAGAZZINO:
+                    nomeSP = "DeleteTipoSubCategorieMagazzino";
+                    break;
+                case EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO:
+                    nomeSP = "DeleteTipoPosizioneMagazzino";
+                    break;
 
                 default:
                     break;

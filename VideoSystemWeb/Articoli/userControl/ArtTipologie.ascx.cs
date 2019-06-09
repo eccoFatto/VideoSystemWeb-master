@@ -133,6 +133,33 @@ namespace VideoSystemWeb.Articoli.userControl
                     lista = SessionManager.ListaTipiIntervento;  //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, true, ref esito);
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_INTERVENTO;
                     break;
+                case "CATEGORIE":
+                    if (clearLista)
+                    {
+                        SessionManager.ListaTipiCategorieMagazzino.Clear();
+                    }
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.Bisque;
+                    lista = SessionManager.ListaTipiCategorieMagazzino;
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_CATEGORIE_MAGAZZINO;
+                    break;
+                case "SUBCATEGORIE":
+                    if (clearLista)
+                    {
+                        SessionManager.ListaTipiSubCategorieMagazzino.Clear();
+                    }
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.BurlyWood;
+                    lista = SessionManager.ListaTipiSubCategorieMagazzino;
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_SUB_CATEGORIE_MAGAZZINO;
+                    break;
+                case "POSIZIONI":
+                    if (clearLista)
+                    {
+                        SessionManager.ListaTipiPosizioniMagazzino.Clear();
+                    }
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.Coral;
+                    lista = SessionManager.ListaTipiPosizioniMagazzino;
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO;
+                    break;
                 default:
                     if (clearLista)
                     {

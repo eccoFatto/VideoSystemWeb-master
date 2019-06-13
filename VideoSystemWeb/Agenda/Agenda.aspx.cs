@@ -338,7 +338,7 @@ namespace VideoSystemWeb.Agenda
                         {
                             tipologia = UtilityTipologiche.getTipologicaById(EnumTipologiche.TIPO_TIPOLOGIE, (int)datoAgendaCorrente.id_tipologia, ref esito).nome;
                         }
-                        string titoloEvento = datoAgendaCorrente.id_stato == Stato.Instance.STATO_RIPOSO ? "Riposo" : datoAgendaCorrente.produzione.PadRight(10, ' ').Substring(0, 10) + "<br/>" + tipologia.PadRight(10, ' ').Substring(0, 10);
+                        string titoloEvento = datoAgendaCorrente.id_stato == Stato.Instance.STATO_RIPOSO ? "Riposo" : "<div class='titoloEvento'>"+datoAgendaCorrente.produzione + "</div><div class='titoloEvento'>" + tipologia+"</div>";
                         #endregion
 
                         // EVENTO GIORNO SINGOLO
@@ -347,7 +347,7 @@ namespace VideoSystemWeb.Agenda
                             Panel mainPanel = new Panel();
                             mainPanel.Controls.Add(new LiteralControl(titoloEvento));
                             mainPanel.CssClass = "round-corners-6px w3-tooltip";
-                            mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
+                            mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + "; color:" + coloreFont);
 
                             mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
@@ -374,7 +374,7 @@ namespace VideoSystemWeb.Agenda
                                 }
 
                                 mainPanel.CssClass = "round-corners-6px unround-bottom-corners w3-tooltip";
-                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
+                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + "; color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
@@ -399,7 +399,7 @@ namespace VideoSystemWeb.Agenda
                                 }
 
                                 mainPanel.CssClass = "round-corners-6px unround-top-corners w3-tooltip";
-                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
+                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + "; color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
@@ -424,10 +424,10 @@ namespace VideoSystemWeb.Agenda
                                 }
 
                                 mainPanel.CssClass = "w3-tooltip";
-                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + ";color:" + coloreFont);
+                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + "; color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
-                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; border-bottom: 0px; background-color:" + colore + ";color:" + coloreFont);
+                                e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; border-bottom: 0px; background-color:" + colore + "; color:" + coloreFont);
                             }
                         }
                     }

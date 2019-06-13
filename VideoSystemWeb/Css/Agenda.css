@@ -38,6 +38,7 @@
     font-size: 8pt;
     text-align: center;
     padding: 0px;
+    max-width: 100px;
 }
 
 
@@ -119,4 +120,11 @@
 
 .easy-autocomplete {
     width: 100% !important
+}
+
+.titoloEvento {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: transparent;
 }

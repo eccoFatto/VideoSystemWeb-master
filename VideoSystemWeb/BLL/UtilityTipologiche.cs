@@ -175,6 +175,11 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
+        public static Esito RemoveTipologia(EnumTipologiche tipoTipologica, int idTipologica)
+        {
+            Esito esito = Base_DAL.RemoveTipologia(tipoTipologica, idTipologica);
+            return esito;
+        }
 
         public static ColonneAgenda getColonneAgendaById(int idColonnaAgenda, ref Esito esito)
         {

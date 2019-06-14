@@ -26,12 +26,19 @@ namespace VideoSystemWeb
                 }
                 else
                 {
+                    if (Session[SessionManager.UTENTE] != null) { 
+                        lbl_benvenuto.Text = "Utente: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Nome + " " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Cognome + " - Ruolo: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).tipoUtente;
 
-                    lbl_benvenuto.Text = "Utente: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Nome + " " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Cognome + " - Ruolo: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).tipoUtente;
+                        lblVersione.Text = BasePage.versione;
 
-                    lblVersione.Text = BasePage.versione;
-
-                    lblDataVersione.Text = BasePage.dataVersione;
+                        lblDataVersione.Text = BasePage.dataVersione;
+                    }
+                    else
+                    {
+                        Session["ErrorPageText"] = "TimeOut Sessione";
+                        string url = String.Format("~/pageError.aspx");
+                        Response.Redirect(url, true);
+                    }
                 }
             }
             catch (Exception ex)

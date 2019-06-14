@@ -62,6 +62,7 @@ namespace VideoSystemWeb.DAL
                                     azienda.ComuneLegale = dt.Rows[0].Field<string>("comuneLegale");
                                     azienda.ComuneOperativo = dt.Rows[0].Field<string>("comuneOperativo");
                                     azienda.Email = dt.Rows[0].Field<string>("email");
+                                    azienda.Telefono = dt.Rows[0].Field<string>("telefono");
                                     azienda.Fax = dt.Rows[0].Field<string>("fax");
                                     azienda.Fornitore = dt.Rows[0].Field<bool>("fornitore");
                                     azienda.Iban = dt.Rows[0].Field<string>("iban");
@@ -138,6 +139,7 @@ namespace VideoSystemWeb.DAL
                                         azienda.ComuneLegale = riga.Field<string>("comuneLegale");
                                         azienda.ComuneOperativo = riga.Field<string>("comuneOperativo");
                                         azienda.Email = riga.Field<string>("email");
+                                        azienda.Telefono = riga.Field<string>("telefono");
                                         azienda.Fax = riga.Field<string>("fax");
                                         azienda.Fornitore = riga.Field<bool>("fornitore");
                                         azienda.Iban = riga.Field<string>("iban");

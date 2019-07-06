@@ -41,7 +41,7 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             get
             {
-                if (ViewState["listaFigureProfessionali"] == null || ((List<FiguraProfessionale>)ViewState["listaFigureProfessionali"]).Count == 0)
+                if (ViewState["listaFigureProfessionali"] == null)
                 {
                     ViewState["listaFigureProfessionali"] = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali;
                 }
@@ -114,12 +114,16 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 long identificatoreOggetto = Convert.ToInt64(commandArgs[1]);
                 ViewState["identificatoreArticoloLavorazione"] = identificatoreOggetto;
+                ViewState["idArticoloLavorazione"] = 0;
                 articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
+
             }
             else
             {
                 ViewState["idArticoloLavorazione"] = id;
                 articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.Id == id);
+
+                ViewState["identificatoreArticoloLavorazione"] = articoloSelezionato.IdentificatoreOggetto;
             }
 
             int indexArticolo = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(articoloSelezionato);
@@ -312,7 +316,10 @@ namespace VideoSystemWeb.Agenda.userControl
             else
             {
                 int idArticolo = (int)ViewState["idArticoloLavorazione"];
-                articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.Id == idArticolo);
+                //articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.Id == idArticolo);
+                long identificatoreOggetto = (long)ViewState["identificatoreArticoloLavorazione"];
+
+                articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.Id == idArticolo && x.IdentificatoreOggetto == identificatoreOggetto);
             }
 
             var index = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(articoloSelezionato);
@@ -401,6 +408,15 @@ namespace VideoSystemWeb.Agenda.userControl
                 importoDiaria = decimal.Parse(txt_diaria.Text);
             }
 
+            // Aggiungo diaria a listaAricoliLavorazione in dettaglio economico
+            if (importoDiaria > 0)
+            {
+                aggiungiDiariaAListaArticoli(importoDiaria, "Diaria "+ figuraProfessionale.Nome + " " + figuraProfessionale.Cognome);
+
+                AggiornaTotali();
+                ResetPanelLavorazione();
+            }
+
             datiPianoEsterno.Data = string.IsNullOrEmpty(txt_data.Text) ? null : (DateTime?)DateTime.Parse(txt_data.Text);
             datiPianoEsterno.Orario = string.IsNullOrEmpty(txt_orario.Text) ? null : (DateTime?)DateTime.Parse(txt_orario.Text);
             datiPianoEsterno.Diaria = chk_diaria.Checked;
@@ -416,6 +432,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
             gvFigProfessionali.DataSource = ListaFigureProfessionali;
             gvFigProfessionali.DataBind();
+
+            
 
             RichiediOperazionePopup("UPDATE");
         }
@@ -500,11 +518,27 @@ namespace VideoSystemWeb.Agenda.userControl
                     figProf.Netto = collabForn.FP_netto;
                     figProf.Lordo = collabForn.FP_lordo;
 
-                    _listaFigureProfessionali.Add(figProf);
+                    if (ListaFigureProfessionali.FirstOrDefault(x => x.IdentificatoreOggetto == figProf.IdentificatoreOggetto) == null)
+                    {
+                        _listaFigureProfessionali.Add(figProf);
+                    }
+                    else
+                    {
+                        FiguraProfessionale figProfGiaPresente = ListaFigureProfessionali.FirstOrDefault(x => x.IdentificatoreOggetto == figProf.IdentificatoreOggetto);
+
+                        if (figProfGiaPresente.Nome != figProf.Nome ||
+                            figProfGiaPresente.Cognome != figProf.Cognome)
+                        {
+                            ListaFigureProfessionali.Remove(figProfGiaPresente);
+                            _listaFigureProfessionali.Add(figProf);
+                        }
+                    }
+                    //_listaFigureProfessionali.Add(figProf);
                     _listaDatiPianoEsterno.Add(datiPianoEsterno);
                 }
 
-                ListaFigureProfessionali = _listaFigureProfessionali;
+                ListaFigureProfessionali.AddRange(_listaFigureProfessionali);
+
                 SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione = _listaDatiPianoEsterno;
 
                 if (ListaFigureProfessionali.Count > 0)
@@ -659,6 +693,36 @@ namespace VideoSystemWeb.Agenda.userControl
             lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
         }
 
+        private void aggiungiDiariaAListaArticoli(decimal importoDiaria, string descrizione)
+        {
+            Esito esito = new Esito();
+            Art_Articoli articoloDiaria = Articoli_BLL.Instance.getDiaria(ref esito);
+
+            if (esito.codice != Esito.ESITO_OK || articoloDiaria == null)
+            {
+                basePage.ShowWarning("La diaria non è stata aggiunta agli articoli del dettaglio economico");
+            }
+            else
+            {
+                int idDiaria = articoloDiaria.Id;
+
+
+                int idLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
+
+                // elimino l'eventuale diaria già presente
+                List<DatiArticoliLavorazione> listaArticoliNoDiaria = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.Descrizione != descrizione).ToList();
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = listaArticoliNoDiaria;
+
+                DatiArticoliLavorazione articoloLavorazioneDiaria = Articoli_BLL.Instance.CaricaArticoloLavorazioneByID(idLavorazione, idDiaria, ref esito);
+                articoloLavorazioneDiaria.Costo = articoloLavorazioneDiaria.Prezzo = importoDiaria;
+                articoloLavorazioneDiaria.Descrizione = articoloLavorazioneDiaria.DescrizioneLunga = descrizione;
+
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Add(articoloLavorazioneDiaria);
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
+
+                lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0; }
+        }
+
         private void AggiornaTotali()
         {
             decimal totPrezzo = 0;
@@ -710,6 +774,10 @@ namespace VideoSystemWeb.Agenda.userControl
             lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente == null || 
                                                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || 
                                                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
+
+            lbl_nessunaFiguraProf.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente == null ||
+                                             ListaFigureProfessionali == null ||
+                                             ListaFigureProfessionali.Count == 0);
 
             AggiornaTotali();
         }

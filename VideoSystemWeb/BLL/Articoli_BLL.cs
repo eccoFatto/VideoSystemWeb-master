@@ -45,6 +45,13 @@ namespace VideoSystemWeb.BLL
             return articolo;
         }
 
+        public Art_Articoli getDiaria(ref Esito esito)
+        {
+            Art_Articoli articolo = Art_Articoli_DAL.Instance.CaricaListaArticoli(ref esito).FirstOrDefault(x=>x.DefaultDescrizione.Trim().ToUpper() == "DIARIA");
+
+            return articolo;
+        }
+
         public int CreaArticolo(Art_Articoli articolo, Anag_Utenti utente, ref Esito esito)
         {
             int iREt = Art_Articoli_DAL.Instance.CreaArticolo(articolo, utente, ref esito);
@@ -269,6 +276,7 @@ namespace VideoSystemWeb.BLL
 
             return articoloLavorazione;
         }
+
 
         public List<DatiArticoli> CaricaListaArticoliByIDEvento(int idDatiAgenda, ref Esito esito)
         {

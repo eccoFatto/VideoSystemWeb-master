@@ -119,8 +119,8 @@
 
 .loader {
     position: fixed;
-    left: 50%;
-    top: 50%;
+    left: 45%;
+    top: 35%;
     z-index: 10000;
     /*width: 150px;
     height: 150px;*/

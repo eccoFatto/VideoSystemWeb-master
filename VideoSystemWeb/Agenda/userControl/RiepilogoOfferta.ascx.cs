@@ -95,10 +95,10 @@ namespace VideoSystemWeb.Agenda.userControl
                 lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
 
                 Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
-                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[3].Text)));
+                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[4].Text)));
 
-                e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
-                e.Row.Cells[4].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[4].Text)));
+                e.Row.Cells[2].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text)));
+               // e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
             }
         }
         #endregion
@@ -108,9 +108,9 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            AbilitaVisualizzazioneStampa(false);
+            //AbilitaVisualizzazioneStampa(false);
 
-            lbl_Data.Text = lbl_DataStampa.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            lbl_Data.Text = lbl_DataStampa.Text = DateTime.Now.ToString("dd/MM/yyyy ore HH:mm");
             lbl_Produzione.Text = lbl_ProduzioneStampa.Text = eventoSelezionato.produzione;
             lbl_Lavorazione.Text = lbl_LavorazioneStampa.Text = eventoSelezionato.lavorazione;
             lbl_DataLavorazione.Text = lbl_DataLavorazioneStampa.Text = eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
@@ -142,7 +142,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
             List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
-            string protocollo = listaProtocolli.Count == 0 ? "N.D." : eventoSelezionato.codice_lavoro + " - " + listaProtocolli.First().Numero_protocollo;
+            string protocollo = listaProtocolli.Count == 0 ? "N.D." :  listaProtocolli.First().Numero_protocollo + "-" + eventoSelezionato.codice_lavoro;
             lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
 
             NoteOfferta noteOfferta = NoteOfferta_BLL.Instance.getNoteOffertaByIdDatiAgenda(eventoSelezionato.id, ref esito);
@@ -193,7 +193,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void AbilitaVisualizzazioneStampa(bool isVisualizzazioneStampa)
         {
-            gvArticoli.Columns[4].Visible = !isVisualizzazioneStampa;
+            gvArticoli.Columns[3].Visible = !isVisualizzazioneStampa; // colonna costo
 
             intestazioneSchermo.Visible = !isVisualizzazioneStampa;
             protocolloSchermo.Visible = !isVisualizzazioneStampa;

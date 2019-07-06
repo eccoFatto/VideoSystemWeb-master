@@ -362,7 +362,13 @@ namespace VideoSystemWeb.MAGAZZINO
                     }
                     else
                     {
-                        cmbMod_Posizione.Text = "";
+                        ListItem item = new ListItem();
+                        item.Text = attrezzatura.Id_posizione_magazzino.ToString();
+                        item.Value = attrezzatura.Id_posizione_magazzino.ToString();
+                        cmbMod_Posizione.Items.Add(item);
+
+                        cmbMod_Posizione.Text = attrezzatura.Id_posizione_magazzino.ToString();
+
                     }
 
                     cbMod_Disponibile.Checked = attrezzatura.Disponibile;

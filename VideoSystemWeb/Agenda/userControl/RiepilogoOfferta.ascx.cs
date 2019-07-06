@@ -75,6 +75,7 @@ namespace VideoSystemWeb.Agenda.userControl
             noteOfferta.Banca = ddl_Banca.SelectedValue;
             noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); 
             noteOfferta.Consegna = txt_Consegna.Text;
+            noteOfferta.Note = "";
             NoteOfferta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
 
             val_bancaStampa.Text = noteOfferta.Banca;

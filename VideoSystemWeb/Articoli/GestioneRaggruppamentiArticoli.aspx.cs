@@ -47,7 +47,7 @@ namespace VideoSystemWeb.Articoli
             
             //lista = Art_Gruppi_BLL.Instance.CaricaListaGruppi(ref esito);
 
-            BasePage p = new BasePage();
+            //BasePage p = new BasePage();
 
             // CARICO LA LISTA RAGGRUPPAMENTI
             if (string.IsNullOrEmpty(esito.descrizione))
@@ -68,7 +68,7 @@ namespace VideoSystemWeb.Articoli
 
 
                 // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                abilitaBottoni(p.AbilitazioneInScrittura());
+                abilitaBottoni(AbilitazioneInScrittura());
 
             }
             else

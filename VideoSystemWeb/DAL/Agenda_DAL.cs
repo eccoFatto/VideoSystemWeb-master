@@ -1595,6 +1595,11 @@ namespace VideoSystemWeb.DAL
             SqlParameter parConsegna = new SqlParameter("@consegna", noteOfferta.Consegna);
             parConsegna.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(parConsegna);
+
+            SqlParameter note = new SqlParameter("@note", noteOfferta.Note);
+            note.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(note);
+
         }
 
         private static void CostruisciSP_DeleteDatiLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiAgenda)

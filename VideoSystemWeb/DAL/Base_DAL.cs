@@ -778,6 +778,103 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
+        public static Esito RemoveTipologia(EnumTipologiche tipoTipologica, int idTipologica)
+        {
+            string nomeSP = "";
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            switch (tipoTipologica)
+            {
+                case EnumTipologiche.TIPO_GENERE:
+                    nomeSP = "RemoveTipoGenere";
+                    break;
+                case EnumTipologiche.TIPO_GRUPPO:
+                    nomeSP = "RemoveTipoGruppo";
+                    break;
+                case EnumTipologiche.TIPO_SOTTOGRUPPO:
+                    nomeSP = "RemoveTipoSottogruppo";
+                    break;
+                case EnumTipologiche.TIPO_COLONNE_AGENDA:
+                    nomeSP = "RemoveTipoColonneAgenda";
+                    break;
+                case EnumTipologiche.TIPO_TENDER:
+                    nomeSP = "RemoveTipoTender";
+                    break;
+                case EnumTipologiche.TIPO_QUALIFICHE:
+                    nomeSP = "RemoveTipoQualifiche";
+                    break;
+                case EnumTipologiche.TIPO_CLIENTI_FORNITORI:
+                    nomeSP = "RemoveTipoClientiFornitori";
+                    break;
+                case EnumTipologiche.TIPO_PROTOCOLLO:
+                    nomeSP = "RemoveTipoProtocollo";
+                    break;
+                case EnumTipologiche.TIPO_TIPOLOGIE:
+                    nomeSP = "RemoveTipoTipologie";
+                    break;
+                case EnumTipologiche.TIPO_INTERVENTO:
+                    nomeSP = "RemoveTipoIntervento";
+                    break;
+                case EnumTipologiche.TIPO_CATEGORIE_MAGAZZINO:
+                    nomeSP = "RemoveTipoCategorieMagazzino";
+                    break;
+                case EnumTipologiche.TIPO_SUB_CATEGORIE_MAGAZZINO:
+                    nomeSP = "RemoveTipoSubCategorieMagazzino";
+                    break;
+                case EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO:
+                    nomeSP = "RemoveTipoPosizioneMagazzino";
+                    break;
+
+                default:
+                    break;
+            }
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand(nomeSP))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                            id.Direction = ParameterDirection.Input;
+                            id.Value = idTipologica;
+                            StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.descrizione = "Base_DAL.cs - RemoveTipologia " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return esito;
+        }
+
+
         public static int getProtocollo(ref Esito esito)
         {
             try

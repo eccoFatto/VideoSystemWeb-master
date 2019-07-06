@@ -55,6 +55,7 @@ namespace VideoSystemWeb.DAL
                                     noteOfferta.Banca = dt.Rows[0].Field<string>("banca");
                                     noteOfferta.Pagamento = dt.Rows[0].Field<int>("pagamento");
                                     noteOfferta.Consegna = dt.Rows[0].Field<string>("consegna");
+                                    noteOfferta.Note = dt.Rows[0].Field<string>("note");
                                 }
                             }
                         }
@@ -96,6 +97,7 @@ namespace VideoSystemWeb.DAL
                                     noteOfferta.Banca = dt.Rows[0].Field<string>("banca");
                                     noteOfferta.Pagamento = dt.Rows[0].Field<int>("pagamento");
                                     noteOfferta.Consegna = dt.Rows[0].Field<string>("consegna");
+                                    noteOfferta.Note = dt.Rows[0].Field<string>("note");
                                 }
                             }
                         }
@@ -156,6 +158,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter consegna = new SqlParameter("@consegna", noteOfferta.Consegna);
                             consegna.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(consegna);
+
+                            SqlParameter note = new SqlParameter("@note", noteOfferta.Note);
+                            note.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(note);
 
                             StoreProc.Connection.Open();
 
@@ -225,6 +231,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter consegna = new SqlParameter("@consegna", noteOfferta.Consegna);
                             consegna.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(consegna);
+
+                            SqlParameter note = new SqlParameter("@note", noteOfferta.Note);
+                            note.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(note);
 
                             StoreProc.Connection.Open();
 

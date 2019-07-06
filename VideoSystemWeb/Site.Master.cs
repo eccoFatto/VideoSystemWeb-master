@@ -16,33 +16,47 @@ namespace VideoSystemWeb
             // lbl_benvenuto.Text = "Bentornato " + ((Anag_Utente)Session[SessionManager.UTENTE]).Nome + " " + ((Anag_Utente)Session[SessionManager.UTENTE]).Cognome;
             try
             {
-                bool isAutenticated = Convert.ToBoolean(Application.Get("IS_AUTHENTICATED").ToString());
-                if (!isAutenticated)
-                {
-                    Session["ErrorPageText"] = "TimeOut Sessione";
-                    string url = String.Format("~/pageError.aspx");
-                    Response.Redirect(url, true);
+                //bool isAutenticated = Convert.ToBoolean(Application.Get("IS_AUTHENTICATED").ToString());
+                //if (!isAutenticated)
+                //{
+                //    Session["ErrorPageText"] = "TimeOut Sessione";
+                //    string url = String.Format("~/pageError.aspx");
+                //    Response.Redirect(url, true);
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
+                    if (Session[SessionManager.UTENTE] != null) { 
+                        lbl_benvenuto.Text = "Utente: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Nome + " " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Cognome + " - Ruolo: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).tipoUtente;
 
-                    lbl_benvenuto.Text = "Utente: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Nome + " " + ((Anag_Utenti)Session[SessionManager.UTENTE]).Cognome + " - Ruolo: " + ((Anag_Utenti)Session[SessionManager.UTENTE]).tipoUtente;
+                        lblVersione.Text = BasePage.versione;
 
-                    lblVersione.Text = BasePage.versione;
-
-                    lblDataVersione.Text = BasePage.dataVersione;
-                }
+                        lblDataVersione.Text = BasePage.dataVersione;
+                    }
+                    else
+                    {
+                        //Session["ErrorPageText"] = "TimeOut Sessione";
+                        BasePage b = new BasePage();
+                        b.ShowError("TimeOut Sessione");
+                        string url = String.Format("~/Login.aspx");
+                        Response.Redirect(url, true);
+                    }
+                //}
             }
             catch (Exception ex)
             {
 
                 string eccezione = "Site.Master.cs - Page_Load " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
-                //string paginaErrore = "pageError.aspx?messaggio=" + eccezione;
-                //string url = String.Format("~/pageError.aspx?messaggio={0}", Server.UrlEncode(eccezione));
-                Session["ErrorPageText"]= eccezione;
+
+                Session["ErrorPageText"] = eccezione;
                 string url = String.Format("~/pageError.aspx");
                 Response.Redirect(url, true);
+
+                //BasePage b = new BasePage();
+                //b.ShowError("TimeOut Sessione");
+                //string url = String.Format("~/Login.aspx");
+                //Response.Redirect(url, true);
+
             }
         }
 

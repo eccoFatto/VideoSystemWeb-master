@@ -24,6 +24,7 @@ namespace VideoSystemWeb.Entity
         private string nota;
         private decimal? netto;
         private decimal? lordo;
+        private int? tipoPagamento;
        
         public int Id { get => id; set => id = value; }
         public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
@@ -41,6 +42,45 @@ namespace VideoSystemWeb.Entity
         public string Nota { get => nota; set => nota = value; }
         public decimal? Netto { get => netto; set => netto = value; }
         public decimal? Lordo { get => lordo; set => lordo = value; }
-        
+        public string NominativoCompleto
+        {
+            get
+            {
+                return cognome + " " + nome;
+            }
+        }
+        public string DecodificaTipo
+        {
+            get
+            {
+                return tipo == 0 ? "Collaboratore" : "Fornitore";
+            }
+        }
+        public string ElencoQualifiche
+        {
+            get
+            {
+                string elencoQualifiche = "";
+
+                if (qualifiche != null)
+                { 
+                    if (qualifiche.Count == 1)
+                    {
+                        elencoQualifiche = qualifiche.ElementAt(0).Qualifica;
+                    }
+                    else if (qualifiche.Count > 1)
+                    {
+                        foreach (Anag_Qualifiche_Collaboratori qualColl in qualifiche)
+                        {
+                            elencoQualifiche += qualColl.Qualifica + "; ";
+                        }
+
+                        elencoQualifiche = elencoQualifiche.Substring(0, elencoQualifiche.Length - 2);
+                    }
+                }
+                return elencoQualifiche;
+            }
+        }
+        public int? TipoPagamento { get => tipoPagamento; set => tipoPagamento = value; }
     }
 }

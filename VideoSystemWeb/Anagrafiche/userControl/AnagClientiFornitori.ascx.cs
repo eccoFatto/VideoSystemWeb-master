@@ -552,7 +552,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     pnlContainer.Visible = false;
                     SessionManager.ListaAnagraficheFornitori.Clear();
                     SessionManager.ListaClientiFornitori.Clear();
-                    SessionManager.ListaCittaFornitori.Clear();
+                    //SessionManager.ListaCittaFornitori.Clear();
                     btnRicercaAziende_Click(null, null);
                 }
 
@@ -589,7 +589,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     SessionManager.ListaAnagraficheFornitori.Clear();
                     SessionManager.ListaClientiFornitori.Clear();
-                    SessionManager.ListaCittaFornitori.Clear();
+                    //SessionManager.ListaCittaFornitori.Clear();
                     EditAzienda_Click(null, null);
                 }
                 
@@ -693,7 +693,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     SessionManager.ListaAnagraficheFornitori.Clear();
                     SessionManager.ListaClientiFornitori.Clear();
-                    SessionManager.ListaCittaFornitori.Clear();
+                    //SessionManager.ListaCittaFornitori.Clear();
                     EditAzienda_Click(null, null);
                 }
                 

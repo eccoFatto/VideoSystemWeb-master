@@ -15,22 +15,25 @@ namespace VideoSystemWeb.Agenda.userControl
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
         public event PopupHandler RichiediOperazionePopup; //evento
 
+        #region ELENCO CHIAVI VIEWSTATE
+        private const string VIEWSTATE_LISTAIDTENDER = "listaIdTender";
+        #endregion
+
         public List<string> ListaIdTender
         {
             get
             {
-                return (List<string>)ViewState["listaIdTender"];
+                return (List<string>)ViewState[VIEWSTATE_LISTAIDTENDER];
             }
             set
             {
-                ViewState["listaIdTender"] = value;
+                ViewState[VIEWSTATE_LISTAIDTENDER] = value;
             }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             Esito esito = new Esito();
-
             
             if (!IsPostBack)
             {

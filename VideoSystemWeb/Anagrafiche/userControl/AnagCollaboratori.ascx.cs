@@ -288,7 +288,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 else
                 {
                     SessionManager.ListaAnagraficheCollaboratori.Clear();
-                    SessionManager.ListaCittaCollaboratori.Clear();
+                    //SessionManager.ListaCittaCollaboratori.Clear();
                     EditCollaboratore_Click(null, null);
                 }
             }
@@ -791,7 +791,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     //btn_chiudi_Click(null, null);
                     pnlContainer.Visible = false;
                     SessionManager.ListaAnagraficheCollaboratori.Clear();
-                    SessionManager.ListaCittaCollaboratori.Clear();
+                    //SessionManager.ListaCittaCollaboratori.Clear();
 
                     btnRicercaCollaboratori_Click(null, null);
                 }
@@ -857,7 +857,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 else
                 {
                     SessionManager.ListaAnagraficheCollaboratori.Clear();
-                    SessionManager.ListaCittaCollaboratori.Clear();
+                    //SessionManager.ListaCittaCollaboratori.Clear();
 
                     EditCollaboratore_Click(null, null);
                 }

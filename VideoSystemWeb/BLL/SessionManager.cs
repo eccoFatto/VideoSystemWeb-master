@@ -165,38 +165,41 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiPagamento"] = value;
             }
         }
-        public static List<string> ListaCittaCollaboratori
-        {
-            get
-            {
-                if (HttpContext.Current.Session["listaCittaCollaboratori"] == null || ((List<string>)HttpContext.Current.Session["listaCittaCollaboratori"]).Count() == 0)
-                {
-                    List<string> listaCittaCollaboratori = (from record in ListaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList();
-                    HttpContext.Current.Session["listaCittaCollaboratori"] = listaCittaCollaboratori.Distinct().ToList<string>();
-                }
-                return (List<string>)HttpContext.Current.Session["listaCittaCollaboratori"];
-            }
-            set
-            {
-                HttpContext.Current.Session["listaCittaCollaboratori"] = value;
-            }
-        }
-        public static List<string> ListaCittaFornitori
-        {
-            get
-            {
-                if (HttpContext.Current.Session["listaCittaFornitori"] == null || ((List<string>)HttpContext.Current.Session["listaCittaFornitori"]).Count() == 0)
-                {
-                    List<string> _listaCittaFornitori = (from record in ListaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList();
-                    HttpContext.Current.Session["listaCittaFornitori"] = _listaCittaFornitori.Distinct().ToList<string>();
-                }
-                return (List<string>)HttpContext.Current.Session["listaCittaFornitori"];
-                }
-            set
-            {
-                HttpContext.Current.Session["listaCittaFornitori"] = value;
-            }
-        }
+
+        //public static List<string> ListaCittaCollaboratori
+        //{
+        //    get
+        //    {
+        //        if (HttpContext.Current.Session["listaCittaCollaboratori"] == null || ((List<string>)HttpContext.Current.Session["listaCittaCollaboratori"]).Count() == 0)
+        //        {
+        //            List<string> listaCittaCollaboratori = (from record in ListaAnagraficheCollaboratori select record.ComuneRiferimento.Trim().ToLower()).ToList();
+        //            HttpContext.Current.Session["listaCittaCollaboratori"] = listaCittaCollaboratori.Distinct().ToList<string>();
+        //        }
+        //        return (List<string>)HttpContext.Current.Session["listaCittaCollaboratori"];
+        //    }
+        //    set
+        //    {
+        //        HttpContext.Current.Session["listaCittaCollaboratori"] = value;
+        //    }
+        //}
+
+        //public static List<string> ListaCittaFornitori
+        //{
+        //    get
+        //    {
+        //        if (HttpContext.Current.Session["listaCittaFornitori"] == null || ((List<string>)HttpContext.Current.Session["listaCittaFornitori"]).Count() == 0)
+        //        {
+        //            List<string> _listaCittaFornitori = (from record in ListaAnagraficheFornitori select record.ComuneLegale.Trim().ToLower()).ToList();
+        //            HttpContext.Current.Session["listaCittaFornitori"] = _listaCittaFornitori.Distinct().ToList<string>();
+        //        }
+        //        return (List<string>)HttpContext.Current.Session["listaCittaFornitori"];
+        //        }
+        //    set
+        //    {
+        //        HttpContext.Current.Session["listaCittaFornitori"] = value;
+        //    }
+        //}
+
         public static List<Anag_Referente_Clienti_Fornitori> ListaReferenti
         {
             get
@@ -444,7 +447,6 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaClientiFornitori"] = value;
             }
         }
-
         public static List<Tipologica> ListaTipiCategorieMagazzino
         {
             get
@@ -490,6 +492,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["ListaTipiPosizioniMagazzino"] = value;
             }
         }
+
         public static void ClearSession()
         {
             HttpContext.Current.Session.Clear();

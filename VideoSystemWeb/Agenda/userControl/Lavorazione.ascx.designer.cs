@@ -130,6 +130,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.TextBox txt_TotCosto;
         
         /// <summary>
+        /// Controllo txt_TotLordo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_TotLordo;
+        
+        /// <summary>
         /// Controllo txt_TotIva.
         /// </summary>
         /// <remarks>
@@ -265,13 +274,67 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.DropDownList ddl_FPqualifica;
         
         /// <summary>
-        /// Controllo ddl_FPcitta.
+        /// Controllo txt_FPCitta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_FPcitta;
+        protected global::System.Web.UI.WebControls.TextBox txt_FPCitta;
+        
+        /// <summary>
+        /// Controllo txt_FPNominativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_FPNominativo;
+        
+        /// <summary>
+        /// Controllo btn_Cerca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_Cerca;
+        
+        /// <summary>
+        /// Controllo gv_FigureProfessionaliModifica.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gv_FigureProfessionaliModifica;
+        
+        /// <summary>
+        /// Controllo div_FiguraProfessionale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_FiguraProfessionale;
+        
+        /// <summary>
+        /// Controllo lbl_NominativoFiguraProfessionale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_NominativoFiguraProfessionale;
+        
+        /// <summary>
+        /// Controllo hf_IdFiguraProfessionale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_IdFiguraProfessionale;
         
         /// <summary>
         /// Controllo txt_FPnotaCollaboratore.
@@ -281,15 +344,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_FPnotaCollaboratore;
-        
-        /// <summary>
-        /// Controllo ddl_FPnominativo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_FPnominativo;
         
         /// <summary>
         /// Controllo txt_FPtelefono.
@@ -310,15 +364,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.DropDownList ddl_FPtipoPagamento;
         
         /// <summary>
-        /// Controllo chk_ModCosto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk_ModCosto;
-        
-        /// <summary>
         /// Controllo txt_FPnetto.
         /// </summary>
         /// <remarks>
@@ -326,6 +371,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_FPnetto;
+        
+        /// <summary>
+        /// Controllo txt_FPRimborsoKM.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_FPRimborsoKM;
         
         /// <summary>
         /// Controllo txt_FPlordo.

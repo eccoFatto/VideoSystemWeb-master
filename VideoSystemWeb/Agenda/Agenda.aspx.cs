@@ -20,15 +20,20 @@ namespace VideoSystemWeb.Agenda
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         bool isUtenteAbilitatoInScrittura;
         string coloreViaggio;
+
+        #region ELENCO CHIAVI VIEWSTATE
+        private const string VIEWSTATE_LISTADATIAGENDA = "listaDatiAgenda"; 
+        #endregion
+
         public List<DatiAgenda> ListaDatiAgenda
         {
             get
             {
-                return (List<DatiAgenda>)ViewState["listaDatiAgenda"];
+                return (List<DatiAgenda>)ViewState[VIEWSTATE_LISTADATIAGENDA];
             }
             set
             {
-                ViewState["listaDatiAgenda"] = value;
+                ViewState[VIEWSTATE_LISTADATIAGENDA] = value;
             }
         }
 
@@ -59,9 +64,6 @@ namespace VideoSystemWeb.Agenda
                 DateTime dataPartenza = DateTime.Now;
 
                 ListaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito); //CARICO SOLO EVENTI VISUALIZZATI
-                //listaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(ref esito); //CARICO TUTTI GLI EVENTI
-
-                //ViewState["listaDatiAgenda"] = listaDatiAgenda;
 
                 hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
@@ -203,7 +205,24 @@ namespace VideoSystemWeb.Agenda
 
         protected void btn_chiudi_Click(object sender, EventArgs e)
         {
-            ChiudiPopup();
+            if (hf_Salvataggio.Value == "1")
+            {
+                Esito esito = SalvaEvento();
+                if (esito.codice == Esito.ESITO_OK)
+                {
+                    ChiudiPopup();
+
+                    ShowSuccess("Salvataggio eseguito correttamente");
+                }
+                else
+                {
+                    UpdatePopup();
+                }
+            }
+            else
+            {
+                ChiudiPopup();
+            }
         }
 
         protected void btnOfferta_Click(object sender, EventArgs e)
@@ -494,13 +513,9 @@ namespace VideoSystemWeb.Agenda
 
         private void AggiornaAgenda()
         {
-            //listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"]; //CARICO TUTTI GLI EVENTI
-
             //CARICO SOLO GLI EVENTI VISUALIZZATI
             Esito esito = new Esito();
             ListaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
-
-            //ViewState["listaDatiAgenda"] = listaDatiAgenda;
 
             gv_scheduler.DataSource = CreateDataTable(DateTime.Parse(hf_valoreData.Value));
             gv_scheduler.DataBind();
@@ -605,7 +620,7 @@ namespace VideoSystemWeb.Agenda
 
         private void UpdatePopup()
         {
-            DatiAgenda _eventoSelezionato = SessionManager.EventoSelezionato;// (DatiAgenda)ViewState["eventoSelezionato"];
+            DatiAgenda _eventoSelezionato = SessionManager.EventoSelezionato;
             popupAppuntamento.CreaOggettoSalvataggio(ref _eventoSelezionato);
             SessionManager.EventoSelezionato = _eventoSelezionato;
             popupAppuntamento.PopolaAppuntamento();
@@ -776,7 +791,6 @@ namespace VideoSystemWeb.Agenda
             popupAppuntamento.NascondiErroriValidazione();
 
             Esito esito = new Esito();
-
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
             //List<DatiArticoli> listaDatiArticoli = (SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_OFFERTA &&
             //                                        SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_LAVORAZIONE) ? null : SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
@@ -804,10 +818,12 @@ namespace VideoSystemWeb.Agenda
 
                 ListaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);
 
+                #region SALVATAGGIO PDF
                 if (!string.IsNullOrEmpty(SessionManager.EventoSelezionato.codice_lavoro))
                 {
                     SalvaPdfSuFile();
                 }
+                #endregion
             }
             else
             {
@@ -820,7 +836,6 @@ namespace VideoSystemWeb.Agenda
 
         private void SalvaPdfSuFile()
         {
-            //DatiAgenda eventoSelezionato = (DatiAgenda)ViewState["eventoSelezionato"];
             Esito esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
 
             string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
@@ -829,14 +844,12 @@ namespace VideoSystemWeb.Agenda
             string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
             File.WriteAllBytes(pathOfferta, workStream.ToArray());
         }
-
         
         #endregion
 
         #region OPERAZIONI SUI DATI
         private bool IsDisponibileDataRisorsa(DatiAgenda eventoDaControllare)
         {
-            //listaDatiAgenda = (List<DatiAgenda>)ViewState["listaDatiAgenda"];
             DatiAgenda eventoEsistente = ListaDatiAgenda.FirstOrDefault(x => x.id != eventoDaControllare.id &&
                                                          x.id_colonne_agenda == eventoDaControllare.id_colonne_agenda &&
                                                         ((x.data_inizio_impegno <= eventoDaControllare.data_inizio_impegno && x.data_fine_impegno >= eventoDaControllare.data_inizio_impegno) ||

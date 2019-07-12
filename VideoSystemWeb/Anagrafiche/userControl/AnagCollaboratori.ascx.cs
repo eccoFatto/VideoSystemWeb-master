@@ -669,6 +669,11 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     }
 
                     // DOCUMENTI
+                    lblDoc.Text = "";
+                    tbInsNumeroDocumento.Text = "";
+                    cmbInsTipoDocumento.Text = "";
+                    tbIdDocumentoDaModificare.Text = "";
+                    phDocumenti.Visible = false;
                     DataTable dtDocumenti = new DataTable();
                     if (collaboratore.Documenti != null)
                     {

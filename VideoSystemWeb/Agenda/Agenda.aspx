@@ -166,7 +166,15 @@
         }
 
         function confermaChiusura() {
-            return confirm("Le modifiche non salvate verranno perse. Confermare la chiusura?");
+            var salvataggio = confirm("Salvare le modifiche?\n\nOK: Salva e chiudi\nAnnulla: Chiudi senza salvare");
+            
+            if (salvataggio) {
+                $('#<%=hf_Salvataggio.ClientID%>').val("1");
+            }
+            else {
+                $('#<%=hf_Salvataggio.ClientID%>').val("0");
+            }
+            return true;
         }
 
         function confermaEliminazione() {
@@ -277,7 +285,7 @@
 
                                         </div>
                                         <div class="w3-rest">
-                                            <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" />
+                                            <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" ToolTip="Mostra agenda"/>
                                         </div>
                                     </div>
                                 </div>
@@ -300,7 +308,9 @@
                     <div style="position: absolute; width: 100%; bottom: 0px; text-align: center; height: 7%">
                         <asp:Button ID="btnRiepilogo" runat="server" Text="Visualizza riepilogo" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
-                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); $('.loader').show();" Style="padding: 7px 10px" />
+                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); " Style="padding: 7px 10px" />
+
+                        <asp:HiddenField ID="hf_Salvataggio" runat="server" />
 
                         <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" Style="padding: 7px 10px" />

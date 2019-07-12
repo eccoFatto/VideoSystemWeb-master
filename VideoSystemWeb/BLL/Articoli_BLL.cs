@@ -271,7 +271,7 @@ namespace VideoSystemWeb.BLL
             articoloLavorazione.Prezzo = articoloTemplate.DefaultPrezzo;
             articoloLavorazione.Costo = articoloTemplate.DefaultCosto;
             articoloLavorazione.Iva = iva;
-            articoloLavorazione.Data = DateTime.Now;
+            articoloLavorazione.Data = SessionManager.EventoSelezionato.data_inizio_lavorazione;
             articoloLavorazione.Tv = 0;
 
             return articoloLavorazione;

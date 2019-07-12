@@ -15,20 +15,26 @@ namespace VideoSystemWeb.Agenda.userControl
         public event PopupHandler RichiediOperazionePopup; //evento
         BasePage basePage = new BasePage();
 
+        #region ELENCO CHIAVI VIEWSTATE
+        private const string VIEWSTATE_LISTAARTICOLIGRUPPI = "listaArticoliGruppi";
+        private const string VIEWSTATE_IDARTICOLO = "idArticolo";
+        private const string VIEWSTATE_IDENTIFICATOREARTICOLO = "identificatoreArticolo";
+        #endregion
+
         List<ArticoliGruppi> ListaArticoliGruppi
         {
             get
             {
-                if (ViewState["listaArticoliGruppi"] == null || ((List<ArticoliGruppi>)ViewState["listaArticoliGruppi"]).Count == 0)
+                if (ViewState[VIEWSTATE_LISTAARTICOLIGRUPPI] == null || ((List<ArticoliGruppi>)ViewState[VIEWSTATE_LISTAARTICOLIGRUPPI]).Count == 0)
                 {
-                    ViewState["listaArticoliGruppi"] = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
+                    ViewState[VIEWSTATE_LISTAARTICOLIGRUPPI] = Articoli_BLL.Instance.CaricaListaArticoliGruppi();
                 }
 
-                return (List<ArticoliGruppi>)ViewState["listaArticoliGruppi"];
+                return (List<ArticoliGruppi>)ViewState[VIEWSTATE_LISTAARTICOLIGRUPPI];
             }
             set
             {
-                ViewState["listaArticoliGruppi"] = value;
+                ViewState[VIEWSTATE_LISTAARTICOLIGRUPPI] = value;
             }
         }
 
@@ -46,14 +52,14 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             DatiArticoli articoloSelezionato;
 
-            if (ViewState["idArticolo"]==null)
+            if (ViewState[VIEWSTATE_IDARTICOLO] ==null)
             {
-                long identificatoreOggetto = (long)ViewState["identificatoreArticolo"];
+                long identificatoreOggetto = (long)ViewState[VIEWSTATE_IDENTIFICATOREARTICOLO];
                 articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
             }
             else
             {
-                int idArticolo = (int)ViewState["idArticolo"];
+                int idArticolo = (int)ViewState[VIEWSTATE_IDARTICOLO];
                 articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.Id == idArticolo);
             }
             
@@ -117,13 +123,13 @@ namespace VideoSystemWeb.Agenda.userControl
             if (id == 0)
             {
                 long identificatoreOggetto = Convert.ToInt64(commandArgs[1]);
-                ViewState["identificatoreArticolo"] = identificatoreOggetto;
+                ViewState[VIEWSTATE_IDENTIFICATOREARTICOLO] = identificatoreOggetto;
                 articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
 
             }
             else
             {
-                ViewState["idArticolo"] = id;
+                ViewState[VIEWSTATE_IDARTICOLO] = id;
                 articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.Id == id);
             }
 
@@ -239,7 +245,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void ClearModificaArticoli()
         {
-            ViewState["identificatoreArticolo"] = null;
+            ViewState[VIEWSTATE_IDENTIFICATOREARTICOLO] = null;
             txt_Descrizione.Text = "";
             txt_DescrizioneLunga.Text = "";
             txt_Costo.Text = "";

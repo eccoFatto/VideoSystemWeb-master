@@ -252,7 +252,8 @@
             </div>
 
             <div class="round">
-                <asp:GridView ID="gv_protocolli" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" PageSize="20">
+                <asp:GridView ID="gv_protocolli" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" PageSize="20"  AllowSorting="true" OnSorting="gv_protocolli_Sorting">
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="Last"/>
                     <Columns>
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
                             <ItemTemplate>
@@ -335,22 +336,30 @@
                                         <asp:TextBox ID="tbIdProtocolloDaModificare" runat="server" Visible="false"></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>Data Prot</label>
-                                        <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" CssClass="w3-input w3-border" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
                                         <label>Riferimento Documento</label>
                                         <asp:TextBox ID="tbMod_ProtocolloRiferimento" runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
+                                    <div class="w3-quarter">
+                                        <label>Tipo</label>
+                                        <asp:DropDownList ID="cmbMod_Tipologia" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
+                                        </asp:DropDownList>
+                                    </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
-                                    <div class="w3-threequarter">
+                                    <div class="w3-quarter">
+                                        <label>Produzione</label>
+                                        <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
                                         <label>Lavorazione</label>
                                         <asp:TextBox ID="tbMod_Lavorazione" runat="server" MaxLength="200" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
                                         <label>Data Lav</label>
                                         <asp:TextBox ID="tbMod_DataLavorazione" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>&nbsp;</label>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
@@ -366,25 +375,32 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w3-half">
-                                        <label>Produzione</label>
-                                        <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                    <div class="w3-quarter">
+                                        <label>Data Prot</label>
+                                        <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" CssClass="w3-input w3-border" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>&nbsp;</label>
                                     </div>
                                 </div>
 
                                 <div class="w3-row-padding w3-center w3-text-center">
-                                    <div class="w3-half">
-                                        <label>Tipo</label>
-                                        <asp:DropDownList ID="cmbMod_Tipologia" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
-                                        </asp:DropDownList>
+                                    <div class="w3-quarter">
+                                        <label>&nbsp;</label>
                                     </div>
                                     <div class="w3-half">
                                         <label>Nome File</label>
                                         <asp:TextBox ID="tbMod_NomeFile" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
+                                    <div class="w3-quarter">
+                                        <label>&nbsp;</label>
+                                    </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
-                                    <div class="w3-threequarter">
+                                    <div class="w3-quarter">
+                                        <label>&nbsp;</label>
+                                    </div>
+                                    <div class="w3-half">
                                         <label>&nbsp;</label>
                                         <ajaxToolkit:AsyncFileUpload ID="fuFileProt"
                                             runat="server"
@@ -395,13 +411,14 @@
                                             OnUploadedComplete="AsyncFileUpload1_UploadedComplete"
                                             OnUploadedFileError="AsyncFileUpload1_UploadedFileError"
                                             ClientIDMode="AutoID"
-                                            Width="600px"
+                                            Width="99%"
                                             class="w3-input w3-border w3-round" />
                                     </div>
                                     <div class="w3-quarter">
                                         <label>&nbsp;</label>
-                                        <asp:Button ID="btnAnnullaCaricamento" runat="server" class="w3-input w3-border w3-round w3-red" Width="50px" Text="&times;" ToolTip="Annulla Caricamento File" OnClick="btnAnnullaCaricamento_Click" />
+                                        <asp:Button ID="btnAnnullaCaricamento" runat="server" class="w3-input w3-border w3-round w3-red  w3-center" Width="50px" Text="&times;" ToolTip="Annulla Caricamento File" OnClick="btnAnnullaCaricamento_Click" />
                                     </div>
+
                                 </div>
                                 <br />
                                 <asp:Label ID="lblStatus" runat="server" Style="font-family: Arial; font-size: small;"></asp:Label>

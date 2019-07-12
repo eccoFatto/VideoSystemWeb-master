@@ -75,7 +75,7 @@ namespace VideoSystemWeb.Agenda.userControl
             noteOfferta.Banca = ddl_Banca.SelectedValue;
             noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); 
             noteOfferta.Consegna = txt_Consegna.Text;
-            noteOfferta.Note = "";
+            noteOfferta.Note = txt_Note.Text.Trim();
             NoteOfferta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
 
             val_bancaStampa.Text = noteOfferta.Banca;
@@ -166,6 +166,12 @@ namespace VideoSystemWeb.Agenda.userControl
             //ddl_Banca.SelectedValue = noteOfferta.Banca;// commentato perché se non trova l'elemento (e può succedere) schioda
             txt_Consegna.Text = noteOfferta.Consegna;
             cmbMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+            if (string.IsNullOrEmpty(noteOfferta.Note)){
+                note.Text = "";
+            }
+            else { 
+                note.Text = noteOfferta.Note.Trim();
+            }
 
             return esito;
         }

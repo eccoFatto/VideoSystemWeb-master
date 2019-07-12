@@ -320,7 +320,8 @@
             <div id="totaliStampa" style="width: 100%; font-size: 8pt" runat="server" visible="true">
                 <table style="width: 100%">
                     <tr>
-                        <td style="width: 70%">&nbsp;</td>
+                        <td style="width: 70%; text-align: left; padding-left: 20px;border:solid 1px #000;">
+                            <b><asp:Label ID="note" runat="server" Text="NOTE" /></b></td>
                         <td style="width: 30%">
                             <table style="width: 100%">
                                 <tr>
@@ -347,7 +348,7 @@
                                             <asp:Label ID="totaleEuroStampa" runat="server" /></b>
                                     </td>
                                 </tr>
-                                <tr>
+<%--                                <tr>
                                     <td colspan="2">&nbsp;</td>
                                 </tr>
                                 <tr>
@@ -367,7 +368,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">&nbsp;</td>
-                                </tr>
+                                </tr>--%>
                             </table>
                         </td>
                     </tr>
@@ -495,6 +496,14 @@
                 </div>
                 <div class="w3-threequarter">
                     <asp:TextBox ID="txt_Consegna" runat="server" class="w3-input w3-border" placeholder="Consegna" Style="padding: 2px;"></asp:TextBox>
+                </div>
+            </div>
+            <div class="w3-row" style="padding: 5px;">
+                <div class="w3-quarter" style="padding: 5px">
+                    <label style="margin-bottom: 0.2rem;">Note</label>
+                </div>
+                <div class="w3-threequarter">
+                    <asp:TextBox ID="txt_Note" runat="server" class="w3-input w3-border" placeholder="Note" Style="padding: 2px;" Rows="5" TextMode="MultiLine"></asp:TextBox>
                 </div>
             </div>
         </div>

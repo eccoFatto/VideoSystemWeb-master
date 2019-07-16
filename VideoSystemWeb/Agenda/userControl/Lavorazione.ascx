@@ -181,6 +181,12 @@
     function confermaEliminazioneFigProf() {
         return confirm("Eliminare la figura professionale corrente?");
     }
+
+    function enterEvent(e) {
+    if (e.keyCode == 13) {
+        $("input[id=<%=btn_Cerca.ClientID%>]").click();
+    }
+    }
 </script>
 
 <asp:HiddenField ID="hf_tabSelezionataLavorazione" runat="server" EnableViewState="true" Value="Lavoraz" />
@@ -261,7 +267,7 @@
                                         <asp:Label ID="lbl_Costo" runat="server" HeaderStyle-Width="8%" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:BoundField DataField="FP_lordo" HeaderText="Lordo" HeaderStyle-Width="8%" />
+                                <asp:BoundField DataField="FP_lordo" HeaderText="Lordo" DataFormatString="{0:N2}" HeaderStyle-Width="8%" />
                                 <asp:TemplateField HeaderText="Tipo pagamento" HeaderStyle-Width="10%">
                                     <ItemTemplate>
                                         <asp:Label ID="lbl_TipoPagamento" runat="server" />
@@ -404,11 +410,11 @@
                                         </div>
                                         <div class="w3-col" style="padding: 5px; width: 23%">
                                             <label style="margin-bottom: 0.2rem;">Città</label>
-                                            <asp:TextBox ID="txt_FPCitta" class="w3-input w3-border w3-round-medium" runat="server" Style="padding: 2px;"></asp:TextBox>
+                                            <asp:TextBox ID="txt_FPCitta" class="w3-input w3-border w3-round-medium" runat="server" Style="padding: 2px;" onkeydown="javascript:enterEvent(event);"></asp:TextBox>
                                         </div>
                                         <div class="w3-col" style="padding: 5px; width: 25%">
                                             <label style="margin-bottom: 0.2rem;">Nominativo (Cognome Nome)</label>
-                                            <asp:TextBox ID="txt_FPNominativo" class="w3-input w3-border w3-round-medium" runat="server" Style="padding: 2px;"></asp:TextBox>
+                                            <asp:TextBox ID="txt_FPNominativo" class="w3-input w3-border w3-round-medium" runat="server" Style="padding: 2px;" onkeydown="javascript:enterEvent(event);"></asp:TextBox>
                                         </div>
                                         <div class="w3-rest" style="padding: 5px;">
                                             <asp:Button ID="btn_Cerca" class=" w3-btn w3-white w3-border w3-border-green w3-round-medium" Style="font-size: smaller; padding: 4px 8px; margin-top: 21px;" runat="server" Text="Cerca" OnClick="btn_Cerca_Click"></asp:Button>
@@ -428,7 +434,7 @@
                                                 <asp:BoundField DataField="Citta" HeaderText="Città" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="20%" ItemStyle-HorizontalAlign="Left"/>
                                                 <asp:TemplateField>
                                                     <ItemTemplate>
-                                                        <asp:ImageButton ID="btn_SelezionaFP" runat="server" ImageUrl="/Images/Male-user-accept-icon.png" ToolTip="Seleziona la Figura Professionale corrente" CommandName="seleziona" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' Height="15"/>
+                                                        <asp:ImageButton ID="btn_SelezionaFP" runat="server" ImageUrl="/Images/Male-user-accept-icon.png" ToolTip="Seleziona la Figura Professionale corrente" CommandName="seleziona" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") + "," + Eval("Tipo") %>' Height="15"/>
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>

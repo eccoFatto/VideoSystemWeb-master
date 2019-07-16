@@ -50,7 +50,7 @@ namespace VideoSystemWeb.BLL
         {
             List<Anag_Clienti_Fornitori> listaAziende = Anag_Clienti_Fornitori_DAL.Instance.CaricaListaAziende(ref esito, soloAttivi);
 
-            return listaAziende.Where(x => x.Cliente).ToList<Anag_Clienti_Fornitori>();
+            return listaAziende.Where(x => x.Fornitore).ToList<Anag_Clienti_Fornitori>();
         }
 
         public int CreaAzienda(Anag_Clienti_Fornitori azienda, Anag_Utenti utente, ref Esito esito)

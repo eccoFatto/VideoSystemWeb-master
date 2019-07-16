@@ -22,6 +22,11 @@ namespace VideoSystemWeb.Agenda.userControl
         private const int COLLABORATORE = 0;
         private const int FORNITORE = 1;
 
+        private const int ID_TIPO_PAGAMENTO_ASSUNZIONE = 1;
+        private const int ID_TIPO_PAGAMENTO_MISTA = 2;
+        private const int ID_TIPO_PAGAMENTO_RITENUTA_ACCONTO = 3;
+        private const int ID_TIPO_PAGAMENTO_FATTURA = 4;
+
         #region ELENCO CHIAVI VIEWSTATE
         private const string VIEWSTATE_FP_DETTAGLIOECONOMICO = "FPDettaglioEconomico"; // Figura Professionale selezionata in pannello modifica
         private const string VIEWSTATE_LISTAARTICOLIGRUPPILAVORAZIONE = "listaArticoliGruppiLavorazione";
@@ -154,10 +159,20 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_FPtipoPagamento.SelectedValue = articoloSelezionato.IdTipoPagamento != null ? articoloSelezionato.IdTipoPagamento.ToString() : "";
 
                     //Cerco tra Collaboratori o Fornitori
-                    FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdCollaboratori);
-                    if (figuraProfessionale == null)
+                    FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdCollaboratori && x.Tipo == COLLABORATORE);
+                    if (figuraProfessionale != null) // TROVATO UN COLLABORATORE
                     {
-                        figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdFornitori);
+                        figuraProfessionale.IdCollaboratori = articoloSelezionato.IdCollaboratori;
+                        figuraProfessionale.IdFornitori = null;
+                    }
+                    else // TROVATO UN FORNITORE
+                    {
+                        figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdFornitori && x.Tipo == FORNITORE);
+                        if (figuraProfessionale != null)
+                        {
+                            figuraProfessionale.IdCollaboratori = null;
+                            figuraProfessionale.IdFornitori = articoloSelezionato.IdFornitori;
+                        }
                     }
 
                     //AbilitaComponentiCosto(articoloSelezionato);
@@ -174,9 +189,14 @@ namespace VideoSystemWeb.Agenda.userControl
                         {
                             txt_FPnetto.Text = articoloSelezionato.FP_netto.ToString();
                             txt_FPlordo.Text = articoloSelezionato.FP_lordo.ToString();
+
+                            if (articoloSelezionato.IdTipoPagamento == ID_TIPO_PAGAMENTO_MISTA)
+                            {
+                                txt_FPRimborsoKM.Text = (articoloSelezionato.FP_netto - 45).ToString();
+                            }
                         }
 
-                        ddl_FPtipo.SelectedValue = figuraProfessionale.Tipo.ToString();
+                        ddl_FPtipo.SelectedValue = "";// figuraProfessionale.Tipo.ToString();
                         txt_FPnotaCollaboratore.Text = articoloSelezionato.Nota;
                         lbl_NominativoFiguraProfessionale.Text = figuraProfessionale.NominativoCompleto;
                         txt_FPtelefono.Text = figuraProfessionale.Telefono;
@@ -362,10 +382,12 @@ namespace VideoSystemWeb.Agenda.userControl
             if (figuraProfessionaleSelezionata!=null && figuraProfessionaleSelezionata.Tipo == COLLABORATORE)
             {
                 articoloSelezionato.IdCollaboratori = figuraProfessionaleSelezionata.Id;
+                articoloSelezionato.IdFornitori = null;
             }
             else if (figuraProfessionaleSelezionata != null && figuraProfessionaleSelezionata.Tipo == FORNITORE)
             {
-                articoloSelezionato.IdFornitori = figuraProfessionaleSelezionata.Id; 
+                articoloSelezionato.IdFornitori = figuraProfessionaleSelezionata.Id;
+                articoloSelezionato.IdCollaboratori = null;
             }
 
             articoloSelezionato.IdTipoPagamento = ddl_FPtipoPagamento.SelectedValue == "" ? null : (int?)int.Parse(ddl_FPtipoPagamento.SelectedValue);
@@ -455,13 +477,13 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 if (rigaCorrente.IdCollaboratori != null && rigaCorrente.IdCollaboratori.HasValue)
                 {
-                    FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdCollaboratori);
+                    FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdCollaboratori && x.Tipo == COLLABORATORE);
                     ((Label)e.Row.FindControl("lbl_Riferimento")).Text = figuraProfessionale.NominativoCompleto;
                 }
 
                 if (rigaCorrente.IdFornitori != null && rigaCorrente.IdFornitori.HasValue)
                 {
-                    FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdFornitori);
+                    FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdFornitori && x.Tipo == FORNITORE);
                     ((Label)e.Row.FindControl("lbl_Riferimento")).Text = figuraProfessionale.NominativoCompleto;
                 }
 
@@ -586,6 +608,7 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
             int id = Convert.ToInt32(commandArgs[0]);
+            int tipo = Convert.ToInt32(commandArgs[2]);
 
             FiguraProfessionale figuraProfessionaleSelezionata;
 
@@ -596,7 +619,7 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                figuraProfessionaleSelezionata = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == id);
+                figuraProfessionaleSelezionata = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == id && x.Tipo == tipo);
             }
 
             switch (e.CommandName)

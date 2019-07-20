@@ -48,14 +48,14 @@ namespace VideoSystemWeb
 
                 string eccezione = "Site.Master.cs - Page_Load " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
 
-                Session["ErrorPageText"] = eccezione;
-                string url = String.Format("~/pageError.aspx");
-                Response.Redirect(url, true);
+                //Session["ErrorPageText"] = eccezione;
+                //string url = String.Format("~/pageError.aspx");
+                //Response.Redirect(url, true);
 
                 //BasePage b = new BasePage();
                 //b.ShowError("TimeOut Sessione");
-                //string url = String.Format("~/Login.aspx");
-                //Response.Redirect(url, true);
+                string url = String.Format("~/Login.aspx");
+                Response.Redirect(url, true);
 
             }
         }

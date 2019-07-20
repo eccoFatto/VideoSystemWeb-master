@@ -319,15 +319,6 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbIdProtocolloDaModificare;
         
         /// <summary>
-        /// Controllo tbMod_DataProtocollo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_DataProtocollo;
-        
-        /// <summary>
         /// Controllo tbMod_ProtocolloRiferimento.
         /// </summary>
         /// <remarks>
@@ -335,6 +326,24 @@ namespace VideoSystemWeb.Protocollo {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_ProtocolloRiferimento;
+        
+        /// <summary>
+        /// Controllo cmbMod_Tipologia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Tipologia;
+        
+        /// <summary>
+        /// Controllo tbMod_Produzione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Produzione;
         
         /// <summary>
         /// Controllo tbMod_Lavorazione.
@@ -382,22 +391,13 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectCliente;
         
         /// <summary>
-        /// Controllo tbMod_Produzione.
+        /// Controllo tbMod_DataProtocollo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Produzione;
-        
-        /// <summary>
-        /// Controllo cmbMod_Tipologia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Tipologia;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_DataProtocollo;
         
         /// <summary>
         /// Controllo tbMod_NomeFile.

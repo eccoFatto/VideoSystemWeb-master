@@ -51,9 +51,13 @@ namespace VideoSystemWeb.Agenda
 
             popupRiepilogoOfferta.RichiediOperazionePopup += OperazioniPopup;
             popupLavorazione.RichiediOperazionePopup += OperazioniPopup;
+            popupConsuntivo.RichiediOperazionePopup += OperazioniPopup;
 
             popupRiepilogoOfferta.RichiediCodiceLavoro += GetCodiceLavoro;
             popupRiepilogoOfferta.RichiediListaArticoli += GetListaArticoli;
+
+            popupConsuntivo.RichiediCodiceLavoro += GetCodiceLavoro;
+            popupConsuntivo.RichiediListaArticoli += GetListaArticoli;
 
             isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
             Tipologica viaggio  = UtilityTipologiche.getElementByID(SessionManager.ListaStati, Stato.Instance.STATO_VIAGGIO, ref esito);
@@ -120,7 +124,6 @@ namespace VideoSystemWeb.Agenda
             if (esito.codice == Esito.ESITO_OK)
             {
                // ChiudiPopup();
-               
                 ShowSuccess("Salvataggio eseguito correttamente");
             }
             else
@@ -140,6 +143,27 @@ namespace VideoSystemWeb.Agenda
             {
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriRiepilogo", script: "javascript: document.getElementById('modalRiepilogoOfferta').style.display='block'", addScriptTags: true);
+
+                //temporaneamente eliminato perché è una gran rottura di cazzo
+                //ShowSuccess("L'evento è stato salvato automaticamente");
+            }
+            else
+            {
+                UpdatePopup();
+            }
+        }
+
+        protected void btnConsuntivo_Click(object sender, EventArgs e)
+        {
+           // Esito esito = SalvaEvento(); 
+           Esito esito = popupConsuntivo.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
+
+            upConsuntivo.Update();
+
+            if (esito.codice == Esito.ESITO_OK)
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriConsuntivo", script: "javascript: document.getElementById('modalConsuntivo').style.display='block'", addScriptTags: true);
 
                 //temporaneamente eliminato perché è una gran rottura di cazzo
                 //ShowSuccess("L'evento è stato salvato automaticamente");
@@ -280,22 +304,22 @@ namespace VideoSystemWeb.Agenda
             
         }
 
-        protected void btnStampa_Click(object sender, EventArgs e)
-        {
-            string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
-            MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
+        //protected void btnStampa_Click(object sender, EventArgs e)
+        //{
+        //    string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
+        //    MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
 
-            Response.Clear();
-            Response.ClearContent();
-            Response.ClearHeaders();
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile );
-            Response.AddHeader("Content-Length", workStream.Length.ToString());
-            Response.BinaryWrite(workStream.ToArray());
-            Response.Flush();
-            Response.Close();
-            Response.End();
-        }
+        //    Response.Clear();
+        //    Response.ClearContent();
+        //    Response.ClearHeaders();
+        //    Response.ContentType = "application/pdf";
+        //    Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile );
+        //    Response.AddHeader("Content-Length", workStream.Length.ToString());
+        //    Response.BinaryWrite(workStream.ToArray());
+        //    Response.Flush();
+        //    Response.Close();
+        //    Response.End();
+        //}
 
         protected void gv_scheduler_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -612,8 +636,11 @@ namespace VideoSystemWeb.Agenda
                 case "CLOSE":
                     ChiudiPopup();
                     break;
-                case "SAVE_PDF":
-                    SalvaPdfSuFile();
+                case "SAVE_PDF_OFFERTA":
+                    SalvaPdfOffertaSuFile();
+                    break;
+                case "SAVE_PDFCONSUNTIVO":
+                    SalvaPdfConsuntivoSuFile();
                     break;
             }
         }     
@@ -649,7 +676,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = SessionManager.EventoSelezionato.id != 0;
-                    btnRiepilogo.Visible = false;
+                    btnRiepilogo.Visible = btnConsuntivo.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_PREVISIONE_IMPEGNO);
                 }
@@ -665,7 +692,7 @@ namespace VideoSystemWeb.Agenda
                     btnRiepilogo.Visible = true;
                     btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnElimina.Visible = true;
-
+                    btnConsuntivo.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
@@ -681,7 +708,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = true;
-                    btnRiepilogo.Visible = true;
+                    btnRiepilogo.Visible = btnConsuntivo.Visible = true;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
@@ -821,7 +848,8 @@ namespace VideoSystemWeb.Agenda
                 #region SALVATAGGIO PDF
                 if (!string.IsNullOrEmpty(SessionManager.EventoSelezionato.codice_lavoro))
                 {
-                    SalvaPdfSuFile();
+                    SalvaPdfOffertaSuFile();
+                    SalvaPdfConsuntivoSuFile();
                 }
                 #endregion
             }
@@ -834,7 +862,7 @@ namespace VideoSystemWeb.Agenda
             return esito;
         }
 
-        private void SalvaPdfSuFile()
+        private void SalvaPdfOffertaSuFile()
         {
             Esito esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
 
@@ -844,7 +872,18 @@ namespace VideoSystemWeb.Agenda
             string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
             File.WriteAllBytes(pathOfferta, workStream.ToArray());
         }
-        
+
+        private void SalvaPdfConsuntivoSuFile()
+        {
+            Esito esito = popupConsuntivo.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
+
+            string nomeFile = "Consuntivo_" + val_CodiceLavoro.Text + ".pdf";
+            MemoryStream workStream = popupConsuntivo.GeneraPdf();
+
+            string pathConsuntivo = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
+            File.WriteAllBytes(pathConsuntivo, workStream.ToArray());
+        }
+
         #endregion
 
         #region OPERAZIONI SUI DATI

@@ -67,7 +67,7 @@ namespace VideoSystemWeb.BLL
                         }
                         catch (Exception ex)
                         {
-                            log.Error("ListaCompletaFigProf FORNITORE - " + collaboratore.Id.ToString(), ex);
+                            log.Error("ListaCompletaFigProf COLLABORATORE - " + collaboratore.Id.ToString(), ex);
                         }
                     }
 

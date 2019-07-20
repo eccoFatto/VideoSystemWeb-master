@@ -4,6 +4,7 @@
 <%@ Register TagPrefix="popup" TagName="Offerta" Src="~/Agenda/userControl/Offerta.ascx" %>
 <%@ Register TagPrefix="popup" TagName="Lavorazione" Src="~/Agenda/userControl/Lavorazione.ascx" %>
 <%@ Register TagPrefix="popup" TagName="RiepilogoOfferta" Src="~/Agenda/userControl/RiepilogoOfferta.ascx" %>
+<%@ Register TagPrefix="popup" TagName="Consuntivo" Src="~/Agenda/userControl/Consuntivo.ascx" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <script>
@@ -306,6 +307,7 @@
                     </div>
 
                     <div style="position: absolute; width: 100%; bottom: 0px; text-align: center; height: 7%">
+                        <asp:Button ID="btnConsuntivo" runat="server" Text="Visualizza consuntivo" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnConsuntivo_Click" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnRiepilogo" runat="server" Text="Visualizza riepilogo" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); " Style="padding: 7px 10px" />
@@ -331,7 +333,12 @@
     <asp:UpdatePanel ID="upRiepilogoOfferta" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
         <ContentTemplate>
             <popup:RiepilogoOfferta ID="popupRiepilogoOfferta" runat="server" />
+        </ContentTemplate>
+    </asp:UpdatePanel>
 
+    <asp:UpdatePanel ID="upConsuntivo" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+        <ContentTemplate>
+            <popup:Consuntivo ID="popupConsuntivo" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
     <div class="showAgendaBackground" style="display: none"></div>

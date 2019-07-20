@@ -250,6 +250,7 @@ namespace VideoSystemWeb.Agenda.userControl
             tb_Nota.Text = evento.nota;
 
             List<DatiTender> listaDatiTender = Dati_Tender_BLL.Instance.getDatiAgendaTenderByIdAgenda(evento.id, ref esito);
+            ListaIdTender = (from tender in listaDatiTender select tender.IdTender.ToString()).ToList();
 
             for (int i = 0; i < check_tender.Items.Count; i++)
             {

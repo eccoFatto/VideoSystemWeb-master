@@ -7,172 +7,46 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.Agenda {
+namespace VideoSystemWeb.Agenda.userControl {
     
     
-    public partial class Agenda {
+    public partial class Consuntivo {
         
         /// <summary>
-        /// Controllo hf_valoreData.
+        /// Controllo modalConsuntivoContent.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_valoreData;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl modalConsuntivoContent;
         
         /// <summary>
-        /// Controllo hf_data.
+        /// Controllo imgLogo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_data;
+        protected global::System.Web.UI.WebControls.Image imgLogo;
         
         /// <summary>
-        /// Controllo hf_risorsa.
+        /// Controllo intestazioneSchermo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_risorsa;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl intestazioneSchermo;
         
         /// <summary>
-        /// Controllo hf_tabSelezionata.
+        /// Controllo lbl_Data.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_tabSelezionata;
-        
-        /// <summary>
-        /// Controllo btnsearch.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnsearch;
-        
-        /// <summary>
-        /// Controllo UpdatePanelCal.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanelCal;
-        
-        /// <summary>
-        /// Controllo gv_scheduler.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gv_scheduler;
-        
-        /// <summary>
-        /// Controllo divLegenda.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLegenda;
-        
-        /// <summary>
-        /// Controllo divFiltroAgenda.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFiltroAgenda;
-        
-        /// <summary>
-        /// Controllo btnEditEvent.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnEditEvent;
-        
-        /// <summary>
-        /// Controllo upEvento.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upEvento;
-        
-        /// <summary>
-        /// Controllo pnlContainer.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pnlContainer;
-        
-        /// <summary>
-        /// Controllo innerContainer.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel innerContainer;
-        
-        /// <summary>
-        /// Controllo tab_Appuntamento.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_Appuntamento;
-        
-        /// <summary>
-        /// Controllo tab_Offerta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_Offerta;
-        
-        /// <summary>
-        /// Controllo tab_Lavorazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_Lavorazione;
-        
-        /// <summary>
-        /// Controllo lbl_Cliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Cliente;
-        
-        /// <summary>
-        /// Controllo val_Cliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label val_Cliente;
+        protected global::System.Web.UI.WebControls.Label lbl_Data;
         
         /// <summary>
         /// Controllo lbl_Produzione.
@@ -184,15 +58,6 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Label lbl_Produzione;
         
         /// <summary>
-        /// Controllo val_Produzione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label val_Produzione;
-        
-        /// <summary>
         /// Controllo lbl_Lavorazione.
         /// </summary>
         /// <remarks>
@@ -202,246 +67,372 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Label lbl_Lavorazione;
         
         /// <summary>
-        /// Controllo val_Lavorazione.
+        /// Controllo lbl_DataLavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label val_Lavorazione;
+        protected global::System.Web.UI.WebControls.Label lbl_DataLavorazione;
         
         /// <summary>
-        /// Controllo lbl_Tipologia.
+        /// Controllo lbl_Cliente.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Tipologia;
+        protected global::System.Web.UI.WebControls.Label lbl_Cliente;
         
         /// <summary>
-        /// Controllo val_Tipologia.
+        /// Controllo lbl_IndirizzoCliente.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label val_Tipologia;
+        protected global::System.Web.UI.WebControls.Label lbl_IndirizzoCliente;
         
         /// <summary>
-        /// Controllo lbl_DataInizio.
+        /// Controllo lbl_PIvaCliente.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DataInizio;
+        protected global::System.Web.UI.WebControls.Label lbl_PIvaCliente;
         
         /// <summary>
-        /// Controllo val_DataInizio.
+        /// Controllo protocolloSchermo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label val_DataInizio;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl protocolloSchermo;
         
         /// <summary>
-        /// Controllo lbl_DataFine.
+        /// Controllo lbl_CodLavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DataFine;
+        protected global::System.Web.UI.WebControls.Label lbl_CodLavorazione;
         
         /// <summary>
-        /// Controllo val_DataFine.
+        /// Controllo lbl_Protocollo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label val_DataFine;
+        protected global::System.Web.UI.WebControls.Label lbl_Protocollo;
         
         /// <summary>
-        /// Controllo lbl_Stato.
+        /// Controllo intestazioneStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Stato;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl intestazioneStampa;
         
         /// <summary>
-        /// Controllo val_Stato.
+        /// Controllo lbl_DataStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label val_Stato;
+        protected global::System.Web.UI.WebControls.Label lbl_DataStampa;
         
         /// <summary>
-        /// Controllo lbl_CodiceLavoro.
+        /// Controllo lbl_ProduzioneStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_CodiceLavoro;
+        protected global::System.Web.UI.WebControls.Label lbl_ProduzioneStampa;
         
         /// <summary>
-        /// Controllo val_CodiceLavoro.
+        /// Controllo lbl_LavorazioneStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label val_CodiceLavoro;
+        protected global::System.Web.UI.WebControls.Label lbl_LavorazioneStampa;
         
         /// <summary>
-        /// Controllo mostraAgenda.
+        /// Controllo lbl_DataLavorazioneStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image mostraAgenda;
+        protected global::System.Web.UI.WebControls.Label lbl_DataLavorazioneStampa;
         
         /// <summary>
-        /// Controllo popupAppuntamento.
+        /// Controllo lbl_ClienteStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::VideoSystemWeb.Agenda.userControl.Appuntamento popupAppuntamento;
+        protected global::System.Web.UI.WebControls.Label lbl_ClienteStampa;
         
         /// <summary>
-        /// Controllo popupOfferta.
+        /// Controllo lbl_IndirizzoClienteStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::VideoSystemWeb.Agenda.userControl.Offerta popupOfferta;
+        protected global::System.Web.UI.WebControls.Label lbl_IndirizzoClienteStampa;
         
         /// <summary>
-        /// Controllo popupLavorazione.
+        /// Controllo lbl_PIvaClienteStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::VideoSystemWeb.Agenda.userControl.Lavorazione popupLavorazione;
+        protected global::System.Web.UI.WebControls.Label lbl_PIvaClienteStampa;
         
         /// <summary>
-        /// Controllo btnConsuntivo.
+        /// Controllo lbl_CodLavorazioneStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConsuntivo;
+        protected global::System.Web.UI.WebControls.Label lbl_CodLavorazioneStampa;
         
         /// <summary>
-        /// Controllo btnRiepilogo.
+        /// Controllo lbl_ProtocolloStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRiepilogo;
+        protected global::System.Web.UI.WebControls.Label lbl_ProtocolloStampa;
         
         /// <summary>
-        /// Controllo btnSalva.
+        /// Controllo gvArticoli.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSalva;
+        protected global::System.Web.UI.WebControls.GridView gvArticoli;
         
         /// <summary>
-        /// Controllo btn_chiudi.
+        /// Controllo totaliSchermo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_chiudi;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totaliSchermo;
         
         /// <summary>
-        /// Controllo hf_Salvataggio.
+        /// Controllo totale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_Salvataggio;
+        protected global::System.Web.UI.WebControls.Label totale;
         
         /// <summary>
-        /// Controllo btnElimina.
+        /// Controllo totaleIVA.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnElimina;
+        protected global::System.Web.UI.WebControls.Label totaleIVA;
         
         /// <summary>
-        /// Controllo btnOfferta.
+        /// Controllo totaleEuro.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOfferta;
+        protected global::System.Web.UI.WebControls.Label totaleEuro;
         
         /// <summary>
-        /// Controllo btnLavorazione.
+        /// Controllo totaliStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLavorazione;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl totaliStampa;
         
         /// <summary>
-        /// Controllo upRiepilogoOfferta.
+        /// Controllo totaleStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upRiepilogoOfferta;
+        protected global::System.Web.UI.WebControls.Label totaleStampa;
         
         /// <summary>
-        /// Controllo popupRiepilogoOfferta.
+        /// Controllo totaleIVAStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::VideoSystemWeb.Agenda.userControl.RiepilogoOfferta popupRiepilogoOfferta;
+        protected global::System.Web.UI.WebControls.Label totaleIVAStampa;
         
         /// <summary>
-        /// Controllo upConsuntivo.
+        /// Controllo totaleEuroStampa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upConsuntivo;
+        protected global::System.Web.UI.WebControls.Label totaleEuroStampa;
         
         /// <summary>
-        /// Controllo popupConsuntivo.
+        /// Controllo footerSchermo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::VideoSystemWeb.Agenda.userControl.Consuntivo popupConsuntivo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerSchermo;
+        
+        /// <summary>
+        /// Controllo val_bancaSchermo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_bancaSchermo;
+        
+        /// <summary>
+        /// Controllo val_pagamentoSchermo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_pagamentoSchermo;
+        
+        /// <summary>
+        /// Controllo val_consegnaSchermo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_consegnaSchermo;
+        
+        /// <summary>
+        /// Controllo footerStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl footerStampa;
+        
+        /// <summary>
+        /// Controllo val_bancaStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_bancaStampa;
+        
+        /// <summary>
+        /// Controllo val_pagamentoStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_pagamentoStampa;
+        
+        /// <summary>
+        /// Controllo val_consegnaStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label val_consegnaStampa;
+        
+        /// <summary>
+        /// Controllo imgDNV.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgDNV;
+        
+        /// <summary>
+        /// Controllo btnStampaConsuntivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStampaConsuntivo;
+        
+        /// <summary>
+        /// Controllo btnModificaNote.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModificaNote;
+        
+        /// <summary>
+        /// Controllo ddl_Banca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Banca;
+        
+        /// <summary>
+        /// Controllo cmbMod_Pagamento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Pagamento;
+        
+        /// <summary>
+        /// Controllo txt_Consegna.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Consegna;
+        
+        /// <summary>
+        /// Controllo btnOKModificaNote.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOKModificaNote;
     }
 }

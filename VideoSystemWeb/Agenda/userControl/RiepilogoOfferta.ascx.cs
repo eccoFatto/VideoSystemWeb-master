@@ -81,6 +81,7 @@ namespace VideoSystemWeb.Agenda.userControl
             val_bancaStampa.Text = noteOfferta.Banca;
             val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
             val_consegnaStampa.Text = noteOfferta.Consegna;
+            note.Text = noteOfferta.Note.Trim();
 
             RichiediOperazionePopup("SAVE_PDF_OFFERTA");
 

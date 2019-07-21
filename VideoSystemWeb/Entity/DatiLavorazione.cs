@@ -17,6 +17,7 @@ namespace VideoSystemWeb.Entity
         private int? idProduttore;
         private string ordine;
         private string fattura;
+        private string notePianoEsterno;
         private List<DatiArticoliLavorazione> listaArticoliLavorazione;
         private List<FiguraProfessionale> listaFigureProfessionali;
         private List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione;
@@ -29,6 +30,7 @@ namespace VideoSystemWeb.Entity
         public int? IdProduttore { get => idProduttore; set => idProduttore = value; }
         public string Ordine { get => ordine; set => ordine = value; }
         public string Fattura { get => fattura; set => fattura = value; }
+        public string NotePianoEsterno { get => notePianoEsterno; set => notePianoEsterno = value; }
         public List<DatiArticoliLavorazione> ListaArticoliLavorazione { get => listaArticoliLavorazione; set => listaArticoliLavorazione = value; }
         public List<FiguraProfessionale> ListaFigureProfessionali
         { get
@@ -45,7 +47,7 @@ namespace VideoSystemWeb.Entity
                         datoArticoloLavorazione = ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == datoPianoEsterno.IdCollaboratori);
                         figProf = collaboratore.CreaFiguraProfessionale();
                     }
-                    else
+                    else if (datoPianoEsterno.IdFornitori != null && datoPianoEsterno.IdFornitori != 0)
                     {
                         Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdFornitori);
                         datoArticoloLavorazione = ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == datoPianoEsterno.IdFornitori);

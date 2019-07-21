@@ -60,6 +60,7 @@ namespace VideoSystemWeb.DAL
                                     datiLavorazione.IdProduttore = dt.Rows[0].Field<int>("idProduttore");
                                     datiLavorazione.Fattura = dt.Rows[0].Field<string>("fattura");
                                     datiLavorazione.Ordine = dt.Rows[0].Field<string>("ordine");
+                                    datiLavorazione.NotePianoEsterno = dt.Rows[0].Field<string>("notePianoEsterno");
                                 }
                             }
                         }
@@ -101,6 +102,7 @@ namespace VideoSystemWeb.DAL
                                     datiLavorazione.IdProduttore = dt.Rows[0].Field<int?>("idProduttore");
                                     datiLavorazione.Fattura = dt.Rows[0].Field<string>("fattura");
                                     datiLavorazione.Ordine = dt.Rows[0].Field<string>("ordine");
+                                    datiLavorazione.NotePianoEsterno = dt.Rows[0].Field<string>("notePianoEsterno");
                                 }
                                 else
                                 {
@@ -173,6 +175,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter ordine = new SqlParameter("@ordine", datiLavorazione.Ordine);
                             ordine.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(ordine);
+
+                            SqlParameter notePianoEsterno = new SqlParameter("@notePianoEsterno", datiLavorazione.NotePianoEsterno);
+                            notePianoEsterno.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(notePianoEsterno);
 
                             StoreProc.Connection.Open();
 
@@ -251,6 +257,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter ordine = new SqlParameter("@ordine", datiLavorazione.Ordine);
                             ordine.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(ordine);
+
+                            SqlParameter notePianoEsterno = new SqlParameter("@notePianoEsterno", datiLavorazione.NotePianoEsterno);
+                            notePianoEsterno.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(notePianoEsterno);
 
                             StoreProc.Connection.Open();
 

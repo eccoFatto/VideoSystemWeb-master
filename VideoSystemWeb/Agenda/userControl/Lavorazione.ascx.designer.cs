@@ -436,31 +436,22 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Button btnImporta;
         
         /// <summary>
-        /// Controllo TextBox2.
+        /// Controllo btnInserimentoGenerale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.Button btnInserimentoGenerale;
         
         /// <summary>
-        /// Controllo TextBox3.
+        /// Controllo txt_notaGeneralePianoEsterno.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox3;
-        
-        /// <summary>
-        /// Controllo TextBox4.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox4;
+        protected global::System.Web.UI.WebControls.TextBox txt_notaGeneralePianoEsterno;
         
         /// <summary>
         /// Controllo panelModificaPianoEsterno.
@@ -580,6 +571,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.TextBox txt_diaria;
         
         /// <summary>
+        /// Controllo div_note.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_note;
+        
+        /// <summary>
         /// Controllo txt_notaPianoEsterno.
         /// </summary>
         /// <remarks>
@@ -596,6 +596,132 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnOKModificaPianoEsterno;
+        
+        /// <summary>
+        /// Controllo panelInserimentoGeneralePianoEsterno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelInserimentoGeneralePianoEsterno;
+        
+        /// <summary>
+        /// Controllo upInserimentoGeneralePianoEsterno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upInserimentoGeneralePianoEsterno;
+        
+        /// <summary>
+        /// Controllo txt_data_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_data_InsGenerale;
+        
+        /// <summary>
+        /// Controllo txt_orario_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_orario_InsGenerale;
+        
+        /// <summary>
+        /// Controllo ddl_intervento_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_intervento_InsGenerale;
+        
+        /// <summary>
+        /// Controllo chk_albergo_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chk_albergo_InsGenerale;
+        
+        /// <summary>
+        /// Controllo chk_diaria_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chk_diaria_InsGenerale;
+        
+        /// <summary>
+        /// Controllo diaria15_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton diaria15_InsGenerale;
+        
+        /// <summary>
+        /// Controllo Label1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// Controllo diaria30_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton diaria30_InsGenerale;
+        
+        /// <summary>
+        /// Controllo Label2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+        
+        /// <summary>
+        /// Controllo diariaLibera_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton diariaLibera_InsGenerale;
+        
+        /// <summary>
+        /// Controllo txt_diaria_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_diaria_InsGenerale;
+        
+        /// <summary>
+        /// Controllo btnOKInserimentoGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOKInserimentoGenerale;
         
         /// <summary>
         /// Controllo tab_Lavorazione.

@@ -1,16 +1,12 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Lavorazione.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.Lavorazione" %>
 
-<script src="../../Scripts/jscrollable.js" type="text/javascript"></script>
-<script src="../../Scripts/scrollabletable.js" type="text/javascript"></script> 
-
-
 <script>
 
     $(document).ready(function () {
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
 
-
+            // MODIFICA FIGURA PROFESSIONALE PINO ESTERNO
             $('#<%=chk_diaria.ClientID%>').click(function () {
                 $('#<%=diaria15.ClientID%>').prop('checked', false);
                 $('#<%=diaria15.ClientID%>').attr("disabled", !this.checked);
@@ -20,11 +16,8 @@
                 $('#<%=diariaLibera.ClientID%>').attr("disabled", !this.checked);
             });
 
-            //$('#<%=diaria15.ClientID%>').prop('checked', false);
             $('#<%=diaria15.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
-            //$('#<%=diaria30.ClientID%>').prop('checked', false);
             $('#<%=diaria30.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
-            //$('#<%=diariaLibera.ClientID%>').prop('checked', false);
             $('#<%=diariaLibera.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
             if ($('#<%=diariaLibera.ClientID%>').prop("checked")) {
                 $("#<%=txt_diaria.ClientID%>").attr("readonly", false);
@@ -47,34 +40,47 @@
                 $("#<%=txt_diaria.ClientID%>").removeClass(" w3-disabled");
             });
 
+
+            //INSERIMENTO GENERALE
+            $('#<%=chk_diaria_InsGenerale.ClientID%>').click(function () {
+                $('#<%=diaria15_InsGenerale.ClientID%>').prop('checked', false);
+                $('#<%=diaria15_InsGenerale.ClientID%>').attr("disabled", !this.checked);
+                $('#<%=diaria30_InsGenerale.ClientID%>').prop('checked', false);
+                $('#<%=diaria30_InsGenerale.ClientID%>').attr("disabled", !this.checked);
+                $('#<%=diariaLibera_InsGenerale.ClientID%>').prop('checked', false);
+                $('#<%=diariaLibera_InsGenerale.ClientID%>').attr("disabled", !this.checked);
+            });
+
+            $('#<%=diaria15_InsGenerale.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
+            $('#<%=diaria30_InsGenerale.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
+            $('#<%=diariaLibera_InsGenerale.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
+            if ($('#<%=diariaLibera_InsGenerale.ClientID%>').prop("checked")) {
+                $("#<%=txt_diaria_InsGenerale.ClientID%>").attr("readonly", false);
+                $("#<%=txt_diaria_InsGenerale.ClientID%>").removeClass(" w3-disabled");
+            } else {
+                $("#<%=txt_diaria_InsGenerale.ClientID%>").attr("readonly", true);
+                $("#<%=txt_diaria_InsGenerale.ClientID%>").addClass(" w3-disabled");
+            }
+
+            $('#<%=diaria15_InsGenerale.ClientID%>').click(function () {
+                $("#<%=txt_diaria_InsGenerale.ClientID%>").attr("readonly", true);
+                $("#<%=txt_diaria_InsGenerale.ClientID%>").addClass(" w3-disabled");
+            });
+            $('#<%=diaria30_InsGenerale.ClientID%>').click(function () {
+                $("#<%=txt_diaria_InsGenerale.ClientID%>").attr("readonly", true);
+                $("#<%=txt_diaria_InsGenerale.ClientID%>").addClass(" w3-disabled");
+            });
+            $('#<%=diariaLibera_InsGenerale.ClientID%>').click(function () {
+                $("#<%=txt_diaria_InsGenerale.ClientID%>").attr("readonly", false);
+                $("#<%=txt_diaria_InsGenerale.ClientID%>").removeClass(" w3-disabled");
+            });
+
+
             $("#<%=txt_FiltroGruppiLavorazione.ClientID%>").val("");
             $("#<%=txt_FiltroGruppiLavorazione.ClientID%>").keyup(function () {
                 filterLavorazione(2);
             });
 
-           <%-- $('#<%=chk_ModCosto.ClientID%>').click(function () {
-
-                if (this.checked) {
-                    $("#<%=txt_FPnetto.ClientID%>").attr("readonly", false);
-                    $("#<%=txt_FPnetto.ClientID%>").removeClass(" w3-disabled");
-
-                    $("#<%=txt_Costo.ClientID%>").attr("readonly", true);
-                    $("#<%=txt_Costo.ClientID%>").addClass(" w3-disabled");
-                    $("#<%=txt_Costo.ClientID%>").val("0");
-
-                }
-                else {
-                    $("#<%=txt_FPnetto.ClientID%>").attr("readonly", true);
-                    $("#<%=txt_FPnetto.ClientID%>").addClass(" w3-disabled");
-                    $("#<%=txt_FPnetto.ClientID%>").val("0");
-
-                    $("#<%=txt_FPnetto.ClientID%>").val("0");
-
-                    $("#<%=txt_Costo.ClientID%>").attr("readonly", false);
-                    $("#<%=txt_Costo.ClientID%>").removeClass(" w3-disabled");
-
-                }
-            });--%>
 
             $('#<%=ddl_FPtipoPagamento.ClientID%>').change(function () {
 
@@ -206,34 +212,34 @@
             <div class="w3-row">
                 <div class="w3-third">
                     <label>Ordine</label><br />
-                    <asp:TextBox ID="txt_Ordine" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txt_Ordine" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round "></asp:TextBox>
                 </div>
 
                 <div class="w3-third">
                     <label>Fattura</label><br />
-                    <asp:TextBox ID="txt_Fattura" runat="server" Enabled="false"></asp:TextBox>
+                    <asp:TextBox ID="txt_Fattura" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round w3-disabled" Enabled="false"></asp:TextBox>
                 </div>
 
                 <div class="w3-third">
                     <label>Contratto</label><br />
-                    <asp:DropDownList ID="ddl_Contratto" runat="server"></asp:DropDownList>
+                    <asp:DropDownList ID="ddl_Contratto" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round "></asp:DropDownList>
                 </div>
             </div>
             <div class="w3-row">&nbsp;</div>
             <div class="w3-row">
                 <div class="w3-third">
                     <label>Referente</label><br />
-                    <asp:DropDownList ID="ddl_Referente" runat="server"></asp:DropDownList>
+                    <asp:DropDownList ID="ddl_Referente" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round "></asp:DropDownList>
                 </div>
 
                 <div class="w3-third">
                     <label>Capotecnico</label><br />
-                    <asp:DropDownList ID="ddl_Capotecnico" runat="server"></asp:DropDownList>
+                    <asp:DropDownList ID="ddl_Capotecnico" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round "></asp:DropDownList>
                 </div>
 
                 <div class="w3-third">
                     <label>Produttore</label><br />
-                    <asp:DropDownList ID="ddl_Produttore" runat="server"></asp:DropDownList>
+                    <asp:DropDownList ID="ddl_Produttore" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round "></asp:DropDownList>
                 </div>
             </div>
         </div>
@@ -503,13 +509,15 @@
                     <asp:Panel runat="server" ID="panel1" CssClass="round" Style="height: 100%; position: relative; background-color: white; overflow: auto;">
                         <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Figure professionali</p>
                         <asp:Label ID="lbl_nessunaFiguraProf" runat="server" Text="Nessuna figura professionale importata" Style="position: absolute; top: 45%; left: 38%; font-size: large; color: cornflowerblue" />
-                        <asp:GridView ID="gvFigProfessionali" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvFigProfessionali_RowCommand" DataMember="IdentificatoreOggetto">
+                        <asp:GridView ID="gvFigProfessionali" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" 
+                            OnRowCommand="gvFigProfessionali_RowCommand" DataMember="IdentificatoreOggetto">
                             <Columns>
-                                <asp:BoundField DataField="Cognome" HeaderText="Personale" />
                                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
-                                <asp:BoundField DataField="Intervento" HeaderText="Intervento" />
-                                <asp:BoundField DataField="Diaria" HeaderText="Diaria" DataFormatString="{0:N2}" />
-                                <asp:BoundField DataField="Nota" HeaderText="Note" />
+
+                                <asp:BoundField DataField="Elencoqualifiche" HeaderText="Qualifiche"/>
+
+                                <asp:BoundField DataField="NominativoCompleto" HeaderText="Personale" />
+                               
                                 <asp:TemplateField HeaderText="Seleziona">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
@@ -518,6 +526,11 @@
                                         <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" CommandName="elimina" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="return confermaEliminazioneFigProf();" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
+
+                                <asp:BoundField DataField="Intervento" HeaderText="Intervento" />
+                                <asp:BoundField DataField="Diaria" HeaderText="Diaria" DataFormatString="{0:N2}" />
+                                <asp:BoundField DataField="Nota" HeaderText="Note" />
+                                
                             </Columns>
 
                         </asp:GridView>
@@ -525,20 +538,21 @@
                 </div>
 
                 <div class="w3-col" style="height: 15%; padding-left: 5px; margin-bottom: 20px;">
-                    <div class="w3-quarter" style="padding: 5px">
+                    <div class="w3-half w3-right-align" style="padding: 8px">
                         <asp:Button ID="btnImporta" runat="server" Text="Importa" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnImporta_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                     </div>
-                    <div class="w3-quarter" style="padding: 5px">
-                        <asp:TextBox ID="TextBox2" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
+                    <div class="w3-half w3-left-align" style="padding: 8px">
+                        <asp:Button ID="btnInserimentoGenerale" runat="server" Text="Inserimento generale" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnInserimentoGenerale_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                     </div>
-                    <div class="w3-quarter" style="padding: 5px">
-                        <asp:TextBox ID="TextBox3" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
-                    </div>
-                    <div class="w3-quarter" style="padding: 5px">
-                        <asp:TextBox ID="TextBox4" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
-                    </div>
+                    
                 </div>
 
+                <div class="w3-col" style="height: 20%;">
+                    <label style="margin-bottom: 0.2rem;">Note piano esterno</label>
+                    <asp:TextBox ID="txt_notaGeneralePianoEsterno" runat="server" Rows="5" TextMode="MultiLine" class="w3-input w3-round-large w3-border w3-hover-shadow" Style="padding: 2px; "></asp:TextBox>
+                </div>
+
+<!-- MODIFICA ELEMENTO SINGOLO -->
                 <div id="panelModificaPianoEsterno" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
                     <asp:UpdatePanel ID="upModificaPianoEsterno" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                         <ContentTemplate>
@@ -590,7 +604,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="w3-row-padding">
+                                        <div class="w3-row-padding" id="div_note" runat="server">
                                             <div class="w3-col" style="padding: 5px">
                                                 <label style="margin-bottom: 0.2rem;">Note</label>
                                                 <asp:TextBox ID="txt_notaPianoEsterno" runat="server" Rows="5" TextMode="MultiLine" class="w3-input w3-border" Style="padding: 2px;"></asp:TextBox>
@@ -609,6 +623,74 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
+
+<!-- INSERIMENTO GENERALE -->
+                <div id="panelInserimentoGeneralePianoEsterno" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
+                    <asp:UpdatePanel ID="upInserimentoGeneralePianoEsterno" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                        <ContentTemplate>
+                            <div class="w3-modal-content w3-card-4 round" style="position: relative; width: 80%; background-color: white; overflow: auto; min-height:350px;">
+                                <div class="w3-row-padding">
+
+                                    <div class="w3-panel w3-blue w3-center w3-round">
+                                        <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Inserimento generale</b> </h5>
+                                        <span onclick="document.getElementById('<%= panelInserimentoGeneralePianoEsterno.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                                    </div>
+                                    <div class="w3-col round" style="padding: 5px;">
+
+                                        <div class="w3-twothird" style="padding: 5px;">
+                                            <div class="w3-col">
+                                                <div class="w3-half" style="padding: 5px">
+                                                    <label style="margin-bottom: 0.2rem;">Data convocazione</label>
+                                                    <asp:TextBox ID="txt_data_InsGenerale" runat="server" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Style="padding: 2px;"></asp:TextBox>
+                                                </div>
+                                                <div class="w3-half" style="padding: 5px">
+                                                    <label style="margin-bottom: 0.2rem;">Orario convocazione</label>
+                                                    <asp:TextBox ID="txt_orario_InsGenerale" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                            <div class="w3-col">
+                                                <div class="w3-half" style="padding: 5px">
+                                                    <label style="margin-bottom: 0.2rem;">Intervento</label><br />
+                                                    <asp:DropDownList ID="ddl_intervento_InsGenerale" runat="server"></asp:DropDownList>
+
+                                                </div>
+                                                <div class="w3-half" style="padding: 5px">
+                                                    <label style="margin-bottom: 0.2rem;">Albergo</label>
+                                                    <asp:CheckBox ID="chk_albergo_InsGenerale" runat="server" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="w3-third" style="padding: 5px">
+                                            <div class="w3-col">
+                                                <label style="margin-bottom: 0.2rem;">Diaria</label>
+                                                <asp:CheckBox ID="chk_diaria_InsGenerale" runat="server" /><br />
+                                                <div class="w3-row">
+                                                    <asp:RadioButton ID="diaria15_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="Label1" runat="server" Text="15€" />
+                                                </div>
+                                                <div class="w3-row">
+                                                    <asp:RadioButton ID="diaria30_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="Label2" runat="server" Text="30€" />
+                                                </div>
+                                                <div class="w3-row">
+                                                    <asp:RadioButton ID="diariaLibera_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px; float: left" /><asp:TextBox ID="txt_diaria_InsGenerale" runat="server" class="w3-input w3-border w3-disabled" Style="padding: 2px; width: 100px" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+
+                                <div class="w3-center" style="margin: 10px; bottom:15px;position:absolute;width:99%;">
+                                    <asp:Button ID="btnOKInserimentoGenerale" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOKInserimentoGenerale_Click" />
+                                    <button onclick="document.getElementById('<%= panelInserimentoGeneralePianoEsterno.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+
+
             </div>
         </div>
 

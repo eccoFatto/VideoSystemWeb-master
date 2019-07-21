@@ -819,8 +819,6 @@ namespace VideoSystemWeb.Agenda
 
             Esito esito = new Esito();
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
-            //List<DatiArticoli> listaDatiArticoli = (SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_OFFERTA &&
-            //                                        SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_LAVORAZIONE) ? null : SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
             DatiLavorazione datiLavorazione = SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_LAVORAZIONE ? null :  popupLavorazione.CreaDatiLavorazione();
             SessionManager.EventoSelezionato.LavorazioneCorrente = datiLavorazione;
 

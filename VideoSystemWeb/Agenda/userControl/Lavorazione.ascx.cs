@@ -741,6 +741,19 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             ddl_FPqualifica.Items.Insert(0, new ListItem("<seleziona>", ""));
             #endregion
+
+            #region TIPI INTERVENTO
+            ddl_intervento.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
+            ddl_intervento.DataTextField = "nome";
+            ddl_intervento.DataValueField = "id";
+            ddl_intervento.DataBind();
+
+            ddl_intervento_InsGenerale.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
+            ddl_intervento_InsGenerale.DataTextField = "nome";
+            ddl_intervento_InsGenerale.DataValueField = "id";
+            ddl_intervento_InsGenerale.DataBind();
+            #endregion
+
         }
         
 
@@ -950,16 +963,6 @@ namespace VideoSystemWeb.Agenda.userControl
                 SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
                 ListaFigureProfessionali = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; //in questo modo assegno identificatoreOggetto
 
-                ddl_intervento.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
-                ddl_intervento.DataTextField = "nome";
-                ddl_intervento.DataValueField = "id";
-                ddl_intervento.DataBind();
-
-                ddl_intervento_InsGenerale.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
-                ddl_intervento_InsGenerale.DataTextField = "nome";
-                ddl_intervento_InsGenerale.DataValueField = "id";
-                ddl_intervento_InsGenerale.DataBind();
-
                 txt_data_InsGenerale.Text = ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
 
 
@@ -1059,11 +1062,9 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 for (int i = 0; i < datoArticolo.Quantita; i++)
                 {
-                    bool firstTime;
-
                     DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
                     datoArticoloLavorazione.Id = 0;
-                    datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out firstTime);
+                    datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out bool firstTime);
                     datoArticoloLavorazione.IdDatiLavorazione = 0;
                     datoArticoloLavorazione.IdArtArticoli = datoArticolo.IdArtArticoli;
                     datoArticoloLavorazione.IdTipoGenere = datoArticolo.IdTipoGenere;
@@ -1236,9 +1237,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     {
                         totCosto += (decimal)art.Costo;
                     }
-
+                    totLordo += art.FP_lordo != null ? (decimal)art.FP_lordo : 0;
                     totPrezzo += art.Prezzo;
-                    totLordo += art.FP_lordo;
                     totIva += (art.Prezzo * art.Iva / 100);
                 }
 

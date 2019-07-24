@@ -159,7 +159,11 @@ namespace VideoSystemWeb.DAL
                             consegna.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(consegna);
 
-                            SqlParameter note = new SqlParameter("@note", noteOfferta.Note);
+                            SqlParameter note = new SqlParameter("@note", DBNull.Value);
+                            if (noteOfferta.Note != null)
+                            {
+                                note = new SqlParameter("@note", noteOfferta.Note);
+                            }
                             note.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(note);
 

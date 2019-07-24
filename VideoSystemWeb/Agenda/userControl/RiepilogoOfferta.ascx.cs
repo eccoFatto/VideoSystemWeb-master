@@ -118,6 +118,13 @@ namespace VideoSystemWeb.Agenda.userControl
             lbl_DataLavorazione.Text = lbl_DataLavorazioneStampa.Text = eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
 
             Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
+
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                basePage.ShowError(esito.descrizione);
+                return esito;
+            }
+
             lbl_Cliente.Text = lbl_ClienteStampa.Text = cliente.RagioneSociale;
             lbl_IndirizzoCliente.Text = lbl_IndirizzoClienteStampa.Text = cliente.IndirizzoOperativo+" " + cliente.ComuneOperativo;
             lbl_PIvaCliente.Text = lbl_PIvaClienteStampa.Text = string.IsNullOrEmpty(cliente.PartitaIva) ? cliente.CodiceFiscale : cliente.PartitaIva;

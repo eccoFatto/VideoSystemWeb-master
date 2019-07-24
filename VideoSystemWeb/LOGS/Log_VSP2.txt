@@ -5330,3 +5330,18 @@ La procedura 'InsertDatiArticoliLavorazione' restituisce uno stato Null, valore 
 2019-07-12 14:48:53,682 [5] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2019-07-12 15:18:01,624 [5] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2019-07-12 15:22:25,796 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 10:29:13,831 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 13:58:56,076 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 14:03:35,359 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 14:17:39,253 [9] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 14:21:34,801 [11] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 14:27:50,809 [11] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 14:48:32,904 [11] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 14:52:36,792 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 14:55:47,788 [12] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 15:07:12,019 [12] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-23 15:07:33,535 [13] ERROR VideoSystemWeb.BLL.BasePage - nicola - Azienda con id 0 non trovato in tabella anag_clienti_fornitori 
+2019-07-23 15:08:17,671 [12] ERROR VideoSystemWeb.BLL.BasePage - nicola - Azienda con id 0 non trovato in tabella anag_clienti_fornitori 
+2019-07-24 15:29:28,818 [11] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-24 16:53:08,085 [61] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-07-24 21:47:08,331 [9] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!

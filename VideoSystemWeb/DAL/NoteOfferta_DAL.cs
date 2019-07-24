@@ -55,7 +55,8 @@ namespace VideoSystemWeb.DAL
                                     noteOfferta.Banca = dt.Rows[0].Field<string>("banca");
                                     noteOfferta.Pagamento = dt.Rows[0].Field<int>("pagamento");
                                     noteOfferta.Consegna = dt.Rows[0].Field<string>("consegna");
-                                    noteOfferta.Note = dt.Rows[0].Field<string>("note");
+                                    noteOfferta.Note = "";
+                                    if (!string.IsNullOrEmpty(dt.Rows[0].Field<string>("note"))) noteOfferta.Note = dt.Rows[0].Field<string>("note");
                                 }
                             }
                         }
@@ -159,6 +160,7 @@ namespace VideoSystemWeb.DAL
                             consegna.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(consegna);
 
+                            if (string.IsNullOrEmpty(noteOfferta.Note)) noteOfferta.Note = string.Empty;
                             SqlParameter note = new SqlParameter("@note", noteOfferta.Note);
                             note.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(note);

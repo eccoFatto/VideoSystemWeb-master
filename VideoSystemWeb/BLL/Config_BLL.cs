@@ -72,14 +72,14 @@ namespace VideoSystemWeb.BLL
             " where chiave like 'BANCA%' AND valore <> '' AND valore is not null"+
             " order by ordinamento";
             DataTable dtBanche = Base_DAL.getDatiBySql(query, ref esito);
-            if (esito.codice==0 && dtBanche!=null && dtBanche.Rows!=null && dtBanche.Rows.Count > 0)
+            if (esito.codice==Esito.ESITO_OK && dtBanche!=null && dtBanche.Rows!=null && dtBanche.Rows.Count > 0)
             {
                 foreach (DataRow rigaBanca in dtBanche.Rows)
                 {
                     DatiBancari datiBancari = new DatiBancari();
                     datiBancari.Banca = rigaBanca["valore"].ToString();
                     Config cfg = getConfig(ref esito, "Iban" + rigaBanca["chiave"].ToString().Substring(rigaBanca["chiave"].ToString().Length-2));
-                    if (esito.codice == 0)
+                    if (esito.codice == Esito.ESITO_OK)
                     {
                         datiBancari.Iban = cfg.valore;
                         listaDatiBancari.Add(datiBancari);

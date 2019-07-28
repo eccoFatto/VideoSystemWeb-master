@@ -927,76 +927,84 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = new Esito();
 
-            int idDatiAgenda = SessionManager.EventoSelezionato.id;
-            int idCliente = SessionManager.EventoSelezionato.id_cliente;
-
-            SessionManager.EventoSelezionato.LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
-            if (esito.codice != Esito.ESITO_OK)
+            try
             {
-                basePage.ShowError(esito.descrizione);
-            }
-            else if (SessionManager.EventoSelezionato.LavorazioneCorrente == null)
-            {
-                basePage.ShowWarning("La lavorazione corrente non contiene dati.<br/> Verrà creata una nuova lavorazione a partire dai dati dell'offerta.");
-                TrasformaInLavorazione();
-            }
-            else
-            {
-                int idContratto = SessionManager.ListaTipiProtocolli.FirstOrDefault(x => x.nome.ToLower() == "contratto").id;
-                List<Protocolli> listaContratti = Protocolli_BLL.Instance.GetProtocolliByIdCliente(ref esito, idCliente).Where(x=>x.Id_tipo_protocollo == idContratto).ToList();
+                int idDatiAgenda = SessionManager.EventoSelezionato.id;
+                int idCliente = SessionManager.EventoSelezionato.id_cliente;
 
-                if (listaContratti.Count() == 0)
-                {
-                    ddl_Contratto.Items.Clear();
-                    ddl_Contratto.Items.Add(new ListItem("<nessun contratto disponibile>", ""));
-                }
-                else
-                {
-                    ddl_Contratto.DataSource = listaContratti;
-                    ddl_Contratto.DataTextField = "numero_protocollo";
-                    ddl_Contratto.DataValueField = "id";
-                    ddl_Contratto.DataBind();
-                    ddl_Contratto.Items.Insert(0, new ListItem("<seleziona>", ""));
-                    
-                }
-
-                SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
-                ListaFigureProfessionali = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; //in questo modo assegno identificatoreOggetto
-
-                txt_data_InsGenerale.Text = ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
-
-
+                SessionManager.EventoSelezionato.LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
                 if (esito.codice != Esito.ESITO_OK)
                 {
                     basePage.ShowError(esito.descrizione);
                 }
+                else if (SessionManager.EventoSelezionato.LavorazioneCorrente == null)
+                {
+                    basePage.ShowWarning("La lavorazione corrente non contiene dati.<br/> Verrà creata una nuova lavorazione a partire dai dati dell'offerta.");
+                    TrasformaInLavorazione();
+                }
                 else
                 {
-                    CreaNuovaLavorazione(SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione);
+                    int idContratto = SessionManager.ListaTipiProtocolli.FirstOrDefault(x => x.nome.ToLower() == "contratto").id;
+                    List<Protocolli> listaContratti = Protocolli_BLL.Instance.GetProtocolliByIdCliente(ref esito, idCliente).Where(x => x.Id_tipo_protocollo == idContratto).ToList();
 
-                    if (SessionManager.EventoSelezionato.LavorazioneCorrente != null)
+                    if (listaContratti.Count() == 0)
                     {
-                        txt_Ordine.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Ordine;
-                        txt_Fattura.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Fattura;
-                        ddl_Contratto.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto.ToString();
-                        ddl_Referente.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente.ToString();
-                        ddl_Capotecnico.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico.ToString();
-                        ddl_Produttore.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore.ToString();
-
-                        SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
-
-                        gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
-                        gvArticoliLavorazione.DataBind();
-
-                        gvFigProfessionali.DataSource = ListaFigureProfessionali;
-                        gvFigProfessionali.DataBind();
-
-                        txt_notaGeneralePianoEsterno.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.NotePianoEsterno;
+                        ddl_Contratto.Items.Clear();
+                        ddl_Contratto.Items.Add(new ListItem("<nessun contratto disponibile>", ""));
                     }
-                    lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null ||
-                                                       SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
-                    AggiornaTotali();
+                    else
+                    {
+                        ddl_Contratto.DataSource = listaContratti;
+                        ddl_Contratto.DataTextField = "numero_protocollo";
+                        ddl_Contratto.DataValueField = "id";
+                        ddl_Contratto.DataBind();
+                        ddl_Contratto.Items.Insert(0, new ListItem("<seleziona>", ""));
+
+                    }
+
+                    SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
+                    ListaFigureProfessionali = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; //in questo modo assegno identificatoreOggetto
+
+                    txt_data_InsGenerale.Text = ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
+
+
+                    if (esito.codice != Esito.ESITO_OK)
+                    {
+                        basePage.ShowError(esito.descrizione);
+                    }
+                    else
+                    {
+                        CreaNuovaLavorazione(SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione);
+
+                        if (SessionManager.EventoSelezionato.LavorazioneCorrente != null)
+                        {
+                            txt_Ordine.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Ordine;
+                            txt_Fattura.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Fattura;
+                            ddl_Contratto.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto.ToString();
+                            ddl_Referente.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente.ToString();
+                            ddl_Capotecnico.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico.ToString();
+                            ddl_Produttore.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore.ToString();
+
+                            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+
+                            gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+                            gvArticoliLavorazione.DataBind();
+
+                            gvFigProfessionali.DataSource = ListaFigureProfessionali;
+                            gvFigProfessionali.DataBind();
+
+                            txt_notaGeneralePianoEsterno.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.NotePianoEsterno;
+                        }
+                        lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null ||
+                                                           SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
+                        AggiornaTotali();
+                    }
                 }
+
+            }
+            catch (Exception ex)
+            {
+                basePage.ShowError(ex.Message);
             }
         }
 

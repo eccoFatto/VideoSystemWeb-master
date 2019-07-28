@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -187,6 +186,7 @@
     <Content Include="Agenda\userControl\Lavorazione.ascx" />
     <Content Include="Agenda\userControl\Offerta.ascx" />
     <Content Include="Agenda\userControl\RiepilogoOfferta.ascx" />
+    <Content Include="Agenda\userControl\RiepilogoOfferta_old.ascx" />
     <Content Include="Anagrafiche\AnagClientiFornitori.aspx" />
     <Content Include="Anagrafiche\AnagCollaboratori.aspx" />
     <Content Include="Anagrafiche\userControl\AnagClientiFornitori.ascx" />
@@ -523,6 +523,13 @@
     </Compile>
     <Compile Include="Agenda\userControl\RiepilogoOfferta.ascx.designer.cs">
       <DependentUpon>RiepilogoOfferta.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\userControl\RiepilogoOfferta_old.ascx.cs">
+      <DependentUpon>RiepilogoOfferta_old.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\userControl\RiepilogoOfferta_old.ascx.designer.cs">
+      <DependentUpon>RiepilogoOfferta_old.ascx</DependentUpon>
     </Compile>
     <Compile Include="Anagrafiche\AnagClientiFornitori.aspx.cs">
       <DependentUpon>AnagClientiFornitori.aspx</DependentUpon>

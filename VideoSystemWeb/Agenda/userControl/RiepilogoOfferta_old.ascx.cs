@@ -11,7 +11,7 @@ using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
-    public partial class RiepilogoOfferta : System.Web.UI.UserControl
+    public partial class RiepilogoOfferta_old : System.Web.UI.UserControl
     {
         BasePage basePage = new BasePage();
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
@@ -47,8 +47,6 @@ namespace VideoSystemWeb.Agenda.userControl
         #region COMPORTAMENTO ELEMENTI PAGINA
         protected void btnStampa_Click(object sender, EventArgs e)
         {
-            
-
             string codiceLavoro = RichiediCodiceLavoro();
 
             string nomeFile = "Offerta_" + codiceLavoro + ".pdf";
@@ -68,14 +66,11 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnModificaNote_Click(object sender, EventArgs e)
         {
-            DivFramePdf.Visible = false;
-            framePdf.Visible = false;
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
         }
 
         protected void btnOKModificaNote_Click(object sender, EventArgs e)
         {
-            
             NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
             noteOfferta.Banca = ddl_Banca.SelectedValue;
             noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); 
@@ -90,13 +85,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
             RichiediOperazionePopup("SAVE_PDF_OFFERTA");
 
-            //string nomeFile = "Offerta_" + Parent.val_CodiceLavoro.Text + ".pdf";
-            //string nomePathVisualizzazionePdf = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
-            //associaNomePdf(nomePathVisualizzazionePdf);
-
-
-            DivFramePdf.Visible = true;
-            framePdf.Visible = true;
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaNote", script: "javascript: aggiornaRiepilogo()", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='none'", addScriptTags: true);
         }
@@ -118,21 +106,6 @@ namespace VideoSystemWeb.Agenda.userControl
         #endregion
 
         #region OPERAZIONI POPUP
-
-        public void associaNomePdf(string nomePdf)
-        {
-            framePdf.Attributes.Remove("src");
-
-            framePdf.Attributes.Add("src", nomePdf);
-
-            intestazioneStampa.Visible=false;
-            totaliStampa.Visible = false;
-            footerStampa.Visible = false;
-            articoliStampa.Visible = false;
-
-            DivFramePdf.Visible = true;
-            framePdf.Visible = true;
-        }
         public Esito popolaPannelloRiepilogo(DatiAgenda eventoSelezionato)
         {
             Esito esito = new Esito();
@@ -203,15 +176,10 @@ namespace VideoSystemWeb.Agenda.userControl
             cmbMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
             if (string.IsNullOrEmpty(noteOfferta.Note)){
                 note.Text = "";
-                txt_Note.Text = "";
             }
             else { 
                 note.Text = noteOfferta.Note.Trim();
-                txt_Note.Text = noteOfferta.Note.Trim();
             }
-
-            DivFramePdf.Visible = true;
-            framePdf.Visible = true;
 
             return esito;
         }
@@ -250,7 +218,6 @@ namespace VideoSystemWeb.Agenda.userControl
             intestazioneStampa.Visible = isVisualizzazioneStampa;
             totaliStampa.Visible = isVisualizzazioneStampa;
             footerStampa.Visible = isVisualizzazioneStampa;
-            articoliStampa.Visible = isVisualizzazioneStampa;
         }
         #endregion
 

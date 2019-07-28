@@ -10,25 +10,8 @@
 namespace VideoSystemWeb.Agenda.userControl {
     
     
-    public partial class RiepilogoOfferta {
-        
-        /// <summary>
-        /// Controllo btnStampaOfferta.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnStampaOfferta;
-        
-        /// <summary>
-        /// Controllo btnModificaNote.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificaNote;
+    public partial class RiepilogoOfferta_old
+    {
         
         /// <summary>
         /// Controllo modalRiepilogoContent.
@@ -238,15 +221,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Label lbl_ProtocolloStampa;
         
         /// <summary>
-        /// Controllo articoliStampa.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl articoliStampa;
-        
-        /// <summary>
         /// Controllo gvArticoli.
         /// </summary>
         /// <remarks>
@@ -418,22 +392,22 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Image imgDNV;
         
         /// <summary>
-        /// Controllo DivFramePdf.
+        /// Controllo btnStampaOfferta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivFramePdf;
+        protected global::System.Web.UI.WebControls.Button btnStampaOfferta;
         
         /// <summary>
-        /// Controllo framePdf.
+        /// Controllo btnModificaNote.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlIframe framePdf;
+        protected global::System.Web.UI.WebControls.Button btnModificaNote;
         
         /// <summary>
         /// Controllo ddl_Banca.

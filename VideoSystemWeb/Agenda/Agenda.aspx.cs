@@ -869,6 +869,10 @@ namespace VideoSystemWeb.Agenda
 
             string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
             File.WriteAllBytes(pathOfferta, workStream.ToArray());
+
+            string nomePathVisualizzazionePdf = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
+            popupRiepilogoOfferta.associaNomePdf(nomePathVisualizzazionePdf);
+
         }
 
         private void SalvaPdfConsuntivoSuFile()

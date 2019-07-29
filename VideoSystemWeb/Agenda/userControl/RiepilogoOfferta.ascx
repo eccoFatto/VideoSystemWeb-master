@@ -36,9 +36,7 @@
             <!-- COMMENTO DA QUI -->
             <!--
             <div class="w3-row  w3-padding-large w3-small">
-                <div class="w3-col">
-                    <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/logoVSP_trim.png" Style="height: 120px" />
-                </div>
+
 
                 <div id="intestazioneSchermo" visible="false" runat="server">
                     <div class="w3-half ">
@@ -145,6 +143,11 @@
 
             <!-- STAMPA-->
             <div id="intestazioneStampa" runat="server" visible="true" style="font-size: 8pt">
+                <div class="w3-row  w3-padding-large w3-small">
+                <div class="w3-col">
+                    <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/logoVSP_trim.png" Style="height: 120px" />
+                </div>
+                </div>
                 <br />
                 <br />
                 <table style="width: 100%">

@@ -40,15 +40,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl modalRiepilogoContent;
         
         /// <summary>
-        /// Controllo imgLogo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgLogo;
-        
-        /// <summary>
         /// Controllo intestazioneSchermo.
         /// </summary>
         /// <remarks>
@@ -155,6 +146,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl intestazioneStampa;
+        
+        /// <summary>
+        /// Controllo imgLogo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgLogo;
         
         /// <summary>
         /// Controllo lbl_DataStampa.

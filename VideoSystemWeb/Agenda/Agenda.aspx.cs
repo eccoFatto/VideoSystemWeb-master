@@ -863,16 +863,32 @@ namespace VideoSystemWeb.Agenda
         private void SalvaPdfOffertaSuFile()
         {
             Esito esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
+            if (esito.codice == Esito.ESITO_OK) { 
+                string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
+            
+                MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
 
-            string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
-            MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
+                string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
+                string pathPdfSenzaNumeroPagina = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + "tmp_"+nomeFile;
+                File.WriteAllBytes(pathPdfSenzaNumeroPagina, workStream.ToArray());
 
-            string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
-            File.WriteAllBytes(pathOfferta, workStream.ToArray());
+                string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(pathPdfSenzaNumeroPagina, pathOfferta, ref esito);
 
-            string nomePathVisualizzazionePdf = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
-            popupRiepilogoOfferta.associaNomePdf(nomePathVisualizzazionePdf);
-
+                if (File.Exists(pathPdfSenzaNumeroPagina)) File.Delete(pathPdfSenzaNumeroPagina);
+                
+                if (esito.codice == Esito.ESITO_OK) { 
+                    // RIPORTA IL NOME DEL FILE PDF DA VISUALIZZARE SULLA FINESTRA RIEPILOGO
+                    popupRiepilogoOfferta.associaNomePdf(nomeFileToDisplay);
+                }
+                else
+                {
+                    ShowError(esito.descrizione);
+                }
+            }
+            else
+            {
+                ShowError(esito.descrizione);
+            }
         }
 
         private void SalvaPdfConsuntivoSuFile()

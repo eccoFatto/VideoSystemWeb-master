@@ -334,8 +334,10 @@
             <div id="totaliStampa" style="width: 100%; font-size: 8pt" runat="server" visible="true">
                 <table style="width: 100%">
                     <tr>
-                        <td style="width: 70%; text-align: left; padding-left: 20px;border:solid 1px #000;">
-                            <b><asp:Label ID="note" runat="server" Text="NOTE" /></b></td>
+                        <td style="width: 25%; text-align: left; padding-left: 20px;">
+                            <b><asp:Label ID="Label1" runat="server" Text="Note:" Font-Bold="true" /></b></td>
+                        <td style="width: 45%; text-align: left; padding-left: 10px;padding-right:10px;border:thin 1px #000;">
+                            <b><asp:Label ID="note" runat="server" Text="" /></b></td>
                         <td style="width: 30%">
                             <table style="width: 100%">
                                 <tr>
@@ -351,7 +353,7 @@
                                         <label><b>Totale i.v.a.</b></label></td>
                                     <td style="width: 40%; text-align: right; padding-right: 20px;border:solid 1px #000;">
                                         <b>
-                                            <asp:Label ID="totaleIVAStampa" runat="server" /><b>
+                                            <asp:Label ID="totaleIVAStampa" runat="server" /></b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -444,7 +446,7 @@
 
         <div id="DivFramePdf" runat="server" style=" width:100%; height:90%;" >
             <%--<iframe id="framePdf" runat="server" src="" allowTransparency="true" frameborder="0" style="overflow:hidden; width:100%; height:600px"></iframe>--%>
-            <iframe id="framePdf" runat="server" src="" frameborder="1" style=" width:100%; height:100%;"></iframe>
+            <iframe id="framePdf" runat="server" src="" style=" width:100%; height:100%;"></iframe>
         </div>
 
 

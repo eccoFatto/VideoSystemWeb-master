@@ -427,6 +427,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.GridView gvFigProfessionali;
         
         /// <summary>
+        /// Controllo ddl_FiltroGiorniLavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_FiltroGiorniLavorazione;
+        
+        /// <summary>
         /// Controllo btnImporta.
         /// </summary>
         /// <remarks>

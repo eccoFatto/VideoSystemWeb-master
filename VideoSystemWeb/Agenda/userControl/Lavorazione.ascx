@@ -6,7 +6,7 @@
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
 
-            // MODIFICA FIGURA PROFESSIONALE PINO ESTERNO
+            // MODIFICA FIGURA PROFESSIONALE PIANO ESTERNO
             $('#<%=chk_diaria.ClientID%>').click(function () {
                 $('#<%=diaria15.ClientID%>').prop('checked', false);
                 $('#<%=diaria15.ClientID%>').attr("disabled", !this.checked);
@@ -537,11 +537,17 @@
                     </asp:Panel>
                 </div>
 
-                <div class="w3-col" style="height: 15%; padding-left: 5px; margin-bottom: 20px;">
-                    <div class="w3-half w3-right-align" style="padding: 8px">
-                        <asp:Button ID="btnImporta" runat="server" Text="Importa" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnImporta_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
+                <div class="w3-col" style="height: 5%; padding-left: 5px; margin-bottom: 20px;">
+                    <div class="w3-col w3-center-align" style="padding: 20px; text-align:center">
+                        <label>Filtro data lavorazione</label>
+                        <asp:DropDownList ID="ddl_FiltroGiorniLavorazione" runat="server" AutoPostBack="true" CssClass=" w3-white w3-border w3-hover-shadow w3-round " OnSelectedIndexChanged="ddl_FiltroGiorniLavorazione_SelectedIndexChanged"></asp:DropDownList>
                     </div>
-                    <div class="w3-half w3-left-align" style="padding: 8px">
+                </div>
+
+                <div class="w3-col" style="height: 20%; padding-left: 5px; margin-bottom: 20px; padding-top:20px;">
+                    <div class="w3-col " style="padding: 8px; text-align:center">
+                        <asp:Button ID="btnImporta" runat="server" Text="Importa" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnImporta_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
+                        
                         <asp:Button ID="btnInserimentoGenerale" runat="server" Text="Inserimento generale" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnInserimentoGenerale_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                     </div>
                     

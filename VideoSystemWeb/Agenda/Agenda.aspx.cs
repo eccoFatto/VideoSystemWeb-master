@@ -1012,7 +1012,7 @@ namespace VideoSystemWeb.Agenda
 
         private void RiempiCampiIntestazioneEvento()
         {
-            if (SessionManager.EventoSelezionato.produzione != null && !string.IsNullOrEmpty(SessionManager.EventoSelezionato.lavorazione) && SessionManager.EventoSelezionato.id_cliente!=0)
+            if (SessionManager.EventoSelezionato.produzione != null && SessionManager.EventoSelezionato.lavorazione!=null && SessionManager.EventoSelezionato.id_cliente!=0)
             {
                 val_Cliente.Text = SessionManager.ListaClientiFornitori.FirstOrDefault(x => x.Id == SessionManager.EventoSelezionato.id_cliente).RagioneSociale;
                 val_Produzione.Text = SessionManager.EventoSelezionato.produzione;

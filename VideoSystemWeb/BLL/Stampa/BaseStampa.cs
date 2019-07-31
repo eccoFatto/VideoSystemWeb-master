@@ -1,4 +1,5 @@
-﻿using iText.Html2pdf;
+﻿using iText;
+using iText.Html2pdf;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
@@ -9,7 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web;
-
+using System.Configuration;
 namespace VideoSystemWeb.BLL.Stampa
 {
     public class BaseStampa
@@ -57,6 +58,40 @@ namespace VideoSystemWeb.BLL.Stampa
             }
 
             return workStream;
+        }
+        public string AddPageNumber(string nomeFileIn,string nomeFileOut, ref Esito esito)
+        {
+            
+            string ret = nomeFileOut;
+            try
+            {
+                FileInfo file = new FileInfo(nomeFileOut);
+                //file.Directory.Create();
+                
+                PdfDocument pdfDoc = new PdfDocument(new PdfReader(nomeFileIn), new PdfWriter(nomeFileOut));
+                Document doc = new Document(pdfDoc);
+                int n = pdfDoc.GetNumberOfPages();
+
+               
+
+                for (int i = 1; i <= n; i++)
+                {
+                    doc.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7),
+                            520, 815, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+                }
+                doc.Close();
+                ret = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + Path.GetFileName(nomeFileOut);
+            }
+            catch (Exception ex)
+            {
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = "AddPageNumber: " + nomeFileIn + "," + nomeFileOut + Environment.NewLine + ex.Message;
+                BasePage b = new BasePage();
+                b.ShowError(esito.descrizione);
+                return ret;
+            }
+            
+            return ret;
         }
     }
 }

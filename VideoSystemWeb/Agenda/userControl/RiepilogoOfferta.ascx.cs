@@ -90,15 +90,13 @@ namespace VideoSystemWeb.Agenda.userControl
 
             RichiediOperazionePopup("SAVE_PDF_OFFERTA");
 
-            //string nomeFile = "Offerta_" + Parent.val_CodiceLavoro.Text + ".pdf";
-            //string nomePathVisualizzazionePdf = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
-            //associaNomePdf(nomePathVisualizzazionePdf);
-
-
             DivFramePdf.Visible = true;
             framePdf.Visible = true;
+
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaNote", script: "javascript: aggiornaRiepilogo()", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='none'", addScriptTags: true);
+            // FACCIO REFRESH SUL FRAME CHE VISUALIZZA IL PDF IN MODO DA VEDERE GLI AGGIORNAMENTI IN TEMPO REALE
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdf.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
         }
 
         protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -232,6 +230,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             MemoryStream workStream = BaseStampa.Instance.GeneraPdf(sw.ToString());
 
+            
             sw.Flush();
             hw.Flush();
 

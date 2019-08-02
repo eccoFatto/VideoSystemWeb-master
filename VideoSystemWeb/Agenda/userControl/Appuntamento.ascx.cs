@@ -57,14 +57,11 @@ namespace VideoSystemWeb.Agenda.userControl
         protected void btn_Risorse_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
-
             int idStato;
-
             string sottotipoRisorsa = UtilityTipologiche.getElementByID(SessionManager.ListaRisorse, int.Parse(hf_Risorse.Value), ref esito).sottotipo.ToUpper();
 
             if (sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString())
             {
-                // hf_IdStato.Value = Stato.Instance.STATO_RIPOSO.ToString();
                 idStato = Stato.Instance.STATO_RIPOSO;
 
                 hf_Tipologie.Value = "";
@@ -82,7 +79,6 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                //        hf_IdStato.Value = Stato.Instance.STATO_PREVISIONE_IMPEGNO.ToString();
                 idStato = Stato.Instance.STATO_PREVISIONE_IMPEGNO;
             }
 
@@ -103,7 +99,6 @@ namespace VideoSystemWeb.Agenda.userControl
         public Esito CreaOggettoSalvataggio(ref DatiAgenda datiAgenda)
         {
             Esito esito = new Esito();
-
             bool campoObbligatorio = datiAgenda.id_stato != Stato.Instance.STATO_RIPOSO;
 
             datiAgenda.data_inizio_lavorazione = BasePage.ValidaCampo(txt_DataInizioLavorazione, DateTime.MinValue, true, ref esito);
@@ -137,13 +132,10 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DurataViaggioRitorno.CssClass = txt_DurataViaggioRitorno.CssClass.Replace("erroreValidazione", "");
             txt_DataInizioImpegno.CssClass = txt_DataInizioImpegno.CssClass.Replace("erroreValidazione", "");
             txt_DataFineImpegno.CssClass = txt_DataFineImpegno.CssClass.Replace("erroreValidazione", "");
-            //txt_ImpegnoOrarioDa.CssClass = txt_ImpegnoOrarioDa.CssClass.Replace("erroreValidazione", "");
-            //txt_ImpegnoOrarioA.CssClass = txt_ImpegnoOrarioA.CssClass.Replace("erroreValidazione", "");
             txt_Produzione.CssClass = txt_Produzione.CssClass.Replace("erroreValidazione", "");
             txt_Lavorazione.CssClass = txt_Lavorazione.CssClass.Replace("erroreValidazione", "");
             txt_Indirizzo.CssClass = txt_Indirizzo.CssClass.Replace("erroreValidazione", "");
             txt_Luogo.CssClass = txt_Luogo.CssClass.Replace("erroreValidazione", "");
-            //txt_CodiceLavoro.CssClass = txt_CodiceLavoro.CssClass.Replace("erroreValidazione", "");
             tb_Nota.CssClass = tb_Nota.CssClass.Replace("erroreValidazione", "");
         }
 
@@ -153,7 +145,6 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DataFineLavorazione.Text = string.Empty;
             txt_DurataLavorazione.Text = string.Empty;
 
-            //ddl_Risorse.SelectedValue = "";
             hf_Risorse.Value = "";
             ddl_Risorse.Text = ddl_Risorse.ToolTip = "";
 
@@ -171,7 +162,6 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Lavorazione.Text = string.Empty;
             txt_Indirizzo.Text = string.Empty;
             txt_Luogo.Text = string.Empty;
-            //txt_CodiceLavoro.Text = string.Empty;
             tb_Nota.Text = string.Empty;
 
             check_tender.SelectedIndex = -1;
@@ -191,7 +181,6 @@ namespace VideoSystemWeb.Agenda.userControl
             string[] elencoLavorazioni = Agenda_BLL.Instance.CaricaElencoLavorazioni(ref esito);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "setElenchi", "setElenchi(" + Newtonsoft.Json.JsonConvert.SerializeObject(elencoProduzioni) + ", " + Newtonsoft.Json.JsonConvert.SerializeObject(elencoLavorazioni) + ");", true);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "autocompletamento", "autocompletamento();", true);
-
 
             txt_DataInizioLavorazione.Text = evento.data_inizio_lavorazione.ToString("dd/MM/yyyy");
             txt_DataFineLavorazione.Text = evento.data_fine_lavorazione == DateTime.MinValue ? "" : evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
@@ -259,7 +248,6 @@ namespace VideoSystemWeb.Agenda.userControl
                     check_tender.Items[i].Selected = true;
                 }
             }
-
         }
 
         public void AbilitaComponentiPopup(int statoEvento)
@@ -283,7 +271,6 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_Luogo.Enabled =
                     tb_Nota.Enabled =
                     check_tender.Enabled = true;
-
                 }
                 else if (statoEvento == Stato.Instance.STATO_OFFERTA)
                 {
@@ -300,7 +287,6 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_Luogo.Enabled = true;
                     tb_Nota.Enabled = true;
                     check_tender.Enabled = true;
-
                 }
                 else if (statoEvento == Stato.Instance.STATO_LAVORAZIONE)
                 {

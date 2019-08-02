@@ -1383,7 +1383,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void btnConfermaInserimentoEmail_Click(object sender, EventArgs e)
         {
             //INSERISCO L'E-MAIL
-            if (!string.IsNullOrEmpty(tbInsEmail.Text) && basePage.validaIndirizzoEmail(tbInsEmail.Text))
+            if (!string.IsNullOrEmpty(tbInsEmail.Text) && basePage.ValidaIndirizzoEmail(tbInsEmail.Text))
             {
                 try
                 {
@@ -1599,7 +1599,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void btnConfermaModificaEmail_Click(object sender, EventArgs e)
         {
             //MODIFICO L'E-MAIL
-            if (!string.IsNullOrEmpty(tbInsEmail.Text) && basePage.validaIndirizzoEmail(tbInsEmail.Text) && !string.IsNullOrEmpty(tbIdEmailDaModificare.Text))
+            if (!string.IsNullOrEmpty(tbInsEmail.Text) && basePage.ValidaIndirizzoEmail(tbInsEmail.Text) && !string.IsNullOrEmpty(tbIdEmailDaModificare.Text))
             {
                 try
                 {

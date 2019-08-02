@@ -625,15 +625,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.UpdatePanel upInserimentoGeneralePianoEsterno;
         
         /// <summary>
-        /// Controllo txt_data_InsGenerale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_data_InsGenerale;
-        
-        /// <summary>
         /// Controllo txt_orario_InsGenerale.
         /// </summary>
         /// <remarks>
@@ -643,15 +634,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.TextBox txt_orario_InsGenerale;
         
         /// <summary>
-        /// Controllo ddl_intervento_InsGenerale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_intervento_InsGenerale;
-        
-        /// <summary>
         /// Controllo chk_albergo_InsGenerale.
         /// </summary>
         /// <remarks>
@@ -659,6 +641,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chk_albergo_InsGenerale;
+        
+        /// <summary>
+        /// Controllo ddl_intervento_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_intervento_InsGenerale;
         
         /// <summary>
         /// Controllo chk_diaria_InsGenerale.

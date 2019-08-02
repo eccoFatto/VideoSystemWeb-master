@@ -23,7 +23,7 @@ namespace VideoSystemWeb
         {
             lblErrorLogin.Visible = false;
             BasePage bp = new BasePage();
-            if (bp.validaIndirizzoEmail(tbEmail.Text.Trim()))
+            if (bp.ValidaIndirizzoEmail(tbEmail.Text.Trim()))
             {
                 Esito esito = new Esito();
                 Utenti utente = Anag_Utenti_BLL.Instance.getUtenteByUserAndEmail(tbUser.Text.Trim(), tbEmail.Text.Trim(), ref esito);

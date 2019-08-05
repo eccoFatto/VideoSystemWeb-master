@@ -103,7 +103,7 @@ namespace VideoSystemWeb.BLL
             return result;
         }
 
-        public bool validaIndirizzoEmail(string indirizzo)
+        public bool ValidaIndirizzoEmail(string indirizzo)
         {
             Regex regex = new Regex(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*");
             Match match = regex.Match(indirizzo);
@@ -117,7 +117,7 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        public static string validaIndirizzoEmail(TextBox t,bool isRequired, ref Esito esito)
+        public static string ValidaIndirizzoEmail(TextBox t,bool isRequired, ref Esito esito)
         {
             if (string.IsNullOrEmpty(t.Text.Trim()) && !isRequired){
                 t.CssClass = t.CssClass.Replace("erroreValidazione", "");
@@ -140,6 +140,7 @@ namespace VideoSystemWeb.BLL
                 }
             }
         }
+
         public bool AbilitazioneInScrittura()
         {
             Esito esito = new Esito();

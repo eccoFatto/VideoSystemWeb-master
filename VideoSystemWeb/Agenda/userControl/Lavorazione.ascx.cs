@@ -272,14 +272,14 @@ namespace VideoSystemWeb.Agenda.userControl
                     // prendo datiPianoEsterno a partire dalla figuraProfessionale selezionata
                     if (figuraProfessionaleSelezionata.IdCollaboratori != null && figuraProfessionaleSelezionata.IdCollaboratori != 0)
                     {
-                        datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdCollaboratori == figuraProfessionaleSelezionata.IdCollaboratori);
+                        datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdCollaboratori == figuraProfessionaleSelezionata.IdCollaboratori && x.Data == figuraProfessionaleSelezionata.Data);
                     }
                     else if (figuraProfessionaleSelezionata.IdFornitori != null && figuraProfessionaleSelezionata.IdFornitori != 0)
                     {
-                        datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdFornitori == figuraProfessionaleSelezionata.IdFornitori);
+                        datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdFornitori == figuraProfessionaleSelezionata.IdFornitori && x.Data == figuraProfessionaleSelezionata.Data);
                     }
 
-                    txt_data.Text = ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
+                    txt_data.Text = figuraProfessionaleSelezionata.Data != null ? ((DateTime)figuraProfessionaleSelezionata.Data).ToString("dd/MM/yyyy") : ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
                     txt_orario.Text = datiPianoEsterno.Orario == null ? "" : ((DateTime)datiPianoEsterno.Orario).ToString("HH:mm");
                     chk_diaria.Checked = datiPianoEsterno.Diaria != null && (bool)datiPianoEsterno.Diaria;
                     
@@ -461,11 +461,11 @@ namespace VideoSystemWeb.Agenda.userControl
             //prendo datiPianoEsterno a partire dalla figuraProfessionale selezionata
             if (figuraProfessionale.IdCollaboratori != null && figuraProfessionale.IdCollaboratori != 0)
             {
-                datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdCollaboratori == figuraProfessionale.IdCollaboratori);
+                datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdCollaboratori == figuraProfessionale.IdCollaboratori && x.Data == figuraProfessionale.Data);
             }
             else if (figuraProfessionale.IdFornitori != null && figuraProfessionale.IdFornitori != 0)
             {
-                datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdFornitori == figuraProfessionale.IdFornitori);
+                datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.IdFornitori == figuraProfessionale.IdFornitori && x.Data == figuraProfessionale.Data);
             }
 
             decimal importoDiaria = 0;
@@ -533,7 +533,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
             foreach (DatiPianoEsternoLavorazione datiPianoEsternoLavorazione in SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione)
             {
-                FiguraProfessionale figuraProfessionale = ListaFigureProfessionali.FirstOrDefault(x => x.IdCollaboratori == datiPianoEsternoLavorazione.IdCollaboratori && x.IdFornitori == datiPianoEsternoLavorazione.IdFornitori);
+                FiguraProfessionale figuraProfessionale = ListaFigureProfessionali.FirstOrDefault(x => x.IdCollaboratori == datiPianoEsternoLavorazione.IdCollaboratori && x.IdFornitori == datiPianoEsternoLavorazione.IdFornitori && x.Data == datiPianoEsternoLavorazione.Data);
+
 
                 if (importoDiaria > 0) // Aggiungo diaria a listaAricoliLavorazione in dettaglio economico
                 {
@@ -544,7 +545,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     CancellaDiariaDaListaArticoli(figuraProfessionale);
                 }
 
-                datiPianoEsternoLavorazione.Data = string.IsNullOrEmpty(txt_data_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_data_InsGenerale.Text);
+               // datiPianoEsternoLavorazione.Data = string.IsNullOrEmpty(txt_data_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_data_InsGenerale.Text);
                 datiPianoEsternoLavorazione.Orario = string.IsNullOrEmpty(txt_orario_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_orario_InsGenerale.Text);
                 datiPianoEsternoLavorazione.Diaria = chk_diaria_InsGenerale.Checked;
                 datiPianoEsternoLavorazione.ImportoDiaria = importoDiaria;
@@ -553,7 +554,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 figuraProfessionale.Intervento = ddl_intervento_InsGenerale.SelectedItem.Text;
                 figuraProfessionale.Diaria = importoDiaria;
-                figuraProfessionale.Data = string.IsNullOrEmpty(txt_data_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_data_InsGenerale.Text);
+               // figuraProfessionale.Data = string.IsNullOrEmpty(txt_data_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_data_InsGenerale.Text);
             }
 
             AggiornaTotali();
@@ -657,8 +658,6 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 e.Row.Attributes["onmouseover"] = "this.style.cursor='pointer';this.style.background='yellow';";
                 e.Row.Attributes["onmouseout"] = "this.style.background='transparent';";
-               // e.Row.ToolTip = "Seleziona questa Figura Professionale";
-                //e.Row.Attributes["onclick"] = "$('#" + btn_SelezionaFP.ClientID + "').click();";//"alert('selezionata riga " + e.Row.RowIndex + "');";
             }
         }
 
@@ -716,78 +715,9 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             RichiediOperazionePopup("UPDATE");
         }
-
-
         #endregion
 
         #region OPERAZIONI LAVORAZIONE
-        private void PopolaCombo()
-        {
-            Esito esito = new Esito();
-
-            #region CAPITECNICI
-            List<Anag_Qualifiche_Collaboratori> listaCapiTecnici = SessionManager.ListaQualificheCollaboratori.Where(x => x.Qualifica == "Capo Tecnico").ToList<Anag_Qualifiche_Collaboratori>();
-
-            List<Anag_Collaboratori> listaAnagraficheCapiTecnici = (from Item1 in SessionManager.ListaAnagraficheCollaboratori
-                                                                    join Item2 in listaCapiTecnici
-                                                                    on Item1.Id equals Item2.Id_collaboratore
-                                                                    select Item1).ToList();
-            ddl_Capotecnico.Items.Clear();
-            foreach (Anag_Collaboratori capoTecnico in listaAnagraficheCapiTecnici)
-            {
-                ddl_Capotecnico.Items.Add(new ListItem(capoTecnico.Nome + " " + capoTecnico.Cognome, capoTecnico.Id.ToString()));
-            }
-            ddl_Capotecnico.Items.Insert(0, new ListItem("<seleziona>", ""));
-            #endregion
-
-            #region PRODUTTORI
-            List<Anag_Qualifiche_Collaboratori> listaProduttori = SessionManager.ListaQualificheCollaboratori.Where(x => x.Qualifica == "Produttore").ToList<Anag_Qualifiche_Collaboratori>();
-
-            List<Anag_Collaboratori> listaAnagraficheProduttori = (from Item1 in SessionManager.ListaAnagraficheCollaboratori
-                                                                   join Item2 in listaProduttori on Item1.Id equals Item2.Id_collaboratore
-                                                                   select Item1).ToList();
-            ddl_Produttore.Items.Clear();
-            foreach (Anag_Collaboratori produttore in listaAnagraficheProduttori)
-            {
-                ddl_Produttore.Items.Add(new ListItem(produttore.Nome + " " + produttore.Cognome, produttore.Id.ToString()));
-            }
-            ddl_Produttore.Items.Insert(0, new ListItem("<seleziona>", ""));
-            #endregion
-
-            #region TIPOPAGAMENTO
-
-            ddl_FPtipoPagamento.Items.Clear();
-            foreach (Tipologica tipoPagamento in SessionManager.ListaTipiPagamento)
-            {
-                ddl_FPtipoPagamento.Items.Add(new ListItem(tipoPagamento.nome, tipoPagamento.id.ToString()));
-            }
-            ddl_FPtipoPagamento.Items.Insert(0, new ListItem("<seleziona>", ""));
-            #endregion
-
-            #region QUALIFICHE
-
-            ddl_FPqualifica.Items.Clear();
-            foreach (Tipologica qualifica in SessionManager.ListaQualifiche)
-            {
-                ddl_FPqualifica.Items.Add(new ListItem(qualifica.nome, qualifica.id.ToString()));
-            }
-            ddl_FPqualifica.Items.Insert(0, new ListItem("<seleziona>", ""));
-            #endregion
-
-            #region TIPI INTERVENTO
-            ddl_intervento.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
-            ddl_intervento.DataTextField = "nome";
-            ddl_intervento.DataValueField = "id";
-            ddl_intervento.DataBind();
-
-            ddl_intervento_InsGenerale.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
-            ddl_intervento_InsGenerale.DataTextField = "nome";
-            ddl_intervento_InsGenerale.DataValueField = "id";
-            ddl_intervento_InsGenerale.DataBind();
-            #endregion
-
-        }
-        
 
         protected void CercaFP()
         {
@@ -825,35 +755,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
             upModificaArticolo.Update();
         }
-
-        //protected void visualizzaFP(object sender, EventArgs e)
-        //{
-        //    FiguraProfessionale fpSelezionata = new FiguraProfessionale();
-        //    if (ddl_FPnominativo.SelectedValue != "")
-        //    {
-        //        fpSelezionata = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == int.Parse(ddl_FPnominativo.SelectedValue));
-        //        //AbilitaComponentiFiguraProfessionale(fpSelezionata, true);
-        //    }
-        //    else
-        //    {
-        //        //AbilitaComponentiFiguraProfessionale(null, true);
-        //    }
-
-        //    txt_FPtelefono.Text = fpSelezionata.Telefono;
-        //    txt_FPnotaCollaboratore.Text = fpSelezionata.Nota;
-
-        //    upModificaArticolo.Update();
-        //}
-
-        //private void PopolaNominativi(List<FiguraProfessionale> listaNominativi)
-        //{
-        //    ddl_FPnominativo.Items.Clear();
-        //    foreach (FiguraProfessionale figPro in listaNominativi)
-        //    {
-        //        ddl_FPnominativo.Items.Add(new ListItem(figPro.Cognome + " " + figPro.Nome, figPro.Id.ToString()));
-        //    }
-        //    ddl_FPnominativo.Items.Insert(0, new ListItem("<seleziona>", ""));
-        //}
 
         private void AggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
         {
@@ -961,6 +862,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
             try
             {
+                // FILTRO GIORNI LAVORAZIONE
+                PopolaComboFiltroGiorniLavorazione();
+
                 int idDatiAgenda = SessionManager.EventoSelezionato.id;
                 int idCliente = SessionManager.EventoSelezionato.id_cliente;
 
@@ -997,7 +901,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
                     ListaFigureProfessionali = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; //in questo modo assegno identificatoreOggetto
 
-                    txt_data_InsGenerale.Text = ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
+                    //txt_data_InsGenerale.Text = ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
 
 
                     if (esito.codice != Esito.ESITO_OK)
@@ -1031,15 +935,6 @@ namespace VideoSystemWeb.Agenda.userControl
                                                            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
                         AggiornaTotali();
                     }
-
-                    //FILTRO GIORNI LAVORAZIONE
-                    int numGiorniLavorazione = SessionManager.EventoSelezionato.durata_lavorazione;
-                    ddl_FiltroGiorniLavorazione.Items.Add(new ListItem("<tutte le date>", ""));
-                    for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
-                    {
-                        DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
-                        ddl_FiltroGiorniLavorazione.Items.Add(new ListItem(dataGiornoLav.ToString("dd/MM/yyyy"), giornoLav.ToString()));
-                    }
                 }
             }
             catch (Exception ex)
@@ -1060,12 +955,16 @@ namespace VideoSystemWeb.Agenda.userControl
             ddl_Produttore.SelectedIndex = 0;
             txt_notaGeneralePianoEsterno.Text = string.Empty;
 
+            // REFERENTE
             ddl_Referente.Items.Clear();
             foreach (Anag_Referente_Clienti_Fornitori referente in SessionManager.ListaReferenti)
             {
                 ddl_Referente.Items.Add(new ListItem(referente.Nome + " " + referente.Cognome, referente.Id.ToString()));
             }
             ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", ""));
+
+            // FILTRO DATA LAVORAZIONE
+            PopolaComboFiltroGiorniLavorazione();
 
             if (SessionManager.EventoSelezionato.LavorazioneCorrente == null)
             {
@@ -1192,7 +1091,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void ClearPanelInserimentoGenerale()
         {
-            txt_data_InsGenerale.Text = ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
             txt_orario_InsGenerale.Text =  
             txt_diaria_InsGenerale.Text = "";
 
@@ -1317,8 +1215,6 @@ namespace VideoSystemWeb.Agenda.userControl
                                                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null ||
                                                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
 
-           //ddl_FiltroGiorniLavorazione.SelectedIndex = 0;
-
             if (SessionManager.EventoSelezionato.LavorazioneCorrente != null &&
                 ListaFigureProfessionali != null &&
                 ListaFigureProfessionali.Count > 0)
@@ -1344,8 +1240,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
             AggiornaTotali();
         }
-        #endregion
-
 
         private void CaricaListaDatiPianoEsternoLavorazione(List<DatiArticoliLavorazione> _listaCollaboratoriFornitori)
         {
@@ -1409,8 +1303,90 @@ namespace VideoSystemWeb.Agenda.userControl
                     _listaDatiPianoEsterno.Add(datiPianoEsterno);
                 }
             }
-            ListaFigureProfessionali =_listaFigureProfessionali;
+            ListaFigureProfessionali = _listaFigureProfessionali;
             SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione = _listaDatiPianoEsterno;
         }
+
+        private void PopolaCombo()
+        {
+            Esito esito = new Esito();
+
+            #region CAPITECNICI
+            List<Anag_Qualifiche_Collaboratori> listaCapiTecnici = SessionManager.ListaQualificheCollaboratori.Where(x => x.Qualifica == "Capo Tecnico").ToList<Anag_Qualifiche_Collaboratori>();
+
+            List<Anag_Collaboratori> listaAnagraficheCapiTecnici = (from Item1 in SessionManager.ListaAnagraficheCollaboratori
+                                                                    join Item2 in listaCapiTecnici
+                                                                    on Item1.Id equals Item2.Id_collaboratore
+                                                                    select Item1).ToList();
+            ddl_Capotecnico.Items.Clear();
+            foreach (Anag_Collaboratori capoTecnico in listaAnagraficheCapiTecnici)
+            {
+                ddl_Capotecnico.Items.Add(new ListItem(capoTecnico.Nome + " " + capoTecnico.Cognome, capoTecnico.Id.ToString()));
+            }
+            ddl_Capotecnico.Items.Insert(0, new ListItem("<seleziona>", ""));
+            #endregion
+
+            #region PRODUTTORI
+            List<Anag_Qualifiche_Collaboratori> listaProduttori = SessionManager.ListaQualificheCollaboratori.Where(x => x.Qualifica == "Produttore").ToList<Anag_Qualifiche_Collaboratori>();
+
+            List<Anag_Collaboratori> listaAnagraficheProduttori = (from Item1 in SessionManager.ListaAnagraficheCollaboratori
+                                                                   join Item2 in listaProduttori on Item1.Id equals Item2.Id_collaboratore
+                                                                   select Item1).ToList();
+            ddl_Produttore.Items.Clear();
+            foreach (Anag_Collaboratori produttore in listaAnagraficheProduttori)
+            {
+                ddl_Produttore.Items.Add(new ListItem(produttore.Nome + " " + produttore.Cognome, produttore.Id.ToString()));
+            }
+            ddl_Produttore.Items.Insert(0, new ListItem("<seleziona>", ""));
+            #endregion
+
+            #region TIPOPAGAMENTO
+
+            ddl_FPtipoPagamento.Items.Clear();
+            foreach (Tipologica tipoPagamento in SessionManager.ListaTipiPagamento)
+            {
+                ddl_FPtipoPagamento.Items.Add(new ListItem(tipoPagamento.nome, tipoPagamento.id.ToString()));
+            }
+            ddl_FPtipoPagamento.Items.Insert(0, new ListItem("<seleziona>", ""));
+            #endregion
+
+            #region QUALIFICHE
+
+            ddl_FPqualifica.Items.Clear();
+            foreach (Tipologica qualifica in SessionManager.ListaQualifiche)
+            {
+                ddl_FPqualifica.Items.Add(new ListItem(qualifica.nome, qualifica.id.ToString()));
+            }
+            ddl_FPqualifica.Items.Insert(0, new ListItem("<seleziona>", ""));
+            #endregion
+
+            #region TIPI INTERVENTO
+            ddl_intervento.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
+            ddl_intervento.DataTextField = "nome";
+            ddl_intervento.DataValueField = "id";
+            ddl_intervento.DataBind();
+
+            ddl_intervento_InsGenerale.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
+            ddl_intervento_InsGenerale.DataTextField = "nome";
+            ddl_intervento_InsGenerale.DataValueField = "id";
+            ddl_intervento_InsGenerale.DataBind();
+            #endregion
+
+        }
+
+        private void PopolaComboFiltroGiorniLavorazione()
+        {
+            ddl_FiltroGiorniLavorazione.Items.Clear();
+
+            int numGiorniLavorazione = SessionManager.EventoSelezionato.durata_lavorazione;
+            ddl_FiltroGiorniLavorazione.Items.Add(new ListItem("<tutte le date>", ""));
+            for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
+            {
+                DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
+                ddl_FiltroGiorniLavorazione.Items.Add(new ListItem(dataGiornoLav.ToString("dd/MM/yyyy"), giornoLav.ToString()));
+            }
+            ddl_FiltroGiorniLavorazione.SelectedIndex = 0;
+        }
+        #endregion
     }
 }

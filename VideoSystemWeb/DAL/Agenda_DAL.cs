@@ -101,7 +101,7 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Agenda_DAL.cs - CaricaDatiAgenda " + ex.Message;
+                esito.descrizione = "Agenda_DAL.cs - CaricaDatiAgenda " + ex.Message + Environment.NewLine + ex.StackTrace;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -166,7 +166,7 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Agenda_DAL.cs - CaricaDatiAgenda " + ex.Message;
+                esito.descrizione = "Agenda_DAL.cs - CaricaDatiAgenda " + ex.Message + Environment.NewLine + ex.StackTrace;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -351,7 +351,7 @@ namespace VideoSystemWeb.DAL
                         catch (Exception ex)
                         {
                             esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                            esito.descrizione = "Agenda_DAL.cs - creaEvento " + Environment.NewLine + ex.Message;
+                            esito.descrizione = "Agenda_DAL.cs - creaEvento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
 
                             try
                             {

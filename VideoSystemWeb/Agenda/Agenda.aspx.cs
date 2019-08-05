@@ -155,7 +155,6 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnConsuntivo_Click(object sender, EventArgs e)
         {
-           // Esito esito = SalvaEvento(); 
            Esito esito = popupConsuntivo.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
 
             upConsuntivo.Update();
@@ -303,23 +302,6 @@ namespace VideoSystemWeb.Agenda
             }
             
         }
-
-        //protected void btnStampa_Click(object sender, EventArgs e)
-        //{
-        //    string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
-        //    MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
-
-        //    Response.Clear();
-        //    Response.ClearContent();
-        //    Response.ClearHeaders();
-        //    Response.ContentType = "application/pdf";
-        //    Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile );
-        //    Response.AddHeader("Content-Length", workStream.Length.ToString());
-        //    Response.BinaryWrite(workStream.ToArray());
-        //    Response.Flush();
-        //    Response.Close();
-        //    Response.End();
-        //}
 
         protected void gv_scheduler_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -943,7 +925,7 @@ namespace VideoSystemWeb.Agenda
 
         public List<DatiArticoli> GetListaArticoli()
         {
-            return SessionManager.EventoSelezionato.ListaDatiArticoli;//popupOfferta.ListaDatiArticoli;
+            return SessionManager.EventoSelezionato.ListaDatiArticoli;
         }
 
         public string GetCodiceLavoro()

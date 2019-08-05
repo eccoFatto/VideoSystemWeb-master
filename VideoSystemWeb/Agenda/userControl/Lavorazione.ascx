@@ -643,31 +643,27 @@
                                     </div>
                                     <div class="w3-col round" style="padding: 5px;">
 
-                                        <div class="w3-twothird" style="padding: 5px;">
-                                            <div class="w3-col">
-                                                <div class="w3-half" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Data convocazione</label>
-                                                    <asp:TextBox ID="txt_data_InsGenerale" runat="server" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Style="padding: 2px;"></asp:TextBox>
-                                                </div>
-                                                <div class="w3-half" style="padding: 5px">
+<%--                                        <div class="w3-twothird" style="padding: 5px;">
+                                            <div class="w3-col">--%>
+                                                
+                                                <div class="w3-quarter" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Orario convocazione</label>
                                                     <asp:TextBox ID="txt_orario_InsGenerale" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;"></asp:TextBox>
                                                 </div>
-                                            </div>
-                                            <div class="w3-col">
-                                                <div class="w3-half" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Intervento</label><br />
-                                                    <asp:DropDownList ID="ddl_intervento_InsGenerale" runat="server"></asp:DropDownList>
-
-                                                </div>
-                                                <div class="w3-half" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Albergo</label>
+                                                <div class="w3-quarter" style="padding: 5px">
+                                                    <label style="margin-bottom: 0.2rem;">Albergo</label><br />
                                                     <asp:CheckBox ID="chk_albergo_InsGenerale" runat="server" />
                                                 </div>
-                                            </div>
-                                        </div>
+                                            <%--</div>
+                                            <div class="w3-col">--%>
+                                                <div class="w3-quarter" style="padding: 5px">
+                                                    <label style="margin-bottom: 0.2rem;">Intervento</label><br />
+                                                    <asp:DropDownList ID="ddl_intervento_InsGenerale" runat="server"></asp:DropDownList>
+                                                </div>
+                                           <%-- </div>--%>
+                                       <%-- </div>--%>
 
-                                        <div class="w3-third" style="padding: 5px">
+                                        <div class="w3-quarter" style="padding: 5px">
                                             <div class="w3-col">
                                                 <label style="margin-bottom: 0.2rem;">Diaria</label>
                                                 <asp:CheckBox ID="chk_diaria_InsGenerale" runat="server" /><br />

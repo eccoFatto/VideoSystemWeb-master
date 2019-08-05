@@ -517,7 +517,7 @@ namespace VideoSystemWeb.Articoli.userControl
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                 return articolo;
             }
         }

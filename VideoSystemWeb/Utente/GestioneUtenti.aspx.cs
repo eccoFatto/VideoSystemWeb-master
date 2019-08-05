@@ -405,7 +405,7 @@ namespace VideoSystemWeb.Utente
             utente.Nome = BasePage.ValidaCampo(tbMod_Nome, "", false, ref esito);
             utente.Username = BasePage.ValidaCampo(tbMod_Username, "", true, ref esito);
 
-            utente.Email = BasePage.validaIndirizzoEmail(tbMod_Email,true, ref esito);
+            utente.Email = BasePage.ValidaIndirizzoEmail(tbMod_Email,true, ref esito);
 
             utente.Descrizione = BasePage.ValidaCampo(tbMod_Descrizione, "", false, ref esito);
             utente.Attivo = true;

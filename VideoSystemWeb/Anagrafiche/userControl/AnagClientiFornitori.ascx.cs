@@ -651,7 +651,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             catch (Exception ex)
             {
                 esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message;
+                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                 return azienda;
             }
         }
@@ -752,7 +752,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void btnConfermaInserimentoReferente_Click(object sender, EventArgs e)
         {
             //INSERISCO IL REFERENTE
-            if (!string.IsNullOrEmpty(tbInsCognomeReferente.Text) && (string.IsNullOrEmpty(tbInsEmailReferente.Text)|| basePage.validaIndirizzoEmail(tbInsEmailReferente.Text.Trim())))
+            if (!string.IsNullOrEmpty(tbInsCognomeReferente.Text) && (string.IsNullOrEmpty(tbInsEmailReferente.Text)|| basePage.ValidaIndirizzoEmail(tbInsEmailReferente.Text.Trim())))
             {
                 try
                 {
@@ -812,7 +812,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void btnConfermaModificaReferente_Click(object sender, EventArgs e)
         {
             //MODIFICO IL REFERENTE
-            if (!string.IsNullOrEmpty(tbIdReferenteDaModificare.Text) && !string.IsNullOrEmpty(tbInsCognomeReferente.Text) && (string.IsNullOrEmpty(tbInsEmailReferente.Text) || basePage.validaIndirizzoEmail(tbInsEmailReferente.Text.Trim())))
+            if (!string.IsNullOrEmpty(tbIdReferenteDaModificare.Text) && !string.IsNullOrEmpty(tbInsCognomeReferente.Text) && (string.IsNullOrEmpty(tbInsEmailReferente.Text) || basePage.ValidaIndirizzoEmail(tbInsEmailReferente.Text.Trim())))
             {
 
                 try

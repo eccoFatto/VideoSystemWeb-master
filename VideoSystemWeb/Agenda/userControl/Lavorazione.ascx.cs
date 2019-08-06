@@ -37,6 +37,11 @@ namespace VideoSystemWeb.Agenda.userControl
         private const string VIEWSTATE_IDENTIFICATOREFIGURAPROFESSIONALE = "identificatoreFiguraProfessionale";
         #endregion
 
+        #region PARAMETRI CONFIGURAZIONE
+        public string aliquota_RitenutaAcconto;
+        public string quotaFissa_PagamentoMisto;
+        public string diariaLorda;
+        #endregion
         List<ArticoliGruppi> ListaArticoliGruppiLavorazione
         {
             get
@@ -87,6 +92,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 gvGruppiLavorazione.DataBind();
 
                 PopolaCombo();
+
+                PopolaParametriConfigurazione();
             }
             else
             {
@@ -612,7 +619,19 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
+                List<FiguraProfessionale> listaFigureProfessionali_OLD = ListaFigureProfessionali; // lista FP per il confronto delle figure non presenti già nell'elenco
+
                 CaricaListaDatiPianoEsternoLavorazione(_listaCollaboratoriFornitori);
+
+                // sostituisco alle Fig Prof caricate dal dettaglio economico quelle precedentementi presenti nel piano esterno
+                if (listaFigureProfessionali_OLD.Count > 0)
+                {
+                    //foreach (FiguraProfessionale figProf_Old in listaFigureProfessionali_OLD)
+                    //{
+                    //    ListaFigureProfessionali = ListaFigureProfessionali.Where(x => x.Data != figProf_Old.Data && x.IdCollaboratori != figProf_Old.IdCollaboratori && x.IdFornitori != figProf_Old.IdFornitori).ToList<FiguraProfessionale>();
+                    //}
+                    ListaFigureProfessionali.AddRange(listaFigureProfessionali_OLD);
+                }
 
                 if (ListaFigureProfessionali.Count > 0)
                 {
@@ -1285,13 +1304,16 @@ namespace VideoSystemWeb.Agenda.userControl
                     figProf.Lordo = collabForn.FP_lordo;
                     figProf.Data = datiPianoEsterno.Data = dataGiornoLav;
 
-                    if (ListaFigureProfessionali.FirstOrDefault(x => x.IdentificatoreOggetto == figProf.IdentificatoreOggetto) == null)
+
+                    FiguraProfessionale figProfGiaPresente = ListaFigureProfessionali.FirstOrDefault(x => x.Data == figProf.Data && x.IdCollaboratori == figProf.IdCollaboratori && x.IdFornitori == figProf.IdFornitori);
+                    //if (ListaFigureProfessionali.FirstOrDefault(x => x.IdentificatoreOggetto == figProf.IdentificatoreOggetto) == null)
+                    if (figProfGiaPresente == null)
                     {
                         _listaFigureProfessionali.Add(figProf);
                     }
                     else
                     {
-                        FiguraProfessionale figProfGiaPresente = ListaFigureProfessionali.FirstOrDefault(x => x.IdentificatoreOggetto == figProf.IdentificatoreOggetto);
+                       //FiguraProfessionale figProfGiaPresente = ListaFigureProfessionali.FirstOrDefault(x => x.Data == figProf.Data && x.IdCollaboratori == figProf.IdCollaboratori && x.IdFornitori == figProf.IdFornitori);// ListaFigureProfessionali.FirstOrDefault(x => x.IdentificatoreOggetto == figProf.IdentificatoreOggetto);
 
                         if (figProfGiaPresente.Nome != figProf.Nome ||
                             figProfGiaPresente.Cognome != figProf.Cognome)
@@ -1372,6 +1394,14 @@ namespace VideoSystemWeb.Agenda.userControl
             ddl_intervento_InsGenerale.DataBind();
             #endregion
 
+        }
+
+        private void PopolaParametriConfigurazione()
+        {
+            Esito esito = new Esito();
+            aliquota_RitenutaAcconto = Config_BLL.Instance.getConfig(ref esito, "ALIQUOTA_RITENUTA_ACCONTO").Valore;
+            quotaFissa_PagamentoMisto = Config_BLL.Instance.getConfig(ref esito, "QUOTA_FISSA_PAGAMENTO_MISTO").Valore;
+            diariaLorda = Config_BLL.Instance.getConfig(ref esito, "DIARIA_LORDA").Valore;
         }
 
         private void PopolaComboFiltroGiorniLavorazione()

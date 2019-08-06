@@ -117,12 +117,12 @@
         if (tipoPagamento == "1") { // ASSUNZIONE
             valoreLordo = 2 * valoreNetto;
         } else if (tipoPagamento == "2") { // MISTA 
-            var rimborsoKm = valoreNetto - 45;
+            var rimborsoKm = valoreNetto - <%=quotaFissa_PagamentoMisto%>;//  45;
             $('#<%=txt_FPRimborsoKM.ClientID%>').val(rimborsoKm);
 
             valoreLordo = 90 + rimborsoKm;
         } else if (tipoPagamento == "3") { // RITENUTA ACCONTO
-            valoreLordo = valoreNetto / 0.8;
+            valoreLordo = valoreNetto / <%=aliquota_RitenutaAcconto%>;//0.8;
         } else if (tipoPagamento == "4") { // FATTURA
             valoreLordo = valoreNetto;
         } 

@@ -121,6 +121,7 @@
             var nomeElemento = '';
 
             var statoCorrente = $("#<%=val_Stato.ClientID%>").text();
+            
 
             if (tipoName == 'Appuntamento') {
                 nomeElemento = '<%=tab_Appuntamento.ClientID%>';

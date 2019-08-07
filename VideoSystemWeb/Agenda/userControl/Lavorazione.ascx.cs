@@ -740,8 +740,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void CercaFP()
         {
-            Esito esito = new Esito();
-
             string tipoFP = ddl_FPtipo.SelectedValue;
             string qualificaFP = ddl_FPqualifica.SelectedItem.Text;
             string cittaFP = txt_FPCitta.Text.ToLower().Trim();
@@ -1399,9 +1397,57 @@ namespace VideoSystemWeb.Agenda.userControl
         private void PopolaParametriConfigurazione()
         {
             Esito esito = new Esito();
+            string erroriConversione = string.Empty;
+
+            #region RITENUTA ACCONTO
             aliquota_RitenutaAcconto = Config_BLL.Instance.getConfig(ref esito, "ALIQUOTA_RITENUTA_ACCONTO").Valore;
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                basePage.ShowError(esito.descrizione);
+                return;
+            }
+            Decimal.TryParse(aliquota_RitenutaAcconto, out decimal aliquotaRitAcc);
+            if (aliquotaRitAcc==0)
+            {
+                erroriConversione += "<li>L'aliquota per la ritenuta di acconto non è nel formato corretto</li>";
+                aliquota_RitenutaAcconto = "1";
+            }
+            #endregion
+
+            #region MISTA
             quotaFissa_PagamentoMisto = Config_BLL.Instance.getConfig(ref esito, "QUOTA_FISSA_PAGAMENTO_MISTO").Valore;
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                basePage.ShowError(esito.descrizione);
+                return;
+            }
+            Decimal.TryParse(quotaFissa_PagamentoMisto, out decimal quotaPagFisso);
+            if (quotaPagFisso == 0)
+            {
+                erroriConversione += "<li>La quota per la tipologia di pagamento mista non è nel formato corretto</li>";
+                quotaFissa_PagamentoMisto = "0";
+            }
+            #endregion
+
+            #region DIARIA LORDA
             diariaLorda = Config_BLL.Instance.getConfig(ref esito, "DIARIA_LORDA").Valore;
+            if (esito.codice != Esito.ESITO_OK)
+            {
+                basePage.ShowError(esito.descrizione);
+                return;
+            }
+            Decimal.TryParse(diariaLorda, out decimal diaria);
+            if (diaria == 0)
+            {
+                erroriConversione += "<li>Il valore della diaria lorda non è nel formato corretto</li>";
+                diariaLorda = "0";
+            }
+            #endregion
+
+            if (!string.IsNullOrEmpty(erroriConversione))
+            {
+                basePage.ShowWarning("Si sono verificati i seguenti errori:<ul>" + erroriConversione + "</ul>Modificare il valore nella sezione Tabelle > Configurazione");
+            }
         }
 
         private void PopolaComboFiltroGiorniLavorazione()

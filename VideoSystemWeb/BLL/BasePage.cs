@@ -312,6 +312,7 @@ namespace VideoSystemWeb.BLL
 
         public void ShowError(string messaggio)
         {
+            messaggio = messaggio.Replace("\\", "/");
             messaggio = messaggio.Replace("'", "\\'");
             messaggio = messaggio.Replace("\r\n", "<br/>");
 

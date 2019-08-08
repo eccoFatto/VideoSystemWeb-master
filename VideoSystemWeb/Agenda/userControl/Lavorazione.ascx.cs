@@ -956,6 +956,11 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             catch (Exception ex)
             {
+                if (esito.codice == Esito.ESITO_OK)
+                {
+                    esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                    esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                }
                 basePage.ShowError(ex.Message);
             }
         }

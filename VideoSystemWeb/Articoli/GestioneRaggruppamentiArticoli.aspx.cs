@@ -205,11 +205,11 @@ namespace VideoSystemWeb.Articoli
             //MODIFICO RAGGRUPPAMENTO
             if (!string.IsNullOrEmpty(tbInsNomeRaggruppamento.Text))
             {
+                Esito esito = new Esito();
                 try
                 {
                     NascondiErroriValidazione();
-                    
-                    Esito esito = new Esito();
+          
                     Art_Gruppi nuovoGruppo = new Art_Gruppi();
                     nuovoGruppo.Id = Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text);
                     nuovoGruppo.Nome = tbInsNomeRaggruppamento.Text.Trim();
@@ -225,8 +225,6 @@ namespace VideoSystemWeb.Articoli
                     btnEliminaRaggruppamento.Visible = false;
                     if (esito.codice != Esito.ESITO_OK)
                     {
-                        //panelErrore.Style.Remove("display");
-                        //lbl_MessaggioErrore.Text = esito.descrizione;
                         ShowError(esito.descrizione);
                     }
                     else
@@ -247,15 +245,17 @@ namespace VideoSystemWeb.Articoli
                     btnModificaRaggruppamento.Visible = false;
                     btnInserisciRaggruppamento.Visible = true;
                     btnEliminaRaggruppamento.Visible = false;
-                    //panelErrore.Style.Remove("display");
-                    //lbl_MessaggioErrore.Text = ex.Message;
+                    if (esito.codice == Esito.ESITO_OK)
+                    {
+                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                    }
                     ShowError(ex.Message);
                 }
             }
             else
             {
-                //panelErrore.Style.Remove("display");
-                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
+
                 ShowError("Verificare il corretto inserimento dei campi");
             }
 
@@ -275,13 +275,14 @@ namespace VideoSystemWeb.Articoli
 
         protected void btnEditRaggruppamento_Click(object sender, EventArgs e)
         {
+            Esito esito = new Esito();
             //CARICO IL RAGGRUPPAMENTO SELEZIONATO
             try
             {
                 NascondiErroriValidazione();
 
                 string gruppoSelezionato = hf_idRagg.Value;
-                Esito esito = new Esito();
+               
                 Art_Gruppi gruppo = Art_Gruppi_BLL.Instance.getGruppiById(Convert.ToInt32(gruppoSelezionato), ref esito);
 
                 if (esito.codice != Esito.ESITO_OK)
@@ -336,6 +337,11 @@ namespace VideoSystemWeb.Articoli
                 btnInserisciRaggruppamento.Visible = true;
                 btnModificaRaggruppamento.Visible = false;
                 btnEliminaRaggruppamento.Visible = false;
+                if (esito.codice == Esito.ESITO_OK)
+                {
+                    esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                    esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                }
                 ShowError(ex.Message);
             }
 
@@ -360,13 +366,13 @@ namespace VideoSystemWeb.Articoli
             //INSERISCO L'ARTICOLO SE SELEZIONATO
             if (ddlArticoliDaAggiungere.SelectedIndex >= 0)
             {
+                Esito esito = new Esito();
                 try
                 {
                     NascondiErroriValidazione();
                     ListItem item = ddlArticoliDaAggiungere.Items[ddlArticoliDaAggiungere.SelectedIndex];
                     string value = item.Value;
-                    string articoloSelezionato = item.Text;
-                    Esito esito = new Esito();
+                    string articoloSelezionato = item.Text;                   
 
                     Art_Gruppi_Articoli nuovoGruppoArticolo = new Art_Gruppi_Articoli();
 
@@ -400,29 +406,26 @@ namespace VideoSystemWeb.Articoli
 
                     if (esito.codice != Esito.ESITO_OK)
                     {
-                        //panelErrore.Style.Remove("display");
-                        //panelErrore.Style.Add("display", "block");
-                        //lbl_MessaggioErrore.Text = esito.descrizione;
                         ShowError(esito.descrizione);
                     }
                     else
                     {
                         btnEditRaggruppamento_Click(null, null);
-
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnInserisciArticolo_Click", ex);
-                    //panelErrore.Style.Add("display", "block");
-                    //lbl_MessaggioErrore.Text = ex.Message;
+                    if (esito.codice == Esito.ESITO_OK)
+                    {
+                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                    }
                     ShowError(ex.Message);
                 }
             }
             else
             {
-                //panelErrore.Style.Add("display", "block");
-                //lbl_MessaggioErrore.Text = "Verificare il corretto inserimento dei campi!";
                 ShowError("Verificare il corretto inserimento dei campi!");
             }
         }
@@ -513,13 +516,13 @@ namespace VideoSystemWeb.Articoli
             if (e.CommandName == "EliminaArticolo" && basePage.AbilitazioneInScrittura())
             {
                 string value = e.CommandArgument.ToString();
+                Esito esito = new Esito();
                 try
                 {
                     NascondiErroriValidazione();
 
                     // DEVO TROVARE PRIMA IL GRUPPO ARTICOLO FORMATO DA ID GRUPPO E ID ARTICOLO
 
-                    Esito esito = new Esito();
                     string query = "SELECT id FROM art_gruppi_articoli where idArtGruppi = " + tbIdRaggruppamentoDaModificare.Text.Trim() + " AND idArtArticoli = " + value;
                     DataTable dtGruppiArticoli = Base_DAL.getDatiBySql(query, ref esito);
 
@@ -557,6 +560,11 @@ namespace VideoSystemWeb.Articoli
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaArticolo_Click", ex);
+                    if (esito.codice == Esito.ESITO_OK)
+                    {
+                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                    }
                     ShowError(ex.Message);
                 }
             }
@@ -567,13 +575,13 @@ namespace VideoSystemWeb.Articoli
             if (e.CommandName == "SelezionaRaggruppamento" && basePage.AbilitazioneInScrittura())
             {
                 string value = e.CommandArgument.ToString();
-
+                Esito esito = new Esito();
                 try
                 {
                     NascondiErroriValidazione();
 
                     string gruppoSelezionato = value;
-                    Esito esito = new Esito();
+                    
                     Art_Gruppi gruppo = Art_Gruppi_BLL.Instance.getGruppiById(Convert.ToInt32(gruppoSelezionato), ref esito);
 
                     if (esito.codice != Esito.ESITO_OK)
@@ -625,6 +633,11 @@ namespace VideoSystemWeb.Articoli
                     btnInserisciRaggruppamento.Visible = true;
                     btnModificaRaggruppamento.Visible = false;
                     btnEliminaRaggruppamento.Visible = false;
+                    if (esito.codice == Esito.ESITO_OK)
+                    {
+                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                    }
                     ShowError(ex.Message);
                 }
             }

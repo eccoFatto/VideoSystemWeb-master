@@ -182,6 +182,7 @@
     <Content Include="Agenda\GestioneColonneAgenda.aspx" />
     <Content Include="Agenda\prova.aspx" />
     <Content Include="Agenda\userControl\Appuntamento.ascx" />
+    <Content Include="Agenda\userControl\Consuntivo_old.ascx" />
     <Content Include="Agenda\userControl\Consuntivo.ascx" />
     <Content Include="Agenda\userControl\Lavorazione.ascx" />
     <Content Include="Agenda\userControl\Offerta.ascx" />
@@ -495,6 +496,13 @@
     </Compile>
     <Compile Include="Agenda\userControl\Appuntamento.ascx.designer.cs">
       <DependentUpon>Appuntamento.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\userControl\Consuntivo_old.ascx.cs">
+      <DependentUpon>Consuntivo_old.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\userControl\Consuntivo_old.ascx.designer.cs">
+      <DependentUpon>Consuntivo_old.ascx</DependentUpon>
     </Compile>
     <Compile Include="Agenda\userControl\Consuntivo.ascx.cs">
       <DependentUpon>Consuntivo.ascx</DependentUpon>

@@ -155,22 +155,22 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnConsuntivo_Click(object sender, EventArgs e)
         {
-           Esito esito = popupConsuntivo.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
+           //Esito esito = popupConsuntivo.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
 
             upConsuntivo.Update();
 
-            if (esito.codice == Esito.ESITO_OK)
-            {
+            //if (esito.codice == Esito.ESITO_OK)
+            //{
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriConsuntivo", script: "javascript: document.getElementById('modalConsuntivo').style.display='block'", addScriptTags: true);
 
                 //temporaneamente eliminato perché è una gran rottura di cazzo
                 //ShowSuccess("L'evento è stato salvato automaticamente");
-            }
-            else
-            {
-                UpdatePopup();
-            }
+            //}
+            //else
+            //{
+            //    UpdatePopup();
+            //}
         }
 
         protected void btnElimina_Click(object sender, EventArgs e)
@@ -875,13 +875,13 @@ namespace VideoSystemWeb.Agenda
 
         private void SalvaPdfConsuntivoSuFile()
         {
-            Esito esito = popupConsuntivo.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
+            //Esito esito = popupConsuntivo.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
 
             string nomeFile = "Consuntivo_" + val_CodiceLavoro.Text + ".pdf";
-            MemoryStream workStream = popupConsuntivo.GeneraPdf();
+            //MemoryStream workStream = popupConsuntivo.GeneraPdf();
 
             string pathConsuntivo = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
-            File.WriteAllBytes(pathConsuntivo, workStream.ToArray());
+            //File.WriteAllBytes(pathConsuntivo, workStream.ToArray());
         }
 
         #endregion

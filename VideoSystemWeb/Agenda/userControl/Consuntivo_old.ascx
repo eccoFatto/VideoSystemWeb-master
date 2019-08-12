@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RiepilogoOfferta.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.RiepilogoOfferta" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Consuntivo_old.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.Consuntivo_old" %>
 
 <script>
 
@@ -19,25 +19,18 @@
 
 
 </style>
-<div id="modalRiepilogoOfferta" class="w3-modal">
+<div id="modalConsuntivo" class="w3-modal">
     <div class="w3-modal-content  w3-animate-zoom " style="position: fixed; top: 5%; width: 70%; left: 15%; overflow: auto; height: 90%; background-color: transparent">
-        <div class="w3-center w3-padding-small" style="position: relative; background-color: white">
-            <%--<asp:Button ID="btnStampaOfferta" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-green w3-round-large " Style="font-size: smaller; padding: 8px 4px" OnClick="btnStampa_Click" />--%>
-            <asp:Button ID="btnStampaOfferta" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-green w3-round-large " Style="font-size: smaller; padding: 8px 4px" />
-            <asp:Button ID="btnModificaNote" runat="server" Text="Modifica note" class="w3-btn w3-white w3-border w3-border-orange w3-round-large " Style="font-size: smaller; padding: 8px 4px" OnClick="btnModificaNote_Click" />
-            <button onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 8px 4px">Chiudi</button>
-        </div>
 
-<%--        <div class="w3-center" style="background-color: white">
+        <div class="w3-center" style="background-color: white">
             <br />
-            <span onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi" style="top: 22px;">&times;</span>
-        </div>--%>
-        <div id="modalRiepilogoContent" runat="server" style="background-color: white;">
-            
-            <!-- COMMENTO DA QUI -->
-            <!--
+            <span onclick="document.getElementById('modalConsuntivo').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi" style="top: 22px;">&times;</span>
+        </div>
+        <div id="modalConsuntivoContent" runat="server" style="background-color: white;">
             <div class="w3-row  w3-padding-large w3-small">
-
+                <div class="w3-col">
+                    <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/logoVSP_trim.png" Style="height: 120px" />
+                </div>
 
                 <div id="intestazioneSchermo" visible="false" runat="server">
                     <div class="w3-half ">
@@ -139,16 +132,9 @@
                     </div>
                 </div>
             </div>
-            -->
-            <!-- COMMENTO A QUI (RIEPILOGO SCHERMO) -->
 
-            <!-- STAMPA-->
+            <%--STAMPA--%>
             <div id="intestazioneStampa" runat="server" visible="true" style="font-size: 8pt">
-                <div class="w3-row  w3-padding-large w3-small">
-                <div class="w3-col">
-                    <asp:Image ID="imgLogo" runat="server" ImageUrl="~/Images/logoVSP_trim.png" Style="height: 120px" />
-                </div>
-                </div>
                 <br />
                 <br />
                 <table style="width: 100%">
@@ -248,7 +234,7 @@
             </div>
             <%--FINE STAMPA--%>
 
-            <div id="articoliStampa" runat="server" class="w3-row w3-section w3-padding w3-small">
+            <div class="w3-row w3-section w3-padding w3-small">
 
                 <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False"
                     Style="font-size: 8pt; max-height: 200px; width: 100%; position: relative; background-color: #FFF; text-align: center"
@@ -285,7 +271,6 @@
                 </asp:GridView>
             </div>
 
-            <!--
             <div id="totaliSchermo" visible="false"  runat="server">
                 <div class="w3-row  w3-small">
                     <div class="w3-col">
@@ -331,14 +316,11 @@
                 </div>
 
             </div>
-            -->
+
             <div id="totaliStampa" style="width: 100%; font-size: 8pt" runat="server" visible="true">
                 <table style="width: 100%">
                     <tr>
-                        <td style="width: 25%; text-align: left; padding-left: 20px;">
-                            <b><asp:Label ID="Label1" runat="server" Text="Note:" Font-Bold="true" /></b></td>
-                        <td style="width: 45%; text-align: left; padding-left: 10px;padding-right:10px;border:thin 1px #000;">
-                            <b><asp:Label ID="note" runat="server" Text="" /></b></td>
+                        <td style="width: 70%">&nbsp;</td>
                         <td style="width: 30%">
                             <table style="width: 100%">
                                 <tr>
@@ -354,7 +336,7 @@
                                         <label><b>Totale i.v.a.</b></label></td>
                                     <td style="width: 40%; text-align: right; padding-right: 20px;border:solid 1px #000;">
                                         <b>
-                                            <asp:Label ID="totaleIVAStampa" runat="server" /></b>
+                                            <asp:Label ID="totaleIVAStampa" runat="server" /><b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -365,12 +347,33 @@
                                             <asp:Label ID="totaleEuroStampa" runat="server" /></b>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">&nbsp;</td>
+                                </tr>
                             </table>
                         </td>
                     </tr>
                 </table>
             </div>
-            <!--
+
             <div id="footerSchermo" visible="false"  style="margin-left: 10px; margin-right: 10px; margin-top: 25px; position: relative; width: 98%; font-size: 8pt" runat="server">
                 <table style="width: 100%;">
                     <tr>
@@ -402,7 +405,7 @@
                 </div>
 
             </div>
-            -->
+
             <div id="footerStampa" style="margin: 10px; margin-top: 25px; position: absolute; bottom: -30px; width: 98%; font-size: 8pt" runat="server" visible="true">
                 <table style="width: 100%;">
                     <tr>
@@ -444,13 +447,11 @@
             </div>
         </div>
 
-
-        <div id="DivFramePdf" runat="server" style=" width:100%; height:90%;" >
-            <%--<iframe id="framePdf" runat="server" src="" allowTransparency="true" frameborder="0" style="overflow:hidden; width:100%; height:600px"></iframe>--%>
-            <iframe id="framePdf" runat="server" src="" style=" width:100%; height:100%;"></iframe>
+        <div class="w3-center w3-padding-small" style="position: relative; background-color: white">
+            <asp:Button ID="btnStampaConsuntivo" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-green w3-round-large " Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampaConsuntivo_Click" />
+            <asp:Button ID="btnModificaNote" runat="server" Text="Modifica note" class="w3-btn w3-white w3-border w3-border-orange w3-round-large " Style="font-size: smaller; padding: 4px 8px" OnClick="btnModificaNote_Click" />
+            <button onclick="document.getElementById('modalConsuntivo').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Chiudi</button>
         </div>
-
-
     </div>
 </div>
 
@@ -494,14 +495,6 @@
                 </div>
                 <div class="w3-threequarter">
                     <asp:TextBox ID="txt_Consegna" runat="server" class="w3-input w3-border" placeholder="Consegna" Style="padding: 2px;"></asp:TextBox>
-                </div>
-            </div>
-            <div class="w3-row" style="padding: 5px;">
-                <div class="w3-quarter" style="padding: 5px">
-                    <label style="margin-bottom: 0.2rem;">Note</label>
-                </div>
-                <div class="w3-threequarter">
-                    <asp:TextBox ID="txt_Note" runat="server" class="w3-input w3-border" placeholder="Note" Style="padding: 2px;" Rows="5" TextMode="MultiLine"></asp:TextBox>
                 </div>
             </div>
         </div>

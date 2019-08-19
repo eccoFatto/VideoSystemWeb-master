@@ -22,21 +22,21 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Button btnStampaConsuntivo;
         
         /// <summary>
-        /// Controllo DivFramePdf.
+        /// Controllo DivFramePdfConsuntivo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivFramePdf;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivFramePdfConsuntivo;
         
         /// <summary>
-        /// Controllo framePdf.
+        /// Controllo framePdfConsuntivo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlIframe framePdf;
+        protected global::System.Web.UI.HtmlControls.HtmlIframe framePdfConsuntivo;
     }
 }

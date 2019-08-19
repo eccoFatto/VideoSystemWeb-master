@@ -16,8 +16,8 @@
             <button onclick="document.getElementById('modalConsuntivo').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Chiudi</button>
         </div>
 
-        <div id="DivFramePdf" runat="server" style=" width:100%; height:90%;" >
-            <iframe id="framePdf" runat="server" src="~/Images/logoVSP_trim.png" style=" width:100%; height:100%;"></iframe>
+        <div id="DivFramePdfConsuntivo" runat="server" style=" width:100%; height:90%;" >
+            <iframe id="framePdfConsuntivo" runat="server" src="~/Images/logoVSP_trim.png" style=" width:100%; height:100%;"></iframe>
         </div>
     </div>
 </div>

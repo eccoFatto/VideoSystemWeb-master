@@ -155,22 +155,19 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnConsuntivo_Click(object sender, EventArgs e)
         {
-           //Esito esito = popupConsuntivo.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
 
-            upConsuntivo.Update();
+            Esito esito = popupConsuntivo.popolaPannelloConsuntivo(SessionManager.EventoSelezionato);
+            if (esito.codice == Esito.ESITO_OK)
+            {
+                upConsuntivo.Update();
 
-            //if (esito.codice == Esito.ESITO_OK)
-            //{
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriConsuntivo", script: "javascript: document.getElementById('modalConsuntivo').style.display='block'", addScriptTags: true);
-
-                //temporaneamente eliminato perché è una gran rottura di cazzo
-                //ShowSuccess("L'evento è stato salvato automaticamente");
-            //}
-            //else
-            //{
-            //    UpdatePopup();
-            //}
+            }
+            else
+            {
+                ShowError(esito.descrizione);
+            }
         }
 
         protected void btnElimina_Click(object sender, EventArgs e)

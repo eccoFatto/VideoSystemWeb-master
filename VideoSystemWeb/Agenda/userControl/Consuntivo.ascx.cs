@@ -20,14 +20,14 @@ namespace VideoSystemWeb.Agenda.userControl
     public partial class Consuntivo : System.Web.UI.UserControl
     {
         BasePage basePage = new BasePage();
-        public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
-        public event PopupHandler RichiediOperazionePopup; //evento
+        //public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
+        //public event PopupHandler RichiediOperazionePopup; //evento
 
-        public delegate List<DatiArticoli> ListaArticoliHandler(); // delegato per l'evento
-        public event ListaArticoliHandler RichiediListaArticoli; //evento
+        //public delegate List<DatiArticoli> ListaArticoliHandler(); // delegato per l'evento
+        //public event ListaArticoliHandler RichiediListaArticoli; //evento
 
-        public delegate string CodiceLavoroHandler(); // delegato per l'evento
-        public event CodiceLavoroHandler RichiediCodiceLavoro; //evento
+        //public delegate string CodiceLavoroHandler(); // delegato per l'evento
+        //public event CodiceLavoroHandler RichiediCodiceLavoro; //evento
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,17 +35,6 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
                 scriptManager.RegisterPostBackControl(this.btnStampaConsuntivo);
-            }
-            else
-            {
-
-                /*
-                    select data,ac.cognome + ' ' + ac.nome, acf.ragioneSociale,dpel.orario,dpel.importoDiaria,dpel.idIntervento, dpel.nota from dbo.dati_pianoEsterno_lavorazione dpel
-                    left join anag_collaboratori ac on dpel.idCollaboratori = ac.id
-                    left join anag_clienti_fornitori acf
-                    on dpel.idFornitori = acf.id
-                    where dpel.idDatiLavorazione = 1173
-                */
             }
         }
         public Esito popolaPannelloConsuntivo(DatiAgenda eventoSelezionato)
@@ -56,15 +45,19 @@ namespace VideoSystemWeb.Agenda.userControl
                 if (eventoSelezionato != null && eventoSelezionato.LavorazioneCorrente != null)
                 {
 
+                    // GESTIONE NOMI FILE PDF
                     string nomeFile = "Consuntivo_" + eventoSelezionato.LavorazioneCorrente.Id.ToString() + ".pdf";
-
                     string pathConsuntivo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_CONSUNTIVO"] + nomeFile;
-
                     string mapPathConsuntivo = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_CONSUNTIVO"]) + nomeFile;
+                    //string mapPathPdfSenzaNumeroPagina = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_CONSUNTIVO"]) + "tmp_" + nomeFile;
 
                     List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = eventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
                     if (listaDatiPianoEsternoLavorazione != null)
                     {
+                        string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                        iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
+                        
+
                         PdfWriter wr = new PdfWriter(mapPathConsuntivo);
                         PdfDocument doc = new PdfDocument(wr);
                         doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
@@ -82,9 +75,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         Paragraph pSpazio = new Paragraph(" ");
                         document.Add(pSpazio);
-
-
-                        
 
                         iText.Layout.Element.Table table = new iText.Layout.Element.Table(7).UseAllAvailableWidth();
                         Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold();
@@ -106,12 +96,12 @@ namespace VideoSystemWeb.Agenda.userControl
 
 
                             string collaboratoreFornitore = "";
-                            
+
                             if (dpe.IdCollaboratori != null)
                             {
-                                Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(dpe.IdCollaboratori.Value,ref esito);
+                                Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(dpe.IdCollaboratori.Value, ref esito);
                                 collaboratoreFornitore = coll.Cognome.Trim() + " " + coll.Nome.Trim();
-                                
+
                             }
                             else if (dpe.IdFornitori != null)
                             {
@@ -167,19 +157,60 @@ namespace VideoSystemWeb.Agenda.userControl
                         Paragraph pNotePiano = new Paragraph(notePianoEsterno.Trim()).SetFontSize(10);
                         document.Add(pNotePiano);
 
+                        iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
+                        iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(1,20,pageSize.GetHeight()-80);
+                        document.Add(image);
+
+                        int n = doc.GetNumberOfPages();
+
+                        Config cfAppo = Config_BLL.Instance.getConfig(ref esito, "PARTITA_IVA");
+                        string pIvaVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "DENOMINAZIONE");
+                        string denominazioneVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "TOPONIMO");
+                        string toponimoVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "INDIRIZZO");
+                        string indirizzoVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CIVICO");
+                        string civicoVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CAP");
+                        string capVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CITTA");
+                        string cittaVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "PROVINCIA");
+                        string provinciaVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "EMAIL");
+                        string emailVs = cfAppo.valore;
+
+                        // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
+                        for (int i = 1; i <= n; i++)
+                        {
+                            document.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7),
+                                pageSize.GetWidth() - 60, pageSize.GetHeight() - 20, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+
+                            document.ShowTextAligned(new Paragraph(denominazioneVs + " P.IVA " + pIvaVs + Environment.NewLine + "Sede legale: " + toponimoVs + " " + indirizzoVs + " " + civicoVs + " - " + capVs + " " + cittaVs + " " + provinciaVs + " e-mail: " + emailVs ).SetFontSize(7).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER),
+                                                            pageSize.GetWidth()/2, 30, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+                        }
+
+
+
                         document.Close();
                         wr.Close();
 
                         if (File.Exists(mapPathConsuntivo))
                         {
-                            framePdfConsuntivo.Attributes.Remove("src");
-                            framePdfConsuntivo.Attributes.Add("src", pathConsuntivo.Replace("~", ""));
+                            //string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(mapPathPdfSenzaNumeroPagina, mapPathConsuntivo, ref esito);
+                            //if (File.Exists(mapPathPdfSenzaNumeroPagina)) File.Delete(mapPathPdfSenzaNumeroPagina);
+                            //if (esito.codice == Esito.ESITO_OK) { 
+                                framePdfConsuntivo.Attributes.Remove("src");
+                                framePdfConsuntivo.Attributes.Add("src", pathConsuntivo.Replace("~", ""));
 
-                            DivFramePdfConsuntivo.Visible = true;
-                            framePdfConsuntivo.Visible = true;
+                                DivFramePdfConsuntivo.Visible = true;
+                                framePdfConsuntivo.Visible = true;
 
-                            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfConsuntivo.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
-                            btnStampaConsuntivo.Attributes.Add("onclick", "window.open('" + pathConsuntivo.Replace("~", "") + "');");
+                                ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfConsuntivo.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
+                                btnStampaConsuntivo.Attributes.Add("onclick", "window.open('" + pathConsuntivo.Replace("~", "") + "');");
+                            //}
                         }
                         else
                         {
@@ -204,32 +235,13 @@ namespace VideoSystemWeb.Agenda.userControl
             return esito;
         }
 
-        
-        
+
+
         #region COMPORTAMENTO ELEMENTI PAGINA
         protected void btnStampaConsuntivo_Click(object sender, EventArgs e)
         {
-            //string codiceLavoro = RichiediCodiceLavoro();
-
-            //string nomeFile = "Consuntivo_" + codiceLavoro + ".pdf";
-            //MemoryStream workStream = GeneraPdf();
-
-            //Response.Clear();
-            //Response.ClearContent();
-            //Response.ClearHeaders();
-            //Response.ContentType = "application/pdf";
-            //Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile);
-            //Response.AddHeader("Content-Length", workStream.Length.ToString());
-            //Response.BinaryWrite(workStream.ToArray());
-            //Response.Flush();
-            //Response.Close();
-            //Response.End();
         }
 
-        protected void btnModificaNote_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
-        }
 
         #endregion
 
@@ -238,4 +250,5 @@ namespace VideoSystemWeb.Agenda.userControl
         #endregion
 
     }
+
 }

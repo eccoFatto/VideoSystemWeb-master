@@ -51,13 +51,13 @@ namespace VideoSystemWeb.Agenda
 
             popupRiepilogoOfferta.RichiediOperazionePopup += OperazioniPopup;
             popupLavorazione.RichiediOperazionePopup += OperazioniPopup;
-            popupConsuntivo.RichiediOperazionePopup += OperazioniPopup;
+            //popupConsuntivo.RichiediOperazionePopup += OperazioniPopup;
 
             popupRiepilogoOfferta.RichiediCodiceLavoro += GetCodiceLavoro;
             popupRiepilogoOfferta.RichiediListaArticoli += GetListaArticoli;
 
-            popupConsuntivo.RichiediCodiceLavoro += GetCodiceLavoro;
-            popupConsuntivo.RichiediListaArticoli += GetListaArticoli;
+            //popupConsuntivo.RichiediCodiceLavoro += GetCodiceLavoro;
+            //popupConsuntivo.RichiediListaArticoli += GetListaArticoli;
 
             isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
             Tipologica viaggio  = UtilityTipologiche.getElementByID(SessionManager.ListaStati, Stato.Instance.STATO_VIAGGIO, ref esito);

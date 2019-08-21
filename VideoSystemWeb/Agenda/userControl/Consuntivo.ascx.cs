@@ -20,15 +20,6 @@ namespace VideoSystemWeb.Agenda.userControl
     public partial class Consuntivo : System.Web.UI.UserControl
     {
         BasePage basePage = new BasePage();
-        //public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
-        //public event PopupHandler RichiediOperazionePopup; //evento
-
-        //public delegate List<DatiArticoli> ListaArticoliHandler(); // delegato per l'evento
-        //public event ListaArticoliHandler RichiediListaArticoli; //evento
-
-        //public delegate string CodiceLavoroHandler(); // delegato per l'evento
-        //public event CodiceLavoroHandler RichiediCodiceLavoro; //evento
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)
@@ -64,6 +55,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         //doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
                         Document document = new Document(doc);
 
+                        document.SetMargins(90, 30, 50, 30);
+
                         Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
 
                         Paragraph pIntestazione = new Paragraph("Consuntivo Piano Esterno - Cliente: " + cliente.RagioneSociale.Trim() + " - " + eventoSelezionato.codice_lavoro).SetFontSize(12).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
@@ -76,6 +69,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         Paragraph pSpazio = new Paragraph(" ");
                         document.Add(pSpazio);
 
+                        // INTESTAZIONE GRIGLIA
                         iText.Layout.Element.Table table = new iText.Layout.Element.Table(7).UseAllAvailableWidth();
                         Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold();
                         table.AddHeaderCell(intestazione);
@@ -119,7 +113,7 @@ namespace VideoSystemWeb.Agenda.userControl
                             if (!string.IsNullOrEmpty(dpe.Nota)) nota = dpe.Nota;
 
                             string orario = "";
-                            if (dpe.Orario != null) orario = dpe.Orario.Value.ToLongTimeString();
+                            if (dpe.Orario != null) orario = dpe.Orario.Value.ToShortTimeString();
 
                             string intervento = "";
                             if (dpe.IdIntervento != null)
@@ -132,7 +126,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                             //Paragraph p = new Paragraph(dpe.Data.Value.ToLongDateString() + " " + orario + " " + collaboratoreFornitore + " " + nota).SetFontSize(8);
                             //document.Add(p);
-                            table.AddCell(dpe.Data.Value.ToLongDateString()).SetFontSize(8);
+                            table.AddCell(dpe.Data.Value.ToShortDateString()).SetFontSize(8);
                             table.AddCell(orario).SetFontSize(8);
                             table.AddCell(collaboratoreFornitore).SetFontSize(8);
                             Paragraph pImportoDiaria = new Paragraph(importoDiaria).SetFontSize(8).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
@@ -158,8 +152,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         document.Add(pNotePiano);
 
                         iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
-                        iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(1,20,pageSize.GetHeight()-80);
-                        document.Add(image);
+                        //iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(1,20,pageSize.GetHeight()-80);
+                        //document.Add(image);
 
                         int n = doc.GetNumberOfPages();
 
@@ -185,9 +179,13 @@ namespace VideoSystemWeb.Agenda.userControl
                         // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
                         for (int i = 1; i <= n; i++)
                         {
+                            // AGGIUNGO LOGO
+                            iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(i, 20, pageSize.GetHeight() - 80);
+                            document.Add(image);
+                            //AGGIUNGO NUM.PAGINA
                             document.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7),
                                 pageSize.GetWidth() - 60, pageSize.GetHeight() - 20, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
-
+                            //AGGIUNGO FOOTER
                             document.ShowTextAligned(new Paragraph(denominazioneVs + " P.IVA " + pIvaVs + Environment.NewLine + "Sede legale: " + toponimoVs + " " + indirizzoVs + " " + civicoVs + " - " + capVs + " " + cittaVs + " " + provinciaVs + " e-mail: " + emailVs ).SetFontSize(7).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER),
                                                             pageSize.GetWidth()/2, 30, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
                         }

@@ -398,7 +398,7 @@
 
                 <div style="padding: 10px; position: relative; font-size: 8pt; text-align: center;">
                     <b>Videosystem Production srl&nbsp;&nbsp;P.IVA 13121341005<br />
-                        Sede legale:  Via T. Val di Pesa 34 - 00148 Roma&nbsp;&nbsp;e-mail: info@vsproduction.it</b>
+                        Sede legale:  Via Tavernelle Val di Pesa 34 - 00148 Roma RM&nbsp;&nbsp;e-mail: info@vsproduction.it</b>
                 </div>
 
             </div>
@@ -431,7 +431,7 @@
                     <tr>
                         <td style="width: 90%; text-align: center; font-size: 8pt;">
                             <b>Videosystem Production srl&nbsp;&nbsp;P.IVA 13121341005<br />
-                                Sede legale:  Via T. Val di Pesa 34 - 00148 Roma&nbsp;&nbsp;e-mail: info@vsproduction.it</b>
+                                Sede legale:  Via Tavernelle Val di Pesa 34 - 00148 Roma RM&nbsp;&nbsp;e-mail: info@vsproduction.it</b>
 
                         </td>
                         <td style="width: 10%">

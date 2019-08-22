@@ -70,12 +70,14 @@ namespace VideoSystemWeb.Agenda.userControl
                         document.Add(pSpazio);
 
                         // INTESTAZIONE GRIGLIA
-                        iText.Layout.Element.Table table = new iText.Layout.Element.Table(7).UseAllAvailableWidth();
+                        iText.Layout.Element.Table table = new iText.Layout.Element.Table(8).UseAllAvailableWidth();
                         Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold();
                         table.AddHeaderCell(intestazione);
                         intestazione = new Paragraph("Orario").SetFontSize(10).SetBold();
                         table.AddHeaderCell(intestazione);
                         intestazione = new Paragraph("Collaboratore").SetFontSize(10).SetBold();
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Qualifica").SetFontSize(10).SetBold();
                         table.AddHeaderCell(intestazione);
                         intestazione = new Paragraph("Importo Diaria").SetFontSize(10).SetBold();
                         table.AddHeaderCell(intestazione);
@@ -88,19 +90,22 @@ namespace VideoSystemWeb.Agenda.userControl
                         foreach (DatiPianoEsternoLavorazione dpe in listaDatiPianoEsternoLavorazione)
                         {
 
-
                             string collaboratoreFornitore = "";
-
+                            string qualifica = "";
                             if (dpe.IdCollaboratori != null)
                             {
                                 Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(dpe.IdCollaboratori.Value, ref esito);
                                 collaboratoreFornitore = coll.Cognome.Trim() + " " + coll.Nome.Trim();
 
+                                FiguraProfessionale fp = coll.CreaFiguraProfessionale();
+                                if (fp!=null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
                             }
                             else if (dpe.IdFornitori != null)
                             {
                                 Anag_Clienti_Fornitori clienteFornitore = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(dpe.IdFornitori.Value, ref esito);
                                 collaboratoreFornitore = clienteFornitore.RagioneSociale.Trim();
+                                FiguraProfessionale fp = clienteFornitore.CreaFiguraProfessionale();
+                                if (fp != null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
                             }
 
                             string importoDiaria = "0,00";
@@ -111,6 +116,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
                             string nota = "";
                             if (!string.IsNullOrEmpty(dpe.Nota)) nota = dpe.Nota;
+
+                            string dataPiano = "";
+                            if (dpe.Data != null) dataPiano = dpe.Data.Value.ToLongDateString();
 
                             string orario = "";
                             if (dpe.Orario != null) orario = dpe.Orario.Value.ToShortTimeString();
@@ -126,9 +134,10 @@ namespace VideoSystemWeb.Agenda.userControl
 
                             //Paragraph p = new Paragraph(dpe.Data.Value.ToLongDateString() + " " + orario + " " + collaboratoreFornitore + " " + nota).SetFontSize(8);
                             //document.Add(p);
-                            table.AddCell(dpe.Data.Value.ToShortDateString()).SetFontSize(8);
+                            table.AddCell(dataPiano).SetFontSize(8);
                             table.AddCell(orario).SetFontSize(8);
                             table.AddCell(collaboratoreFornitore).SetFontSize(8);
+                            table.AddCell(qualifica).SetFontSize(8);
                             Paragraph pImportoDiaria = new Paragraph(importoDiaria).SetFontSize(8).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                             table.AddCell(pImportoDiaria);
                             table.AddCell(intervento).SetFontSize(8);

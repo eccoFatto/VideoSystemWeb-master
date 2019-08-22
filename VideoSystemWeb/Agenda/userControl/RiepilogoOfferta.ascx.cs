@@ -191,7 +191,7 @@ namespace VideoSystemWeb.Agenda.userControl
             if (noteOfferta.Id == 0)
             {
                 List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
-                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + Environment.NewLine + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + Environment.NewLine + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
 
                 NoteOfferta_BLL.Instance.CreaNoteOfferta(noteOfferta, ref esito);
             }

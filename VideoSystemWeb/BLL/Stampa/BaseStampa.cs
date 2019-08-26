@@ -70,14 +70,18 @@ namespace VideoSystemWeb.BLL.Stampa
                 
                 PdfDocument pdfDoc = new PdfDocument(new PdfReader(nomeFileIn), new PdfWriter(nomeFileOut));
                 Document doc = new Document(pdfDoc);
-                int n = pdfDoc.GetNumberOfPages();
 
-               
+                iText.Kernel.Geom.Rectangle pageSize = pdfDoc.GetPage(1).GetPageSize();
+
+
+                int n = pdfDoc.GetNumberOfPages();
 
                 for (int i = 1; i <= n; i++)
                 {
+                    //doc.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7),
+                    //        520, 815, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
                     doc.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7),
-                            520, 815, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+                        pageSize.GetWidth()-60, pageSize.GetHeight()-20, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
                 }
                 doc.Close();
                 ret = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + Path.GetFileName(nomeFileOut);

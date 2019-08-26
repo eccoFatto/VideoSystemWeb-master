@@ -308,8 +308,8 @@
                     </div>
 
                     <div style="position: absolute; width: 100%; bottom: 0px; text-align: center; height: 7%">
-                        <asp:Button ID="btnConsuntivo" runat="server" Text="Visualizza consuntivo" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnConsuntivo_Click" Visible="false" Style="padding: 7px 10px" />
-                        <asp:Button ID="btnRiepilogo" runat="server" Text="Visualizza riepilogo" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" Style="padding: 7px 10px" />
+                        <asp:Button ID="btnConsuntivo" runat="server" Text="Visualizza consuntivo" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnConsuntivo_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
+                        <asp:Button ID="btnRiepilogo" runat="server" Text="Visualizza riepilogo" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); " Style="padding: 7px 10px" />
 

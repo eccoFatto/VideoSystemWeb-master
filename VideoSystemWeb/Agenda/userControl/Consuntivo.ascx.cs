@@ -8,21 +8,18 @@ using System.Web.UI.WebControls;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.BLL.Stampa;
 using VideoSystemWeb.Entity;
+using iText;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iTextSharp;
+using System.Configuration;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
     public partial class Consuntivo : System.Web.UI.UserControl
     {
         BasePage basePage = new BasePage();
-        public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
-        public event PopupHandler RichiediOperazionePopup; //evento
-
-        public delegate List<DatiArticoli> ListaArticoliHandler(); // delegato per l'evento
-        public event ListaArticoliHandler RichiediListaArticoli; //evento
-
-        public delegate string CodiceLavoroHandler(); // delegato per l'evento
-        public event CodiceLavoroHandler RichiediCodiceLavoro; //evento
-
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)
@@ -30,182 +27,235 @@ namespace VideoSystemWeb.Agenda.userControl
                 ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
                 scriptManager.RegisterPostBackControl(this.btnStampaConsuntivo);
             }
-            else
-            {
-                foreach (GiorniPagamentoFatture gpf in SessionManager.ListaGPF)
-                {
-                    cmbMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione, gpf.Giorni));
-                }
-
-                foreach (DatiBancari datiBancari in SessionManager.ListaDatiBancari)
-                {
-                    ddl_Banca.Items.Add(new ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
-                }
-            }
         }
-
-        #region COMPORTAMENTO ELEMENTI PAGINA
-        protected void btnStampaConsuntivo_Click(object sender, EventArgs e)
-        {
-            string codiceLavoro = RichiediCodiceLavoro();
-
-            string nomeFile = "Consuntivo_" + codiceLavoro + ".pdf";
-            MemoryStream workStream = GeneraPdf();
-
-            Response.Clear();
-            Response.ClearContent();
-            Response.ClearHeaders();
-            Response.ContentType = "application/pdf";
-            Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile);
-            Response.AddHeader("Content-Length", workStream.Length.ToString());
-            Response.BinaryWrite(workStream.ToArray());
-            Response.Flush();
-            Response.Close();
-            Response.End();
-        }
-
-        protected void btnModificaNote_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
-        }
-
-        protected void btnOKModificaNote_Click(object sender, EventArgs e)
-        {
-            NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
-            noteOfferta.Banca = ddl_Banca.SelectedValue;
-            noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue);
-            noteOfferta.Consegna = txt_Consegna.Text;
-            noteOfferta.Note = "";
-            Offerta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
-
-            val_bancaStampa.Text = noteOfferta.Banca;
-            val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
-            val_consegnaStampa.Text = noteOfferta.Consegna;
-
-            RichiediOperazionePopup("SAVE_PDF_CONSUNTIVO");
-
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaNote", script: "javascript: aggiornaRiepilogo()", addScriptTags: true);
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='none'", addScriptTags: true);
-        }
-
-        protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                Label lblDescrizione = (Label)e.Row.FindControl("lblDescrizione");
-                lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
-
-                Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
-                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[4].Text)));
-
-                e.Row.Cells[2].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text)));
-                // e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
-            }
-        }
-        #endregion
-
-        #region OPERAZIONI POPUP
-        public Esito popolaPannelloRiepilogo(DatiAgenda eventoSelezionato)
+        public Esito popolaPannelloConsuntivo(DatiAgenda eventoSelezionato)
         {
             Esito esito = new Esito();
-
-            //AbilitaVisualizzazioneStampa(false);
-
-            lbl_Data.Text = lbl_DataStampa.Text = DateTime.Now.ToString("dd/MM/yyyy ore HH:mm");
-            lbl_Produzione.Text = lbl_ProduzioneStampa.Text = eventoSelezionato.produzione;
-            lbl_Lavorazione.Text = lbl_LavorazioneStampa.Text = eventoSelezionato.lavorazione;
-            lbl_DataLavorazione.Text = lbl_DataLavorazioneStampa.Text = eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy");
-
-            Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
-            lbl_Cliente.Text = lbl_ClienteStampa.Text = cliente.RagioneSociale;
-            lbl_IndirizzoCliente.Text = lbl_IndirizzoClienteStampa.Text = cliente.IndirizzoOperativo + " " + cliente.ComuneOperativo;
-            lbl_PIvaCliente.Text = lbl_PIvaClienteStampa.Text = string.IsNullOrEmpty(cliente.PartitaIva) ? cliente.CodiceFiscale : cliente.PartitaIva;
-
-            lbl_CodLavorazione.Text = lbl_CodLavorazioneStampa.Text = eventoSelezionato.codice_lavoro;
-
-            List<DatiArticoli> listaDatiArticoli = RichiediListaArticoli().Where(x => x.Stampa).ToList<DatiArticoli>();
-
-            gvArticoli.DataSource = listaDatiArticoli;
-            gvArticoli.DataBind();
-
-            decimal totPrezzo = 0;
-            decimal totIVA = 0;
-
-            foreach (DatiArticoli art in listaDatiArticoli)
+            try
             {
-                totPrezzo += art.Prezzo * art.Quantita;
-                totIVA += (art.Prezzo * art.Iva / 100) * art.Quantita;
+                if (eventoSelezionato != null && eventoSelezionato.LavorazioneCorrente != null)
+                {
+
+                    // GESTIONE NOMI FILE PDF
+                    string nomeFile = "Consuntivo_" + eventoSelezionato.LavorazioneCorrente.Id.ToString() + ".pdf";
+                    string pathConsuntivo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_CONSUNTIVO"] + nomeFile;
+                    string mapPathConsuntivo = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_CONSUNTIVO"]) + nomeFile;
+                    //string mapPathPdfSenzaNumeroPagina = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_CONSUNTIVO"]) + "tmp_" + nomeFile;
+
+                    List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = eventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
+                    if (listaDatiPianoEsternoLavorazione != null)
+                    {
+                        string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                        iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
+                        
+
+                        PdfWriter wr = new PdfWriter(mapPathConsuntivo);
+                        PdfDocument doc = new PdfDocument(wr);
+                        doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
+                        //doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
+                        Document document = new Document(doc);
+
+                        document.SetMargins(90, 30, 50, 30);
+
+                        Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
+
+                        Paragraph pIntestazione = new Paragraph("Consuntivo Piano Esterno - Cliente: " + cliente.RagioneSociale.Trim() + " - " + eventoSelezionato.codice_lavoro).SetFontSize(12).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                        document.Add(pIntestazione);
+
+                        Paragraph pIntestazione2 = new Paragraph("Lavorazione: " + eventoSelezionato.lavorazione + " " + eventoSelezionato.produzione + " del " + eventoSelezionato.data_inizio_lavorazione.ToShortDateString() + " - " + eventoSelezionato.data_fine_lavorazione.ToShortDateString()).SetFontSize(12).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                        document.Add(pIntestazione2);
+
+
+                        Paragraph pSpazio = new Paragraph(" ");
+                        document.Add(pSpazio);
+
+                        // INTESTAZIONE GRIGLIA
+                        iText.Layout.Element.Table table = new iText.Layout.Element.Table(8).UseAllAvailableWidth();
+                        Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold();
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Orario").SetFontSize(10).SetBold();
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Collaboratore").SetFontSize(10).SetBold();
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Qualifica").SetFontSize(10).SetBold();
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Importo Diaria").SetFontSize(10).SetBold();
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Intervento").SetFontSize(10).SetBold();
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Albergo").SetFontSize(10).SetBold();
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Note").SetFontSize(10).SetBold();
+                        table.AddHeaderCell(intestazione);
+                        foreach (DatiPianoEsternoLavorazione dpe in listaDatiPianoEsternoLavorazione)
+                        {
+
+                            string collaboratoreFornitore = "";
+                            string qualifica = "";
+                            if (dpe.IdCollaboratori != null)
+                            {
+                                Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(dpe.IdCollaboratori.Value, ref esito);
+                                collaboratoreFornitore = coll.Cognome.Trim() + " " + coll.Nome.Trim();
+
+                                FiguraProfessionale fp = coll.CreaFiguraProfessionale();
+                                if (fp!=null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                            }
+                            else if (dpe.IdFornitori != null)
+                            {
+                                Anag_Clienti_Fornitori clienteFornitore = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(dpe.IdFornitori.Value, ref esito);
+                                collaboratoreFornitore = clienteFornitore.RagioneSociale.Trim();
+                                FiguraProfessionale fp = clienteFornitore.CreaFiguraProfessionale();
+                                if (fp != null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                            }
+
+                            string importoDiaria = "0,00";
+                            if (dpe.ImportoDiaria != null)
+                            {
+                                importoDiaria = dpe.ImportoDiaria.Value.ToString("###,###.00");
+                            }
+
+                            string nota = "";
+                            if (!string.IsNullOrEmpty(dpe.Nota)) nota = dpe.Nota;
+
+                            string dataPiano = "";
+                            if (dpe.Data != null) dataPiano = dpe.Data.Value.ToLongDateString();
+
+                            string orario = "";
+                            if (dpe.Orario != null) orario = dpe.Orario.Value.ToShortTimeString();
+
+                            string intervento = "";
+                            if (dpe.IdIntervento != null)
+                            {
+                                intervento = SessionManager.ListaTipiIntervento.FirstOrDefault(x => x.id == dpe.IdIntervento).nome;
+                            }
+
+                            string albergo = "no";
+                            if (dpe.Albergo != null && dpe.Albergo == true) albergo = "si";
+
+                            //Paragraph p = new Paragraph(dpe.Data.Value.ToLongDateString() + " " + orario + " " + collaboratoreFornitore + " " + nota).SetFontSize(8);
+                            //document.Add(p);
+                            table.AddCell(dataPiano).SetFontSize(8);
+                            table.AddCell(orario).SetFontSize(8);
+                            table.AddCell(collaboratoreFornitore).SetFontSize(8);
+                            table.AddCell(qualifica).SetFontSize(8);
+                            Paragraph pImportoDiaria = new Paragraph(importoDiaria).SetFontSize(8).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            table.AddCell(pImportoDiaria);
+                            table.AddCell(intervento).SetFontSize(8);
+                            table.AddCell(albergo).SetFontSize(8);
+                            table.AddCell(nota).SetFontSize(8);
+
+                        }
+                        document.Add(table);
+
+                        document.Add(pSpazio);
+
+                        Paragraph pIntNote = new Paragraph("Note:").SetFontSize(12).SetBold();
+                        document.Add(pIntNote);
+
+                        document.Add(pSpazio);
+
+                        string notePianoEsterno = "";
+                        if (eventoSelezionato.LavorazioneCorrente.NotePianoEsterno != null) notePianoEsterno = eventoSelezionato.LavorazioneCorrente.NotePianoEsterno;
+
+                        Paragraph pNotePiano = new Paragraph(notePianoEsterno.Trim()).SetFontSize(10);
+                        document.Add(pNotePiano);
+
+                        iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
+                        //iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(1,20,pageSize.GetHeight()-80);
+                        //document.Add(image);
+
+                        int n = doc.GetNumberOfPages();
+
+                        Config cfAppo = Config_BLL.Instance.getConfig(ref esito, "PARTITA_IVA");
+                        string pIvaVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "DENOMINAZIONE");
+                        string denominazioneVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "TOPONIMO");
+                        string toponimoVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "INDIRIZZO");
+                        string indirizzoVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CIVICO");
+                        string civicoVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CAP");
+                        string capVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CITTA");
+                        string cittaVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "PROVINCIA");
+                        string provinciaVs = cfAppo.valore;
+                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "EMAIL");
+                        string emailVs = cfAppo.valore;
+
+                        // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
+                        for (int i = 1; i <= n; i++)
+                        {
+                            // AGGIUNGO LOGO
+                            iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(i, 20, pageSize.GetHeight() - 80);
+                            document.Add(image);
+                            //AGGIUNGO NUM.PAGINA
+                            document.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7),
+                                pageSize.GetWidth() - 60, pageSize.GetHeight() - 20, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+                            //AGGIUNGO FOOTER
+                            document.ShowTextAligned(new Paragraph(denominazioneVs + " P.IVA " + pIvaVs + Environment.NewLine + "Sede legale: " + toponimoVs + " " + indirizzoVs + " " + civicoVs + " - " + capVs + " " + cittaVs + " " + provinciaVs + " e-mail: " + emailVs ).SetFontSize(7).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER),
+                                                            pageSize.GetWidth()/2, 30, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+                        }
+
+
+
+                        document.Close();
+                        wr.Close();
+
+                        if (File.Exists(mapPathConsuntivo))
+                        {
+                            //string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(mapPathPdfSenzaNumeroPagina, mapPathConsuntivo, ref esito);
+                            //if (File.Exists(mapPathPdfSenzaNumeroPagina)) File.Delete(mapPathPdfSenzaNumeroPagina);
+                            //if (esito.codice == Esito.ESITO_OK) { 
+                                framePdfConsuntivo.Attributes.Remove("src");
+                                framePdfConsuntivo.Attributes.Add("src", pathConsuntivo.Replace("~", ""));
+
+                                DivFramePdfConsuntivo.Visible = true;
+                                framePdfConsuntivo.Visible = true;
+
+                                ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfConsuntivo.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
+                                btnStampaConsuntivo.Attributes.Add("onclick", "window.open('" + pathConsuntivo.Replace("~", "") + "');");
+                            //}
+                        }
+                        else
+                        {
+                            esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                            esito.descrizione = "Il File " + pathConsuntivo.Replace("~", "") + " non è stato creato correttamente!";
+                        }
+
+
+
+                    }
+
+
+                }
             }
-
-            totale.Text = totaleStampa.Text = string.Format("{0:N2}", totPrezzo);
-            totaleIVA.Text = totaleIVAStampa.Text = string.Format("{0:N2}", totIVA);
-            totaleEuro.Text = totaleEuroStampa.Text = string.Format("{0:N2}", totPrezzo + totIVA);
-
-            int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id;
-            List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
-            string protocollo = listaProtocolli.Count == 0 ? "N.D." : listaProtocolli.First().Numero_protocollo + "-" + eventoSelezionato.codice_lavoro;
-            lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
-
-            NoteOfferta noteOfferta = Offerta_BLL.Instance.getNoteOffertaByIdDatiAgenda(eventoSelezionato.id, ref esito);
-
-            // se non viene trovata una notaOfferta (vecchi eventi) viene creata e salvata
-            if (noteOfferta.Id == 0)
+            catch (Exception ex)
             {
-                List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
-                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
 
-                Offerta_BLL.Instance.CreaNoteOfferta(noteOfferta, ref esito);
+                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.descrizione = "popolaPannelloConsuntivo(DatiAgenda eventoSelezionato) " + ex.Message + Environment.NewLine + ex.StackTrace;
             }
-
-            ViewState["NoteOfferta"] = noteOfferta;
-
-            val_bancaSchermo.Text = val_bancaStampa.Text = noteOfferta.Banca;// 
-            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = noteOfferta.Pagamento + " gg DFFM";
-            val_consegnaSchermo.Text = val_consegnaStampa.Text = noteOfferta.Consegna;
-
-            //ddl_Banca.SelectedValue = noteOfferta.Banca;// commentato perché se non trova l'elemento (e può succedere) schioda
-            txt_Consegna.Text = noteOfferta.Consegna;
-            cmbMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
 
             return esito;
         }
 
-        public MemoryStream GeneraPdf()
+
+
+        #region COMPORTAMENTO ELEMENTI PAGINA
+        protected void btnStampaConsuntivo_Click(object sender, EventArgs e)
         {
-            string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
-            imgLogo.ImageUrl = prefissoUrl + "/Images/logoVSP_trim.png";
-            imgDNV.ImageUrl = prefissoUrl + "/Images/DNV_2008_ITA2.jpg";
-
-            AbilitaVisualizzazioneStampa(true);
-
-
-            StringWriter sw = new StringWriter();
-            HtmlTextWriter hw = new HtmlTextWriter(sw);
-            modalConsuntivoContent.RenderControl(hw);
-
-
-            MemoryStream workStream = BaseStampa.Instance.GeneraPdf(sw.ToString());
-
-            sw.Flush();
-            hw.Flush();
-
-            return workStream;
         }
 
-        private void AbilitaVisualizzazioneStampa(bool isVisualizzazioneStampa)
-        {
-            gvArticoli.Columns[3].Visible = !isVisualizzazioneStampa; // colonna costo
 
-            intestazioneSchermo.Visible = !isVisualizzazioneStampa;
-            protocolloSchermo.Visible = !isVisualizzazioneStampa;
-            totaliSchermo.Visible = !isVisualizzazioneStampa;
-            footerSchermo.Visible = !isVisualizzazioneStampa;
+        #endregion
 
-            intestazioneStampa.Visible = isVisualizzazioneStampa;
-            totaliStampa.Visible = isVisualizzazioneStampa;
-            footerStampa.Visible = isVisualizzazioneStampa;
-        }
+        #region OPERAZIONI POPUP
+
         #endregion
 
     }
+
 }

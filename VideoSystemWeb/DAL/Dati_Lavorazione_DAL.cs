@@ -69,8 +69,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
             return datiLavorazione;
         }
@@ -115,8 +115,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
             return datiLavorazione;
         }
@@ -193,8 +193,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Lavorazione_DAL.cs - CreaDatiLavorazione " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Dati_Lavorazione_DAL.cs - CreaDatiLavorazione " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return 0;
@@ -272,8 +272,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Lavorazione_DAL.cs - AggiornaDatiLavorazione " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Dati_Lavorazione_DAL.cs - AggiornaDatiLavorazione " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -319,8 +319,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Lavorazione_DAL.cs - EliminaDatiLavorazione " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Dati_Lavorazione_DAL.cs - EliminaDatiLavorazione " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

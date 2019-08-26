@@ -35,6 +35,16 @@
         });
     }
 
+    function azzeraCampiRicerca() {
+        $("#<%=txt_dataLavorazione_FiltroRecuperaOfferta.ClientID%>").val('');
+        $("#<%=ddl_cliente_FiltroRecuperaOfferta.ClientID%>").val('');
+        $("#<%=ddl_codiceLavoro_FiltroRecuperaOfferta.ClientID%>").val('');
+        $("#<%=ddl_lavorazione_FiltroRecuperaOfferta.ClientID%>").val('');
+        $("#<%=ddl_luogo_FiltroRecuperaOfferta.ClientID%>").val('');
+        $("#<%=ddl_produzione_FiltroRecuperaOfferta.ClientID%>").val('');
+        $("#<%=ddl_tipologia_FiltroRecuperaOfferta.ClientID%>").val('');
+        return false;
+    }
 </script>
 
 <asp:Panel runat="server" ID="panelOfferta" Style="height: 100%">
@@ -133,7 +143,7 @@
 
                         <div class="w3-col">
                             <label style="margin-bottom: 0.2rem;">Descrizione</label>
-                            <asp:TextBox ID="txt_Descrizione" runat="server" class="w3-input w3-border" MaxLength="60" placeholder="Descrizione" Style="padding: 2px;"></asp:TextBox>
+                            <asp:TextBox ID="txt_Descrizione" runat="server" class="w3-input w3-border  w3-round" MaxLength="60" placeholder="Descrizione" Style="padding: 2px;"></asp:TextBox>
                         </div>
 
                         <div class="w3-col">
@@ -141,16 +151,15 @@
 
                                 <div class="w3-third" style="padding: 5px">
                                     <label style="margin-bottom: 0.2rem;">Prezzo</label>
-                                    <asp:TextBox ID="txt_Prezzo" runat="server" class="w3-input w3-border" placeholder="Prezzo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                    <asp:TextBox ID="txt_Prezzo" runat="server" class="w3-input w3-border  w3-round" placeholder="Prezzo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                                 </div>
                                 <div class="w3-third" style="padding: 5px">
                                     <label style="margin-bottom: 0.2rem;">Costo</label>
-                                    <asp:TextBox ID="txt_Costo" runat="server" class="w3-input w3-border" placeholder="Costo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                    <asp:TextBox ID="txt_Costo" runat="server" class="w3-input w3-border  w3-round" placeholder="Costo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                                 </div>
                                 <div class="w3-third" style="padding: 5px">
                                     <label style="margin-bottom: 0.2rem;">Quantità</label>
-
-                                    <asp:TextBox ID="txt_Quantita" runat="server" class="w3-input w3-border" placeholder="Quantità" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                    <asp:TextBox ID="txt_Quantita" runat="server" class="w3-input w3-border  w3-round" placeholder="Quantità" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="w3-half">
@@ -160,11 +169,11 @@
 
                                 <div class="w3-third" style="padding: 5px">
                                     <label style="margin-bottom: 0.2rem;">Iva</label>
-                                    <asp:TextBox ID="txt_Iva" runat="server" class="w3-input w3-border" placeholder="iva" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                    <asp:TextBox ID="txt_Iva" runat="server" class="w3-input w3-border w3-round" placeholder="iva" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                                 </div>
                                 <div class="w3-third" style="padding: 5px">
                                     <label style="margin-bottom: 0.2rem;">Stampa</label><br />
-                                    <asp:DropDownList ID="ddl_Stampa" runat="server">
+                                    <asp:DropDownList ID="ddl_Stampa" runat="server" class=" w3-border w3-round">
                                         <asp:ListItem Value="1" Text="SI" />
                                         <asp:ListItem Value="0" Text="NO" />
                                     </asp:DropDownList>
@@ -175,7 +184,7 @@
                     </div>
                     <div class="w3-half" style="padding: 5px">
                         <label style="margin-bottom: 0.2rem;">Descrizione lunga</label>
-                        <asp:TextBox ID="txt_DescrizioneLunga" runat="server" Rows="5" TextMode="MultiLine" class="w3-input w3-border" MaxLength="100" placeholder="Descrizione lunga" Style="padding: 2px;"></asp:TextBox>
+                        <asp:TextBox ID="txt_DescrizioneLunga" runat="server" Rows="5" TextMode="MultiLine" class="w3-input w3-border w3-round" MaxLength="100" placeholder="Descrizione lunga" Style="padding: 2px;"></asp:TextBox>
                     </div>
                 </div>
             </div>
@@ -186,29 +195,92 @@
         </div>
     </div>
 
+<!-- RECUPERA OFFERTA -->
     <div id="panelRecuperaOfferta" class="w3-modal " style="position: fixed;" runat="server">
-        <div class="w3-modal-content w3-card-4 w3-animate-top round" style="max-width: 800px; width: 60%; height: 220px; position: relative; background-color: white; overflow: auto; font-size: 0.8em;">
+        <asp:UpdatePanel ID="upRecuperaOfferta" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+            <ContentTemplate>
+                <div class="w3-modal-content w3-card-4 w3-animate-top round" style="width: 75%;min-height:350px; position: relative; background-color: white; overflow: auto;">
+                    <div class="w3-row-padding">
+                        <div class="w3-panel w3-blue w3-center w3-round">
+                            <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Recupera offerta</b> </h5>
+                            <span onclick="document.getElementById('<%= panelRecuperaOfferta.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                        </div>
+                        <div class="w3-col round" style="padding: 5px;">
+                            <div class="w3-row " style="background-color: #cccccc;">
+                                <div class="w3-row">
+                                    <div class="w3-quarter" style="padding: 5px">
+                                        <label style="margin-bottom: 0.2rem;">Data lavorazione</label>
+                                        <asp:TextBox ID="txt_dataLavorazione_FiltroRecuperaOfferta" runat="server" placeholder="Data lavorazione" class="calendar w3-input w3-border"></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter" style="padding: 5px">
+                                        <label style="margin-bottom: 0.2rem;">Tipologia</label>
+                                        <asp:DropDownList ID="ddl_tipologia_FiltroRecuperaOfferta" runat="server" class="w3-input w3-border w3-round"></asp:DropDownList>
+                                    </div>
+                                    <div class="w3-quarter" style="padding: 5px">
+                                        <label style="margin-bottom: 0.2rem;">Cliente</label>
+                                        <asp:DropDownList ID="ddl_cliente_FiltroRecuperaOfferta" runat="server" class="w3-input w3-border w3-round"></asp:DropDownList>
+                                    </div>
+                                    <div class="w3-quarter" style="padding: 5px">
+                                        <label style="margin-bottom: 0.2rem;">Codice lavoro</label>
+                                        <asp:DropDownList ID="ddl_codiceLavoro_FiltroRecuperaOfferta" runat="server" class="w3-input w3-border w3-round"></asp:DropDownList>
+                                    </div>
+                                </div>
+                                <div class="w3-row">
+                                    <div class="w3-quarter" style="padding: 5px">
+                                        <label style="margin-bottom: 0.2rem;">Produzione</label>
+                                        <asp:DropDownList ID="ddl_produzione_FiltroRecuperaOfferta" runat="server" class="w3-input w3-border w3-round"></asp:DropDownList>
+                                    </div>
+                                    <div class="w3-quarter" style="padding: 5px">
+                                        <label style="margin-bottom: 0.2rem;">Lavorazione</label>
+                                        <asp:DropDownList ID="ddl_lavorazione_FiltroRecuperaOfferta" runat="server" class="w3-input w3-border w3-round"></asp:DropDownList>
+                                    </div>
+                                    <div class="w3-quarter" style="padding: 5px">
+                                        <label style="margin-bottom: 0.2rem;">Luogo</label>
+                                        <asp:DropDownList ID="ddl_luogo_FiltroRecuperaOfferta" runat="server" class="w3-input w3-border w3-round"></asp:DropDownList>
+                                    </div>
+                                    <div class="w3-quarter w3-center" style="padding: 5px; margin-top: 27px;">
+                                        <asp:Button ID="btn_cerca_FiltroRecuperaOfferta" runat="server" Text="Cerca" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="padding: 4px 8px" OnClick="btn_cerca_FiltroRecuperaOfferta_Click" />&nbsp;&nbsp;
+                                    <span id="btn_PulisciCampiRicerca_FiltroRecuperaOfferta" class="w3-btn w3-circle w3-red" onclick="return azzeraCampiRicerca();" title="Azzera campi di ricerca">&times;</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="w3-center">
-                <br>
-                <span onclick="document.getElementById('<%= panelRecuperaOfferta.ClientID%>').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
-            </div>
 
-            <div class="w3-center">
-                <h3>Recupera Offerta</h3>
-            </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <div class="w3-center" style="margin: 10px">
-                <asp:Button ID="btnOK_recuperaOfferta" runat="server" Text="Cerca" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" />
-                <button onclick="document.getElementById('<%= panelRecuperaOfferta.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
-            </div>
-        </div>
+                        <asp:GridView ID="gv_OfferteRecuperate" runat="server" AutoGenerateColumns="False"
+                            Style="font-size: 8pt; max-height: 150px; width: 100%; position: relative; background-color: #FFF; text-align: center;top: 20px; max-height: 220px; overflow: auto"
+                            HeaderStyle-BackColor="#2196F3" HeaderStyle-Font-Bold="true" HeaderStyle-ForeColor="White" BorderWidth="0"
+                            GridLines="None" AllowPaging="True" PageSize="5" OnPageIndexChanging="gv_OfferteRecuperate_PageIndexChanging"
+                            OnRowCommand="gv_OfferteRecuperate_RowCommand" OnRowCreated="gv_OfferteRecuperate_RowCreated">
+                            <Columns>
+                                <asp:BoundField DataField="data_inizio_lavorazione" HeaderText="Inizio lavor." HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left" DataFormatString="{0:dd/MM/yyyy}" />
+                                <asp:BoundField DataField="data_fine_lavorazione" HeaderText="Fine lavor." HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left" DataFormatString="{0:dd/MM/yyyy}" />
+                                <asp:BoundField DataField="DecodificaTipologia" HeaderText="Tipologia" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="DecodificaCliente" HeaderText="Cliente" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="24%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="produzione" HeaderText="Produzione" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="15%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="lavorazione" HeaderText="Lavorazione" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="15%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="luogo" HeaderText="Luogo" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="codice_lavoro" HeaderText="Cod. lavoro" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Left" />
+
+                                <asp:TemplateField>
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="btn_SelezionaOfferta" runat="server" ImageUrl="/Images/add.png" ToolTip="Seleziona l'offerta corrente" CommandName="seleziona" CommandArgument='<%#Eval("id")%>' Height="15" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+
+                        <br />
+                        <div class="w3-col" style="margin-top:80px;margin-bottom: 10px;" >
+                            <div class="w3-center">
+                                <%--<asp:Button ID="btnOK_recuperaOfferta" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" />--%>
+                                <button onclick="document.getElementById('<%= panelRecuperaOfferta.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </div>
 
 

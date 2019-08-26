@@ -42,7 +42,7 @@ namespace VideoSystemWeb
             //Login_BLL.Instance.Connetti(tbUser.Text.Trim(), tbPassword.Text.Trim(), ref esito);
             Login_BLL.Instance.Connetti(tbUser.Text.Trim(), pwdEncrypted, ref esito);
 
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 lbInfoLogin.Text = "Utente autenticato, attendere i caricamenti iniziali...";
                 lbInfoLogin.Visible = true;
@@ -51,15 +51,15 @@ namespace VideoSystemWeb
 
                 Response.Redirect("~/Agenda/Agenda.aspx");
             }
-            else if (esito.codice == Esito.ESITO_KO_ERRORE_UTENTE_NON_RICONOSCIUTO)
+            else if (esito.Codice == Esito.ESITO_KO_ERRORE_UTENTE_NON_RICONOSCIUTO)
             {
-                lblErrorLogin.Text = esito.descrizione;
+                lblErrorLogin.Text = esito.Descrizione;
                 lblErrorLogin.Visible = true;
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loaderLogin').hide();", addScriptTags: true);
             }
             else
             {
-                Session["ErrorPageText"] = esito.descrizione;
+                Session["ErrorPageText"] = esito.Descrizione;
                 string url = String.Format("~/pageError.aspx");
                 Response.Redirect(url, true);
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loaderLogin').hide();", addScriptTags: true);

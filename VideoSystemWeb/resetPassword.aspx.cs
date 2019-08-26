@@ -27,7 +27,7 @@ namespace VideoSystemWeb
             {
                 Esito esito = new Esito();
                 Utenti utente = Anag_Utenti_BLL.Instance.getUtenteByUserAndEmail(tbUser.Text.Trim(), tbEmail.Text.Trim(), ref esito);
-                if (esito.codice == 0 && utente.Id > 0) {
+                if (esito.Codice == 0 && utente.Id > 0) {
 
                     string nuovaPassword = DateTime.Now.Ticks.ToString().Substring(13);
 
@@ -37,7 +37,7 @@ namespace VideoSystemWeb
 
                     // AGGIORNO LA PASSWORD
                     esito = Anag_Utenti_BLL.Instance.AggiornaPassword(utente.Id, nuovaPasswordCriptata);
-                    if (esito.codice == 0)
+                    if (esito.Codice == 0)
                     {
                         // DESTINATARIO
                         List<string> destinatari = new List<string>();
@@ -52,7 +52,7 @@ namespace VideoSystemWeb
 
                         // MANDO NUOVA PASSWORD VIA MAIL
                         esito = SendEmail(destinatari, "VIDEOSYSTEM - Notifica cambio Password", bodyMessage, null);
-                        if (esito.codice == 0)
+                        if (esito.Codice == 0)
                         {
                             lblErrorLogin.Visible = true;
                             lblErrorLogin.ForeColor = System.Drawing.Color.Green;
@@ -63,21 +63,21 @@ namespace VideoSystemWeb
                         {
                             lblErrorLogin.Visible = true;
                             lblErrorLogin.ForeColor = System.Drawing.Color.Red;
-                            lblErrorLogin.Text = "Attenzione, errore durante l'invio mail." + Environment.NewLine + esito.descrizione;
+                            lblErrorLogin.Text = "Attenzione, errore durante l'invio mail." + Environment.NewLine + esito.Descrizione;
                         }
                     }
                     else
                     {
                         lblErrorLogin.Visible = true;
                         lblErrorLogin.ForeColor = System.Drawing.Color.Red;
-                        lblErrorLogin.Text = "Attenzione, errore durante l'aggiornamento Password." + Environment.NewLine + esito.descrizione;
+                        lblErrorLogin.Text = "Attenzione, errore durante l'aggiornamento Password." + Environment.NewLine + esito.Descrizione;
                     }
 
                 }
                 else
                 {
                     lblErrorLogin.Visible = true;
-                    lblErrorLogin.Text = "Attenzione, utenza ed email non trovate, verificare." + Environment.NewLine + esito.descrizione;
+                    lblErrorLogin.Text = "Attenzione, utenza ed email non trovate, verificare." + Environment.NewLine + esito.Descrizione;
                 }
             }
             else

@@ -74,8 +74,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaDocumenti;
@@ -115,8 +115,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return documento;
@@ -183,8 +183,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Anag_Documenti_Collaboratori_DAL.cs - CreaDocumentoCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Anag_Documenti_Collaboratori_DAL.cs - CreaDocumentoCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return 0;
@@ -249,8 +249,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Anag_Documenti_Collaboratori_DAL.cs - AggiornaDocumentoCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Anag_Documenti_Collaboratori_DAL.cs - AggiornaDocumentoCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -295,8 +295,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Anag_Documenti_Collaboratori_DAL.cs - EliminaDocuementoCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Anag_Documenti_Collaboratori_DAL.cs - EliminaDocuementoCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

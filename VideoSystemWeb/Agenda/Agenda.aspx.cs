@@ -121,7 +121,7 @@ namespace VideoSystemWeb.Agenda
         protected void btnSalva_Click(object sender, EventArgs e)
         {
             Esito esito = SalvaEvento();
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                // ChiudiPopup();
                 ShowSuccess("Salvataggio eseguito correttamente");
@@ -139,7 +139,7 @@ namespace VideoSystemWeb.Agenda
 
             upRiepilogoOfferta.Update();
 
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriRiepilogo", script: "javascript: document.getElementById('modalRiepilogoOfferta').style.display='block'", addScriptTags: true);
@@ -159,7 +159,7 @@ namespace VideoSystemWeb.Agenda
 
             upConsuntivo.Update();
 
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriConsuntivo", script: "javascript: document.getElementById('modalConsuntivo').style.display='block'", addScriptTags: true);
@@ -182,10 +182,10 @@ namespace VideoSystemWeb.Agenda
                 SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_OFFERTA;
                 esito = Agenda_BLL.Instance.EliminaLavorazione(SessionManager.EventoSelezionato);
 
-                if (esito.codice == Esito.ESITO_OK)
+                if (esito.Codice == Esito.ESITO_OK)
                 {
                     esito = SalvaEvento();
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
                         btnLavorazione.Visible = true;
                         UpdatePopup();
@@ -198,7 +198,7 @@ namespace VideoSystemWeb.Agenda
                     else
                     {
                         UpdatePopup();
-                        ShowError(esito.descrizione);
+                        ShowError(esito.Descrizione);
                     }
 
                     val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
@@ -206,21 +206,21 @@ namespace VideoSystemWeb.Agenda
                 }
                 else
                 {
-                    ShowError(esito.descrizione);
+                    ShowError(esito.Descrizione);
                 }
             }
             else
             {
                 esito = Agenda_BLL.Instance.EliminaEvento(SessionManager.EventoSelezionato.id);
 
-                if (esito.codice == Esito.ESITO_OK)
+                if (esito.Codice == Esito.ESITO_OK)
                 {
                     ChiudiPopup();
                     ShowSuccess("Eliminazione eseguita correttamente");
                 }
                 else
                 {
-                    ShowError(esito.descrizione);
+                    ShowError(esito.Descrizione);
                     UpdatePopup();
                 }
             }
@@ -231,7 +231,7 @@ namespace VideoSystemWeb.Agenda
             if (hf_Salvataggio.Value == "1")
             {
                 Esito esito = SalvaEvento();
-                if (esito.codice == Esito.ESITO_OK)
+                if (esito.Codice == Esito.ESITO_OK)
                 {
                     ChiudiPopup();
 
@@ -255,7 +255,7 @@ namespace VideoSystemWeb.Agenda
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
 
             esito = ValidazioneSalvataggio( listaIdTender);
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 popupOfferta.TrasformaInOfferta();
 
@@ -268,7 +268,7 @@ namespace VideoSystemWeb.Agenda
             }
             else
             {
-                ShowWarning(esito.descrizione);
+                ShowWarning(esito.Descrizione);
                 popupAppuntamento.PopolaAppuntamento();
                 UpdatePopup();
             }
@@ -281,7 +281,7 @@ namespace VideoSystemWeb.Agenda
 
             esito = ValidazioneSalvataggio(listaIdTender);
 
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 popupLavorazione.TrasformaInLavorazione();
 
@@ -296,7 +296,7 @@ namespace VideoSystemWeb.Agenda
             }
             else
             {
-                ShowWarning(esito.descrizione);
+                ShowWarning(esito.Descrizione);
                 popupAppuntamento.PopolaAppuntamento();
                 UpdatePopup();
             }
@@ -475,17 +475,21 @@ namespace VideoSystemWeb.Agenda
 
             #region intestazione tabella
             DataColumn column;
-            column = new DataColumn();
-            column.DataType = typeof(string);
-            column.ColumnName = " ";
+            column = new DataColumn
+            {
+                DataType = typeof(string),
+                ColumnName = " "
+            };
 
             table.Columns.Add(column);
 
             foreach (ColonneAgenda risorsa in SessionManager.ListaRisorse)
             {
-                column = new DataColumn();
-                column.DataType = typeof(string);
-                column.ColumnName = risorsa.id.ToString(); // inserisco id risorsa per poi formattare la cella in RowDataBound 
+                column = new DataColumn
+                {
+                    DataType = typeof(string),
+                    ColumnName = risorsa.id.ToString() // inserisco id risorsa per poi formattare la cella in RowDataBound 
+                };
                 table.Columns.Add(column);
             }
             #endregion
@@ -779,17 +783,18 @@ namespace VideoSystemWeb.Agenda
 
             if (SessionManager.EventoSelezionato == null)
             {
-                SessionManager.EventoSelezionato = new DatiAgenda();
-
-                SessionManager.EventoSelezionato.data_inizio_lavorazione = dataEvento;
-                SessionManager.EventoSelezionato.data_fine_lavorazione = dataEvento;
-                SessionManager.EventoSelezionato.durata_lavorazione = 1;
-                SessionManager.EventoSelezionato.id_colonne_agenda = risorsaEvento;
-                SessionManager.EventoSelezionato.data_inizio_impegno = dataEvento;
-                SessionManager.EventoSelezionato.data_fine_impegno = dataEvento;
-                SessionManager.EventoSelezionato.durata_viaggio_andata = 0;
-                SessionManager.EventoSelezionato.durata_viaggio_ritorno = 0;
-                SessionManager.EventoSelezionato.id_stato = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString() ? Stato.Instance.STATO_RIPOSO : Stato.Instance.STATO_PREVISIONE_IMPEGNO;
+                SessionManager.EventoSelezionato = new DatiAgenda
+                {
+                    data_inizio_lavorazione = dataEvento,
+                    data_fine_lavorazione = dataEvento,
+                    durata_lavorazione = 1,
+                    id_colonne_agenda = risorsaEvento,
+                    data_inizio_impegno = dataEvento,
+                    data_fine_impegno = dataEvento,
+                    durata_viaggio_andata = 0,
+                    durata_viaggio_ritorno = 0,
+                    id_stato = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString() ? Stato.Instance.STATO_RIPOSO : Stato.Instance.STATO_PREVISIONE_IMPEGNO
+                };
             }
 
             return SessionManager.EventoSelezionato;
@@ -806,7 +811,7 @@ namespace VideoSystemWeb.Agenda
 
             esito = ValidazioneSalvataggio(listaIdTender);
 
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 if (SessionManager.EventoSelezionato.id == 0)
                 {
@@ -835,7 +840,7 @@ namespace VideoSystemWeb.Agenda
             }
             else
             {
-                ShowWarning(esito.descrizione);
+                ShowWarning(esito.Descrizione);
                 popupAppuntamento.PopolaAppuntamento();
             }
 
@@ -845,7 +850,7 @@ namespace VideoSystemWeb.Agenda
         private void SalvaPdfOffertaSuFile()
         {
             Esito esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
-            if (esito.codice == Esito.ESITO_OK) { 
+            if (esito.Codice == Esito.ESITO_OK) { 
                 string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
             
                 MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
@@ -858,18 +863,18 @@ namespace VideoSystemWeb.Agenda
 
                 if (File.Exists(pathPdfSenzaNumeroPagina)) File.Delete(pathPdfSenzaNumeroPagina);
                 
-                if (esito.codice == Esito.ESITO_OK) { 
+                if (esito.Codice == Esito.ESITO_OK) { 
                     // RIPORTA IL NOME DEL FILE PDF DA VISUALIZZARE SULLA FINESTRA RIEPILOGO
                     popupRiepilogoOfferta.associaNomePdf(nomeFileToDisplay);
                 }
                 else
                 {
-                    ShowError(esito.descrizione);
+                    ShowError(esito.Descrizione);
                 }
             }
             else
             {
-                ShowError(esito.descrizione);
+                ShowError(esito.Descrizione);
             }
         }
 
@@ -908,7 +913,7 @@ namespace VideoSystemWeb.Agenda
             else
             {
                 Esito esito = new Esito();
-                List<int> listaIdTenderImpiegatiInPeriodo = Agenda_BLL.Instance.getTenderImpiegatiInPeriodo(eventoDaControllare, ref esito);
+                List<int> listaIdTenderImpiegatiInPeriodo = Agenda_BLL.Instance.GetTenderImpiegatiInPeriodo(eventoDaControllare, ref esito);
 
 
                 foreach (string idTenderCorrente in listaIdTenderSelezionati)
@@ -941,33 +946,33 @@ namespace VideoSystemWeb.Agenda
 
             List<string> listaTenderNonDisponibili = new List<string>();
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                esito.descrizione = "Controllare i campi evidenziati";
+                esito.Descrizione = "Controllare i campi evidenziati";
 
             }
             else if (!IsDisponibileDataRisorsa(_eventoSelezionato))
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.descrizione = "Non è possibile salvare perché la risorsa è già impiegata nel periodo selezionato";
+                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.Descrizione = "Non è possibile salvare perché la risorsa è già impiegata nel periodo selezionato";
             }
             else if (!IsDisponibileTender(_eventoSelezionato, ref listaTenderNonDisponibili, listaIdTender))
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.descrizione = "Non è possibile salvare perché le seguenti unità appoggio sono già impiegate nel periodo selezionato:<br/><ul>";
+                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.Descrizione = "Non è possibile salvare perché le seguenti unità appoggio sono già impiegate nel periodo selezionato:<br/><ul>";
 
                 foreach (string tender in listaTenderNonDisponibili)
                 {
-                    esito.descrizione += "<li>" + tender + "</li>";
+                    esito.Descrizione += "<li>" + tender + "</li>";
                 }
-                esito.descrizione += "</ul>";
+                esito.Descrizione += "</ul>";
 
             }
             else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA && 
                     (SessionManager.EventoSelezionato.ListaDatiArticoli == null || SessionManager.EventoSelezionato.ListaDatiArticoli.Count == 0))
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.descrizione = "Non è possibile salvare senza aver associato gli articoli";
+                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.Descrizione = "Non è possibile salvare senza aver associato gli articoli";
             }
             SessionManager.EventoSelezionato = _eventoSelezionato;
             return esito;

@@ -38,7 +38,7 @@ namespace VideoSystemWeb.Articoli
             Esito esito = new Esito();
             gvMod_Raggruppamenti.DataSource = null;
             esito = new Esito();
-            DataTable dtGruppi = Base_DAL.getDatiBySql("SELECT id,Nome,Descrizione FROM art_gruppi"+
+            DataTable dtGruppi = Base_DAL.GetDatiBySql("SELECT id,Nome,Descrizione FROM art_gruppi"+
             " WHERE ATTIVO = 1"+
             " ORDER BY nome", ref esito);
 
@@ -50,7 +50,7 @@ namespace VideoSystemWeb.Articoli
             //BasePage p = new BasePage();
 
             // CARICO LA LISTA RAGGRUPPAMENTI
-            if (string.IsNullOrEmpty(esito.descrizione))
+            if (string.IsNullOrEmpty(esito.Descrizione))
             {
                 gvMod_Raggruppamenti.DataSource = dtGruppi;
                 gvMod_Raggruppamenti.DataBind();
@@ -73,7 +73,7 @@ namespace VideoSystemWeb.Articoli
             }
             else
             {
-                Session["ErrorPageText"] = esito.descrizione;
+                Session["ErrorPageText"] = esito.Descrizione;
                 string url = String.Format("~/pageError.aspx");
                 Response.Redirect(url, true);
             }
@@ -112,7 +112,7 @@ namespace VideoSystemWeb.Articoli
 
             gruppo.Attivo = true;
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 //panelErrore.Style.Add("display", "block");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
@@ -123,11 +123,11 @@ namespace VideoSystemWeb.Articoli
                 NascondiErroriValidazione();
 
                 int iRet = Art_Gruppi_BLL.Instance.CreaGruppo(gruppo, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Add("display", "block");
                     //lbl_MessaggioErrore.Text = esito.descrizione;
-                    ShowError(esito.descrizione);
+                    ShowError(esito.Descrizione);
                 }
                 else
                 {
@@ -155,11 +155,11 @@ namespace VideoSystemWeb.Articoli
                     //Esito esito = Art_Gruppi_BLL.Instance.EliminaGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
                     Esito esito = Art_Gruppi_BLL.Instance.RemoveGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         //panelErrore.Style.Add("display", "block");
                         //lbl_MessaggioErrore.Text = esito.descrizione;
-                        ShowError(esito.descrizione);
+                        ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -223,9 +223,9 @@ namespace VideoSystemWeb.Articoli
                     btnModificaRaggruppamento.Visible = false;
                     btnInserisciRaggruppamento.Visible = true;
                     btnEliminaRaggruppamento.Visible = false;
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        ShowError(esito.descrizione);
+                        ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -245,10 +245,10 @@ namespace VideoSystemWeb.Articoli
                     btnModificaRaggruppamento.Visible = false;
                     btnInserisciRaggruppamento.Visible = true;
                     btnEliminaRaggruppamento.Visible = false;
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     ShowError(ex.Message);
                 }
@@ -285,10 +285,10 @@ namespace VideoSystemWeb.Articoli
                
                 Art_Gruppi gruppo = Art_Gruppi_BLL.Instance.getGruppiById(Convert.ToInt32(gruppoSelezionato), ref esito);
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
                     btnInserisciRaggruppamento.Visible = true;
-                    ShowError(esito.descrizione);
+                    ShowError(esito.Descrizione);
                 }
                 else
                 {
@@ -306,7 +306,7 @@ namespace VideoSystemWeb.Articoli
                     // Articoli Associati
                     gvMod_Articoli.DataSource = null;
                     esito = new Esito();
-                    DataTable dtArticoli = Base_DAL.getDatiBySql("SELECT articoli.id,articoli.defaultDescrizione as Descrizione,articoli.defaultDescrizioneLunga as [Desc. Lunga] " +
+                    DataTable dtArticoli = Base_DAL.GetDatiBySql("SELECT articoli.id,articoli.defaultDescrizione as Descrizione,articoli.defaultDescrizioneLunga as [Desc. Lunga] " +
                     " FROM art_gruppi_articoli artgruppi " +
                     " join art_articoli articoli " +
                     " on artgruppi.idArtArticoli = articoli.id " +
@@ -315,7 +315,7 @@ namespace VideoSystemWeb.Articoli
                     " where idArtGruppi = " + gruppo.Id.ToString(), ref esito);
 
 
-                    if (esito.codice == 0)
+                    if (esito.Codice == 0)
                     {
                         gvMod_Articoli.DataSource = dtArticoli;
                         gvMod_Articoli.DataBind();
@@ -323,7 +323,7 @@ namespace VideoSystemWeb.Articoli
                     }
                     else
                     {
-                        Session["ErrorPageText"] = esito.descrizione;
+                        Session["ErrorPageText"] = esito.Descrizione;
                         string url = String.Format("~/pageError.aspx");
                         Response.Redirect(url, true);
                     }
@@ -337,10 +337,10 @@ namespace VideoSystemWeb.Articoli
                 btnInserisciRaggruppamento.Visible = true;
                 btnModificaRaggruppamento.Visible = false;
                 btnEliminaRaggruppamento.Visible = false;
-                if (esito.codice == Esito.ESITO_OK)
+                if (esito.Codice == Esito.ESITO_OK)
                 {
-                    esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                    esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                    esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                    esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                 }
                 ShowError(ex.Message);
             }
@@ -397,16 +397,16 @@ namespace VideoSystemWeb.Articoli
                     for (int i = 0; i < nArtDaInserire; i++)
                     {
                         int iNuovoArtGruppo = Art_Gruppi_Articoli_BLL.Instance.CreaGruppoArticolo(nuovoGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
-                        if (esito.codice != Esito.ESITO_OK)
+                        if (esito.Codice != Esito.ESITO_OK)
                         {
                             break;
                         }
                     }
 
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        ShowError(esito.descrizione);
+                        ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -416,10 +416,10 @@ namespace VideoSystemWeb.Articoli
                 catch (Exception ex)
                 {
                     log.Error("btnInserisciArticolo_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     ShowError(ex.Message);
                 }
@@ -524,18 +524,18 @@ namespace VideoSystemWeb.Articoli
                     // DEVO TROVARE PRIMA IL GRUPPO ARTICOLO FORMATO DA ID GRUPPO E ID ARTICOLO
 
                     string query = "SELECT id FROM art_gruppi_articoli where idArtGruppi = " + tbIdRaggruppamentoDaModificare.Text.Trim() + " AND idArtArticoli = " + value;
-                    DataTable dtGruppiArticoli = Base_DAL.getDatiBySql(query, ref esito);
+                    DataTable dtGruppiArticoli = Base_DAL.GetDatiBySql(query, ref esito);
 
                     if (dtGruppiArticoli == null || dtGruppiArticoli.Rows == null)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                        esito.descrizione = "btnEliminaArticolo_Click - Nessun risultato restituito dalla query " + query;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                        esito.Descrizione = "btnEliminaArticolo_Click - Nessun risultato restituito dalla query " + query;
                     }
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        log.Error(esito.descrizione);
-                        ShowError(esito.descrizione);
+                        log.Error(esito.Descrizione);
+                        ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -544,10 +544,10 @@ namespace VideoSystemWeb.Articoli
                             int idGruppoArticolo = Convert.ToInt16(riga["id"]);
                             esito = Art_Gruppi_Articoli_BLL.Instance.EliminaGruppoArticolo(idGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
                         }
-                        if (esito.codice != Esito.ESITO_OK)
+                        if (esito.Codice != Esito.ESITO_OK)
                         {
-                            log.Error(esito.descrizione);
-                            ShowError(esito.descrizione);
+                            log.Error(esito.Descrizione);
+                            ShowError(esito.Descrizione);
                         }
                         else
                         {
@@ -560,10 +560,10 @@ namespace VideoSystemWeb.Articoli
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaArticolo_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     ShowError(ex.Message);
                 }
@@ -584,10 +584,10 @@ namespace VideoSystemWeb.Articoli
                     
                     Art_Gruppi gruppo = Art_Gruppi_BLL.Instance.getGruppiById(Convert.ToInt32(gruppoSelezionato), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         btnInserisciRaggruppamento.Visible = true;
-                        ShowError(esito.descrizione);
+                        ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -603,7 +603,7 @@ namespace VideoSystemWeb.Articoli
                         // Articoli Associati
                         gvMod_Articoli.DataSource = null;
                         esito = new Esito();
-                        DataTable dtArticoli = Base_DAL.getDatiBySql("SELECT articoli.id,articoli.defaultDescrizione as Descrizione,articoli.defaultDescrizioneLunga as [Desc. Lunga] " +
+                        DataTable dtArticoli = Base_DAL.GetDatiBySql("SELECT articoli.id,articoli.defaultDescrizione as Descrizione,articoli.defaultDescrizioneLunga as [Desc. Lunga] " +
                         " FROM art_gruppi_articoli artgruppi " +
                         " join art_articoli articoli " +
                         " on artgruppi.idArtArticoli = articoli.id " +
@@ -611,7 +611,7 @@ namespace VideoSystemWeb.Articoli
                         " on idArtGruppi = gruppi.id " +
                         " where idArtGruppi = " + gruppo.Id.ToString(), ref esito);
 
-                        if (esito.codice == 0)
+                        if (esito.Codice == 0)
                         {
                             gvMod_Articoli.DataSource = dtArticoli;
                             gvMod_Articoli.DataBind();
@@ -619,7 +619,7 @@ namespace VideoSystemWeb.Articoli
                         }
                         else
                         {
-                            Session["ErrorPageText"] = esito.descrizione;
+                            Session["ErrorPageText"] = esito.Descrizione;
                             string url = String.Format("~/pageError.aspx");
                             Response.Redirect(url, true);
                         }
@@ -633,10 +633,10 @@ namespace VideoSystemWeb.Articoli
                     btnInserisciRaggruppamento.Visible = true;
                     btnModificaRaggruppamento.Visible = false;
                     btnEliminaRaggruppamento.Visible = false;
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     ShowError(ex.Message);
                 }

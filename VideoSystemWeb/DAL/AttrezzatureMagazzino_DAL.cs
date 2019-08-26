@@ -78,8 +78,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaAttrezzature;
@@ -127,8 +127,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return attrezzatura;
@@ -229,8 +229,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "AttrezzatureMagazzino_DAL.cs - CreaAttrezzatura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "AttrezzatureMagazzino_DAL.cs - CreaAttrezzatura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return 0;
@@ -329,8 +329,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "AttrezzatureMagazzino_DAL.cs - AggiornaAttrezzatura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "AttrezzatureMagazzino_DAL.cs - AggiornaAttrezzatura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -376,8 +376,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "AttrezzatureMagazzino_DAL.cs - EliminaAttrezzatura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "AttrezzatureMagazzino_DAL.cs - EliminaAttrezzatura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -422,8 +422,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "AttrezzatureMagazzino_DAL.cs - RemoveAttrezzatura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "AttrezzatureMagazzino_DAL.cs - RemoveAttrezzatura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

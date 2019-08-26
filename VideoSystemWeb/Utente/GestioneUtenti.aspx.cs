@@ -32,7 +32,7 @@ namespace VideoSystemWeb.Utente
                 Esito esito = new Esito();
                 //Esito esito = basePage.CaricaListeTipologiche();
                 // CARICO LE COMBO
-                if (string.IsNullOrEmpty(esito.descrizione))
+                if (string.IsNullOrEmpty(esito.Descrizione))
                 {
                     ddlTipoUtente.Items.Clear();
                     cmbMod_TipoUtente.Items.Clear();
@@ -58,7 +58,7 @@ namespace VideoSystemWeb.Utente
                 }
                 else
                 {
-                    Session["ErrorPageText"] = esito.descrizione;
+                    Session["ErrorPageText"] = esito.Descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
@@ -96,7 +96,7 @@ namespace VideoSystemWeb.Utente
             queryRicerca = queryRicerca.Replace("@tipologia", ddlTipoUtente.SelectedValue.ToString().Trim().Replace("'", "''"));
 
             Esito esito = new Esito();
-            DataTable dtUtenti = Base_DAL.getDatiBySql(queryRicerca, ref esito);
+            DataTable dtUtenti = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gv_utenti.DataSource = dtUtenti;
             gv_utenti.DataBind();
 
@@ -164,7 +164,7 @@ namespace VideoSystemWeb.Utente
             Esito esito = new Esito();
             Utenti utente = CreaOggettoUtente(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 basePage.ShowError("Controllare i campi evidenziati");
             }
@@ -181,10 +181,10 @@ namespace VideoSystemWeb.Utente
                     hf_tipoOperazione.Value = "VISUALIZZAZIONE";
                 }
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    log.Error(esito.descrizione);
-                    basePage.ShowError(esito.descrizione);
+                    log.Error(esito.Descrizione);
+                    basePage.ShowError(esito.Descrizione);
                 }
                 basePage.ShowSuccess("Inserito Utente " + utente.Username);
                 btnEditUtente_Click(null, null);
@@ -198,19 +198,19 @@ namespace VideoSystemWeb.Utente
             Esito esito = new Esito();
             Utenti utente = CreaOggettoUtente(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                log.Error(esito.descrizione);
+                log.Error(esito.Descrizione);
                 basePage.ShowError("Controllare i campi evidenziati!");
             }
             else
             {
                 esito = Anag_Utenti_BLL.Instance.AggiornaUtente(utente);
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    log.Error(esito.descrizione);
-                    basePage.ShowError(esito.descrizione);
+                    log.Error(esito.Descrizione);
+                    basePage.ShowError(esito.Descrizione);
 
                 }
                 btnEditUtente_Click(null, null);
@@ -225,9 +225,9 @@ namespace VideoSystemWeb.Utente
             if (!string.IsNullOrEmpty((string)ViewState["idUtente"]))
             {
                 esito = Anag_Utenti_BLL.Instance.EliminaUtente(Convert.ToInt32(ViewState["idUtente"].ToString()));
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                     AttivaDisattivaModificaUtente(true);
                 }
                 else
@@ -262,7 +262,7 @@ namespace VideoSystemWeb.Utente
             if (!string.IsNullOrEmpty(idUtente))
             {
                 Entity.Utenti utente = Anag_Utenti_BLL.Instance.getUtenteById(Convert.ToInt16(idUtente), ref esito);
-                if (esito.codice == 0)
+                if (esito.Codice == 0)
                 {
                     pulisciCampiDettaglio();
 
@@ -289,7 +289,7 @@ namespace VideoSystemWeb.Utente
                 }
                 else
                 {
-                    Session["ErrorPageText"] = esito.descrizione;
+                    Session["ErrorPageText"] = esito.Descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
@@ -417,7 +417,7 @@ namespace VideoSystemWeb.Utente
         {
             string pwdRet = "";
             Esito esito = new Esito();
-            DataTable dt = Base_DAL.getDatiBySql("SELECT password from ANAG_UTENTI WHERE ID = " + idUtente.ToString(), ref esito);
+            DataTable dt = Base_DAL.GetDatiBySql("SELECT password from ANAG_UTENTI WHERE ID = " + idUtente.ToString(), ref esito);
             if (dt!=null && dt.Rows!=null && dt.Rows.Count == 1)
             {
                 pwdRet = dt.Rows[0]["password"].ToString();

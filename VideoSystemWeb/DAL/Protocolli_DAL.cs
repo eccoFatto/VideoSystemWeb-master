@@ -78,8 +78,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaProtocolli;
@@ -133,8 +133,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaProtocolli;
@@ -181,8 +181,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return protocollo;
@@ -239,8 +239,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaProtocolli;
@@ -342,8 +342,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Protocolli_DAL.cs - CreaProtocollo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Protocolli_DAL.cs - CreaProtocollo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return 0;
@@ -434,8 +434,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Protocolli_DAL.cs - AggiornaProtocollo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Protocolli_DAL.cs - AggiornaProtocollo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -481,8 +481,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Protocolli_DAL.cs - EliminaProtocollo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Protocolli_DAL.cs - EliminaProtocollo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -529,8 +529,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Protocolli_DAL.cs - RemoveProtocollo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Protocolli_DAL.cs - RemoveProtocollo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

@@ -76,7 +76,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     }
 
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                    abilitaBottoni(basePage.AbilitazioneInScrittura());
+                    AbilitaBottoni(basePage.AbilitazioneInScrittura());
 
 
                 //}
@@ -95,9 +95,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
         // ABILITO I BOTTONI DI MODIFICA IN BASE ALLA TIPOLOGIA DI UTENTE
-        private void abilitaBottoni(bool utenteAbilitatoInScrittura)
+        private void AbilitaBottoni(bool utenteAbilitatoInScrittura)
         {
-            annullaModifiche();
+            AnnullaModifiche();
             if (!utenteAbilitatoInScrittura)
             {
                 //btnInserisciCollaboratori.Visible = false;
@@ -144,7 +144,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             queryRicerca = queryRicerca.Replace("@qualifica", ddlQualifiche.SelectedValue.ToString().Trim().Replace("'","''"));
             queryRicerca = queryRicerca.Replace("@nome", tbNome.Text.Trim().Replace("'", "''"));
             Esito esito = new Esito();
-            DataTable dtCollaboratori = Base_DAL.getDatiBySql(queryRicerca,ref esito);
+            DataTable dtCollaboratori = Base_DAL.GetDatiBySql(queryRicerca,ref esito);
             gv_collaboratori.DataSource = dtCollaboratori;
             gv_collaboratori.DataBind();
         }
@@ -180,9 +180,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         {
             if (!string.IsNullOrEmpty(hf_idColl.Value) || (!string.IsNullOrEmpty((string)ViewState["idColl"]))) {
                 if (!string.IsNullOrEmpty(hf_idColl.Value)) ViewState["idColl"] = hf_idColl.Value;
-                editCollaboratore();
+                EditCollaboratore();
                 AttivaDisattivaModificaAnagrafica(true);
-                gestisciPulsantiAnagrafica("VISUALIZZAZIONE");
+                GestisciPulsantiAnagrafica("VISUALIZZAZIONE");
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('Anagrafica');", addScriptTags: true);
                 pnlContainer.Visible = true;
             }
@@ -191,10 +191,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected void btnModifica_Click(object sender, EventArgs e)
         {
             AttivaDisattivaModificaAnagrafica(false);
-            gestisciPulsantiAnagrafica("MODIFICA");
+            GestisciPulsantiAnagrafica("MODIFICA");
         }
         // DETTAGLIO GESTIONE PULSANTI ANAGRAFICA
-        private void gestisciPulsantiAnagrafica(string stato)
+        private void GestisciPulsantiAnagrafica(string stato)
         {
             switch (stato)
             {
@@ -262,9 +262,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 collaboratore.PathFoto = Path.GetFileName(imgCollaboratore.ImageUrl);
             }
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                log.Error(esito.descrizione);
+                log.Error(esito.Descrizione);
                 //panelErrore.Style.Add("display","block");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
                 basePage.ShowError("Controllare i campi evidenziati!");
@@ -276,13 +276,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                 esito = Anag_Collaboratori_BLL.Instance.AggiornaCollaboratore(collaboratore);
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    log.Error(esito.descrizione);
+                    log.Error(esito.Descrizione);
                     //panelErrore.Style.Remove("display");
                     //panelErrore.Style.Add("display", "block");
                     //lbl_MessaggioErrore.Text = esito.descrizione;
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
 
                 }
                 else
@@ -296,23 +296,23 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         protected void btnAnnulla_Click(object sender, EventArgs e)
         {
-            annullaModifiche();
+            AnnullaModifiche();
         }
 
-        private void annullaModifiche()
+        private void AnnullaModifiche()
         {
             NascondiErroriValidazione();
             AttivaDisattivaModificaAnagrafica(true);
-            editCollaboratore();
-            gestisciPulsantiAnagrafica("ANNULLAMENTO");
+            EditCollaboratore();
+            GestisciPulsantiAnagrafica("ANNULLAMENTO");
         }
         
         protected void InserisciCollaboratori_Click(object sender, EventArgs e)
         {
             ViewState["idColl"] = "";
-            editCollaboratoreVuoto();
+            EditCollaboratoreVuoto();
             AttivaDisattivaModificaAnagrafica(false);
-            gestisciPulsantiAnagrafica("INSERIMENTO");
+            GestisciPulsantiAnagrafica("INSERIMENTO");
 
             // PULISCO I PH DI MODIFICA
             btnAnnullaIndirizzo_Click(null, null);
@@ -327,7 +327,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             pnlContainer.Visible = true;
         }
 
-        private void pulisciCampiDettaglio()
+        private void PulisciCampiDettaglio()
         {
             tbMod_CF.Text = "";
             tbMod_Cognome.Text = "";
@@ -389,17 +389,17 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                             string queryUpdateImg = "UPDATE ANAG_COLLABORATORI SET pathFoto = '" + nomefileNew + "' WHERE ID = " + ViewState["idColl"].ToString();
                            
-                            int iRighe = Base_DAL.executeUpdateBySql(queryUpdateImg, ref esito);
+                            int iRighe = Base_DAL.ExecuteUpdateBySql(queryUpdateImg, ref esito);
                             EditCollaboratore_Click(null, null);
                         }
                         catch (Exception ex)
                         {
                             lblImage.Text = ex.Message;
 
-                            if (esito.codice == Esito.ESITO_OK)
+                            if (esito.Codice == Esito.ESITO_OK)
                             {
-                                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                             }
 
                             basePage.ShowError(ex.Message);
@@ -438,7 +438,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                             fuDoc.SaveAs(fullPath);
                             string queryUpdateImg = "UPDATE anag_documenti_collaboratori SET pathDocumento = '" + nomefileDoc + "' WHERE ID = " + tbIdDocumentoDaModificare.Text.Trim();
                            
-                            int iRighe = Base_DAL.executeUpdateBySql(queryUpdateImg, ref esito);
+                            int iRighe = Base_DAL.ExecuteUpdateBySql(queryUpdateImg, ref esito);
                             lblDoc.Text = "Caricato file " + nomefileDoc;
 
                             btnCaricaDocumento.Visible = false;
@@ -450,10 +450,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         {
                             lblDoc.Text = ex.Message;
 
-                            if (esito.codice == Esito.ESITO_OK)
+                            if (esito.Codice == Esito.ESITO_OK)
                             {
-                                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                             }
                             basePage.ShowError(ex.Message);
                         }
@@ -503,7 +503,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
         }
 
-        private void editCollaboratore()
+        private void EditCollaboratore()
         {
             string idCollaboratore = (string) ViewState["idColl"];
             Esito esito = new Esito();
@@ -511,9 +511,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             if (!string.IsNullOrEmpty(idCollaboratore))
             {
                 Entity.Anag_Collaboratori collaboratore = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(Convert.ToInt16(idCollaboratore), ref esito);
-                if (esito.codice == 0)
+                if (esito.Codice == 0)
                 {
-                    pulisciCampiDettaglio();
+                    PulisciCampiDettaglio();
 
                     dettaglioModifica = collaboratore.Cognome.Trim() + " " + collaboratore.Nome.Trim();
                     lblDettaglioModifica.Text = dettaglioModifica;
@@ -734,8 +734,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 else
                 {
-                    log.Error(esito.descrizione);
-                    Session["ErrorPageText"] = esito.descrizione;
+                    log.Error(esito.Descrizione);
+                    Session["ErrorPageText"] = esito.Descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
@@ -772,12 +772,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             return collaboratore;
         }
 
-        private void editCollaboratoreVuoto()
+        private void EditCollaboratoreVuoto()
         {
             Esito esito = new Esito();
             dettaglioModifica = "";
             lblDettaglioModifica.Text = dettaglioModifica;
-            pulisciCampiDettaglio();
+            PulisciCampiDettaglio();
             // IMMAGINE COLLABORATORE
             imgCollaboratore.ImageUrl = ConfigurationManager.AppSettings["PATH_IMMAGINI_COLLABORATORI"] + ConfigurationManager.AppSettings["IMMAGINE_DUMMY_COLLABORATORE"];
             
@@ -791,12 +791,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 //esito = Anag_Collaboratori_BLL.Instance.EliminaCollaboratore(Convert.ToInt32(ViewState["idColl"].ToString()));
                 esito = Anag_Collaboratori_BLL.Instance.RemoveCollaboratore(Convert.ToInt32(ViewState["idColl"].ToString()));
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
                     //panelErrore.Style.Add("display", "block");
                     //lbl_MessaggioErrore.Text = esito.descrizione;
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                     AttivaDisattivaModificaAnagrafica(true);
                 }
                 else
@@ -839,7 +839,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             collaboratore.PathFoto = ConfigurationManager.AppSettings["IMMAGINE_DUMMY_COLLABORATORE"];
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 //panelErrore.Style.Remove("display");
                 //panelErrore.Style.Add("display", "block");
@@ -860,13 +860,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     hf_tipoOperazione.Value = "VISUALIZZAZIONE";
                 }
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    log.Error(esito.descrizione);
+                    log.Error(esito.Descrizione);
                     //panelErrore.Style.Remove("display");
                     //panelErrore.Style.Add("display", "block");
                     //lbl_MessaggioErrore.Text = esito.descrizione;
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                 }
                 else
                 {
@@ -893,26 +893,26 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     string qualificaSelezionata = item.Text;
                     esito = Anag_Qualifiche_Collaboratori_BLL.Instance.EliminaQualificaCollaboratore(Convert.ToInt32(item.Value), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        log.Error(esito.descrizione);
-                        basePage.ShowError(esito.descrizione);
+                        log.Error(esito.Descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
                         SessionManager.ListaQualificheCollaboratori.Clear();
                         
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaQualifica_Click", ex);
 
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -936,11 +936,11 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     NascondiErroriValidazione();
                     esito = Anag_Email_Collaboratori_BLL.Instance.EliminaEmailCollaboratore(Convert.ToInt32(tbIdEmailDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         //panelErrore.Style.Add("display", "block");
                         //lbl_MessaggioErrore.Text = esito.descrizione;
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -952,16 +952,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         btnModificaEmail.Visible = false;
                         btnInserisciEmail.Visible = true;
 
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaDocumento_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -984,9 +984,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     NascondiErroriValidazione();
                     esito = Anag_Indirizzi_Collaboratori_BLL.Instance.EliminaIndirizziCollaboratore(Convert.ToInt32(tbIdIndirizzoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1002,16 +1002,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         btnInserisciIndirizzo.Visible = true;
                         tbIdIndirizzoDaModificare.Text = "";
 
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaIndirizzo_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1035,11 +1035,11 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     NascondiErroriValidazione();
                     esito = Anag_Telefoni_Collaboratori_BLL.Instance.EliminaTelefonoCollaboratore(Convert.ToInt32(tbIdTelefonoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         //panelErrore.Style.Add("display", "block");
                         //lbl_MessaggioErrore.Text = esito.descrizione;
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1052,16 +1052,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         btnModificaTelefono.Visible = false;
                         btnInserisciTelefono.Visible = true;
 
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaDocumento_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1085,9 +1085,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     NascondiErroriValidazione();
                     esito = Anag_Documenti_Collaboratori_BLL.Instance.EliminaDocumentoCollaboratore(Convert.ToInt32(tbIdDocumentoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1100,16 +1100,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         btnCaricaDocumento.Visible = false;
                         fuDoc.Visible = false;
 
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaDocumento_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1132,32 +1132,34 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     ListItem item = ddlQualificheDaAggiungere.Items[ddlQualificheDaAggiungere.SelectedIndex];
                     string value = item.Value;
                     string qualificaSelezionata = item.Text;
-                    
-                    Anag_Qualifiche_Collaboratori nuovaQualifica = new Anag_Qualifiche_Collaboratori();
-                    nuovaQualifica.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
-                    nuovaQualifica.Priorita = Convert.ToInt16(tbInsPrioritaQualifica.Text.Trim());
-                    nuovaQualifica.Qualifica = qualificaSelezionata.Replace("'","''");
-                    nuovaQualifica.Attivo = true;
-                    nuovaQualifica.Descrizione = "";
+
+                    Anag_Qualifiche_Collaboratori nuovaQualifica = new Anag_Qualifiche_Collaboratori
+                    {
+                        Id_collaboratore = Convert.ToInt32(ViewState["idColl"]),
+                        Priorita = Convert.ToInt16(tbInsPrioritaQualifica.Text.Trim()),
+                        Qualifica = qualificaSelezionata.Replace("'", "''"),
+                        Attivo = true,
+                        Descrizione = ""
+                    };
                     int iNuovaQualifica = Anag_Qualifiche_Collaboratori_BLL.Instance.CreaQualificaCollaboratore(nuovaQualifica, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
                         SessionManager.ListaQualificheCollaboratori.Clear();
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnConfermaInserimentoQualifica_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1178,34 +1180,36 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 try
                 {
                     NascondiErroriValidazione();
-                    
-                    Anag_Email_Collaboratori nuovaEmail = new Anag_Email_Collaboratori();
-                    nuovaEmail.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
-                    nuovaEmail.Priorita = Convert.ToInt16(tbInsPrioritaEmail.Text.Trim());
-                    nuovaEmail.IndirizzoEmail = tbInsEmail.Text.Trim();
-                    nuovaEmail.Attivo = true;
-                    nuovaEmail.Descrizione = tbInsTipoEmail.Text.Trim();
+
+                    Anag_Email_Collaboratori nuovaEmail = new Anag_Email_Collaboratori
+                    {
+                        Id_collaboratore = Convert.ToInt32(ViewState["idColl"]),
+                        Priorita = Convert.ToInt16(tbInsPrioritaEmail.Text.Trim()),
+                        IndirizzoEmail = tbInsEmail.Text.Trim(),
+                        Attivo = true,
+                        Descrizione = tbInsTipoEmail.Text.Trim()
+                    };
                     int iNuovaEmail = Anag_Email_Collaboratori_BLL.Instance.CreaEmailCollaboratore(nuovaEmail, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
                         tbInsEmail.Text = "";
                         tbInsPrioritaEmail.Text = "1";
                         tbInsTipoEmail.Text = "";
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnConfermaInserimentoEmail_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1226,24 +1230,26 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 try
                 {
                     NascondiErroriValidazione();
-                  
-                    Anag_Indirizzi_Collaboratori nuovoIndirizzo = new Anag_Indirizzi_Collaboratori();
-                    nuovoIndirizzo.Id_Collaboratore = Convert.ToInt32(ViewState["idColl"]);
-                    nuovoIndirizzo.Priorita = Convert.ToInt16(tbInsPrioritaIndirizzo.Text.Trim());
-                    nuovoIndirizzo.Indirizzo = tbInsIndirizzoIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Attivo = true;
-                    nuovoIndirizzo.Descrizione = tbInsDescrizioneIndirizzo.Text.Trim();
-                    //nuovoIndirizzo.Tipo = tbInsTipoIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Tipo = cmbInsTipoIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Comune = tbInsComuneIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Provincia = tbInsProvinciaIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Cap = tbInsCapIndirizzo.Text.Trim();
-                    nuovoIndirizzo.NumeroCivico = tbInsCivicoIndirizzo.Text.Trim();
+
+                    Anag_Indirizzi_Collaboratori nuovoIndirizzo = new Anag_Indirizzi_Collaboratori
+                    {
+                        Id_Collaboratore = Convert.ToInt32(ViewState["idColl"]),
+                        Priorita = Convert.ToInt16(tbInsPrioritaIndirizzo.Text.Trim()),
+                        Indirizzo = tbInsIndirizzoIndirizzo.Text.Trim(),
+                        Attivo = true,
+                        Descrizione = tbInsDescrizioneIndirizzo.Text.Trim(),
+                        //nuovoIndirizzo.Tipo = tbInsTipoIndirizzo.Text.Trim();
+                        Tipo = cmbInsTipoIndirizzo.Text.Trim(),
+                        Comune = tbInsComuneIndirizzo.Text.Trim(),
+                        Provincia = tbInsProvinciaIndirizzo.Text.Trim(),
+                        Cap = tbInsCapIndirizzo.Text.Trim(),
+                        NumeroCivico = tbInsCivicoIndirizzo.Text.Trim()
+                    };
                     int iNuovoIndirizzo = Anag_Indirizzi_Collaboratori_BLL.Instance.CreaIndirizziCollaboratore(nuovoIndirizzo, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1256,16 +1262,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         tbInsProvinciaIndirizzo.Text = "";
                         //tbInsTipoIndirizzo.Text = "";
                         cmbInsTipoIndirizzo.Text = "";
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnConfermaInserimentoIndirizzo_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1286,22 +1292,24 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     NascondiErroriValidazione();
 
-                    Anag_Telefoni_Collaboratori nuovoTelefono = new Anag_Telefoni_Collaboratori();
-                    nuovoTelefono.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
-                    nuovoTelefono.Priorita = Convert.ToInt16(tbInsPrioritaIndirizzo.Text.Trim());
-                    nuovoTelefono.Attivo = true;
-                    nuovoTelefono.Descrizione = tbInsDescrizioneTelefono.Text.Trim();
-                    nuovoTelefono.Tipo = cmbInsTipoTelefono.Text.Trim();
-                    nuovoTelefono.Pref_int = tbInsPrefIntTelefono.Text.Trim();
-                    nuovoTelefono.Pref_naz = tbInsPrefNazTelefono.Text.Trim();
-                    nuovoTelefono.Numero = tbInsNumeroTelefono.Text.Trim();
-                    nuovoTelefono.Whatsapp = cbInsWhatsappTelefono.Checked;
+                    Anag_Telefoni_Collaboratori nuovoTelefono = new Anag_Telefoni_Collaboratori
+                    {
+                        Id_collaboratore = Convert.ToInt32(ViewState["idColl"]),
+                        Priorita = Convert.ToInt16(tbInsPrioritaIndirizzo.Text.Trim()),
+                        Attivo = true,
+                        Descrizione = tbInsDescrizioneTelefono.Text.Trim(),
+                        Tipo = cmbInsTipoTelefono.Text.Trim(),
+                        Pref_int = tbInsPrefIntTelefono.Text.Trim(),
+                        Pref_naz = tbInsPrefNazTelefono.Text.Trim(),
+                        Numero = tbInsNumeroTelefono.Text.Trim(),
+                        Whatsapp = cbInsWhatsappTelefono.Checked
+                    };
 
                     int iNuovoTelefono = Anag_Telefoni_Collaboratori_BLL.Instance.CreaTelefonoCollaboratore(nuovoTelefono, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1313,16 +1321,16 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         tbInsPrefNazTelefono.Text = "";
                         tbInsNumeroTelefono.Text = "";
                         cbInsWhatsappTelefono.Checked=false;
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnConfermaInserimentoTelefono_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1342,34 +1350,36 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 try
                 {
                     NascondiErroriValidazione();
-                    
-                    Anag_Documenti_Collaboratori nuovoDocumento = new Anag_Documenti_Collaboratori();
-                    nuovoDocumento.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
-                    nuovoDocumento.Attivo = true;
-                    nuovoDocumento.TipoDocumento = cmbInsTipoDocumento.Text.Trim();
-                    nuovoDocumento.NumeroDocumento = tbInsNumeroDocumento.Text.Trim();
-                    nuovoDocumento.PathDocumento = "";
+
+                    Anag_Documenti_Collaboratori nuovoDocumento = new Anag_Documenti_Collaboratori
+                    {
+                        Id_collaboratore = Convert.ToInt32(ViewState["idColl"]),
+                        Attivo = true,
+                        TipoDocumento = cmbInsTipoDocumento.Text.Trim(),
+                        NumeroDocumento = tbInsNumeroDocumento.Text.Trim(),
+                        PathDocumento = ""
+                    };
 
                     int iNuovoDocumento = Anag_Documenti_Collaboratori_BLL.Instance.CreaDocumentoCollaboratore(nuovoDocumento, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
                         tbInsNumeroDocumento.Text = "";
                         cmbInsTipoDocumento.Text = "";
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
                 {
                     log.Error("btnConfermaInserimentoDocumento_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1389,29 +1399,31 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 try
                 {
                     NascondiErroriValidazione();
-                    
-                    Anag_Email_Collaboratori nuovaEmail = new Anag_Email_Collaboratori();
-                    nuovaEmail.Id = Convert.ToInt32(tbIdEmailDaModificare.Text);
-                    nuovaEmail.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
-                    nuovaEmail.Priorita = Convert.ToInt16(tbInsPrioritaEmail.Text.Trim());
-                    nuovaEmail.IndirizzoEmail = tbInsEmail.Text.Trim();
-                    nuovaEmail.Attivo = true;
-                    nuovaEmail.Descrizione = tbInsTipoEmail.Text.Trim();
+
+                    Anag_Email_Collaboratori nuovaEmail = new Anag_Email_Collaboratori
+                    {
+                        Id = Convert.ToInt32(tbIdEmailDaModificare.Text),
+                        Id_collaboratore = Convert.ToInt32(ViewState["idColl"]),
+                        Priorita = Convert.ToInt16(tbInsPrioritaEmail.Text.Trim()),
+                        IndirizzoEmail = tbInsEmail.Text.Trim(),
+                        Attivo = true,
+                        Descrizione = tbInsTipoEmail.Text.Trim()
+                    };
                     esito = Anag_Email_Collaboratori_BLL.Instance.AggiornaEmailCollaboratore(nuovaEmail, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     btnModificaEmail.Visible = false;
                     btnInserisciEmail.Visible = true;
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
                         tbInsEmail.Text = "";
                         tbInsPrioritaEmail.Text = "1";
                         tbInsTipoEmail.Text = "";
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
@@ -1419,10 +1431,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     log.Error("btnConfermaMdoficaEmail_Click", ex);
                     btnModificaEmail.Visible = false;
                     btnInserisciEmail.Visible = true;
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1443,29 +1455,31 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     NascondiErroriValidazione();
 
-                    Anag_Indirizzi_Collaboratori nuovoIndirizzo = new Anag_Indirizzi_Collaboratori();
-                    nuovoIndirizzo.Id = Convert.ToInt32(tbIdIndirizzoDaModificare.Text);
-                    nuovoIndirizzo.Id_Collaboratore = Convert.ToInt32(ViewState["idColl"]);
-                    nuovoIndirizzo.Priorita = Convert.ToInt16(tbInsPrioritaIndirizzo.Text.Trim());
-                    nuovoIndirizzo.Indirizzo = tbInsIndirizzoIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Attivo = true;
-                    nuovoIndirizzo.Descrizione = tbInsDescrizioneIndirizzo.Text.Trim();
-                    //nuovoIndirizzo.Tipo = tbInsTipoIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Tipo = cmbInsTipoIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Nazione = "Italia";
-                    nuovoIndirizzo.NumeroCivico = tbInsCivicoIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Cap = tbInsCapIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Comune = tbInsComuneIndirizzo.Text.Trim();
-                    nuovoIndirizzo.Provincia = tbInsProvinciaIndirizzo.Text.Trim();
+                    Anag_Indirizzi_Collaboratori nuovoIndirizzo = new Anag_Indirizzi_Collaboratori
+                    {
+                        Id = Convert.ToInt32(tbIdIndirizzoDaModificare.Text),
+                        Id_Collaboratore = Convert.ToInt32(ViewState["idColl"]),
+                        Priorita = Convert.ToInt16(tbInsPrioritaIndirizzo.Text.Trim()),
+                        Indirizzo = tbInsIndirizzoIndirizzo.Text.Trim(),
+                        Attivo = true,
+                        Descrizione = tbInsDescrizioneIndirizzo.Text.Trim(),
+                        //nuovoIndirizzo.Tipo = tbInsTipoIndirizzo.Text.Trim();
+                        Tipo = cmbInsTipoIndirizzo.Text.Trim(),
+                        Nazione = "Italia",
+                        NumeroCivico = tbInsCivicoIndirizzo.Text.Trim(),
+                        Cap = tbInsCapIndirizzo.Text.Trim(),
+                        Comune = tbInsComuneIndirizzo.Text.Trim(),
+                        Provincia = tbInsProvinciaIndirizzo.Text.Trim()
+                    };
 
                     esito = Anag_Indirizzi_Collaboratori_BLL.Instance.AggiornaIndirizziCollaboratore(nuovoIndirizzo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     btnModificaIndirizzo.Visible = false;
                     btnInserisciIndirizzo.Visible = true;
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1479,7 +1493,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         tbInsProvinciaIndirizzo.Text = "";
                         tbInsCapIndirizzo.Text = "";
                         tbInsCivicoIndirizzo.Text = "";
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
@@ -1487,10 +1501,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     log.Error("btnConfermaMdoficaIndirizzo_Click", ex);
                     btnModificaIndirizzo.Visible = false;
                     btnInserisciIndirizzo.Visible = true;
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1509,27 +1523,29 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 try
                 {
                     NascondiErroriValidazione();
-                  
-                    Anag_Telefoni_Collaboratori nuovoTelefono = new Anag_Telefoni_Collaboratori();
-                    nuovoTelefono.Id = Convert.ToInt32(tbIdTelefonoDaModificare.Text);
-                    nuovoTelefono.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
-                    nuovoTelefono.Priorita = Convert.ToInt16(tbInsPrioritaTelefono.Text.Trim());
-                    nuovoTelefono.Pref_int = tbInsPrefIntTelefono.Text.Trim();
-                    nuovoTelefono.Pref_naz = tbInsPrefNazTelefono.Text.Trim();
-                    nuovoTelefono.Tipo = cmbInsTipoTelefono.Text.Trim();
-                    nuovoTelefono.Numero = tbInsNumeroTelefono.Text.Trim();
-                    nuovoTelefono.Whatsapp = cbInsWhatsappTelefono.Checked;
-                    nuovoTelefono.Attivo = true;
-                    nuovoTelefono.Descrizione = tbInsDescrizioneTelefono.Text.Trim();
+
+                    Anag_Telefoni_Collaboratori nuovoTelefono = new Anag_Telefoni_Collaboratori
+                    {
+                        Id = Convert.ToInt32(tbIdTelefonoDaModificare.Text),
+                        Id_collaboratore = Convert.ToInt32(ViewState["idColl"]),
+                        Priorita = Convert.ToInt16(tbInsPrioritaTelefono.Text.Trim()),
+                        Pref_int = tbInsPrefIntTelefono.Text.Trim(),
+                        Pref_naz = tbInsPrefNazTelefono.Text.Trim(),
+                        Tipo = cmbInsTipoTelefono.Text.Trim(),
+                        Numero = tbInsNumeroTelefono.Text.Trim(),
+                        Whatsapp = cbInsWhatsappTelefono.Checked,
+                        Attivo = true,
+                        Descrizione = tbInsDescrizioneTelefono.Text.Trim()
+                    };
 
                     esito = Anag_Telefoni_Collaboratori_BLL.Instance.AggiornaTelefonoCollaboratore(nuovoTelefono, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     btnModificaTelefono.Visible = false;
                     btnInserisciTelefono.Visible = true;
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1541,7 +1557,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         cmbInsTipoTelefono.Text = "";
                         tbInsDescrizioneTelefono.Text = "";
                         cbInsWhatsappTelefono.Checked = false;
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
@@ -1549,10 +1565,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     log.Error("btnConfermaMdoficaTelefono_Click", ex);
                     btnModificaTelefono.Visible = false;
                     btnInserisciTelefono.Visible = true;
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1573,22 +1589,24 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     NascondiErroriValidazione();
 
-                    Anag_Documenti_Collaboratori nuovoDocumento = new Anag_Documenti_Collaboratori();
-                    nuovoDocumento.Id = Convert.ToInt32(tbIdDocumentoDaModificare.Text);
-                    nuovoDocumento.Id_collaboratore = Convert.ToInt32(ViewState["idColl"]);
-                    nuovoDocumento.TipoDocumento = cmbInsTipoDocumento.Text.Trim();
-                    nuovoDocumento.NumeroDocumento = tbInsNumeroDocumento.Text.Trim();
-                    nuovoDocumento.PathDocumento = "";
-                    nuovoDocumento.Attivo = true;
+                    Anag_Documenti_Collaboratori nuovoDocumento = new Anag_Documenti_Collaboratori
+                    {
+                        Id = Convert.ToInt32(tbIdDocumentoDaModificare.Text),
+                        Id_collaboratore = Convert.ToInt32(ViewState["idColl"]),
+                        TipoDocumento = cmbInsTipoDocumento.Text.Trim(),
+                        NumeroDocumento = tbInsNumeroDocumento.Text.Trim(),
+                        PathDocumento = "",
+                        Attivo = true
+                    };
 
                     esito = Anag_Documenti_Collaboratori_BLL.Instance.AggiornaDocumentoCollaboratore(nuovoDocumento, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
                     btnModificaDocumento.Visible = false;
                     btnInserisciDocumento.Visible = true;
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1596,7 +1614,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         tbInsNumeroDocumento.Text = "";
                         cmbInsTipoDocumento.Text = "";
 
-                        editCollaboratore();
+                        EditCollaboratore();
                     }
                 }
                 catch (Exception ex)
@@ -1604,10 +1622,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     log.Error("btnConfermaMdoficaDocumento_Click", ex);
                     btnModificaDocumento.Visible = false;
                     btnInserisciDocumento.Visible = true;
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1746,13 +1764,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     
                     Anag_Telefoni_Collaboratori telefono = Anag_Telefoni_Collaboratori_BLL.Instance.getTelefonoById(ref esito,Convert.ToInt32(telefonoSelezionato));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         btnModificaTelefono.Visible = false;
                         btnInserisciTelefono.Visible = true;
                         tbIdTelefonoDaModificare.Text = "";
 
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1783,10 +1801,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     btnModificaTelefono.Visible = false;
                     btnInserisciTelefono.Visible = true;
                     tbIdTelefonoDaModificare.Text = "";
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1806,13 +1824,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     
                     Anag_Indirizzi_Collaboratori indirizzo = Anag_Indirizzi_Collaboratori_BLL.Instance.getIndirizzoById(ref esito, Convert.ToInt32(indirizzoSelezionato));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         btnModificaIndirizzo.Visible = false;
                         btnInserisciIndirizzo.Visible = true;
                         tbIdIndirizzoDaModificare.Text = "";
                         
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1845,10 +1863,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     btnModificaIndirizzo.Visible = false;
                     btnInserisciIndirizzo.Visible = true;
                     tbIdIndirizzoDaModificare.Text = "";
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1868,13 +1886,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     
                     Anag_Email_Collaboratori email = Anag_Email_Collaboratori_BLL.Instance.getEmailById(Convert.ToInt32(emailSelezionata), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         btnModificaEmail.Visible = false;
                         btnInserisciEmail.Visible = true;
                         tbIdEmailDaModificare.Text = "";
 
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1893,10 +1911,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     btnModificaEmail.Visible = false;
                     btnInserisciEmail.Visible = true;
                     tbIdEmailDaModificare.Text = "";
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -1917,7 +1935,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     
                     Anag_Documenti_Collaboratori documento = Anag_Documenti_Collaboratori_BLL.Instance.getDocumentoById(ref esito, Convert.ToInt32(documentoSelezionato));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         btnModificaDocumento.Visible = false;
                         btnInserisciDocumento.Visible = true;
@@ -1925,7 +1943,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         fuDoc.Visible = false;
                         tbIdDocumentoDaModificare.Text = "";
 
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -1954,10 +1972,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     btnCaricaDocumento.Visible = false;
                     fuDoc.Visible = false;
                     tbIdDocumentoDaModificare.Text = "";
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }

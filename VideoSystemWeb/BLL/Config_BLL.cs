@@ -32,14 +32,14 @@ namespace VideoSystemWeb.BLL
 
         public Config getConfig(ref Esito esito, string chiave)
         {
-            Config configRet = Config_DAL.Instance.getConfig(ref esito, chiave);
+            Config configRet = Config_DAL.Instance.GetConfig(ref esito, chiave);
 
             return configRet;
         }
 
         public List<Config> getListaConfig(ref Esito esito)
         {
-            List<Config> listaConfig = Config_DAL.Instance.getListaConfig(ref esito);
+            List<Config> listaConfig = Config_DAL.Instance.GetListaConfig(ref esito);
 
             return listaConfig;
         }
@@ -71,15 +71,15 @@ namespace VideoSystemWeb.BLL
             string query = "select * from tab_config"+
             " where chiave like 'BANCA%' AND valore <> '' AND valore is not null"+
             " order by ordinamento";
-            DataTable dtBanche = Base_DAL.getDatiBySql(query, ref esito);
-            if (esito.codice==Esito.ESITO_OK && dtBanche!=null && dtBanche.Rows!=null && dtBanche.Rows.Count > 0)
+            DataTable dtBanche = Base_DAL.GetDatiBySql(query, ref esito);
+            if (esito.Codice==Esito.ESITO_OK && dtBanche!=null && dtBanche.Rows!=null && dtBanche.Rows.Count > 0)
             {
                 foreach (DataRow rigaBanca in dtBanche.Rows)
                 {
                     DatiBancari datiBancari = new DatiBancari();
                     datiBancari.Banca = rigaBanca["valore"].ToString();
                     Config cfg = getConfig(ref esito, "Iban" + rigaBanca["chiave"].ToString().Substring(rigaBanca["chiave"].ToString().Length-2));
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
                         datiBancari.Iban = cfg.valore;
                         listaDatiBancari.Add(datiBancari);
@@ -95,7 +95,7 @@ namespace VideoSystemWeb.BLL
 
             Config cfg = getConfig(ref esito, "GIORNI_PAGAMENTO");
 
-            if (esito.codice == 0) { 
+            if (esito.Codice == 0) { 
                 string sGiorniEsito = cfg.valore;
                 char[] separator = { '-' };
                 string[] arGiorniEsito = sGiorniEsito.Split(separator, StringSplitOptions.RemoveEmptyEntries);

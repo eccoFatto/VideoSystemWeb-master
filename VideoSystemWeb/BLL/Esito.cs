@@ -21,12 +21,11 @@ namespace VideoSystemWeb.BLL
         public static int ESITO_KO_ERRORE_NO_RISULTATI = 6;
         public static int ESITO_KO_ERRORE_GENERICO = 99;
 
-        private int _codice;
         private string _descrizione;
 
-        public int codice { get; set; }
+        public int Codice { get; set; }
        
-        public string descrizione
+        public string Descrizione
         {
             get
             {
@@ -59,8 +58,8 @@ namespace VideoSystemWeb.BLL
 
         public Esito()
         {
-            this.codice = ESITO_OK;
-            this.descrizione = string.Empty;
+            this.Codice = ESITO_OK;
+            this.Descrizione = string.Empty;
         }
     }
 }

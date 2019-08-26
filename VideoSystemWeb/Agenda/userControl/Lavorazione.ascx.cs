@@ -74,9 +74,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
                     foreach (FiguraProfessionale figuraProfessionale in _listaFigureProfessionali)
                     {
-                        bool firstTime;
-                        figuraProfessionale.IdentificatoreOggetto = IDGenerator.GetId(figuraProfessionale, out firstTime);
-
+                        figuraProfessionale.IdentificatoreOggetto = IDGenerator.GetId(figuraProfessionale, out bool firstTime);
                     }
                 }
 
@@ -626,10 +624,6 @@ namespace VideoSystemWeb.Agenda.userControl
                 // sostituisco alle Fig Prof caricate dal dettaglio economico quelle precedentementi presenti nel piano esterno
                 if (listaFigureProfessionali_OLD.Count > 0)
                 {
-                    //foreach (FiguraProfessionale figProf_Old in listaFigureProfessionali_OLD)
-                    //{
-                    //    ListaFigureProfessionali = ListaFigureProfessionali.Where(x => x.Data != figProf_Old.Data && x.IdCollaboratori != figProf_Old.IdCollaboratori && x.IdFornitori != figProf_Old.IdFornitori).ToList<FiguraProfessionale>();
-                    //}
                     ListaFigureProfessionali.AddRange(listaFigureProfessionali_OLD);
                 }
 
@@ -802,7 +796,7 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
             Art_Articoli articoloDiaria = Articoli_BLL.Instance.getDiaria(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK || articoloDiaria == null)
+            if (esito.Codice != Esito.ESITO_OK || articoloDiaria == null)
             {
                 basePage.ShowWarning("La diaria non è stata aggiunta agli articoli del dettaglio economico");
             }
@@ -845,7 +839,7 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
             Art_Articoli articoloDiaria = Articoli_BLL.Instance.getDiaria(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK || articoloDiaria == null)
+            if (esito.Codice != Esito.ESITO_OK || articoloDiaria == null)
             {
                 basePage.ShowWarning("La diaria non è stata rimossa dagli articoli del dettaglio economico");
             }
@@ -886,9 +880,9 @@ namespace VideoSystemWeb.Agenda.userControl
                 int idCliente = SessionManager.EventoSelezionato.id_cliente;
 
                 SessionManager.EventoSelezionato.LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                 }
                 else if (SessionManager.EventoSelezionato.LavorazioneCorrente == null)
                 {
@@ -921,9 +915,9 @@ namespace VideoSystemWeb.Agenda.userControl
                     //txt_data_InsGenerale.Text = ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
 
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -956,10 +950,10 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             catch (Exception ex)
             {
-                if (esito.codice == Esito.ESITO_OK)
+                if (esito.Codice == Esito.ESITO_OK)
                 {
-                    esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                    esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                    esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                    esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                 }
                 basePage.ShowError(ex.Message);
             }
@@ -990,9 +984,11 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (SessionManager.EventoSelezionato.LavorazioneCorrente == null)
             {
-                SessionManager.EventoSelezionato.LavorazioneCorrente = new DatiLavorazione();
-                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = new List<DatiArticoliLavorazione>();
-                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione = new List<DatiPianoEsternoLavorazione>();
+                SessionManager.EventoSelezionato.LavorazioneCorrente = new DatiLavorazione
+                {
+                    ListaArticoliLavorazione = new List<DatiArticoliLavorazione>(),
+                    ListaDatiPianoEsternoLavorazione = new List<DatiPianoEsternoLavorazione>()
+                };
             }
 
             SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = listaArticoliLavorazione;
@@ -1027,18 +1023,20 @@ namespace VideoSystemWeb.Agenda.userControl
 
         public DatiLavorazione CreaDatiLavorazione()
         {
-            DatiLavorazione datiLavorazione = new DatiLavorazione();
-            datiLavorazione.Id = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
+            DatiLavorazione datiLavorazione = new DatiLavorazione
+            {
+                Id = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id,
 
-            datiLavorazione.Ordine = txt_Ordine.Text;
-            datiLavorazione.Fattura = txt_Fattura.Text;
-            datiLavorazione.IdContratto = string.IsNullOrEmpty(ddl_Contratto.SelectedValue) ? null : (int?)int.Parse(ddl_Contratto.SelectedValue);
-            datiLavorazione.IdReferente = string.IsNullOrEmpty(ddl_Referente.SelectedValue) ? null : (int?)int.Parse(ddl_Referente.SelectedValue); 
-            datiLavorazione.IdCapoTecnico = string.IsNullOrEmpty(ddl_Capotecnico.SelectedValue) ? null : (int?)int.Parse(ddl_Capotecnico.SelectedValue); 
-            datiLavorazione.IdProduttore = string.IsNullOrEmpty(ddl_Produttore.SelectedValue) ? null : (int?)int.Parse(ddl_Produttore.SelectedValue); 
-            datiLavorazione.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
-            datiLavorazione.ListaDatiPianoEsternoLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
-            datiLavorazione.NotePianoEsterno = txt_notaGeneralePianoEsterno.Text;
+                Ordine = txt_Ordine.Text,
+                Fattura = txt_Fattura.Text,
+                IdContratto = string.IsNullOrEmpty(ddl_Contratto.SelectedValue) ? null : (int?)int.Parse(ddl_Contratto.SelectedValue),
+                IdReferente = string.IsNullOrEmpty(ddl_Referente.SelectedValue) ? null : (int?)int.Parse(ddl_Referente.SelectedValue),
+                IdCapoTecnico = string.IsNullOrEmpty(ddl_Capotecnico.SelectedValue) ? null : (int?)int.Parse(ddl_Capotecnico.SelectedValue),
+                IdProduttore = string.IsNullOrEmpty(ddl_Produttore.SelectedValue) ? null : (int?)int.Parse(ddl_Produttore.SelectedValue),
+                ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione,
+                ListaDatiPianoEsternoLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione,
+                NotePianoEsterno = txt_notaGeneralePianoEsterno.Text
+            };
             return datiLavorazione;
         }
 
@@ -1053,28 +1051,27 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 for (int i = 0; i < datoArticolo.Quantita; i++)
                 {
-                    DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
-                    datoArticoloLavorazione.Id = 0;
+                    DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione
+                    {
+                        Id = 0,
+                        IdDatiLavorazione = 0,
+                        IdArtArticoli = datoArticolo.IdArtArticoli,
+                        IdTipoGenere = datoArticolo.IdTipoGenere,
+                        IdTipoGruppo = datoArticolo.IdTipoGruppo,
+                        IdTipoSottogruppo = datoArticolo.IdTipoSottogruppo,
+                        IdCollaboratori = null,
+                        IdFornitori = null,
+                        IdTipoPagamento = null,
+                        Descrizione = datoArticolo.Descrizione,
+                        DescrizioneLunga = datoArticolo.DescrizioneLunga,
+                        Stampa = datoArticolo.Stampa,
+                        Prezzo = datoArticolo.Prezzo,
+                        Costo = datoArticolo.Costo,
+                        Iva = datoArticolo.Iva,
+                        Data = SessionManager.EventoSelezionato.data_inizio_lavorazione
+                    };
+
                     datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out bool firstTime);
-                    datoArticoloLavorazione.IdDatiLavorazione = 0;
-                    datoArticoloLavorazione.IdArtArticoli = datoArticolo.IdArtArticoli;
-                    datoArticoloLavorazione.IdTipoGenere = datoArticolo.IdTipoGenere;
-                    datoArticoloLavorazione.IdTipoGruppo = datoArticolo.IdTipoGruppo;
-                    datoArticoloLavorazione.IdTipoSottogruppo = datoArticolo.IdTipoSottogruppo;
-
-                    datoArticoloLavorazione.IdCollaboratori = null;
-                    datoArticoloLavorazione.IdFornitori = null;
-                    datoArticoloLavorazione.IdTipoPagamento = null;
-
-                    datoArticoloLavorazione.Descrizione = datoArticolo.Descrizione;
-                    datoArticoloLavorazione.DescrizioneLunga = datoArticolo.DescrizioneLunga;
-                    datoArticoloLavorazione.Stampa = datoArticolo.Stampa;
-                    datoArticoloLavorazione.Prezzo = datoArticolo.Prezzo;
-                    datoArticoloLavorazione.Costo = datoArticolo.Costo;
-                    datoArticoloLavorazione.Iva = datoArticolo.Iva;
-
-                    datoArticoloLavorazione.Data = SessionManager.EventoSelezionato.data_inizio_lavorazione;
-
                     listaDatiArticoliLavorazione.Add(datoArticoloLavorazione);
                 }
             }
@@ -1230,7 +1227,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void ResetPanelLavorazione()
         {
-            gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? null : SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+            gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente?.ListaArticoliLavorazione;
             gvArticoliLavorazione.DataBind();
 
             lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente == null ||
@@ -1299,8 +1296,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         datiPianoEsterno.IdFornitori = fornitore.Id;
                     }
 
-                    bool firstTime;
-                    figProf.IdentificatoreOggetto = IDGenerator.GetId(figProf, out firstTime);
+                    figProf.IdentificatoreOggetto = IDGenerator.GetId(figProf, out bool firstTime);
 
                     figProf.Nota = collabForn.Nota;
                     figProf.Netto = collabForn.FP_netto;
@@ -1309,15 +1305,12 @@ namespace VideoSystemWeb.Agenda.userControl
 
 
                     FiguraProfessionale figProfGiaPresente = ListaFigureProfessionali.FirstOrDefault(x => x.Data == figProf.Data && x.IdCollaboratori == figProf.IdCollaboratori && x.IdFornitori == figProf.IdFornitori);
-                    //if (ListaFigureProfessionali.FirstOrDefault(x => x.IdentificatoreOggetto == figProf.IdentificatoreOggetto) == null)
                     if (figProfGiaPresente == null)
                     {
                         _listaFigureProfessionali.Add(figProf);
                     }
                     else
                     {
-                       //FiguraProfessionale figProfGiaPresente = ListaFigureProfessionali.FirstOrDefault(x => x.Data == figProf.Data && x.IdCollaboratori == figProf.IdCollaboratori && x.IdFornitori == figProf.IdFornitori);// ListaFigureProfessionali.FirstOrDefault(x => x.IdentificatoreOggetto == figProf.IdentificatoreOggetto);
-
                         if (figProfGiaPresente.Nome != figProf.Nome ||
                             figProfGiaPresente.Cognome != figProf.Cognome)
                         {
@@ -1406,9 +1399,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
             #region RITENUTA ACCONTO
             aliquota_RitenutaAcconto = Config_BLL.Instance.getConfig(ref esito, "ALIQUOTA_RITENUTA_ACCONTO").Valore;
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                basePage.ShowError(esito.descrizione);
+                basePage.ShowError(esito.Descrizione);
                 return;
             }
             Decimal.TryParse(aliquota_RitenutaAcconto, out decimal aliquotaRitAcc);
@@ -1421,9 +1414,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
             #region MISTA
             quotaFissa_PagamentoMisto = Config_BLL.Instance.getConfig(ref esito, "QUOTA_FISSA_PAGAMENTO_MISTO").Valore;
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                basePage.ShowError(esito.descrizione);
+                basePage.ShowError(esito.Descrizione);
                 return;
             }
             Decimal.TryParse(quotaFissa_PagamentoMisto, out decimal quotaPagFisso);
@@ -1436,9 +1429,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
             #region DIARIA LORDA
             diariaLorda = Config_BLL.Instance.getConfig(ref esito, "DIARIA_LORDA").Valore;
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                basePage.ShowError(esito.descrizione);
+                basePage.ShowError(esito.Descrizione);
                 return;
             }
             Decimal.TryParse(diariaLorda, out decimal diaria);

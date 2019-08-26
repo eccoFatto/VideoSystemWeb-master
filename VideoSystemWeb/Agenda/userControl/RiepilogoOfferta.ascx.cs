@@ -81,7 +81,7 @@ namespace VideoSystemWeb.Agenda.userControl
             noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); 
             noteOfferta.Consegna = txt_Consegna.Text;
             noteOfferta.Note = txt_Note.Text.Trim();
-            NoteOfferta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
+            Offerta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
 
             val_bancaStampa.Text = noteOfferta.Banca;
             val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
@@ -144,9 +144,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
             Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                basePage.ShowError(esito.descrizione);
+                basePage.ShowError(esito.Descrizione);
                 return esito;
             }
 
@@ -179,7 +179,7 @@ namespace VideoSystemWeb.Agenda.userControl
             string protocollo = listaProtocolli.Count == 0 ? "N.D." :  listaProtocolli.First().Numero_protocollo + "-" + eventoSelezionato.codice_lavoro;
             lbl_Protocollo.Text = lbl_ProtocolloStampa.Text = protocollo;
 
-            NoteOfferta noteOfferta = NoteOfferta_BLL.Instance.getNoteOffertaByIdDatiAgenda(eventoSelezionato.id, ref esito);
+            NoteOfferta noteOfferta = Offerta_BLL.Instance.getNoteOffertaByIdDatiAgenda(eventoSelezionato.id, ref esito);
 
             // se non viene trovata una notaOfferta (vecchi eventi) viene creata e salvata
             if (noteOfferta.Id == 0)
@@ -187,7 +187,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
                 noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + Environment.NewLine + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
 
-                NoteOfferta_BLL.Instance.CreaNoteOfferta(noteOfferta, ref esito);
+                Offerta_BLL.Instance.CreaNoteOfferta(noteOfferta, ref esito);
             }
 
             ViewState["NoteOfferta"] = noteOfferta;

@@ -34,6 +34,36 @@ namespace VideoSystemWeb.Entity
         public List<DatiArticoli> ListaDatiArticoli { get; set; }
         public DatiLavorazione LavorazioneCorrente { get; set; }
 
+        public string DecodificaTipologia
+        {
+            get
+            {
+                if (id_tipologia == 0)
+                {
+                    return "";
+                }
+                else
+                {
+                    return (((List<Tipologica>)SessionManager.ListaTipiTipologie).FirstOrDefault(x => x.id == id_tipologia)).nome;
+                }
+            }
+        }
+
+        public string DecodificaCliente
+        {
+            get
+            {
+                if (id_cliente == 0)
+                {
+                    return "";
+                }
+                else
+                {
+                    return (((List<Anag_Clienti_Fornitori>)SessionManager.ListaClientiFornitori).FirstOrDefault(x => x.Id == id_cliente)).RagioneSociale;
+                }
+            }
+        }
+
         public DatiAgenda() { }
 
         public DatiAgenda(int id, int id_colonne_agenda, int id_stato, DateTime data_inizio_lavorazione, DateTime data_fine_lavorazione, string produzione)

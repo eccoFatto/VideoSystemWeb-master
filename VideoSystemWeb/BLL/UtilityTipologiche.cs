@@ -77,8 +77,8 @@ namespace VideoSystemWeb.BLL
             tipologica = listaTipologiche.Where(x => x.id == id).FirstOrDefault();
             if (tipologica == null)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                esito.descrizione = "Nessuna Tipologica trovata per id = '"+id+"'";
+                esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                esito.Descrizione = "Nessuna Tipologica trovata per id = '"+id+"'";
             }
 
             return tipologica;
@@ -92,8 +92,8 @@ namespace VideoSystemWeb.BLL
             colonna = listaColonne.Where(x => x.id == id).FirstOrDefault();
             if (colonna == null)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                esito.descrizione = "Nessuna Colonna Agenda trovata per id = '" + id + "'";
+                esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                esito.Descrizione = "Nessuna Colonna Agenda trovata per id = '" + id + "'";
             }
 
             return colonna;
@@ -106,8 +106,8 @@ namespace VideoSystemWeb.BLL
             tipologica = listaTipologiche.Where(x => x.nome.ToUpper().Trim() == nome.ToUpper().Trim()).FirstOrDefault();
             if (tipologica == null)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                esito.descrizione = "Nessuna Tipologica trovata per nome = '" + nome + "'";
+                esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                esito.Descrizione = "Nessuna Tipologica trovata per nome = '" + nome + "'";
             }
 
             return tipologica;
@@ -132,8 +132,8 @@ namespace VideoSystemWeb.BLL
 
             if (string.IsNullOrEmpty(valoreParametro))
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                esito.descrizione = "Nessun parametro con nome = '" + nomeParametro + "'";
+                esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                esito.Descrizione = "Nessun parametro con nome = '" + nomeParametro + "'";
             }
 
             return valoreParametro;
@@ -153,7 +153,7 @@ namespace VideoSystemWeb.BLL
 
         public static Tipologica getTipologicaById(EnumTipologiche eTipo, int idTipologica, ref Esito esito)
         {
-            Tipologica tipologica = Base_DAL.getTipologicaById(eTipo, idTipologica, ref esito);
+            Tipologica tipologica = Base_DAL.GetTipologicaById(eTipo, idTipologica, ref esito);
             return tipologica;
         }
 
@@ -183,7 +183,7 @@ namespace VideoSystemWeb.BLL
 
         public static ColonneAgenda getColonneAgendaById(int idColonnaAgenda, ref Esito esito)
         {
-            ColonneAgenda colonnaAgenda = Base_DAL.getColonneAgendaById(idColonnaAgenda, ref esito);
+            ColonneAgenda colonnaAgenda = Base_DAL.GetColonneAgendaById(idColonnaAgenda, ref esito);
             return colonnaAgenda;
         }
         public static int CreaColonneAgenda(ColonneAgenda colonnaAgenda, ref Esito esito)

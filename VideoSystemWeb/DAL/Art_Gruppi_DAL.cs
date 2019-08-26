@@ -62,8 +62,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Gruppo con id " + idGruppo.ToString() + " non trovato in tabella art_gruppi ";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Gruppo con id " + idGruppo.ToString() + " non trovato in tabella art_gruppi ";
                                 }
                             }
                         }
@@ -72,8 +72,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
             return gruppo;
         }
@@ -115,8 +115,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella art_gruppi ";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella tabella art_gruppi ";
                                 }
                             }
                         }
@@ -125,8 +125,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaGruppi;
@@ -191,8 +191,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Gruppi_DAL.cs - CreaGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Art_Gruppi_DAL.cs - CreaGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return 0;
@@ -257,8 +257,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Gruppi_DAL.cs - AggiornaGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Art_Gruppi_DAL.cs - AggiornaGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -303,8 +303,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Gruppi_DAL.cs - EliminaGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Art_Gruppi_DAL.cs - EliminaGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -350,8 +350,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Gruppi_DAL.cs - RemoveGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Art_Gruppi_DAL.cs - RemoveGruppo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

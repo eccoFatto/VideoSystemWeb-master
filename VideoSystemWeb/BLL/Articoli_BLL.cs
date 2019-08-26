@@ -156,7 +156,7 @@ namespace VideoSystemWeb.BLL
             List<DatiArticoli> listaArticoliDelGruppo = new List<DatiArticoli>();
 
             List<int> listaIDArticoli = CaricaListaGruppiArticoliByIDgruppo(idGruppo, ref esito).Select(x => x.IdArtArticoli).ToList<int>();
-            int iva = int.Parse(Config_DAL.Instance.getConfig(ref esito, SessionManager.CFG_IVA).valore);
+            int iva = int.Parse(Config_DAL.Instance.GetConfig(ref esito, SessionManager.CFG_IVA).valore);
 
             
             foreach (int idArticolo in listaIDArticoli)
@@ -192,7 +192,7 @@ namespace VideoSystemWeb.BLL
             List<DatiArticoliLavorazione> listaArticoliDelGruppo = new List<DatiArticoliLavorazione>();
 
             List<int> listaIDArticoli = CaricaListaGruppiArticoliByIDgruppo(idGruppo, ref esito).Select(x => x.IdArtArticoli).ToList<int>();
-            int iva = int.Parse(Config_DAL.Instance.getConfig(ref esito, SessionManager.CFG_IVA).valore);
+            int iva = int.Parse(Config_DAL.Instance.GetConfig(ref esito, SessionManager.CFG_IVA).valore);
 
 
             foreach (int idArticolo in listaIDArticoli)
@@ -226,7 +226,7 @@ namespace VideoSystemWeb.BLL
         public DatiArticoli CaricaArticoloByID(int idEvento, int idArticolo, ref Esito esito, bool soloAttivi = true)
         {
             Art_Articoli articoloTemplate = getArticoloById(idArticolo, ref esito);
-            int iva = int.Parse(Config_DAL.Instance.getConfig(ref esito, SessionManager.CFG_IVA).valore);
+            int iva = int.Parse(Config_DAL.Instance.GetConfig(ref esito, SessionManager.CFG_IVA).valore);
 
             DatiArticoli articolo = new DatiArticoli();
 
@@ -253,7 +253,7 @@ namespace VideoSystemWeb.BLL
         public DatiArticoliLavorazione CaricaArticoloLavorazioneByID(int idDatiLavorazione, int idArticolo, ref Esito esito, bool soloAttivi = true)
         {
             Art_Articoli articoloTemplate = getArticoloById(idArticolo, ref esito);
-            int iva = int.Parse(Config_DAL.Instance.getConfig(ref esito, SessionManager.CFG_IVA).valore);
+            int iva = int.Parse(Config_DAL.Instance.GetConfig(ref esito, SessionManager.CFG_IVA).valore);
 
             DatiArticoliLavorazione articoloLavorazione = new DatiArticoliLavorazione();
 
@@ -280,7 +280,7 @@ namespace VideoSystemWeb.BLL
 
         public List<DatiArticoli> CaricaListaArticoliByIDEvento(int idDatiAgenda, ref Esito esito)
         {
-            return Dati_Articoli_DAL.Instance.getDatiArticoliByIdDatiAgenda(ref esito, idDatiAgenda);
+            return Dati_Articoli_DAL.Instance.GetDatiArticoliByIdDatiAgenda(ref esito, idDatiAgenda);
         }
 
         public List<ArticoliGruppi> CaricaListaArticoliGruppi()

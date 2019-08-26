@@ -21,7 +21,7 @@ namespace VideoSystemWeb.Utente
         {
             Anag_Utenti utente = (Anag_Utenti)Session[SessionManager.UTENTE];
             Esito esito = ValidazioneCampi(utente);
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 // AGGIORNO LA NUOVA PASSWORD SU ANAG_UTENTI
 
@@ -31,9 +31,9 @@ namespace VideoSystemWeb.Utente
                 utente.password = pwdEncrypted;
 
                 esito = Login_BLL.Instance.AggiornaUtente(utente);
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    ShowWarning(esito.descrizione);
+                    ShowWarning(esito.Descrizione);
                 }
                 else
                 {
@@ -44,7 +44,7 @@ namespace VideoSystemWeb.Utente
             }
             else
             {
-                ShowWarning(esito.descrizione);
+                ShowWarning(esito.Descrizione);
             }
         }
 
@@ -52,19 +52,19 @@ namespace VideoSystemWeb.Utente
         {
             Esito esito = new Esito();
             esito = ControlloCampiObbligatori();
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                esito.descrizione = "Controllare i campi evidenziati";
+                esito.Descrizione = "Controllare i campi evidenziati";
             }
             else if (!ControlloNuovaPassword())
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.descrizione = "Errore nella convalida delle nuove Password";
+                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.Descrizione = "Errore nella convalida delle nuove Password";
             }
             else if (!ControlloVecchiaPassword(utente))
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.descrizione = "La password inserita non è valida";
+                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.Descrizione = "La password inserita non è valida";
             }
 
             return esito;

@@ -78,8 +78,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaReferenti;
@@ -175,8 +175,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Anag_Referenti_Clienti_Fornitori_DAL.cs - CreaReferente " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Anag_Referenti_Clienti_Fornitori_DAL.cs - CreaReferente " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return 0;
@@ -261,8 +261,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Anag_Referente_Clienti_Fornitori_DAL.cs - AggiornaReferente " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Anag_Referente_Clienti_Fornitori_DAL.cs - AggiornaReferente " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -307,8 +307,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Anag_Referente_Clienti_Fornitori_DAL.cs - EliminaReferente " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Anag_Referente_Clienti_Fornitori_DAL.cs - EliminaReferente " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -349,8 +349,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella anag_referente_clienti_fornitori ";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella tabella anag_referente_clienti_fornitori ";
                                 }
                             }
                         }
@@ -359,8 +359,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return referente;

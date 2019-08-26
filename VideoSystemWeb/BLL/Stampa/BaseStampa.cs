@@ -84,10 +84,10 @@ namespace VideoSystemWeb.BLL.Stampa
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "AddPageNumber: " + nomeFileIn + "," + nomeFileOut + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "AddPageNumber: " + nomeFileIn + "," + nomeFileOut + Environment.NewLine + ex.Message;
                 BasePage b = new BasePage();
-                b.ShowError(esito.descrizione);
+                b.ShowError(esito.Descrizione);
                 return ret;
             }
             

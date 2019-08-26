@@ -38,14 +38,14 @@ namespace VideoSystemWeb.Articoli.userControl
                 {
 
                     lblTipoArticolo.Text = ViewState["TIPO_ARTICOLO"].ToString();
-                    caricaTipologia(false);
+                    CaricaTipologia(false);
 
                 }
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
             }
         }
 
-        private List<Tipologica> caricaTipologia(bool clearLista)
+        private List<Tipologica> CaricaTipologia(bool clearLista)
         {
             List<Tipologica> lista;
             Esito esito = new Esito();
@@ -175,31 +175,32 @@ namespace VideoSystemWeb.Articoli.userControl
             BasePage p = new BasePage();
 
             // CARICO LA COMBO
-            if (string.IsNullOrEmpty(esito.descrizione))
+            if (string.IsNullOrEmpty(esito.Descrizione))
             {
                 lbMod_Tipologia.Items.Clear();
                 foreach (Tipologica tipologia in lista)
                 {
-                    ListItem item = new ListItem();
-                    item.Text = tipologia.nome;
-                    item.Value = tipologia.id.ToString();
+                    ListItem item = new ListItem
+                    {
+                        Text = tipologia.nome,
+                        Value = tipologia.id.ToString()
+                    };
                     lbMod_Tipologia.Items.Add(item);
                 }
 
                 // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                abilitaBottoni(p.AbilitazioneInScrittura());
-
+                AbilitaBottoni(p.AbilitazioneInScrittura());
             }
             else
             {
-                Session["ErrorPageText"] = esito.descrizione;
+                Session["ErrorPageText"] = esito.Descrizione;
                 string url = String.Format("~/pageError.aspx");
                 Response.Redirect(url, true);
             }
             return lista;
         }
 
-        private void abilitaBottoni(bool utenteAbilitatoInScrittura)
+        private void AbilitaBottoni(bool utenteAbilitatoInScrittura)
         {
             if (!utenteAbilitatoInScrittura)
             {
@@ -219,15 +220,16 @@ namespace VideoSystemWeb.Articoli.userControl
         {
             // INSERISCO TIPOLOGIA
             Esito esito = new Esito();
-            Tipologica tipologia = new Tipologica();
+            Tipologica tipologia = new Tipologica
+            {
+                nome = tbInsNomeTipologia.Text.Trim(),
+                descrizione = tbInsDescrizioneTipologia.Text.Trim(),
+                parametri = tbInsParametriTipologia.Text.Trim(),
+                sottotipo = tbInsSottotipoTipologia.Text.Trim(),
+                attivo = true
+            };
 
-            tipologia.nome = tbInsNomeTipologia.Text.Trim();
-            tipologia.descrizione = tbInsDescrizioneTipologia.Text.Trim();
-            tipologia.parametri = tbInsParametriTipologia.Text.Trim();
-            tipologia.sottotipo = tbInsSottotipoTipologia.Text.Trim();
-            tipologia.attivo = true;
-
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 //panelErrore.Style.Add("display", "block");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
@@ -239,11 +241,11 @@ namespace VideoSystemWeb.Articoli.userControl
 
                 int iRet = UtilityTipologiche.CreaTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], tipologia, ref esito);
                 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Add("display", "block");
                     //lbl_MessaggioErrore.Text = esito.descrizione;
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                 }
                 else
                 {
@@ -251,7 +253,7 @@ namespace VideoSystemWeb.Articoli.userControl
                     tbInsDescrizioneTipologia.Text = "1";
                     tbInsParametriTipologia.Text = "";
                     tbInsSottotipoTipologia.Text = "";
-                    List<Tipologica> lista = caricaTipologia(true);
+                    List<Tipologica> lista = CaricaTipologia(true);
                     HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
                 }
                 
@@ -270,9 +272,9 @@ namespace VideoSystemWeb.Articoli.userControl
                     NascondiErroriValidazione();
                     esito = UtilityTipologiche.RemoveTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], Convert.ToInt32(tbIdTipologiaDaModificare.Text.Trim()));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -286,7 +288,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         btnInserisciTipologia.Visible = true;
                         btnEliminaTipologia.Visible = false;
 
-                        List<Tipologica> lista = caricaTipologia(true);
+                        List<Tipologica> lista = CaricaTipologia(true);
                         HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
 
                     }
@@ -294,10 +296,10 @@ namespace VideoSystemWeb.Articoli.userControl
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaDocumento_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -330,11 +332,11 @@ namespace VideoSystemWeb.Articoli.userControl
                     
                     Tipologica tipologica = UtilityTipologiche.getTipologicaById((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], Convert.ToInt32(tipologiaSelezionata), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         btnInserisciTipologia.Visible = true;
 
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -354,10 +356,10 @@ namespace VideoSystemWeb.Articoli.userControl
                     btnInserisciTipologia.Visible = true;
                     btnModificaTipologia.Visible = false;
                     btnEliminaTipologia.Visible = false;
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -374,21 +376,23 @@ namespace VideoSystemWeb.Articoli.userControl
                 {
                     NascondiErroriValidazione();
 
-                    Tipologica nuovaTipologia = new Tipologica();
-                    nuovaTipologia.id = Convert.ToInt32(tbIdTipologiaDaModificare.Text);
-                    nuovaTipologia.nome = tbInsNomeTipologia.Text.Trim();
-                    nuovaTipologia.descrizione = tbInsDescrizioneTipologia.Text.Trim();
-                    nuovaTipologia.parametri = tbInsParametriTipologia.Text.Trim();
-                    nuovaTipologia.sottotipo = tbInsSottotipoTipologia.Text.Trim();
-                    nuovaTipologia.attivo = true;
+                    Tipologica nuovaTipologia = new Tipologica
+                    {
+                        id = Convert.ToInt32(tbIdTipologiaDaModificare.Text),
+                        nome = tbInsNomeTipologia.Text.Trim(),
+                        descrizione = tbInsDescrizioneTipologia.Text.Trim(),
+                        parametri = tbInsParametriTipologia.Text.Trim(),
+                        sottotipo = tbInsSottotipoTipologia.Text.Trim(),
+                        attivo = true
+                    };
                     esito = UtilityTipologiche.AggiornaTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], nuovaTipologia);
 
                     btnModificaTipologia.Visible = false;
                     btnInserisciTipologia.Visible = true;
                     btnEliminaTipologia.Visible = false;
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -397,7 +401,7 @@ namespace VideoSystemWeb.Articoli.userControl
                         tbInsDescrizioneTipologia.Text = "";
                         tbInsParametriTipologia.Text = "";
                         tbInsSottotipoTipologia.Text = "";
-                        List<Tipologica> lista = caricaTipologia(true);
+                        List<Tipologica> lista = CaricaTipologia(true);
                         HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
 
                     }
@@ -408,10 +412,10 @@ namespace VideoSystemWeb.Articoli.userControl
                     btnModificaTipologia.Visible = false;
                     btnInserisciTipologia.Visible = true;
                     btnEliminaTipologia.Visible = false;
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }

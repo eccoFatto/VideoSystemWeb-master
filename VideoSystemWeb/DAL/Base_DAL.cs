@@ -15,7 +15,7 @@ namespace VideoSystemWeb.DAL
         public static string sqlConstr = ConfigurationManager.ConnectionStrings["sqlConstrMSSQL"].ConnectionString;
         protected static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public static int executeUpdateBySql(string querySql, ref Esito esito)
+        public static int ExecuteUpdateBySql(string querySql, ref Esito esito)
         {
             int iReturn = 0;
             try
@@ -29,16 +29,16 @@ namespace VideoSystemWeb.DAL
                         iReturn = cmd.ExecuteNonQuery();
 
                         if (iReturn == 0) { 
-                            esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                            esito.descrizione = "Nessun dato affetto dalla query " + querySql;
+                            esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                            esito.Descrizione = "Nessun dato affetto dalla query " + querySql;
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Base_DAL.cs - executeUpdateBySql " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Base_DAL.cs - executeUpdateBySql " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -46,7 +46,7 @@ namespace VideoSystemWeb.DAL
             return iReturn;
 
         }
-        public static DataTable getDatiBySql(string querySql, ref Esito esito)
+        public static DataTable GetDatiBySql(string querySql, ref Esito esito)
         {
             DataTable dtReturn = new DataTable();
             try
@@ -71,8 +71,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Base_DAL.cs - getDatiBySql " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Base_DAL.cs - getDatiBySql " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -114,8 +114,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella ricerca della tipologica "+tipologica;
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella ricerca della tipologica "+tipologica;
                                 }
                             }
                         }
@@ -124,8 +124,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Base_DAL.cs - CaricaTipologica " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Base_DAL.cs - CaricaTipologica " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -154,22 +154,24 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-                                        ColonneAgenda tipologicaCorrente = new ColonneAgenda();
-                                        tipologicaCorrente.id = int.Parse(riga["id"].ToString());
-                                        tipologicaCorrente.nome = riga["nome"].ToString();
-                                        tipologicaCorrente.descrizione = riga["descrizione"].ToString();
-                                        tipologicaCorrente.sottotipo = riga["sottotipo"].ToString();
-                                        tipologicaCorrente.Ordinamento = int.Parse(riga["ordinamento"].ToString());
-                                        tipologicaCorrente.parametri = riga["parametri"].ToString();
-                                        tipologicaCorrente.attivo = bool.Parse(riga["attivo"].ToString());
+                                        ColonneAgenda tipologicaCorrente = new ColonneAgenda
+                                        {
+                                            id = int.Parse(riga["id"].ToString()),
+                                            nome = riga["nome"].ToString(),
+                                            descrizione = riga["descrizione"].ToString(),
+                                            sottotipo = riga["sottotipo"].ToString(),
+                                            Ordinamento = int.Parse(riga["ordinamento"].ToString()),
+                                            parametri = riga["parametri"].ToString(),
+                                            attivo = bool.Parse(riga["attivo"].ToString())
+                                        };
 
                                         listaColonneAgenda.Add(tipologicaCorrente);
                                     }
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella ricerca della tipologica tipo_colonne_agenda";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella ricerca della tipologica tipo_colonne_agenda";
                                 }
                             }
                         }
@@ -178,8 +180,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Base_DAL.cs - CaricaColonneAgenda " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Base_DAL.cs - CaricaColonneAgenda " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -187,7 +189,7 @@ namespace VideoSystemWeb.DAL
             return listaColonneAgenda;
         }
 
-        public static Tipologica getTipologicaById(EnumTipologiche tipoTipologica,int idTipologica, ref Esito esito)
+        public static Tipologica GetTipologicaById(EnumTipologiche tipoTipologica,int idTipologica, ref Esito esito)
         {
             Tipologica tipologica = new Tipologica();
             string nomeTipologica = UtilityTipologiche.getNomeTipologica(tipoTipologica);
@@ -216,8 +218,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella ricerca della tipologica " + tipoTipologica;
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella ricerca della tipologica " + tipoTipologica;
                                 }
                             }
                         }
@@ -226,8 +228,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Base_DAL.cs - getTipologicaById " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Base_DAL.cs - getTipologicaById " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -235,7 +237,7 @@ namespace VideoSystemWeb.DAL
             return tipologica;
         }
 
-        public static ColonneAgenda getColonneAgendaById(int idColonnaAgenda, ref Esito esito)
+        public static ColonneAgenda GetColonneAgendaById(int idColonnaAgenda, ref Esito esito)
         {
             ColonneAgenda tipologica = new ColonneAgenda();
             try
@@ -264,8 +266,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella ricerca della tipologica tipo_colonne_agenda";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella ricerca della tipologica tipo_colonne_agenda";
                                 }
                             }
                         }
@@ -274,8 +276,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Base_DAL.cs - getColonneAgendaById " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Base_DAL.cs - getColonneAgendaById " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -393,15 +395,15 @@ namespace VideoSystemWeb.DAL
                 }
                 catch (Exception ex)
                 {
-                    esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                    esito.descrizione = "Base_DAL.cs - CreaTipologia " + Environment.NewLine + ex.Message;
+                    esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                    esito.Descrizione = "Base_DAL.cs - CreaTipologia " + Environment.NewLine + ex.Message;
 
                     log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
                 }
             }
             else
             {
-                esito.descrizione = "Tipologia non censita!";
+                esito.Descrizione = "Tipologia non censita!";
             }
 
             return 0;
@@ -474,8 +476,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Base_DAL.cs - CreaColonneAgenda " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - CreaColonneAgenda " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -595,15 +597,15 @@ namespace VideoSystemWeb.DAL
                 }
                 catch (Exception ex)
                 {
-                    esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                    esito.descrizione = "Base_DAL.cs - AggiornaTipologia " + Environment.NewLine + ex.Message;
+                    esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                    esito.Descrizione = "Base_DAL.cs - AggiornaTipologia " + Environment.NewLine + ex.Message;
 
                     log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
                 }
             }
             else
             {
-                esito.descrizione = "Tipologia non censita!";
+                esito.Descrizione = "Tipologia non censita!";
             }
             return esito;
         }
@@ -674,8 +676,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Base_DAL.cs - AggiornaColonneAgenda " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - AggiornaColonneAgenda " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -769,8 +771,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Base_DAL.cs - EliminaTipologia " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - EliminaTipologia " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -865,8 +867,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Base_DAL.cs - RemoveTipologia " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - RemoveTipologia " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -875,7 +877,7 @@ namespace VideoSystemWeb.DAL
         }
 
 
-        public static int getProtocollo(ref Esito esito)
+        public static int GetProtocollo(ref Esito esito)
         {
             try
             {
@@ -904,15 +906,15 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Base_DAL.cs - getProtocollo " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - getProtocollo " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
             return 0;
         }
 
-        public static Esito resetProtocollo(int protIniziale)
+        public static Esito ResetProtocollo(int protIniziale)
         {
             Esito esito = new Esito();
             try
@@ -941,8 +943,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Base_DAL.cs - resetProtocollo " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - resetProtocollo " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -951,7 +953,7 @@ namespace VideoSystemWeb.DAL
 
         }
 
-        public static int getCodiceLavorazione(ref Esito esito)
+        public static int GetCodiceLavorazione(ref Esito esito)
         {
             try
             {
@@ -982,15 +984,15 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Base_DAL.cs - getCodiceLavorazione " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - getCodiceLavorazione " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
             return 0;
         }
 
-        public static Esito resetCodiceLavorazione(int codLavIniziale)
+        public static Esito ResetCodiceLavorazione(int codLavIniziale)
         {
             Esito esito = new Esito();
             try
@@ -1019,13 +1021,907 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Base_DAL.cs - resetCodiceLavorazione " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - resetCodiceLavorazione " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
 
             return esito;
         }
+
+        protected static void CostruisciSP_InsertDatiArticoli(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, DatiArticoli datoArticolo)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "InsertDatiArticoli";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+            SqlParameter costo = new SqlParameter("@costo", datoArticolo.Costo);
+            costo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(costo);
+
+            SqlParameter idArtArticoli = new SqlParameter("@idArtArticoli", datoArticolo.IdArtArticoli);
+            idArtArticoli.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idArtArticoli);
+
+            // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+            SqlParameter idDatiAgenda = new SqlParameter("@idDatiAgenda", iDatiAgendaReturn);
+            idDatiAgenda.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idDatiAgenda);
+
+            SqlParameter idTipoGenere = new SqlParameter("@idTipoGenere", datoArticolo.IdTipoGenere);
+            idTipoGenere.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idTipoGenere);
+
+            SqlParameter idTipoGruppo = new SqlParameter("@idTipoGruppo", datoArticolo.IdTipoGruppo);
+            idTipoGruppo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idTipoGruppo);
+
+            SqlParameter idTipoSottogruppo = new SqlParameter("@idTipoSottogruppo", datoArticolo.IdTipoSottogruppo);
+            idTipoSottogruppo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idTipoSottogruppo);
+
+            SqlParameter descrizione = new SqlParameter("@descrizione", datoArticolo.Descrizione);
+            descrizione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(descrizione);
+
+            SqlParameter descrizioneLunga = new SqlParameter("@descrizioneLunga", datoArticolo.DescrizioneLunga);
+            descrizioneLunga.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(descrizioneLunga);
+
+            SqlParameter iva = new SqlParameter("@iva", datoArticolo.Iva);
+            iva.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(iva);
+
+            SqlParameter quantita = new SqlParameter("@quantita", datoArticolo.Quantita);
+            quantita.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(quantita);
+
+            SqlParameter prezzo = new SqlParameter("@prezzo", datoArticolo.Prezzo);
+            prezzo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(prezzo);
+
+            SqlParameter stampa = new SqlParameter("@stampa", datoArticolo.Stampa);
+            stampa.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(stampa);
+        }
+
+        protected static void CostruisciSP_InsertDatiTender(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, string idTender)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "InsertDatiTender";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+            SqlParameter idTenderSP = new SqlParameter("@idTender", idTender);
+            idTenderSP.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idTenderSP);
+
+            // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+            SqlParameter idDatiAgenda = new SqlParameter("@idDatiAgenda", iDatiAgendaReturn);
+            idDatiAgenda.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idDatiAgenda);
+        }
+
+        protected static void CostruisciSP_InsertProtocollo(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, Protocolli protocollo)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "[InsertProtocollo]";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+            SqlParameter codice_lavoro = new SqlParameter("@codice_lavoro", protocollo.Codice_lavoro);
+            codice_lavoro.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(codice_lavoro);
+
+            SqlParameter numero_protocollo = new SqlParameter("@numero_protocollo", protocollo.Numero_protocollo);
+            numero_protocollo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(numero_protocollo);
+
+            SqlParameter cliente = new SqlParameter("@cliente", protocollo.Cliente);
+            cliente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(cliente);
+
+            SqlParameter id_cliente = new SqlParameter("@id_cliente", protocollo.Id_cliente);
+            id_cliente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(id_cliente);
+
+            SqlParameter id_tipo_protocollo = new SqlParameter("@id_tipo_protocollo", protocollo.Id_tipo_protocollo);
+            id_tipo_protocollo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(id_tipo_protocollo);
+
+            SqlParameter protocollo_riferimento = new SqlParameter("@protocollo_riferimento", protocollo.Protocollo_riferimento);
+            protocollo_riferimento.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(protocollo_riferimento);
+
+            SqlParameter pathDocumento = new SqlParameter("@pathDocumento", protocollo.PathDocumento);
+            pathDocumento.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(pathDocumento);
+
+            SqlParameter descrizione = new SqlParameter("@descrizione", protocollo.Descrizione);
+            descrizione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(descrizione);
+
+            SqlParameter produzione = new SqlParameter("@produzione", protocollo.Produzione);
+            produzione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(produzione);
+
+            SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", protocollo.Data_inizio_lavorazione);
+            data_inizio_lavorazione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(data_inizio_lavorazione);
+
+            SqlParameter attivo = new SqlParameter("@attivo", protocollo.Attivo);
+            attivo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(attivo);
+        }
+
+        protected static void CostruisciSP_InsertEvento(DatiAgenda evento, SqlCommand StoreProc, SqlDataAdapter sda)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            sda.SelectCommand = StoreProc;
+            StoreProc.CommandType = CommandType.StoredProcedure;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+            SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.DateTime);
+            data_inizio_lavorazione.Direction = ParameterDirection.Input;
+            data_inizio_lavorazione.Value = evento.data_inizio_lavorazione;
+            StoreProc.Parameters.Add(data_inizio_lavorazione);
+
+            SqlParameter data_fine_lavorazione = new SqlParameter("@data_fine_lavorazione", SqlDbType.DateTime);
+            data_fine_lavorazione.Direction = ParameterDirection.Input;
+            data_fine_lavorazione.Value = evento.data_fine_lavorazione;
+            StoreProc.Parameters.Add(data_fine_lavorazione);
+
+            SqlParameter durata_lavorazione = new SqlParameter("@durata_lavorazione", SqlDbType.Int);
+            durata_lavorazione.Direction = ParameterDirection.Input;
+            durata_lavorazione.Value = evento.durata_lavorazione;
+            StoreProc.Parameters.Add(durata_lavorazione);
+
+            SqlParameter id_colonne_agenda = new SqlParameter("@id_colonne_agenda", SqlDbType.Int);
+            id_colonne_agenda.Direction = ParameterDirection.Input;
+            id_colonne_agenda.Value = evento.id_colonne_agenda;
+            StoreProc.Parameters.Add(id_colonne_agenda);
+
+            SqlParameter id_tipologia = new SqlParameter("@id_tipologia", SqlDbType.Int);
+            id_tipologia.Direction = ParameterDirection.Input;
+            id_tipologia.Value = evento.id_tipologia == 0 ? null : evento.id_tipologia;
+            StoreProc.Parameters.Add(id_tipologia);
+
+            SqlParameter id_stato = new SqlParameter("@id_stato", SqlDbType.Int);
+            id_stato.Direction = ParameterDirection.Input;
+            id_stato.Value = evento.id_stato;
+            StoreProc.Parameters.Add(id_stato);
+
+            SqlParameter id_cliente = new SqlParameter("@id_cliente", SqlDbType.Int);
+            id_cliente.Direction = ParameterDirection.Input;
+            id_cliente.Value = evento.id_cliente;
+            StoreProc.Parameters.Add(id_cliente);
+
+            SqlParameter durata_viaggio_andata = new SqlParameter("@durata_viaggio_andata", SqlDbType.Int);
+            durata_viaggio_andata.Direction = ParameterDirection.Input;
+            durata_viaggio_andata.Value = evento.durata_viaggio_andata;
+            StoreProc.Parameters.Add(durata_viaggio_andata);
+
+            SqlParameter durata_viaggio_ritorno = new SqlParameter("@durata_viaggio_ritorno", SqlDbType.Int);
+            durata_viaggio_ritorno.Direction = ParameterDirection.Input;
+            durata_viaggio_ritorno.Value = evento.durata_viaggio_ritorno;
+            StoreProc.Parameters.Add(durata_viaggio_ritorno);
+
+            SqlParameter data_inizio_impegno = new SqlParameter("@data_inizio_impegno", SqlDbType.DateTime);
+            data_inizio_impegno.Direction = ParameterDirection.Input;
+            data_inizio_impegno.Value = evento.data_inizio_impegno;
+            StoreProc.Parameters.Add(data_inizio_impegno);
+
+            SqlParameter data_fine_impegno = new SqlParameter("@data_fine_impegno", SqlDbType.DateTime);
+            data_fine_impegno.Direction = ParameterDirection.Input;
+            data_fine_impegno.Value = evento.data_fine_impegno;
+            StoreProc.Parameters.Add(data_fine_impegno);
+
+            SqlParameter impegnoOrario = new SqlParameter("@impegnoOrario", SqlDbType.Bit);
+            impegnoOrario.Direction = ParameterDirection.Input;
+            impegnoOrario.Value = evento.impegnoOrario;
+            StoreProc.Parameters.Add(impegnoOrario);
+
+            SqlParameter impegnoOrario_da = new SqlParameter("@impegnoOrario_da", SqlDbType.VarChar);
+            impegnoOrario_da.Direction = ParameterDirection.Input;
+            impegnoOrario_da.Value = evento.impegnoOrario_da;
+            StoreProc.Parameters.Add(impegnoOrario_da);
+
+            SqlParameter impegnoOrario_a = new SqlParameter("@impegnoOrario_a", SqlDbType.VarChar);
+            impegnoOrario_a.Direction = ParameterDirection.Input;
+            impegnoOrario_a.Value = evento.impegnoOrario_a;
+            StoreProc.Parameters.Add(impegnoOrario_a);
+
+            SqlParameter produzione = new SqlParameter("@produzione", SqlDbType.VarChar);
+            produzione.Direction = ParameterDirection.Input;
+            produzione.Value = evento.produzione;
+            StoreProc.Parameters.Add(produzione);
+
+            SqlParameter lavorazione = new SqlParameter("@lavorazione", SqlDbType.VarChar);
+            lavorazione.Direction = ParameterDirection.Input;
+            lavorazione.Value = evento.lavorazione;
+            StoreProc.Parameters.Add(lavorazione);
+
+            SqlParameter indirizzo = new SqlParameter("@indirizzo", SqlDbType.VarChar);
+            indirizzo.Direction = ParameterDirection.Input;
+            indirizzo.Value = evento.indirizzo;
+            StoreProc.Parameters.Add(indirizzo);
+
+            SqlParameter luogo = new SqlParameter("@luogo", SqlDbType.VarChar);
+            luogo.Direction = ParameterDirection.Input;
+            luogo.Value = evento.luogo;
+            StoreProc.Parameters.Add(luogo);
+
+            SqlParameter codice_lavoro = new SqlParameter("@codice_lavoro", SqlDbType.VarChar);
+            codice_lavoro.Direction = ParameterDirection.Input;
+            codice_lavoro.Value = evento.codice_lavoro;
+            StoreProc.Parameters.Add(codice_lavoro);
+
+            SqlParameter nota = new SqlParameter("@nota", SqlDbType.VarChar);
+            nota.Direction = ParameterDirection.Input;
+            nota.Value = evento.nota;
+            StoreProc.Parameters.Add(nota);
+        }
+
+        protected static void CostruisciSP_UpdateEvento(DatiAgenda evento, SqlCommand StoreProc, SqlDataAdapter sda)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            sda.SelectCommand = StoreProc;
+            StoreProc.CommandType = CommandType.StoredProcedure;
+
+            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+            id.Direction = ParameterDirection.Input;
+            id.Value = evento.id;
+            StoreProc.Parameters.Add(id);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+            SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", SqlDbType.DateTime);
+            data_inizio_lavorazione.Direction = ParameterDirection.Input;
+            data_inizio_lavorazione.Value = evento.data_inizio_lavorazione;
+            StoreProc.Parameters.Add(data_inizio_lavorazione);
+
+            SqlParameter data_fine_lavorazione = new SqlParameter("@data_fine_lavorazione", SqlDbType.DateTime);
+            data_fine_lavorazione.Direction = ParameterDirection.Input;
+            data_fine_lavorazione.Value = evento.data_fine_lavorazione;
+            StoreProc.Parameters.Add(data_fine_lavorazione);
+
+            SqlParameter durata_lavorazione = new SqlParameter("@durata_lavorazione", SqlDbType.Int);
+            durata_lavorazione.Direction = ParameterDirection.Input;
+            durata_lavorazione.Value = evento.durata_lavorazione;
+            StoreProc.Parameters.Add(durata_lavorazione);
+
+            SqlParameter id_colonne_agenda = new SqlParameter("@id_colonne_agenda", SqlDbType.Int);
+            id_colonne_agenda.Direction = ParameterDirection.Input;
+            id_colonne_agenda.Value = evento.id_colonne_agenda;
+            StoreProc.Parameters.Add(id_colonne_agenda);
+
+            SqlParameter id_tipologia = new SqlParameter("@id_tipologia", SqlDbType.Int);
+            id_tipologia.Direction = ParameterDirection.Input;
+            id_tipologia.Value = evento.id_tipologia == 0 ? null : evento.id_tipologia;
+            StoreProc.Parameters.Add(id_tipologia);
+
+            SqlParameter id_stato = new SqlParameter("@id_stato", SqlDbType.Int);
+            id_stato.Direction = ParameterDirection.Input;
+            id_stato.Value = evento.id_stato;
+            StoreProc.Parameters.Add(id_stato);
+
+            SqlParameter id_cliente = new SqlParameter("@id_cliente", SqlDbType.Int);
+            id_cliente.Direction = ParameterDirection.Input;
+            id_cliente.Value = evento.id_cliente;
+            StoreProc.Parameters.Add(id_cliente);
+
+            SqlParameter durata_viaggio_andata = new SqlParameter("@durata_viaggio_andata", SqlDbType.Int);
+            durata_viaggio_andata.Direction = ParameterDirection.Input;
+            durata_viaggio_andata.Value = evento.durata_viaggio_andata;
+            StoreProc.Parameters.Add(durata_viaggio_andata);
+
+            SqlParameter durata_viaggio_ritorno = new SqlParameter("@durata_viaggio_ritorno", SqlDbType.Int);
+            durata_viaggio_ritorno.Direction = ParameterDirection.Input;
+            durata_viaggio_ritorno.Value = evento.durata_viaggio_ritorno;
+            StoreProc.Parameters.Add(durata_viaggio_ritorno);
+
+            SqlParameter data_inizio_impegno = new SqlParameter("@data_inizio_impegno", SqlDbType.DateTime);
+            data_inizio_impegno.Direction = ParameterDirection.Input;
+            data_inizio_impegno.Value = evento.data_inizio_impegno;
+            StoreProc.Parameters.Add(data_inizio_impegno);
+
+            SqlParameter data_fine_impegno = new SqlParameter("@data_fine_impegno", SqlDbType.DateTime);
+            data_fine_impegno.Direction = ParameterDirection.Input;
+            data_fine_impegno.Value = evento.data_fine_impegno;
+            StoreProc.Parameters.Add(data_fine_impegno);
+
+            SqlParameter impegnoOrario = new SqlParameter("@impegnoOrario", SqlDbType.Bit);
+            impegnoOrario.Direction = ParameterDirection.Input;
+            impegnoOrario.Value = evento.impegnoOrario;
+            StoreProc.Parameters.Add(impegnoOrario);
+
+            SqlParameter impegnoOrario_da = new SqlParameter("@impegnoOrario_da", SqlDbType.VarChar);
+            impegnoOrario_da.Direction = ParameterDirection.Input;
+            impegnoOrario_da.Value = evento.impegnoOrario_da;
+            StoreProc.Parameters.Add(impegnoOrario_da);
+
+            SqlParameter impegnoOrario_a = new SqlParameter("@impegnoOrario_a", SqlDbType.VarChar);
+            impegnoOrario_a.Direction = ParameterDirection.Input;
+            impegnoOrario_a.Value = evento.impegnoOrario_a;
+            StoreProc.Parameters.Add(impegnoOrario_a);
+
+            SqlParameter produzione = new SqlParameter("@produzione", SqlDbType.VarChar);
+            produzione.Direction = ParameterDirection.Input;
+            produzione.Value = evento.produzione;
+            StoreProc.Parameters.Add(produzione);
+
+            SqlParameter lavorazione = new SqlParameter("@lavorazione", SqlDbType.VarChar);
+            lavorazione.Direction = ParameterDirection.Input;
+            lavorazione.Value = evento.lavorazione;
+            StoreProc.Parameters.Add(lavorazione);
+
+            SqlParameter indirizzo = new SqlParameter("@indirizzo", SqlDbType.VarChar);
+            indirizzo.Direction = ParameterDirection.Input;
+            indirizzo.Value = evento.indirizzo;
+            StoreProc.Parameters.Add(indirizzo);
+
+            SqlParameter luogo = new SqlParameter("@luogo", SqlDbType.VarChar);
+            luogo.Direction = ParameterDirection.Input;
+            luogo.Value = evento.luogo;
+            StoreProc.Parameters.Add(luogo);
+
+            SqlParameter codice_lavoro = new SqlParameter("@codice_lavoro", SqlDbType.VarChar);
+            codice_lavoro.Direction = ParameterDirection.Input;
+            codice_lavoro.Value = evento.codice_lavoro;
+            StoreProc.Parameters.Add(codice_lavoro);
+
+            SqlParameter nota = new SqlParameter("@nota", SqlDbType.VarChar);
+            nota.Direction = ParameterDirection.Input;
+            nota.Value = evento.nota;
+            StoreProc.Parameters.Add(nota);
+        }
+
+        protected static void CostruisciSP_DeleteDatiArticoli(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiAgenda)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "DeleteDatiArticoliByIdDatiAgenda";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            SqlParameter parIdDatiAgenda = new SqlParameter("@idDatiAgenda", idDatiAgenda);
+            parIdDatiAgenda.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parIdDatiAgenda);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+        }
+
+        protected static void CostruisciSP_DeleteDatiTender(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiAgenda)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "DeleteDatiTenderByIdDatiAgenda";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            SqlParameter parIdDatiAgenda = new SqlParameter("@idDatiAgenda", idDatiAgenda);
+            parIdDatiAgenda.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parIdDatiAgenda);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+        }
+
+        protected static void CostruisciSP_InsertNoteOfferta(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, NoteOfferta noteOfferta)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "InsertNoteOfferta";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+
+            // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+            SqlParameter idDatiAgenda = new SqlParameter("@id_dati_agenda", iDatiAgendaReturn);
+            idDatiAgenda.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idDatiAgenda);
+
+            SqlParameter parBanca = new SqlParameter("@banca", noteOfferta.Banca);
+            parBanca.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parBanca);
+
+            SqlParameter parPagamento = new SqlParameter("@pagamento", noteOfferta.Pagamento);
+            parPagamento.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parPagamento);
+
+            SqlParameter parConsegna = new SqlParameter("@consegna", noteOfferta.Consegna);
+            parConsegna.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parConsegna);
+
+            SqlParameter note = new SqlParameter("@note", noteOfferta.Note);
+            note.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(note);
+
+        }
+
+        protected static void CostruisciSP_DeleteDatiLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiAgenda)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "DeleteDatiLavorazioneByIdDatiAgenda";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            SqlParameter parIdDatiAgenda = new SqlParameter("@idDatiAgenda", idDatiAgenda);
+            parIdDatiAgenda.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parIdDatiAgenda);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+        }
+
+        protected static void CostruisciSP_InsertDatiLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, DatiLavorazione datoLavorazione)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "InsertDatiLavorazione";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+            // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+            SqlParameter idDatiAgenda = new SqlParameter("@idDatiAgenda", iDatiAgendaReturn);
+            idDatiAgenda.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idDatiAgenda);
+
+            SqlParameter idContratto = new SqlParameter("@idContratto", DBNull.Value);
+            if (datoLavorazione.IdContratto != null)
+            {
+                idContratto = new SqlParameter("@idContratto", datoLavorazione.IdContratto);
+            }
+            idContratto.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idContratto);
+
+            SqlParameter idReferente = new SqlParameter("@idReferente", DBNull.Value);
+            if (datoLavorazione.IdReferente != null)
+            {
+                idReferente = new SqlParameter("@idReferente", datoLavorazione.IdReferente);
+            }
+            idReferente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idReferente);
+
+            SqlParameter idCapoTecnico = new SqlParameter("@idCapoTecnico", DBNull.Value);
+            if (datoLavorazione.IdCapoTecnico != null)
+            {
+                idCapoTecnico = new SqlParameter("@idCapoTecnico", datoLavorazione.IdCapoTecnico);
+            }
+            idCapoTecnico.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idCapoTecnico);
+
+
+            SqlParameter idProduttore = new SqlParameter("@idProduttore", DBNull.Value);
+            if (datoLavorazione.IdProduttore != null)
+            {
+                idProduttore = new SqlParameter("@idProduttore", datoLavorazione.IdProduttore);
+            }
+            idProduttore.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idProduttore);
+
+            SqlParameter ordine = new SqlParameter("@ordine", datoLavorazione.Ordine);
+            ordine.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(ordine);
+
+            SqlParameter fattura = new SqlParameter("@fattura", datoLavorazione.Fattura);
+            fattura.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(fattura);
+
+            SqlParameter notePianoEsterno = new SqlParameter("@notePianoEsterno", datoLavorazione.NotePianoEsterno);
+            notePianoEsterno.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(notePianoEsterno);
+        }
+
+        protected static void CostruisciSP_InsertDatiArticoliLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiLavorazioneReturn, DatiArticoliLavorazione datoArticoloLavorazione)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "InsertDatiArticoliLavorazione";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+
+            // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+            SqlParameter idDatiLavorazione = new SqlParameter("@idDatiLavorazione", idDatiLavorazioneReturn);
+            idDatiLavorazione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idDatiLavorazione);
+
+            SqlParameter idArtArticoli = new SqlParameter("@idArtArticoli", datoArticoloLavorazione.IdArtArticoli);
+            idArtArticoli.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idArtArticoli);
+
+            SqlParameter idTipoGenere = new SqlParameter("@idTipoGenere", datoArticoloLavorazione.IdTipoGenere);
+            idTipoGenere.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idTipoGenere);
+
+            SqlParameter idTipoGruppo = new SqlParameter("@idTipoGruppo", datoArticoloLavorazione.IdTipoGruppo);
+            idTipoGruppo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idTipoGruppo);
+
+            SqlParameter idTipoSottogruppo = new SqlParameter("@idTipoSottogruppo", datoArticoloLavorazione.IdTipoSottogruppo);
+            idTipoSottogruppo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idTipoSottogruppo);
+
+            SqlParameter idCollaboratori = new SqlParameter("@idCollaboratori", DBNull.Value);
+            if (datoArticoloLavorazione.IdCollaboratori != null)
+            {
+                idCollaboratori = new SqlParameter("@idCollaboratori", datoArticoloLavorazione.IdCollaboratori);
+            }
+            idCollaboratori.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idCollaboratori);
+
+            SqlParameter idFornitori = new SqlParameter("@idFornitori", DBNull.Value);
+            if (datoArticoloLavorazione.IdFornitori != null)
+            {
+                idFornitori = new SqlParameter("@idFornitori", datoArticoloLavorazione.IdFornitori);
+            }
+            idFornitori.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idFornitori);
+
+            SqlParameter idTipoPagamento = new SqlParameter("@idTipoPagamento", DBNull.Value);
+            if (datoArticoloLavorazione.IdTipoPagamento != null)
+            {
+                idTipoPagamento = new SqlParameter("@idTipoPagamento", datoArticoloLavorazione.IdTipoPagamento);
+            }
+            idTipoPagamento.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idTipoPagamento);
+
+            SqlParameter descrizione = new SqlParameter("@descrizione", datoArticoloLavorazione.Descrizione);
+            descrizione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(descrizione);
+
+            SqlParameter descrizioneLunga = new SqlParameter("@descrizioneLunga", datoArticoloLavorazione.DescrizioneLunga);
+            descrizioneLunga.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(descrizioneLunga);
+
+            SqlParameter stampa = new SqlParameter("@stampa", datoArticoloLavorazione.Stampa);
+            stampa.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(stampa);
+
+            SqlParameter prezzo = new SqlParameter("@prezzo", datoArticoloLavorazione.Prezzo);
+            prezzo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(prezzo);
+
+            SqlParameter costo = new SqlParameter("@costo", datoArticoloLavorazione.Costo);
+            costo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(costo);
+
+            SqlParameter iva = new SqlParameter("@iva", datoArticoloLavorazione.Iva);
+            iva.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(iva);
+
+            SqlParameter data = new SqlParameter("@data", DBNull.Value);
+            if (datoArticoloLavorazione.Data != null)
+            {
+                data = new SqlParameter("@data", datoArticoloLavorazione.Data);
+            }
+            data.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(data);
+
+            SqlParameter tv = new SqlParameter("@tv", DBNull.Value);
+            if (datoArticoloLavorazione.Tv != null)
+            {
+                tv = new SqlParameter("@tv", datoArticoloLavorazione.Tv);
+            }
+            tv.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(tv);
+
+            SqlParameter nota = new SqlParameter("@nota", DBNull.Value);
+            if (datoArticoloLavorazione.Nota != null)
+            {
+                nota = new SqlParameter("@nota", datoArticoloLavorazione.Nota);
+            }
+            nota.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nota);
+
+            SqlParameter fp_netto = new SqlParameter("@fp_netto", DBNull.Value);
+            if (datoArticoloLavorazione.FP_netto != null)
+            {
+                fp_netto = new SqlParameter("@fp_netto", datoArticoloLavorazione.FP_netto);
+            }
+            fp_netto.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(fp_netto);
+
+            SqlParameter fp_lordo = new SqlParameter("@fp_lordo", DBNull.Value);
+            if (datoArticoloLavorazione.FP_lordo != null)
+            {
+                fp_lordo = new SqlParameter("@fp_lordo", datoArticoloLavorazione.FP_lordo);
+            }
+            fp_lordo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(fp_lordo);
+
+            SqlParameter usaCostoFP = new SqlParameter("@usaCostoFP", DBNull.Value);
+            if (datoArticoloLavorazione.UsaCostoFP != null)
+            {
+                usaCostoFP = new SqlParameter("@usaCostoFP", datoArticoloLavorazione.UsaCostoFP);
+            }
+            fp_lordo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(usaCostoFP);
+        }
+
+        protected static void CostruisciSP_DeleteDatiArticoliLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiLavorazione)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "DeleteDatiArticoliLavorazioneByIdDatiLavorazione";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            SqlParameter parIdDatiLavorazione = new SqlParameter("@idDatiLavorazione", idDatiLavorazione);
+            parIdDatiLavorazione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parIdDatiLavorazione);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+        }
+
+        protected static void CostruisciSP_DeleteDatiPianoEsternoLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiLavorazione)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "DeleteDatiPianoEsternoLavorazioneByIdDatiLavorazione";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            SqlParameter parIdDatiLavorazione = new SqlParameter("@idDatiLavorazione", idDatiLavorazione);
+            parIdDatiLavorazione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parIdDatiLavorazione);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+        }
+
+        protected static void CostruisciSP_InsertDatiPianoEsternoLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiLavorazione, DatiPianoEsternoLavorazione datoPianoEsternoLavorazione)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "InsertDatiPianoEsternoLavorazione";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+
+            // INSERISCO ID RECUPERATO DALLA SP PRECEDENTE
+            SqlParameter par_idDatiLavorazione = new SqlParameter("@idDatiLavorazione", idDatiLavorazione);
+            par_idDatiLavorazione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(par_idDatiLavorazione);
+
+            SqlParameter idCollaboratori = new SqlParameter("@idCollaboratori", DBNull.Value);
+            if (datoPianoEsternoLavorazione.IdCollaboratori != null)
+            {
+                idCollaboratori = new SqlParameter("@idCollaboratori", datoPianoEsternoLavorazione.IdCollaboratori);
+            }
+            idCollaboratori.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idCollaboratori);
+
+            SqlParameter idFornitori = new SqlParameter("@idFornitori", DBNull.Value);
+            if (datoPianoEsternoLavorazione.IdFornitori != null)
+            {
+                idFornitori = new SqlParameter("@idFornitori", datoPianoEsternoLavorazione.IdFornitori);
+            }
+            idFornitori.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idFornitori);
+
+            SqlParameter idIntervento = new SqlParameter("@idIntervento", DBNull.Value);
+            if (datoPianoEsternoLavorazione.IdIntervento != null)
+            {
+                idIntervento = new SqlParameter("@idIntervento", datoPianoEsternoLavorazione.IdIntervento);
+            }
+            idIntervento.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idIntervento);
+
+            SqlParameter diaria = new SqlParameter("@diaria", DBNull.Value);
+            if (datoPianoEsternoLavorazione.Diaria != null)
+            {
+                diaria = new SqlParameter("@diaria", datoPianoEsternoLavorazione.Diaria);
+            }
+            diaria.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(diaria);
+
+            SqlParameter importoDiaria = new SqlParameter("@importoDiaria", DBNull.Value);
+            if (datoPianoEsternoLavorazione.ImportoDiaria != null)
+            {
+                importoDiaria = new SqlParameter("@importoDiaria", datoPianoEsternoLavorazione.ImportoDiaria);
+            }
+            importoDiaria.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(importoDiaria);
+
+            SqlParameter albergo = new SqlParameter("@albergo", DBNull.Value);
+            if (datoPianoEsternoLavorazione.Albergo != null)
+            {
+                albergo = new SqlParameter("@albergo", datoPianoEsternoLavorazione.Albergo);
+            }
+            albergo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(albergo);
+
+            SqlParameter data = new SqlParameter("@data", DBNull.Value);
+            if (datoPianoEsternoLavorazione.Data != null)
+            {
+                data = new SqlParameter("@data", datoPianoEsternoLavorazione.Data);
+            }
+            data.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(data);
+
+            SqlParameter orario = new SqlParameter("@orario", DBNull.Value);
+            if (datoPianoEsternoLavorazione.Orario != null)
+            {
+                orario = new SqlParameter("@orario", datoPianoEsternoLavorazione.Orario);
+            }
+            orario.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(orario);
+
+            SqlParameter nota = new SqlParameter("@nota", DBNull.Value);
+            if (datoPianoEsternoLavorazione.Nota != null)
+            {
+                nota = new SqlParameter("@nota", datoPianoEsternoLavorazione.Nota);
+            }
+            nota.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nota);
+        }
+
     }
 }

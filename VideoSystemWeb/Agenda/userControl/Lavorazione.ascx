@@ -337,7 +337,7 @@
             <div id="panelModificaArticolo" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
                 <asp:UpdatePanel ID="upModificaArticolo" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                     <ContentTemplate>
-                        <div class="w3-modal-content w3-card-4 round" style="position: relative; width: 80%; background-color: white; overflow: auto; max-height: 80%;">
+                        <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 80%; background-color: white; overflow: auto; max-height: 80%;">
                             <div class="w3-row-padding">
 
                                 <div class="w3-panel w3-blue w3-center w3-round">
@@ -562,7 +562,7 @@
                 <div id="panelModificaPianoEsterno" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
                     <asp:UpdatePanel ID="upModificaPianoEsterno" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                         <ContentTemplate>
-                            <div class="w3-modal-content w3-card-4 round" style="position: relative; width: 80%; background-color: white; overflow: auto;">
+                            <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 80%; background-color: white; overflow: auto;">
                                 <div class="w3-row-padding">
 
                                     <div class="w3-panel w3-blue w3-center w3-round">
@@ -634,7 +634,7 @@
                 <div id="panelInserimentoGeneralePianoEsterno" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
                     <asp:UpdatePanel ID="upInserimentoGeneralePianoEsterno" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                         <ContentTemplate>
-                            <div class="w3-modal-content w3-card-4 round" style="position: relative; width: 80%; background-color: white; overflow: auto; min-height:350px;">
+                            <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 80%; background-color: white; overflow: auto; min-height:350px;">
                                 <div class="w3-row-padding">
 
                                     <div class="w3-panel w3-blue w3-center w3-round">

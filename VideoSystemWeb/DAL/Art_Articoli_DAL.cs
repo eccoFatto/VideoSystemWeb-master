@@ -65,15 +65,15 @@ namespace VideoSystemWeb.DAL
                                     articolo.Note = dt.Rows[0].Field<string>("Note");
                                     articolo.Attivo = dt.Rows[0].Field<bool>("attivo");
 
-                                    articolo.DefaultTipoGenere = getTipologicaById(EnumTipologiche.TIPO_GENERE, articolo.DefaultIdTipoGenere, ref esito);
-                                    articolo.DefaultTipoGruppo = getTipologicaById(EnumTipologiche.TIPO_GRUPPO, articolo.DefaultIdTipoGruppo, ref esito);
-                                    articolo.DefaultTipoSottogruppo = getTipologicaById(EnumTipologiche.TIPO_SOTTOGRUPPO, articolo.DefaultIdTipoSottogruppo, ref esito);
+                                    articolo.DefaultTipoGenere = GetTipologicaById(EnumTipologiche.TIPO_GENERE, articolo.DefaultIdTipoGenere, ref esito);
+                                    articolo.DefaultTipoGruppo = GetTipologicaById(EnumTipologiche.TIPO_GRUPPO, articolo.DefaultIdTipoGruppo, ref esito);
+                                    articolo.DefaultTipoSottogruppo = GetTipologicaById(EnumTipologiche.TIPO_SOTTOGRUPPO, articolo.DefaultIdTipoSottogruppo, ref esito);
 
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Articolo con id " + idArticolo.ToString() + " non trovato in tabella art_articoli ";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Articolo con id " + idArticolo.ToString() + " non trovato in tabella art_articoli ";
                                 }
                             }
                         }
@@ -82,8 +82,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
             return articolo;
         }
@@ -127,8 +127,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella art_articoli ";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella tabella art_articoli ";
                                 }
                             }
                         }
@@ -137,8 +137,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaArticoli;
@@ -227,8 +227,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Articoli_DAL.cs - CreaArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Art_Articoli_DAL.cs - CreaArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return 0;
@@ -317,8 +317,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Articoli_DAL.cs - aggiornaArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Art_Articoli_DAL.cs - aggiornaArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -363,8 +363,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Articoli_DAL.cs - EliminaArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Art_Articoli_DAL.cs - EliminaArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -411,8 +411,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Art_Articoli_DAL.cs - RemoveArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Art_Articoli_DAL.cs - RemoveArticolo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

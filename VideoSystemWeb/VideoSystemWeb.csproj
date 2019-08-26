@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -602,7 +603,7 @@
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Dati_Lavorazione_BLL.cs" />
-    <Compile Include="BLL\NoteOfferta_BLL.cs" />
+    <Compile Include="BLL\Offerta_BLL.cs" />
     <Compile Include="BLL\Config_BLL.cs" />
     <Compile Include="BLL\AttrezzatureMagazzino_BLL.cs" />
     <Compile Include="BLL\Protocolli_BLL.cs" />
@@ -645,7 +646,7 @@
     <Compile Include="DAL\Dati_Articoli_Lavorazione_DAL.cs" />
     <Compile Include="DAL\Dati_Lavorazione_DAL.cs" />
     <Compile Include="DAL\Dati_PianoEsterno_Lavorazione_DAL.cs" />
-    <Compile Include="DAL\NoteOfferta_DAL.cs" />
+    <Compile Include="DAL\Offerta_DAL.cs" />
     <Compile Include="DAL\AttrezzatureMagazzino_DAL.cs" />
     <Compile Include="DAL\Protocolli_DAL.cs" />
     <Compile Include="DAL\Dati_Tender_DAL.cs" />

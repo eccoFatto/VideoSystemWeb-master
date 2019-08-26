@@ -31,7 +31,7 @@ namespace VideoSystemWeb.BLL
 
         public Anag_Clienti_Fornitori getAziendaById(int idAzienda, ref Esito esito)
         {
-            return Anag_Clienti_Fornitori_DAL.Instance.getAziendaById(idAzienda, ref esito);
+            return Anag_Clienti_Fornitori_DAL.Instance.GetAziendaById(idAzienda, ref esito);
         }
 
         public List<Anag_Clienti_Fornitori> CaricaListaAziende(ref Esito esito, bool soloAttivi = true)

@@ -80,7 +80,7 @@ namespace VideoSystemWeb.BLL
 
         public int getProtocollo(ref Esito esito)
         {
-            int iREt = Base_DAL.getProtocollo(ref esito);
+            int iREt = Base_DAL.GetProtocollo(ref esito);
 
             return iREt;
         }
@@ -88,7 +88,7 @@ namespace VideoSystemWeb.BLL
 
         public Esito resetProcotollo(int protocolloIniziale)
         {
-            Esito esito = Base_DAL.resetProtocollo(protocolloIniziale);
+            Esito esito = Base_DAL.ResetProtocollo(protocolloIniziale);
 
             return esito;
         }
@@ -100,7 +100,7 @@ namespace VideoSystemWeb.BLL
             ret = ConfigurationManager.AppSettings["NUMERO_PROTOCOLLO"];
             Esito esito = new Esito();
             int nProt = getProtocollo(ref esito);
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 ret = ret.Replace("@anno", DateTime.Today.Year.ToString("0000"));
                 ret = ret.Replace("@protocollo", nProt.ToString(ConfigurationManager.AppSettings["FORMAT_NUMERO_PROTOCOLLO"]));
@@ -113,14 +113,14 @@ namespace VideoSystemWeb.BLL
         }
         public int getCodiceLavorazione(ref Esito esito)
         {
-            int iREt = Base_DAL.getCodiceLavorazione(ref esito);
+            int iREt = Base_DAL.GetCodiceLavorazione(ref esito);
 
             return iREt;
         }
 
         public Esito resetCodiceLavorazione(int codiceLavorazioneIniziale)
         {
-            Esito esito = Base_DAL.resetCodiceLavorazione(codiceLavorazioneIniziale);
+            Esito esito = Base_DAL.ResetCodiceLavorazione(codiceLavorazioneIniziale);
 
             return esito;
         }
@@ -132,7 +132,7 @@ namespace VideoSystemWeb.BLL
             ret = ConfigurationManager.AppSettings["CODICE_LAVORAZIONE"];
             Esito esito = new Esito();
             int codLav = getCodiceLavorazione(ref esito);
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 ret = ret.Replace("@anno", DateTime.Today.Year.ToString("0000"));
                 ret = ret.Replace("@codiceLavorazione", codLav.ToString(ConfigurationManager.AppSettings["FORMAT_CODICE_LAVORAZIONE"]));

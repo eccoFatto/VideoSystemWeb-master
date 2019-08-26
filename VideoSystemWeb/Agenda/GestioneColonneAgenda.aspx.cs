@@ -37,7 +37,7 @@ namespace VideoSystemWeb.Agenda
             BasePage p = new BasePage();
 
             // CARICO LA COMBO
-            if (string.IsNullOrEmpty(esito.descrizione))
+            if (string.IsNullOrEmpty(esito.Descrizione))
             {
                 lbMod_Tipologia.Items.Clear();
                 foreach (ColonneAgenda tipologia in lista)
@@ -54,7 +54,7 @@ namespace VideoSystemWeb.Agenda
             }
             else
             {
-                Session["ErrorPageText"] = esito.descrizione;
+                Session["ErrorPageText"] = esito.Descrizione;
                 string url = String.Format("~/pageError.aspx");
                 Response.Redirect(url, true);
             }
@@ -94,7 +94,7 @@ namespace VideoSystemWeb.Agenda
             tipologia.Ordinamento = Convert.ToInt16(tbInsOrdinamento.Text);
             tipologia.attivo = true;
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 panelErrore.Style.Add("display", "block");
                 lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
@@ -104,10 +104,10 @@ namespace VideoSystemWeb.Agenda
                 NascondiErroriValidazione();
 
                 int iRet = UtilityTipologiche.CreaColonneAgenda(tipologia, ref esito);
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
                     panelErrore.Style.Add("display", "block");
-                    lbl_MessaggioErrore.Text = esito.descrizione;
+                    lbl_MessaggioErrore.Text = esito.Descrizione;
                 }
                 else
                 {
@@ -139,10 +139,10 @@ namespace VideoSystemWeb.Agenda
                     NascondiErroriValidazione();
                     Esito esito = UtilityTipologiche.EliminaTipologia(EnumTipologiche.TIPO_COLONNE_AGENDA, Convert.ToInt32(tbIdTipologiaDaModificare.Text.Trim()));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         panelErrore.Style.Add("display", "block");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        lbl_MessaggioErrore.Text = esito.Descrizione;
                     }
                     else
                     {
@@ -205,11 +205,11 @@ namespace VideoSystemWeb.Agenda
                     Esito esito = new Esito();
                     ColonneAgenda tipologica = UtilityTipologiche.getColonneAgendaById(Convert.ToInt32(tipologiaSelezionata), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         btnInserisciTipologia.Visible = true;
                         panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        lbl_MessaggioErrore.Text = esito.Descrizione;
                     }
                     else
                     {
@@ -296,10 +296,10 @@ namespace VideoSystemWeb.Agenda
                     btnModificaTipologia.Visible = false;
                     btnInserisciTipologia.Visible = true;
                     btnEliminaTipologia.Visible = false;
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         panelErrore.Style.Remove("display");
-                        lbl_MessaggioErrore.Text = esito.descrizione;
+                        lbl_MessaggioErrore.Text = esito.Descrizione;
                     }
                     else
                     {

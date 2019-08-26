@@ -19,6 +19,10 @@ namespace VideoSystemWeb.Agenda.userControl
         private const string VIEWSTATE_LISTAARTICOLIGRUPPI = "listaArticoliGruppi";
         private const string VIEWSTATE_IDARTICOLO = "idArticolo";
         private const string VIEWSTATE_IDENTIFICATOREARTICOLO = "identificatoreArticolo";
+        private const string VIEWSTATE_LISTACODICILAVORO = "listaCodiciLavoro";
+        private const string VIEWSTATE_LISTAPRODUZIONI = "listaProduzioni";
+        private const string VIEWSTATE_LISTALAVORAZIONI = "listaLavorazioni";
+        private const string VIEWSTATE_LISTALUOGHI = "listaLuoghi";
         #endregion
 
         List<ArticoliGruppi> ListaArticoliGruppi
@@ -37,6 +41,70 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState[VIEWSTATE_LISTAARTICOLIGRUPPI] = value;
             }
         }
+        List<string> ListaCodiciLavoro
+        {
+            get
+            {
+                if (ViewState[VIEWSTATE_LISTACODICILAVORO] == null || ((List<ArticoliGruppi>)ViewState[VIEWSTATE_LISTACODICILAVORO]).Count == 0)
+                {
+                    ViewState[VIEWSTATE_LISTACODICILAVORO] = Offerta_BLL.Instance.GetAllCodiciLavoro();
+                }
+
+                return (List<string>)ViewState[VIEWSTATE_LISTACODICILAVORO];
+            }
+            set
+            {
+                ViewState[VIEWSTATE_LISTACODICILAVORO] = value;
+            }
+        }
+        List<string> ListaProduzioni
+        {
+            get
+            {
+                if (ViewState[VIEWSTATE_LISTAPRODUZIONI] == null || ((List<ArticoliGruppi>)ViewState[VIEWSTATE_LISTAPRODUZIONI]).Count == 0)
+                {
+                    ViewState[VIEWSTATE_LISTAPRODUZIONI] = Offerta_BLL.Instance.GetAllProduzioni();
+                }
+
+                return (List<string>)ViewState[VIEWSTATE_LISTAPRODUZIONI];
+            }
+            set
+            {
+                ViewState[VIEWSTATE_LISTAPRODUZIONI] = value;
+            }
+        }
+        List<string> ListaLavorazioni
+        {
+            get
+            {
+                if (ViewState[VIEWSTATE_LISTALAVORAZIONI] == null || ((List<ArticoliGruppi>)ViewState[VIEWSTATE_LISTALAVORAZIONI]).Count == 0)
+                {
+                    ViewState[VIEWSTATE_LISTALAVORAZIONI] = Offerta_BLL.Instance.GetAllLavorazioni();
+                }
+
+                return (List<string>)ViewState[VIEWSTATE_LISTALAVORAZIONI];
+            }
+            set
+            {
+                ViewState[VIEWSTATE_LISTALAVORAZIONI] = value;
+            }
+        }
+        List<string> ListaLuoghi
+        {
+            get
+            {
+                if (ViewState[VIEWSTATE_LISTALUOGHI] == null || ((List<ArticoliGruppi>)ViewState[VIEWSTATE_LISTALUOGHI]).Count == 0)
+                {
+                    ViewState[VIEWSTATE_LISTALUOGHI] = Offerta_BLL.Instance.GetAllLuoghi();
+                }
+
+                return (List<string>)ViewState[VIEWSTATE_LISTALUOGHI];
+            }
+            set
+            {
+                ViewState[VIEWSTATE_LISTALUOGHI] = value;
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -44,7 +112,11 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 gvGruppi.DataSource = ListaArticoliGruppi;
                 gvGruppi.DataBind();
+
+                PopolaCombo();
             }
+
+
         }
 
         #region COMPORTAMENTO ELEMENTI PAGINA
@@ -52,7 +124,7 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             DatiArticoli articoloSelezionato;
 
-            if (ViewState[VIEWSTATE_IDARTICOLO] ==null)
+            if (ViewState[VIEWSTATE_IDARTICOLO] == null)
             {
                 long identificatoreOggetto = (long)ViewState[VIEWSTATE_IDENTIFICATOREARTICOLO];
                 articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
@@ -62,7 +134,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 int idArticolo = (int)ViewState[VIEWSTATE_IDARTICOLO];
                 articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.Id == idArticolo);
             }
-            
+
             var index = SessionManager.EventoSelezionato.ListaDatiArticoli.IndexOf(articoloSelezionato);
 
             articoloSelezionato.Descrizione = txt_Descrizione.Text;
@@ -92,11 +164,11 @@ namespace VideoSystemWeb.Agenda.userControl
 
             if (articoloGruppo.Isgruppo)
             {
-                aggiungiArticoliDelGruppoAListaArticoli(articoloGruppo.IdOggetto);
+                AggiungiArticoliDelGruppoAListaArticoli(articoloGruppo.IdOggetto);
             }
             else
             {
-                aggiungiArticoloAListaArticoli(articoloGruppo.IdOggetto);
+                AggiungiArticoloAListaArticoli(articoloGruppo.IdOggetto);
             }
 
             if (SessionManager.EventoSelezionato.ListaDatiArticoli != null && SessionManager.EventoSelezionato.ListaDatiArticoli.Count > 0)
@@ -144,7 +216,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_Prezzo.Text = articoloSelezionato.Prezzo.ToString();
                     txt_Iva.Text = articoloSelezionato.Iva.ToString();
                     txt_Quantita.Text = articoloSelezionato.Quantita.ToString();
-                    
+
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelModificaArticolo.ClientID + "').style.display='block'", addScriptTags: true);
 
                     break;
@@ -167,7 +239,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
                     break;
                 case "moveDown":
-                    if (indexArticolo < SessionManager.EventoSelezionato.ListaDatiArticoli.Count-1)
+                    if (indexArticolo < SessionManager.EventoSelezionato.ListaDatiArticoli.Count - 1)
                     {
                         SessionManager.EventoSelezionato.ListaDatiArticoli.Remove(articoloSelezionato);
                         SessionManager.EventoSelezionato.ListaDatiArticoli.Insert(indexArticolo + 1, articoloSelezionato);
@@ -182,6 +254,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnRecuperaOfferta_Click(object sender, EventArgs e)
         {
+            ClearRecuperaOfferta();
             panelModificaArticolo.Style.Add("display", "none");
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelRecuperaOfferta.ClientID + "').style.display='block'", addScriptTags: true);
             RichiediOperazionePopup("UPDATE");
@@ -194,6 +267,114 @@ namespace VideoSystemWeb.Agenda.userControl
             ResetPanelOfferta();
 
             RichiediOperazionePopup("UPDATE");
+        }
+
+        protected void btn_cerca_FiltroRecuperaOfferta_Click(object sender, EventArgs e)
+        {
+            List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();
+            Esito esito = Offerta_BLL.Instance.GetListaDatiAgendaByFiltri(txt_dataLavorazione_FiltroRecuperaOfferta.Text,
+                                                                          ddl_tipologia_FiltroRecuperaOfferta.SelectedValue,
+                                                                          ddl_cliente_FiltroRecuperaOfferta.SelectedValue,
+                                                                          ddl_produzione_FiltroRecuperaOfferta.SelectedValue,
+                                                                          ddl_lavorazione_FiltroRecuperaOfferta.SelectedValue,
+                                                                          ddl_luogo_FiltroRecuperaOfferta.SelectedValue,
+                                                                          ddl_codiceLavoro_FiltroRecuperaOfferta.SelectedValue,
+                                                                          ref listaDatiAgenda);
+
+            gv_OfferteRecuperate.DataSource = listaDatiAgenda;
+            gv_OfferteRecuperate.DataBind();
+
+            upRecuperaOfferta.Update();
+        }
+
+        protected void gv_OfferteRecuperate_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gv_OfferteRecuperate.PageIndex = e.NewPageIndex;
+            btn_cerca_FiltroRecuperaOfferta_Click(null, null);
+        }
+
+        protected void gv_OfferteRecuperate_RowCreated(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onmouseover"] = "this.style.cursor='pointer';this.style.background='yellow';";
+                e.Row.Attributes["onmouseout"] = "this.style.background='transparent';";
+            }
+        }
+
+        protected void gv_OfferteRecuperate_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            string idDatiAgenda = e.CommandArgument.ToString();
+            List<DatiArticoli> listaDatiArticoli = new List<DatiArticoli>();
+            Esito esito = new Esito();
+            switch (e.CommandName)
+            {
+                case "seleziona":
+                    esito = Offerta_BLL.Instance.GetListaDatiArticoliByIdDatiAgenda(idDatiAgenda, ref listaDatiArticoli);
+
+                    if (esito.Codice != Esito.ESITO_OK)
+                    {
+                        basePage.ShowError("Errore nel recupero dell'offerta selezionata");
+                    }
+                    else
+                    {
+                        if (SessionManager.EventoSelezionato.ListaDatiArticoli == null)
+                        {
+                            SessionManager.EventoSelezionato.ListaDatiArticoli = new List<DatiArticoli>();
+                        }
+                        SessionManager.EventoSelezionato.ListaDatiArticoli.AddRange(listaDatiArticoli);
+
+                        basePage.ShowSuccess("Offerta recuperata correttamente");
+                        ResetPanelOfferta();
+                        RichiediOperazionePopup("UPDATE");
+                    }
+
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region OPERAZIONI PAGINA
+        private void PopolaCombo()
+        {
+            List<Tipologica> listaTipologie = SessionManager.ListaTipiTipologie;
+            ddl_tipologia_FiltroRecuperaOfferta.Items.Add(new ListItem("<seleziona>", ""));
+            foreach (Tipologica tipologia in listaTipologie)
+            {
+                ddl_tipologia_FiltroRecuperaOfferta.Items.Add(new ListItem(tipologia.nome, tipologia.id.ToString()));
+            }
+
+            List<Anag_Clienti_Fornitori> listaCienti = SessionManager.ListaClientiFornitori.Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
+            ddl_cliente_FiltroRecuperaOfferta.Items.Add(new ListItem("<seleziona>", ""));
+            foreach (Anag_Clienti_Fornitori cliente in listaCienti)
+            {
+                ddl_cliente_FiltroRecuperaOfferta.Items.Add(new ListItem(cliente.RagioneSociale, cliente.Id.ToString()));
+            }
+
+            ddl_codiceLavoro_FiltroRecuperaOfferta.Items.Add(new ListItem("<seleziona>", ""));
+            foreach (string codiceLavoro in ListaCodiciLavoro)
+            {
+                ddl_codiceLavoro_FiltroRecuperaOfferta.Items.Add(new ListItem(codiceLavoro, codiceLavoro));
+            }
+
+            ddl_produzione_FiltroRecuperaOfferta.Items.Add(new ListItem("<seleziona>", ""));
+            foreach (string produzione in ListaProduzioni)
+            {
+                ddl_produzione_FiltroRecuperaOfferta.Items.Add(new ListItem(produzione, produzione));
+            }
+
+            ddl_lavorazione_FiltroRecuperaOfferta.Items.Add(new ListItem("<seleziona>", ""));
+            foreach (string lavorazione in ListaLavorazioni)
+            {
+                ddl_lavorazione_FiltroRecuperaOfferta.Items.Add(new ListItem(lavorazione, lavorazione));
+            }
+
+            ddl_luogo_FiltroRecuperaOfferta.Items.Add(new ListItem("<seleziona>", ""));
+            foreach (string luogo in ListaLuoghi)
+            {
+                ddl_luogo_FiltroRecuperaOfferta.Items.Add(new ListItem(luogo, luogo));
+            }
         }
         #endregion
 
@@ -243,6 +424,20 @@ namespace VideoSystemWeb.Agenda.userControl
             ResetPanelOfferta();
         }
 
+        public void ClearRecuperaOfferta()
+        {
+            txt_dataLavorazione_FiltroRecuperaOfferta.Text = string.Empty;
+            ddl_cliente_FiltroRecuperaOfferta.SelectedIndex =
+            ddl_codiceLavoro_FiltroRecuperaOfferta.SelectedIndex =
+            ddl_lavorazione_FiltroRecuperaOfferta.SelectedIndex =
+            ddl_luogo_FiltroRecuperaOfferta.SelectedIndex =
+            ddl_produzione_FiltroRecuperaOfferta.SelectedIndex =
+            ddl_tipologia_FiltroRecuperaOfferta.SelectedIndex = 0;
+
+            gv_OfferteRecuperate.DataSource = null;
+            gv_OfferteRecuperate.DataBind();
+        }
+
         private void ClearModificaArticoli()
         {
             ViewState[VIEWSTATE_IDENTIFICATOREARTICOLO] = null;
@@ -285,7 +480,7 @@ namespace VideoSystemWeb.Agenda.userControl
             ResetPanelOfferta();
         }
 
-        private void aggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
+        private void AggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
         {
             Esito esito = new Esito();
             int idEvento = 0;
@@ -293,7 +488,7 @@ namespace VideoSystemWeb.Agenda.userControl
             SessionManager.EventoSelezionato.ListaDatiArticoli = SessionManager.EventoSelezionato.ListaDatiArticoli.OrderByDescending(x => x.Prezzo).ToList();
         }
 
-        private void aggiungiArticoloAListaArticoli(int idArticolo)
+        private void AggiungiArticoloAListaArticoli(int idArticolo)
         {
             Esito esito = new Esito();
             int idEvento = 0;
@@ -309,7 +504,7 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 if (statoEvento == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
                 {
-                    panelOfferta.Enabled  = false;
+                    panelOfferta.Enabled = false;
                 }
                 else if (statoEvento == Stato.Instance.STATO_OFFERTA)
                 {

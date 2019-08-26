@@ -35,7 +35,7 @@ namespace VideoSystemWeb.CONFIG
             }
             
             List<Config> listaConf = BLL.Config_BLL.Instance.getListaConfig(ref esito);
-            if (esito.codice == 0)
+            if (esito.Codice == 0)
             {
                 //int top = 0;
                 //int totValori = listaConf.Count;
@@ -189,7 +189,7 @@ namespace VideoSystemWeb.CONFIG
 
                     Esito esito = new Esito();
                     Config cfg = Config_BLL.Instance.getConfig(ref esito, chiave);
-                    if (esito.codice == 0)
+                    if (esito.Codice == 0)
                     {
                         if (!valore.Equals(cfg.valore)) { 
                             cfg.valore = valore;

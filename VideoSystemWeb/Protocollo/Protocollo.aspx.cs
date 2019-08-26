@@ -48,7 +48,7 @@ namespace VideoSystemWeb.Protocollo
                 //basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
 
                 // CARICO LE COMBO
-                if (string.IsNullOrEmpty(esito.descrizione))
+                if (string.IsNullOrEmpty(esito.Descrizione))
                 {
                     ddlTipoProtocollo.Items.Clear();
                     cmbMod_Tipologia.Items.Clear();
@@ -80,7 +80,7 @@ namespace VideoSystemWeb.Protocollo
                 }
                 else
                 {
-                    Session["ErrorPageText"] = esito.descrizione;
+                    Session["ErrorPageText"] = esito.Descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
@@ -205,7 +205,7 @@ namespace VideoSystemWeb.Protocollo
             Esito esito = new Esito();
             Protocolli protocollo = CreaOggettoProtocollo(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 basePage.ShowError("Controllare i campi evidenziati");
             }
@@ -222,10 +222,10 @@ namespace VideoSystemWeb.Protocollo
                     hf_tipoOperazione.Value = "VISUALIZZAZIONE";
                 }
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    log.Error(esito.descrizione);
-                    basePage.ShowError(esito.descrizione);
+                    log.Error(esito.Descrizione);
+                    basePage.ShowError(esito.Descrizione);
                 }
                 //basePage.ShowSuccess("Inserito Protocollo n. " + protocollo.Numero_protocollo);
                 ShowPopMessage("Inserito Protocollo n. " + protocollo.Numero_protocollo);
@@ -239,9 +239,9 @@ namespace VideoSystemWeb.Protocollo
             Esito esito = new Esito();
             Protocolli protocollo = CreaOggettoProtocollo(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                log.Error(esito.descrizione);
+                log.Error(esito.Descrizione);
                 basePage.ShowError("Controllare i campi evidenziati!");
             }
             else
@@ -250,10 +250,10 @@ namespace VideoSystemWeb.Protocollo
 
                 esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocollo);
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    log.Error(esito.descrizione);
-                    basePage.ShowError(esito.descrizione);
+                    log.Error(esito.Descrizione);
+                    basePage.ShowError(esito.Descrizione);
 
                 }
                 btnEditProtocollo_Click(null, null);
@@ -269,9 +269,9 @@ namespace VideoSystemWeb.Protocollo
             {
                 //esito = Protocolli_BLL.Instance.EliminaProtocollo(Convert.ToInt32(ViewState["idProtocollo"].ToString()));
                 esito = Protocolli_BLL.Instance.RemoveProtocollo(Convert.ToInt32(ViewState["idProtocollo"].ToString()));
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                     AttivaDisattivaModificaProtocollo(true);
                 }
                 else
@@ -307,7 +307,7 @@ namespace VideoSystemWeb.Protocollo
             queryRicerca = queryRicerca.Replace("@protocolloRiferimento", tbProtocolloRiferimento.Text.Trim().Replace("'","''"));
 
             Esito esito = new Esito();
-            DataTable dtProtocolli = Base_DAL.getDatiBySql(queryRicerca, ref esito);
+            DataTable dtProtocolli = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
 
             Session["TaskTable"] = dtProtocolli;
             //gv_protocolli.DataSource = dtProtocolli;
@@ -405,7 +405,7 @@ namespace VideoSystemWeb.Protocollo
             {
                 Session["NOME_FILE"] = "";
                 Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt16(idProtocollo));
-                if (esito.codice == 0)
+                if (esito.Codice == 0)
                 {
                     pulisciCampiDettaglio();
 
@@ -463,7 +463,7 @@ namespace VideoSystemWeb.Protocollo
                 }
                 else
                 {
-                    Session["ErrorPageText"] = esito.descrizione;
+                    Session["ErrorPageText"] = esito.Descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
@@ -696,7 +696,7 @@ namespace VideoSystemWeb.Protocollo
             
             
             Esito esito = new Esito();
-            DataTable dtLavorazioni = Base_DAL.getDatiBySql(queryRicerca, ref esito);
+            DataTable dtLavorazioni = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gvLavorazioni.DataSource = dtLavorazioni;
             gvLavorazioni.DataBind();
 
@@ -733,7 +733,7 @@ namespace VideoSystemWeb.Protocollo
 
 
             Esito esito = new Esito();
-            DataTable dtClienti = Base_DAL.getDatiBySql(queryRicerca, ref esito);
+            DataTable dtClienti = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gvClienti.DataSource = dtClienti;
             gvClienti.DataBind();
 
@@ -777,9 +777,9 @@ namespace VideoSystemWeb.Protocollo
             else { 
                 Esito esito = new Esito();
                 Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
-                if (esito.codice != 0)
+                if (esito.Codice != 0)
                 {
-                    ShowError(esito.descrizione);
+                    ShowError(esito.Descrizione);
                 }
                 else
                 {

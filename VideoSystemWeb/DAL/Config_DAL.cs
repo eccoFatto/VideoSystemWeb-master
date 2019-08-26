@@ -31,7 +31,7 @@ namespace VideoSystemWeb.DAL
                 return instance;
             }
         }
-        public List<Config> getListaConfig(ref Esito esito)
+        public List<Config> GetListaConfig(ref Esito esito)
         {
             List<Config> listaConfig = new List<Config>();
             try
@@ -52,11 +52,13 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-                                        Config config = new Config();
-                                        config.Chiave = riga.Field<string>("chiave");
-                                        config.Valore = riga.Field<string>("valore");
-                                        config.Descrizione = riga.Field<string>("descrizione");
-                                        config.Ordinamento = riga.Field<int>("ordinamento");
+                                        Config config = new Config
+                                        {
+                                            Chiave = riga.Field<string>("chiave"),
+                                            Valore = riga.Field<string>("valore"),
+                                            Descrizione = riga.Field<string>("descrizione"),
+                                            Ordinamento = riga.Field<int>("ordinamento")
+                                        };
                                         listaConfig.Add(config);
                                     }
                                 }
@@ -67,14 +69,14 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaConfig;
         }
 
-        public Config getConfig(ref Esito esito, string chiave)
+        public Config GetConfig(ref Esito esito, string chiave)
         {
             Config config = new Config();
             try
@@ -105,8 +107,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return config;
@@ -154,8 +156,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Config_DAL.cs - CreaConfig " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Config_DAL.cs - CreaConfig " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -206,8 +208,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Config_DAL.cs - AggiornaConfig " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Config_DAL.cs - AggiornaConfig " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -242,8 +244,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Config_DAL.cs - EliminaConfig " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Config_DAL.cs - EliminaConfig " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

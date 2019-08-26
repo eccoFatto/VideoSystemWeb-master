@@ -33,7 +33,7 @@ namespace VideoSystemWeb.DAL
             }
         }
 
-        public Anag_Clienti_Fornitori getAziendaById(int idAzienda, ref Esito esito)
+        public Anag_Clienti_Fornitori GetAziendaById(int idAzienda, ref Esito esito)
         {
             Anag_Clienti_Fornitori azienda = new Anag_Clienti_Fornitori();
             try
@@ -88,8 +88,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Azienda con id " + idAzienda.ToString() + " non trovato in tabella anag_clienti_fornitori ";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Azienda con id " + idAzienda.ToString() + " non trovato in tabella anag_clienti_fornitori ";
                                 }
                             }
                         }
@@ -98,8 +98,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
             return azienda;
         }
@@ -128,37 +128,39 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-                                        Anag_Clienti_Fornitori azienda = new Anag_Clienti_Fornitori();
-                                        azienda.Id = riga.Field<int>("id");
-                                        azienda.Attivo = riga.Field<bool>("attivo");
-                                        azienda.CapLegale = riga.Field<string>("capLegale");
-                                        azienda.CapOperativo = riga.Field<string>("capOperativo");
-                                        azienda.Cliente = riga.Field<bool>("cliente");
-                                        azienda.CodiceFiscale = riga.Field<string>("codiceFiscale");
-                                        azienda.CodiceIdentificativo = riga.Field<string>("codiceIdentificativo");
-                                        azienda.ComuneLegale = riga.Field<string>("comuneLegale");
-                                        azienda.ComuneOperativo = riga.Field<string>("comuneOperativo");
-                                        azienda.Email = riga.Field<string>("email");
-                                        azienda.Telefono = riga.Field<string>("telefono");
-                                        azienda.Fax = riga.Field<string>("fax");
-                                        azienda.Fornitore = riga.Field<bool>("fornitore");
-                                        azienda.Iban = riga.Field<string>("iban");
-                                        azienda.TipoIndirizzoLegale = riga.Field<string>("tipoIndirizzoLegale");
-                                        azienda.IndirizzoLegale = riga.Field<string>("indirizzoLegale");
-                                        azienda.TipoIndirizzoOperativo = riga.Field<string>("tipoIndirizzoOperativo");
-                                        azienda.IndirizzoOperativo = riga.Field<string>("indirizzoOperativo");
-                                        azienda.NazioneLegale = riga.Field<string>("nazioneLegale");
-                                        azienda.NazioneOperativo = riga.Field<string>("nazioneOperativo");
-                                        azienda.Note = riga.Field<string>("note");
-                                        azienda.NumeroCivicoLegale = riga.Field<string>("numeroCivicoLegale");
-                                        azienda.NumeroCivicoOperativo = riga.Field<string>("numeroCivicoOperativo");
-                                        azienda.Pagamento = riga.Field<int>("pagamento");
-                                        azienda.PartitaIva = riga.Field<string>("partitaIva");
-                                        azienda.Pec = riga.Field<string>("pec");
-                                        azienda.ProvinciaLegale = riga.Field<string>("provinciaLegale");
-                                        azienda.ProvinciaOperativo = riga.Field<string>("provinciaOperativo");
-                                        azienda.RagioneSociale = riga.Field<string>("ragioneSociale");
-                                        azienda.WebSite = riga.Field<string>("webSite");
+                                        Anag_Clienti_Fornitori azienda = new Anag_Clienti_Fornitori
+                                        {
+                                            Id = riga.Field<int>("id"),
+                                            Attivo = riga.Field<bool>("attivo"),
+                                            CapLegale = riga.Field<string>("capLegale"),
+                                            CapOperativo = riga.Field<string>("capOperativo"),
+                                            Cliente = riga.Field<bool>("cliente"),
+                                            CodiceFiscale = riga.Field<string>("codiceFiscale"),
+                                            CodiceIdentificativo = riga.Field<string>("codiceIdentificativo"),
+                                            ComuneLegale = riga.Field<string>("comuneLegale"),
+                                            ComuneOperativo = riga.Field<string>("comuneOperativo"),
+                                            Email = riga.Field<string>("email"),
+                                            Telefono = riga.Field<string>("telefono"),
+                                            Fax = riga.Field<string>("fax"),
+                                            Fornitore = riga.Field<bool>("fornitore"),
+                                            Iban = riga.Field<string>("iban"),
+                                            TipoIndirizzoLegale = riga.Field<string>("tipoIndirizzoLegale"),
+                                            IndirizzoLegale = riga.Field<string>("indirizzoLegale"),
+                                            TipoIndirizzoOperativo = riga.Field<string>("tipoIndirizzoOperativo"),
+                                            IndirizzoOperativo = riga.Field<string>("indirizzoOperativo"),
+                                            NazioneLegale = riga.Field<string>("nazioneLegale"),
+                                            NazioneOperativo = riga.Field<string>("nazioneOperativo"),
+                                            Note = riga.Field<string>("note"),
+                                            NumeroCivicoLegale = riga.Field<string>("numeroCivicoLegale"),
+                                            NumeroCivicoOperativo = riga.Field<string>("numeroCivicoOperativo"),
+                                            Pagamento = riga.Field<int>("pagamento"),
+                                            PartitaIva = riga.Field<string>("partitaIva"),
+                                            Pec = riga.Field<string>("pec"),
+                                            ProvinciaLegale = riga.Field<string>("provinciaLegale"),
+                                            ProvinciaOperativo = riga.Field<string>("provinciaOperativo"),
+                                            RagioneSociale = riga.Field<string>("ragioneSociale"),
+                                            WebSite = riga.Field<string>("webSite")
+                                        };
 
                                         azienda.Referenti = Anag_Referente_Clienti_Fornitori_DAL.Instance.getReferentiByIdAzienda(ref esito, azienda.Id);
 
@@ -167,8 +169,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella anag_clienti_fornitori ";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella tabella anag_clienti_fornitori ";
                                 }
                             }
                         }
@@ -177,8 +179,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaAziende;
@@ -343,8 +345,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Anag_Clienti_Fornitori_DAL.cs - CreaAzienda " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Anag_Clienti_Fornitori_DAL.cs - CreaAzienda " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return 0;
@@ -509,8 +511,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Anag_Clienti_Fornitori_DAL.cs - aggiornaAzienda " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Anag_Clienti_Fornitori_DAL.cs - aggiornaAzienda " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -555,8 +557,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Anag_Clienti_Fornitori_DAL.cs - EliminaAzienda " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Anag_Clienti_Fornitori_DAL.cs - EliminaAzienda " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -603,8 +605,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Anag_Clienti_Fornitori_DAL.cs - RemoveAzienda " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Anag_Clienti_Fornitori_DAL.cs - RemoveAzienda " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

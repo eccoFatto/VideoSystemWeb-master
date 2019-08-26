@@ -58,7 +58,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 List<GiorniPagamentoFatture> listaGPF = Config_BLL.Instance.getListaGiorniPagamentoFatture(ref esito);
 
                 // CARICO LE COMBO
-                if (esito.codice==0)
+                if (esito.Codice==0)
                 {
                     // COMBO TIPO AZIENDA
                     ddlTipoAzienda.Items.Clear();
@@ -91,7 +91,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 else
                 {
-                    Session["ErrorPageText"] = esito.descrizione;
+                    Session["ErrorPageText"] = esito.Descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
@@ -144,7 +144,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             if (!string.IsNullOrEmpty(idAzienda))
             {
                 Entity.Anag_Clienti_Fornitori azienda = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt16(idAzienda), ref esito);
-                if (esito.codice == 0)
+                if (esito.Codice == 0)
                 {
                     pulisciCampiDettaglio();
 
@@ -288,7 +288,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 else
                 {
-                    Session["ErrorPageText"] = esito.descrizione;
+                    Session["ErrorPageText"] = esito.Descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
@@ -389,7 +389,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             queryRicerca = queryRicerca.Replace("@codiceIdentificativo", tbCodiceIdentificativo.Text.Trim().Replace("'", "''"));
 
             Esito esito = new Esito();
-            DataTable dtAziende = Base_DAL.getDatiBySql(queryRicerca, ref esito);
+            DataTable dtAziende = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gv_aziende.DataSource = dtAziende;
             gv_aziende.DataBind();
 
@@ -537,12 +537,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 //esito = Anag_Clienti_Fornitori_BLL.Instance.EliminaAzienda(Convert.ToInt32(ViewState["idAzienda"].ToString()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
                 esito = Anag_Clienti_Fornitori_BLL.Instance.RemoveAzienda(Convert.ToInt32(ViewState["idAzienda"].ToString()));
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
                     //panelErrore.Style.Add("display","block");
                     //lbl_MessaggioErrore.Text = esito.descrizione;
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                     AttivaDisattivaModificaAzienda(true);
                 }
                 else
@@ -566,7 +566,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             Esito esito = new Esito();
             Anag_Clienti_Fornitori azienda = CreaOggettoSalvataggio(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 //panelErrore.Style.Remove("display");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
@@ -579,11 +579,11 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 esito = Anag_Clienti_Fornitori_BLL.Instance.AggiornaAzienda(azienda, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
                     //lbl_MessaggioErrore.Text = esito.descrizione;
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                 }
                 else
                 {
@@ -651,8 +651,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             catch (Exception ex)
             {
                 
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                 return azienda;
             }
         }
@@ -663,9 +663,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             Esito esito = new Esito();
             Anag_Clienti_Fornitori azienda = CreaOggettoSalvataggio(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                basePage.ShowError(esito.descrizione);
+                basePage.ShowError(esito.Descrizione);
                 AttivaDisattivaModificaAzienda(false);
             }
             else
@@ -681,9 +681,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     hf_tipoOperazione.Value = "VISUALIZZAZIONE";
                 }
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                 }
                 else
                 {
@@ -770,9 +770,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                     int iNuovoReferente = Anag_Referente_Clienti_Fornitori_BLL.Instance.CreaReferente(nuovoReferente, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -790,10 +790,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -832,9 +832,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     btnModificaReferente.Visible = false;
                     btnInserisciReferente.Visible = true;
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -856,10 +856,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     btnModificaReferente.Visible = false;
                     btnInserisciReferente.Visible = true;
 
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -882,9 +882,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     string referenteSelezionato = gvMod_Referenti.Rows[gvMod_Referenti.SelectedIndex].Cells[1].Text;
                     esito = Anag_Referente_Clienti_Fornitori_BLL.Instance.EliminaReferente(Convert.ToInt32(referenteSelezionato.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -907,10 +907,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
                 catch (Exception ex)
                 {
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -954,13 +954,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     
                     Anag_Referente_Clienti_Fornitori referente = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferenteById(ref esito, Convert.ToInt32(referenteSelezionato));
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
                         btnModificaReferente.Visible = false;
                         btnInserisciReferente.Visible = true;
                         tbIdReferenteDaModificare.Text = "";
 
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -985,10 +985,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     btnInserisciReferente.Visible = true;
                     tbIdReferenteDaModificare.Text = "";
 
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }

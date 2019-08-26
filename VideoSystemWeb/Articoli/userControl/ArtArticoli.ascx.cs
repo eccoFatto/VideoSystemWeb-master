@@ -149,7 +149,7 @@ namespace VideoSystemWeb.Articoli.userControl
             if (!string.IsNullOrEmpty(idArticolo))
             {
                 Entity.Art_Articoli articolo = Art_Articoli_BLL.Instance.getArticoloById(Convert.ToInt16(idArticolo), ref esito);
-                if (esito.codice == 0)
+                if (esito.Codice == 0)
                 {
                     pulisciCampiDettaglio();
 
@@ -223,21 +223,21 @@ namespace VideoSystemWeb.Articoli.userControl
                     // GRUPPI
                     gvMod_Gruppi.DataSource = null;
                     esito = new Esito();
-                    DataTable dtGruppi = Base_DAL.getDatiBySql("SELECT gruppi.id,nome,descrizione FROM art_gruppi_articoli artgruppi " +
+                    DataTable dtGruppi = Base_DAL.GetDatiBySql("SELECT gruppi.id,nome,descrizione FROM art_gruppi_articoli artgruppi " +
                     "join art_articoli articoli " +
                     "on artgruppi.idArtArticoli = articoli.id " +
                     "join art_gruppi gruppi " +
                     "on idArtGruppi = gruppi.id " +
                     "where idArtArticoli = " + articolo.Id.ToString(), ref esito);
 
-                    if (esito.codice == 0)
+                    if (esito.Codice == 0)
                     {
                         gvMod_Gruppi.DataSource = dtGruppi;
                         gvMod_Gruppi.DataBind();
                     }
                     else
                     {
-                        Session["ErrorPageText"] = esito.descrizione;
+                        Session["ErrorPageText"] = esito.Descrizione;
                         string url = String.Format("~/pageError.aspx");
                         Response.Redirect(url, true);
                     }
@@ -245,7 +245,7 @@ namespace VideoSystemWeb.Articoli.userControl
                 }
                 else
                 {
-                    Session["ErrorPageText"] = esito.descrizione;
+                    Session["ErrorPageText"] = esito.Descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
@@ -315,7 +315,7 @@ namespace VideoSystemWeb.Articoli.userControl
             queryRicerca = queryRicerca.Replace("@defaultIva", "");
 
             Esito esito = new Esito();
-            DataTable dtArticoli = Base_DAL.getDatiBySql(queryRicerca, ref esito);
+            DataTable dtArticoli = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gv_articoli.DataSource = dtArticoli;
             gv_articoli.DataBind();
 
@@ -433,12 +433,12 @@ namespace VideoSystemWeb.Articoli.userControl
             {
                 //esito = Art_Articoli_BLL.Instance.EliminaArticolo(Convert.ToInt32(ViewState["idArticolo"].ToString()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
                 esito = Art_Articoli_BLL.Instance.RemoveArticolo(Convert.ToInt32(ViewState["idArticolo"].ToString()));
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
                     //panelErrore.Style.Add("display","block");
                     //lbl_MessaggioErrore.Text = esito.descrizione;
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                     AttivaDisattivaModificaArticolo(true);
                 }
                 else
@@ -459,7 +459,7 @@ namespace VideoSystemWeb.Articoli.userControl
             Esito esito = new Esito();
             Art_Articoli articolo = CreaOggettoSalvataggio(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 //panelErrore.Style.Remove("display");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
@@ -472,11 +472,11 @@ namespace VideoSystemWeb.Articoli.userControl
                 esito = Art_Articoli_BLL.Instance.AggiornaArticolo(articolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
 
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
                     //lbl_MessaggioErrore.Text = esito.descrizione;
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                 }
                 EditArticolo_Click(null, null);
             }
@@ -516,8 +516,8 @@ namespace VideoSystemWeb.Articoli.userControl
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                 
                 return articolo;
             }
@@ -529,11 +529,11 @@ namespace VideoSystemWeb.Articoli.userControl
             Esito esito = new Esito();
             Art_Articoli articolo = CreaOggettoSalvataggio(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 //panelErrore.Style.Remove("display");
                 //lbl_MessaggioErrore.Text = esito.descrizione;
-                basePage.ShowError(esito.descrizione);
+                basePage.ShowError(esito.Descrizione);
             }
             else
             {
@@ -548,12 +548,12 @@ namespace VideoSystemWeb.Articoli.userControl
                     hf_tipoOperazione.Value = "VISUALIZZAZIONE";
                 }
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Remove("display");
                     //panelErrore.Style.Add("display","block");
                     //lbl_MessaggioErrore.Text = esito.descrizione;
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                 }
                 else
                 {
@@ -617,9 +617,9 @@ namespace VideoSystemWeb.Articoli.userControl
 
                     int iNuovoArtGruppo = Art_Gruppi_Articoli_BLL.Instance.CreaGruppoArticolo(nuovoGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]), ref esito);
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -629,10 +629,10 @@ namespace VideoSystemWeb.Articoli.userControl
                 catch (Exception ex)
                 {
                     log.Error("btnConfermaInserimentoGruppo_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -658,18 +658,18 @@ namespace VideoSystemWeb.Articoli.userControl
                     // DEVO TROVARE PRIMA IL GRUPPO ARTICOLO FORMATO DA ID GRUPPO E ID ARTICOLO
 
                     string query = "SELECT id FROM art_gruppi_articoli where idArtGruppi = " + value + " AND idArtArticoli = " + ViewState["idArticolo"].ToString();
-                    DataTable dtGruppiArticoli = Base_DAL.getDatiBySql(query, ref esito);
+                    DataTable dtGruppiArticoli = Base_DAL.GetDatiBySql(query, ref esito);
 
                     if (dtGruppiArticoli == null || dtGruppiArticoli.Rows == null)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                        esito.descrizione = "btnEliminaGruppo_Click - Nessun risultato restituito dalla query " + query;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                        esito.Descrizione = "btnEliminaGruppo_Click - Nessun risultato restituito dalla query " + query;
                     }
 
-                    if (esito.codice != Esito.ESITO_OK )
+                    if (esito.Codice != Esito.ESITO_OK )
                     {
-                        log.Error(esito.descrizione);
-                        basePage.ShowError(esito.descrizione);
+                        log.Error(esito.Descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -678,10 +678,10 @@ namespace VideoSystemWeb.Articoli.userControl
                             int idGruppoArticolo = Convert.ToInt16(riga["id"]);
                             esito = Art_Gruppi_Articoli_BLL.Instance.EliminaGruppoArticolo(idGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
                         }
-                        if (esito.codice != Esito.ESITO_OK)
+                        if (esito.Codice != Esito.ESITO_OK)
                         {
-                            log.Error(esito.descrizione);
-                            basePage.ShowError(esito.descrizione);
+                            log.Error(esito.Descrizione);
+                            basePage.ShowError(esito.Descrizione);
                         }
                         else
                         {
@@ -693,10 +693,10 @@ namespace VideoSystemWeb.Articoli.userControl
                 catch (Exception ex)
                 {
                     log.Error("btnEliminaGruppo_Click", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }
@@ -730,18 +730,18 @@ namespace VideoSystemWeb.Articoli.userControl
                     // DEVO TROVARE PRIMA IL GRUPPO ARTICOLO FORMATO DA ID GRUPPO E ID ARTICOLO
 
                     string query = "SELECT id FROM art_gruppi_articoli where idArtGruppi = " + value + " AND idArtArticoli = " + ViewState["idArticolo"].ToString();
-                    DataTable dtGruppiArticoli = Base_DAL.getDatiBySql(query, ref esito);
+                    DataTable dtGruppiArticoli = Base_DAL.GetDatiBySql(query, ref esito);
 
                     if (dtGruppiArticoli == null || dtGruppiArticoli.Rows == null)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                        esito.descrizione = "imgElimina_Command - Nessun risultato restituito dalla query " + query;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                        esito.Descrizione = "imgElimina_Command - Nessun risultato restituito dalla query " + query;
                     }
 
-                    if (esito.codice != Esito.ESITO_OK)
+                    if (esito.Codice != Esito.ESITO_OK)
                     {
-                        log.Error(esito.descrizione);
-                        basePage.ShowError(esito.descrizione);
+                        log.Error(esito.Descrizione);
+                        basePage.ShowError(esito.Descrizione);
                     }
                     else
                     {
@@ -750,10 +750,10 @@ namespace VideoSystemWeb.Articoli.userControl
                             int idGruppoArticolo = Convert.ToInt16(riga["id"]);
                             esito = Art_Gruppi_Articoli_BLL.Instance.EliminaGruppoArticolo(idGruppoArticolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
                         }
-                        if (esito.codice != Esito.ESITO_OK)
+                        if (esito.Codice != Esito.ESITO_OK)
                         {
-                            log.Error(esito.descrizione);
-                            basePage.ShowError(esito.descrizione);
+                            log.Error(esito.Descrizione);
+                            basePage.ShowError(esito.Descrizione);
                         }
                         else
                         {
@@ -764,10 +764,10 @@ namespace VideoSystemWeb.Articoli.userControl
                 catch (Exception ex)
                 {
                     log.Error("imgElimina_Command", ex);
-                    if (esito.codice == Esito.ESITO_OK)
+                    if (esito.Codice == Esito.ESITO_OK)
                     {
-                        esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                        esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
                     }
                     basePage.ShowError(ex.Message);
                 }

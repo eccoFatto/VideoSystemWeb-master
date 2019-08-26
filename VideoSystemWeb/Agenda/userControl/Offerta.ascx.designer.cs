@@ -220,12 +220,93 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelRecuperaOfferta;
         
         /// <summary>
-        /// Controllo btnOK_recuperaOfferta.
+        /// Controllo upRecuperaOfferta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOK_recuperaOfferta;
+        protected global::System.Web.UI.UpdatePanel upRecuperaOfferta;
+        
+        /// <summary>
+        /// Controllo txt_dataLavorazione_FiltroRecuperaOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_dataLavorazione_FiltroRecuperaOfferta;
+        
+        /// <summary>
+        /// Controllo ddl_tipologia_FiltroRecuperaOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_tipologia_FiltroRecuperaOfferta;
+        
+        /// <summary>
+        /// Controllo ddl_cliente_FiltroRecuperaOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_cliente_FiltroRecuperaOfferta;
+        
+        /// <summary>
+        /// Controllo ddl_codiceLavoro_FiltroRecuperaOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_codiceLavoro_FiltroRecuperaOfferta;
+        
+        /// <summary>
+        /// Controllo ddl_produzione_FiltroRecuperaOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_produzione_FiltroRecuperaOfferta;
+        
+        /// <summary>
+        /// Controllo ddl_lavorazione_FiltroRecuperaOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_lavorazione_FiltroRecuperaOfferta;
+        
+        /// <summary>
+        /// Controllo ddl_luogo_FiltroRecuperaOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_luogo_FiltroRecuperaOfferta;
+        
+        /// <summary>
+        /// Controllo btn_cerca_FiltroRecuperaOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_cerca_FiltroRecuperaOfferta;
+        
+        /// <summary>
+        /// Controllo gv_OfferteRecuperate.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gv_OfferteRecuperate;
     }
 }

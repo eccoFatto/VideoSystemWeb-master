@@ -74,8 +74,8 @@ namespace VideoSystemWeb.DAL
                                     }
                                     else
                                     {
-                                        esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                        esito.descrizione = "Nessun dato trovato nella tabella dati_pianoEsterno_lavorazione";
+                                        esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                        esito.Descrizione = "Nessun dato trovato nella tabella dati_pianoEsterno_lavorazione";
                                     }
                                 }
                             }
@@ -84,8 +84,8 @@ namespace VideoSystemWeb.DAL
                 }
                 catch (Exception ex)
                 {
-                    esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                    esito.descrizione = "Dati_Articoli_LavorazioneDAL.cs - getDatiPianoEsternoLavorazioneByIdDatiLavorazione " + Environment.NewLine + ex.Message;
+                    esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                    esito.Descrizione = "Dati_Articoli_LavorazioneDAL.cs - getDatiPianoEsternoLavorazioneByIdDatiLavorazione " + Environment.NewLine + ex.Message;
 
                     log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
                 }
@@ -133,8 +133,8 @@ namespace VideoSystemWeb.DAL
                 }
                 catch (Exception ex)
                 {
-                    esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                    esito.descrizione = "Dati_Articoli_Lavorazione_DAL.cs - EliminaDatiPianoEsternoLavorazioneByIdDatiLavorazione " + Environment.NewLine + ex.Message;
+                    esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                    esito.Descrizione = "Dati_Articoli_Lavorazione_DAL.cs - EliminaDatiPianoEsternoLavorazioneByIdDatiLavorazione " + Environment.NewLine + ex.Message;
 
                     log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
                 }

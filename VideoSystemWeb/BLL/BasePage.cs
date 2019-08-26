@@ -42,8 +42,8 @@ namespace VideoSystemWeb.BLL
             if (isRequired && string.IsNullOrEmpty(valore))
             {
                 campo.CssClass += " erroreValidazione";
-                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.descrizione = "Campo obbligatorio";
+                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.Descrizione = "Campo obbligatorio";
             }
             else
             {
@@ -60,8 +60,8 @@ namespace VideoSystemWeb.BLL
                 catch
                 {
                     campo.CssClass += " erroreValidazione";
-                    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                    esito.descrizione = "Controllare il campo";
+                    esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.Descrizione = "Controllare il campo";
                 }
             }
 
@@ -77,8 +77,8 @@ namespace VideoSystemWeb.BLL
             if (isRequired && string.IsNullOrEmpty(valore))
             {
                 campo.CssClass += " erroreValidazione";
-                esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.descrizione = "Campo obbligatorio";
+                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.Descrizione = "Campo obbligatorio";
             }
             else
             {
@@ -95,8 +95,8 @@ namespace VideoSystemWeb.BLL
                 catch
                 {
                     campo.CssClass += " erroreValidazione";
-                    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                    esito.descrizione = "Controllare il campo";
+                    esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.Descrizione = "Controllare il campo";
                 }
             }
 
@@ -134,8 +134,8 @@ namespace VideoSystemWeb.BLL
                 else
                 {
                     t.CssClass += " erroreValidazione";
-                    esito.codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                    esito.descrizione = "Campo obbligatorio";
+                    esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.Descrizione = "Campo obbligatorio";
                     return t.Text;
                 }
             }
@@ -286,8 +286,8 @@ namespace VideoSystemWeb.BLL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -336,7 +336,7 @@ namespace VideoSystemWeb.BLL
 
         public void GestisciErrore(Esito esito, string messaggioErroreSpecifico = null)
         {
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 if (messaggioErroreSpecifico != null)
                 {
@@ -344,7 +344,7 @@ namespace VideoSystemWeb.BLL
                 }
                 else
                 {
-                    ShowError(esito.descrizione);
+                    ShowError(esito.Descrizione);
                 }
             }
         }

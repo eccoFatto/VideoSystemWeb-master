@@ -70,8 +70,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_UTENTE_NON_RICONOSCIUTO;
-                                    esito.descrizione = "Utenza/Password non riconosciute!";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_UTENTE_NON_RICONOSCIUTO;
+                                    esito.Descrizione = "Utenza/Password non riconosciute!";
                                 }
                             }
                         }
@@ -80,8 +80,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Login_DAL.cs - Connetti " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Login_DAL.cs - Connetti " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
         }
 
@@ -152,8 +152,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Login_DAL.cs - AggiornaUtente " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Login_DAL.cs - AggiornaUtente " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

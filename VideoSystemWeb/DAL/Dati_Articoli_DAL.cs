@@ -31,7 +31,7 @@ namespace VideoSystemWeb.DAL
                 return instance;
             }
         }
-        public List<DatiArticoli> getDatiArticoliByIdDatiAgenda(ref Esito esito, int idDatiAgenda)
+        public List<DatiArticoli> GetDatiArticoliByIdDatiAgenda(ref Esito esito, int idDatiAgenda)
         {
             List<DatiArticoli> listaDatiArticoli = new List<DatiArticoli>();
             try
@@ -54,28 +54,30 @@ namespace VideoSystemWeb.DAL
                                     foreach (DataRow riga in dt.Rows)
                                     {
 
-                                        DatiArticoli datiArticoli = new DatiArticoli();
-                                        datiArticoli.Id = riga.Field<int>("id");
-                                        datiArticoli.IdArtArticoli = riga.Field<int>("idArtArticoli");
-                                        datiArticoli.IdDatiAgenda = riga.Field<int>("idDatiAgenda");
-                                        datiArticoli.IdTipoGenere = riga.Field<int>("idTipoGenere");
-                                        datiArticoli.IdTipoGruppo = riga.Field<int>("idTipoGruppo");
-                                        datiArticoli.IdTipoSottogruppo = riga.Field<int>("idTipoSottogruppo");
-                                        datiArticoli.Descrizione = riga.Field<string>("descrizione");
-                                        datiArticoli.DescrizioneLunga = riga.Field<string>("descrizioneLunga");
-                                        datiArticoli.Iva = riga.Field<int>("iva");
-                                        datiArticoli.Quantita = riga.Field<int>("quantita");
-                                        datiArticoli.Prezzo = riga.Field<decimal>("prezzo");
-                                        datiArticoli.Costo = riga.Field<decimal>("costo");
-                                        datiArticoli.Stampa = riga.Field<bool>("stampa");
+                                        DatiArticoli datiArticoli = new DatiArticoli
+                                        {
+                                            Id = riga.Field<int>("id"),
+                                            IdArtArticoli = riga.Field<int>("idArtArticoli"),
+                                            IdDatiAgenda = riga.Field<int>("idDatiAgenda"),
+                                            IdTipoGenere = riga.Field<int>("idTipoGenere"),
+                                            IdTipoGruppo = riga.Field<int>("idTipoGruppo"),
+                                            IdTipoSottogruppo = riga.Field<int>("idTipoSottogruppo"),
+                                            Descrizione = riga.Field<string>("descrizione"),
+                                            DescrizioneLunga = riga.Field<string>("descrizioneLunga"),
+                                            Iva = riga.Field<int>("iva"),
+                                            Quantita = riga.Field<int>("quantita"),
+                                            Prezzo = riga.Field<decimal>("prezzo"),
+                                            Costo = riga.Field<decimal>("costo"),
+                                            Stampa = riga.Field<bool>("stampa")
+                                        };
 
                                         listaDatiArticoli.Add(datiArticoli);
                                     }
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella dati_articoli ";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella tabella dati_articoli ";
                                 }
                             }
                         }
@@ -84,8 +86,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Dati_Articoli_DAL.cs - getDatiArticoliByIdDatiAgenda " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Dati_Articoli_DAL.cs - getDatiArticoliByIdDatiAgenda " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -93,7 +95,7 @@ namespace VideoSystemWeb.DAL
             return listaDatiArticoli;
         }
 
-        public DatiArticoli getDatiArticoliById(ref Esito esito, int id)
+        public DatiArticoli GetDatiArticoliById(ref Esito esito, int id)
         {
             DatiArticoli datiArticoli = new DatiArticoli();
             try
@@ -129,8 +131,8 @@ namespace VideoSystemWeb.DAL
                                 }
                                 else
                                 {
-                                    esito.codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
-                                    esito.descrizione = "Nessun dato trovato nella tabella dati_articoli ";
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella tabella dati_articoli ";
                                 }
                             }
                         }
@@ -139,8 +141,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "Dati_Articoli_DAL.cs - getDatiArticoliById " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Dati_Articoli_DAL.cs - getDatiArticoliById " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -237,8 +239,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Articoli_DAL.cs - CreaDatoArticolo " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Dati_Articoli_DAL.cs - CreaDatoArticolo " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -333,8 +335,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Articoli_DAL.cs - AggiornaDatoArticolo " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Dati_Articoli_DAL.cs - AggiornaDatoArticolo " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -381,8 +383,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Articoli_DAL.cs - EliminaDatoArticolo " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Dati_Articoli_DAL.cs - EliminaDatoArticolo " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }
@@ -430,8 +432,8 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.descrizione = "Dati_Articoli_DAL.cs - EliminaDatiArticoloByIdDatiAgenda " + Environment.NewLine + ex.Message;
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Dati_Articoli_DAL.cs - EliminaDatiArticoloByIdDatiAgenda " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }

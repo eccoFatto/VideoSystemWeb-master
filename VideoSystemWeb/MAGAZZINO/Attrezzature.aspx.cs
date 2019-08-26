@@ -31,22 +31,26 @@ namespace VideoSystemWeb.MAGAZZINO
                 Esito esito = new Esito();
 
                 // CARICO LE COMBO
-                if (string.IsNullOrEmpty(esito.descrizione))
+                if (string.IsNullOrEmpty(esito.Descrizione))
                 {
                     ddlTipoCategoria.Items.Clear();
                     cmbMod_Categoria.Items.Clear();
                     ddlTipoCategoria.Items.Add("");
                     foreach (Tipologica tipologiaCategoria in SessionManager.ListaTipiCategorieMagazzino)
                     {
-                        ListItem item = new ListItem();
-                        item.Text = tipologiaCategoria.nome;
-                        item.Value = tipologiaCategoria.nome;
+                        ListItem item = new ListItem
+                        {
+                            Text = tipologiaCategoria.nome,
+                            Value = tipologiaCategoria.nome
+                        };
 
                         ddlTipoCategoria.Items.Add(item);
 
-                        ListItem itemMod = new ListItem();
-                        itemMod.Text = tipologiaCategoria.nome;
-                        itemMod.Value = tipologiaCategoria.id.ToString();
+                        ListItem itemMod = new ListItem
+                        {
+                            Text = tipologiaCategoria.nome,
+                            Value = tipologiaCategoria.id.ToString()
+                        };
 
                         cmbMod_Categoria.Items.Add(itemMod);
                     }
@@ -57,15 +61,19 @@ namespace VideoSystemWeb.MAGAZZINO
                     cmbMod_SubCategoria.Items.Add("");
                     foreach (Tipologica tipologiaSubCategoria in SessionManager.ListaTipiSubCategorieMagazzino)
                     {
-                        ListItem item = new ListItem();
-                        item.Text = tipologiaSubCategoria.nome;
-                        item.Value = tipologiaSubCategoria.nome;
+                        ListItem item = new ListItem
+                        {
+                            Text = tipologiaSubCategoria.nome,
+                            Value = tipologiaSubCategoria.nome
+                        };
 
                         ddlTipoSubCategoria.Items.Add(item);
 
-                        ListItem itemMod = new ListItem();
-                        itemMod.Text = tipologiaSubCategoria.nome;
-                        itemMod.Value = tipologiaSubCategoria.id.ToString();
+                        ListItem itemMod = new ListItem
+                        {
+                            Text = tipologiaSubCategoria.nome,
+                            Value = tipologiaSubCategoria.id.ToString()
+                        };
 
                         cmbMod_SubCategoria.Items.Add(itemMod);
                     }
@@ -75,26 +83,30 @@ namespace VideoSystemWeb.MAGAZZINO
                     ddlTipoPosizioneMagazzino.Items.Add("");
                     foreach (Tipologica tipologiaPosizione in SessionManager.ListaTipiPosizioniMagazzino)
                     {
-                        ListItem item = new ListItem();
-                        item.Text = tipologiaPosizione.nome;
-                        item.Value = tipologiaPosizione.nome;
+                        ListItem item = new ListItem
+                        {
+                            Text = tipologiaPosizione.nome,
+                            Value = tipologiaPosizione.nome
+                        };
 
                         ddlTipoPosizioneMagazzino.Items.Add(item);
 
-                        ListItem itemMod = new ListItem();
-                        itemMod.Text = tipologiaPosizione.nome;
-                        itemMod.Value = tipologiaPosizione.id.ToString();
+                        ListItem itemMod = new ListItem
+                        {
+                            Text = tipologiaPosizione.nome,
+                            Value = tipologiaPosizione.id.ToString()
+                        };
 
                         cmbMod_Posizione.Items.Add(itemMod);
                     }
 
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                    abilitaBottoni(basePage.AbilitazioneInScrittura());
+                    AbilitaBottoni(basePage.AbilitazioneInScrittura());
 
                 }
                 else
                 {
-                    Session["ErrorPageText"] = esito.descrizione;
+                    Session["ErrorPageText"] = esito.Descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
@@ -120,7 +132,7 @@ namespace VideoSystemWeb.MAGAZZINO
             queryRicerca = queryRicerca.Replace("@posizione", ddlTipoPosizioneMagazzino.SelectedItem.Text.Trim().Replace("'", "''"));
 
             Esito esito = new Esito();
-            DataTable dtAttrezzature = Base_DAL.getDatiBySql(queryRicerca, ref esito);
+            DataTable dtAttrezzature = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gv_attrezzature.DataSource = dtAttrezzature;
             gv_attrezzature.DataBind();
 
@@ -150,9 +162,9 @@ namespace VideoSystemWeb.MAGAZZINO
             if (!string.IsNullOrEmpty(hf_idAttrezzatura.Value) || (!string.IsNullOrEmpty((string)ViewState["idAttrezzatura"])))
             {
                 if (!string.IsNullOrEmpty(hf_idAttrezzatura.Value)) ViewState["idAttrezzatura"] = hf_idAttrezzatura.Value;
-                editAttrezzatura();
+                EditAttrezzatura();
                 AttivaDisattivaModificaAttrezzatura(true);
-                gestisciPulsantiAttrezzatura("VISUALIZZAZIONE");
+                GestisciPulsantiAttrezzatura("VISUALIZZAZIONE");
                 pnlContainer.Visible = true;
             }
         }
@@ -161,9 +173,9 @@ namespace VideoSystemWeb.MAGAZZINO
         {
             // VISUALIZZO FORM INSERIMENTO NUOVA ATTREZZATURA
             ViewState["idAttrezzatura"] = "";
-            editAttrezzaturaVuota();
+            EditAttrezzaturaVuota();
             AttivaDisattivaModificaAttrezzatura(false);
-            gestisciPulsantiAttrezzatura("INSERIMENTO");
+            GestisciPulsantiAttrezzatura("INSERIMENTO");
 
             pnlContainer.Visible = true;
         }
@@ -176,7 +188,7 @@ namespace VideoSystemWeb.MAGAZZINO
         protected void btnGestisciAttrezzatura_Click(object sender, EventArgs e)
         {
             AttivaDisattivaModificaAttrezzatura(false);
-            gestisciPulsantiAttrezzatura("MODIFICA");
+            GestisciPulsantiAttrezzatura("MODIFICA");
         }
 
         protected void btnInserisciAttrezzatura_Click(object sender, EventArgs e)
@@ -185,7 +197,7 @@ namespace VideoSystemWeb.MAGAZZINO
             Esito esito = new Esito();
             AttrezzatureMagazzino attrezzatura = CreaOggettoAttrezzatura(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
                 basePage.ShowError("Controllare i campi evidenziati");
             }
@@ -202,10 +214,10 @@ namespace VideoSystemWeb.MAGAZZINO
                     hf_tipoOperazione.Value = "VISUALIZZAZIONE";
                 }
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    log.Error(esito.descrizione);
-                    basePage.ShowError(esito.descrizione);
+                    log.Error(esito.Descrizione);
+                    basePage.ShowError(esito.Descrizione);
                 }
                 else { 
                     basePage.ShowSuccess("Inserita Attrezzatura " + attrezzatura.Descrizione);
@@ -221,19 +233,19 @@ namespace VideoSystemWeb.MAGAZZINO
             Esito esito = new Esito();
             AttrezzatureMagazzino attrezzatura = CreaOggettoAttrezzatura(ref esito);
 
-            if (esito.codice != Esito.ESITO_OK)
+            if (esito.Codice != Esito.ESITO_OK)
             {
-                log.Error(esito.descrizione);
+                log.Error(esito.Descrizione);
                 basePage.ShowError("Controllare i campi evidenziati!");
             }
             else
             {
                 esito = AttrezzatureMagazzino_BLL.Instance.AggiornaAttrezzatura(attrezzatura);
 
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    log.Error(esito.descrizione);
-                    basePage.ShowError(esito.descrizione);
+                    log.Error(esito.Descrizione);
+                    basePage.ShowError(esito.Descrizione);
 
                 }
                 btnEditAttrezzatura_Click(null, null);
@@ -249,9 +261,9 @@ namespace VideoSystemWeb.MAGAZZINO
             {
                 esito = AttrezzatureMagazzino_BLL.Instance.EliminaAttrezzatura(Convert.ToInt32(ViewState["idAttrezzatura"].ToString()));
                 //esito = AttrezzatureMagazzino_BLL.Instance.RemoveAttrezzatura(Convert.ToInt32(ViewState["idAttrezzatura"].ToString()));
-                if (esito.codice != Esito.ESITO_OK)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    basePage.ShowError(esito.descrizione);
+                    basePage.ShowError(esito.Descrizione);
                     AttivaDisattivaModificaAttrezzatura(true);
                 }
                 else
@@ -268,11 +280,11 @@ namespace VideoSystemWeb.MAGAZZINO
         protected void btnAnnullaAttrezzatura_Click(object sender, EventArgs e)
         {
             AttivaDisattivaModificaAttrezzatura(true);
-            gestisciPulsantiAttrezzatura("ANNULLAMENTO");
+            GestisciPulsantiAttrezzatura("ANNULLAMENTO");
 
         }
 
-        private void abilitaBottoni(bool utenteAbilitatoInScrittura)
+        private void AbilitaBottoni(bool utenteAbilitatoInScrittura)
         {
             //annullaModifiche();
             if (!utenteAbilitatoInScrittura)
@@ -305,7 +317,7 @@ namespace VideoSystemWeb.MAGAZZINO
             cmbMod_SubCategoria.CssClass = cmbMod_SubCategoria.CssClass.Replace("erroreValidazione", "");
             cmbMod_Posizione.CssClass = cmbMod_Posizione.CssClass.Replace("erroreValidazione", "");
         }
-        private void editAttrezzatura()
+        private void EditAttrezzatura()
         {
             string idAttrezzatura = (string)ViewState["idAttrezzatura"];
             Esito esito = new Esito();
@@ -313,9 +325,9 @@ namespace VideoSystemWeb.MAGAZZINO
             if (!string.IsNullOrEmpty(idAttrezzatura))
             {
                 Entity.AttrezzatureMagazzino attrezzatura = AttrezzatureMagazzino_BLL.Instance.getAttrezzaturaById(ref esito, Convert.ToInt16(idAttrezzatura));
-                if (esito.codice == 0)
+                if (esito.Codice == 0)
                 {
-                    pulisciCampiDettaglio();
+                    PulisciCampiDettaglio();
 
                     // RIEMPIO I CAMPI DEL DETTAGLIO ATTREZZATURA
                     tbMod_CodiceVideoSystem.Text = attrezzatura.Cod_vs;
@@ -362,9 +374,11 @@ namespace VideoSystemWeb.MAGAZZINO
                     }
                     else
                     {
-                        ListItem item = new ListItem();
-                        item.Text = attrezzatura.Id_posizione_magazzino.ToString();
-                        item.Value = attrezzatura.Id_posizione_magazzino.ToString();
+                        ListItem item = new ListItem
+                        {
+                            Text = attrezzatura.Id_posizione_magazzino.ToString(),
+                            Value = attrezzatura.Id_posizione_magazzino.ToString()
+                        };
                         cmbMod_Posizione.Items.Add(item);
 
                         cmbMod_Posizione.Text = attrezzatura.Id_posizione_magazzino.ToString();
@@ -376,14 +390,14 @@ namespace VideoSystemWeb.MAGAZZINO
                 }
                 else
                 {
-                    Session["ErrorPageText"] = esito.descrizione;
+                    Session["ErrorPageText"] = esito.Descrizione;
                     string url = String.Format("~/pageError.aspx");
                     Response.Redirect(url, true);
                 }
             }
 
         }
-        private void pulisciCampiDettaglio()
+        private void PulisciCampiDettaglio()
         {
             tbMod_CodiceVideoSystem.Text = "";
             tbMod_DataAcquisto.Text = "";
@@ -427,7 +441,7 @@ namespace VideoSystemWeb.MAGAZZINO
             cbMod_Disponibile.Enabled = !attivaModifica;
             cbMod_Garanzia.Enabled = !attivaModifica;
         }
-        private void gestisciPulsantiAttrezzatura(string stato)
+        private void GestisciPulsantiAttrezzatura(string stato)
         {
             switch (stato)
             {
@@ -481,10 +495,10 @@ namespace VideoSystemWeb.MAGAZZINO
             }
 
         }
-        private void editAttrezzaturaVuota()
+        private void EditAttrezzaturaVuota()
         {
             Esito esito = new Esito();
-            pulisciCampiDettaglio();
+            PulisciCampiDettaglio();
         }
         private AttrezzatureMagazzino CreaOggettoAttrezzatura(ref Esito esito)
         {

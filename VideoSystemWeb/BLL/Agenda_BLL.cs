@@ -115,11 +115,11 @@ namespace VideoSystemWeb.BLL
         public Esito EliminaEvento(int idEvento)
         {
             Esito esito = Dati_Articoli_DAL.Instance.EliminaDatiArticoloByIdDatiAgenda(idEvento);
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 esito = Dati_Tender_DAL.Instance.EliminaDatiTenderByIdDatiAgenda(idEvento);
             }
-            if (esito.codice == Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 esito = Agenda_DAL.Instance.EliminaEvento(idEvento);
             }
@@ -132,13 +132,16 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-        public List<int> getTenderImpiegatiInPeriodo(DatiAgenda eventoDaControllare, ref Esito esito)
+        public List<int> GetTenderImpiegatiInPeriodo(DatiAgenda eventoDaControllare, ref Esito esito)
         {
             DateTime dataInizio = eventoDaControllare.data_inizio_impegno;
             DateTime dataFine = eventoDaControllare.data_fine_impegno;
             int idEventoDaControllare = eventoDaControllare.id;
 
-            return Agenda_DAL.Instance.getTenderImpiegatiInPeriodo(dataInizio, dataFine, idEventoDaControllare,  ref esito);
+            return Agenda_DAL.Instance.GetTenderImpiegatiInPeriodo(dataInizio, dataFine, idEventoDaControllare,  ref esito);
         }
+
+        
+
     }
 }

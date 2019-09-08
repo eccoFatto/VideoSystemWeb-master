@@ -88,7 +88,18 @@ namespace VideoSystemWeb.Agenda.userControl
             val_bancaStampa.Text = noteOfferta.Banca;
             val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
             val_consegnaStampa.Text = noteOfferta.Consegna;
-            note.Text = noteOfferta.Note.Trim();
+            //note.Text = txt_Note.Text.Trim().Replace(Environment.NewLine, " ");
+
+
+            if (txt_Note.Text.IndexOf("\n") >-1)
+            {
+                note.Text = txt_Note.Text.Replace("\n","<br/>");
+            }
+            else
+            {
+                note.Text = txt_Note.Text;
+            }
+            
 
             RichiediOperazionePopup("SAVE_PDF_OFFERTA");
 
@@ -206,11 +217,13 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_Consegna.Text = noteOfferta.Consegna;
             cmbMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
             if (string.IsNullOrEmpty(noteOfferta.Note)){
+                //note.Text = "";
                 note.Text = "";
                 txt_Note.Text = "";
             }
-            else { 
-                note.Text = noteOfferta.Note.Trim();
+            else {
+                //note.Text = noteOfferta.Note.Trim();
+                note.Text = noteOfferta.Note.Trim().Replace("\n","<br/>");
                 txt_Note.Text = noteOfferta.Note.Trim();
             }
 
@@ -231,7 +244,17 @@ namespace VideoSystemWeb.Agenda.userControl
 
             StringWriter sw = new StringWriter();
             HtmlTextWriter hw = new HtmlTextWriter(sw);
-            modalRiepilogoContent.RenderControl(hw);
+
+            try
+            {
+                modalRiepilogoContent.RenderControl(hw);
+            }
+            catch (Exception ex)
+            {
+                basePage.ShowError(ex.Message);
+
+
+            }
 
 
             MemoryStream workStream = BaseStampa.Instance.GeneraPdf(sw.ToString());

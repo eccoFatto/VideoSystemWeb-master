@@ -35,6 +35,26 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 if (eventoSelezionato != null && eventoSelezionato.LavorazioneCorrente != null)
                 {
+                    // LEGGO I PARAMETRI DI VS
+                    Config cfAppo = Config_BLL.Instance.getConfig(ref esito, "PARTITA_IVA");
+                    string pIvaVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "DENOMINAZIONE");
+                    string denominazioneVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "TOPONIMO");
+                    string toponimoVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "INDIRIZZO");
+                    string indirizzoVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "CIVICO");
+                    string civicoVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "CAP");
+                    string capVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "CITTA");
+                    string cittaVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "PROVINCIA");
+                    string provinciaVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "EMAIL");
+                    string emailVs = cfAppo.valore;
+
 
                     // GESTIONE NOMI FILE PDF
                     string nomeFile = "Consuntivo_" + eventoSelezionato.LavorazioneCorrente.Id.ToString() + ".pdf";
@@ -69,65 +89,67 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
 
-                        Paragraph pTitolo = new Paragraph("Cliente").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        tbIntestazioneDx.AddCell(pTitolo);
+                        Paragraph pTitolo = new Paragraph("Cliente").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         Paragraph pValore = new Paragraph(cliente.RagioneSociale.Trim()).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
-                        tbIntestazioneDx.AddCell(pValore);
-                        pTitolo = new Paragraph("Referente").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        tbIntestazioneDx.AddCell(pTitolo);
+                        tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Referente").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         string nomeReferente = "";
                         if (eventoSelezionato.LavorazioneCorrente.IdReferente != null)
                         {
-                            nomeReferente = eventoSelezionato.LavorazioneCorrente.IdReferente.ToString();
+                            Anag_Referente_Clienti_Fornitori referente = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferenteById(ref esito, Convert.ToInt32(eventoSelezionato.LavorazioneCorrente.IdReferente.Value));
+                            nomeReferente = referente.Nome + " " + referente.Cognome;
                         }
-                        pValore = new Paragraph(nomeReferente).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
-                        tbIntestazioneDx.AddCell(pValore);
+                        pValore = new Paragraph(nomeReferente).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                        pTitolo = new Paragraph("Produzione").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        tbIntestazioneDx.AddCell(pTitolo);
-                        pValore = new Paragraph(eventoSelezionato.produzione).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
-                        tbIntestazioneDx.AddCell(pValore);
-                        pTitolo = new Paragraph("Capotecnico").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        tbIntestazioneDx.AddCell(pTitolo);
+                        pTitolo = new Paragraph("Produzione").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pValore = new Paragraph(eventoSelezionato.produzione).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Capotecnico").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         string nomeCapotecnico = "";
                         if (eventoSelezionato.LavorazioneCorrente.IdCapoTecnico != null)
                         {
-                            nomeCapotecnico = eventoSelezionato.LavorazioneCorrente.IdCapoTecnico.ToString();
+                            Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(eventoSelezionato.LavorazioneCorrente.IdCapoTecnico.Value, ref esito);
+                            nomeCapotecnico = coll.Nome + " " + coll.Cognome;
                         }
-                        pValore = new Paragraph(nomeCapotecnico).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
-                        tbIntestazioneDx.AddCell(pValore);
+                        pValore = new Paragraph(nomeCapotecnico).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                        pTitolo = new Paragraph("Lavorazione").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        tbIntestazioneDx.AddCell(pTitolo);
-                        tbIntestazioneDx.AddCell(eventoSelezionato.lavorazione);
-                        pTitolo = new Paragraph("Data Inizio").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        tbIntestazioneDx.AddCell(pTitolo);
-                        tbIntestazioneDx.AddCell(eventoSelezionato.data_inizio_impegno.ToShortDateString());
+                        pTitolo = new Paragraph("Lavorazione").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.lavorazione).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Data Inizio").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.data_inizio_impegno.ToShortDateString()).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                        pTitolo = new Paragraph("Luogo").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        tbIntestazioneDx.AddCell(pTitolo);
-                        tbIntestazioneDx.AddCell(eventoSelezionato.luogo);
-                        pTitolo = new Paragraph("Cod.Lavor.").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        tbIntestazioneDx.AddCell(pTitolo);
-                        tbIntestazioneDx.AddCell(eventoSelezionato.codice_lavoro);
+                        pTitolo = new Paragraph("Luogo").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.luogo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Cod.Lavor.").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.codice_lavoro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                        pTitolo = new Paragraph("Indirizzo").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        tbIntestazioneDx.AddCell(pTitolo);
-                        tbIntestazioneDx.AddCell(eventoSelezionato.indirizzo);
-                        pTitolo = new Paragraph("Data Lavoraz.").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        tbIntestazioneDx.AddCell(pTitolo);
-                        tbIntestazioneDx.AddCell(eventoSelezionato.data_inizio_lavorazione.ToShortDateString());
+                        pTitolo = new Paragraph("Indirizzo").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.indirizzo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Data Lavoraz.").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.data_inizio_lavorazione.ToShortDateString()).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
 
-                        iText.Layout.Element.Cell cellaNote = new iText.Layout.Element.Cell(2, 4);
+                        iText.Layout.Element.Cell cellaNote = new iText.Layout.Element.Cell(2, 4).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         string notePianoEsterno = "";
                         if (eventoSelezionato.LavorazioneCorrente.NotePianoEsterno != null) notePianoEsterno = eventoSelezionato.LavorazioneCorrente.NotePianoEsterno;
-                        Paragraph pNotePiano = new Paragraph("Note: " + notePianoEsterno.Trim()).SetFontSize(10);
-                        cellaNote.Add(pNotePiano).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
-                        tbIntestazioneDx.AddCell(cellaNote);
+                        Paragraph pNotePiano = new Paragraph("Note: " + notePianoEsterno.Trim()).SetFontSize(10).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        cellaNote.Add(pNotePiano).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(cellaNote).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
 
-                        tbIntestazione.AddCell(tbIntestazioneDx);
+                        tbIntestazione.AddCell(tbIntestazioneDx).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
                         document.Add(tbIntestazione);
 
@@ -141,7 +163,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         Paragraph pSpazio = new Paragraph(" ");
                         document.Add(pSpazio);
 
-                        Paragraph pLuogoData = new Paragraph("Roma, " + DateTime.Today.ToLongDateString());
+                        Paragraph pLuogoData = new Paragraph(cittaVs +", " + DateTime.Today.ToLongDateString());
                         document.Add(pLuogoData);
 
                         document.Add(pSpazio);
@@ -242,24 +264,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         int n = doc.GetNumberOfPages();
 
-                        Config cfAppo = Config_BLL.Instance.getConfig(ref esito, "PARTITA_IVA");
-                        string pIvaVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "DENOMINAZIONE");
-                        string denominazioneVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "TOPONIMO");
-                        string toponimoVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "INDIRIZZO");
-                        string indirizzoVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CIVICO");
-                        string civicoVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CAP");
-                        string capVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CITTA");
-                        string cittaVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "PROVINCIA");
-                        string provinciaVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "EMAIL");
-                        string emailVs = cfAppo.valore;
 
                         // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
                         for (int i = 1; i <= n; i++)

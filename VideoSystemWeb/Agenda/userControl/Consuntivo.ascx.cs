@@ -221,8 +221,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         }
                         else
                         {
-                            esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                            esito.descrizione = "Il File " + pathConsuntivo.Replace("~", "") + " non è stato creato correttamente!";
+                            esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                            esito.Descrizione = "Il File " + pathConsuntivo.Replace("~", "") + " non è stato creato correttamente!";
                         }
 
 
@@ -235,8 +235,8 @@ namespace VideoSystemWeb.Agenda.userControl
             catch (Exception ex)
             {
 
-                esito.codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.descrizione = "popolaPannelloConsuntivo(DatiAgenda eventoSelezionato) " + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "popolaPannelloConsuntivo(DatiAgenda eventoSelezionato) " + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;

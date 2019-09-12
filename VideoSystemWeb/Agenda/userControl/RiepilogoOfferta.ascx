@@ -8,6 +8,8 @@
         $("#<%=val_pagamentoSchermo.ClientID%>").text($("#<%=cmbMod_Pagamento.ClientID%>").find('option:selected').val() + " gg DFFM");
 
         $("#<%=val_consegnaSchermo.ClientID%>").text($("#<%=txt_Consegna.ClientID%>").val());
+
+        $("#<%=note.ClientID%>").text($("#<%=txt_Note.ClientID%>").val());
     }
 </script>
 
@@ -335,11 +337,12 @@
             <div id="totaliStampa" style="width: 100%; font-size: 8pt" runat="server" visible="true">
                 <table style="width: 100%">
                     <tr>
-                        <td style="width: 25%; text-align: left; padding-left: 20px;">
+                        <td style="width: 23%; text-align: left; padding-left: 20px;vertical-align:top;">
                             <b><asp:Label ID="Label1" runat="server" Text="Note:" Font-Bold="true" /></b></td>
-                        <td style="width: 45%; text-align: left; padding-left: 10px;padding-right:10px;border:thin 1px #000;">
-                            <b><asp:Label ID="note" runat="server" Text="" /></b></td>
-                        <td style="width: 30%">
+                        <td style="width: 47%; text-align: left; padding-left: 5px;padding-right:5px;border:solid 1px #000;vertical-align:top;">
+                            <asp:Label runat="server" Text="" ID="note"></asp:Label>
+                        </td>
+                        <td style="width: 30%;vertical-align:top;">
                             <table style="width: 100%">
                                 <tr>
                                     <td style="width: 60%;border:solid 1px #000;">

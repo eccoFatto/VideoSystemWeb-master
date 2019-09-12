@@ -35,6 +35,26 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 if (eventoSelezionato != null && eventoSelezionato.LavorazioneCorrente != null)
                 {
+                    // LEGGO I PARAMETRI DI VS
+                    Config cfAppo = Config_BLL.Instance.getConfig(ref esito, "PARTITA_IVA");
+                    string pIvaVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "DENOMINAZIONE");
+                    string denominazioneVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "TOPONIMO");
+                    string toponimoVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "INDIRIZZO");
+                    string indirizzoVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "CIVICO");
+                    string civicoVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "CAP");
+                    string capVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "CITTA");
+                    string cittaVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "PROVINCIA");
+                    string provinciaVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "EMAIL");
+                    string emailVs = cfAppo.valore;
+
 
                     // GESTIONE NOMI FILE PDF
                     string nomeFile = "Consuntivo_" + eventoSelezionato.LavorazioneCorrente.Id.ToString() + ".pdf";
@@ -55,37 +75,117 @@ namespace VideoSystemWeb.Agenda.userControl
                         //doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
                         Document document = new Document(doc);
 
-                        document.SetMargins(90, 30, 50, 30);
+                        //document.SetMargins(90, 30, 50, 30);
+                        document.SetMargins(50, 30, 50, 30);
+
+
+                        // AGGIUNGO TABLE PER LAYOUT INTESTAZIONE
+                        iText.Layout.Element.Table tbIntestazione = new iText.Layout.Element.Table(new float[] { 1, 9 }).UseAllAvailableWidth().SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        //iText.Layout.Element.Table tbIntestazione = new iText.Layout.Element.Table(3).UseAllAvailableWidth();
+                        iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(80, 80).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazione.AddCell(image);
+
+                        iText.Layout.Element.Table tbIntestazioneDx = new iText.Layout.Element.Table(new float[] { 2, 3, 2, 3 }).UseAllAvailableWidth().SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
                         Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
 
-                        Paragraph pIntestazione = new Paragraph("Consuntivo Piano Esterno - Cliente: " + cliente.RagioneSociale.Trim() + " - " + eventoSelezionato.codice_lavoro).SetFontSize(12).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-                        document.Add(pIntestazione);
+                        Paragraph pTitolo = new Paragraph("Cliente").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        Paragraph pValore = new Paragraph(cliente.RagioneSociale.Trim()).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
+                        tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Referente").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        string nomeReferente = "";
+                        if (eventoSelezionato.LavorazioneCorrente.IdReferente != null)
+                        {
+                            Anag_Referente_Clienti_Fornitori referente = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferenteById(ref esito, Convert.ToInt32(eventoSelezionato.LavorazioneCorrente.IdReferente.Value));
+                            nomeReferente = referente.Nome + " " + referente.Cognome;
+                        }
+                        pValore = new Paragraph(nomeReferente).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                        Paragraph pIntestazione2 = new Paragraph("Lavorazione: " + eventoSelezionato.lavorazione + " " + eventoSelezionato.produzione + " del " + eventoSelezionato.data_inizio_lavorazione.ToShortDateString() + " - " + eventoSelezionato.data_fine_lavorazione.ToShortDateString()).SetFontSize(12).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-                        document.Add(pIntestazione2);
+                        pTitolo = new Paragraph("Produzione").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pValore = new Paragraph(eventoSelezionato.produzione).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Capotecnico").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        string nomeCapotecnico = "";
+                        if (eventoSelezionato.LavorazioneCorrente.IdCapoTecnico != null)
+                        {
+                            Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(eventoSelezionato.LavorazioneCorrente.IdCapoTecnico.Value, ref esito);
+                            nomeCapotecnico = coll.Nome + " " + coll.Cognome;
+                        }
+                        pValore = new Paragraph(nomeCapotecnico).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+
+                        pTitolo = new Paragraph("Lavorazione").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.lavorazione).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Data Inizio").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.data_inizio_impegno.ToShortDateString()).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+
+                        pTitolo = new Paragraph("Luogo").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.luogo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Cod.Lavor.").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.codice_lavoro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+
+                        pTitolo = new Paragraph("Indirizzo").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.indirizzo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Data Lavoraz.").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(eventoSelezionato.data_inizio_lavorazione.ToShortDateString()).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+
+
+                        iText.Layout.Element.Cell cellaNote = new iText.Layout.Element.Cell(2, 4).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        string notePianoEsterno = "";
+                        if (eventoSelezionato.LavorazioneCorrente.NotePianoEsterno != null) notePianoEsterno = eventoSelezionato.LavorazioneCorrente.NotePianoEsterno;
+                        Paragraph pNotePiano = new Paragraph("Note: " + notePianoEsterno.Trim()).SetFontSize(10).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        cellaNote.Add(pNotePiano).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        tbIntestazioneDx.AddCell(cellaNote).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+
+
+                        tbIntestazione.AddCell(tbIntestazioneDx).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+
+                        document.Add(tbIntestazione);
+
+                        //Paragraph pIntestazione = new Paragraph("Consuntivo Piano Esterno - Cliente: " + cliente.RagioneSociale.Trim() + " - " + eventoSelezionato.codice_lavoro).SetFontSize(12).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                        //document.Add(pIntestazione);
+
+                        //Paragraph pIntestazione2 = new Paragraph("Lavorazione: " + eventoSelezionato.lavorazione + " " + eventoSelezionato.produzione + " del " + eventoSelezionato.data_inizio_lavorazione.ToShortDateString() + " - " + eventoSelezionato.data_fine_lavorazione.ToShortDateString()).SetFontSize(12).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                        //document.Add(pIntestazione2);
 
 
                         Paragraph pSpazio = new Paragraph(" ");
                         document.Add(pSpazio);
 
+                        Paragraph pLuogoData = new Paragraph(cittaVs +", " + DateTime.Today.ToLongDateString());
+                        document.Add(pLuogoData);
+
+                        document.Add(pSpazio);
+
                         // INTESTAZIONE GRIGLIA
-                        iText.Layout.Element.Table table = new iText.Layout.Element.Table(8).UseAllAvailableWidth();
-                        Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold();
+
+                        iText.Layout.Element.Table table = new iText.Layout.Element.Table(8).UseAllAvailableWidth(); //.SetBorderTop(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.ORANGE, 5)).SetBorderBottom(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.YELLOW, 5)).SetBorderLeft(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.GREEN, 5)).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.RED, 5));
+                        Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Orario").SetFontSize(10).SetBold();
+                        intestazione = new Paragraph("Orario").SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Collaboratore").SetFontSize(10).SetBold();
+                        intestazione = new Paragraph("Collaboratore").SetFontSize(10).SetBold().SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Qualifica").SetFontSize(10).SetBold();
+                        intestazione = new Paragraph("Qualifica").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Importo Diaria").SetFontSize(10).SetBold();
+                        intestazione = new Paragraph("Importo Diaria").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Intervento").SetFontSize(10).SetBold();
+                        intestazione = new Paragraph("Intervento").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Albergo").SetFontSize(10).SetBold();
+                        intestazione = new Paragraph("Albergo").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Note").SetFontSize(10).SetBold();
+                        intestazione = new Paragraph("Note").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
                         foreach (DatiPianoEsternoLavorazione dpe in listaDatiPianoEsternoLavorazione)
                         {
@@ -134,9 +234,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
                             //Paragraph p = new Paragraph(dpe.Data.Value.ToLongDateString() + " " + orario + " " + collaboratoreFornitore + " " + nota).SetFontSize(8);
                             //document.Add(p);
-                            table.AddCell(dataPiano).SetFontSize(8);
+                            table.AddCell(dataPiano).SetFontSize(8).SetFontSize(10);
                             table.AddCell(orario).SetFontSize(8);
-                            table.AddCell(collaboratoreFornitore).SetFontSize(8);
+                            table.AddCell(collaboratoreFornitore);
                             table.AddCell(qualifica).SetFontSize(8);
                             Paragraph pImportoDiaria = new Paragraph(importoDiaria).SetFontSize(8).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                             table.AddCell(pImportoDiaria);
@@ -147,18 +247,16 @@ namespace VideoSystemWeb.Agenda.userControl
                         }
                         document.Add(table);
 
-                        document.Add(pSpazio);
+                        //document.Add(pSpazio);
 
-                        Paragraph pIntNote = new Paragraph("Note:").SetFontSize(12).SetBold();
-                        document.Add(pIntNote);
+                        //Paragraph pIntNote = new Paragraph("Note:").SetFontSize(12).SetBold();
+                        //document.Add(pIntNote);
 
-                        document.Add(pSpazio);
+                        //document.Add(pSpazio);
 
-                        string notePianoEsterno = "";
-                        if (eventoSelezionato.LavorazioneCorrente.NotePianoEsterno != null) notePianoEsterno = eventoSelezionato.LavorazioneCorrente.NotePianoEsterno;
 
-                        Paragraph pNotePiano = new Paragraph(notePianoEsterno.Trim()).SetFontSize(10);
-                        document.Add(pNotePiano);
+                        //Paragraph pNotePiano = new Paragraph(notePianoEsterno.Trim()).SetFontSize(10);
+                        //document.Add(pNotePiano);
 
                         iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
                         //iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(1,20,pageSize.GetHeight()-80);
@@ -166,31 +264,13 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         int n = doc.GetNumberOfPages();
 
-                        Config cfAppo = Config_BLL.Instance.getConfig(ref esito, "PARTITA_IVA");
-                        string pIvaVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "DENOMINAZIONE");
-                        string denominazioneVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "TOPONIMO");
-                        string toponimoVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "INDIRIZZO");
-                        string indirizzoVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CIVICO");
-                        string civicoVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CAP");
-                        string capVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "CITTA");
-                        string cittaVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "PROVINCIA");
-                        string provinciaVs = cfAppo.valore;
-                        cfAppo = Config_BLL.Instance.getConfig(ref esito, "EMAIL");
-                        string emailVs = cfAppo.valore;
 
                         // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
                         for (int i = 1; i <= n; i++)
                         {
                             // AGGIUNGO LOGO
-                            iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(i, 20, pageSize.GetHeight() - 80);
-                            document.Add(image);
+                            //iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(i, 20, pageSize.GetHeight() - 80);
+                            //document.Add(image);
                             //AGGIUNGO NUM.PAGINA
                             document.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7),
                                 pageSize.GetWidth() - 60, pageSize.GetHeight() - 20, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);

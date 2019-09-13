@@ -254,17 +254,17 @@
                             <Columns>
                                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="15%" />
                                 <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="15%" />
+                                <asp:TemplateField HeaderText="Collab./Fornitore" HeaderStyle-Width="15%">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lbl_Riferimento" runat="server" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Seleziona" HeaderStyle-Width="15%">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDown" runat="server" ImageUrl="/Images/arrow-down-icon.png" ToolTip="Sposta giù" CommandName="moveDown" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/Male-user-edit-icon.png" ToolTip="Modifica e aggiungi riferimento" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" CommandName="elimina" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="return confermaEliminazioneArticolo();" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                <asp:TemplateField HeaderText="Collab./Fornitore" HeaderStyle-Width="15%">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lbl_Riferimento" runat="server" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                                 <asp:BoundField DataField="Prezzo" HeaderText="Listino" DataFormatString="{0:N2}" HeaderStyle-Width="8%" />
@@ -293,12 +293,12 @@
                         <asp:TextBox ID="txt_TotPrezzo" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="w3-col" style="padding: 5px; width: 20%">
-                        <label style="margin-bottom: 0.2rem;">Totale costo</label><br />
-                        <asp:TextBox ID="txt_TotCosto" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
+                        <label style="margin-bottom: 0.2rem;">Totale costo lordo</label><br />
+                        <asp:TextBox ID="txt_TotLordo" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="w3-col" style="padding: 5px; width: 20%">
-                        <label style="margin-bottom: 0.2rem;">Totale lordo</label><br />
-                        <asp:TextBox ID="txt_TotLordo" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
+                        <label style="margin-bottom: 0.2rem;">Totale costo</label><br />
+                        <asp:TextBox ID="txt_TotCosto" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
                     </div>
                     <div class="w3-col" style="padding: 5px; width: 20%">
                         <label style="margin-bottom: 0.2rem;">Totale IVA</label><br />

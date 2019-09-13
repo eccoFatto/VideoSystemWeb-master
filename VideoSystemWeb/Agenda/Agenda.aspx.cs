@@ -124,7 +124,7 @@ namespace VideoSystemWeb.Agenda
             if (esito.Codice == Esito.ESITO_OK)
             {
                // ChiudiPopup();
-                ShowSuccess("Salvataggio eseguito correttamente");
+               // ShowSuccess("Salvataggio eseguito correttamente");
             }
             else
             {                
@@ -232,7 +232,7 @@ namespace VideoSystemWeb.Agenda
                 {
                     ChiudiPopup();
 
-                    ShowSuccess("Salvataggio eseguito correttamente");
+                    //ShowSuccess("Salvataggio eseguito correttamente");
                 }
                 else
                 {
@@ -807,10 +807,20 @@ namespace VideoSystemWeb.Agenda
             {
                 if (SessionManager.EventoSelezionato.id == 0)
                 {
-                    Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(SessionManager.EventoSelezionato.id_cliente, ref esito);
-                    List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
-                    NoteOfferta noteOfferta = new NoteOfferta { Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " ", Note = "" };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+                    int risorsaEvento = int.Parse(hf_risorsa.Value);
+                    string sottotipoRisorsa = UtilityTipologiche.getElementByID(SessionManager.ListaRisorse, risorsaEvento, ref esito).sottotipo.ToUpper();
 
+                    NoteOfferta noteOfferta = new NoteOfferta();
+                    if (sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString())
+                    {
+                        Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(SessionManager.EventoSelezionato.id_cliente, ref esito);
+                        List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
+                        noteOfferta.Banca = datiBancari[0].DatiCompleti;
+                        noteOfferta.Pagamento = cliente.Pagamento;
+                        noteOfferta.Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " ";
+                        noteOfferta.Note = "";// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+                    }
+                    
                     esito = Agenda_BLL.Instance.CreaEvento(SessionManager.EventoSelezionato, listaIdTender, noteOfferta);
                 }
                 else

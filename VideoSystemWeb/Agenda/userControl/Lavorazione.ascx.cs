@@ -807,7 +807,9 @@ namespace VideoSystemWeb.Agenda.userControl
                 int idLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
 
                 DatiArticoliLavorazione articoloLavorazioneDiaria = Articoli_BLL.Instance.CaricaArticoloLavorazioneByID(idLavorazione, idDiaria, ref esito);
-                articoloLavorazioneDiaria.Costo = articoloLavorazioneDiaria.Prezzo = importoDiaria;
+                articoloLavorazioneDiaria.Costo = importoDiaria;
+                articoloLavorazioneDiaria.FP_lordo = importoDiaria;
+                articoloLavorazioneDiaria.Prezzo = articoloDiaria.DefaultPrezzo;
 
                 if (figuraProfessionale.Tipo == COLLABORATORE)
                 {
@@ -1214,7 +1216,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 if (totPrezzo != 0)
                 {
-                    percRicavo = ((totPrezzo - totCosto) / totPrezzo) * 100;
+                    percRicavo = ((totPrezzo - (decimal)totLordo) / totPrezzo) * 100;
                 }
             }
 

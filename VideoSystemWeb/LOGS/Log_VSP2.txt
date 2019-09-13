@@ -5353,3 +5353,13 @@ La procedura 'InsertDatiArticoliLavorazione' restituisce uno stato Null, valore 
 2019-07-31 09:05:27,735 [11] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2019-07-31 09:07:45,010 [6] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2019-07-31 14:07:44,454 [9] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-09-13 10:43:39,071 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-09-13 10:44:16,136 [7] ERROR VideoSystemWeb.BLL.Esito - nicola - Azienda con id 0 non trovato in tabella anag_clienti_fornitori 
+2019-09-13 10:46:12,123 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-09-13 10:46:56,111 [10] ERROR VideoSystemWeb.BLL.Esito - nicola - Azienda con id 0 non trovato in tabella anag_clienti_fornitori 
+2019-09-13 10:57:47,820 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-09-13 11:00:50,938 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-09-13 11:05:13,112 [9] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-09-13 11:10:01,993 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-09-13 11:12:37,553 [9] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2019-09-13 11:43:26,234 [21] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!

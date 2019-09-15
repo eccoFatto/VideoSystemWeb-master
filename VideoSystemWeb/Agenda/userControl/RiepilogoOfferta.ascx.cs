@@ -32,9 +32,10 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
+                ComboMod_Pagamento.Items.Clear();
                 foreach (GiorniPagamentoFatture gpf in SessionManager.ListaGPF)
                 {
-                    cmbMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione, gpf.Giorni));
+                    ComboMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione, gpf.Giorni));
                 }
 
                 foreach (DatiBancari datiBancari in SessionManager.ListaDatiBancari)
@@ -80,7 +81,7 @@ namespace VideoSystemWeb.Agenda.userControl
             
             NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
             noteOfferta.Banca = ddl_Banca.SelectedValue;
-            noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); 
+            noteOfferta.Pagamento = int.Parse(ComboMod_Pagamento.SelectedValue); 
             noteOfferta.Consegna = txt_Consegna.Text;
             noteOfferta.Note = txt_Note.Text.Trim();
             Offerta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
@@ -215,7 +216,18 @@ namespace VideoSystemWeb.Agenda.userControl
 
             //ddl_Banca.SelectedValue = noteOfferta.Banca;// commentato perché se non trova l'elemento (e può succedere) schioda
             txt_Consegna.Text = noteOfferta.Consegna;
-            cmbMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+
+            try
+            {
+                ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+            }
+            catch (Exception ex)
+            {
+                ComboMod_Pagamento.Items.Add(new ListItem(noteOfferta.Pagamento.ToString(), noteOfferta.Pagamento.ToString()));
+                ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+            }
+
+            //ComboMod_Pagamento.Text = noteOfferta.Pagamento.ToString();
             if (string.IsNullOrEmpty(noteOfferta.Note)){
                 //note.Text = "";
                 note.Text = "";
@@ -282,5 +294,21 @@ namespace VideoSystemWeb.Agenda.userControl
         }
         #endregion
 
+        protected void cmbMod_Pagamento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           // txt_Pagamento.Text = cmbMod_Pagamento.SelectedValue;
+           ////ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaPagamento", script: "javascript: aggiornaPagamento("+ cmbMod_Pagamento.SelectedValue+");", addScriptTags: false);
+           // ScriptManager.RegisterClientScriptBlock(
+           // this,
+           // typeof(Page),
+           // "ToggleScript",
+           // "javascript: aggiornaPagamento(" + cmbMod_Pagamento.SelectedValue + ");",
+           // true);
+        }
+
+        protected void BulletedList1_Click(object sender, BulletedListEventArgs e)
+        {
+            //txt_Pagamento.Text = BulletedList1.Items[e.Index].Text;
+        }
     }
 }

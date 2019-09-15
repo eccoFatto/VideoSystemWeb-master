@@ -454,13 +454,13 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.DropDownList ddl_Banca;
         
         /// <summary>
-        /// Controllo cmbMod_Pagamento.
+        /// Controllo ComboMod_Pagamento.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Pagamento;
+        protected global::AjaxControlToolkit.ComboBox ComboMod_Pagamento;
         
         /// <summary>
         /// Controllo txt_Consegna.

@@ -1,16 +1,23 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RiepilogoOfferta.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.RiepilogoOfferta" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <script>
 
     function aggiornaRiepilogo() {
         $("#<%=val_bancaSchermo.ClientID%>").text($("#<%=ddl_Banca.ClientID%>").val());
 
-        $("#<%=val_pagamentoSchermo.ClientID%>").text($("#<%=cmbMod_Pagamento.ClientID%>").find('option:selected').val() + " gg DFFM");
+        $("#<%=val_pagamentoSchermo.ClientID%>").text($("#<%=ComboMod_Pagamento.ClientID%>").find('option:selected').val() + " gg DFFM");
 
         $("#<%=val_consegnaSchermo.ClientID%>").text($("#<%=txt_Consegna.ClientID%>").val());
 
         $("#<%=note.ClientID%>").text($("#<%=txt_Note.ClientID%>").val());
     }
+
+    function aggiornaPagamento(giorniPagamento) {
+        alert('aggiornaPagamento');
+        document.getElementById('<%=ComboMod_Pagamento.ClientID%>').text = giorniPagamento;
+    }
+
 </script>
 
 <style>
@@ -334,15 +341,15 @@
 
             </div>
             -->
-            <div id="totaliStampa" style="width: 100%; font-size: 8pt" runat="server" visible="true">
+            <div id="totaliStampa" style="width: 100%;height:100px; font-size: 8pt" runat="server" visible="true">
                 <table style="width: 100%">
                     <tr>
-                        <td style="width: 23%; text-align: left; padding-left: 20px;vertical-align:top;">
+                        <td style="width: 23%;height:100%; text-align: left; padding-left: 20px;vertical-align:top;">
                             <b><asp:Label ID="Label1" runat="server" Text="Note:" Font-Bold="true" /></b></td>
-                        <td style="width: 47%; text-align: left; padding-left: 5px;padding-right:5px;border:solid 1px #000;vertical-align:top;">
+                        <td style="width: 47%;height:100%; text-align: left; padding-left: 5px;padding-right:5px;border:solid 1px #000;vertical-align:top;">
                             <asp:Label runat="server" Text="" ID="note"></asp:Label>
                         </td>
-                        <td style="width: 30%;vertical-align:top;">
+                        <td style="width: 30%;height:100%;vertical-align:top;">
                             <table style="width: 100%">
                                 <tr>
                                     <td style="width: 60%;border:solid 1px #000;">
@@ -463,6 +470,8 @@
     <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 50%; background-color: white; overflow: auto;">
         <div class="w3-row-padding">
 
+
+
             <div class="w3-center">
                 <br>
                 <span onclick="document.getElementById('panelModificaNote').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
@@ -487,9 +496,11 @@
                     <label style="margin-bottom: 0.2rem;">Pagamento</label>
                 </div>
                 <div class="w3-threequarter">
-                    <%--<asp:TextBox ID="txt_Pagamento" runat="server" class="w3-input w3-border" placeholder="Pagamento" Style="padding: 2px;"></asp:TextBox>--%>
-                    <asp:DropDownList ID="cmbMod_Pagamento" runat="server" class="w3-input w3-border"></asp:DropDownList>
+                    <div>
+                        <ajaxToolkit:ComboBox ID="ComboMod_Pagamento" runat="server" CssClass="cella" />
+                    </div>
                 </div>
+                
             </div>
             <div class="w3-row" style="padding: 5px;">
                 <div class="w3-quarter" style="padding: 5px">

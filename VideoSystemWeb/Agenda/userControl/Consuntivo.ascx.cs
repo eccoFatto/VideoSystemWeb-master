@@ -78,6 +78,58 @@ namespace VideoSystemWeb.Agenda.userControl
                         //document.SetMargins(90, 30, 50, 30);
                         document.SetMargins(50, 30, 50, 30);
 
+                        // AGGIUNGO TABLE TEST BORDI
+                        iText.Layout.Element.Table tbTest = new iText.Layout.Element.Table(new float[] { 4, 6 }).SetMargin(10).SetWidth(300).SetHeight(200).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.YELLOW, 30);
+
+                        Paragraph pTest = new Paragraph("in alto a sinistra").SetFontSize(10);
+                        iText.Layout.Element.Cell cellaTest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaTest.Add(pTest);
+                        tbTest.AddCell(cellaTest);
+
+                        pTest = new Paragraph("in alto a destra").SetFontSize(9);
+                        cellaTest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaTest.Add(pTest);
+                        tbTest.AddCell(cellaTest);
+
+                        pTest = new Paragraph("in basso a sinistra").SetFontSize(8);
+                        cellaTest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaTest.Add(pTest);
+                        tbTest.AddCell(cellaTest);
+
+                        pTest = new Paragraph("in basso a destra").SetFontSize(12);
+                        cellaTest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaTest.Add(pTest);
+                        tbTest.AddCell(cellaTest);
+
+                        document.Add(tbTest);
+
+
+                        // AGGIUNGO TABLE TEST BORDI
+                        iText.Layout.Element.Table tbTest2 = new iText.Layout.Element.Table(new float[] { 4, 6 }).SetMargin(10).SetWidth(300).SetHeight(200).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.RED, 30).SetFixedPosition(355,335,300);
+
+                        Paragraph pTest2 = new Paragraph("in alto a sinistra").SetFontSize(10);
+                        iText.Layout.Element.Cell cellaTest2 = new iText.Layout.Element.Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE,3,100)).SetPadding(5);
+                        cellaTest2.Add(pTest2);
+                        tbTest2.AddCell(cellaTest2);
+
+                        pTest2 = new Paragraph("in alto a destra").SetFontSize(9);
+                        cellaTest2 = new iText.Layout.Element.Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 3,100)).SetPadding(5);
+                        cellaTest2.Add(pTest2);
+                        tbTest2.AddCell(cellaTest2);
+
+                        pTest2 = new Paragraph("in basso a sinistra").SetFontSize(8);
+                        cellaTest2 = new iText.Layout.Element.Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 3,100)).SetPadding(5);
+                        cellaTest2.Add(pTest2);
+                        tbTest2.AddCell(cellaTest2);
+
+                        pTest2 = new Paragraph("in basso a destra").SetFontSize(12);
+                        cellaTest2 = new iText.Layout.Element.Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 3,100)).SetPadding(5);
+                        cellaTest2.Add(pTest2);
+                        tbTest2.AddCell(cellaTest2);
+
+                        document.Add(tbTest2);
+
+
 
                         // AGGIUNGO TABLE PER LAYOUT INTESTAZIONE
                         iText.Layout.Element.Table tbIntestazione = new iText.Layout.Element.Table(new float[] { 1, 9 }).UseAllAvailableWidth().SetBorder(iText.Layout.Borders.Border.NO_BORDER);

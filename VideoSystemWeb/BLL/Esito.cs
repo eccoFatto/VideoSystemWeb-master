@@ -37,9 +37,13 @@ namespace VideoSystemWeb.BLL
                 if (!string.IsNullOrEmpty(_descrizione))
                 {
                     Anag_Utenti utente = new Anag_Utenti();
+                    utente.username = "ANONIMO";
                     try
                     {
-                        utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+                        if (HttpContext.Current.Session[SessionManager.UTENTE] != null)
+                        {
+                            utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+                        }
                     }
                     catch (Exception)
                     {

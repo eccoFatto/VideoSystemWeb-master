@@ -121,15 +121,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.TextBox txt_TotPrezzo;
         
         /// <summary>
-        /// Controllo txt_TotCosto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_TotCosto;
-        
-        /// <summary>
         /// Controllo txt_TotLordo.
         /// </summary>
         /// <remarks>
@@ -137,6 +128,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_TotLordo;
+        
+        /// <summary>
+        /// Controllo txt_TotCosto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_TotCosto;
         
         /// <summary>
         /// Controllo txt_TotIva.

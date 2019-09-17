@@ -256,6 +256,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_Pagamento;
         
         /// <summary>
+        /// Controllo tbMod_NotaPagamento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_NotaPagamento;
+        
+        /// <summary>
         /// Controllo cmbMod_TipoIndirizzoLegale.
         /// </summary>
         /// <remarks>

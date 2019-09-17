@@ -463,15 +463,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.TextBox tbMod_Pagamento;
         
         /// <summary>
-        /// Controllo ftbe.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::AjaxControlToolkit.FilteredTextBoxExtender ftbe;
-        
-        /// <summary>
         /// Controllo ComboMod_Pagamento.
         /// </summary>
         /// <remarks>

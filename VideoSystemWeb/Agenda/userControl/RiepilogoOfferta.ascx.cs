@@ -81,17 +81,18 @@ namespace VideoSystemWeb.Agenda.userControl
             
             NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
             noteOfferta.Banca = ddl_Banca.SelectedValue;
-            noteOfferta.Pagamento = int.Parse(tbMod_Pagamento.Text); //int.Parse(ComboMod_Pagamento.SelectedValue); 
+            noteOfferta.Pagamento = 30; // int.Parse(tbMod_Pagamento.Text); //int.Parse(ComboMod_Pagamento.SelectedValue); 
+            noteOfferta.NotaPagamento = tbMod_Pagamento.Text.Trim();
             noteOfferta.Consegna = txt_Consegna.Text;
             noteOfferta.Note = txt_Note.Text.Trim();
             Offerta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
 
             val_bancaStampa.Text = noteOfferta.Banca;
-            val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
+            val_pagamentoStampa.Text = noteOfferta.NotaPagamento.ToString(); //+ " gg DFFM";
             val_consegnaStampa.Text = noteOfferta.Consegna;
             //note.Text = txt_Note.Text.Trim().Replace(Environment.NewLine, " ");
 
-            note.Text = BasePage.trimNote(txt_Note.Text.Trim(),4);
+            note.Text = BasePage.trimNote(txt_Note.Text.Trim(),5);
             if (note.Text.IndexOf("\n") >-1)
             {
                 note.Text = note.Text.Replace("\n","<br/>");
@@ -121,7 +122,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
 
                 Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
-                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[4].Text)));
+                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[4].Text))) + "&nbsp;&nbsp;";
 
                 e.Row.Cells[2].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text)));
                // e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
@@ -203,7 +204,7 @@ namespace VideoSystemWeb.Agenda.userControl
             if (noteOfferta.Id == 0)
             {
                 List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
-                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + Environment.NewLine + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, NotaPagamento = cliente.NotaPagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + Environment.NewLine + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
 
                 Offerta_BLL.Instance.CreaNoteOfferta(noteOfferta, ref esito);
             }
@@ -211,7 +212,7 @@ namespace VideoSystemWeb.Agenda.userControl
             ViewState["NoteOfferta"] = noteOfferta;
 
             val_bancaSchermo.Text = val_bancaStampa.Text = noteOfferta.Banca;// 
-            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = noteOfferta.Pagamento + " gg DFFM";
+            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = noteOfferta.NotaPagamento; // + " gg DFFM";
             val_consegnaSchermo.Text = val_consegnaStampa.Text = noteOfferta.Consegna;
 
             //ddl_Banca.SelectedValue = noteOfferta.Banca;// commentato perché se non trova l'elemento (e può succedere) schioda
@@ -227,7 +228,8 @@ namespace VideoSystemWeb.Agenda.userControl
             //    ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
             //}
 
-            tbMod_Pagamento.Text = noteOfferta.Pagamento.ToString();
+            //tbMod_Pagamento.Text = noteOfferta.Pagamento.ToString();
+            tbMod_Pagamento.Text = noteOfferta.NotaPagamento.ToString();
 
             //ComboMod_Pagamento.Text = noteOfferta.Pagamento.ToString();
             if (string.IsNullOrEmpty(noteOfferta.Note)){
@@ -237,7 +239,7 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else {
                 //note.Text = noteOfferta.Note.Trim();
-                note.Text = BasePage.trimNote(noteOfferta.Note,4);
+                note.Text = BasePage.trimNote(noteOfferta.Note,5);
                 note.Text= note.Text.Trim().Replace("\n","<br/>");
 
                 

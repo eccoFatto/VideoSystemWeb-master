@@ -3,6 +3,17 @@
 
 <script>
 
+    $(document).ready(function () {
+        $('.limited-lines').keydown(function(event){
+            if ( event.which == 13 ) {
+                var numberOfLines = $(this).val().split('\n').length;
+                if(numberOfLines >= 5){
+                    event.preventDefault();  
+                }
+            }
+        });
+    });
+    
     function aggiornaRiepilogo() {
         $("#<%=val_bancaSchermo.ClientID%>").text($("#<%=ddl_Banca.ClientID%>").val());
 
@@ -346,7 +357,7 @@
                     <tr>
                         <td style="width: 23%;height:100%; text-align: left; padding-left: 20px;vertical-align:top;">
                             <b><asp:Label ID="Label1" runat="server" Text="Note:" Font-Bold="true" /></b></td>
-                        <td style="width: 43%;height:100%; text-align: left; padding-left: 5px;padding-right:5px;border:solid 1px #000;vertical-align:top;">
+                        <td style="width: 43%;height:100%; text-align: left; padding-left: 5px;padding-right:5px;border:solid 1px #000;vertical-align:top;font:10px/110%;">
                             <asp:Label runat="server" Text="" ID="note"></asp:Label>
                         </td>
                         <td style="width: 34%;height:100%;vertical-align:top;">
@@ -495,7 +506,7 @@
                 </div>
                 <div class="w3-threequarter">
                     <asp:TextBox ID="tbMod_Pagamento" runat="server"/>    
-                    <ajaxToolkit:FilteredTextBoxExtender runat="server" ID="ftbe" FilterMode="ValidChars" FilterType="Numbers" TargetControlID="tbMod_Pagamento" /> 
+                    <%--<ajaxToolkit:FilteredTextBoxExtender runat="server" ID="ftbe" FilterMode="ValidChars" FilterType="Numbers" TargetControlID="tbMod_Pagamento" /> --%>
                     <ajaxToolkit:ComboBox ID="ComboMod_Pagamento" runat="server" Visible="false"/>
                 </div>
             </div>
@@ -512,7 +523,7 @@
                     <label style="margin-bottom: 0.2rem;">Note</label>
                 </div>
                 <div class="w3-threequarter">
-                    <asp:TextBox ID="txt_Note" runat="server" class="w3-input w3-border" placeholder="Note" Style="padding: 2px;" Rows="5" TextMode="MultiLine"></asp:TextBox>
+                    <asp:TextBox ID="txt_Note" runat="server" CssClass="w3-input w3-border limited-lines" placeholder="Note" Style="padding: 2px;" Rows="5" TextMode="MultiLine"></asp:TextBox>
                 </div>
             </div>
         </div>

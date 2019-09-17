@@ -219,7 +219,8 @@
                             </div>
                             <div class="w3-quarter">
                                 <label>Pagamento</label><br />
-                                <asp:DropDownList ID="cmbMod_Pagamento" runat="server" CssClass="w3-input w3-border" disabled />
+                                <asp:DropDownList ID="cmbMod_Pagamento" runat="server" CssClass="w3-input w3-border" disabled Visible="false" />
+                                <asp:TextBox ID="tbMod_NotaPagamento" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="50"></asp:TextBox>
                             </div>
                         </div>
                         <div class="w3-panel w3-blue w3-center w3-round">

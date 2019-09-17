@@ -54,6 +54,7 @@ namespace VideoSystemWeb.DAL
                                     noteOfferta.Id_dati_agenda = dt.Rows[0].Field<int>("id_dati_agenda");
                                     noteOfferta.Banca = dt.Rows[0].Field<string>("banca");
                                     noteOfferta.Pagamento = dt.Rows[0].Field<int>("pagamento");
+                                    noteOfferta.NotaPagamento = dt.Rows[0].Field<string>("notaPagamento");
                                     noteOfferta.Consegna = dt.Rows[0].Field<string>("consegna");
                                     noteOfferta.Note = "";
                                     if (!string.IsNullOrEmpty(dt.Rows[0].Field<string>("note"))) noteOfferta.Note = dt.Rows[0].Field<string>("note");
@@ -97,6 +98,7 @@ namespace VideoSystemWeb.DAL
                                     noteOfferta.Id_dati_agenda = dt.Rows[0].Field<int>("id_dati_agenda");
                                     noteOfferta.Banca = dt.Rows[0].Field<string>("banca");
                                     noteOfferta.Pagamento = dt.Rows[0].Field<int>("pagamento");
+                                    noteOfferta.NotaPagamento = dt.Rows[0].Field<string>("notaPagamento");
                                     noteOfferta.Consegna = dt.Rows[0].Field<string>("consegna");
                                     noteOfferta.Note = dt.Rows[0].Field<string>("note");
                                 }
@@ -165,6 +167,11 @@ namespace VideoSystemWeb.DAL
                             note.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(note);
 
+                            SqlParameter notaPagamento = new SqlParameter("@notaPagamento", noteOfferta.NotaPagamento);
+                            notaPagamento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(notaPagamento);
+
+
                             StoreProc.Connection.Open();
 
                             StoreProc.ExecuteNonQuery();
@@ -229,6 +236,11 @@ namespace VideoSystemWeb.DAL
                             SqlParameter pagamento = new SqlParameter("@pagamento", noteOfferta.Pagamento);
                             pagamento.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(pagamento);
+
+                            SqlParameter notaPagamento = new SqlParameter("@notaPagamento", noteOfferta.NotaPagamento);
+                            notaPagamento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(notaPagamento);
+
 
                             SqlParameter consegna = new SqlParameter("@consegna", noteOfferta.Consegna);
                             consegna.Direction = ParameterDirection.Input;

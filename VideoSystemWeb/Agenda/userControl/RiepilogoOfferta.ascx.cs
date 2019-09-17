@@ -122,7 +122,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
 
                 Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
-                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[4].Text))) + "&nbsp;&nbsp;";
+                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[4].Text))/100) + "&nbsp;&nbsp;";
 
                 e.Row.Cells[2].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text)));
                // e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));

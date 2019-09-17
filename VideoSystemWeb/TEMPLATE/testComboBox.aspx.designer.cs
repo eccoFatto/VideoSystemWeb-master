@@ -56,5 +56,23 @@ namespace VideoSystemWeb.TEMPLATE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::AjaxControlToolkit.ComboBox ComboBox1;
+        
+        /// <summary>
+        /// Controllo tb1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tb1;
+        
+        /// <summary>
+        /// Controllo ftbe.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::AjaxControlToolkit.FilteredTextBoxExtender ftbe;
     }
 }

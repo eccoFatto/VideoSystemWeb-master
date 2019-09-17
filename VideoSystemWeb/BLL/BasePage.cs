@@ -244,6 +244,44 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        public static string trimNote(string note, int nRighe)
+        {
+
+            if (string.IsNullOrEmpty(note))
+            {
+                return "";
+            }
+
+            if (note.IndexOf("\n") < 0)
+            {
+                return note;
+            }
+            else
+            {
+                string sRet = note;
+                string appoNote = note;
+                string ret = "";
+                for (int i = 0; i < nRighe; i++)
+                {
+                    int indice = appoNote.IndexOf("\n");
+                    if (indice > -1)
+                    {
+                        sRet = appoNote.Substring(0, indice+1);
+                        ret += sRet;
+                        appoNote = appoNote.Substring(indice+1);
+                    }
+                    else
+                    {
+                        //NON TROVO A CAPO QUINDI ESCO DALLA ROUTINE
+                        return note;
+                    }
+                }
+                return ret;
+            }
+            
+        }
+
+
         public static Esito SendEmail(List<string> receivers, string subject, string body, List<string> attachments)
         {
             Esito esito = new Esito();

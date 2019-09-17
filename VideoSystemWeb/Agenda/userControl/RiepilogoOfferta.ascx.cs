@@ -35,7 +35,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 ComboMod_Pagamento.Items.Clear();
                 foreach (GiorniPagamentoFatture gpf in SessionManager.ListaGPF)
                 {
-                    ComboMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione, gpf.Giorni));
+                    ComboMod_Pagamento.Items.Add(new ListItem(gpf.Giorni, gpf.Giorni));
                 }
 
                 foreach (DatiBancari datiBancari in SessionManager.ListaDatiBancari)
@@ -81,7 +81,7 @@ namespace VideoSystemWeb.Agenda.userControl
             
             NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
             noteOfferta.Banca = ddl_Banca.SelectedValue;
-            noteOfferta.Pagamento = int.Parse(ComboMod_Pagamento.SelectedValue); 
+            noteOfferta.Pagamento = int.Parse(tbMod_Pagamento.Text); //int.Parse(ComboMod_Pagamento.SelectedValue); 
             noteOfferta.Consegna = txt_Consegna.Text;
             noteOfferta.Note = txt_Note.Text.Trim();
             Offerta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
@@ -91,10 +91,10 @@ namespace VideoSystemWeb.Agenda.userControl
             val_consegnaStampa.Text = noteOfferta.Consegna;
             //note.Text = txt_Note.Text.Trim().Replace(Environment.NewLine, " ");
 
-
-            if (txt_Note.Text.IndexOf("\n") >-1)
+            note.Text = BasePage.trimNote(txt_Note.Text.Trim(),4);
+            if (note.Text.IndexOf("\n") >-1)
             {
-                note.Text = txt_Note.Text.Replace("\n","<br/>");
+                note.Text = note.Text.Replace("\n","<br/>");
             }
             else
             {
@@ -217,15 +217,17 @@ namespace VideoSystemWeb.Agenda.userControl
             //ddl_Banca.SelectedValue = noteOfferta.Banca;// commentato perché se non trova l'elemento (e può succedere) schioda
             txt_Consegna.Text = noteOfferta.Consegna;
 
-            try
-            {
-                ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
-            }
-            catch (Exception ex)
-            {
-                ComboMod_Pagamento.Items.Add(new ListItem(noteOfferta.Pagamento.ToString(), noteOfferta.Pagamento.ToString()));
-                ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
-            }
+            //try
+            //{
+            //    ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+            //}
+            //catch (Exception ex)
+            //{
+            //    ComboMod_Pagamento.Items.Add(new ListItem(noteOfferta.Pagamento.ToString(), noteOfferta.Pagamento.ToString()));
+            //    ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+            //}
+
+            tbMod_Pagamento.Text = noteOfferta.Pagamento.ToString();
 
             //ComboMod_Pagamento.Text = noteOfferta.Pagamento.ToString();
             if (string.IsNullOrEmpty(noteOfferta.Note)){
@@ -235,7 +237,10 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else {
                 //note.Text = noteOfferta.Note.Trim();
-                note.Text = noteOfferta.Note.Trim().Replace("\n","<br/>");
+                note.Text = BasePage.trimNote(noteOfferta.Note,4);
+                note.Text= note.Text.Trim().Replace("\n","<br/>");
+
+                
                 txt_Note.Text = noteOfferta.Note.Trim();
             }
 

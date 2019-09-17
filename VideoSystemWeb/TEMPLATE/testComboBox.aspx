@@ -30,11 +30,13 @@
         </asp:BulletedList>
     </asp:Panel>
     <br />
+    <div class="w3-card-4">
     <ajaxToolkit:ComboBox ID="ComboBox1" runat="server" >
         <asp:ListItem Value="30">30 giorni</asp:ListItem>
         <asp:ListItem Value="60">60 giorni</asp:ListItem>
         <asp:ListItem Value="90">90 giorni</asp:ListItem>
     </ajaxToolkit:ComboBox>
-
-
+    </div>
+    <asp:TextBox ID="tb1" runat="server"/>    
+    <ajaxToolkit:FilteredTextBoxExtender runat="server" ID="ftbe" FilterMode="ValidChars" FilterType="Numbers" TargetControlID="tb1" />
 </asp:Content>

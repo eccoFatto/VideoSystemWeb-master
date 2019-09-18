@@ -442,6 +442,6 @@ namespace VideoSystemWeb.Agenda {
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::VideoSystemWeb.Agenda.userControl.Consuntivo popupConsuntivo;
+        protected global::VideoSystemWeb.Agenda.userControl.RiepilogoPianoEsterno popupConsuntivo;
     }
 }

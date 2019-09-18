@@ -175,6 +175,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     tbMod_ProvinciaOperativo.Text = azienda.ProvinciaOperativo;
                     tbMod_Telefono.Text = azienda.Telefono;
                     tbMod_WebSite.Text = azienda.WebSite;
+                    tbMod_NotaPagamento.Text = azienda.NotaPagamento;
 
 
                     //cbMod_Attivo.Checked = azienda.Attivo;
@@ -322,6 +323,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_ProvinciaOperativo.Text = "";
             tbMod_Telefono.Text = "";
             tbMod_WebSite.Text = "";
+            tbMod_NotaPagamento.Text = "";
 
             cmbMod_TipoIndirizzoLegale.Text = "";
             cmbMod_TipoIndirizzoOperativo.Text = "";
@@ -453,6 +455,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_ProvinciaOperativo.ReadOnly = attivaModifica;
             tbMod_Telefono.ReadOnly = attivaModifica;
             tbMod_WebSite.ReadOnly = attivaModifica;
+            tbMod_NotaPagamento.ReadOnly = attivaModifica;
 
             //cbMod_Attivo.Enabled = !attivaModifica;
             cbMod_Cliente.Enabled = !attivaModifica;
@@ -644,6 +647,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 azienda.TipoIndirizzoLegale = cmbMod_TipoIndirizzoLegale.SelectedValue;
                 azienda.TipoIndirizzoOperativo = cmbMod_TipoIndirizzoOperativo.SelectedValue;
                 azienda.WebSite = BasePage.ValidaCampo(tbMod_WebSite, "", false, ref esito);
+                azienda.NotaPagamento = BasePage.ValidaCampo(tbMod_NotaPagamento, "", true, ref esito);
 
                 return azienda;
 

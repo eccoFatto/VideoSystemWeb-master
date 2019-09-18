@@ -9,6 +9,7 @@ namespace VideoSystemWeb.Entity
         private int id_dati_agenda;
         private string banca;
         private int pagamento;
+        private string notaPagamento;
         private string consegna;
         private string note;
 
@@ -18,6 +19,7 @@ namespace VideoSystemWeb.Entity
         public int Pagamento { get => pagamento; set => pagamento = value; }
         public string Consegna { get => consegna; set => consegna = value; }
         public string Note { get => note; set => note = value; }
+        public string NotaPagamento { get => notaPagamento; set => notaPagamento = value; }
     }
 
     

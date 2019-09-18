@@ -83,7 +83,7 @@ namespace VideoSystemWeb.DAL
                                     azienda.RagioneSociale = dt.Rows[0].Field<string>("ragioneSociale");
                                     azienda.Tipo = dt.Rows[0].Field<string>("tipo");
                                     azienda.WebSite = dt.Rows[0].Field<string>("webSite");
-
+                                    azienda.NotaPagamento = dt.Rows[0].Field<string>("notaPagamento");
                                     azienda.Referenti = Anag_Referente_Clienti_Fornitori_DAL.Instance.getReferentiByIdAzienda(ref esito, azienda.Id);
                                 }
                                 else
@@ -159,7 +159,8 @@ namespace VideoSystemWeb.DAL
                                             ProvinciaLegale = riga.Field<string>("provinciaLegale"),
                                             ProvinciaOperativo = riga.Field<string>("provinciaOperativo"),
                                             RagioneSociale = riga.Field<string>("ragioneSociale"),
-                                            WebSite = riga.Field<string>("webSite")
+                                            WebSite = riga.Field<string>("webSite"),
+                                            NotaPagamento = riga.Field<string>("notaPagamento")
                                         };
 
                                         azienda.Referenti = Anag_Referente_Clienti_Fornitori_DAL.Instance.getReferentiByIdAzienda(ref esito, azienda.Id);
@@ -332,6 +333,10 @@ namespace VideoSystemWeb.DAL
                             webSite.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(webSite);
 
+                            SqlParameter notaPagamento = new SqlParameter("@notaPagamento", azienda.NotaPagamento);
+                            notaPagamento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(notaPagamento);
+
                             StoreProc.Connection.Open();
 
                             StoreProc.ExecuteNonQuery();
@@ -500,6 +505,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter webSite = new SqlParameter("@webSite", azienda.WebSite);
                             webSite.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(webSite);
+
+                            SqlParameter notaPagamento = new SqlParameter("@notaPagamento", azienda.NotaPagamento);
+                            notaPagamento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(notaPagamento);
 
                             StoreProc.Connection.Open();
 

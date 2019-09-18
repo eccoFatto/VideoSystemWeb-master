@@ -1,21 +1,39 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RiepilogoOfferta.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.RiepilogoOfferta" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
 <script>
 
+    $(document).ready(function () {
+        $('.limited-lines').keydown(function(event){
+            if ( event.which == 13 ) {
+                var numberOfLines = $(this).val().split('\n').length;
+                if(numberOfLines >= 5){
+                    event.preventDefault();  
+                }
+            }
+        });
+    });
+    
     function aggiornaRiepilogo() {
         $("#<%=val_bancaSchermo.ClientID%>").text($("#<%=ddl_Banca.ClientID%>").val());
 
-        $("#<%=val_pagamentoSchermo.ClientID%>").text($("#<%=cmbMod_Pagamento.ClientID%>").find('option:selected').val() + " gg DFFM");
+        $("#<%=val_pagamentoSchermo.ClientID%>").text($("#<%=ComboMod_Pagamento.ClientID%>").find('option:selected').val() + " gg DFFM");
 
         $("#<%=val_consegnaSchermo.ClientID%>").text($("#<%=txt_Consegna.ClientID%>").val());
 
         $("#<%=note.ClientID%>").text($("#<%=txt_Note.ClientID%>").val());
     }
+
+    function aggiornaPagamento(giorniPagamento) {
+        alert('aggiornaPagamento');
+        document.getElementById('<%=ComboMod_Pagamento.ClientID%>').text = giorniPagamento;
+    }
+
 </script>
 
 <style>
     .cella {
-        padding-top:18px;
+        padding-top:10px;
         vertical-align:top;
     }
 
@@ -161,10 +179,10 @@
                                     <td colspan="2">
                                         <table border="1" style="width: 100%;border-collapse:collapse;border-width:thin;">
                                             <tr>
-                                                <td style="width: 33%; text-align:center">
+                                                <td style="width: 40%; text-align:center">
                                                     <label><b>Roma</b></label>
                                                 </td>
-                                                <td style="width: 66%; text-align:center">
+                                                <td style="width: 60%; text-align:center">
                                                     <asp:Label ID="lbl_DataStampa" runat="server"></asp:Label>
                                                 </td>
                                             </tr>
@@ -174,23 +192,23 @@
                                 </tr>
 
                                 <tr>
-                                    <td style="width: 33%">
+                                    <td style="width: 40%">
                                         <label><b>Produzione</b></label></td>
-                                    <td style="width: 66%">
+                                    <td style="width: 60%">
                                         <asp:Label ID="lbl_ProduzioneStampa" runat="server"></asp:Label></td>
                                 </tr>
 
                                 <tr>
-                                    <td style="width: 33%">
+                                    <td style="width: 40%">
                                         <label><b>Lavorazione</b></label></td>
-                                    <td style="width: 66%">
+                                    <td style="width: 60%">
                                         <asp:Label ID="lbl_LavorazioneStampa" runat="server"></asp:Label></td>
                                 </tr>
 
                                 <tr>
-                                    <td style="width: 33%">
+                                    <td style="width: 40%">
                                         <label><b>Data Lav.ne</b></label></td>
-                                    <td style="width: 66%">
+                                    <td style="width: 60%">
                                         <asp:Label ID="lbl_DataLavorazioneStampa" runat="server"></asp:Label></td>
                                 </tr>
 
@@ -200,23 +218,23 @@
                         <td style="width: 50%">
                             <table  border="1" style="width:100%;border-collapse:collapse">
                                 <tr>
-                                    <td style="width: 33%;height:50px;vertical-align:top;padding:5px;">
+                                    <td style="width: 35%;height:50px;vertical-align:top;padding:5px;">
                                         <label><b>Spettabile</b></label></td>
-                                    <td style="width: 66%; vertical-align:top;padding:5px;">
+                                    <td style="width: 65%; vertical-align:top;padding:5px;">
                                         <asp:Label ID="lbl_ClienteStampa" runat="server"></asp:Label></td>
                                 </tr>
 
                                 <tr>
-                                    <td style="width: 33%;padding:5px;">
+                                    <td style="width: 35%;padding:5px;">
                                         <label><b>Indirizzo</b></label></td>
-                                    <td style="width: 66%;padding:5px;">
+                                    <td style="width: 65%;padding:5px;">
                                         <asp:Label ID="lbl_IndirizzoClienteStampa" runat="server"></asp:Label></td>
                                 </tr>
 
                                 <tr>
-                                    <td style="width: 33%;padding:5px;">
+                                    <td style="width: 35%;padding:5px;">
                                         <label><b>P. Iva / C.F.</b></label></td>
-                                    <td style="width: 66%;padding:5px;">
+                                    <td style="width: 65%;padding:5px;">
                                         <asp:Label ID="lbl_PIvaClienteStampa" runat="server"></asp:Label></td>
                                 </tr>
                             </table>
@@ -227,7 +245,7 @@
                 <br />
                 <table border="1" style="border-collapse:collapse;width: 100%">
                     <tr>
-                        <td style="width: 15%;padding:5px;">
+                        <td style="width: 23%;padding:5px;">
                             
                             <label><b>Offerta numero</b></label>
 
@@ -236,7 +254,7 @@
                             <asp:Label ID="lbl_CodLavorazioneStampa" runat="server" style="font-weight:bold"></asp:Label>
                         </td>
                                     
-                        <td style="width: 34%;text-align:center">
+                        <td style="width: 26%;text-align:center">
                             <label>elenco offerte</label>
                         </td>
                         <td style="width: 33%; padding:5px;">
@@ -250,14 +268,14 @@
             </div>
             <%--FINE STAMPA--%>
 
-            <div id="articoliStampa" runat="server" class="w3-row w3-section w3-padding w3-small">
+            <div id="articoliStampa" runat="server" class="w3-row w3-section w3-small">
 
                 <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False"
                     Style="font-size: 8pt; max-height: 200px; width: 100%; position: relative; background-color: #FFF; text-align: center"
                     HeaderStyle-BackColor="#2196F3" HeaderStyle-Font-Bold="true" HeaderStyle-ForeColor="White" BorderWidth="0"
                     GridLines="None" OnRowDataBound="gvArticoli_RowDataBound" >
                     <Columns>
-                        <asp:TemplateField HeaderStyle-Width="20%" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" >
+                        <asp:TemplateField HeaderStyle-Width="20%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" >
                             <HeaderTemplate>
                                 <div style="text-align: center;">Codice</div>
                             </HeaderTemplate>
@@ -265,7 +283,7 @@
                                 <asp:Label runat="server" ID="lblCodice" Text='<%# Eval("Descrizione") %>' />
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:TemplateField HeaderText="Descrizione" HeaderStyle-Width="40%" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella">
+                        <asp:TemplateField HeaderText="Descrizione" HeaderStyle-Width="40%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Left" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella">
                             <HeaderTemplate>
                                 <div style="text-align: center;">Descrizione</div>
                             </HeaderTemplate>
@@ -274,13 +292,13 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
-                        <asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
-                        <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
-                        <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
-                        <asp:TemplateField HeaderText="Totale" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella">
+                        <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-HorizontalAlign="Right" HeaderStyle-Width="9%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
+                        <%--<asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />--%>
+                        <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-HorizontalAlign="Right" HeaderStyle-Width="5%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
+                        <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="8%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
+                        <asp:TemplateField HeaderText="Totale" HeaderStyle-HorizontalAlign="Right" HeaderStyle-Width="12%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella">
                             <ItemTemplate>
-                                <asp:Label ID="totaleRiga" runat="server" />
+                                <asp:Label ID="totaleRiga" runat="server"  />
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -334,20 +352,20 @@
 
             </div>
             -->
-            <div id="totaliStampa" style="width: 100%; font-size: 8pt" runat="server" visible="true">
+            <div id="totaliStampa" style="width: 100%;height:100px; font-size: 8pt" runat="server" visible="true">
                 <table style="width: 100%">
                     <tr>
-                        <td style="width: 23%; text-align: left; padding-left: 20px;vertical-align:top;">
+                        <td style="width: 23%;height:100%; text-align: left; padding-left: 20px;vertical-align:top;">
                             <b><asp:Label ID="Label1" runat="server" Text="Note:" Font-Bold="true" /></b></td>
-                        <td style="width: 47%; text-align: left; padding-left: 5px;padding-right:5px;border:solid 1px #000;vertical-align:top;">
+                        <td style="width: 43%;height:100%; text-align: left; padding-left: 5px;padding-right:5px;border:solid 1px #000;vertical-align:top;font:10px/110%;">
                             <asp:Label runat="server" Text="" ID="note"></asp:Label>
                         </td>
-                        <td style="width: 30%;vertical-align:top;">
+                        <td style="width: 34%;height:100%;vertical-align:top;">
                             <table style="width: 100%">
                                 <tr>
                                     <td style="width: 60%;border:solid 1px #000;">
                                         <label><b>Totale</b></label></td>
-                                    <td style="width: 40%; text-align: right; padding-right: 20px;border:solid 1px #000;">
+                                    <td style="width: 40%; text-align: right; padding-right: 1px;border:solid 1px #000;">
                                         <b>
                                             <asp:Label ID="totaleStampa" runat="server" /></b>
                                     </td>
@@ -355,7 +373,7 @@
                                 <tr>
                                     <td style="width: 60%;border:solid 1px #000;">
                                         <label><b>Totale i.v.a.</b></label></td>
-                                    <td style="width: 40%; text-align: right; padding-right: 20px;border:solid 1px #000;">
+                                    <td style="width: 40%; text-align: right; padding-right: 1px;border:solid 1px #000;">
                                         <b>
                                             <asp:Label ID="totaleIVAStampa" runat="server" /></b>
                                     </td>
@@ -363,7 +381,7 @@
                                 <tr>
                                     <td style="width: 60%;border:solid 1px #000;">
                                         <label><b>Totale Euro</b></label></td>
-                                    <td style="width: 40%; text-align: right; padding-right: 20px;border:solid 1px #000;">
+                                    <td style="width: 40%; text-align: right; padding-right: 1px;border:solid 1px #000;">
                                         <b>
                                             <asp:Label ID="totaleEuroStampa" runat="server" /></b>
                                     </td>
@@ -409,22 +427,22 @@
             <div id="footerStampa" style="margin: 10px; margin-top: 25px; position: absolute; bottom: -30px; width: 98%; font-size: 8pt" runat="server" visible="true">
                 <table style="width: 100%;">
                     <tr>
-                        <td style="width: 16%; background-color: #2196F3; color: white; border: solid 1px #fff; text-align: center">Banca</td>
-                        <td style="width: 50%; background-color: #DDD; border: solid 1px #fff">
+                        <td style="width: 22%; background-color: #2196F3; color: white; border: solid 1px #fff; text-align: center">Banca</td>
+                        <td style="width: 44%; background-color: #DDD; border: solid 1px #fff">
                             <asp:Label ID="val_bancaStampa" runat="server" />
                         </td>
                         <td style="width: 34%; background-color: #2196F3; color: white; border: solid 1px #fff"><b>Timbro e firma per accettazione</b></td>
                     </tr>
                     <tr>
-                        <td style="width: 16%; background-color: #2196F3; color: white; border: solid 1px #fff; text-align: center">Pagamento</td>
-                        <td style="width: 50%; background-color: #DDD; border: solid 1px #fff">
+                        <td style="width: 22%; background-color: #2196F3; color: white; border: solid 1px #fff; text-align: center">Pagamento</td>
+                        <td style="width: 44%; background-color: #DDD; border: solid 1px #fff">
                             <asp:Label ID="val_pagamentoStampa" runat="server" />
                         </td>
                         <td style="width: 34%; background-color: #DDD; color: white; border: solid 1px #fff" rowspan="2">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td style="width: 16%; background-color: #2196F3; color: white; border: solid 1px #fff; text-align: center">Consegna</td>
-                        <td style="width: 50%; background-color: #DDD; border: solid 1px #fff">
+                        <td style="width: 22%; background-color: #2196F3; color: white; border: solid 1px #fff; text-align: center">Consegna</td>
+                        <td style="width: 44%; background-color: #DDD; border: solid 1px #fff">
                             <asp:Label ID="val_consegnaStampa" runat="server" />
                         </td>
                     </tr>
@@ -450,7 +468,7 @@
 
         <div id="DivFramePdf" runat="server" style=" width:100%; height:90%;" >
             <%--<iframe id="framePdf" runat="server" src="" allowTransparency="true" frameborder="0" style="overflow:hidden; width:100%; height:600px"></iframe>--%>
-            <iframe id="framePdf" runat="server" src="" style=" width:100%; height:100%;"></iframe>
+            <iframe id="framePdf" runat="server" src="#" style=" width:100%; height:100%;"></iframe>
         </div>
 
 
@@ -460,9 +478,9 @@
 
 
 <div id="panelModificaNote" class="w3-modal " style="position: fixed;">
+
     <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 50%; background-color: white; overflow: auto;">
         <div class="w3-row-padding">
-
             <div class="w3-center">
                 <br>
                 <span onclick="document.getElementById('panelModificaNote').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
@@ -484,11 +502,12 @@
             </div>
             <div class="w3-row" style="padding: 5px;">
                 <div class="w3-quarter">
-                    <label style="margin-bottom: 0.2rem;">Pagamento</label>
+                    <label style="margin-bottom: 0.2rem;">Pagamento (GG)</label>
                 </div>
                 <div class="w3-threequarter">
-                    <%--<asp:TextBox ID="txt_Pagamento" runat="server" class="w3-input w3-border" placeholder="Pagamento" Style="padding: 2px;"></asp:TextBox>--%>
-                    <asp:DropDownList ID="cmbMod_Pagamento" runat="server" class="w3-input w3-border"></asp:DropDownList>
+                    <asp:TextBox ID="tbMod_Pagamento" runat="server"/>    
+                    <%--<ajaxToolkit:FilteredTextBoxExtender runat="server" ID="ftbe" FilterMode="ValidChars" FilterType="Numbers" TargetControlID="tbMod_Pagamento" /> --%>
+                    <ajaxToolkit:ComboBox ID="ComboMod_Pagamento" runat="server" Visible="false"/>
                 </div>
             </div>
             <div class="w3-row" style="padding: 5px;">
@@ -504,7 +523,7 @@
                     <label style="margin-bottom: 0.2rem;">Note</label>
                 </div>
                 <div class="w3-threequarter">
-                    <asp:TextBox ID="txt_Note" runat="server" class="w3-input w3-border" placeholder="Note" Style="padding: 2px;" Rows="5" TextMode="MultiLine"></asp:TextBox>
+                    <asp:TextBox ID="txt_Note" runat="server" CssClass="w3-input w3-border limited-lines" placeholder="Note" Style="padding: 2px;" Rows="5" TextMode="MultiLine"></asp:TextBox>
                 </div>
             </div>
         </div>

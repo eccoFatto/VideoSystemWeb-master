@@ -16,8 +16,8 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "1.37";
-        public static string dataVersione = "31/08/2019";
+        public static string versione = "1.39";
+        public static string dataVersione = "17/09/2019";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static T ValidaCampo<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito)
@@ -243,6 +243,44 @@ namespace VideoSystemWeb.BLL
                 return false;
             }
         }
+
+        public static string trimNote(string note, int nRighe)
+        {
+
+            if (string.IsNullOrEmpty(note))
+            {
+                return "";
+            }
+
+            if (note.IndexOf("\n") < 0)
+            {
+                return note;
+            }
+            else
+            {
+                string sRet = note;
+                string appoNote = note;
+                string ret = "";
+                for (int i = 0; i < nRighe; i++)
+                {
+                    int indice = appoNote.IndexOf("\n");
+                    if (indice > -1)
+                    {
+                        sRet = appoNote.Substring(0, indice+1);
+                        ret += sRet;
+                        appoNote = appoNote.Substring(indice+1);
+                    }
+                    else
+                    {
+                        //NON TROVO A CAPO QUINDI ESCO DALLA ROUTINE
+                        return note;
+                    }
+                }
+                return ret;
+            }
+            
+        }
+
 
         public static Esito SendEmail(List<string> receivers, string subject, string body, List<string> attachments)
         {

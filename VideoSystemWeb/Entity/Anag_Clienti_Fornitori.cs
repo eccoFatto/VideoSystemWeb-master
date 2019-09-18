@@ -36,6 +36,7 @@ namespace VideoSystemWeb.Entity
     //[note] [varchar] (200) NOT NULL,
     //[tipo] [varchar] (50) NOT NULL,  
     //[attivo] bit
+    //[notaPagamento]
 
     [Serializable]
     public class Anag_Clienti_Fornitori
@@ -71,6 +72,7 @@ namespace VideoSystemWeb.Entity
         private string note;
         private string tipo;
         private bool attivo;
+        private string notaPagamento;
         private List<Anag_Referente_Clienti_Fornitori> referenti;
 
         public int Id { get => id; set => id = value; }
@@ -105,6 +107,7 @@ namespace VideoSystemWeb.Entity
         public string Tipo { get => tipo; set => tipo = value; }
         public bool Attivo { get => attivo; set => attivo = value; }
         public List<Anag_Referente_Clienti_Fornitori> Referenti { get => referenti; set => referenti = value; }
+        public string NotaPagamento { get => notaPagamento; set => notaPagamento = value; }
 
         public FiguraProfessionale CreaFiguraProfessionale()
         {

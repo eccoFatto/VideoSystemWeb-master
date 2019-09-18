@@ -32,9 +32,10 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
+                ComboMod_Pagamento.Items.Clear();
                 foreach (GiorniPagamentoFatture gpf in SessionManager.ListaGPF)
                 {
-                    cmbMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione, gpf.Giorni));
+                    ComboMod_Pagamento.Items.Add(new ListItem(gpf.Giorni, gpf.Giorni));
                 }
 
                 foreach (DatiBancari datiBancari in SessionManager.ListaDatiBancari)
@@ -80,20 +81,21 @@ namespace VideoSystemWeb.Agenda.userControl
             
             NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
             noteOfferta.Banca = ddl_Banca.SelectedValue;
-            noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); 
+            noteOfferta.Pagamento = 30; // int.Parse(tbMod_Pagamento.Text); //int.Parse(ComboMod_Pagamento.SelectedValue); 
+            noteOfferta.NotaPagamento = tbMod_Pagamento.Text.Trim();
             noteOfferta.Consegna = txt_Consegna.Text;
             noteOfferta.Note = txt_Note.Text.Trim();
             Offerta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
 
             val_bancaStampa.Text = noteOfferta.Banca;
-            val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
+            val_pagamentoStampa.Text = noteOfferta.NotaPagamento.ToString(); //+ " gg DFFM";
             val_consegnaStampa.Text = noteOfferta.Consegna;
             //note.Text = txt_Note.Text.Trim().Replace(Environment.NewLine, " ");
 
-
-            if (txt_Note.Text.IndexOf("\n") >-1)
+            note.Text = BasePage.trimNote(txt_Note.Text.Trim(),5);
+            if (note.Text.IndexOf("\n") >-1)
             {
-                note.Text = txt_Note.Text.Replace("\n","<br/>");
+                note.Text = note.Text.Replace("\n","<br/>");
             }
             else
             {
@@ -120,7 +122,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
 
                 Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
-                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[4].Text)));
+                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[4].Text))/100) + "&nbsp;&nbsp;";
 
                 e.Row.Cells[2].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text)));
                // e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
@@ -202,7 +204,7 @@ namespace VideoSystemWeb.Agenda.userControl
             if (noteOfferta.Id == 0)
             {
                 List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
-                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + Environment.NewLine + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, NotaPagamento = cliente.NotaPagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + Environment.NewLine + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
 
                 Offerta_BLL.Instance.CreaNoteOfferta(noteOfferta, ref esito);
             }
@@ -210,12 +212,26 @@ namespace VideoSystemWeb.Agenda.userControl
             ViewState["NoteOfferta"] = noteOfferta;
 
             val_bancaSchermo.Text = val_bancaStampa.Text = noteOfferta.Banca;// 
-            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = noteOfferta.Pagamento + " gg DFFM";
+            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = noteOfferta.NotaPagamento; // + " gg DFFM";
             val_consegnaSchermo.Text = val_consegnaStampa.Text = noteOfferta.Consegna;
 
             //ddl_Banca.SelectedValue = noteOfferta.Banca;// commentato perché se non trova l'elemento (e può succedere) schioda
             txt_Consegna.Text = noteOfferta.Consegna;
-            cmbMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+
+            //try
+            //{
+            //    ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+            //}
+            //catch (Exception ex)
+            //{
+            //    ComboMod_Pagamento.Items.Add(new ListItem(noteOfferta.Pagamento.ToString(), noteOfferta.Pagamento.ToString()));
+            //    ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+            //}
+
+            //tbMod_Pagamento.Text = noteOfferta.Pagamento.ToString();
+            tbMod_Pagamento.Text = noteOfferta.NotaPagamento.ToString();
+
+            //ComboMod_Pagamento.Text = noteOfferta.Pagamento.ToString();
             if (string.IsNullOrEmpty(noteOfferta.Note)){
                 //note.Text = "";
                 note.Text = "";
@@ -223,7 +239,10 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else {
                 //note.Text = noteOfferta.Note.Trim();
-                note.Text = noteOfferta.Note.Trim().Replace("\n","<br/>");
+                note.Text = BasePage.trimNote(noteOfferta.Note,5);
+                note.Text= note.Text.Trim().Replace("\n","<br/>");
+
+                
                 txt_Note.Text = noteOfferta.Note.Trim();
             }
 
@@ -282,5 +301,21 @@ namespace VideoSystemWeb.Agenda.userControl
         }
         #endregion
 
+        protected void cmbMod_Pagamento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           // txt_Pagamento.Text = cmbMod_Pagamento.SelectedValue;
+           ////ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaPagamento", script: "javascript: aggiornaPagamento("+ cmbMod_Pagamento.SelectedValue+");", addScriptTags: false);
+           // ScriptManager.RegisterClientScriptBlock(
+           // this,
+           // typeof(Page),
+           // "ToggleScript",
+           // "javascript: aggiornaPagamento(" + cmbMod_Pagamento.SelectedValue + ");",
+           // true);
+        }
+
+        protected void BulletedList1_Click(object sender, BulletedListEventArgs e)
+        {
+            //txt_Pagamento.Text = BulletedList1.Items[e.Index].Text;
+        }
     }
 }

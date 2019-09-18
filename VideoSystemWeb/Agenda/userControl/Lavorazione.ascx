@@ -4,7 +4,21 @@
 
     $(document).ready(function () {
 
+
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+
+            $(".time").focus(function () {
+                $(".time").select();//.val("");
+            });
+
+            $('.limited-lines').keydown(function(event){
+                if ( event.which == 13 ) {
+                    var numberOfLines = $(this).val().split('\n').length;
+                    if(numberOfLines >= 5){
+                        event.preventDefault();   
+                    }
+                }
+            });
 
             // MODIFICA FIGURA PROFESSIONALE PIANO ESTERNO
             $('#<%=chk_diaria.ClientID%>').click(function () {
@@ -189,10 +203,11 @@
     }
 
     function enterEvent(e) {
-    if (e.keyCode == 13) {
-        $("input[id=<%=btn_Cerca.ClientID%>]").click();
+        if (e.keyCode == 13) {
+            $("input[id=<%=btn_Cerca.ClientID%>]").click();
+        }
     }
-    }
+
 </script>
 
 <asp:HiddenField ID="hf_tabSelezionataLavorazione" runat="server" EnableViewState="true" Value="Lavoraz" />
@@ -555,7 +570,7 @@
 
                 <div class="w3-col" style="height: 20%;">
                     <label style="margin-bottom: 0.2rem;">Note piano esterno</label>
-                    <asp:TextBox ID="txt_notaGeneralePianoEsterno" runat="server" Rows="5" TextMode="MultiLine" class="w3-input w3-round-large w3-border w3-hover-shadow" Style="padding: 2px; "></asp:TextBox>
+                    <asp:TextBox ID="txt_notaGeneralePianoEsterno" runat="server" Rows="6" TextMode="MultiLine" class="w3-input w3-round-large w3-border w3-hover-shadow limited-lines" Style="padding: 2px; "></asp:TextBox>
                 </div>
 
 <!-- MODIFICA ELEMENTO SINGOLO -->
@@ -579,7 +594,7 @@
                                                 </div>
                                                 <div class="w3-half" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Orario convocazione</label>
-                                                    <asp:TextBox ID="txt_orario" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;"></asp:TextBox>
+                                                    <asp:TextBox ID="txt_orario" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;" ></asp:TextBox>
                                                 </div>
                                             </div>
                                             <div class="w3-col">

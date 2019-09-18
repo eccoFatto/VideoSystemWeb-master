@@ -9,6 +9,11 @@
 
     <script>
         $(document).ready(function () {
+            (function blink() { 
+              $('.blink').fadeOut(800).fadeIn(500, blink); 
+            })();
+
+
             $('.calendarAgenda').datetimepicker({
                 inline: true,
                 locale: 'it',
@@ -140,6 +145,10 @@
                     width: "47%"
                 }, velocita);
                 $('#div_tabStato').css('width', '60%');
+
+                $('#<%=btnRiepilogo.ClientID%>').hide();
+                $('#<%=btnConsuntivo.ClientID%>').hide();
+
             } else if (tipoName == 'Offerta') {
                 nomeElemento = '<%=tab_Offerta.ClientID%>';
 
@@ -157,6 +166,10 @@
                     width: "47%"
                 }, velocita);
                 $('#div_tabStato').css('width', '60%');
+
+                $('#<%=btnRiepilogo.ClientID%>').show();
+                $('#<%=btnConsuntivo.ClientID%>').hide();
+
             } else if (tipoName == 'Lavorazione') {
                 nomeElemento = '<%=tab_Lavorazione.ClientID%>';
                 $("#<%=btnElimina.ClientID%>").removeClass("w3-disabled");
@@ -168,6 +181,9 @@
                 $('.infoEvento').fadeIn(1000);
                 $('#infoGenerali').removeClass("w3-col");
                 $('#infoGenerali').addClass("w3-quarter");
+
+                $('#<%=btnRiepilogo.ClientID%>').hide();
+                $('#<%=btnConsuntivo.ClientID%>').show();
             }
             if (document.getElementById(nomeElemento).className.indexOf("w3-red") == -1)
                 document.getElementById(nomeElemento).className += " w3-red";
@@ -348,5 +364,10 @@
             <popup:Consuntivo ID="popupConsuntivo" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
-    <div class="showAgendaBackground" style="display: none"></div>
+    <div class="showAgendaBackground" style="display: none">
+        <div class="blink" style="position: fixed; width: 100%; bottom: 5%; color:darkred;">
+            <asp:Label ID="lbl_backgroundAgenda" Text="Un evento è in fase di modifica" style="font-size:50pt; " runat="server" /><br />
+            <asp:Label ID="lbl_sottotitoloBGAgenda" Text="Fare clic per tornare alla visualizzazione evento" style="font-size:20pt;"  runat="server" />
+        </div>
+    </div>
 </asp:Content>

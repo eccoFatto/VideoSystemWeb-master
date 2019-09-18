@@ -107,7 +107,7 @@
     <div class="w3-col" style="height: 25%; position: relative;">
         <asp:Panel runat="server" ID="panelGruppi" CssClass="round" Style="height: 100%; position: relative; background-color: white; overflow: auto;">
             <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Articoli e Articoli composti</p>
-            <asp:GridView ID="gvGruppi" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvGruppi_RowCommand" DataMember="ID">
+            <asp:GridView ID="gvGruppi" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvGruppi_RowCommand" DataMember="ID" OnRowDataBound="gvGruppi_RowDataBound">
                 <Columns>
                     <asp:BoundField DataField="ID" HeaderText="ID" />
                     <asp:BoundField DataField="nome" HeaderText="Descrizione" />

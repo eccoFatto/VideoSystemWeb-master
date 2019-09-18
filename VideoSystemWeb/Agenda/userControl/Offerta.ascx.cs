@@ -185,6 +185,17 @@ namespace VideoSystemWeb.Agenda.userControl
             }
         }
 
+        protected void gvGruppi_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if (((ArticoliGruppi)e.Row.DataItem).Isgruppo)
+                {
+                    e.Row.Font.Bold = true;
+                }
+            }
+        }
+
         protected void gvArticoli_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             DatiArticoli articoloSelezionato;

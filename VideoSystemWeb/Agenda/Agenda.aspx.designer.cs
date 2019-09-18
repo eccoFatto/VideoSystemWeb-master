@@ -443,5 +443,23 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.Consuntivo popupConsuntivo;
+        
+        /// <summary>
+        /// Controllo lbl_backgroundAgenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_backgroundAgenda;
+        
+        /// <summary>
+        /// Controllo lbl_sottotitoloBGAgenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_sottotitoloBGAgenda;
     }
 }

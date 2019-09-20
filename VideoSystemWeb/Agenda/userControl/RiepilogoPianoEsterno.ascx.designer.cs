@@ -10,7 +10,7 @@
 namespace VideoSystemWeb.Agenda.userControl {
     
     
-    public partial class Consuntivo {
+    public partial class RiepilogoPianoEsterno {
         
         /// <summary>
         /// Controllo btnStampaConsuntivo.

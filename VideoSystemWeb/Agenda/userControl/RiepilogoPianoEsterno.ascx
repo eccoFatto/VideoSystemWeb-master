@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Consuntivo.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.Consuntivo" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RiepilogoPianoEsterno.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.RiepilogoPianoEsterno" %>
 
 <script>
 </script>

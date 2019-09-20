@@ -4,7 +4,7 @@
 <%@ Register TagPrefix="popup" TagName="Offerta" Src="~/Agenda/userControl/Offerta.ascx" %>
 <%@ Register TagPrefix="popup" TagName="Lavorazione" Src="~/Agenda/userControl/Lavorazione.ascx" %>
 <%@ Register TagPrefix="popup" TagName="RiepilogoOfferta" Src="~/Agenda/userControl/RiepilogoOfferta.ascx" %>
-<%@ Register TagPrefix="popup" TagName="Consuntivo" Src="~/Agenda/userControl/Consuntivo.ascx" %>
+<%@ Register TagPrefix="popup" TagName="RiepilogoPianoEsterno" Src="~/Agenda/userControl/RiepilogoPianoEsterno.ascx" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <script>
@@ -361,7 +361,7 @@
 
     <asp:UpdatePanel ID="upConsuntivo" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
         <ContentTemplate>
-            <popup:Consuntivo ID="popupConsuntivo" runat="server" />
+            <popup:RiepilogoPianoEsterno ID="popupConsuntivo" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
     <div class="showAgendaBackground" style="display: none">

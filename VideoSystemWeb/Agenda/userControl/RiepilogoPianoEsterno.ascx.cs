@@ -17,7 +17,7 @@ using System.Configuration;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
-    public partial class Consuntivo : System.Web.UI.UserControl
+    public partial class RiepilogoPianoEsterno : System.Web.UI.UserControl
     {
         BasePage basePage = new BasePage();
         protected void Page_Load(object sender, EventArgs e)
@@ -57,10 +57,10 @@ namespace VideoSystemWeb.Agenda.userControl
 
 
                     // GESTIONE NOMI FILE PDF
-                    string nomeFile = "Consuntivo_" + eventoSelezionato.LavorazioneCorrente.Id.ToString() + ".pdf";
-                    string pathConsuntivo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_CONSUNTIVO"] + nomeFile;
-                    string mapPathConsuntivo = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_CONSUNTIVO"]) + nomeFile;
-                    //string mapPathPdfSenzaNumeroPagina = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_CONSUNTIVO"]) + "tmp_" + nomeFile;
+                    string nomeFile = "PianoEsterno_" + eventoSelezionato.LavorazioneCorrente.Id.ToString() + ".pdf";
+                    string pathPianoEsterno = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PIANOESTERNO"] + nomeFile;
+                    string mapPathPianoEsterno = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PIANOESTERNO"]) + nomeFile;
+                    //string mapPathPdfSenzaNumeroPagina = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PIANOESTERNO"]) + "tmp_" + nomeFile;
 
                     List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = eventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
                     if (listaDatiPianoEsternoLavorazione != null)
@@ -69,7 +69,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
                         
 
-                        PdfWriter wr = new PdfWriter(mapPathConsuntivo);
+                        PdfWriter wr = new PdfWriter(mapPathPianoEsterno);
                         PdfDocument doc = new PdfDocument(wr);
                         doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
                         //doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
@@ -336,25 +336,25 @@ namespace VideoSystemWeb.Agenda.userControl
                         document.Close();
                         wr.Close();
 
-                        if (File.Exists(mapPathConsuntivo))
+                        if (File.Exists(mapPathPianoEsterno))
                         {
-                            //string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(mapPathPdfSenzaNumeroPagina, mapPathConsuntivo, ref esito);
+                            //string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(mapPathPdfSenzaNumeroPagina, mapPianoEsterno, ref esito);
                             //if (File.Exists(mapPathPdfSenzaNumeroPagina)) File.Delete(mapPathPdfSenzaNumeroPagina);
                             //if (esito.codice == Esito.ESITO_OK) { 
-                                framePdfConsuntivo.Attributes.Remove("src");
-                                framePdfConsuntivo.Attributes.Add("src", pathConsuntivo.Replace("~", ""));
+                            framePdfConsuntivo.Attributes.Remove("src");
+                                framePdfConsuntivo.Attributes.Add("src", pathPianoEsterno.Replace("~", ""));
 
                                 DivFramePdfConsuntivo.Visible = true;
                                 framePdfConsuntivo.Visible = true;
 
                                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfConsuntivo.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
-                                btnStampaConsuntivo.Attributes.Add("onclick", "window.open('" + pathConsuntivo.Replace("~", "") + "');");
+                                btnStampaConsuntivo.Attributes.Add("onclick", "window.open('" + pathPianoEsterno.Replace("~", "") + "');");
                             //}
                         }
                         else
                         {
                             esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                            esito.Descrizione = "Il File " + pathConsuntivo.Replace("~", "") + " non è stato creato correttamente!";
+                            esito.Descrizione = "Il File " + pathPianoEsterno.Replace("~", "") + " non è stato creato correttamente!";
                         }
 
 

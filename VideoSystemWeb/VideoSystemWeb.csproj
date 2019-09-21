@@ -449,6 +449,24 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="SITO\IMMAGINI\1 - 1.jpg" />
+    <Content Include="SITO\IMMAGINI\1.jpg" />
+    <Content Include="SITO\IMMAGINI\2 - 1.jpg" />
+    <Content Include="SITO\IMMAGINI\2.jpg" />
+    <Content Include="SITO\IMMAGINI\3 - 1.jpg" />
+    <Content Include="SITO\IMMAGINI\3.jpg" />
+    <Content Include="SITO\IMMAGINI\4 - 1.jpg" />
+    <Content Include="SITO\IMMAGINI\4.jpg" />
+    <Content Include="SITO\IMMAGINI\5.jpg" />
+    <Content Include="SITO\IMMAGINI\6.jpg" />
+    <Content Include="SITO\IMMAGINI\facebook-icon.ico" />
+    <Content Include="SITO\IMMAGINI\google-maps-48.png" />
+    <Content Include="SITO\IMMAGINI\immagine Home.jpg" />
+    <Content Include="SITO\IMMAGINI\instagram-icon.ico" />
+    <Content Include="SITO\IMMAGINI\logoVSP.jpg" />
+    <Content Include="SITO\IMMAGINI\logoVSP.png" />
+    <Content Include="SITO\IMMAGINI\mail-50.png" />
+    <Content Include="SITO\index.html" />
     <Content Include="StretchSession.aspx" />
     <Content Include="TEMPLATE\testComboBox.aspx" />
     <Content Include="TEMPLATE\testWord.aspx" />
@@ -831,6 +849,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="TEMPLATE\Modello Prova.dotx" />
+    <Content Include="SITO\IMMAGINI\Azienda.docx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -4,14 +4,21 @@
 <script>
 
     $(document).ready(function () {
-        $('.limited-lines').keydown(function(event){
-            if ( event.which == 13 ) {
-                var numberOfLines = $(this).val().split('\n').length;
-                if(numberOfLines >= 5){
-                    event.preventDefault();  
+
+        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+
+            $('.limited-lines').keydown(function (event) {
+
+                if ( event.which == 13 ) {
+                    var numberOfLines = $(this).val().split('\n').length;
+                    if(numberOfLines >= 5){
+                        event.preventDefault();  
+                    }
                 }
-            }
+            });
+
         });
+
     });
     
     function aggiornaRiepilogo() {
@@ -523,7 +530,7 @@
                     <label style="margin-bottom: 0.2rem;">Note</label>
                 </div>
                 <div class="w3-threequarter">
-                    <asp:TextBox ID="txt_Note" runat="server" CssClass="w3-input w3-border limited-lines" placeholder="Note" Style="padding: 2px;" Rows="5" TextMode="MultiLine"></asp:TextBox>
+                    <asp:TextBox ID="txt_Note" runat="server" CssClass="w3-input w3-border limited-lines" placeholder="Note" Style="padding: 2px;" Rows="6" TextMode="MultiLine"></asp:TextBox>
                 </div>
             </div>
         </div>

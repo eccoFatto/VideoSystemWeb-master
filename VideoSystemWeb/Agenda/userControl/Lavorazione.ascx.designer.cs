@@ -184,6 +184,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.TextBox txt_FiltroGruppiLavorazione;
         
         /// <summary>
+        /// Controllo ddl_filtroGiorniLavorazioneDettEcon.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_filtroGiorniLavorazioneDettEcon;
+        
+        /// <summary>
         /// Controllo panelModificaArticolo.
         /// </summary>
         /// <remarks>
@@ -200,6 +209,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upModificaArticolo;
+        
+        /// <summary>
+        /// Controllo txt_DataArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_DataArticolo;
         
         /// <summary>
         /// Controllo txt_Descrizione.
@@ -227,6 +245,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_Costo;
+        
+        /// <summary>
+        /// Controllo ddl_Consuntivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Consuntivo;
         
         /// <summary>
         /// Controllo txt_Iva.
@@ -400,13 +427,13 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Button btnOKModificaArtLavorazione;
         
         /// <summary>
-        /// Controllo panel1.
+        /// Controllo panelFigProf.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel panel1;
+        protected global::System.Web.UI.WebControls.Panel panelFigProf;
         
         /// <summary>
         /// Controllo lbl_nessunaFiguraProf.

@@ -10,7 +10,7 @@ using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
-    
+
     public partial class Lavorazione : System.Web.UI.UserControl
     {
         ObjectIDGenerator IDGenerator = new ObjectIDGenerator();
@@ -42,6 +42,8 @@ namespace VideoSystemWeb.Agenda.userControl
         public string quotaFissa_PagamentoMisto;
         public string diariaLorda;
         #endregion
+
+        #region VARIABILI LOCALI
         List<ArticoliGruppi> ListaArticoliGruppiLavorazione
         {
             get
@@ -81,6 +83,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState[VIEWSTATE_LISTAFIGUREPROFESSIONALI] = _listaFigureProfessionali;
             }
         }
+        #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -100,7 +103,8 @@ namespace VideoSystemWeb.Agenda.userControl
             }
         }
 
-        #region COMPORTAMENTO ELEMENTI PAGINA
+
+        #region DETTAGLIO ECONOMICO
         protected void gvGruppiLavorazione_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             long idSelezione = Convert.ToInt64(e.CommandArgument);
@@ -124,7 +128,6 @@ namespace VideoSystemWeb.Agenda.userControl
             }
         }
 
-        // DETTAGLIO ECONOMICO
         protected void gvArticoliLavorazione_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
@@ -155,6 +158,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     ClearPanelModificaArticolo();
 
+                    txt_DataArticolo.Text = ((DateTime)articoloSelezionato.Data).ToString("dd/MM/yyyy");
                     txt_Descrizione.Text = articoloSelezionato.Descrizione;
                     txt_DescrizioneLunga.Text = articoloSelezionato.DescrizioneLunga;
                     txt_Costo.Text = articoloSelezionato.Costo.ToString();
@@ -179,8 +183,6 @@ namespace VideoSystemWeb.Agenda.userControl
                             figuraProfessionale.IdFornitori = articoloSelezionato.IdFornitori;
                         }
                     }
-
-                    //AbilitaComponentiCosto(articoloSelezionato);
 
                     if (figuraProfessionale != null)
                     {
@@ -210,8 +212,9 @@ namespace VideoSystemWeb.Agenda.userControl
                     {
                         AbilitaCostoFP(false);
                     }
-
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "abilitaAnimazione", script: "javascript: abilitaAnimazione('true');", addScriptTags: true);
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaArticolo", script: "javascript: document.getElementById('" + panelModificaArticolo.ClientID + "').style.display='block'", addScriptTags: true);
+
 
                     break;
                 case "elimina":
@@ -219,8 +222,12 @@ namespace VideoSystemWeb.Agenda.userControl
                     gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
                     gvArticoliLavorazione.DataBind();
 
-                   // AggiornaTotali();
+                    // AggiornaTotali();
                     ResetPanelLavorazione();
+                    if (ListaFigureProfessionali.Count > 0)
+                    {
+                        ImportaFigProfInPianoEsterno(); // elimino elemento anche in piano esterno
+                    }
 
                     break;
                 case "moveUp":
@@ -231,7 +238,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
                         gvArticoliLavorazione.DataBind();
 
-                        
+
                     }
                     break;
                 case "moveDown":
@@ -249,7 +256,329 @@ namespace VideoSystemWeb.Agenda.userControl
             RichiediOperazionePopup("UPDATE");
         }
 
-        // PIANO ESTERNO
+        protected void ddl_FiltroGiorniLavorazioneDettEcon_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddl_filtroGiorniLavorazioneDettEcon.SelectedItem.Value == "")
+            {
+                gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+                gvArticoliLavorazione.DataBind();
+            }
+            else
+            {
+                DateTime giornoLavorazione = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(int.Parse(ddl_filtroGiorniLavorazioneDettEcon.SelectedItem.Value));
+                List<DatiArticoliLavorazione> listaAtricoliLavorazioneFiltrati = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.Data == giornoLavorazione).ToList<DatiArticoliLavorazione>();
+
+                gvArticoliLavorazione.DataSource = listaAtricoliLavorazioneFiltrati;
+                gvArticoliLavorazione.DataBind();
+            }
+            RichiediOperazionePopup("UPDATE");
+        }
+
+        protected void btnOKModificaArtLavorazione_Click(object sender, EventArgs e)
+        {
+            DatiArticoliLavorazione articoloSelezionato;
+
+            if (ViewState[VIEWSTATE_IDARTICOLOLAVORAZIONE] == null)
+            {
+                long identificatoreOggetto = (long)ViewState[VIEWSTATE_IDENTIFICATOREARTICOLOLAVORAZIONE];
+                articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
+            }
+            else
+            {
+                int idArticolo = (int)ViewState[VIEWSTATE_IDARTICOLOLAVORAZIONE];
+                long identificatoreOggetto = (long)ViewState[VIEWSTATE_IDENTIFICATOREARTICOLOLAVORAZIONE];
+
+                articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.Id == idArticolo && x.IdentificatoreOggetto == identificatoreOggetto);
+            }
+
+            var index = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(articoloSelezionato);
+
+            articoloSelezionato.Data = DateTime.Parse(txt_DataArticolo.Text);
+            articoloSelezionato.Descrizione = txt_Descrizione.Text;
+            articoloSelezionato.DescrizioneLunga = txt_DescrizioneLunga.Text;
+
+            articoloSelezionato.UsaCostoFP = !string.IsNullOrEmpty(ddl_FPtipoPagamento.SelectedValue);
+
+            if (articoloSelezionato.UsaCostoFP != null && (bool)articoloSelezionato.UsaCostoFP)
+            {
+                articoloSelezionato.FP_netto = string.IsNullOrEmpty(txt_FPnetto.Text) ? 0 : decimal.Parse(txt_FPnetto.Text);
+                articoloSelezionato.FP_lordo = string.IsNullOrEmpty(txt_FPlordo.Text) ? 0 : decimal.Parse(txt_FPlordo.Text);
+                articoloSelezionato.Costo = 0;
+            }
+            else
+            {
+                articoloSelezionato.Costo = decimal.Parse(txt_Costo.Text);
+                articoloSelezionato.FP_netto = 0;
+                articoloSelezionato.FP_lordo = 0;
+            }
+
+            articoloSelezionato.Prezzo = decimal.Parse(txt_Prezzo.Text);
+            articoloSelezionato.Iva = int.Parse(txt_Iva.Text);
+            articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
+            articoloSelezionato.FP_lordo = string.IsNullOrEmpty(txt_FPlordo.Text) ? 0 : decimal.Parse(txt_FPlordo.Text);
+
+            FiguraProfessionale figuraProfessionaleSelezionata = (FiguraProfessionale)ViewState[VIEWSTATE_FP_DETTAGLIOECONOMICO];
+
+            if (figuraProfessionaleSelezionata != null && figuraProfessionaleSelezionata.Tipo == COLLABORATORE)
+            {
+                articoloSelezionato.IdCollaboratori = figuraProfessionaleSelezionata.Id;
+                articoloSelezionato.IdFornitori = null;
+            }
+            else if (figuraProfessionaleSelezionata != null && figuraProfessionaleSelezionata.Tipo == FORNITORE)
+            {
+                articoloSelezionato.IdFornitori = figuraProfessionaleSelezionata.Id;
+                articoloSelezionato.IdCollaboratori = null;
+            }
+
+            articoloSelezionato.IdTipoPagamento = ddl_FPtipoPagamento.SelectedValue == "" ? null : (int?)int.Parse(ddl_FPtipoPagamento.SelectedValue);
+            articoloSelezionato.Nota = txt_FPnotaCollaboratore.Text;
+
+            //SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderBy(y => y.Data).ThenByDescending(x => x.Prezzo).ToList();
+
+            ResetPanelLavorazione();
+            if (ListaFigureProfessionali.Count > 0)
+            {
+                ImportaFigProfInPianoEsterno(); // modifico elemento anche in piano esterno
+            }
+
+            RichiediOperazionePopup("UPDATE");
+        }
+
+        protected void gvArticoliLavorazione_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DatiArticoliLavorazione rigaCorrente = (DatiArticoliLavorazione)e.Row.DataItem;
+
+                if (rigaCorrente.IdCollaboratori != null && rigaCorrente.IdCollaboratori.HasValue)
+                {
+                    FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdCollaboratori && x.Tipo == COLLABORATORE);
+                    ((Label)e.Row.FindControl("lbl_Riferimento")).Text = figuraProfessionale.NominativoCompleto;
+                }
+
+                if (rigaCorrente.IdFornitori != null && rigaCorrente.IdFornitori.HasValue)
+                {
+                    FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdFornitori && x.Tipo == FORNITORE);
+                    ((Label)e.Row.FindControl("lbl_Riferimento")).Text = figuraProfessionale.NominativoCompleto;
+                }
+
+                if (rigaCorrente.IdTipoPagamento != null && rigaCorrente.IdTipoPagamento.HasValue)
+                {
+                    ((Label)e.Row.FindControl("lbl_TipoPagamento")).Text = SessionManager.ListaTipiPagamento.FirstOrDefault(x => x.id == rigaCorrente.IdTipoPagamento).nome;
+                }
+
+                if (rigaCorrente.UsaCostoFP != null && (bool)rigaCorrente.UsaCostoFP)
+                {
+                    ((Label)e.Row.FindControl("lbl_Costo")).Text = string.Format("{0:N2}", rigaCorrente.FP_netto);
+                }
+                else
+                {
+                    ((Label)e.Row.FindControl("lbl_Costo")).Text = string.Format("{0:N2}", rigaCorrente.Costo);
+                }
+            }
+        }
+
+        protected void btn_Cerca_Click(object sender, EventArgs e)
+        {
+            CercaFP();
+        }
+
+
+
+
+
+        protected void CercaFP()
+        {
+            string tipoFP = ddl_FPtipo.SelectedValue;
+            string qualificaFP = ddl_FPqualifica.SelectedItem.Text;
+            string cittaFP = txt_FPCitta.Text.ToLower().Trim();
+            string nominativoFP = txt_FPNominativo.Text;
+
+            List<FiguraProfessionale> listaFPfiltrata = SessionManager.ListaCompletaFigProf;
+
+            if (tipoFP != "")
+            {
+                listaFPfiltrata = listaFPfiltrata.Where(x => x.Tipo == int.Parse(tipoFP)).ToList();
+            }
+
+            if (qualificaFP != "<seleziona>")
+            {
+                listaFPfiltrata = listaFPfiltrata.Where(x => x.Qualifiche != null && x.Qualifiche.Where(y => y.Qualifica == qualificaFP).Count() > 0).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(cittaFP))
+            {
+                listaFPfiltrata = listaFPfiltrata.Where(x => x.Citta.ToLower().Trim().Contains(cittaFP)).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(nominativoFP))
+            {
+                listaFPfiltrata = listaFPfiltrata.Where(x => (x.NominativoCompleto).ToLower().Trim().Contains(nominativoFP)).ToList();
+            }
+
+            gv_FigureProfessionaliModifica.DataSource = listaFPfiltrata;
+            gv_FigureProfessionaliModifica.DataBind();
+
+            upModificaArticolo.Update();
+        }
+
+        private void AggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
+        {
+            Esito esito = new Esito();
+            int idLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
+
+            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.AddRange(Articoli_BLL.Instance.CaricaListaArticoliLavorazioneByIDGruppo(idLavorazione, idGruppo, ref esito));
+            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
+
+            lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
+        }
+
+        private void AggiungiArticoloAListaArticoli(int idArticolo)
+        {
+            int numGiorniLavorazione = SessionManager.EventoSelezionato.durata_lavorazione;
+            Esito esito = new Esito();
+            int idLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
+
+            DatiArticoliLavorazione articoloLavorazione = Articoli_BLL.Instance.CaricaArticoloLavorazioneByID(idLavorazione, idArticolo, null, ref esito);
+
+            for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
+            {
+                long maxIdentificatoreOggetto = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Max(x => x.IdentificatoreOggetto);
+
+                DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
+                DatiArticoliLavorazione datiArticoliLav = new DatiArticoliLavorazione();
+
+                datiArticoliLav.Id = articoloLavorazione.Id;
+                datiArticoliLav.IdentificatoreOggetto = IDGenerator.GetId(datiArticoliLav, out bool firstTime) + maxIdentificatoreOggetto;
+                datiArticoliLav.IdDatiLavorazione = articoloLavorazione.IdDatiLavorazione;
+                datiArticoliLav.IdArtArticoli = articoloLavorazione.IdArtArticoli;
+                datiArticoliLav.IdTipoGenere = articoloLavorazione.IdTipoGenere;
+                datiArticoliLav.IdTipoGruppo = articoloLavorazione.IdTipoGruppo;
+                datiArticoliLav.IdTipoSottogruppo = articoloLavorazione.IdTipoSottogruppo;
+                datiArticoliLav.IdCollaboratori = articoloLavorazione.IdCollaboratori;
+                datiArticoliLav.IdFornitori = articoloLavorazione.IdFornitori;
+                datiArticoliLav.IdTipoPagamento = articoloLavorazione.IdTipoPagamento;
+                datiArticoliLav.Descrizione = articoloLavorazione.Descrizione;
+                datiArticoliLav.DescrizioneLunga = articoloLavorazione.DescrizioneLunga;
+                datiArticoliLav.Stampa = articoloLavorazione.Stampa;
+                datiArticoliLav.Prezzo = articoloLavorazione.Prezzo;
+                datiArticoliLav.Costo = articoloLavorazione.Costo;
+                datiArticoliLav.Iva = articoloLavorazione.Iva;
+                datiArticoliLav.Data = dataGiornoLav;
+                datiArticoliLav.Tv = articoloLavorazione.Tv;
+                datiArticoliLav.Nota = articoloLavorazione.Nota;
+                datiArticoliLav.FP_netto = articoloLavorazione.FP_netto;
+                datiArticoliLav.FP_lordo = articoloLavorazione.FP_lordo;
+                datiArticoliLav.UsaCostoFP = articoloLavorazione.UsaCostoFP;
+
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Add(datiArticoliLav);
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderBy(y => y.Data).ThenByDescending(x => x.Prezzo).ToList();
+            }
+            lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
+        }
+
+        private void ClearPanelModificaArticolo()
+        {
+            txt_DataArticolo.Text =
+            txt_Descrizione.Text =
+            txt_Prezzo.Text =
+            txt_Costo.Text =
+            txt_Iva.Text =
+            txt_DescrizioneLunga.Text =
+            txt_FPCitta.Text =
+            txt_FPNominativo.Text =
+            txt_FPnotaCollaboratore.Text =
+            txt_FPtelefono.Text =
+            txt_FPnetto.Text =
+            txt_FPRimborsoKM.Text =
+            txt_FPlordo.Text = "";
+
+            ddl_Stampa.SelectedIndex =
+            ddl_FPtipo.SelectedIndex =
+            ddl_FPqualifica.SelectedIndex =
+            ddl_FPtipoPagamento.SelectedIndex = 0;
+
+            hf_IdFiguraProfessionale.Value = "";
+
+            gv_FigureProfessionaliModifica.DataSource = null;
+            gv_FigureProfessionaliModifica.DataBind();
+
+            div_FiguraProfessionale.Visible = false;
+        }
+
+        private void AbilitaCostoFP(bool abilita)
+        {
+            if (abilita)
+            {
+                txt_FPnetto.Attributes.Remove("readonly");
+                txt_FPnetto.CssClass = "w3-input w3-border";
+                txt_Costo.Attributes.Add("readonly", "readonly");
+                txt_Costo.CssClass = "w3-input w3-border w3-disabled";
+
+                txt_Costo.Text = "";
+            }
+            else
+            {
+                txt_FPnetto.Attributes.Add("readonly", "readonly");
+                txt_FPnetto.CssClass = "w3-input w3-border w3-disabled";
+                txt_Costo.Attributes.Remove("readonly");
+                txt_Costo.CssClass = "w3-input w3-border";
+
+                txt_FPnetto.Text = "";
+                txt_FPRimborsoKM.Text = "";
+                txt_FPlordo.Text = "";
+            }
+        }
+
+        //Replica elementi dettaglio economico per ogni giorno di lavorazione
+        //private void CaricaListaDatiDettaglioEconomico()
+        //{
+        //    int numGiorniLavorazione = SessionManager.EventoSelezionato.durata_lavorazione;
+
+        //    List<DatiArticoliLavorazione> _listaCollaboratoriFornitori = new List<DatiArticoliLavorazione>();
+
+        //    foreach (DatiArticoliLavorazione collabForn in SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione)
+        //    {
+        //        for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
+        //        {
+        //            DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
+
+        //            DatiArticoliLavorazione datiArticoliLav = new DatiArticoliLavorazione();
+
+        //            datiArticoliLav.Id = collabForn.Id;
+        //            datiArticoliLav.IdentificatoreOggetto = IDGenerator.GetId(datiArticoliLav, out bool firstTime);
+        //            datiArticoliLav.IdDatiLavorazione = collabForn.IdDatiLavorazione;
+        //            datiArticoliLav.IdArtArticoli = collabForn.IdArtArticoli;
+        //            datiArticoliLav.IdTipoGenere = collabForn.IdTipoGenere;
+        //            datiArticoliLav.IdTipoGruppo = collabForn.IdTipoGruppo;
+        //            datiArticoliLav.IdTipoSottogruppo = collabForn.IdTipoSottogruppo;
+        //            datiArticoliLav.IdCollaboratori = collabForn.IdCollaboratori;
+        //            datiArticoliLav.IdFornitori = collabForn.IdFornitori;
+        //            datiArticoliLav.IdTipoPagamento = collabForn.IdTipoPagamento;
+        //            datiArticoliLav.Descrizione = collabForn.Descrizione;
+        //            datiArticoliLav.DescrizioneLunga = collabForn.DescrizioneLunga;
+        //            datiArticoliLav.Stampa = collabForn.Stampa;
+        //            datiArticoliLav.Prezzo = collabForn.Prezzo;
+        //            datiArticoliLav.Costo = collabForn.Costo;
+        //            datiArticoliLav.Iva = collabForn.Iva;
+        //            datiArticoliLav.Data = dataGiornoLav;
+        //            datiArticoliLav.Tv = collabForn.Tv;
+        //            datiArticoliLav.Nota = collabForn.Nota;
+        //            datiArticoliLav.FP_netto = collabForn.FP_netto;
+        //            datiArticoliLav.FP_lordo = collabForn.FP_lordo;
+        //            datiArticoliLav.UsaCostoFP = collabForn.UsaCostoFP;
+
+
+        //            _listaCollaboratoriFornitori.Add(datiArticoliLav);
+        //        }
+        //    }
+        //    _listaCollaboratoriFornitori = _listaCollaboratoriFornitori.OrderBy(x => x.Data).ThenByDescending(y => y.Costo).ToList<DatiArticoliLavorazione>();
+        //    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = _listaCollaboratoriFornitori;
+        //}
+
+        #endregion
+
+        #region PIANO ESTERNO
         protected void gvFigProfessionali_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             string[] commandArgs = e.CommandArgument.ToString().Split(new char[] { ',' });
@@ -273,6 +602,8 @@ namespace VideoSystemWeb.Agenda.userControl
             switch (e.CommandName)
             {
                 case "modifica":
+                    
+
                     DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione();
                     // prendo datiPianoEsterno a partire dalla figuraProfessionale selezionata
                     if (figuraProfessionaleSelezionata.IdCollaboratori != null && figuraProfessionaleSelezionata.IdCollaboratori != 0)
@@ -287,7 +618,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_data.Text = figuraProfessionaleSelezionata.Data != null ? ((DateTime)figuraProfessionaleSelezionata.Data).ToString("dd/MM/yyyy") : ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
                     txt_orario.Text = datiPianoEsterno.Orario == null ? "" : ((DateTime)datiPianoEsterno.Orario).ToString("HH:mm");
                     chk_diaria.Checked = datiPianoEsterno.Diaria != null && (bool)datiPianoEsterno.Diaria;
-                    
+
                     diaria15.Checked = (datiPianoEsterno.ImportoDiaria != null && datiPianoEsterno.ImportoDiaria == 15);
                     diaria30.Checked = (datiPianoEsterno.ImportoDiaria != null && datiPianoEsterno.ImportoDiaria == 30);
                     if (datiPianoEsterno.ImportoDiaria != null &&
@@ -304,9 +635,9 @@ namespace VideoSystemWeb.Agenda.userControl
                         txt_diaria.Text = "";
                     }
 
-                    ddl_intervento.SelectedValue = datiPianoEsterno.IdIntervento == null ? "1": ((int)datiPianoEsterno.IdIntervento).ToString();
-                    chk_albergo.Checked = datiPianoEsterno.Albergo !=null && (bool)datiPianoEsterno.Albergo;
-                    txt_notaPianoEsterno.Text = datiPianoEsterno.Nota;
+                    ddl_intervento.SelectedValue = datiPianoEsterno.IdIntervento == null ? "1" : ((int)datiPianoEsterno.IdIntervento).ToString();
+                    chk_albergo.Checked = datiPianoEsterno.Albergo != null && (bool)datiPianoEsterno.Albergo;
+                    txt_notaPianoEsterno.Text = figuraProfessionaleSelezionata.Nota;
 
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaFigProf", script: "javascript: document.getElementById('" + panelModificaPianoEsterno.ClientID + "').style.display='block'", addScriptTags: true);
 
@@ -380,72 +711,6 @@ namespace VideoSystemWeb.Agenda.userControl
             RichiediOperazionePopup("UPDATE");
         }
 
-        protected void btnOKModificaArtLavorazione_Click(object sender, EventArgs e)
-        {
-            DatiArticoliLavorazione articoloSelezionato;
-
-            if (ViewState[VIEWSTATE_IDARTICOLOLAVORAZIONE] == null)
-            {
-                long identificatoreOggetto = (long)ViewState[VIEWSTATE_IDENTIFICATOREARTICOLOLAVORAZIONE];
-                articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
-            }
-            else
-            {
-                int idArticolo = (int)ViewState[VIEWSTATE_IDARTICOLOLAVORAZIONE];
-                long identificatoreOggetto = (long)ViewState[VIEWSTATE_IDENTIFICATOREARTICOLOLAVORAZIONE];
-
-                articoloSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.Id == idArticolo && x.IdentificatoreOggetto == identificatoreOggetto);
-            }
-
-            var index = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(articoloSelezionato);
-
-            articoloSelezionato.Descrizione = txt_Descrizione.Text;
-            articoloSelezionato.DescrizioneLunga = txt_DescrizioneLunga.Text;
-
-            articoloSelezionato.UsaCostoFP = !string.IsNullOrEmpty(ddl_FPtipoPagamento.SelectedValue);
-
-            if (articoloSelezionato.UsaCostoFP != null && (bool)articoloSelezionato.UsaCostoFP)
-            {
-                articoloSelezionato.FP_netto = string.IsNullOrEmpty(txt_FPnetto.Text) ? 0 : decimal.Parse(txt_FPnetto.Text);
-                articoloSelezionato.FP_lordo = string.IsNullOrEmpty(txt_FPlordo.Text) ? 0 : decimal.Parse(txt_FPlordo.Text);
-                articoloSelezionato.Costo = 0;
-            }
-            else
-            {
-                articoloSelezionato.Costo = decimal.Parse(txt_Costo.Text);
-                articoloSelezionato.FP_netto = 0;
-                articoloSelezionato.FP_lordo = 0;
-            }
-
-            articoloSelezionato.Prezzo = decimal.Parse(txt_Prezzo.Text);
-            articoloSelezionato.Iva = int.Parse(txt_Iva.Text);
-            articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
-            articoloSelezionato.Data = SessionManager.EventoSelezionato.data_inizio_lavorazione;
-            articoloSelezionato.FP_lordo = string.IsNullOrEmpty(txt_FPlordo.Text) ? 0 : decimal.Parse(txt_FPlordo.Text);
-
-            FiguraProfessionale figuraProfessionaleSelezionata = (FiguraProfessionale)ViewState[VIEWSTATE_FP_DETTAGLIOECONOMICO];
-
-            if (figuraProfessionaleSelezionata!=null && figuraProfessionaleSelezionata.Tipo == COLLABORATORE)
-            {
-                articoloSelezionato.IdCollaboratori = figuraProfessionaleSelezionata.Id;
-                articoloSelezionato.IdFornitori = null;
-            }
-            else if (figuraProfessionaleSelezionata != null && figuraProfessionaleSelezionata.Tipo == FORNITORE)
-            {
-                articoloSelezionato.IdFornitori = figuraProfessionaleSelezionata.Id;
-                articoloSelezionato.IdCollaboratori = null;
-            }
-
-            articoloSelezionato.IdTipoPagamento = ddl_FPtipoPagamento.SelectedValue == "" ? null : (int?)int.Parse(ddl_FPtipoPagamento.SelectedValue);
-            articoloSelezionato.Nota = txt_FPnotaCollaboratore.Text;
-
-            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
-
-            ResetPanelLavorazione();
-
-            RichiediOperazionePopup("UPDATE");
-        }
-
         protected void btnOKModificaPianoEsterno_Click(object sender, EventArgs e)
         {
             DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione();
@@ -487,10 +752,10 @@ namespace VideoSystemWeb.Agenda.userControl
                 importoDiaria = decimal.Parse(txt_diaria.Text);
             }
 
-            
+
             if (importoDiaria > 0) // Aggiungo diaria a listaAricoliLavorazione in dettaglio economico
             {
-                AggiungiDiariaAListaArticoli(importoDiaria, figuraProfessionale);
+                AggiungiDiariaAListaArticoli(importoDiaria, figuraProfessionale, DateTime.Parse(txt_data.Text));
             }
             else // Elimino eventuale diaria da listaAricoliLavorazione in dettaglio economico
             {
@@ -499,6 +764,16 @@ namespace VideoSystemWeb.Agenda.userControl
 
             AggiornaTotali();
             ResetPanelLavorazione();
+
+
+
+            // prendo indice dell'elemento in dattaglio economico per eventuale modifica
+            DatiArticoliLavorazione datoArticoloDaModificare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == figuraProfessionale.IdCollaboratori && x.IdFornitori == figuraProfessionale.IdFornitori && x.Data == figuraProfessionale.Data);
+            int indiceArticoloDaModificare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(datoArticoloDaModificare);
+            //fine
+
+
+
 
             datiPianoEsterno.Data = string.IsNullOrEmpty(txt_data.Text) ? null : (DateTime?)DateTime.Parse(txt_data.Text);
             datiPianoEsterno.Orario = string.IsNullOrEmpty(txt_orario.Text) ? null : (DateTime?)DateTime.Parse(txt_orario.Text);
@@ -515,6 +790,17 @@ namespace VideoSystemWeb.Agenda.userControl
 
             gvFigProfessionali.DataSource = ListaFigureProfessionali;
             gvFigProfessionali.DataBind();
+
+            // eseguo modifica a elemento in dettaglio economico
+            if (indiceArticoloDaModificare != -1)
+            {
+                datoArticoloDaModificare.Data = datiPianoEsterno.Data;
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione[indiceArticoloDaModificare] = datoArticoloDaModificare;
+
+                gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+                gvArticoliLavorazione.DataBind();
+            }
+            // fine
 
             RichiediOperazionePopup("UPDATE");
         }
@@ -543,14 +829,14 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 if (importoDiaria > 0) // Aggiungo diaria a listaAricoliLavorazione in dettaglio economico
                 {
-                    AggiungiDiariaAListaArticoli(importoDiaria, figuraProfessionale);
+                    AggiungiDiariaAListaArticoli(importoDiaria, figuraProfessionale, figuraProfessionale.Data);
                 }
                 else // Elimino eventuale diaria da listaAricoliLavorazione in dettaglio economico
                 {
                     CancellaDiariaDaListaArticoli(figuraProfessionale);
                 }
 
-               // datiPianoEsternoLavorazione.Data = string.IsNullOrEmpty(txt_data_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_data_InsGenerale.Text);
+                // datiPianoEsternoLavorazione.Data = string.IsNullOrEmpty(txt_data_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_data_InsGenerale.Text);
                 datiPianoEsternoLavorazione.Orario = string.IsNullOrEmpty(txt_orario_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_orario_InsGenerale.Text);
                 datiPianoEsternoLavorazione.Diaria = chk_diaria_InsGenerale.Checked;
                 datiPianoEsternoLavorazione.ImportoDiaria = importoDiaria;
@@ -559,7 +845,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 figuraProfessionale.Intervento = ddl_intervento_InsGenerale.SelectedItem.Text;
                 figuraProfessionale.Diaria = importoDiaria;
-               // figuraProfessionale.Data = string.IsNullOrEmpty(txt_data_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_data_InsGenerale.Text);
+                // figuraProfessionale.Data = string.IsNullOrEmpty(txt_data_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_data_InsGenerale.Text);
             }
 
             AggiornaTotali();
@@ -571,80 +857,9 @@ namespace VideoSystemWeb.Agenda.userControl
             RichiediOperazionePopup("UPDATE");
         }
 
-        protected void gvArticoliLavorazione_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                DatiArticoliLavorazione rigaCorrente = (DatiArticoliLavorazione)e.Row.DataItem;
-
-                if (rigaCorrente.IdCollaboratori != null && rigaCorrente.IdCollaboratori.HasValue)
-                {
-                    FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdCollaboratori && x.Tipo == COLLABORATORE);
-                    ((Label)e.Row.FindControl("lbl_Riferimento")).Text = figuraProfessionale.NominativoCompleto;
-                }
-
-                if (rigaCorrente.IdFornitori != null && rigaCorrente.IdFornitori.HasValue)
-                {
-                    FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdFornitori && x.Tipo == FORNITORE);
-                    ((Label)e.Row.FindControl("lbl_Riferimento")).Text = figuraProfessionale.NominativoCompleto;
-                }
-
-                if (rigaCorrente.IdTipoPagamento != null && rigaCorrente.IdTipoPagamento.HasValue)
-                {
-                    ((Label)e.Row.FindControl("lbl_TipoPagamento")).Text = SessionManager.ListaTipiPagamento.FirstOrDefault(x => x.id == rigaCorrente.IdTipoPagamento).nome;
-                }
-
-                if (rigaCorrente.UsaCostoFP != null && (bool)rigaCorrente.UsaCostoFP)
-                {
-                    ((Label)e.Row.FindControl("lbl_Costo")).Text = string.Format("{0:N2}", rigaCorrente.FP_netto);
-                }
-                else
-                {
-                    ((Label)e.Row.FindControl("lbl_Costo")).Text = string.Format("{0:N2}", rigaCorrente.Costo);
-                }
-            }
-        }
-
         protected void btnImporta_Click(object sender, EventArgs e)
         {
-            List<DatiArticoliLavorazione> _listaCollaboratoriFornitori;
-            if (SessionManager.EventoSelezionato.LavorazioneCorrente == null ||
-                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null ||
-                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0 ||
-                (_listaCollaboratoriFornitori = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.IdCollaboratori != null || x.IdFornitori != null).ToList()).Count() == 0)
-            {
-                basePage.ShowWarning("Nessuna Figura Professionale da importare");
-            }
-            else
-            {
-                List<FiguraProfessionale> listaFigureProfessionali_OLD = ListaFigureProfessionali; // lista FP per il confronto delle figure non presenti già nell'elenco
-
-                CaricaListaDatiPianoEsternoLavorazione(_listaCollaboratoriFornitori);
-
-                // sostituisco alle Fig Prof caricate dal dettaglio economico quelle precedentementi presenti nel piano esterno
-                if (listaFigureProfessionali_OLD.Count > 0)
-                {
-                    ListaFigureProfessionali.AddRange(listaFigureProfessionali_OLD);
-                }
-
-                if (ListaFigureProfessionali.Count > 0)
-                {
-                    lbl_nessunaFiguraProf.Visible = false;
-
-                    ddl_FiltroGiorniLavorazione.Attributes.Remove("readonly");
-                    ddl_FiltroGiorniLavorazione.CssClass = "w3-white w3-border w3-hover-shadow w3-round";
-
-                    btnInserimentoGenerale.Attributes.Remove("readonly");
-                    btnInserimentoGenerale.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large";
-
-                    ListaFigureProfessionali = ListaFigureProfessionali.OrderBy(x => x.Data).ThenBy(x => x.Netto).ToList<FiguraProfessionale>();
-
-                    gvFigProfessionali.DataSource = ListaFigureProfessionali;
-                    gvFigProfessionali.DataBind();
-                    
-                    RichiediOperazionePopup("UPDATE");
-                }
-            }
+            ImportaFigProfInPianoEsterno();
         }
 
         protected void btnInserimentoGenerale_Click(object sender, EventArgs e)
@@ -654,9 +869,22 @@ namespace VideoSystemWeb.Agenda.userControl
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaFigProf", script: "javascript: document.getElementById('" + panelInserimentoGeneralePianoEsterno.ClientID + "').style.display='block'", addScriptTags: true);
         }
 
-        protected void btn_Cerca_Click(object sender, EventArgs e)
+        protected void ddl_FiltroGiorniLavorazione_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CercaFP();
+            if (ddl_FiltroGiorniLavorazione.SelectedItem.Value == "")
+            {
+                gvFigProfessionali.DataSource = ListaFigureProfessionali;
+                gvFigProfessionali.DataBind();
+            }
+            else
+            {
+                DateTime giornoLavorazione = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(int.Parse(ddl_FiltroGiorniLavorazione.SelectedItem.Value));
+                List<FiguraProfessionale> listaFigProfFiltrate = ListaFigureProfessionali.Where(x => x.Data == giornoLavorazione).ToList<FiguraProfessionale>();
+
+                gvFigProfessionali.DataSource = listaFigProfFiltrate;
+                gvFigProfessionali.DataBind();
+            }
+            RichiediOperazionePopup("UPDATE");
         }
 
         protected void gv_FigureProfessionaliModifica_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -676,8 +904,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void gv_FigureProfessionaliModifica_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-           
-
             switch (e.CommandName)
             {
                 case "seleziona":
@@ -710,88 +936,271 @@ namespace VideoSystemWeb.Agenda.userControl
             upModificaArticolo.Update();
         }
 
-        
-        protected void ddl_FiltroGiorniLavorazione_SelectedIndexChanged(object sender, EventArgs e)
+
+
+
+        private void ImportaFigProfInPianoEsterno()
         {
-            if (ddl_FiltroGiorniLavorazione.SelectedItem.Value == "")
+            List<DatiArticoliLavorazione> _listaCollaboratoriFornitori;
+            if (SessionManager.EventoSelezionato.LavorazioneCorrente == null ||
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null ||
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0 ||
+                (_listaCollaboratoriFornitori = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.IdCollaboratori != null || x.IdFornitori != null).ToList()).Count() == 0)
             {
-                gvFigProfessionali.DataSource = ListaFigureProfessionali;
-                gvFigProfessionali.DataBind();
+                basePage.ShowWarning("Nessuna Figura Professionale da importare");
             }
             else
             {
-                DateTime giornoLavorazione = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(int.Parse(ddl_FiltroGiorniLavorazione.SelectedItem.Value));
-                List<FiguraProfessionale> listaFigProfFiltrate = ListaFigureProfessionali.Where(x => x.Data == giornoLavorazione).ToList<FiguraProfessionale>();
+                List<FiguraProfessionale> listaFigureProfessionali_OLD = ListaFigureProfessionali; // lista FP per il confronto delle figure non presenti già nell'elenco
 
-                gvFigProfessionali.DataSource = listaFigProfFiltrate;
-                gvFigProfessionali.DataBind();
+                CaricaListaDatiPianoEsternoLavorazione(_listaCollaboratoriFornitori);
+
+                // se un elemento non è presente in dett. economico non lo reinserisco (caso di elementi modificati che risulterebbero duplicati)
+                List<FiguraProfessionale> listaFigureProfessionali_DA_ELIMINARE = new List<FiguraProfessionale>();
+                foreach (FiguraProfessionale figProf_OLD in listaFigureProfessionali_OLD)
+                {
+                    if (_listaCollaboratoriFornitori.Where(x => x.Data == figProf_OLD.Data && x.IdCollaboratori == figProf_OLD.IdCollaboratori && x.IdFornitori == figProf_OLD.IdFornitori).ToList().Count == 0)
+                    {
+                        listaFigureProfessionali_DA_ELIMINARE.Add(figProf_OLD);
+                    }
+                }
+                foreach (FiguraProfessionale figProf_ELIM in listaFigureProfessionali_DA_ELIMINARE)
+                {
+                    listaFigureProfessionali_OLD.Remove(figProf_ELIM);
+                }
+                //fine
+
+                // sostituisco alle Fig Prof caricate dal dettaglio economico quelle precedentemente presenti nel piano esterno
+                if (listaFigureProfessionali_OLD.Count > 0)
+                {
+                    ListaFigureProfessionali.AddRange(listaFigureProfessionali_OLD);
+                }
+
+                if (ListaFigureProfessionali.Count > 0)
+                {
+                    lbl_nessunaFiguraProf.Visible = false;
+
+                    ddl_FiltroGiorniLavorazione.Attributes.Remove("readonly");
+                    ddl_FiltroGiorniLavorazione.CssClass = "w3-white w3-border w3-hover-shadow w3-round";
+
+                    btnInserimentoGenerale.Attributes.Remove("readonly");
+                    btnInserimentoGenerale.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large";
+
+                    ListaFigureProfessionali = ListaFigureProfessionali.OrderBy(x => x.Data).ThenByDescending(x => x.Netto).ToList<FiguraProfessionale>();
+
+                    gvFigProfessionali.DataSource = ListaFigureProfessionali;
+                    gvFigProfessionali.DataBind();
+
+                    RichiediOperazionePopup("UPDATE");
+                }
             }
+        }
+
+        private void ClearPanelInserimentoGenerale()
+        {
+            txt_orario_InsGenerale.Text =
+            txt_diaria_InsGenerale.Text = "";
+
+            chk_diaria_InsGenerale.Checked =
+            chk_albergo_InsGenerale.Checked = false;
+
+            diaria15_InsGenerale.Checked =
+            diaria30_InsGenerale.Checked =
+            diariaLibera_InsGenerale.Checked = false;
+
+            ddl_intervento_InsGenerale.SelectedIndex = 0;
+
             RichiediOperazionePopup("UPDATE");
         }
+
+        private void CaricaListaDatiPianoEsternoLavorazione(List<DatiArticoliLavorazione> _listaCollaboratoriFornitori)
+        {
+            List<FiguraProfessionale> _listaFigureProfessionali = new List<FiguraProfessionale>();
+            List<DatiPianoEsternoLavorazione> _listaDatiPianoEsterno = new List<DatiPianoEsternoLavorazione>();
+
+            int numGiorniLavorazione = SessionManager.EventoSelezionato.durata_lavorazione;
+
+            foreach (DatiArticoliLavorazione collabForn in _listaCollaboratoriFornitori)
+            {
+                FiguraProfessionale figProf = new FiguraProfessionale();
+                DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione();
+                if (collabForn.IdCollaboratori != null) //COLLABORATORI
+                {
+                    Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == collabForn.IdCollaboratori);
+
+                    figProf = collaboratore.CreaFiguraProfessionale();
+                    figProf.IdCollaboratori = collabForn.IdCollaboratori;
+
+                    datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
+                    datiPianoEsterno.IdCollaboratori = collaboratore.Id;
+                }
+                else //FORNITORI
+                {
+                    Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == collabForn.IdFornitori);
+
+                    figProf = fornitore.CreaFiguraProfessionale();
+                    figProf.IdFornitori = collabForn.IdFornitori;
+
+                    datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
+                    datiPianoEsterno.IdFornitori = fornitore.Id;
+                }
+
+                figProf.IdentificatoreOggetto = IDGenerator.GetId(figProf, out bool firstTime);
+
+                figProf.Nota = collabForn.Nota;
+                figProf.Netto = collabForn.FP_netto;
+                figProf.Lordo = collabForn.FP_lordo;
+                figProf.Data = datiPianoEsterno.Data = collabForn.Data;
+
+
+                FiguraProfessionale figProfGiaPresente = ListaFigureProfessionali.FirstOrDefault(x => x.Data == figProf.Data && x.IdCollaboratori == figProf.IdCollaboratori && x.IdFornitori == figProf.IdFornitori);
+                if (figProfGiaPresente == null)
+                {
+                    _listaFigureProfessionali.Add(figProf);
+                }
+                else
+                {
+                    if (figProfGiaPresente.Nome != figProf.Nome ||
+                        figProfGiaPresente.Cognome != figProf.Cognome)
+                    {
+                        ListaFigureProfessionali.Remove(figProfGiaPresente);
+                        _listaFigureProfessionali.Add(figProf);
+                    }
+                }
+                _listaDatiPianoEsterno.Add(datiPianoEsterno);
+            }
+
+            ListaFigureProfessionali = _listaFigureProfessionali;
+            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione = _listaDatiPianoEsterno;
+        }
+
         #endregion
 
-        #region OPERAZIONI LAVORAZIONE
-
-        protected void CercaFP()
-        {
-            string tipoFP = ddl_FPtipo.SelectedValue;
-            string qualificaFP = ddl_FPqualifica.SelectedItem.Text;
-            string cittaFP = txt_FPCitta.Text.ToLower().Trim();
-            string nominativoFP = txt_FPNominativo.Text;
-
-            List<FiguraProfessionale> listaFPfiltrata = SessionManager.ListaCompletaFigProf;
-
-            if (tipoFP != "")
-            {
-                listaFPfiltrata = listaFPfiltrata.Where(x => x.Tipo == int.Parse(tipoFP)).ToList();
-            }
-
-            if (qualificaFP != "<seleziona>")
-            {
-                listaFPfiltrata = listaFPfiltrata.Where(x => x.Qualifiche.Where(y => y.Qualifica == qualificaFP).Count() > 0).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(cittaFP))
-            {
-                listaFPfiltrata = listaFPfiltrata.Where(x => x.Citta.ToLower().Trim().Contains(cittaFP)).ToList();
-            }
-
-            if (!string.IsNullOrEmpty(nominativoFP))
-            {
-                listaFPfiltrata = listaFPfiltrata.Where(x => (x.NominativoCompleto).ToLower().Trim().Contains(nominativoFP)).ToList();
-            }
-
-            gv_FigureProfessionaliModifica.DataSource = listaFPfiltrata;
-            gv_FigureProfessionaliModifica.DataBind();
-
-            upModificaArticolo.Update();
-        }
-
-        private void AggiungiArticoliDelGruppoAListaArticoli(int idGruppo)
+        #region OPERAZIONI COMUNI
+        private void PopolaCombo()
         {
             Esito esito = new Esito();
-            int idLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
 
-            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.AddRange(Articoli_BLL.Instance.CaricaListaArticoliLavorazioneByIDGruppo(idLavorazione, idGruppo, ref esito));
-            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
+            #region CAPITECNICI
+            List<Anag_Qualifiche_Collaboratori> listaCapiTecnici = SessionManager.ListaQualificheCollaboratori.Where(x => x.Qualifica == "Capo Tecnico").ToList<Anag_Qualifiche_Collaboratori>();
 
-            lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
+            List<Anag_Collaboratori> listaAnagraficheCapiTecnici = (from Item1 in SessionManager.ListaAnagraficheCollaboratori
+                                                                    join Item2 in listaCapiTecnici
+                                                                    on Item1.Id equals Item2.Id_collaboratore
+                                                                    select Item1).ToList();
+            ddl_Capotecnico.Items.Clear();
+            foreach (Anag_Collaboratori capoTecnico in listaAnagraficheCapiTecnici)
+            {
+                ddl_Capotecnico.Items.Add(new ListItem(capoTecnico.Nome + " " + capoTecnico.Cognome, capoTecnico.Id.ToString()));
+            }
+            ddl_Capotecnico.Items.Insert(0, new ListItem("<seleziona>", ""));
+            #endregion
+
+            #region PRODUTTORI
+            List<Anag_Qualifiche_Collaboratori> listaProduttori = SessionManager.ListaQualificheCollaboratori.Where(x => x.Qualifica == "Produttore").ToList<Anag_Qualifiche_Collaboratori>();
+
+            List<Anag_Collaboratori> listaAnagraficheProduttori = (from Item1 in SessionManager.ListaAnagraficheCollaboratori
+                                                                   join Item2 in listaProduttori on Item1.Id equals Item2.Id_collaboratore
+                                                                   select Item1).ToList();
+            ddl_Produttore.Items.Clear();
+            foreach (Anag_Collaboratori produttore in listaAnagraficheProduttori)
+            {
+                ddl_Produttore.Items.Add(new ListItem(produttore.Nome + " " + produttore.Cognome, produttore.Id.ToString()));
+            }
+            ddl_Produttore.Items.Insert(0, new ListItem("<seleziona>", ""));
+            #endregion
+
+            #region TIPOPAGAMENTO
+
+            ddl_FPtipoPagamento.Items.Clear();
+            foreach (Tipologica tipoPagamento in SessionManager.ListaTipiPagamento)
+            {
+                ddl_FPtipoPagamento.Items.Add(new ListItem(tipoPagamento.nome, tipoPagamento.id.ToString()));
+            }
+            ddl_FPtipoPagamento.Items.Insert(0, new ListItem("<seleziona>", ""));
+            #endregion
+
+            #region QUALIFICHE
+
+            ddl_FPqualifica.Items.Clear();
+            foreach (Tipologica qualifica in SessionManager.ListaQualifiche)
+            {
+                ddl_FPqualifica.Items.Add(new ListItem(qualifica.nome, qualifica.id.ToString()));
+            }
+            ddl_FPqualifica.Items.Insert(0, new ListItem("<seleziona>", ""));
+            #endregion
+
+            #region TIPI INTERVENTO
+            ddl_intervento.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
+            ddl_intervento.DataTextField = "nome";
+            ddl_intervento.DataValueField = "id";
+            ddl_intervento.DataBind();
+
+            ddl_intervento_InsGenerale.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
+            ddl_intervento_InsGenerale.DataTextField = "nome";
+            ddl_intervento_InsGenerale.DataValueField = "id";
+            ddl_intervento_InsGenerale.DataBind();
+            #endregion
+
         }
 
-        private void AggiungiArticoloAListaArticoli(int idArticolo)
+        private void PopolaParametriConfigurazione()
         {
             Esito esito = new Esito();
-            int idLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
+            string erroriConversione = string.Empty;
 
-            DatiArticoliLavorazione articoloLavorazione = Articoli_BLL.Instance.CaricaArticoloLavorazioneByID(idLavorazione, idArticolo, ref esito);
+            #region RITENUTA ACCONTO
+            aliquota_RitenutaAcconto = Config_BLL.Instance.getConfig(ref esito, "ALIQUOTA_RITENUTA_ACCONTO").Valore;
+            if (esito.Codice != Esito.ESITO_OK)
+            {
+                basePage.ShowError(esito.Descrizione);
+                return;
+            }
+            Decimal.TryParse(aliquota_RitenutaAcconto, out decimal aliquotaRitAcc);
+            if (aliquotaRitAcc == 0)
+            {
+                erroriConversione += "<li>L'aliquota per la ritenuta di acconto non è nel formato corretto</li>";
+                aliquota_RitenutaAcconto = "1";
+            }
+            #endregion
 
-            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Add(articoloLavorazione);
-            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
+            #region MISTA
+            quotaFissa_PagamentoMisto = Config_BLL.Instance.getConfig(ref esito, "QUOTA_FISSA_PAGAMENTO_MISTO").Valore;
+            if (esito.Codice != Esito.ESITO_OK)
+            {
+                basePage.ShowError(esito.Descrizione);
+                return;
+            }
+            Decimal.TryParse(quotaFissa_PagamentoMisto, out decimal quotaPagFisso);
+            if (quotaPagFisso == 0)
+            {
+                erroriConversione += "<li>La quota per la tipologia di pagamento mista non è nel formato corretto</li>";
+                quotaFissa_PagamentoMisto = "0";
+            }
+            #endregion
 
-            lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
+            #region DIARIA LORDA
+            diariaLorda = Config_BLL.Instance.getConfig(ref esito, "DIARIA_LORDA").Valore;
+            if (esito.Codice != Esito.ESITO_OK)
+            {
+                basePage.ShowError(esito.Descrizione);
+                return;
+            }
+            Decimal.TryParse(diariaLorda, out decimal diaria);
+            if (diaria == 0)
+            {
+                erroriConversione += "<li>Il valore della diaria lorda non è nel formato corretto</li>";
+                diariaLorda = "0";
+            }
+            #endregion
+
+            if (!string.IsNullOrEmpty(erroriConversione))
+            {
+                basePage.ShowWarning("Si sono verificati i seguenti errori:<ul>" + erroriConversione + "</ul>Modificare il valore nella sezione Tabelle > Configurazione");
+            }
         }
 
-        private void AggiungiDiariaAListaArticoli(decimal importoDiaria, FiguraProfessionale figuraProfessionale)
+        private void AggiungiDiariaAListaArticoli(decimal importoDiaria, FiguraProfessionale figuraProfessionale, DateTime? data)
         {
             Esito esito = new Esito();
             Art_Articoli articoloDiaria = Articoli_BLL.Instance.getDiaria(ref esito);
@@ -803,10 +1212,10 @@ namespace VideoSystemWeb.Agenda.userControl
             else
             {
                 int idDiaria = articoloDiaria.Id;
-
                 int idLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
+                int indiceInserimentoDiaria = 0;
 
-                DatiArticoliLavorazione articoloLavorazioneDiaria = Articoli_BLL.Instance.CaricaArticoloLavorazioneByID(idLavorazione, idDiaria, ref esito);
+                DatiArticoliLavorazione articoloLavorazioneDiaria = Articoli_BLL.Instance.CaricaArticoloLavorazioneByID(idLavorazione, idDiaria, data, ref esito);
                 articoloLavorazioneDiaria.Costo = importoDiaria;
                 articoloLavorazioneDiaria.FP_lordo = importoDiaria;
                 articoloLavorazioneDiaria.Prezzo = articoloDiaria.DefaultPrezzo;
@@ -817,8 +1226,11 @@ namespace VideoSystemWeb.Agenda.userControl
                     articoloLavorazioneDiaria.IdFornitori = null;
 
                     // elimino l'eventuale diaria già presente
-                    DatiArticoliLavorazione diariaDaEliminare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdArtArticoli == idDiaria && x.IdCollaboratori == figuraProfessionale.IdCollaboratori);
+                    DatiArticoliLavorazione diariaDaEliminare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdArtArticoli == idDiaria && x.IdCollaboratori == figuraProfessionale.IdCollaboratori && x.Data == data);
                     SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Remove(diariaDaEliminare);
+
+                    // seleziono l'indice del collaboratore per cui inserire la diaria
+                    indiceInserimentoDiaria = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.IdArtArticoli != idDiaria && x.IdCollaboratori == figuraProfessionale.IdCollaboratori && x.Data == data).FirstOrDefault());
                 }
                 else if (figuraProfessionale.Tipo == FORNITORE)
                 {
@@ -826,14 +1238,23 @@ namespace VideoSystemWeb.Agenda.userControl
                     articoloLavorazioneDiaria.IdFornitori = figuraProfessionale.IdFornitori;
 
                     // elimino l'eventuale diaria già presente
-                    DatiArticoliLavorazione diariaDaEliminare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdArtArticoli == idDiaria && x.IdFornitori == figuraProfessionale.IdFornitori);
+                    DatiArticoliLavorazione diariaDaEliminare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdArtArticoli == idDiaria && x.IdFornitori == figuraProfessionale.IdFornitori && x.Data == data);
                     SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Remove(diariaDaEliminare);
+
+                    // seleziono l'indice del fornitore per cui inserire la diaria
+                    indiceInserimentoDiaria = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.IdArtArticoli != idDiaria && x.IdFornitori == figuraProfessionale.IdFornitori && x.Data == data).FirstOrDefault());
                 }
 
-                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Add(articoloLavorazioneDiaria);
-                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
+                if (indiceInserimentoDiaria == -1)
+                {
+                    indiceInserimentoDiaria = 0;
+                }
 
-                lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0; }
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Insert(indiceInserimentoDiaria + 1, articoloLavorazioneDiaria);
+                //SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
+
+                lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
+            }
         }
 
         private void CancellaDiariaDaListaArticoli(FiguraProfessionale figuraProfessionale)
@@ -914,9 +1335,6 @@ namespace VideoSystemWeb.Agenda.userControl
                     SessionManager.ListaReferenti = Anag_Referente_Clienti_Fornitori_BLL.Instance.getReferentiByIdAzienda(ref esito, idCliente);
                     ListaFigureProfessionali = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali; //in questo modo assegno identificatoreOggetto
 
-                    //txt_data_InsGenerale.Text = ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
-
-
                     if (esito.Codice != Esito.ESITO_OK)
                     {
                         basePage.ShowError(esito.Descrizione);
@@ -934,7 +1352,11 @@ namespace VideoSystemWeb.Agenda.userControl
                             ddl_Capotecnico.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico.ToString();
                             ddl_Produttore.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdProduttore.ToString();
 
-                            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+                            //SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+
+
+                            //CaricaListaDatiDettaglioEconomico();
+
 
                             gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
                             gvArticoliLavorazione.DataBind();
@@ -967,7 +1389,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             txt_Ordine.Text = string.Empty;
             txt_Fattura.Text = string.Empty;
-            ddl_Contratto.SelectedIndex = 0;  
+            ddl_Contratto.SelectedIndex = 0;
             ddl_Referente.SelectedIndex = 0;
             ddl_Capotecnico.SelectedIndex = 0;
             ddl_Produttore.SelectedIndex = 0;
@@ -1017,7 +1439,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 btnInserimentoGenerale.Attributes.Remove("readonly");
                 btnInserimentoGenerale.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large";
             }
-    
+
 
             gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
             gvArticoliLavorazione.DataBind();
@@ -1044,6 +1466,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
         public void TrasformaInLavorazione()
         {
+            int numGiorniLavorazione = SessionManager.EventoSelezionato.durata_lavorazione;
+
             SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
 
             // COSTRUISCO LISTA DATI ARTICOLI LAVORAZIONE
@@ -1051,104 +1475,41 @@ namespace VideoSystemWeb.Agenda.userControl
 
             foreach (DatiArticoli datoArticolo in SessionManager.EventoSelezionato.ListaDatiArticoli)
             {
-                for (int i = 0; i < datoArticolo.Quantita; i++)
-                {
-                    DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione
-                    {
-                        Id = 0,
-                        IdDatiLavorazione = 0,
-                        IdArtArticoli = datoArticolo.IdArtArticoli,
-                        IdTipoGenere = datoArticolo.IdTipoGenere,
-                        IdTipoGruppo = datoArticolo.IdTipoGruppo,
-                        IdTipoSottogruppo = datoArticolo.IdTipoSottogruppo,
-                        IdCollaboratori = null,
-                        IdFornitori = null,
-                        IdTipoPagamento = null,
-                        Descrizione = datoArticolo.Descrizione,
-                        DescrizioneLunga = datoArticolo.DescrizioneLunga,
-                        Stampa = datoArticolo.Stampa,
-                        Prezzo = datoArticolo.Prezzo,
-                        Costo = datoArticolo.Costo,
-                        Iva = datoArticolo.Iva,
-                        Data = SessionManager.EventoSelezionato.data_inizio_lavorazione
-                    };
 
-                    datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out bool firstTime);
-                    listaDatiArticoliLavorazione.Add(datoArticoloLavorazione);
+                for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
+                {
+                    DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
+
+                    for (int i = 0; i < datoArticolo.Quantita; i++)
+                    {
+                        DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione
+                        {
+                            Id = 0,
+                            IdDatiLavorazione = 0,
+                            IdArtArticoli = datoArticolo.IdArtArticoli,
+                            IdTipoGenere = datoArticolo.IdTipoGenere,
+                            IdTipoGruppo = datoArticolo.IdTipoGruppo,
+                            IdTipoSottogruppo = datoArticolo.IdTipoSottogruppo,
+                            IdCollaboratori = null,
+                            IdFornitori = null,
+                            IdTipoPagamento = null,
+                            Descrizione = datoArticolo.Descrizione,
+                            DescrizioneLunga = datoArticolo.DescrizioneLunga,
+                            Stampa = datoArticolo.Stampa,
+                            Prezzo = datoArticolo.Prezzo,
+                            Costo = datoArticolo.Costo,
+                            Iva = datoArticolo.Iva,
+                            Data = dataGiornoLav// SessionManager.EventoSelezionato.data_inizio_lavorazione
+                        };
+
+                        datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out bool firstTime);
+                        listaDatiArticoliLavorazione.Add(datoArticoloLavorazione);
+                    }
+
                 }
             }
+            listaDatiArticoliLavorazione = listaDatiArticoliLavorazione.OrderBy(x => x.Data).ThenByDescending(y => y.Costo).ToList<DatiArticoliLavorazione>();
             CreaNuovaLavorazione(listaDatiArticoliLavorazione);
-        }
-        #endregion
-
-        #region OPERAZIONI PAGINA
-        private void ClearPanelModificaArticolo()
-        {
-            txt_Descrizione.Text =
-            txt_Prezzo.Text =
-            txt_Costo.Text =
-            txt_Iva.Text =
-            txt_DescrizioneLunga.Text =
-            txt_FPCitta.Text =
-            txt_FPNominativo.Text =
-            txt_FPnotaCollaboratore.Text =
-            txt_FPtelefono.Text =
-            txt_FPnetto.Text =
-            txt_FPRimborsoKM.Text =
-            txt_FPlordo.Text = "";
-
-            ddl_Stampa.SelectedIndex = 
-            ddl_FPtipo.SelectedIndex =
-            ddl_FPqualifica.SelectedIndex =
-            ddl_FPtipoPagamento.SelectedIndex = 0;
-
-            hf_IdFiguraProfessionale.Value = "";
-
-            gv_FigureProfessionaliModifica.DataSource = null;
-            gv_FigureProfessionaliModifica.DataBind();
-
-            div_FiguraProfessionale.Visible = false;
-        }
-
-        private void ClearPanelInserimentoGenerale()
-        {
-            txt_orario_InsGenerale.Text =  
-            txt_diaria_InsGenerale.Text = "";
-
-            chk_diaria_InsGenerale.Checked = 
-            chk_albergo_InsGenerale.Checked = false;
-
-            diaria15_InsGenerale.Checked =
-            diaria30_InsGenerale.Checked =
-            diariaLibera_InsGenerale.Checked = false;
-
-            ddl_intervento_InsGenerale.SelectedIndex = 0;
-
-            RichiediOperazionePopup("UPDATE");
-        }
-
-        private void AbilitaCostoFP(bool abilita)
-        {
-            if (abilita)
-            {
-                txt_FPnetto.Attributes.Remove("readonly");
-                txt_FPnetto.CssClass = "w3-input w3-border";
-                txt_Costo.Attributes.Add("readonly", "readonly");
-                txt_Costo.CssClass = "w3-input w3-border w3-disabled";
-
-                txt_Costo.Text = "";
-            }
-            else
-            {
-                txt_FPnetto.Attributes.Add("readonly", "readonly");
-                txt_FPnetto.CssClass = "w3-input w3-border w3-disabled";
-                txt_Costo.Attributes.Remove("readonly");
-                txt_Costo.CssClass = "w3-input w3-border";
-
-                txt_FPnetto.Text = "";
-                txt_FPRimborsoKM.Text = "";
-                txt_FPlordo.Text = "";
-            }
         }
 
         public void ClearLavorazione()
@@ -1262,207 +1623,25 @@ namespace VideoSystemWeb.Agenda.userControl
             AggiornaTotali();
         }
 
-        private void CaricaListaDatiPianoEsternoLavorazione(List<DatiArticoliLavorazione> _listaCollaboratoriFornitori)
-        {
-            List<FiguraProfessionale> _listaFigureProfessionali = new List<FiguraProfessionale>();
-            List<DatiPianoEsternoLavorazione> _listaDatiPianoEsterno = new List<DatiPianoEsternoLavorazione>();
-
-            int numGiorniLavorazione = SessionManager.EventoSelezionato.durata_lavorazione;
-
-            foreach (DatiArticoliLavorazione collabForn in _listaCollaboratoriFornitori)
-            {
-                for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
-                {
-                    DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
-
-                    FiguraProfessionale figProf = new FiguraProfessionale();
-                    DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione();
-                    if (collabForn.IdCollaboratori != null) //COLLABORATORI
-                    {
-                        Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == collabForn.IdCollaboratori);
-
-                        figProf = collaboratore.CreaFiguraProfessionale();
-                        figProf.IdCollaboratori = collabForn.IdCollaboratori;
-
-                        datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
-                        datiPianoEsterno.IdCollaboratori = collaboratore.Id;
-                    }
-                    else //FORNITORI
-                    {
-                        Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == collabForn.IdFornitori);
-
-                        figProf = fornitore.CreaFiguraProfessionale();
-                        figProf.IdFornitori = collabForn.IdFornitori;
-
-                        datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
-                        datiPianoEsterno.IdFornitori = fornitore.Id;
-                    }
-
-                    figProf.IdentificatoreOggetto = IDGenerator.GetId(figProf, out bool firstTime);
-
-                    figProf.Nota = collabForn.Nota;
-                    figProf.Netto = collabForn.FP_netto;
-                    figProf.Lordo = collabForn.FP_lordo;
-                    figProf.Data = datiPianoEsterno.Data = dataGiornoLav;
-
-
-                    FiguraProfessionale figProfGiaPresente = ListaFigureProfessionali.FirstOrDefault(x => x.Data == figProf.Data && x.IdCollaboratori == figProf.IdCollaboratori && x.IdFornitori == figProf.IdFornitori);
-                    if (figProfGiaPresente == null)
-                    {
-                        _listaFigureProfessionali.Add(figProf);
-                    }
-                    else
-                    {
-                        if (figProfGiaPresente.Nome != figProf.Nome ||
-                            figProfGiaPresente.Cognome != figProf.Cognome)
-                        {
-                            ListaFigureProfessionali.Remove(figProfGiaPresente);
-                            _listaFigureProfessionali.Add(figProf);
-                        }
-                    }
-                    _listaDatiPianoEsterno.Add(datiPianoEsterno);
-                }
-            }
-            ListaFigureProfessionali = _listaFigureProfessionali;
-            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione = _listaDatiPianoEsterno;
-        }
-
-        private void PopolaCombo()
-        {
-            Esito esito = new Esito();
-
-            #region CAPITECNICI
-            List<Anag_Qualifiche_Collaboratori> listaCapiTecnici = SessionManager.ListaQualificheCollaboratori.Where(x => x.Qualifica == "Capo Tecnico").ToList<Anag_Qualifiche_Collaboratori>();
-
-            List<Anag_Collaboratori> listaAnagraficheCapiTecnici = (from Item1 in SessionManager.ListaAnagraficheCollaboratori
-                                                                    join Item2 in listaCapiTecnici
-                                                                    on Item1.Id equals Item2.Id_collaboratore
-                                                                    select Item1).ToList();
-            ddl_Capotecnico.Items.Clear();
-            foreach (Anag_Collaboratori capoTecnico in listaAnagraficheCapiTecnici)
-            {
-                ddl_Capotecnico.Items.Add(new ListItem(capoTecnico.Nome + " " + capoTecnico.Cognome, capoTecnico.Id.ToString()));
-            }
-            ddl_Capotecnico.Items.Insert(0, new ListItem("<seleziona>", ""));
-            #endregion
-
-            #region PRODUTTORI
-            List<Anag_Qualifiche_Collaboratori> listaProduttori = SessionManager.ListaQualificheCollaboratori.Where(x => x.Qualifica == "Produttore").ToList<Anag_Qualifiche_Collaboratori>();
-
-            List<Anag_Collaboratori> listaAnagraficheProduttori = (from Item1 in SessionManager.ListaAnagraficheCollaboratori
-                                                                   join Item2 in listaProduttori on Item1.Id equals Item2.Id_collaboratore
-                                                                   select Item1).ToList();
-            ddl_Produttore.Items.Clear();
-            foreach (Anag_Collaboratori produttore in listaAnagraficheProduttori)
-            {
-                ddl_Produttore.Items.Add(new ListItem(produttore.Nome + " " + produttore.Cognome, produttore.Id.ToString()));
-            }
-            ddl_Produttore.Items.Insert(0, new ListItem("<seleziona>", ""));
-            #endregion
-
-            #region TIPOPAGAMENTO
-
-            ddl_FPtipoPagamento.Items.Clear();
-            foreach (Tipologica tipoPagamento in SessionManager.ListaTipiPagamento)
-            {
-                ddl_FPtipoPagamento.Items.Add(new ListItem(tipoPagamento.nome, tipoPagamento.id.ToString()));
-            }
-            ddl_FPtipoPagamento.Items.Insert(0, new ListItem("<seleziona>", ""));
-            #endregion
-
-            #region QUALIFICHE
-
-            ddl_FPqualifica.Items.Clear();
-            foreach (Tipologica qualifica in SessionManager.ListaQualifiche)
-            {
-                ddl_FPqualifica.Items.Add(new ListItem(qualifica.nome, qualifica.id.ToString()));
-            }
-            ddl_FPqualifica.Items.Insert(0, new ListItem("<seleziona>", ""));
-            #endregion
-
-            #region TIPI INTERVENTO
-            ddl_intervento.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
-            ddl_intervento.DataTextField = "nome";
-            ddl_intervento.DataValueField = "id";
-            ddl_intervento.DataBind();
-
-            ddl_intervento_InsGenerale.DataSource = SessionManager.ListaTipiIntervento.OrderBy(x => x.id);
-            ddl_intervento_InsGenerale.DataTextField = "nome";
-            ddl_intervento_InsGenerale.DataValueField = "id";
-            ddl_intervento_InsGenerale.DataBind();
-            #endregion
-
-        }
-
-        private void PopolaParametriConfigurazione()
-        {
-            Esito esito = new Esito();
-            string erroriConversione = string.Empty;
-
-            #region RITENUTA ACCONTO
-            aliquota_RitenutaAcconto = Config_BLL.Instance.getConfig(ref esito, "ALIQUOTA_RITENUTA_ACCONTO").Valore;
-            if (esito.Codice != Esito.ESITO_OK)
-            {
-                basePage.ShowError(esito.Descrizione);
-                return;
-            }
-            Decimal.TryParse(aliquota_RitenutaAcconto, out decimal aliquotaRitAcc);
-            if (aliquotaRitAcc==0)
-            {
-                erroriConversione += "<li>L'aliquota per la ritenuta di acconto non è nel formato corretto</li>";
-                aliquota_RitenutaAcconto = "1";
-            }
-            #endregion
-
-            #region MISTA
-            quotaFissa_PagamentoMisto = Config_BLL.Instance.getConfig(ref esito, "QUOTA_FISSA_PAGAMENTO_MISTO").Valore;
-            if (esito.Codice != Esito.ESITO_OK)
-            {
-                basePage.ShowError(esito.Descrizione);
-                return;
-            }
-            Decimal.TryParse(quotaFissa_PagamentoMisto, out decimal quotaPagFisso);
-            if (quotaPagFisso == 0)
-            {
-                erroriConversione += "<li>La quota per la tipologia di pagamento mista non è nel formato corretto</li>";
-                quotaFissa_PagamentoMisto = "0";
-            }
-            #endregion
-
-            #region DIARIA LORDA
-            diariaLorda = Config_BLL.Instance.getConfig(ref esito, "DIARIA_LORDA").Valore;
-            if (esito.Codice != Esito.ESITO_OK)
-            {
-                basePage.ShowError(esito.Descrizione);
-                return;
-            }
-            Decimal.TryParse(diariaLorda, out decimal diaria);
-            if (diaria == 0)
-            {
-                erroriConversione += "<li>Il valore della diaria lorda non è nel formato corretto</li>";
-                diariaLorda = "0";
-            }
-            #endregion
-
-            if (!string.IsNullOrEmpty(erroriConversione))
-            {
-                basePage.ShowWarning("Si sono verificati i seguenti errori:<ul>" + erroriConversione + "</ul>Modificare il valore nella sezione Tabelle > Configurazione");
-            }
-        }
-
         private void PopolaComboFiltroGiorniLavorazione()
         {
+            int numGiorniLavorazione = SessionManager.EventoSelezionato.durata_lavorazione;
+
+            ddl_filtroGiorniLavorazioneDettEcon.Items.Clear();
             ddl_FiltroGiorniLavorazione.Items.Clear();
 
-            int numGiorniLavorazione = SessionManager.EventoSelezionato.durata_lavorazione;
+            ddl_filtroGiorniLavorazioneDettEcon.Items.Add(new ListItem("<tutte le date>", ""));
             ddl_FiltroGiorniLavorazione.Items.Add(new ListItem("<tutte le date>", ""));
             for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
             {
                 DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
+                ddl_filtroGiorniLavorazioneDettEcon.Items.Add(new ListItem(dataGiornoLav.ToString("dd/MM/yyyy"), giornoLav.ToString()));
                 ddl_FiltroGiorniLavorazione.Items.Add(new ListItem(dataGiornoLav.ToString("dd/MM/yyyy"), giornoLav.ToString()));
             }
+            ddl_filtroGiorniLavorazioneDettEcon.SelectedIndex = 0;
             ddl_FiltroGiorniLavorazione.SelectedIndex = 0;
         }
         #endregion
+
     }
 }

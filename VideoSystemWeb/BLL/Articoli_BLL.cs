@@ -250,7 +250,7 @@ namespace VideoSystemWeb.BLL
             return articolo;
         }
 
-        public DatiArticoliLavorazione CaricaArticoloLavorazioneByID(int idDatiLavorazione, int idArticolo, ref Esito esito, bool soloAttivi = true)
+        public DatiArticoliLavorazione CaricaArticoloLavorazioneByID(int idDatiLavorazione, int idArticolo, DateTime? data, ref Esito esito,  bool soloAttivi = true)
         {
             Art_Articoli articoloTemplate = getArticoloById(idArticolo, ref esito);
             int iva = int.Parse(Config_DAL.Instance.GetConfig(ref esito, SessionManager.CFG_IVA).valore);
@@ -271,7 +271,10 @@ namespace VideoSystemWeb.BLL
             articoloLavorazione.Prezzo = articoloTemplate.DefaultPrezzo;
             articoloLavorazione.Costo = articoloTemplate.DefaultCosto;
             articoloLavorazione.Iva = iva;
-            articoloLavorazione.Data = SessionManager.EventoSelezionato.data_inizio_lavorazione;
+            if (data != null)
+            {
+                articoloLavorazione.Data = data; // SessionManager.EventoSelezionato.data_inizio_lavorazione;
+            }
             articoloLavorazione.Tv = 0;
 
             return articoloLavorazione;

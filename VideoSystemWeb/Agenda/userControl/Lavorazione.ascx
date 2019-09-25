@@ -4,8 +4,30 @@
 
     $(document).ready(function () {
 
+        // mantiene la posizione dello scroll dopo la modifica alla gridView
+        var xPosDettEcon, yPosDettEcon, xPosPEst, yPosPEst;
+        var prm = Sys.WebForms.PageRequestManager.getInstance();
+        prm.add_beginRequest(BeginRequestHandler);
+        prm.add_endRequest(EndRequestHandler);
+        function BeginRequestHandler(sender, args) {
+            xPosDettEcon = $get('<%=panelArticoli.ClientID%>').scrollLeft;
+            yPosDettEcon = $get('<%=panelArticoli.ClientID%>').scrollTop;
+
+            xPosPEst = $get('<%=panelFigProf.ClientID%>').scrollLeft;
+            yPosPEst = $get('<%=panelFigProf.ClientID%>').scrollTop;
+        }
+        function EndRequestHandler(sender, args) {
+            $get('<%=panelArticoli.ClientID%>').scrollLeft = xPosDettEcon;
+            $get('<%=panelArticoli.ClientID%>').scrollTop = yPosDettEcon;
+
+            $get('<%=panelFigProf.ClientID%>').scrollLeft = xPosPEst;
+            $get('<%=panelFigProf.ClientID%>').scrollTop = yPosPEst;
+        }
+        // fine
+
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+
 
             $(".time").focus(function () {
                 $(".time").select();//.val("");
@@ -208,6 +230,13 @@
         }
     }
 
+    function abilitaAnimazione(abilita) {
+        if (abilita == "true") {
+            $("#divModificaArticolo").addClass(" w3-animate-top");
+        } else {
+            $("#divModificaArticolo").removeClass(" w3-animate-top");
+        }
+    }
 </script>
 
 <asp:HiddenField ID="hf_tabSelezionataLavorazione" runat="server" EnableViewState="true" Value="Lavoraz" />
@@ -223,6 +252,7 @@
 
     <div class="w3-container" style="width: 100%; height: 99%; position: relative; padding: 0px;">
 
+<!-- LAVORAZIONE -->
         <div id="Lavoraz" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 90%; overflow: auto;">
             <div class="w3-row">
                 <div class="w3-third">
@@ -259,6 +289,7 @@
             </div>
         </div>
 
+<!-- DETTAGLIO ECONOMICO -->
         <div id="DettEconomico" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 90%; overflow: auto; display: none">
             <div class="w3-row" style="height: 60%; font-size: small;">
                 <div class="w3-col" style="height: 80%">
@@ -267,6 +298,9 @@
                         <asp:Label ID="lbl_selezionareArticolo" runat="server" Text="Selezionare un articolo dalla lista" Style="position: absolute; top: 45%; left: 38%; font-size: large; color: cornflowerblue" />
                         <asp:GridView ID="gvArticoliLavorazione" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvArticoliLavorazione_RowCommand" DataMember="IdentificatoreOggetto" OnRowDataBound="gvArticoliLavorazione_RowDataBound">
                             <Columns>
+                                <%--<asp:BoundField DataField="Id" HeaderText="ID"  HeaderStyle-Width="15%" />
+                                <asp:BoundField DataField="IdentificatoreOggetto" HeaderText="IdentificatoreOggetto" HeaderStyle-Width="15%" />--%>
+
                                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="15%" />
                                 <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="15%" />
                                 <asp:TemplateField HeaderText="Collab./Fornitore" HeaderStyle-Width="15%">
@@ -344,15 +378,23 @@
                     </asp:GridView>
                 </asp:Panel>
 
-                <div class="w3-col">
+                <div class="w3-half">
                     <asp:TextBox ID="txt_FiltroGruppiLavorazione" runat="server" CssClass="w3-round" placeholder="Cerca.." Style="width: 100%; padding: 5px; margin-top: 10px;"></asp:TextBox>
+                </div>
+                
+                <div class="w3-half">
+                    <div class="w3-col w3-center-align" style="padding: 20px; text-align:center">
+                        <label>Filtro data lavorazione</label>
+                        <asp:DropDownList ID="ddl_filtroGiorniLavorazioneDettEcon" runat="server" AutoPostBack="true" CssClass=" w3-white w3-border w3-hover-shadow w3-round " OnSelectedIndexChanged="ddl_FiltroGiorniLavorazioneDettEcon_SelectedIndexChanged"></asp:DropDownList>
+                    </div>
                 </div>
             </div>
 
+<!-- MODIFICA ELEMENTO SINGOLO -->
             <div id="panelModificaArticolo" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
                 <asp:UpdatePanel ID="upModificaArticolo" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                     <ContentTemplate>
-                        <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 80%; background-color: white; overflow: auto; max-height: 80%;">
+                        <div id="divModificaArticolo" class="w3-modal-content w3-card-4 round" style="position: relative; width: 80%; background-color: white; overflow: auto; max-height: 80%;">
                             <div class="w3-row-padding">
 
                                 <div class="w3-panel w3-blue w3-center w3-round">
@@ -362,9 +404,18 @@
                                 <div class="w3-col round" style="padding: 5px;">
                                     <div class="w3-half" style="padding: 5px;">
 
+
                                         <div class="w3-col">
-                                            <label style="margin-bottom: 0.2rem;">Descrizione</label>
-                                            <asp:TextBox ID="txt_Descrizione" runat="server" class="w3-input w3-border w3-round-medium" MaxLength="60" placeholder="Descrizione" Style="padding: 2px;"></asp:TextBox>
+                                            <div class="w3-quarter" style="padding: 5px">
+                                                <label style="margin-bottom: 0.2rem;">Data</label>
+                                                <asp:TextBox ID="txt_DataArticolo" runat="server" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Style="padding: 2px;"></asp:TextBox>
+                                             </div>
+
+                                            <div class="w3-threequarter" style="padding: 5px">
+                                                <label style="margin-bottom: 0.2rem;">Descrizione</label>
+                                                <asp:TextBox ID="txt_Descrizione" runat="server" class="w3-input w3-border w3-round-medium" MaxLength="60" placeholder="Descrizione" Style="padding: 2px;"></asp:TextBox>
+                                             </div>
+
                                         </div>
 
                                         <div class="w3-col">
@@ -379,7 +430,11 @@
                                                     <asp:TextBox ID="txt_Costo" runat="server" class="w3-input w3-border w3-round-medium" placeholder="Costo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
                                                 </div>
                                                 <div class="w3-third" style="padding: 5px">
-                                                    &nbsp;
+                                                   <label style="margin-bottom: 0.2rem;">Consuntivo</label>
+                                                    <asp:DropDownList ID="ddl_Consuntivo" runat="server" >
+                                                        <asp:ListItem Value="1" Text="SI" />
+                                                        <asp:ListItem Value="0" Text="NO" Selected/>
+                                                    </asp:DropDownList>
                                                 </div>
                                             </div>
                                             <div class="w3-half">
@@ -392,7 +447,7 @@
 
                                                 <div class="w3-third" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Stampa</label><br />
-                                                    <asp:DropDownList ID="ddl_Stampa" runat="server">
+                                                    <asp:DropDownList ID="ddl_Stampa" runat="server" >
                                                         <asp:ListItem Value="1" Text="SI" />
                                                         <asp:ListItem Value="0" Text="NO" />
                                                     </asp:DropDownList>
@@ -419,7 +474,7 @@
                                     <div class="w3-row " style="background-color: #cccccc;">
                                         <div class="w3-col" style="padding: 5px; width: 23%">
                                             <label style="margin-bottom: 0.2rem;">Tipo figura professionale</label>
-                                            <asp:DropDownList ID="ddl_FPtipo" class="w3-input w3-border w3-round-medium" runat="server" Style="padding: 2px;"  AutoPostBack="true">
+                                            <asp:DropDownList ID="ddl_FPtipo" class="w3-input w3-border w3-round-medium" runat="server" Style="padding: 2px;" >
                                                 <asp:ListItem Value="" Text="<seleziona>" />
                                                 <asp:ListItem Value="0" Text="Collaboratore" />
                                                 <asp:ListItem Value="1" Text="Fornitore" />
@@ -427,7 +482,7 @@
                                         </div>
                                         <div class="w3-col" style="padding: 5px; width: 23%">
                                             <label style="margin-bottom: 0.2rem;">Qualifica</label>
-                                            <asp:DropDownList ID="ddl_FPqualifica" class="w3-input w3-border w3-round-medium" runat="server" Style="padding: 2px;" AutoPostBack="true"></asp:DropDownList>
+                                            <asp:DropDownList ID="ddl_FPqualifica" class="w3-input w3-border w3-round-medium" runat="server" Style="padding: 2px;" ></asp:DropDownList>
                                         </div>
                                         <div class="w3-col" style="padding: 5px; width: 23%">
                                             <label style="margin-bottom: 0.2rem;">Città</label>
@@ -518,22 +573,23 @@
 
         </div>
 
+<!-- PIANO ESTERNO -->
         <div id="PianoEsterno" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 90%; overflow: auto; display: none">
             <div class="w3-row" style="height: 60%; font-size: small;">
                 <div class="w3-col" style="height: 80%">
-                    <asp:Panel runat="server" ID="panel1" CssClass="round" Style="height: 100%; position: relative; background-color: white; overflow: auto;">
+                    <asp:Panel runat="server" ID="panelFigProf" CssClass="round" Style="height: 100%; position: relative; background-color: white; overflow: auto;">
                         <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Figure professionali</p>
                         <asp:Label ID="lbl_nessunaFiguraProf" runat="server" Text="Nessuna figura professionale importata" Style="position: absolute; top: 45%; left: 38%; font-size: large; color: cornflowerblue" />
                         <asp:GridView ID="gvFigProfessionali" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" 
                             OnRowCommand="gvFigProfessionali_RowCommand" DataMember="IdentificatoreOggetto">
                             <Columns>
-                                <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" />
+                                <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%"/>
 
-                                <asp:BoundField DataField="Elencoqualifiche" HeaderText="Qualifiche"/>
+                                <asp:BoundField DataField="Elencoqualifiche" HeaderText="Qualifiche" HeaderStyle-Width="20%"/>
 
-                                <asp:BoundField DataField="NominativoCompleto" HeaderText="Personale" />
+                                <asp:BoundField DataField="NominativoCompleto" HeaderText="Personale" HeaderStyle-Width="20%"/>
                                
-                                <asp:TemplateField HeaderText="Seleziona">
+                                <asp:TemplateField HeaderText="Seleziona" HeaderStyle-Width="15%">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDown" runat="server" ImageUrl="/Images/arrow-down-icon.png" ToolTip="Sposta giù" CommandName="moveDown" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
@@ -542,9 +598,9 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-                                <asp:BoundField DataField="Intervento" HeaderText="Intervento" />
-                                <asp:BoundField DataField="Diaria" HeaderText="Diaria" DataFormatString="{0:N2}" />
-                                <asp:BoundField DataField="Nota" HeaderText="Note" />
+                                <asp:BoundField DataField="Intervento" HeaderText="Intervento" HeaderStyle-Width="8%"/>
+                                <asp:BoundField DataField="Diaria" HeaderText="Diaria" DataFormatString="{0:N2}" HeaderStyle-Width="5%"/>
+                                <asp:BoundField DataField="Nota" HeaderText="Note" HeaderStyle-Width="24%"/>
                                 
                             </Columns>
 

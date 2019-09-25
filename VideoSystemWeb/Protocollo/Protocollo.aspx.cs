@@ -196,6 +196,8 @@ namespace VideoSystemWeb.Protocollo
             AttivaDisattivaModificaProtocollo(false);
             gestisciPulsantiProtocollo("INSERIMENTO");
 
+            tbMod_NumeroProtocollo.Text = Protocolli_BLL.Instance.getNumeroProtocollo();
+
             pnlContainer.Visible = true;
         }
 
@@ -547,6 +549,11 @@ namespace VideoSystemWeb.Protocollo
             if (fuFileProt.HasFile)
             {
                 string nomeFileToSave = DateTime.Now.Ticks.ToString() + "_" + Path.GetFileName(e.filename);
+                //string nomeFileToSave = DateTime.Now.Ticks.ToString() + "_" + Path.GetFileName(e.filename);
+                if (!string.IsNullOrEmpty(tbMod_NumeroProtocollo.Text.Trim())){
+                    nomeFileToSave = "Protocollo_" + tbMod_NumeroProtocollo.Text.Trim() + Path.GetExtension(e.filename);
+                }
+                
                 string strPath = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFileToSave;
                 fuFileProt.SaveAs(strPath);
                 if (File.Exists(strPath))

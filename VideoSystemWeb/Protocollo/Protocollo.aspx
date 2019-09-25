@@ -142,8 +142,8 @@
         }
 
         function associaCliente(idCli, cliente) {
-            alert('ASSOCIA CLIENTE prima - CLIENTE ' +  cliente);
-            alert('ASSOCIA CLIENTE prima - ID CLIENTE ' +  idCli);
+            //alert('ASSOCIA CLIENTE prima - CLIENTE ' +  cliente);
+            //alert('ASSOCIA CLIENTE prima - ID CLIENTE ' +  idCli);
 
             var txt1 = $("#<%=tbMod_Cliente.ClientID%>");
             var txt2 = $("#<%=tbMod_IdCliente.ClientID%>");
@@ -152,13 +152,13 @@
             txt1.text = cliente;
             txt2.text = idCli;
 
-            alert('ASSOCIA CLIENTE dopo - CLIENTE ' + txt1.text);
-            alert('ASSOCIA CLIENTE dopo - ID CLIENTE ' + txt2.text);
+            //alert('ASSOCIA CLIENTE dopo - CLIENTE ' + txt1.text);
+            //alert('ASSOCIA CLIENTE dopo - ID CLIENTE ' + txt2.text);
             $("#<%=btnAssociaClienteServer.ClientID%>").click();
         }
 
         function inserisciCliente() {
-            alert('' + document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value);
+            //alert('' + document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value);
             if (document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value != '') {
                 associaCliente('', document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value);
             }
@@ -210,7 +210,7 @@
                     <asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
                 <div class="w3-quarter">
-                    <label>Lavorazione</label>
+                    <label>Lavorazione/Descrizione</label>
                     <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
                 <div class="w3-quarter" style="position:relative;">
@@ -223,7 +223,7 @@
             </div>
             <div class="w3-row-padding w3-margin-bottom">
                 <div class="w3-half">
-                    <label>Cliente</label>
+                    <label>Cliente/Fornitore</label>
                     <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
                 <div class="w3-quarter" style="position:relative;">
@@ -351,7 +351,7 @@
                                         <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>Lavorazione</label>
+                                        <label>Lavorazione/Descrizione</label>
                                         <asp:TextBox ID="tbMod_Lavorazione" runat="server" MaxLength="200" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
@@ -364,14 +364,14 @@
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-half">
-                                        <label>Cliente</label>
+                                        <label>Cliente/Fornitore</label>
                                         <div class="w3-row-padding w3-center w3-text-center">
                                             <div class="w3-threequarter">
                                                 <asp:TextBox ID="tbMod_Cliente" runat="server" CssClass="w3-input w3-border" Text=""></asp:TextBox>
                                                 <asp:HiddenField runat="server" ID="tbMod_IdCliente" />
                                             </div>
                                             <div class="w3-quarter">
-                                                <asp:ImageButton ID="imgbtnSelectCliente" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" ToolTip="Cerca Cliente" OnClick="imgbtnSelectCliente_Click" OnClientClick="cercaCliente()" />
+                                                <asp:ImageButton ID="imgbtnSelectCliente" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" ToolTip="Cerca Cliente" OnClientClick="cercaCliente()" />
                                             </div>
                                         </div>
                                     </div>

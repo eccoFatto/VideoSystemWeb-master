@@ -135,9 +135,11 @@
             document.getElementById('<%=tbMod_NomeFile.ClientID%>').innerText = filename;
         }
 
-        function associaCodiceLavorazione(codLav, cliente) {
+        function associaCodiceLavorazione(codLav, cliente, produzione, lavorazione) {
             document.getElementById('<%=tbMod_CodiceLavoro.ClientID%>').value = codLav;
             //document.getElementById('<%=tbMod_Cliente.ClientID%>').value = cliente;
+            document.getElementById('<%=tbMod_Produzione.ClientID%>').value = produzione;
+            document.getElementById('<%=tbMod_Lavorazione.ClientID%>').value = lavorazione;
             chiudiPopupLavorazioni();
         }
 
@@ -210,15 +212,16 @@
                     <asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
                 <div class="w3-quarter">
-                    <label>Lavorazione/Descrizione</label>
-                    <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    <label>Lavorazione</label>
+                    <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
                 <div class="w3-quarter" style="position:relative;">
                     <label>Data Lav.</label>
                     <asp:TextBox ID="tbDataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                 </div>
                 <div class="w3-quarter">
-                    &nbsp;
+                    <label>Descrizione</label>
+                    <asp:TextBox ID="tbDescrizione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
             </div>
             <div class="w3-row-padding w3-margin-bottom">
@@ -351,15 +354,16 @@
                                         <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>Lavorazione/Descrizione</label>
-                                        <asp:TextBox ID="tbMod_Lavorazione" runat="server" MaxLength="200" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <label>Lavorazione</label>
+                                        <asp:TextBox ID="tbMod_Lavorazione" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
                                         <label>Data Lav</label>
                                         <asp:TextBox ID="tbMod_DataLavorazione" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>&nbsp;</label>
+                                        <label>Descrizione</label>
+                                        <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="200" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">

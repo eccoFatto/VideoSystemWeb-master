@@ -300,7 +300,8 @@ namespace VideoSystemWeb.DAL
                                         Id_tipo_protocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "offerta", ref esito).id,
                                         Protocollo_riferimento = "",
                                         PathDocumento = nomeFile,
-                                        Descrizione = evento.lavorazione.Trim(),
+                                        Lavorazione = evento.lavorazione.Trim(),
+                                        Descrizione = "",
                                         Produzione = evento.produzione.Trim(),
                                         Data_inizio_lavorazione = evento.data_inizio_lavorazione,
                                         Attivo = true
@@ -453,7 +454,8 @@ namespace VideoSystemWeb.DAL
                                             Id_tipo_protocollo = idTipoProtocollo,
                                             Protocollo_riferimento = "",
                                             PathDocumento = nomeFile,
-                                            Descrizione = evento.lavorazione.Trim(),
+                                            Lavorazione = evento.lavorazione.Trim(),
+                                            Descrizione = "",
                                             Produzione = evento.produzione.Trim(),
                                             Data_inizio_lavorazione = evento.data_inizio_lavorazione,
                                             Attivo = true

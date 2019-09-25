@@ -13,6 +13,7 @@ namespace VideoSystemWeb.Entity
     //@id_tipo_protocollo int,
     //@pathDocumento varchar(100),
     //@descrizione varchar(200),
+    //@lavorazione varchar(50),
     //@attivo bit
 
     public class Protocolli
@@ -27,6 +28,7 @@ namespace VideoSystemWeb.Entity
         private string protocollo_riferimento;  // EVENTUALE RIFERIMENTO AD UN PRECEDENTE PROTOCOLLO
         private string pathDocumento;       // PATH DEL DOCUMENTO UPLOADATO - NOMENCLATURA = IDPROTOCOLLO_TICK.*
         private string descrizione;
+        private string lavorazione;
         private string produzione;
         private DateTime data_inizio_lavorazione;
         private bool attivo;
@@ -44,5 +46,6 @@ namespace VideoSystemWeb.Entity
         public string Produzione { get => produzione; set => produzione = value; }
         public DateTime Data_inizio_lavorazione { get => data_inizio_lavorazione; set => data_inizio_lavorazione = value; }
         public int? Id_cliente { get => id_cliente; set => id_cliente = value; }
+        public string Lavorazione { get => lavorazione; set => lavorazione = value; }
     }
 }

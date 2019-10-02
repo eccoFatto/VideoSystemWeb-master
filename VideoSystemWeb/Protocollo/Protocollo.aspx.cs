@@ -327,7 +327,7 @@ namespace VideoSystemWeb.Protocollo
             {
 
                 // PRENDO IL PATH DELL'ALLEGATO SE C'E'
-                string pathDocumento = e.Row.Cells[9].Text.Trim();
+                string pathDocumento = e.Row.Cells[10].Text.Trim();
                 ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
                 {
@@ -400,6 +400,7 @@ namespace VideoSystemWeb.Protocollo
         {
             Esito esito = new Esito();
             pulisciCampiDettaglio();
+            tbMod_CodiceLavoro.Text = "generico";
             //btnViewAttachement.Attributes.Add("disabled", "true");
             btnViewAttachement.Enabled = false;
         }

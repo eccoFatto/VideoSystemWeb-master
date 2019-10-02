@@ -96,6 +96,7 @@
             $("#<%=tbProduzione.ClientID%>").val('');
             $("#<%=tbProtocolloRiferimento.ClientID%>").val('');
             $("#<%=tbLavorazione.ClientID%>").val('');
+            $("#<%=tbDescrizione.ClientID%>").val('');
             $("#<%=ddlTipoProtocollo.ClientID%>").val('');
         }
 

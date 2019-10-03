@@ -461,12 +461,19 @@
     <Content Include="SITO\IMMAGINI\5.jpg" />
     <Content Include="SITO\IMMAGINI\6.jpg" />
     <Content Include="SITO\IMMAGINI\facebook-icon.ico" />
+    <Content Include="SITO\IMMAGINI\FACEBOOK.gif" />
+    <Content Include="SITO\IMMAGINI\FRECCIA DX.png" />
+    <Content Include="SITO\IMMAGINI\FRECCIA SX.png" />
     <Content Include="SITO\IMMAGINI\google-maps-48.png" />
     <Content Include="SITO\IMMAGINI\immagine Home.jpg" />
     <Content Include="SITO\IMMAGINI\instagram-icon.ico" />
+    <Content Include="SITO\IMMAGINI\INSTAGRAM.gif" />
+    <Content Include="SITO\IMMAGINI\LINKEDIN.gif" />
     <Content Include="SITO\IMMAGINI\logoVSP.jpg" />
     <Content Include="SITO\IMMAGINI\logoVSP.png" />
     <Content Include="SITO\IMMAGINI\mail-50.png" />
+    <Content Include="SITO\IMMAGINI\MAIL.gif" />
+    <Content Include="SITO\IMMAGINI\POSIZIONE.gif" />
     <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\1.jpg" />
     <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\2.jpg" />
     <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\3.jpg" />
@@ -475,6 +482,7 @@
     <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\6.jpg" />
     <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\7.jpg" />
     <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\8.jpg" />
+    <Content Include="SITO\IMMAGINI\TELEFONO.gif" />
     <Content Include="SITO\index.html" />
     <Content Include="StretchSession.aspx" />
     <Content Include="TEMPLATE\testComboBox.aspx" />

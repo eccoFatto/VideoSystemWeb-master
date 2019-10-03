@@ -61,7 +61,8 @@ namespace VideoSystemWeb.BLL
                                 Telefono = collaboratore.Telefoni.Count == 0 ? "" : collaboratore.Telefoni.OrderBy(x => x.Priorita).ToList()[0].NumeroCompleto,
                                 Qualifiche = collaboratore.Qualifiche,
                                 Tipo = 0,
-                                Nota = collaboratore.Note
+                                Nota = collaboratore.Note,
+                                IsAssunto = collaboratore.Assunto
                             });
 
                         }
@@ -82,7 +83,8 @@ namespace VideoSystemWeb.BLL
                                 Citta = fornitore.ComuneLegale.Trim().ToLower(),
                                 Telefono = fornitore.Telefono,
                                 Tipo = 1,
-                                Nota = fornitore.Note
+                                Nota = fornitore.Note,
+                                IsAssunto = false
                             });
 
                         }

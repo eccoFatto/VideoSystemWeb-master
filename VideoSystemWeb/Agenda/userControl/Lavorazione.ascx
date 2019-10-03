@@ -25,12 +25,28 @@
         }
         // fine
 
+         
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
 
+            // data da assegnare all'articolo selezionato in dett. economico
+            $('.calendarArticolo').datetimepicker({
+                inline: true,
+                locale: 'it',
+                format: 'DD/MM/YYYY',
+                showTodayButton: false
+            });
+
+            $('.calendarArticolo').on('dp.change', function (e) {
+                
+                $("#<%=hf_valoreDataArticolo.ClientID%>").val(e.date.format('DD/MM/YYYY'));
+            });
+
+            $("#<%=hf_valoreDataArticolo.ClientID%>").val($(".calendarArticolo").data("DateTimePicker").date().format('DD/MM/YYYY'));
+            //fine
 
             $(".time").focus(function () {
-                $(".time").select();//.val("");
+                $(".time").select();
             });
 
             $('.limited-lines').keydown(function(event){
@@ -569,6 +585,30 @@
                         </div>
                     </ContentTemplate>
                 </asp:UpdatePanel>
+            </div>
+
+<!-- SELEZIONE DATA ARTICOLO -->
+            <asp:HiddenField ID="hf_valoreDataArticolo" runat="server" />
+            
+            <div id="panelInserisciDataArticolo" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
+
+                <div id="divMInserisciDataArticolo" class="w3-modal-content w3-card-4 round" style="position: relative; width: 32%; background-color: white; overflow: auto; max-height: 80%;">
+                    <div class="w3-row-padding">
+                        <div class="w3-panel w3-blue w3-center w3-round">
+                            <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Definire la data per l'articolo selezionato</b> </h5>
+                            <span onclick="document.getElementById('<%= panelInserisciDataArticolo.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                        </div>
+                        <div class="w3-col round" style="padding: 5px; margin-bottom:10px;">
+                            <div class="w3-col" style="margin-left:25%; width:50%;">
+                                    <div class="calendarArticolo"></div>
+                            </div>
+                        </div>
+                        <div class="w3-center" style="margin: 10px">
+                                <asp:Button ID="btnOKInserisciDataArticolo" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOKInserisciDataArticolo_Click" />
+                                <button onclick="document.getElementById('<%= panelInserisciDataArticolo.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                            </div>
+                    </div>
+                </div>
             </div>
 
         </div>

@@ -427,6 +427,33 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Button btnOKModificaArtLavorazione;
         
         /// <summary>
+        /// Controllo hf_valoreDataArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_valoreDataArticolo;
+        
+        /// <summary>
+        /// Controllo panelInserisciDataArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelInserisciDataArticolo;
+        
+        /// <summary>
+        /// Controllo btnOKInserisciDataArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOKInserisciDataArticolo;
+        
+        /// <summary>
         /// Controllo panelFigProf.
         /// </summary>
         /// <remarks>

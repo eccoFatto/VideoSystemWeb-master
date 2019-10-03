@@ -25,6 +25,7 @@ namespace VideoSystemWeb.Entity
         private decimal? netto;
         private decimal? lordo;
         private int? tipoPagamento;
+        private bool isAssunto;
        
         public int Id { get => id; set => id = value; }
         public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
@@ -82,5 +83,6 @@ namespace VideoSystemWeb.Entity
             }
         }
         public int? TipoPagamento { get => tipoPagamento; set => tipoPagamento = value; }
+        public bool IsAssunto { get => isAssunto; set => isAssunto = value; }
     }
 }

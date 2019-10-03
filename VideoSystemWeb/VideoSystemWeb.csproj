@@ -304,6 +304,7 @@
     <Content Include="DOCUMENTI\HELP\HELP VIDEOSYSTEM.docx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="fonts\open-sans_[it.allfont.net].ttf" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -466,6 +467,14 @@
     <Content Include="SITO\IMMAGINI\logoVSP.jpg" />
     <Content Include="SITO\IMMAGINI\logoVSP.png" />
     <Content Include="SITO\IMMAGINI\mail-50.png" />
+    <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\1.jpg" />
+    <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\2.jpg" />
+    <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\3.jpg" />
+    <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\4.jpg" />
+    <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\5.jpg" />
+    <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\6.jpg" />
+    <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\7.jpg" />
+    <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\8.jpg" />
     <Content Include="SITO\index.html" />
     <Content Include="StretchSession.aspx" />
     <Content Include="TEMPLATE\testComboBox.aspx" />

@@ -13,30 +13,30 @@ namespace VideoSystemWeb.Agenda.userControl {
     public partial class RiepilogoPianoEsterno {
         
         /// <summary>
-        /// Controllo btnStampaConsuntivo.
+        /// Controllo btnStampaPianoEsterno.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnStampaConsuntivo;
+        protected global::System.Web.UI.WebControls.Button btnStampaPianoEsterno;
         
         /// <summary>
-        /// Controllo DivFramePdfConsuntivo.
+        /// Controllo DivFramePdfPianoEsterno.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivFramePdfConsuntivo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivFramePdfPianoEsterno;
         
         /// <summary>
-        /// Controllo framePdfConsuntivo.
+        /// Controllo framePdfPianoEsterno.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlIframe framePdfConsuntivo;
+        protected global::System.Web.UI.HtmlControls.HtmlIframe framePdfPianoEsterno;
     }
 }

@@ -65,6 +65,7 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Protocollo_riferimento = riga.Field<string>("protocollo_riferimento");
                                         protocollo.PathDocumento = riga.Field<string>("pathDocumento");
                                         protocollo.Descrizione = riga.Field<string>("descrizione");
+                                        protocollo.Lavorazione = riga.Field<string>("lavorazione");
                                         protocollo.Produzione = riga.Field<string>("produzione");
                                         if (!DBNull.Value.Equals(riga["data_inizio_lavorazione"])) protocollo.Data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
                                         protocollo.Attivo = riga.Field<bool>("attivo");
@@ -120,6 +121,7 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Protocollo_riferimento = riga.Field<string>("protocollo_riferimento");
                                         protocollo.PathDocumento = riga.Field<string>("pathDocumento");
                                         protocollo.Descrizione = riga.Field<string>("descrizione");
+                                        protocollo.Lavorazione = riga.Field<string>("lavorazione");
                                         protocollo.Produzione = riga.Field<string>("produzione");
                                         if (!DBNull.Value.Equals(riga["data_inizio_lavorazione"]))protocollo.Data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
                                         protocollo.Attivo = riga.Field<bool>("attivo");
@@ -170,6 +172,7 @@ namespace VideoSystemWeb.DAL
                                     protocollo.Protocollo_riferimento = dt.Rows[0].Field<string>("protocollo_riferimento");
                                     protocollo.PathDocumento = dt.Rows[0].Field<string>("pathDocumento");
                                     protocollo.Descrizione = dt.Rows[0].Field<string>("descrizione");
+                                    protocollo.Lavorazione = dt.Rows[0].Field<string>("lavorazione");
                                     protocollo.Produzione = dt.Rows[0].Field<string>("produzione");
                                     if (!DBNull.Value.Equals(dt.Rows[0]["data_inizio_lavorazione"]))protocollo.Data_inizio_lavorazione = dt.Rows[0].Field<DateTime>("data_inizio_lavorazione");
                                     protocollo.Attivo = dt.Rows[0].Field<bool>("attivo");
@@ -226,6 +229,7 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Protocollo_riferimento = riga.Field<string>("protocollo_riferimento");
                                         protocollo.PathDocumento = riga.Field<string>("pathDocumento");
                                         protocollo.Descrizione = riga.Field<string>("descrizione");
+                                        protocollo.Lavorazione = riga.Field<string>("lavorazione");
                                         protocollo.Produzione = riga.Field<string>("produzione");
                                         if (!DBNull.Value.Equals(riga["data_inizio_lavorazione"])) protocollo.Data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
                                         protocollo.Attivo = riga.Field<bool>("attivo");
@@ -315,6 +319,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter descrizione = new SqlParameter("@descrizione", protocollo.Descrizione);
                             descrizione.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter lavorazione = new SqlParameter("@lavorazione", protocollo.Lavorazione);
+                            lavorazione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(lavorazione);
 
                             SqlParameter produzione = new SqlParameter("@produzione", protocollo.Produzione);
                             produzione.Direction = ParameterDirection.Input;
@@ -411,6 +419,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter descrizione = new SqlParameter("@descrizione", protocollo.Descrizione);
                             descrizione.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter lavorazione = new SqlParameter("@lavorazione", protocollo.Lavorazione);
+                            lavorazione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(lavorazione);
 
                             SqlParameter produzione = new SqlParameter("@produzione", protocollo.Produzione);
                             produzione.Direction = ParameterDirection.Input;

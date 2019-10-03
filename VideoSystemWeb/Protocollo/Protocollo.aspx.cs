@@ -304,7 +304,10 @@ namespace VideoSystemWeb.Protocollo
             queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
+
             queryRicerca = queryRicerca.Replace("@lavorazione", tbLavorazione.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@descrizione", tbDescrizione.Text.Trim().Replace("'", "''"));
+
             queryRicerca = queryRicerca.Replace("@tipoProtocollo", ddlTipoProtocollo.SelectedValue.ToString().Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@protocolloRiferimento", tbProtocolloRiferimento.Text.Trim().Replace("'","''"));
 
@@ -324,7 +327,7 @@ namespace VideoSystemWeb.Protocollo
             {
 
                 // PRENDO IL PATH DELL'ALLEGATO SE C'E'
-                string pathDocumento = e.Row.Cells[9].Text.Trim();
+                string pathDocumento = e.Row.Cells[10].Text.Trim();
                 ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
                 {
@@ -361,6 +364,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Cliente.Text = "";
             tbMod_NomeFile.Text = "";
             tbMod_Lavorazione.Text = "";
+            tbMod_Descrizione.Text = "";
             cmbMod_Tipologia.SelectedIndex = 0;
 
         }
@@ -378,6 +382,7 @@ namespace VideoSystemWeb.Protocollo
             //tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Cliente.ReadOnly = true;
             tbMod_Lavorazione.ReadOnly = attivaModifica;
+            tbMod_Descrizione.ReadOnly = attivaModifica;
             tbMod_NomeFile.ReadOnly = true;
             //tbMod_NomeFile.ReadOnly = attivaModifica;
 
@@ -395,6 +400,7 @@ namespace VideoSystemWeb.Protocollo
         {
             Esito esito = new Esito();
             pulisciCampiDettaglio();
+            tbMod_CodiceLavoro.Text = "generico";
             //btnViewAttachement.Attributes.Add("disabled", "true");
             btnViewAttachement.Enabled = false;
         }
@@ -437,7 +443,8 @@ namespace VideoSystemWeb.Protocollo
                     }
                     tbMod_NomeFile.Text = protocollo.PathDocumento;
                     Session["NOME_FILE"] = protocollo.PathDocumento;
-                    tbMod_Lavorazione.Text = protocollo.Descrizione;
+                    tbMod_Lavorazione.Text = protocollo.Lavorazione;
+                    tbMod_Descrizione.Text = protocollo.Descrizione;
 
                     //TIPI PROTOCOLLO
                     ListItem trovati = cmbMod_Tipologia.Items.FindByValue(protocollo.Id_tipo_protocollo.ToString());
@@ -512,7 +519,8 @@ namespace VideoSystemWeb.Protocollo
             protocollo.Produzione = BasePage.ValidaCampo(tbMod_Produzione, "", false, ref esito);
             protocollo.Data_inizio_lavorazione = BasePage.ValidaCampo(tbMod_DataLavorazione, DateTime.Now, true, ref esito);
             protocollo.Codice_lavoro = BasePage.ValidaCampo(tbMod_CodiceLavoro, "", false, ref esito);
-            protocollo.Descrizione = BasePage.ValidaCampo(tbMod_Lavorazione, "", true, ref esito);
+            protocollo.Lavorazione = BasePage.ValidaCampo(tbMod_Lavorazione, "", true, ref esito);
+            protocollo.Descrizione = BasePage.ValidaCampo(tbMod_Descrizione, "", true, ref esito);
             protocollo.Attivo = true;
 
             return protocollo;
@@ -589,6 +597,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_DataLavorazione.CssClass = tbMod_DataLavorazione.CssClass.Replace("erroreValidazione", "");
             tbMod_Produzione.CssClass = tbMod_Produzione.CssClass.Replace("erroreValidazione", "");
             tbMod_Lavorazione.CssClass = tbMod_Lavorazione.CssClass.Replace("erroreValidazione", "");
+            tbMod_Descrizione.CssClass = tbMod_Descrizione.CssClass.Replace("erroreValidazione", "");
             tbMod_NomeFile.CssClass = tbMod_NomeFile.CssClass.Replace("erroreValidazione", "");
             tbMod_NumeroProtocollo.CssClass = tbMod_NumeroProtocollo.CssClass.Replace("erroreValidazione", "");
             tbMod_ProtocolloRiferimento.CssClass = tbMod_ProtocolloRiferimento.CssClass.Replace("erroreValidazione", "");
@@ -719,8 +728,13 @@ namespace VideoSystemWeb.Protocollo
                 // PRENDO CODICE LAVORAZIONE E CLIENTE/FORNITORE E LI PASSO ALLA FUNZIONE
                 string codLavSelezionato = e.Row.Cells[2].Text;
                 string clienteFornitoreSelezionato = e.Row.Cells[3].Text;
+                string produzioneSelezionata = e.Row.Cells[6].Text;
+                string lavorazioneSelezionata = e.Row.Cells[7].Text;
+
+
                 ImageButton myButtonEdit = e.Row.FindControl("imgSelect") as ImageButton;
-                myButtonEdit.Attributes.Add("onclick", "associaCodiceLavorazione('" + codLavSelezionato.Replace("&nbsp;","") + "','" + clienteFornitoreSelezionato.Replace("&nbsp;", "") + "');");
+                //myButtonEdit.Attributes.Add("onclick", "associaCodiceLavorazione('" + codLavSelezionato.Replace("&nbsp;","") + "','" + clienteFornitoreSelezionato.Replace("&nbsp;", "") + "');");
+                myButtonEdit.Attributes.Add("onclick", "associaCodiceLavorazione('" + codLavSelezionato.Replace("&nbsp;", "") + "','" + clienteFornitoreSelezionato.Replace("&nbsp;", "") + "','" + produzioneSelezionata.Replace("&nbsp;", "") + "','" + lavorazioneSelezionata.Replace("&nbsp;", "") + "');");
             }
 
             //associaCodiceLavorazione(codLav, cliente)

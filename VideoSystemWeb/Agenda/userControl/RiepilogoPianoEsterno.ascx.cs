@@ -25,10 +25,10 @@ namespace VideoSystemWeb.Agenda.userControl
             if (IsPostBack)
             {
                 ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
-                scriptManager.RegisterPostBackControl(this.btnStampaConsuntivo);
+                scriptManager.RegisterPostBackControl(this.btnStampaPianoEsterno);
             }
         }
-        public Esito popolaPannelloConsuntivo(DatiAgenda eventoSelezionato)
+        public Esito popolaPannelloPianoEsterno(DatiAgenda eventoSelezionato)
         {
             Esito esito = new Esito();
             try
@@ -222,20 +222,24 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         // INTESTAZIONE GRIGLIA
 
-                        iText.Layout.Element.Table table = new iText.Layout.Element.Table(8).UseAllAvailableWidth(); //.SetBorderTop(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.ORANGE, 5)).SetBorderBottom(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.YELLOW, 5)).SetBorderLeft(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.GREEN, 5)).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.RED, 5));
+                        iText.Layout.Element.Table table = new iText.Layout.Element.Table(10).UseAllAvailableWidth(); //.SetBorderTop(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.ORANGE, 5)).SetBorderBottom(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.YELLOW, 5)).SetBorderLeft(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.GREEN, 5)).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.RED, 5));
                         Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Orario").SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Collaboratore").SetFontSize(10).SetBold().SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        intestazione = new Paragraph("Personale").SetFontSize(10).SetBold().SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
                         intestazione = new Paragraph("Qualifica").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Importo Diaria").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                        table.AddHeaderCell(intestazione);
                         intestazione = new Paragraph("Intervento").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Telefono").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Città").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        table.AddHeaderCell(intestazione);
                         intestazione = new Paragraph("Albergo").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Diaria").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        table.AddHeaderCell(intestazione);
+                        intestazione = new Paragraph("Orario").SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
                         intestazione = new Paragraph("Note").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
                         table.AddHeaderCell(intestazione);
@@ -243,7 +247,9 @@ namespace VideoSystemWeb.Agenda.userControl
                         {
 
                             string collaboratoreFornitore = "";
+                            string telefono = "";
                             string qualifica = "";
+                            string citta = "";
                             if (dpe.IdCollaboratori != null)
                             {
                                 Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(dpe.IdCollaboratori.Value, ref esito);
@@ -251,6 +257,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
                                 FiguraProfessionale fp = coll.CreaFiguraProfessionale();
                                 if (fp!=null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                                if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
+                                if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
                             }
                             else if (dpe.IdFornitori != null)
                             {
@@ -258,6 +266,8 @@ namespace VideoSystemWeb.Agenda.userControl
                                 collaboratoreFornitore = clienteFornitore.RagioneSociale.Trim();
                                 FiguraProfessionale fp = clienteFornitore.CreaFiguraProfessionale();
                                 if (fp != null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                                if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
+                                if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
                             }
 
                             string importoDiaria = "0,00";
@@ -281,19 +291,26 @@ namespace VideoSystemWeb.Agenda.userControl
                                 intervento = SessionManager.ListaTipiIntervento.FirstOrDefault(x => x.id == dpe.IdIntervento).nome;
                             }
 
+                            
+                            
+
                             string albergo = "no";
                             if (dpe.Albergo != null && dpe.Albergo == true) albergo = "si";
 
                             //Paragraph p = new Paragraph(dpe.Data.Value.ToLongDateString() + " " + orario + " " + collaboratoreFornitore + " " + nota).SetFontSize(8);
                             //document.Add(p);
                             table.AddCell(dataPiano).SetFontSize(8).SetFontSize(10);
-                            table.AddCell(orario).SetFontSize(8);
                             table.AddCell(collaboratoreFornitore);
                             table.AddCell(qualifica).SetFontSize(8);
+                            table.AddCell(intervento).SetFontSize(8);
+
+                            table.AddCell(telefono).SetFontSize(8);
+                            table.AddCell(citta).SetFontSize(8);
+
+                            table.AddCell(albergo).SetFontSize(8);
                             Paragraph pImportoDiaria = new Paragraph(importoDiaria).SetFontSize(8).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                             table.AddCell(pImportoDiaria);
-                            table.AddCell(intervento).SetFontSize(8);
-                            table.AddCell(albergo).SetFontSize(8);
+                            table.AddCell(orario).SetFontSize(8);
                             table.AddCell(nota).SetFontSize(8);
 
                         }
@@ -341,14 +358,14 @@ namespace VideoSystemWeb.Agenda.userControl
                             //string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(mapPathPdfSenzaNumeroPagina, mapPianoEsterno, ref esito);
                             //if (File.Exists(mapPathPdfSenzaNumeroPagina)) File.Delete(mapPathPdfSenzaNumeroPagina);
                             //if (esito.codice == Esito.ESITO_OK) { 
-                            framePdfConsuntivo.Attributes.Remove("src");
-                                framePdfConsuntivo.Attributes.Add("src", pathPianoEsterno.Replace("~", ""));
+                            framePdfPianoEsterno.Attributes.Remove("src");
+                                framePdfPianoEsterno.Attributes.Add("src", pathPianoEsterno.Replace("~", ""));
 
-                                DivFramePdfConsuntivo.Visible = true;
-                                framePdfConsuntivo.Visible = true;
+                                DivFramePdfPianoEsterno.Visible = true;
+                                framePdfPianoEsterno.Visible = true;
 
-                                ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfConsuntivo.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
-                                btnStampaConsuntivo.Attributes.Add("onclick", "window.open('" + pathPianoEsterno.Replace("~", "") + "');");
+                                ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfPianoEsterno.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
+                                btnStampaPianoEsterno.Attributes.Add("onclick", "window.open('" + pathPianoEsterno.Replace("~", "") + "');");
                             //}
                         }
                         else
@@ -368,7 +385,7 @@ namespace VideoSystemWeb.Agenda.userControl
             {
 
                 esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.Descrizione = "popolaPannelloConsuntivo(DatiAgenda eventoSelezionato) " + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Descrizione = "popolaPannelloPianoEsterno(DatiAgenda eventoSelezionato) " + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -377,7 +394,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
 
         #region COMPORTAMENTO ELEMENTI PAGINA
-        protected void btnStampaConsuntivo_Click(object sender, EventArgs e)
+        protected void btnStampaPianoEsterno_Click(object sender, EventArgs e)
         {
         }
 

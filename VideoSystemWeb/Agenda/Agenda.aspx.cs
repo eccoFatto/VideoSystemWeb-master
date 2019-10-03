@@ -153,21 +153,31 @@ namespace VideoSystemWeb.Agenda
             }
         }
 
-        protected void btnConsuntivo_Click(object sender, EventArgs e)
+        protected void btnStampaPianoEsterno_Click(object sender, EventArgs e)
         {
-
-            Esito esito = popupConsuntivo.popolaPannelloConsuntivo(SessionManager.EventoSelezionato);
+            Esito esito = SalvaEvento();
             if (esito.Codice == Esito.ESITO_OK)
             {
-                upConsuntivo.Update();
+                esito = popupConsuntivo.popolaPannelloPianoEsterno(SessionManager.EventoSelezionato);
+                if (esito.Codice == Esito.ESITO_OK)
+                {
+                    upConsuntivo.Update();
 
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
-                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriConsuntivo", script: "javascript: document.getElementById('modalConsuntivo').style.display='block'", addScriptTags: true);
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriPianoEsterno", script: "javascript: document.getElementById('modalPianoEsterno').style.display='block'", addScriptTags: true);
+                }
+                else
+                {
+                    ShowError(esito.Descrizione);
+                }
             }
             else
             {
                 ShowError(esito.Descrizione);
+                UpdatePopup();
             }
+
+
         }
 
         protected void btnElimina_Click(object sender, EventArgs e)
@@ -661,7 +671,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = SessionManager.EventoSelezionato.id != 0;
-                    btnRiepilogo.Visible = btnConsuntivo.Visible = false;
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_PREVISIONE_IMPEGNO);
                 }
@@ -677,7 +687,7 @@ namespace VideoSystemWeb.Agenda
                     btnRiepilogo.Visible = true;
                     btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnElimina.Visible = true;
-                    btnConsuntivo.Visible = false;
+                    btnStampaPianoEsterno.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
@@ -693,7 +703,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = true;
-                    btnRiepilogo.Visible = btnConsuntivo.Visible = true;
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = true;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);

@@ -299,10 +299,9 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-HorizontalAlign="Right" HeaderStyle-Width="9%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
-                        <%--<asp:BoundField DataField="Costo" HeaderText="Costo" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />--%>
+                        <asp:BoundField DataField="Prezzo" HeaderText="Listino" HeaderStyle-HorizontalAlign="Right" HeaderStyle-Width="15%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
+                        <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="13%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
                         <asp:BoundField DataField="Quantita" HeaderText="Q.tà" HeaderStyle-HorizontalAlign="Right" HeaderStyle-Width="5%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
-                        <asp:BoundField DataField="Iva" HeaderText="Iva" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="8%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella" />
                         <asp:TemplateField HeaderText="Totale" HeaderStyle-HorizontalAlign="Right" HeaderStyle-Width="12%" HeaderStyle-BorderColor="White" HeaderStyle-BorderWidth="1" HeaderStyle-BorderStyle="Solid" ItemStyle-HorizontalAlign="Right" ItemStyle-VerticalAlign="Top" ItemStyle-CssClass="cella">
                             <ItemTemplate>
                                 <asp:Label ID="totaleRiga" runat="server"  />

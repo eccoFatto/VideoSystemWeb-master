@@ -346,13 +346,13 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Button btnRiepilogo;
         
         /// <summary>
-        /// Controllo btnConsuntivo.
+        /// Controllo btnStampaPianoEsterno.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConsuntivo;
+        protected global::System.Web.UI.WebControls.Button btnStampaPianoEsterno;
         
         /// <summary>
         /// Controllo btnSalva.
@@ -434,7 +434,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upConsuntivo;
-
+        
         /// <summary>
         /// Controllo popupConsuntivo.
         /// </summary>
@@ -443,6 +443,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.RiepilogoPianoEsterno popupConsuntivo;
+        
         /// <summary>
         /// Controllo lbl_backgroundAgenda.
         /// </summary>

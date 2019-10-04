@@ -355,6 +355,37 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         if (File.Exists(mapPathPianoEsterno))
                         {
+
+                            // SE FILE OK INSERISCO O AGGIORNO PROTOCOLLO DI TIPO PIANO ESTERNO
+                            Protocolli protocolloPianoEsterno = new Protocolli();
+                            int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Piano Esterno", ref esito).id;
+                            List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
+                            if (listaProtocolli.Count == 0)
+                            {
+                                //INSERISCO
+                                protocolloPianoEsterno.Attivo = true;
+                                protocolloPianoEsterno.Cliente = cliente.RagioneSociale.Trim();
+                                protocolloPianoEsterno.Codice_lavoro = eventoSelezionato.codice_lavoro;
+                                protocolloPianoEsterno.Data_inizio_lavorazione = eventoSelezionato.data_inizio_impegno;
+                                protocolloPianoEsterno.Data_protocollo = DateTime.Today;
+                                protocolloPianoEsterno.Descrizione = "Piano Esterno";
+                                protocolloPianoEsterno.Id_cliente = eventoSelezionato.id_cliente;
+                                protocolloPianoEsterno.Id_tipo_protocollo = idTipoProtocollo;
+                                protocolloPianoEsterno.Lavorazione = eventoSelezionato.lavorazione;
+                                protocolloPianoEsterno.PathDocumento = Path.GetFileName(mapPathPianoEsterno);
+                                protocolloPianoEsterno.Produzione = eventoSelezionato.produzione;
+                                protocolloPianoEsterno.Protocollo_riferimento = "";
+                                protocolloPianoEsterno.Numero_protocollo = Protocolli_BLL.Instance.getNumeroProtocollo();
+                                int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloPianoEsterno, ref esito);
+                            }
+                            else
+                            {
+                                // AGGIORNO
+                                protocolloPianoEsterno = listaProtocolli.First();
+                                protocolloPianoEsterno.PathDocumento = Path.GetFileName(mapPathPianoEsterno);
+                                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloPianoEsterno);
+                            }
+
                             //string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(mapPathPdfSenzaNumeroPagina, mapPianoEsterno, ref esito);
                             //if (File.Exists(mapPathPdfSenzaNumeroPagina)) File.Delete(mapPathPdfSenzaNumeroPagina);
                             //if (esito.codice == Esito.ESITO_OK) { 

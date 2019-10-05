@@ -183,6 +183,7 @@
     <Content Include="Agenda\prova.aspx" />
     <Content Include="Agenda\userControl\Appuntamento.ascx" />
     <Content Include="Agenda\userControl\Consuntivo_old.ascx" />
+    <Content Include="Agenda\userControl\RiepilogoConsuntivo.ascx" />
     <Content Include="Agenda\userControl\RiepilogoPianoEsterno.ascx" />
     <Content Include="Agenda\userControl\Lavorazione.ascx" />
     <Content Include="Agenda\userControl\Offerta.ascx" />
@@ -540,6 +541,13 @@
     </Compile>
     <Compile Include="Agenda\userControl\Consuntivo_old.ascx.designer.cs">
       <DependentUpon>Consuntivo_old.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\userControl\RiepilogoConsuntivo.ascx.cs">
+      <DependentUpon>RiepilogoConsuntivo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\userControl\RiepilogoConsuntivo.ascx.designer.cs">
+      <DependentUpon>RiepilogoConsuntivo.ascx</DependentUpon>
     </Compile>
     <Compile Include="Agenda\userControl\RiepilogoPianoEsterno.ascx.cs">
       <DependentUpon>RiepilogoPianoEsterno.ascx</DependentUpon>

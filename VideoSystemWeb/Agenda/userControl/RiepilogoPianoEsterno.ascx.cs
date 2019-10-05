@@ -55,16 +55,30 @@ namespace VideoSystemWeb.Agenda.userControl
                     cfAppo = Config_BLL.Instance.getConfig(ref esito, "EMAIL");
                     string emailVs = cfAppo.valore;
 
-
-                    // GESTIONE NOMI FILE PDF
-                    string nomeFile = "PianoEsterno_" + eventoSelezionato.LavorazioneCorrente.Id.ToString() + ".pdf";
-                    string pathPianoEsterno = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PIANOESTERNO"] + nomeFile;
-                    string mapPathPianoEsterno = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PIANOESTERNO"]) + nomeFile;
-                    //string mapPathPdfSenzaNumeroPagina = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PIANOESTERNO"]) + "tmp_" + nomeFile;
-
                     List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = eventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
                     if (listaDatiPianoEsternoLavorazione != null)
                     {
+
+                        Protocolli protocolloPianoEsterno = new Protocolli();
+                        int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Piano Esterno", ref esito).id;
+                        List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
+                        string numeroProtocollo = "";
+                        if (listaProtocolli.Count == 0)
+                        {
+                            numeroProtocollo = Protocolli_BLL.Instance.getNumeroProtocollo();
+                        }
+                        else
+                        {
+                            protocolloPianoEsterno = listaProtocolli.First();
+                            numeroProtocollo = protocolloPianoEsterno.Numero_protocollo;
+                        }
+
+                        // GESTIONE NOMI FILE PDF
+                        //string nomeFile = "PianoEsterno_" + eventoSelezionato.LavorazioneCorrente.Id.ToString() + ".pdf";
+                        string nomeFile = "PianoEsterno_" + numeroProtocollo + ".pdf";
+                        string pathPianoEsterno = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
+                        string mapPathPianoEsterno = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
+
                         string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
                         iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
                         
@@ -291,9 +305,6 @@ namespace VideoSystemWeb.Agenda.userControl
                                 intervento = SessionManager.ListaTipiIntervento.FirstOrDefault(x => x.id == dpe.IdIntervento).nome;
                             }
 
-                            
-                            
-
                             string albergo = "no";
                             if (dpe.Albergo != null && dpe.Albergo == true) albergo = "si";
 
@@ -357,9 +368,6 @@ namespace VideoSystemWeb.Agenda.userControl
                         {
 
                             // SE FILE OK INSERISCO O AGGIORNO PROTOCOLLO DI TIPO PIANO ESTERNO
-                            Protocolli protocolloPianoEsterno = new Protocolli();
-                            int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Piano Esterno", ref esito).id;
-                            List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
                             if (listaProtocolli.Count == 0)
                             {
                                 //INSERISCO
@@ -375,13 +383,12 @@ namespace VideoSystemWeb.Agenda.userControl
                                 protocolloPianoEsterno.PathDocumento = Path.GetFileName(mapPathPianoEsterno);
                                 protocolloPianoEsterno.Produzione = eventoSelezionato.produzione;
                                 protocolloPianoEsterno.Protocollo_riferimento = "";
-                                protocolloPianoEsterno.Numero_protocollo = Protocolli_BLL.Instance.getNumeroProtocollo();
+                                protocolloPianoEsterno.Numero_protocollo = numeroProtocollo;
                                 int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloPianoEsterno, ref esito);
                             }
                             else
                             {
                                 // AGGIORNO
-                                protocolloPianoEsterno = listaProtocolli.First();
                                 protocolloPianoEsterno.PathDocumento = Path.GetFileName(mapPathPianoEsterno);
                                 esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloPianoEsterno);
                             }

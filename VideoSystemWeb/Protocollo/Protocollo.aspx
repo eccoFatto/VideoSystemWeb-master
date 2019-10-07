@@ -320,12 +320,12 @@
                     <!-- TAB PROTOCOLLI -->
                     <div id="Protocollo" class="w3-container w3-border prot" style="display: block">
                         <%--<label>Protocolli</label>--%>
-                        <div class="w3-container w3-center">
+                        <div class="w3-container">
                             <p>
-                                <div class="w3-row-padding w3-center">
+                                <div class="w3-row-padding">
                                     <div class="w3-quarter">
                                         <label>Codice Lavorazione</label>
-                                        <div class="w3-row w3-center">
+                                        <div class="w3-row">
                                             <div class="w3-threequarter">
                                                 <asp:TextBox ID="tbMod_CodiceLavoro" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                             </div>
@@ -349,7 +349,7 @@
                                         </asp:DropDownList>
                                     </div>
                                 </div>
-                                <div class="w3-row-padding w3-center">
+                                <div class="w3-row-padding">
                                     <div class="w3-quarter">
                                         <label>Produzione</label>
                                         <asp:TextBox ID="tbMod_Produzione" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
@@ -367,10 +367,10 @@
                                         <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="200" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>
-                                <div class="w3-row-padding w3-center">
+                                <div class="w3-row-padding">
                                     <div class="w3-half">
                                         <label>Cliente/Fornitore</label>
-                                        <div class="w3-row w3-center w3-text-center">
+                                        <div class="w3-row">
                                             <div class="w3-threequarter">
                                                 <asp:TextBox ID="tbMod_Cliente" runat="server" CssClass="w3-input w3-border" Text=""></asp:TextBox>
                                                 <asp:HiddenField runat="server" ID="tbMod_IdCliente" />
@@ -389,7 +389,7 @@
                                     </div>
                                 </div>
 
-                                <div class="w3-row-padding w3-center">
+                                <div class="w3-row-padding">
                                     <div class="w3-threequarter">
                                         <label>Nome File</label>
                                         <asp:TextBox ID="tbMod_NomeFile" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
@@ -398,7 +398,7 @@
                                         <label>&nbsp;</label>
                                     </div>
                                 </div>
-                                <div class="w3-row-padding w3-center">
+                                <div class="w3-row-padding">
                                     <div class="w3-threequarter">
                                         <label>&nbsp;</label>
                                         <ajaxToolkit:AsyncFileUpload ID="fuFileProt"

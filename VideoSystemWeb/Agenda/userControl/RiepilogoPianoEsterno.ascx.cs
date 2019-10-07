@@ -75,7 +75,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         // GESTIONE NOMI FILE PDF
                         //string nomeFile = "PianoEsterno_" + eventoSelezionato.LavorazioneCorrente.Id.ToString() + ".pdf";
-                        string nomeFile = "PianoEsterno_" + numeroProtocollo + ".pdf";
+                        //string nomeFile = "PianoEsterno_" + numeroProtocollo + ".pdf";
+                        string nomeFile = "PianoEsterno_" + eventoSelezionato.codice_lavoro + ".pdf";
                         string pathPianoEsterno = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
                         string mapPathPianoEsterno = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 

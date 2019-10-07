@@ -182,13 +182,11 @@
     <Content Include="Agenda\GestioneColonneAgenda.aspx" />
     <Content Include="Agenda\prova.aspx" />
     <Content Include="Agenda\userControl\Appuntamento.ascx" />
-    <Content Include="Agenda\userControl\Consuntivo_old.ascx" />
     <Content Include="Agenda\userControl\RiepilogoConsuntivo.ascx" />
     <Content Include="Agenda\userControl\RiepilogoPianoEsterno.ascx" />
     <Content Include="Agenda\userControl\Lavorazione.ascx" />
     <Content Include="Agenda\userControl\Offerta.ascx" />
     <Content Include="Agenda\userControl\RiepilogoOfferta.ascx" />
-    <Content Include="Agenda\userControl\RiepilogoOfferta_old.ascx" />
     <Content Include="Anagrafiche\AnagClientiFornitori.aspx" />
     <Content Include="Anagrafiche\AnagCollaboratori.aspx" />
     <Content Include="Anagrafiche\userControl\AnagClientiFornitori.ascx" />
@@ -535,13 +533,6 @@
     <Compile Include="Agenda\userControl\Appuntamento.ascx.designer.cs">
       <DependentUpon>Appuntamento.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Agenda\userControl\Consuntivo_old.ascx.cs">
-      <DependentUpon>Consuntivo_old.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Agenda\userControl\Consuntivo_old.ascx.designer.cs">
-      <DependentUpon>Consuntivo_old.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Agenda\userControl\RiepilogoConsuntivo.ascx.cs">
       <DependentUpon>RiepilogoConsuntivo.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -576,13 +567,6 @@
     </Compile>
     <Compile Include="Agenda\userControl\RiepilogoOfferta.ascx.designer.cs">
       <DependentUpon>RiepilogoOfferta.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Agenda\userControl\RiepilogoOfferta_old.ascx.cs">
-      <DependentUpon>RiepilogoOfferta_old.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Agenda\userControl\RiepilogoOfferta_old.ascx.designer.cs">
-      <DependentUpon>RiepilogoOfferta_old.ascx</DependentUpon>
     </Compile>
     <Compile Include="Anagrafiche\AnagClientiFornitori.aspx.cs">
       <DependentUpon>AnagClientiFornitori.aspx</DependentUpon>

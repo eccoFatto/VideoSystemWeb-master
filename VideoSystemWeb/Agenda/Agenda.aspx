@@ -5,6 +5,7 @@
 <%@ Register TagPrefix="popup" TagName="Lavorazione" Src="~/Agenda/userControl/Lavorazione.ascx" %>
 <%@ Register TagPrefix="popup" TagName="RiepilogoOfferta" Src="~/Agenda/userControl/RiepilogoOfferta.ascx" %>
 <%@ Register TagPrefix="popup" TagName="RiepilogoPianoEsterno" Src="~/Agenda/userControl/RiepilogoPianoEsterno.ascx" %>
+<%@ Register TagPrefix="popup" TagName="RiepilogoConsuntivo" Src="~/Agenda/userControl/RiepilogoConsuntivo.ascx" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <script>
@@ -148,6 +149,7 @@
 
                 $('#<%=btnRiepilogo.ClientID%>').hide();
                 $('#<%=btnStampaPianoEsterno.ClientID%>').hide();
+                $('#<%=btnStampaConsuntivo.ClientID%>').hide();
 
             } else if (tipoName == 'Offerta') {
                 nomeElemento = '<%=tab_Offerta.ClientID%>';
@@ -169,6 +171,7 @@
 
                 $('#<%=btnRiepilogo.ClientID%>').show();
                 $('#<%=btnStampaPianoEsterno.ClientID%>').hide();
+                $('#<%=btnStampaConsuntivo.ClientID%>').hide();
 
             } else if (tipoName == 'Lavorazione') {
                 nomeElemento = '<%=tab_Lavorazione.ClientID%>';
@@ -184,6 +187,7 @@
 
                 $('#<%=btnRiepilogo.ClientID%>').hide();
                 $('#<%=btnStampaPianoEsterno.ClientID%>').show();
+                $('#<%=btnStampaConsuntivo.ClientID%>').show();
             }
             if (document.getElementById(nomeElemento).className.indexOf("w3-red") == -1)
                 document.getElementById(nomeElemento).className += " w3-red";
@@ -332,6 +336,7 @@
                     <div style="position: absolute; width: 100%; bottom: 0px; text-align: center; height: 7%">
                         <asp:Button ID="btnRiepilogo" runat="server" Text="Stampa Offerta" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btnStampaPianoEsterno" runat="server" Text="Stampa Piano Esterno" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaPianoEsterno_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
+                        <asp:Button ID="btnStampaConsuntivo" runat="server" Text="Stampa Consuntivo" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaConsuntivo_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); " Style="padding: 7px 10px" />
 
@@ -359,11 +364,18 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
-    <asp:UpdatePanel ID="upConsuntivo" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+    <asp:UpdatePanel ID="upRiepilogoPianoEsterno" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
         <ContentTemplate>
-            <popup:RiepilogoPianoEsterno ID="popupConsuntivo" runat="server" />
+            <popup:RiepilogoPianoEsterno ID="popupRiepilogoPianoEsterno" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
+
+    <asp:UpdatePanel ID="upRiepilogoConsuntivo" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+        <ContentTemplate>
+            <popup:RiepilogoConsuntivo ID="popupRiepilogoConsuntivo" runat="server" />
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
     <div class="showAgendaBackground" style="display: none">
         <div class="blink" style="position: fixed; width: 100%; bottom: 5%; color:darkred;">
             <asp:Label ID="lbl_backgroundAgenda" Text="Un evento è in fase di modifica" style="font-size:50pt; " runat="server" /><br />

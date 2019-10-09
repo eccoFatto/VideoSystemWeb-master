@@ -158,10 +158,10 @@ namespace VideoSystemWeb.Agenda
             Esito esito = SalvaEvento();
             if (esito.Codice == Esito.ESITO_OK)
             {
-                esito = popupConsuntivo.popolaPannelloPianoEsterno(SessionManager.EventoSelezionato);
+                esito = popupRiepilogoPianoEsterno.popolaPannelloPianoEsterno(SessionManager.EventoSelezionato);
                 if (esito.Codice == Esito.ESITO_OK)
                 {
-                    upConsuntivo.Update();
+                    upRiepilogoPianoEsterno.Update();
 
                     ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriPianoEsterno", script: "javascript: document.getElementById('modalPianoEsterno').style.display='block'", addScriptTags: true);
@@ -635,7 +635,7 @@ namespace VideoSystemWeb.Agenda
                     SalvaPdfOffertaSuFile();
                     break;
                 case "SAVE_PDFCONSUNTIVO":
-                    SalvaPdfConsuntivoSuFile();
+                    //SalvaPdfConsuntivoSuFile();
                     break;
             }
         }     
@@ -671,7 +671,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = SessionManager.EventoSelezionato.id != 0;
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = false;
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_PREVISIONE_IMPEGNO);
                 }
@@ -688,6 +688,7 @@ namespace VideoSystemWeb.Agenda
                     btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnElimina.Visible = true;
                     btnStampaPianoEsterno.Visible = false;
+                    btnStampaConsuntivo.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
@@ -703,7 +704,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = true;
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = true;
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = true;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
@@ -852,7 +853,7 @@ namespace VideoSystemWeb.Agenda
                 if (!string.IsNullOrEmpty(SessionManager.EventoSelezionato.codice_lavoro))
                 {
                     SalvaPdfOffertaSuFile();
-                    SalvaPdfConsuntivoSuFile();
+                    //SalvaPdfConsuntivoSuFile();
                 }
                 #endregion
             }
@@ -1048,6 +1049,32 @@ namespace VideoSystemWeb.Agenda
         public override void VerifyRenderingInServerForm(Control control)
         {
             /* Non eliminare questo metodo. Risolve il problema della stampa. */
+        }
+
+        protected void btnStampaConsuntivo_Click(object sender, EventArgs e)
+        {
+            Esito esito = SalvaEvento();
+            if (esito.Codice == Esito.ESITO_OK)
+            {
+                esito = popupRiepilogoConsuntivo.popolaPannelloConsuntivo(SessionManager.EventoSelezionato);
+                if (esito.Codice == Esito.ESITO_OK)
+                {
+                    upRiepilogoConsuntivo.Update();
+
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriConsuntivo", script: "javascript: document.getElementById('modalConsuntivo').style.display='block'", addScriptTags: true);
+                }
+                else
+                {
+                    ShowError(esito.Descrizione);
+                }
+            }
+            else
+            {
+                ShowError(esito.Descrizione);
+                UpdatePopup();
+            }
+
         }
     }
 }

@@ -355,6 +355,15 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Button btnStampaPianoEsterno;
         
         /// <summary>
+        /// Controllo btnStampaConsuntivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStampaConsuntivo;
+        
+        /// <summary>
         /// Controllo btnSalva.
         /// </summary>
         /// <remarks>
@@ -427,22 +436,40 @@ namespace VideoSystemWeb.Agenda {
         protected global::VideoSystemWeb.Agenda.userControl.RiepilogoOfferta popupRiepilogoOfferta;
         
         /// <summary>
-        /// Controllo upConsuntivo.
+        /// Controllo upRiepilogoPianoEsterno.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upConsuntivo;
+        protected global::System.Web.UI.UpdatePanel upRiepilogoPianoEsterno;
         
         /// <summary>
-        /// Controllo popupConsuntivo.
+        /// Controllo popupRiepilogoPianoEsterno.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::VideoSystemWeb.Agenda.userControl.RiepilogoPianoEsterno popupConsuntivo;
+        protected global::VideoSystemWeb.Agenda.userControl.RiepilogoPianoEsterno popupRiepilogoPianoEsterno;
+        
+        /// <summary>
+        /// Controllo upRiepilogoConsuntivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upRiepilogoConsuntivo;
+        
+        /// <summary>
+        /// Controllo popupRiepilogoConsuntivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::VideoSystemWeb.Agenda.userControl.RiepilogoConsuntivo popupRiepilogoConsuntivo;
         
         /// <summary>
         /// Controllo lbl_backgroundAgenda.

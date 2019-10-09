@@ -1189,6 +1189,10 @@ namespace VideoSystemWeb.DAL
             produzione.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(produzione);
 
+            SqlParameter lavorazione = new SqlParameter("@lavorazione", protocollo.Lavorazione);
+            lavorazione.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(lavorazione);
+
             SqlParameter data_inizio_lavorazione = new SqlParameter("@data_inizio_lavorazione", protocollo.Data_inizio_lavorazione);
             data_inizio_lavorazione.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(data_inizio_lavorazione);
@@ -1525,6 +1529,10 @@ namespace VideoSystemWeb.DAL
             SqlParameter parPagamento = new SqlParameter("@pagamento", noteOfferta.Pagamento);
             parPagamento.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(parPagamento);
+
+            SqlParameter notaPagamento = new SqlParameter("@notaPagamento", noteOfferta.NotaPagamento);
+            notaPagamento.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(notaPagamento);
 
             SqlParameter parConsegna = new SqlParameter("@consegna", noteOfferta.Consegna);
             parConsegna.Direction = ParameterDirection.Input;

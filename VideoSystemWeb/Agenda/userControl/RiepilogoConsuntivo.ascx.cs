@@ -58,7 +58,10 @@ namespace VideoSystemWeb.Agenda.userControl
                     //List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = eventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
                     List<DatiArticoli> listaDatiArticoli = eventoSelezionato.ListaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
 
-                    if (listaDatiArticoli != null)
+                    List<DatiArticoliLavorazione> listaArticoliLavorazione = eventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.Stampa).OrderBy(x => x.Consuntivo).ToList<DatiArticoliLavorazione>();
+
+                    //if (listaDatiArticoli != null)
+                    if(listaArticoliLavorazione!=null)
                     {
 
                         Protocolli protocolloConsuntivo = new Protocolli();
@@ -91,7 +94,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
                         Document document = new Document(doc);
 
-                        document.SetMargins(100, 30, 50, 30);
+                        document.SetMargins(100, 30, 100, 30);
 
                         // AGGIUNGO LOGO
                         iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(80, 80).SetFixedPosition(1, 30, 740);
@@ -239,18 +242,29 @@ namespace VideoSystemWeb.Agenda.userControl
                         decimal totIVA = 0;
 
                         // CICLO GLI ARTICOLI
-                        foreach (DatiArticoli da in listaDatiArticoli)
+                        //foreach (DatiArticoli da in listaDatiArticoli)
+                        foreach (DatiArticoliLavorazione da in listaArticoliLavorazione)
                         {
                             // CALCOLO I TOTALI
-                            totPrezzo += da.Prezzo * da.Quantita;
-                            totIVA += (da.Prezzo * da.Iva / 100) * da.Quantita;
+                            //totPrezzo += da.Prezzo * da.Quantita;
+                            totPrezzo += da.Prezzo * 1;
+                            //totIVA += (da.Prezzo * da.Iva / 100) * da.Quantita;
+                            totIVA += (da.Prezzo * da.Iva / 100) * 1;
 
-                            pGriglia = new Paragraph(da.Descrizione).SetFontSize(9);
+                            string descrizione = da.Descrizione;
+                            string descrizioneLunga = da.DescrizioneLunga;
+                            if (da.Consuntivo==true)
+                            {
+                                descrizione = "(c)" + descrizione;
+                                descrizioneLunga = "(Cons.)" + Environment.NewLine + descrizioneLunga;
+                            }
+
+                            pGriglia = new Paragraph(descrizione).SetFontSize(9);
                             cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
 
-                            pGriglia = new Paragraph(da.DescrizioneLunga).SetFontSize(9);
+                            pGriglia = new Paragraph(descrizioneLunga).SetFontSize(9);
                             cellaGriglia = new iText.Layout.Element.Cell(1, 2).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
@@ -260,7 +274,8 @@ namespace VideoSystemWeb.Agenda.userControl
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
 
-                            pGriglia = new Paragraph(da.Quantita.ToString("##0")).SetFontSize(9);
+                            //pGriglia = new Paragraph(da.Quantita.ToString("##0")).SetFontSize(9);
+                            pGriglia = new Paragraph(1.ToString("##0")).SetFontSize(9);
                             cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
@@ -270,7 +285,8 @@ namespace VideoSystemWeb.Agenda.userControl
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
 
-                            decimal totale = da.Prezzo * da.Quantita;
+                            //decimal totale = da.Prezzo * da.Quantita;
+                            decimal totale = da.Prezzo * 1;
 
                             pGriglia = new Paragraph(totale.ToString("###,##0.00")).SetFontSize(9);
                             cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);

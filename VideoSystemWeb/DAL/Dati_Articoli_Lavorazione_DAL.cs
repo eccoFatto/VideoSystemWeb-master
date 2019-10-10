@@ -78,6 +78,7 @@ namespace VideoSystemWeb.DAL
                                         datiArticoliLavorazione.FP_netto = riga.Field<decimal?>("fp_netto");
                                         datiArticoliLavorazione.FP_lordo = riga.Field<decimal?>("fp_lordo");
                                         datiArticoliLavorazione.UsaCostoFP = riga.Field<bool?>("usaCostoFP");
+                                        datiArticoliLavorazione.Consuntivo = riga.Field<bool?>("consuntivo");
 
                                         listaDatiArticoli.Add(datiArticoliLavorazione);
                                     }

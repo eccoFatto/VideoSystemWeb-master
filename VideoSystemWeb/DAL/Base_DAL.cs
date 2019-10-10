@@ -1779,6 +1779,14 @@ namespace VideoSystemWeb.DAL
             }
             fp_lordo.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(usaCostoFP);
+
+            SqlParameter consuntivo = new SqlParameter("@consuntivo", DBNull.Value);
+            if (datoArticoloLavorazione.Consuntivo != null)
+            {
+                consuntivo = new SqlParameter("@consuntivo", datoArticoloLavorazione.Consuntivo);
+            }
+            fp_lordo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(consuntivo);
         }
 
         protected static void CostruisciSP_DeleteDatiArticoliLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiLavorazione)

@@ -150,6 +150,16 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_Stampa.SelectedValue = articoloSelezionato.Stampa ? "1" : "0";
                     ddl_FPtipoPagamento.SelectedValue = articoloSelezionato.IdTipoPagamento != null ? articoloSelezionato.IdTipoPagamento.ToString() : "";
 
+                    if(articoloSelezionato.Consuntivo!=null && articoloSelezionato.Consuntivo==true)
+                    {
+                        ddl_Consuntivo.SelectedValue = "1";
+                    }
+                    else
+                    {
+                        ddl_Consuntivo.SelectedValue = "0";
+                    }
+                        
+
                     //Cerco tra Collaboratori o Fornitori
                     FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == articoloSelezionato.IdCollaboratori && x.Tipo == COLLABORATORE);
                     if (figuraProfessionale != null) // TROVATO UN COLLABORATORE
@@ -172,6 +182,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         div_FiguraProfessionale.Visible = true;
                         hf_IdFiguraProfessionale.Value = figuraProfessionale.Id.ToString();
                         ddl_FPtipoPagamento.SelectedValue = articoloSelezionato.IdTipoPagamento == null ? "" : articoloSelezionato.IdTipoPagamento.ToString();
+                        ddl_Consuntivo.SelectedValue = articoloSelezionato.Consuntivo == null ? "" : articoloSelezionato.Consuntivo.ToString();
 
                         AbilitaCostoFP(!string.IsNullOrEmpty(ddl_FPtipoPagamento.SelectedValue));
 
@@ -278,6 +289,8 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.DescrizioneLunga = txt_DescrizioneLunga.Text;
 
             articoloSelezionato.UsaCostoFP = !string.IsNullOrEmpty(ddl_FPtipoPagamento.SelectedValue);
+
+            articoloSelezionato.Consuntivo = !string.IsNullOrEmpty(ddl_Consuntivo.SelectedValue);
 
             if (articoloSelezionato.UsaCostoFP != null && (bool)articoloSelezionato.UsaCostoFP)
             {
@@ -476,6 +489,7 @@ namespace VideoSystemWeb.Agenda.userControl
             datiArticoliLav.FP_netto = articoloLavorazione.FP_netto;
             datiArticoliLav.FP_lordo = articoloLavorazione.FP_lordo;
             datiArticoliLav.UsaCostoFP = articoloLavorazione.UsaCostoFP;
+            datiArticoliLav.Consuntivo = false;
 
             SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Add(datiArticoliLav);
             SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderBy(y => y.Data).ThenByDescending(x => x.Prezzo).ToList();
@@ -503,6 +517,7 @@ namespace VideoSystemWeb.Agenda.userControl
             ddl_FPtipo.SelectedIndex =
             ddl_FPqualifica.SelectedIndex =
             ddl_FPtipoPagamento.SelectedIndex = 0;
+            ddl_Consuntivo.SelectedIndex = 0;
 
             hf_IdFiguraProfessionale.Value = "";
 

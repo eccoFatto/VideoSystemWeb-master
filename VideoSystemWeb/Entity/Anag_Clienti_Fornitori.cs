@@ -109,7 +109,7 @@ namespace VideoSystemWeb.Entity
         public List<Anag_Referente_Clienti_Fornitori> Referenti { get => referenti; set => referenti = value; }
         public string NotaPagamento { get => notaPagamento; set => notaPagamento = value; }
 
-        public FiguraProfessionale CreaFiguraProfessionale()
+        public FiguraProfessionale CreaFiguraProfessionale(string descrizioneArticoloAssociato)
         {
             FiguraProfessionale figProf = new FiguraProfessionale();
 
@@ -120,6 +120,8 @@ namespace VideoSystemWeb.Entity
             figProf.Citta = this.ComuneOperativo;
             figProf.Qualifiche = null;
             figProf.Telefono = this.Telefono;
+
+            figProf.DescrizioneArticoloAssociato = descrizioneArticoloAssociato;
 
             figProf.Tipo = 1;
 

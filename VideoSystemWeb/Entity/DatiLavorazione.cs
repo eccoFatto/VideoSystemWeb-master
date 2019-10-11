@@ -41,17 +41,36 @@ namespace VideoSystemWeb.Entity
                 {
                     FiguraProfessionale figProf = new FiguraProfessionale();
                     DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
+
+                    string descrizioneArticoloAssociato = "";
                     if (datoPianoEsterno.IdCollaboratori != null && datoPianoEsterno.IdCollaboratori != 0)
                     {
                         Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdCollaboratori);
                         datoArticoloLavorazione = ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == datoPianoEsterno.IdCollaboratori);
-                        figProf = collaboratore.CreaFiguraProfessionale();
+
+                        // prendo descrizione da datiArticoliLavorazione filtrando per data, idCollaboratore e idLavorazione
+                        DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == datoPianoEsterno.IdCollaboratori && x.Data == datoPianoEsterno.Data);
+                        if (articoloAssociato != null)
+                        {
+                            descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                        }
+
+
+                        figProf = collaboratore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
                     }
                     else if (datoPianoEsterno.IdFornitori != null && datoPianoEsterno.IdFornitori != 0)
                     {
                         Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdFornitori);
                         datoArticoloLavorazione = ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == datoPianoEsterno.IdFornitori);
-                        figProf = fornitore.CreaFiguraProfessionale();
+
+                        // prendo descrizione da datiArticoliLavorazione filtrando per data, idFornitore e idLavorazione
+                        DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == datoPianoEsterno.IdFornitori && x.Data == datoPianoEsterno.Data);
+                        if (articoloAssociato != null)
+                        {
+                            descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                        }
+
+                        figProf = fornitore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
                     }
                     figProf.Nota = datoArticoloLavorazione.Nota;
                     figProf.Lordo = datoArticoloLavorazione.FP_lordo;

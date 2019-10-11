@@ -1045,7 +1045,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
                     Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == collabForn.IdCollaboratori);
 
-                    figProf = collaboratore.CreaFiguraProfessionale();
+                    figProf = collaboratore.CreaFiguraProfessionale(collabForn.Descrizione);
                     figProf.IdCollaboratori = collabForn.IdCollaboratori;
 
                     datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
@@ -1055,7 +1055,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
                     Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == collabForn.IdFornitori);
 
-                    figProf = fornitore.CreaFiguraProfessionale();
+                    figProf = fornitore.CreaFiguraProfessionale(collabForn.Descrizione);
                     figProf.IdFornitori = collabForn.IdFornitori;
 
                     datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;

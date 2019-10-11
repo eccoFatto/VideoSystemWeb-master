@@ -265,12 +265,22 @@ namespace VideoSystemWeb.Agenda.userControl
                             string telefono = "";
                             string qualifica = "";
                             string citta = "";
+
+                            string descrizioneArticoloAssociato = "";
+
                             if (dpe.IdCollaboratori != null)
                             {
                                 Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(dpe.IdCollaboratori.Value, ref esito);
                                 collaboratoreFornitore = coll.Cognome.Trim() + " " + coll.Nome.Trim();
 
-                                FiguraProfessionale fp = coll.CreaFiguraProfessionale();
+                                // prendo descrizione da datiArticoliLavorazione filtrando per data, idCollaboratore e idLavorazione
+                                DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x=>x.IdCollaboratori == coll.Id && x.Data == dpe.Data);
+                                if (articoloAssociato != null)
+                                {
+                                    descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                                }
+
+                                FiguraProfessionale fp = coll.CreaFiguraProfessionale(descrizioneArticoloAssociato);
                                 if (fp!=null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
                                 if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
                                 if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
@@ -279,7 +289,15 @@ namespace VideoSystemWeb.Agenda.userControl
                             {
                                 Anag_Clienti_Fornitori clienteFornitore = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(dpe.IdFornitori.Value, ref esito);
                                 collaboratoreFornitore = clienteFornitore.RagioneSociale.Trim();
-                                FiguraProfessionale fp = clienteFornitore.CreaFiguraProfessionale();
+
+                                // prendo descrizione da datiArticoliLavorazione filtrando per data, idFornitore e idLavorazione
+                                DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == clienteFornitore.Id && x.Data == dpe.Data);
+                                if (articoloAssociato != null)
+                                {
+                                    descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                                }
+
+                                FiguraProfessionale fp = clienteFornitore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
                                 if (fp != null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
                                 if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
                                 if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;

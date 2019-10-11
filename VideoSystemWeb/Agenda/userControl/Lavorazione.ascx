@@ -625,7 +625,7 @@
                             <Columns>
                                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%"/>
 
-                                <asp:BoundField DataField="Elencoqualifiche" HeaderText="Qualifiche" HeaderStyle-Width="20%"/>
+                                <asp:BoundField DataField="DescrizioneArticoloAssociato" HeaderText="Qualifiche" HeaderStyle-Width="20%"/>
 
                                 <asp:BoundField DataField="NominativoCompleto" HeaderText="Personale" HeaderStyle-Width="20%"/>
                                

@@ -74,7 +74,7 @@ namespace VideoSystemWeb.Entity
         public List<Anag_Documenti_Collaboratori> Documenti { get => documenti; set => documenti = value; }
         public string Iban { get => iban; set => iban = value; }
 
-        public FiguraProfessionale CreaFiguraProfessionale()
+        public FiguraProfessionale CreaFiguraProfessionale(string descrizioneArticoloAssociato)
         {
             FiguraProfessionale figProf = new FiguraProfessionale();
 
@@ -85,6 +85,8 @@ namespace VideoSystemWeb.Entity
             figProf.Citta = this.ComuneRiferimento;
             figProf.Qualifiche = this.Qualifiche;
             figProf.Telefono = this.Telefoni.Count == 0 ? "" : this.Telefoni[0].NumeroCompleto;
+
+            figProf.DescrizioneArticoloAssociato = descrizioneArticoloAssociato;
 
             figProf.Tipo = 0;
 

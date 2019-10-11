@@ -9,10 +9,83 @@
     <title>videosystemproduction</title>
     <link rel="stylesheet" href="/Css/w3.css" />
     <link rel="stylesheet" href="/Css/w3-colors-win8.css" />
-    <!--<link href="../fonts/open-sans_[it.allfont.net].ttf" rel="stylesheet" type="text/css" />-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    
     <script type="text/javascript" src="/Scripts/jquery-3.3.1.min.js"></script>
     <script>
+        var slideIndex = 1;
+
+        var myTimer;
+
+        var slideshowContainer;
+
+        window.addEventListener("load", function () {
+            showSlides(slideIndex);
+            myTimer = setInterval(function () { plusSlides(1) }, 4000);
+
+            //COMMENT OUT THE LINE BELOW TO KEEP ARROWS PART OF MOUSEENTER PAUSE/RESUME
+            slideshowContainer = document.getElementsByClassName('slideshow-inner')[0];
+
+            //UNCOMMENT OUT THE LINE BELOW TO KEEP ARROWS PART OF MOUSEENTER PAUSE/RESUME
+            // slideshowContainer = document.getElementsByClassName('slideshow-container')[0];
+
+            slideshowContainer.addEventListener('mouseenter', pause)
+            slideshowContainer.addEventListener('mouseleave', resume)
+        })
+
+        // NEXT AND PREVIOUS CONTROL
+        function plusSlides(n) {
+            clearInterval(myTimer);
+            if (n < 0) {
+                showSlides(slideIndex -= 1);
+            } else {
+                showSlides(slideIndex += 1);
+            }
+
+            //COMMENT OUT THE LINES BELOW TO KEEP ARROWS PART OF MOUSEENTER PAUSE/RESUME
+
+            if (n === -1) {
+                myTimer = setInterval(function () { plusSlides(n + 2) }, 4000);
+            } else {
+                myTimer = setInterval(function () { plusSlides(n + 1) }, 4000);
+            }
+        }
+
+        //Controls the current slide and resets interval if needed
+        function currentSlide(n) {
+            clearInterval(myTimer);
+            myTimer = setInterval(function () { plusSlides(n + 1) }, 4000);
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+
+        pause = () => {
+            clearInterval(myTimer);
+        }
+
+        resume = () => {
+            clearInterval(myTimer);
+            myTimer = setInterval(function () { plusSlides(slideIndex) }, 4000);
+        }
+
+
+
+
         function sottolinea(menu) {
             if (menu == 'menuHome') {
                 $("#menuHome").css({ "text-decoration": "underline" });
@@ -43,14 +116,14 @@
             } else {
                 $("#menuPhotogallery").css({ "text-decoration": "unset" });
             }
-            
+
             if (menu == 'menuContatti') {
                 $("#menuContatti").css({ "text-decoration": "underline" });
             } else {
-                $("#menuContatti").css({ "text-decoration": "unset"});
+                $("#menuContatti").css({ "text-decoration": "unset" });
             }
 
-            
+
         }
     </script>
     <style>
@@ -85,14 +158,6 @@
                 padding-top: 112px;
             }
 
-        .mySlides {
-            display: none;
-        }
-
-        .mySlidesAuto {
-            display: none;
-        }
-
         .cssBtnTop {
             width: 50px;
             height: 50px;
@@ -113,7 +178,6 @@
             left: 0;
             font-weight: bold;
             font-size: 18px;
-            
         }
 
         .content {
@@ -121,6 +185,97 @@
 
         a:hover {
             text-decoration: underline;
+        }
+
+
+
+        .slideshow-container {
+            max-width: 100%;
+            position: absolute;
+            margin: auto;
+            /*padding-top:100px;*/
+        }
+
+        .mySlides {
+            display: none;
+            height: auto;
+            border: solid 1px black;
+        }
+
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
+            color: #222428;
+            font-weight: bold;
+            font-size: 30px;
+            transition: .6s ease;
+            border-radius: 0 3px 3px 0
+        }
+
+        .next {
+            right: 50px;
+            border-radius: 3px 3px 3px 3px
+        }
+
+        .prev {
+            left: 50px;
+            border-radius: 3px 3px 3px 3px
+        }
+
+            .prev:hover,
+            .next:hover {
+                color: #f2f2f2;
+                background-color: rgba(0, 0, 0, 0.8)
+            }
+
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: #222428
+        }
+
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color .6s ease
+        }
+
+            .active,
+            .dot:hover {
+                background-color: #717171
+            }
+
+        .social {
+            cursor: pointer;
+            position: absolute;
+            top: 80%;
+            width: auto;
+            margin-top: -22px;
+            padding: 16px;
         }
 
     </style>
@@ -132,7 +287,6 @@
 
 
     <!-- HEADER -->
-    <!--<header class="w3-container w3-text-white w3-center header" id="myHeader">-->
     <header class="w3-container w3-text-white w3-center cssMenu" id="myHeader">
         <table style="width:100%">
             <tr>
@@ -172,57 +326,85 @@
 
     <div class="content">
         <!-- HOME -->
-        <div class="w3-display-content w3-section" style="width:100%;height:auto;padding-top:84px;">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/1.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/2.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/3.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/4.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/5.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/6.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/7.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/8.jpg" style="width:100%">
-            <div class="w3-display-left w3-container">
-                <img src="IMMAGINI/FRECCIA DX.png"  style="width:40px;" />
-            </div>
-            <div class="w3-display-right w3-container">
-                <img src="IMMAGINI/FRECCIA SX.png" style="width:40px;" />
-            </div>
-            <div class="w3-display-bottommiddle w3-container">
-                <div align="center">
+        <div class="w3-display w3-section" style="width:100%;height:auto;padding-top:84px;">
+            <div class="slideshow-container">
+                <div class="slideshow-inner">
+                    <div class="mySlides fade">
+
+                        <img src='IMMAGINI/SLIDEAUTOMATICO/1.jpg' style='width: 100%;' alt="sally lightfoot crab" />
+                        <!--<div class="text">Papa Francesco</div>-->
+                    </div>
+
+                    <div class="mySlides fade">
+
+                        <img src='IMMAGINI/SLIDEAUTOMATICO/2.jpg' style='width: 100%;' alt="fighting nazca boobies" />
+                        <!--<div class="text">Buonasera Dottore</div>-->
+                    </div>
+
+                    <div class="mySlides fade">
+
+                        <img src='IMMAGINI/SLIDEAUTOMATICO/3.jpg' style='width: 100%;' alt="otovalo waterfall" />
+                        <!--<div class="text">Presidente Conte</div>-->
+                    </div>
+
+                    <div class="mySlides fade">
+
+                        <img src='IMMAGINI/SLIDEAUTOMATICO/4.jpg' style='width: 100%;' alt="pelican" />
+                        <!--<div class="text">Calcio</div>-->
+                    </div>
+
+                    <div class="mySlides fade">
+
+                        <img src='IMMAGINI/SLIDEAUTOMATICO/5.jpg' style='width: 100%;' alt="sally lightfoot crab" />
+                        <!--<div class="text">Stadio</div>-->
+                    </div>
+
+                    <div class="mySlides fade">
+
+                        <img src='IMMAGINI/SLIDEAUTOMATICO/6.jpg' style='width: 100%;' alt="fighting nazca boobies" />
+                        <!--<div class="text">Piazza Venezia</div>-->
+                    </div>
+
+                    <div class="mySlides fade">
+
+                        <img src='IMMAGINI/SLIDEAUTOMATICO/7.jpg' style='width: 100%;' alt="otovalo waterfall" />
+                        <!--<div class="text">Regia</div>-->
+                    </div>
+
+                    <div class="mySlides fade">
+
+                        <img src='IMMAGINI/SLIDEAUTOMATICO/8.jpg' style='width: 100%;' alt="pelican" />
+                        <!--<div class="text">Intervista</div>-->
+                    </div>
+                </div>
+
+                <div class="social">
                     <a href="https://www.facebook.com/videosystemproduction/" target='_blank'><img alt='Seguici su Facebook' title='Seguici su Facebook' src="IMMAGINI/FACEBOOK.gif" style="width:50px;margin:15px;" /></a>&#160;&#160;
                     <a href="https://www.instagram.com/videosystemproduction/" target="_blank"><img src="IMMAGINI/INSTAGRAM.gif" style="width:48px;margin:15px;" alt="Seguici su Instagram" title="Seguici su Instagram" /></a>&#160;&#160;
                     <a href="https://www.linkedin.com/company/videosystemproduction" target='_blank'><img alt='Seguici su LinkedIn' title='Seguici su LinkedIn' src="IMMAGINI/LINKEDIN.gif" style="width:50px;margin:15px;" /></a>&#160;&#160;
                 </div>
+                <a class="prev" onclick='plusSlides(-1)'>&#10094;</a>
+                <a class="next" onclick='plusSlides(1)'>&#10095;</a>
+
+
+            </div>
+
+            <br />
+            <div style='text-align: center;'>
+                <span class="dot" onclick='currentSlide(1)'></span>
+                <span class="dot" onclick='currentSlide(2)'></span>
+                <span class="dot" onclick='currentSlide(3)'></span>
+                <span class="dot" onclick='currentSlide(4)'></span>
+                <span class="dot" onclick='currentSlide(5)'></span>
+                <span class="dot" onclick='currentSlide(6)'></span>
+                <span class="dot" onclick='currentSlide(7)'></span>
+                <span class="dot" onclick='currentSlide(8)'></span>
             </div>
         </div>
-        <script>
-            var carosello;
-            var myIndex = getRandomInt(0, 7);
-            //alert (myIndex);
-            carousel();
-
-            function carousel() {
-                var i;
-                var x = document.getElementsByClassName("mySlidesAuto");
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";
-                }
-                myIndex++;
-                if (myIndex > x.length) { myIndex = 1 }
-                x[myIndex - 1].style.display = "block";
-                carosello=setTimeout(carousel, 4000); // Change image every 4 seconds
-            }
-
-            function getRandomInt(min, max) {
-                min = Math.ceil(min);
-                max = Math.floor(max);
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-        </script>
 
         <!-- AZIENDA -->
         <a name="segnalibroAzienda"></a>
-        <div class="w3-cell-row" style="padding-top:140px;">
+        <div class="w3-cell-row" style="padding-top:280px;">
             <div class="w3-container">
                 <p class="pIntestazione">AZIENDA</p>
                 <div class="w3-row">
@@ -424,6 +606,9 @@
         </div>
     </div>
 
+    
+
+
     <!-- FOOTER -->
     <footer class="w3-container w3-left w3-text-white" style="width:100%;background-color:#34675c;">
         <p>&copy; 2019 - <b>VIDEOSYSTEM Production Srl</b> - Via Tavarnelle Val di Pesa 34 - 00148 Roma, Italia</p>
@@ -445,6 +630,12 @@
                 header.classList.add("w3-opacity-min");
             }
 
+            // scrollo il menu
+            //if (window.pageYOffset > sticky) {
+            //    header.classList.add("sticky");
+            //} else {
+            //    header.classList.remove("sticky");
+            //}
         }
     </script>
 </body>

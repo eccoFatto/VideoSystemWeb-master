@@ -42,8 +42,9 @@ namespace VideoSystemWeb.Entity
         private decimal? fp_netto;
         private decimal? fp_lordo;
         private bool? usaCostoFP;
+        private bool? consuntivo;
 
-        
+
 
 
         public int Id { get => id; set => id = value; }
@@ -68,7 +69,6 @@ namespace VideoSystemWeb.Entity
         public decimal? FP_netto { get => fp_netto; set => fp_netto = value; }
         public decimal? FP_lordo { get => fp_lordo; set => fp_lordo = value; }
         public bool? UsaCostoFP { get => usaCostoFP; set => usaCostoFP = value; }
-
-        
+        public bool? Consuntivo { get => consuntivo; set => consuntivo = value; }
     }
 }

@@ -344,8 +344,8 @@
                                         <asp:Label ID="lbl_TipoPagamento" runat="server" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-
-                                <asp:BoundField DataField="Stampa" HeaderText="Stampa" HeaderStyle-Width="6%" />
+                                <asp:BoundField DataField="Consuntivo" HeaderText="Consuntivo" HeaderStyle-Width="3%" />
+                                <asp:BoundField DataField="Stampa" HeaderText="Stampa" HeaderStyle-Width="3%" />
                             </Columns>
 
                         </asp:GridView>

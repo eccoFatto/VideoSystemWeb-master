@@ -43,6 +43,7 @@ namespace VideoSystemWeb.Entity
         private decimal? fp_lordo;
         private bool? usaCostoFP;
         private bool? consuntivo;
+        private int numOccorrenza;
 
 
 
@@ -70,5 +71,6 @@ namespace VideoSystemWeb.Entity
         public decimal? FP_lordo { get => fp_lordo; set => fp_lordo = value; }
         public bool? UsaCostoFP { get => usaCostoFP; set => usaCostoFP = value; }
         public bool? Consuntivo { get => consuntivo; set => consuntivo = value; }
+        public int NumOccorrenza { get => numOccorrenza; set => numOccorrenza = value; }
     }
 }

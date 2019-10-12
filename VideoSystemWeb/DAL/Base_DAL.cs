@@ -1785,6 +1785,11 @@ namespace VideoSystemWeb.DAL
             {
                 consuntivo = new SqlParameter("@consuntivo", datoArticoloLavorazione.Consuntivo);
             }
+            SqlParameter numOccorrenza = new SqlParameter("@numOccorrenza", DBNull.Value);
+            if (datoArticoloLavorazione.NumOccorrenza != null)
+            {
+                consuntivo = new SqlParameter("@numOccorrenza", datoArticoloLavorazione.NumOccorrenza);
+            }
             fp_lordo.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(consuntivo);
         }

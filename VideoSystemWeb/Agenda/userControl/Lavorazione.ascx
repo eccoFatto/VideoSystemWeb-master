@@ -315,8 +315,8 @@
                         <asp:GridView ID="gvArticoliLavorazione" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvArticoliLavorazione_RowCommand" DataMember="IdentificatoreOggetto" OnRowDataBound="gvArticoliLavorazione_RowDataBound">
                             <Columns>
                                 <%--<asp:BoundField DataField="Id" HeaderText="ID"  HeaderStyle-Width="15%" />
-                                <asp:BoundField DataField="IdentificatoreOggetto" HeaderText="IdentificatoreOggetto" HeaderStyle-Width="15%" />--%>
-
+                                <asp:BoundField DataField="IdentificatoreOggetto" HeaderText="IdentificatoreOggetto" HeaderStyle-Width="15%" />
+                                <asp:BoundField DataField="numOccorrenza" HeaderText="occorrenza" HeaderStyle-Width="15%" />--%>
                                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="15%" />
                                 <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="15%" />
                                 <asp:TemplateField HeaderText="Collab./Fornitore" HeaderStyle-Width="15%">
@@ -576,6 +576,10 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="w3-center" style="margin: 10px">
+                                <asp:CheckBox ID="chk_propagaModifica" runat="server" />
+                                <asp:Label ID="lbl_propagaModifica" runat="server" Text="Applica ad ogni giorno di lavorazione"></asp:Label>
                             </div>
 
                             <div class="w3-center" style="margin: 10px">

@@ -11,7 +11,7 @@ using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
-    public partial class RiepilogoOfferta_old : System.Web.UI.UserControl
+    public partial class RiepilogoOffertaOld : System.Web.UI.UserControl
     {
         BasePage basePage = new BasePage();
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
@@ -32,21 +32,26 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
+                ComboMod_Pagamento.Items.Clear();
                 foreach (GiorniPagamentoFatture gpf in SessionManager.ListaGPF)
                 {
-                    cmbMod_Pagamento.Items.Add(new ListItem(gpf.Descrizione, gpf.Giorni));
+                    ComboMod_Pagamento.Items.Add(new ListItem(gpf.Giorni, gpf.Giorni));
                 }
 
                 foreach (DatiBancari datiBancari in SessionManager.ListaDatiBancari)
                 {
                     ddl_Banca.Items.Add(new ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
                 }
+
+
             }
         }
 
         #region COMPORTAMENTO ELEMENTI PAGINA
         protected void btnStampa_Click(object sender, EventArgs e)
         {
+            
+
             string codiceLavoro = RichiediCodiceLavoro();
 
             string nomeFile = "Offerta_" + codiceLavoro + ".pdf";
@@ -66,27 +71,47 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnModificaNote_Click(object sender, EventArgs e)
         {
+            DivFramePdf.Visible = false;
+            framePdf.Visible = false;
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
         }
 
         protected void btnOKModificaNote_Click(object sender, EventArgs e)
         {
+            
             NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
             noteOfferta.Banca = ddl_Banca.SelectedValue;
-            noteOfferta.Pagamento = int.Parse(cmbMod_Pagamento.SelectedValue); 
+            noteOfferta.Pagamento = 30; // int.Parse(tbMod_Pagamento.Text); //int.Parse(ComboMod_Pagamento.SelectedValue); 
+            noteOfferta.NotaPagamento = tbMod_Pagamento.Text.Trim();
             noteOfferta.Consegna = txt_Consegna.Text;
             noteOfferta.Note = txt_Note.Text.Trim();
             Offerta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
 
             val_bancaStampa.Text = noteOfferta.Banca;
-            val_pagamentoStampa.Text = noteOfferta.Pagamento.ToString() + " gg DFFM";
+            val_pagamentoStampa.Text = noteOfferta.NotaPagamento.ToString(); //+ " gg DFFM";
             val_consegnaStampa.Text = noteOfferta.Consegna;
-            note.Text = noteOfferta.Note.Trim();
+            //note.Text = txt_Note.Text.Trim().Replace(Environment.NewLine, " ");
+
+            note.Text = BasePage.trimNote(txt_Note.Text.Trim(),5);
+            if (note.Text.IndexOf("\n") >-1)
+            {
+                note.Text = note.Text.Replace("\n","<br/>");
+            }
+            else
+            {
+                note.Text = txt_Note.Text;
+            }
+            
 
             RichiediOperazionePopup("SAVE_PDF_OFFERTA");
 
+            DivFramePdf.Visible = true;
+            framePdf.Visible = true;
+
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaNote", script: "javascript: aggiornaRiepilogo()", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='none'", addScriptTags: true);
+            // FACCIO REFRESH SUL FRAME CHE VISUALIZZA IL PDF IN MODO DA VEDERE GLI AGGIORNAMENTI IN TEMPO REALE
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdf.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
         }
 
         protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -97,7 +122,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 lblDescrizione.Text = lblDescrizione.Text.Replace("\n", "<br/>");
 
                 Label totaleRiga = (Label)e.Row.FindControl("totaleRiga");
-                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[4].Text)));
+                totaleRiga.Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text) * int.Parse(e.Row.Cells[4].Text))) + "&nbsp;&nbsp;";
 
                 e.Row.Cells[2].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[2].Text)));
                // e.Row.Cells[3].Text = string.Format("{0:N2}", (int.Parse(e.Row.Cells[3].Text)));
@@ -106,6 +131,25 @@ namespace VideoSystemWeb.Agenda.userControl
         #endregion
 
         #region OPERAZIONI POPUP
+
+        public void associaNomePdf(string nomePdf)
+        {
+            framePdf.Attributes.Remove("src");
+
+            framePdf.Attributes.Add("src", nomePdf);
+
+            intestazioneStampa.Visible=false;
+            totaliStampa.Visible = false;
+            footerStampa.Visible = false;
+            articoliStampa.Visible = false;
+
+            DivFramePdf.Visible = true;
+            framePdf.Visible = true;
+
+            string pathCompleto = framePdf.Src.Replace("~", "");
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdf.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
+            btnStampaOfferta.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
+        }
         public Esito popolaPannelloRiepilogo(DatiAgenda eventoSelezionato)
         {
             Esito esito = new Esito();
@@ -126,7 +170,7 @@ namespace VideoSystemWeb.Agenda.userControl
             }
 
             lbl_Cliente.Text = lbl_ClienteStampa.Text = cliente.RagioneSociale;
-            lbl_IndirizzoCliente.Text = lbl_IndirizzoClienteStampa.Text = cliente.IndirizzoOperativo+" " + cliente.ComuneOperativo;
+            lbl_IndirizzoCliente.Text = lbl_IndirizzoClienteStampa.Text = cliente.TipoIndirizzoOperativo + " " + cliente.IndirizzoOperativo + " " + cliente.NumeroCivicoOperativo + " " + cliente.CapOperativo + " " + cliente.ComuneOperativo + " " + cliente.ProvinciaOperativo;
             lbl_PIvaCliente.Text = lbl_PIvaClienteStampa.Text = string.IsNullOrEmpty(cliente.PartitaIva) ? cliente.CodiceFiscale : cliente.PartitaIva;
 
             lbl_CodLavorazione.Text = lbl_CodLavorazioneStampa.Text = eventoSelezionato.codice_lavoro;
@@ -134,7 +178,15 @@ namespace VideoSystemWeb.Agenda.userControl
             List<DatiArticoli> listaDatiArticoli = RichiediListaArticoli().Where(x => x.Stampa).ToList<DatiArticoli>(); 
 
             gvArticoli.DataSource = listaDatiArticoli;
-            gvArticoli.DataBind();
+            try
+            {
+                gvArticoli.DataBind();
+            }
+            catch (Exception e)
+            {
+                basePage.ShowError(e.Message);
+            }
+            
 
             decimal totPrezzo = 0;
             decimal totIVA = 0;
@@ -160,7 +212,7 @@ namespace VideoSystemWeb.Agenda.userControl
             if (noteOfferta.Id == 0)
             {
                 List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
-                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+                noteOfferta = new NoteOfferta { Id_dati_agenda = eventoSelezionato.id, Banca = datiBancari[0].DatiCompleti, Pagamento = cliente.Pagamento, NotaPagamento = cliente.NotaPagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + Environment.NewLine + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale + " " };// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
 
                 Offerta_BLL.Instance.CreaNoteOfferta(noteOfferta, ref esito);
             }
@@ -168,18 +220,42 @@ namespace VideoSystemWeb.Agenda.userControl
             ViewState["NoteOfferta"] = noteOfferta;
 
             val_bancaSchermo.Text = val_bancaStampa.Text = noteOfferta.Banca;// 
-            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = noteOfferta.Pagamento + " gg DFFM";
+            val_pagamentoSchermo.Text = val_pagamentoStampa.Text = noteOfferta.NotaPagamento; // + " gg DFFM";
             val_consegnaSchermo.Text = val_consegnaStampa.Text = noteOfferta.Consegna;
 
             //ddl_Banca.SelectedValue = noteOfferta.Banca;// commentato perché se non trova l'elemento (e può succedere) schioda
             txt_Consegna.Text = noteOfferta.Consegna;
-            cmbMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+
+            //try
+            //{
+            //    ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+            //}
+            //catch (Exception ex)
+            //{
+            //    ComboMod_Pagamento.Items.Add(new ListItem(noteOfferta.Pagamento.ToString(), noteOfferta.Pagamento.ToString()));
+            //    ComboMod_Pagamento.SelectedValue = noteOfferta.Pagamento.ToString();
+            //}
+
+            //tbMod_Pagamento.Text = noteOfferta.Pagamento.ToString();
+            tbMod_Pagamento.Text = noteOfferta.NotaPagamento.ToString();
+
+            //ComboMod_Pagamento.Text = noteOfferta.Pagamento.ToString();
             if (string.IsNullOrEmpty(noteOfferta.Note)){
+                //note.Text = "";
                 note.Text = "";
+                txt_Note.Text = "";
             }
-            else { 
-                note.Text = noteOfferta.Note.Trim();
+            else {
+                //note.Text = noteOfferta.Note.Trim();
+                note.Text = BasePage.trimNote(noteOfferta.Note,5);
+                note.Text= note.Text.Trim().Replace("\n","<br/>");
+
+                
+                txt_Note.Text = noteOfferta.Note.Trim();
             }
+
+            DivFramePdf.Visible = true;
+            framePdf.Visible = true;
 
             return esito;
         }
@@ -195,11 +271,22 @@ namespace VideoSystemWeb.Agenda.userControl
 
             StringWriter sw = new StringWriter();
             HtmlTextWriter hw = new HtmlTextWriter(sw);
-            modalRiepilogoContent.RenderControl(hw);
+
+            try
+            {
+                modalRiepilogoContent.RenderControl(hw);
+            }
+            catch (Exception ex)
+            {
+                basePage.ShowError(ex.Message);
+
+
+            }
 
 
             MemoryStream workStream = BaseStampa.Instance.GeneraPdf(sw.ToString());
 
+            
             sw.Flush();
             hw.Flush();
 
@@ -218,8 +305,25 @@ namespace VideoSystemWeb.Agenda.userControl
             intestazioneStampa.Visible = isVisualizzazioneStampa;
             totaliStampa.Visible = isVisualizzazioneStampa;
             footerStampa.Visible = isVisualizzazioneStampa;
+            articoliStampa.Visible = isVisualizzazioneStampa;
         }
         #endregion
 
+        protected void cmbMod_Pagamento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           // txt_Pagamento.Text = cmbMod_Pagamento.SelectedValue;
+           ////ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaPagamento", script: "javascript: aggiornaPagamento("+ cmbMod_Pagamento.SelectedValue+");", addScriptTags: false);
+           // ScriptManager.RegisterClientScriptBlock(
+           // this,
+           // typeof(Page),
+           // "ToggleScript",
+           // "javascript: aggiornaPagamento(" + cmbMod_Pagamento.SelectedValue + ");",
+           // true);
+        }
+
+        protected void BulletedList1_Click(object sender, BulletedListEventArgs e)
+        {
+            //txt_Pagamento.Text = BulletedList1.Items[e.Index].Text;
+        }
     }
 }

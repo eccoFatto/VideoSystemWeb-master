@@ -56,7 +56,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     string emailVs = cfAppo.valore;
 
                     //List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = eventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
-                    List<DatiArticoli> listaDatiArticoli = eventoSelezionato.ListaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
+                    //List<DatiArticoli> listaDatiArticoli = eventoSelezionato.ListaDatiArticoli.Where(x => x.Stampa).ToList<DatiArticoli>();
 
                     List<DatiArticoliLavorazione> listaArticoliLavorazione = eventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.Stampa).OrderBy(x => x.Consuntivo).ToList<DatiArticoliLavorazione>();
 
@@ -109,8 +109,18 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         // CREAZIONE GRIGLIA INFORMAZIONI
                         iText.Layout.Element.Table tbGriglaInfo = new iText.Layout.Element.Table(new float[] { 70, 230 }).SetWidth(300);
-                        Paragraph pGrigliaInfo = new Paragraph("Produzione:").SetFontSize(9).SetBold();
+                        Paragraph pGrigliaInfo = new Paragraph(cittaVs).SetFontSize(9).SetBold();
                         iText.Layout.Element.Cell cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph(DateTime.Today.ToLongDateString()).SetFontSize(9);
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph("Produzione:").SetFontSize(9).SetBold();
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                         cellaGrigliaInfo.Add(pGrigliaInfo);
                         tbGriglaInfo.AddCell(cellaGrigliaInfo);
 

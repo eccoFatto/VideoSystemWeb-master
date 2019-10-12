@@ -93,59 +93,6 @@ namespace VideoSystemWeb.Agenda.userControl
                         //document.SetMargins(90, 30, 50, 30);
                         document.SetMargins(50, 30, 50, 30);
 
-                        //// AGGIUNGO TABLE TEST BORDI
-                        //iText.Layout.Element.Table tbTest = new iText.Layout.Element.Table(new float[] { 4, 6 }).SetMargin(10).SetWidth(300).SetHeight(200).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.YELLOW, 30);
-
-                        //Paragraph pTest = new Paragraph("in alto a sinistra").SetFontSize(10);
-                        //iText.Layout.Element.Cell cellaTest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        //cellaTest.Add(pTest);
-                        //tbTest.AddCell(cellaTest);
-
-                        //pTest = new Paragraph("in alto a destra").SetFontSize(9);
-                        //cellaTest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        //cellaTest.Add(pTest);
-                        //tbTest.AddCell(cellaTest);
-
-                        //pTest = new Paragraph("in basso a sinistra").SetFontSize(8);
-                        //cellaTest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        //cellaTest.Add(pTest);
-                        //tbTest.AddCell(cellaTest);
-
-                        //pTest = new Paragraph("in basso a destra").SetFontSize(12);
-                        //cellaTest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        //cellaTest.Add(pTest);
-                        //tbTest.AddCell(cellaTest);
-
-                        //document.Add(tbTest);
-
-
-                        //// AGGIUNGO TABLE TEST BORDI
-                        //iText.Layout.Element.Table tbTest2 = new iText.Layout.Element.Table(new float[] { 4, 6 }).SetMargin(10).SetWidth(300).SetHeight(200).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.RED, 30).SetFixedPosition(355,335,300);
-
-                        //Paragraph pTest2 = new Paragraph("in alto a sinistra").SetFontSize(10);
-                        //iText.Layout.Element.Cell cellaTest2 = new iText.Layout.Element.Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE,3,100)).SetPadding(5);
-                        //cellaTest2.Add(pTest2);
-                        //tbTest2.AddCell(cellaTest2);
-
-                        //pTest2 = new Paragraph("in alto a destra").SetFontSize(9);
-                        //cellaTest2 = new iText.Layout.Element.Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 3,100)).SetPadding(5);
-                        //cellaTest2.Add(pTest2);
-                        //tbTest2.AddCell(cellaTest2);
-
-                        //pTest2 = new Paragraph("in basso a sinistra").SetFontSize(8);
-                        //cellaTest2 = new iText.Layout.Element.Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 3,100)).SetPadding(5);
-                        //cellaTest2.Add(pTest2);
-                        //tbTest2.AddCell(cellaTest2);
-
-                        //pTest2 = new Paragraph("in basso a destra").SetFontSize(12);
-                        //cellaTest2 = new iText.Layout.Element.Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 3,100)).SetPadding(5);
-                        //cellaTest2.Add(pTest2);
-                        //tbTest2.AddCell(cellaTest2);
-
-                        //document.Add(tbTest2);
-
-
-
                         // AGGIUNGO TABLE PER LAYOUT INTESTAZIONE
                         iText.Layout.Element.Table tbIntestazione = new iText.Layout.Element.Table(new float[] { 1, 9 }).UseAllAvailableWidth().SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         //iText.Layout.Element.Table tbIntestazione = new iText.Layout.Element.Table(3).UseAllAvailableWidth();
@@ -220,13 +167,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         document.Add(tbIntestazione);
 
-                        //Paragraph pIntestazione = new Paragraph("Consuntivo Piano Esterno - Cliente: " + cliente.RagioneSociale.Trim() + " - " + eventoSelezionato.codice_lavoro).SetFontSize(12).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-                        //document.Add(pIntestazione);
-
-                        //Paragraph pIntestazione2 = new Paragraph("Lavorazione: " + eventoSelezionato.lavorazione + " " + eventoSelezionato.produzione + " del " + eventoSelezionato.data_inizio_lavorazione.ToShortDateString() + " - " + eventoSelezionato.data_fine_lavorazione.ToShortDateString()).SetFontSize(12).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-                        //document.Add(pIntestazione2);
-
-
                         Paragraph pSpazio = new Paragraph(" ");
                         document.Add(pSpazio);
 
@@ -281,7 +221,11 @@ namespace VideoSystemWeb.Agenda.userControl
                                 }
 
                                 FiguraProfessionale fp = coll.CreaFiguraProfessionale(descrizioneArticoloAssociato);
-                                if (fp!=null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                                //if (fp!=null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                                if (fp != null && !string.IsNullOrEmpty(fp.DescrizioneArticoloAssociato)) qualifica = fp.DescrizioneArticoloAssociato;
+
+                                
+
                                 if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
                                 if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
                             }
@@ -298,10 +242,14 @@ namespace VideoSystemWeb.Agenda.userControl
                                 }
 
                                 FiguraProfessionale fp = clienteFornitore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
-                                if (fp != null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                                //if (fp != null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                                if (fp != null && !string.IsNullOrEmpty(fp.DescrizioneArticoloAssociato)) qualifica = fp.DescrizioneArticoloAssociato;
                                 if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
                                 if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
                             }
+
+
+                            
 
                             string importoDiaria = "0,00";
                             if (dpe.ImportoDiaria != null)
@@ -331,7 +279,10 @@ namespace VideoSystemWeb.Agenda.userControl
                             //document.Add(p);
                             table.AddCell(dataPiano).SetFontSize(8).SetFontSize(10);
                             table.AddCell(collaboratoreFornitore);
+
+                            
                             table.AddCell(qualifica).SetFontSize(8);
+
                             table.AddCell(intervento).SetFontSize(8);
 
                             table.AddCell(telefono).SetFontSize(8);
@@ -346,21 +297,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         }
                         document.Add(table);
 
-                        //document.Add(pSpazio);
-
-                        //Paragraph pIntNote = new Paragraph("Note:").SetFontSize(12).SetBold();
-                        //document.Add(pIntNote);
-
-                        //document.Add(pSpazio);
-
-
-                        //Paragraph pNotePiano = new Paragraph(notePianoEsterno.Trim()).SetFontSize(10);
-                        //document.Add(pNotePiano);
 
                         iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
-                        //iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(1,20,pageSize.GetHeight()-80);
-                        //document.Add(image);
-
                         int n = doc.GetNumberOfPages();
 
 
@@ -377,8 +315,6 @@ namespace VideoSystemWeb.Agenda.userControl
                             document.ShowTextAligned(new Paragraph(denominazioneVs + " P.IVA " + pIvaVs + Environment.NewLine + "Sede legale: " + toponimoVs + " " + indirizzoVs + " " + civicoVs + " - " + capVs + " " + cittaVs + " " + provinciaVs + " e-mail: " + emailVs ).SetFontSize(7).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER),
                                                             pageSize.GetWidth()/2, 30, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
                         }
-
-
 
                         document.Close();
                         wr.Close();

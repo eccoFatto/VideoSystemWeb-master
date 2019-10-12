@@ -256,7 +256,7 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                DateTime giornoLavorazione = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(int.Parse(ddl_filtroGiorniLavorazioneDettEcon.SelectedItem.Value));
+                DateTime giornoLavorazione = DateTime.Parse(ddl_filtroGiorniLavorazioneDettEcon.SelectedItem.Value);// SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(int.Parse(ddl_filtroGiorniLavorazioneDettEcon.SelectedItem.Value));
                 List<DatiArticoliLavorazione> listaAtricoliLavorazioneFiltrati = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.Data == giornoLavorazione).ToList<DatiArticoliLavorazione>();
 
                 gvArticoliLavorazione.DataSource = listaAtricoliLavorazioneFiltrati;
@@ -370,13 +370,13 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 ImportaFigProfInPianoEsterno(); // modifico elemento anche in piano esterno
             }
-            
+            PopolaComboFiltroGiorniLavorazione();
             RichiediOperazionePopup("UPDATE");
         }
 
         protected void btnOKInserisciDataArticolo_Click(object sender, EventArgs e)
         {
-            long idSelezione = Convert.ToInt64(ViewState[VIEWSTATE_IDARTICOLOLAVORAZIONE]);//Convert.ToInt64(e.CommandArgument);
+            long idSelezione = Convert.ToInt64(ViewState[VIEWSTATE_IDARTICOLOLAVORAZIONE]);
             DateTime dataSelezione = Convert.ToDateTime(hf_valoreDataArticolo.Value);
 
 
@@ -391,10 +391,12 @@ namespace VideoSystemWeb.Agenda.userControl
                 AggiungiArticoloAListaArticoli(articoloGruppo.IdOggetto, dataSelezione);
             }
 
-            if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione != null && SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count > 0)
+            if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione != null && 
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count > 0)
             {
                 AggiornaTotali();
                 ResetPanelLavorazione();
+                PopolaComboFiltroGiorniLavorazione();
                 RichiediOperazionePopup("UPDATE");
             }
             
@@ -905,7 +907,7 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                DateTime giornoLavorazione = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(int.Parse(ddl_FiltroGiorniLavorazione.SelectedItem.Value));
+                DateTime giornoLavorazione = DateTime.Parse(ddl_FiltroGiorniLavorazione.SelectedItem.Value);// SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(int.Parse(ddl_FiltroGiorniLavorazione.SelectedItem.Value));
                 List<FiguraProfessionale> listaFigProfFiltrate = ListaFigureProfessionali.Where(x => x.Data == giornoLavorazione).ToList<FiguraProfessionale>();
 
                 gvFigProfessionali.DataSource = listaFigProfFiltrate;
@@ -1339,8 +1341,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             try
             {
-                // FILTRO GIORNI LAVORAZIONE
-                PopolaComboFiltroGiorniLavorazione();
+                
 
                 int idDatiAgenda = SessionManager.EventoSelezionato.id;
                 int idCliente = SessionManager.EventoSelezionato.id_cliente;
@@ -1411,6 +1412,10 @@ namespace VideoSystemWeb.Agenda.userControl
                         }
                         lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null ||
                                                            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0);
+
+                        // FILTRO GIORNI LAVORAZIONE
+                        PopolaComboFiltroGiorniLavorazione();
+
                         AggiornaTotali();
                     }
                 }
@@ -1446,8 +1451,7 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             ddl_Referente.Items.Insert(0, new ListItem("<seleziona>", ""));
 
-            // FILTRO DATA LAVORAZIONE
-            PopolaComboFiltroGiorniLavorazione();
+            
 
             if (SessionManager.EventoSelezionato.LavorazioneCorrente == null)
             {
@@ -1486,6 +1490,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
             gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
             gvArticoliLavorazione.DataBind();
+
+            // FILTRO DATA LAVORAZIONE
+            PopolaComboFiltroGiorniLavorazione();
         }
 
         public DatiLavorazione CreaDatiLavorazione()
@@ -1669,18 +1676,18 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void PopolaComboFiltroGiorniLavorazione()
         {
-            int numGiorniLavorazione = SessionManager.EventoSelezionato.durata_lavorazione;
+            List<DateTime?> listaDateLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.GroupBy(x => x.Data).Select(x => x.FirstOrDefault()).Select(l => l.Data).OrderBy(y=>y.Value).ToList();
+            int numGiorniLavorazione = listaDateLavorazione.Count();
 
             ddl_filtroGiorniLavorazioneDettEcon.Items.Clear();
             ddl_FiltroGiorniLavorazione.Items.Clear();
 
             ddl_filtroGiorniLavorazioneDettEcon.Items.Add(new ListItem("<tutte le date>", ""));
             ddl_FiltroGiorniLavorazione.Items.Add(new ListItem("<tutte le date>", ""));
-            for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
+            foreach (DateTime dataGiornoLav in listaDateLavorazione)
             {
-                DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
-                ddl_filtroGiorniLavorazioneDettEcon.Items.Add(new ListItem(dataGiornoLav.ToString("dd/MM/yyyy"), giornoLav.ToString()));
-                ddl_FiltroGiorniLavorazione.Items.Add(new ListItem(dataGiornoLav.ToString("dd/MM/yyyy"), giornoLav.ToString()));
+                ddl_filtroGiorniLavorazioneDettEcon.Items.Add(new ListItem(dataGiornoLav.ToString("dd/MM/yyyy"), dataGiornoLav.ToString("dd/MM/yyyy")));
+                ddl_FiltroGiorniLavorazione.Items.Add(new ListItem(dataGiornoLav.ToString("dd/MM/yyyy"), dataGiornoLav.ToString("dd/MM/yyyy")));
             }
             ddl_filtroGiorniLavorazioneDettEcon.SelectedIndex = 0;
             ddl_FiltroGiorniLavorazione.SelectedIndex = 0;

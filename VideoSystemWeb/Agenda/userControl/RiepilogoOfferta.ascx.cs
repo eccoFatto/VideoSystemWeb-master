@@ -21,13 +21,13 @@ namespace VideoSystemWeb.Agenda.userControl
     {
         BasePage basePage = new BasePage();
         public delegate void PopupHandler(string operazionePopup); // delegato per l'evento
-        public event PopupHandler RichiediOperazionePopup; //evento
+        //public event PopupHandler RichiediOperazionePopup; //evento
 
         public delegate List<DatiArticoli> ListaArticoliHandler(); // delegato per l'evento
         public event ListaArticoliHandler RichiediListaArticoli; //evento
 
         public delegate string CodiceLavoroHandler(); // delegato per l'evento
-        public event CodiceLavoroHandler RichiediCodiceLavoro; //evento
+        //public event CodiceLavoroHandler RichiediCodiceLavoro; //evento
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -80,11 +80,6 @@ namespace VideoSystemWeb.Agenda.userControl
             DivFramePdf.Visible = false;
             framePdf.Visible = false;
 
-            //NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
-            //tbMod_Pagamento.Text = noteOfferta.NotaPagamento;
-            //txt_Consegna.Text = noteOfferta.Consegna;
-            //txt_Note.Text = noteOfferta.Note;
-            //ddl_Banca.SelectedValue = noteOfferta.Banca;
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='block'", addScriptTags: true);
         }
 

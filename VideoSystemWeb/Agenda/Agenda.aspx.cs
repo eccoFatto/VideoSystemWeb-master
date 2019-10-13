@@ -49,11 +49,11 @@ namespace VideoSystemWeb.Agenda
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
 
-            popupRiepilogoOfferta.RichiediOperazionePopup += OperazioniPopup;
+            //popupRiepilogoOfferta.RichiediOperazionePopup += OperazioniPopup;
             popupLavorazione.RichiediOperazionePopup += OperazioniPopup;
             //popupConsuntivo.RichiediOperazionePopup += OperazioniPopup;
 
-            popupRiepilogoOfferta.RichiediCodiceLavoro += GetCodiceLavoro;
+           // popupRiepilogoOfferta.RichiediCodiceLavoro += GetCodiceLavoro;
             popupRiepilogoOfferta.RichiediListaArticoli += GetListaArticoli;
 
             //popupConsuntivo.RichiediCodiceLavoro += GetCodiceLavoro;
@@ -835,11 +835,15 @@ namespace VideoSystemWeb.Agenda
                         noteOfferta.Banca = datiBancari[0].DatiCompleti;
                         noteOfferta.Pagamento = cliente.Pagamento;
                         noteOfferta.NotaPagamento = cliente.Pagamento.ToString();
-                        noteOfferta.Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " ";
+                        noteOfferta.Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale + " ";
                         noteOfferta.Note = "";// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
                     }
                     
                     esito = Agenda_BLL.Instance.CreaEvento(SessionManager.EventoSelezionato, listaIdTender, noteOfferta);
+                    // QUANDO CREO L'EVENTO E HO INSERITO CORRETTAMENTE I DATI IN TABELLA, CREO IL PDF OFFERTA
+                    if (esito.Codice == 0) { 
+                        esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
+                    }
                 }
                 else
                 {

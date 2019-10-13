@@ -405,12 +405,14 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
 
                     // NOTE
-                    pGriglia = new iText.Layout.Element.Paragraph("Note:").SetFontSize(9);
-                    cellaGriglia = new iText.Layout.Element.Cell(1, 3).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetBold();
-                    cellaGriglia.Add(pGriglia);
+                    iText.Layout.Element.Text first = new iText.Layout.Element.Text("Note:").SetFontSize(9).SetBold();
+                    iText.Layout.Element.Text second = new iText.Layout.Element.Text(Environment.NewLine + noteOfferta.Note.Trim()).SetFontSize(9);
+                    iText.Layout.Element.Paragraph paragraphNote = new iText.Layout.Element.Paragraph().Add(first).Add(second);
+
+                    cellaGriglia = new iText.Layout.Element.Cell(3, 3).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
+                    cellaGriglia.Add(paragraphNote);
                     tbGrigla.AddCell(cellaGriglia);
 
-                    // TOTALE
                     pGriglia = new iText.Layout.Element.Paragraph("Totale").SetFontSize(9);
                     cellaGriglia = new iText.Layout.Element.Cell(1, 3).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetBold();
                     cellaGriglia.Add(pGriglia);
@@ -418,12 +420,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     pGriglia = new iText.Layout.Element.Paragraph(totPrezzo.ToString("###,##0.00")).SetFontSize(9);
                     cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
-                    cellaGriglia.Add(pGriglia);
-                    tbGrigla.AddCell(cellaGriglia);
-
-                    // NOTE
-                    pGriglia = new iText.Layout.Element.Paragraph(" " + Environment.NewLine + eventoSelezionato.nota).SetFontSize(9);
-                    cellaGriglia = new iText.Layout.Element.Cell(1, 3).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddCell(cellaGriglia);
 
@@ -435,14 +431,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     pGriglia = new iText.Layout.Element.Paragraph(totIVA.ToString("###,##0.00")).SetFontSize(9);
                     cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
-                    cellaGriglia.Add(pGriglia);
-                    tbGrigla.AddCell(cellaGriglia);
-
-                    // NOTE
-                    string sNoteOfferta = "";
-                    if (!string.IsNullOrEmpty(noteOfferta.Note)) sNoteOfferta = noteOfferta.Note;
-                    pGriglia = new iText.Layout.Element.Paragraph(sNoteOfferta).SetFontSize(9);
-                    cellaGriglia = new iText.Layout.Element.Cell(1, 3).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddCell(cellaGriglia);
 

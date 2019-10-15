@@ -357,8 +357,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        //pGriglia = new Paragraph(da.Quantita.ToString("##0")).SetFontSize(9);
-                        pGriglia = new iText.Layout.Element.Paragraph(1.ToString("##0")).SetFontSize(9);
+                        pGriglia = new iText.Layout.Element.Paragraph(da.Quantita.ToString("##0")).SetFontSize(9);
+                        //pGriglia = new iText.Layout.Element.Paragraph(1.ToString("##0")).SetFontSize(9);
                         cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
@@ -368,8 +368,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        //decimal totale = da.Prezzo * da.Quantita;
-                        decimal totale = da.Prezzo * 1;
+                        decimal totale = da.Prezzo * da.Quantita;
+                        //decimal totale = da.Prezzo * 1;
 
                         pGriglia = new iText.Layout.Element.Paragraph(totale.ToString("###,##0.00")).SetFontSize(9);
                         cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);

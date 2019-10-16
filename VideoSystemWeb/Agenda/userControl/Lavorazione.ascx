@@ -326,6 +326,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Seleziona" HeaderStyle-Width="15%">
                                     <ItemTemplate>
+                                        <asp:CheckBox ID="chkDelete" runat="server" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>'/>
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDown" runat="server" ImageUrl="/Images/arrow-down-icon.png" ToolTip="Sposta giù" CommandName="moveDown" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/Male-user-edit-icon.png" ToolTip="Modifica e aggiungi riferimento" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
@@ -398,10 +399,15 @@
                     <asp:TextBox ID="txt_FiltroGruppiLavorazione" runat="server" CssClass="w3-round" placeholder="Cerca.." Style="width: 100%; padding: 5px; margin-top: 10px;"></asp:TextBox>
                 </div>
                 
-                <div class="w3-half">
+                <div class="w3-quarter">
                     <div class="w3-col w3-center-align" style="padding: 20px; text-align:center">
                         <label>Filtro data lavorazione</label>
                         <asp:DropDownList ID="ddl_filtroGiorniLavorazioneDettEcon" runat="server" AutoPostBack="true" CssClass=" w3-white w3-border w3-hover-shadow w3-round " OnSelectedIndexChanged="ddl_FiltroGiorniLavorazioneDettEcon_SelectedIndexChanged"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="w3-quarter">
+                    <div class="w3-col w3-center-align" style="padding: 20px; text-align:center">
+                        <asp:Button ID="btn_CancellazioneMassiva" runat="server" Text="Elimina selezione" class=" w3-btn w3-white w3-border w3-border-red w3-round-medium" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_CancellazioneMassiva_Click" OnClientClick="return confermaEliminazioneArticolo();"/>
                     </div>
                 </div>
             </div>

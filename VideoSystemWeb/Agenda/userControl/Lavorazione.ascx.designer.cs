@@ -195,6 +195,15 @@ namespace VideoSystemWeb.Agenda.userControl
         protected global::System.Web.UI.WebControls.DropDownList ddl_filtroGiorniLavorazioneDettEcon;
 
         /// <summary>
+        /// Controllo btn_CancellazioneMassiva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_CancellazioneMassiva;
+
+        /// <summary>
         /// Controllo panelModificaArticolo.
         /// </summary>
         /// <remarks>

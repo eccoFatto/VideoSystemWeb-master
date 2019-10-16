@@ -440,9 +440,31 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             CercaFP();
         }
+        
+        protected void btn_CancellazioneMassiva_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < gvArticoliLavorazione.Rows.Count; i++)
+            {
+                CheckBox checkboxdelete = ((CheckBox)gvArticoliLavorazione.Rows[i].FindControl("chkDelete"));
 
+                if (checkboxdelete.Checked == true)
+                {
+                    DatiArticoliLavorazione articoloSelezionato = (DatiArticoliLavorazione)gvArticoliLavorazione.Rows[i].DataItem;
 
+                    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Remove(articoloSelezionato);
+                }
+            }
 
+            gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
+            gvArticoliLavorazione.DataBind();
+
+            // AggiornaTotali();
+            ResetPanelLavorazione();
+            if (ListaFigureProfessionali.Count > 0)
+            {
+                ImportaFigProfInPianoEsterno(); // elimino elemento anche in piano esterno
+            }
+        }
 
 
         protected void CercaFP()

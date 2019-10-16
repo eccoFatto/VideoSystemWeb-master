@@ -49,11 +49,11 @@ namespace VideoSystemWeb.Agenda
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
 
-            popupRiepilogoOfferta.RichiediOperazionePopup += OperazioniPopup;
+            //popupRiepilogoOfferta.RichiediOperazionePopup += OperazioniPopup;
             popupLavorazione.RichiediOperazionePopup += OperazioniPopup;
             //popupConsuntivo.RichiediOperazionePopup += OperazioniPopup;
 
-            popupRiepilogoOfferta.RichiediCodiceLavoro += GetCodiceLavoro;
+           // popupRiepilogoOfferta.RichiediCodiceLavoro += GetCodiceLavoro;
             popupRiepilogoOfferta.RichiediListaArticoli += GetListaArticoli;
 
             //popupConsuntivo.RichiediCodiceLavoro += GetCodiceLavoro;
@@ -632,7 +632,7 @@ namespace VideoSystemWeb.Agenda
                     ChiudiPopup();
                     break;
                 case "SAVE_PDF_OFFERTA":
-                    SalvaPdfOffertaSuFile();
+                    //SalvaPdfOffertaSuFile();
                     break;
                 case "SAVE_PDFCONSUNTIVO":
                     //SalvaPdfConsuntivoSuFile();
@@ -834,11 +834,16 @@ namespace VideoSystemWeb.Agenda
                         List<DatiBancari> datiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
                         noteOfferta.Banca = datiBancari[0].DatiCompleti;
                         noteOfferta.Pagamento = cliente.Pagamento;
-                        noteOfferta.Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " ";
+                        noteOfferta.NotaPagamento = cliente.Pagamento.ToString();
+                        noteOfferta.Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale + " ";
                         noteOfferta.Note = "";// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
                     }
                     
                     esito = Agenda_BLL.Instance.CreaEvento(SessionManager.EventoSelezionato, listaIdTender, noteOfferta);
+                    // QUANDO CREO L'EVENTO E HO INSERITO CORRETTAMENTE I DATI IN TABELLA, CREO IL PDF OFFERTA
+                    if (esito.Codice == 0) { 
+                        esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
+                    }
                 }
                 else
                 {
@@ -852,7 +857,7 @@ namespace VideoSystemWeb.Agenda
                 #region SALVATAGGIO PDF
                 if (!string.IsNullOrEmpty(SessionManager.EventoSelezionato.codice_lavoro))
                 {
-                    SalvaPdfOffertaSuFile();
+                    //SalvaPdfOffertaSuFile();
                     //SalvaPdfConsuntivoSuFile();
                 }
                 #endregion
@@ -872,24 +877,24 @@ namespace VideoSystemWeb.Agenda
             if (esito.Codice == Esito.ESITO_OK) { 
                 string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
             
-                MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
+                //MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
 
-                string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
-                string pathPdfSenzaNumeroPagina = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + "tmp_"+nomeFile;
-                File.WriteAllBytes(pathPdfSenzaNumeroPagina, workStream.ToArray());
+                //string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
+                //string pathPdfSenzaNumeroPagina = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + "tmp_"+nomeFile;
+                //File.WriteAllBytes(pathPdfSenzaNumeroPagina, workStream.ToArray());
 
-                string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(pathPdfSenzaNumeroPagina, pathOfferta, ref esito);
+                //string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(pathPdfSenzaNumeroPagina, pathOfferta, ref esito);
 
-                if (File.Exists(pathPdfSenzaNumeroPagina)) File.Delete(pathPdfSenzaNumeroPagina);
+                //if (File.Exists(pathPdfSenzaNumeroPagina)) File.Delete(pathPdfSenzaNumeroPagina);
                 
-                if (esito.Codice == Esito.ESITO_OK) { 
-                    // RIPORTA IL NOME DEL FILE PDF DA VISUALIZZARE SULLA FINESTRA RIEPILOGO
-                    popupRiepilogoOfferta.associaNomePdf(nomeFileToDisplay);
-                }
-                else
-                {
-                    ShowError(esito.Descrizione);
-                }
+                //if (esito.Codice == Esito.ESITO_OK) { 
+                //    // RIPORTA IL NOME DEL FILE PDF DA VISUALIZZARE SULLA FINESTRA RIEPILOGO
+                //    popupRiepilogoOfferta.associaNomePdf(nomeFileToDisplay);
+                //}
+                //else
+                //{
+                //    ShowError(esito.Descrizione);
+                //}
             }
             else
             {

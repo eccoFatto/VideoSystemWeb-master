@@ -288,7 +288,15 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.Descrizione = txt_Descrizione.Text;
             articoloSelezionato.DescrizioneLunga = txt_DescrizioneLunga.Text;
             articoloSelezionato.UsaCostoFP = !string.IsNullOrEmpty(ddl_FPtipoPagamento.SelectedValue);
-            articoloSelezionato.Consuntivo = !string.IsNullOrEmpty(ddl_Consuntivo.SelectedValue);
+
+            if(string.IsNullOrEmpty(ddl_Consuntivo.SelectedValue) || ddl_Consuntivo.SelectedValue=="0")
+            {
+                articoloSelezionato.Consuntivo = false;
+            }
+            else
+            {
+                articoloSelezionato.Consuntivo = true;
+            }
 
             if (articoloSelezionato.UsaCostoFP != null && (bool)articoloSelezionato.UsaCostoFP)
             {

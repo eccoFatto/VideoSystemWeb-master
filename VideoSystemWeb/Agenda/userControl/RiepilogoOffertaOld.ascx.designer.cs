@@ -10,8 +10,25 @@
 namespace VideoSystemWeb.Agenda.userControl {
     
     
-    public partial class RiepilogoOfferta_old
-    {
+    public partial class RiepilogoOffertaOld {
+        
+        /// <summary>
+        /// Controllo btnStampaOfferta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStampaOfferta;
+        
+        /// <summary>
+        /// Controllo btnModificaNote.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModificaNote;
         
         /// <summary>
         /// Controllo modalRiepilogoContent.
@@ -21,15 +38,6 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl modalRiepilogoContent;
-        
-        /// <summary>
-        /// Controllo imgLogo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgLogo;
         
         /// <summary>
         /// Controllo intestazioneSchermo.
@@ -140,6 +148,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl intestazioneStampa;
         
         /// <summary>
+        /// Controllo imgLogo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image imgLogo;
+        
+        /// <summary>
         /// Controllo lbl_DataStampa.
         /// </summary>
         /// <remarks>
@@ -221,6 +238,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Label lbl_ProtocolloStampa;
         
         /// <summary>
+        /// Controllo articoliStampa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl articoliStampa;
+        
+        /// <summary>
         /// Controllo gvArticoli.
         /// </summary>
         /// <remarks>
@@ -273,6 +299,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl totaliStampa;
+        
+        /// <summary>
+        /// Controllo Label1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
         /// Controllo note.
@@ -392,22 +427,22 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Image imgDNV;
         
         /// <summary>
-        /// Controllo btnStampaOfferta.
+        /// Controllo DivFramePdf.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnStampaOfferta;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivFramePdf;
         
         /// <summary>
-        /// Controllo btnModificaNote.
+        /// Controllo framePdf.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnModificaNote;
+        protected global::System.Web.UI.HtmlControls.HtmlIframe framePdf;
         
         /// <summary>
         /// Controllo ddl_Banca.
@@ -419,13 +454,22 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.DropDownList ddl_Banca;
         
         /// <summary>
-        /// Controllo cmbMod_Pagamento.
+        /// Controllo tbMod_Pagamento.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Pagamento;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Pagamento;
+        
+        /// <summary>
+        /// Controllo ComboMod_Pagamento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ComboBox ComboMod_Pagamento;
         
         /// <summary>
         /// Controllo txt_Consegna.

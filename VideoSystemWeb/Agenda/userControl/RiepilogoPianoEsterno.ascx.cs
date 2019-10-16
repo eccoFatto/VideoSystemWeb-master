@@ -93,6 +93,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         //document.SetMargins(90, 30, 50, 30);
                         document.SetMargins(50, 30, 50, 30);
 
+                        iText.Kernel.Colors.Color azzurro = new iText.Kernel.Colors.DeviceRgb(128, 255, 255);
+
                         // AGGIUNGO TABLE PER LAYOUT INTESTAZIONE
                         iText.Layout.Element.Table tbIntestazione = new iText.Layout.Element.Table(new float[] { 1, 9 }).UseAllAvailableWidth().SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         //iText.Layout.Element.Table tbIntestazione = new iText.Layout.Element.Table(3).UseAllAvailableWidth();
@@ -103,11 +105,11 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
 
-                        Paragraph pTitolo = new Paragraph("Cliente").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        Paragraph pTitolo = new Paragraph("Cliente").SetBackgroundColor(azzurro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         Paragraph pValore = new Paragraph(cliente.RagioneSociale.Trim()).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
                         tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
-                        pTitolo = new Paragraph("Referente").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Referente").SetBackgroundColor(azzurro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         string nomeReferente = "";
                         if (eventoSelezionato.LavorazioneCorrente.IdReferente != null)
@@ -118,11 +120,11 @@ namespace VideoSystemWeb.Agenda.userControl
                         pValore = new Paragraph(nomeReferente).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                        pTitolo = new Paragraph("Produzione").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Produzione").SetBackgroundColor(azzurro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         pValore = new Paragraph(eventoSelezionato.produzione).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
-                        pTitolo = new Paragraph("Capotecnico").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Capotecnico").SetBackgroundColor(azzurro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         string nomeCapotecnico = "";
                         if (eventoSelezionato.LavorazioneCorrente.IdCapoTecnico != null)
@@ -133,24 +135,24 @@ namespace VideoSystemWeb.Agenda.userControl
                         pValore = new Paragraph(nomeCapotecnico).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                        pTitolo = new Paragraph("Lavorazione").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Lavorazione").SetBackgroundColor(azzurro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(eventoSelezionato.lavorazione).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
-                        pTitolo = new Paragraph("Data Inizio").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Data Inizio").SetBackgroundColor(azzurro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(eventoSelezionato.data_inizio_impegno.ToShortDateString()).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                        pTitolo = new Paragraph("Luogo").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Luogo").SetBackgroundColor(azzurro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(eventoSelezionato.luogo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
-                        pTitolo = new Paragraph("Cod.Lavor.").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Cod.Lavor.").SetBackgroundColor(azzurro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(eventoSelezionato.codice_lavoro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                        pTitolo = new Paragraph("Indirizzo").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Indirizzo").SetBackgroundColor(azzurro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(eventoSelezionato.indirizzo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
-                        pTitolo = new Paragraph("Data Lavoraz.").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pTitolo = new Paragraph("Data Lavoraz.").SetBackgroundColor(azzurro).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(eventoSelezionato.data_inizio_lavorazione.ToShortDateString()).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
@@ -178,25 +180,25 @@ namespace VideoSystemWeb.Agenda.userControl
                         // INTESTAZIONE GRIGLIA
 
                         iText.Layout.Element.Table table = new iText.Layout.Element.Table(10).UseAllAvailableWidth(); //.SetBorderTop(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.ORANGE, 5)).SetBorderBottom(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.YELLOW, 5)).SetBorderLeft(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.GREEN, 5)).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.RED, 5));
-                        Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold().SetBackgroundColor(azzurro);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Personale").SetFontSize(10).SetBold().SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        intestazione = new Paragraph("Personale").SetFontSize(10).SetBold().SetFontSize(10).SetBold().SetBackgroundColor(azzurro);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Qualifica").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        intestazione = new Paragraph("Qualifica").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(azzurro);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Intervento").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        intestazione = new Paragraph("Intervento").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(azzurro);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Telefono").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        intestazione = new Paragraph("Telefono").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(azzurro);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Città").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        intestazione = new Paragraph("Città").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(azzurro);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Albergo").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        intestazione = new Paragraph("Albergo").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(azzurro);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Diaria").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        intestazione = new Paragraph("Diaria").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(azzurro);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Orario").SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        intestazione = new Paragraph("Orario").SetFontSize(10).SetBold().SetBackgroundColor(azzurro);
                         table.AddHeaderCell(intestazione);
-                        intestazione = new Paragraph("Note").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.BLUE);
+                        intestazione = new Paragraph("Note").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(azzurro);
                         table.AddHeaderCell(intestazione);
                         foreach (DatiPianoEsternoLavorazione dpe in listaDatiPianoEsternoLavorazione)
                         {

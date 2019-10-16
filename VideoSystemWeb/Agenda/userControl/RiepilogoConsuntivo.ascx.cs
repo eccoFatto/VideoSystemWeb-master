@@ -102,7 +102,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         document.Add(pSpazio);
 
                         // CREAZIONE GRIGLIA
-                        iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 80, 50, 200, 70, 25, 25, 80 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
+                        iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 80, 70, 180, 70, 30, 30, 70 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
                         Paragraph pGriglia;
                         Cell cellaGriglia;
 
@@ -174,18 +174,30 @@ namespace VideoSystemWeb.Agenda.userControl
 
                             string descrizione = da.Descrizione;
                             string descrizioneLunga = da.DescrizioneLunga;
-                            if (da.Consuntivo==true)
-                            {
-                                //descrizione = "(c)" + descrizione;
-                                descrizioneLunga = "(Consuntivo)" + Environment.NewLine + descrizioneLunga;
-                            }
+
 
                             pGriglia = new Paragraph(descrizione).SetFontSize(9);
                             cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
 
-                            pGriglia = new Paragraph(descrizioneLunga).SetFontSize(9);
+                            
+                            if (da.Consuntivo == true)
+                            {
+                                //descrizione = "(c)" + descrizione;
+                                //descrizioneLunga = "(Consuntivo)" + Environment.NewLine + descrizioneLunga;
+
+                                Text firstDesc = new Text("(Consuntivo)" + Environment.NewLine).SetFontSize(9).SetBold();
+                                Text secondDesc = new Text(descrizioneLunga).SetFontSize(9);
+                                pGriglia = new Paragraph().Add(firstDesc).Add(secondDesc);
+                            }
+                            else
+                            {
+                                pGriglia = new Paragraph(descrizioneLunga).SetFontSize(9);
+                            }
+                            
+
+
                             cellaGriglia = new Cell(1, 2).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
@@ -326,8 +338,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
                             document.Add(tbGriglaInfo);
 
-                            document.Add(pSpazio);
-                            document.Add(pSpazio);
 
                             // CREAZIONE GRIGLIA DESTINATARIO
                             iText.Layout.Element.Table tbGriglaDest = new iText.Layout.Element.Table(new float[] { 70, 230 }).SetWidth(300).SetFixedPosition(i,350, 650, 300);
@@ -369,6 +379,9 @@ namespace VideoSystemWeb.Agenda.userControl
                             document.Add(tbGriglaDest);
 
 
+                            //document.Add(pSpazio);
+                            //document.Add(pSpazio);
+
                             // CREAZIONE INTESTAZIONE GRIGLIA
                             //iText.Layout.Element.Table tbGriglaInt = new iText.Layout.Element.Table(new float[] { 80, 50, 200, 80, 20, 20, 80 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedPosition(i, 30, 595, 530); ;
 
@@ -392,17 +405,17 @@ namespace VideoSystemWeb.Agenda.userControl
                             {
                                 // NELL'ULTIMA PAGINA AGGIUNGO LA GRIGLIA CON LE NOTE E IL TIMBRO
                                 // CREAZIONE GRIGLIA
-                                iText.Layout.Element.Table tbGriglaNoteFooter = new iText.Layout.Element.Table(new float[] { 80, 50, 180, 100, 20, 20, 80 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetFixedPosition(30, 50,530);
-                                
+                                iText.Layout.Element.Table tbGriglaNoteFooter = new iText.Layout.Element.Table(new float[] { 80, 70, 180, 70, 30, 30, 70 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetFixedPosition(30, 50,530).SetFixedLayout();
+
                                 // PRIMA RIGA GRIGLIA NOTE FOOTER
                                 Paragraph pGrigliaNoteFooter = new Paragraph("Banca").SetFontSize(9);
                                 iText.Layout.Element.Cell cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                                 cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                                 tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
-                                pGrigliaNoteFooter = new Paragraph(noteOfferta.Banca).SetFontSize(8);
+                                pGrigliaNoteFooter = new Paragraph(noteOfferta.Banca).SetFontSize(9);
                                 //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1,2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(2);
-                                cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                                cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                                 
                                 cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                                 tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
@@ -419,11 +432,11 @@ namespace VideoSystemWeb.Agenda.userControl
                                 tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
                                 pGrigliaNoteFooter = new Paragraph(noteOfferta.NotaPagamento).SetFontSize(9);
-                                cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                                cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                                 cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                                 tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
-                                pGrigliaNoteFooter = new Paragraph("").SetFontSize(9);
+                                pGrigliaNoteFooter = new Paragraph(" ").SetFontSize(9);
                                 cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                                 cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                                 tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
@@ -435,11 +448,11 @@ namespace VideoSystemWeb.Agenda.userControl
                                 tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
                                 pGrigliaNoteFooter = new Paragraph(noteOfferta.Consegna.Replace("\r\n"," ")).SetFontSize(9);
-                                cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                                cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                                 cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                                 tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
-                                pGrigliaNoteFooter = new Paragraph("").SetFontSize(9);
+                                pGrigliaNoteFooter = new Paragraph(" ").SetFontSize(9);
                                 cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                                 cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                                 tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);

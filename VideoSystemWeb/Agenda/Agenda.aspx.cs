@@ -49,15 +49,9 @@ namespace VideoSystemWeb.Agenda
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
 
-            //popupRiepilogoOfferta.RichiediOperazionePopup += OperazioniPopup;
             popupLavorazione.RichiediOperazionePopup += OperazioniPopup;
-            //popupConsuntivo.RichiediOperazionePopup += OperazioniPopup;
 
-           // popupRiepilogoOfferta.RichiediCodiceLavoro += GetCodiceLavoro;
             popupRiepilogoOfferta.RichiediListaArticoli += GetListaArticoli;
-
-            //popupConsuntivo.RichiediCodiceLavoro += GetCodiceLavoro;
-            //popupConsuntivo.RichiediListaArticoli += GetListaArticoli;
 
             isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
             Tipologica viaggio  = UtilityTipologiche.getElementByID(SessionManager.ListaStati, Stato.Instance.STATO_VIAGGIO, ref esito);
@@ -370,7 +364,7 @@ namespace VideoSystemWeb.Agenda
                         {
                             tipologia = UtilityTipologiche.getTipologicaById(EnumTipologiche.TIPO_TIPOLOGIE, (int)datoAgendaCorrente.id_tipologia, ref esito).nome;
                         }
-                        string titoloEvento = datoAgendaCorrente.id_stato == Stato.Instance.STATO_RIPOSO ? "Riposo" : "<div class='titoloEvento'>"+datoAgendaCorrente.produzione + "</div><div class='titoloEvento'>" + tipologia+"</div>";
+                        string titoloEvento = datoAgendaCorrente.id_stato == Stato.Instance.STATO_RIPOSO ? "Riposo" : "<div class='titoloEvento'>"+datoAgendaCorrente.lavorazione + "</div><div class='titoloEvento'>" + tipologia+"</div>";
                         #endregion
 
                         // EVENTO GIORNO SINGOLO

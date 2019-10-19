@@ -528,6 +528,15 @@ namespace VideoSystemWeb.Agenda.userControl
         protected global::System.Web.UI.WebControls.Button btnImporta;
 
         /// <summary>
+        /// Controllo btn_CancellazioneMassivaPianoesterno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_CancellazioneMassivaPianoesterno;
+
+        /// <summary>
         /// Controllo btnInserimentoGenerale.
         /// </summary>
         /// <remarks>
@@ -706,6 +715,15 @@ namespace VideoSystemWeb.Agenda.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upInserimentoGeneralePianoEsterno;
+
+        /// <summary>
+        /// Controllo txt_data_InsGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_data_InsGenerale;
 
         /// <summary>
         /// Controllo txt_orario_InsGenerale.

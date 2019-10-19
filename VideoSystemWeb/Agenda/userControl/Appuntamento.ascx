@@ -119,7 +119,7 @@
 
 <asp:Panel runat="server" ID="panelAppuntamenti" ScrollBars="Auto">
 
-    <div class="w3-container w3-center w3-xlarge">GESTIONE APPUNTAMENTI</div>
+    <div class="w3-container w3-center w3-large" style="font-weight:bold">GESTIONE APPUNTAMENTI</div>
 
     <!--PIANIFICAZIONE-->
     <div class="w3-col" style="width: 100%">

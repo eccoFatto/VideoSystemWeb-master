@@ -453,6 +453,29 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="SITO\data1\images\1.jpg" />
+    <Content Include="SITO\data1\images\2.jpg" />
+    <Content Include="SITO\data1\images\3.jpg" />
+    <Content Include="SITO\data1\images\4.jpg" />
+    <Content Include="SITO\data1\images\5.jpg" />
+    <Content Include="SITO\data1\images\6.jpg" />
+    <Content Include="SITO\data1\images\7.jpg" />
+    <Content Include="SITO\data1\images\8.jpg" />
+    <Content Include="SITO\data1\tooltips\1.jpg" />
+    <Content Include="SITO\data1\tooltips\2.jpg" />
+    <Content Include="SITO\data1\tooltips\3.jpg" />
+    <Content Include="SITO\data1\tooltips\4.jpg" />
+    <Content Include="SITO\data1\tooltips\5.jpg" />
+    <Content Include="SITO\data1\tooltips\6.jpg" />
+    <Content Include="SITO\data1\tooltips\7.jpg" />
+    <Content Include="SITO\data1\tooltips\8.jpg" />
+    <Content Include="SITO\engine1\jquery.js" />
+    <Content Include="SITO\engine1\script.js" />
+    <Content Include="SITO\engine1\style.css" />
+    <Content Include="SITO\engine1\style.mod.css" />
+    <Content Include="SITO\engine1\wowslider.js" />
+    <Content Include="SITO\engine1\wowslider.mod.js" />
+    <Content Include="SITO\engine1\ws-ctrl-bootstrap.svg" />
     <Content Include="SITO\IMMAGINI\1 - 1.jpg" />
     <Content Include="SITO\IMMAGINI\1.jpg" />
     <Content Include="SITO\IMMAGINI\2 - 1.jpg" />
@@ -491,7 +514,6 @@
     <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\8.jpg" />
     <Content Include="SITO\IMMAGINI\TELEFONO.gif" />
     <Content Include="SITO\index.html" />
-    <Content Include="SITO\index2.html" />
     <Content Include="StretchSession.aspx" />
     <Content Include="TEMPLATE\testComboBox.aspx" />
     <Content Include="TEMPLATE\testWord.aspx" />
@@ -868,6 +890,9 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="TEMPLATE\Modello Prova.dotx" />
     <Content Include="SITO\IMMAGINI\Azienda.docx" />
+    <Content Include="SITO\engine1\ws-ctrl-bootstrap.eot" />
+    <Content Include="SITO\engine1\ws-ctrl-bootstrap.ttf" />
+    <Content Include="SITO\engine1\ws-ctrl-bootstrap.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

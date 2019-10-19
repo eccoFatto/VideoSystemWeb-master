@@ -14,6 +14,10 @@
         return confirm("Eliminare l'articolo corrente?");
     }
 
+    function confermaEliminazioneMassiva() {
+        return confirm("Eliminare tutti gli articoli selezionati?");
+    }
+
     function confermaEliminazioneTuttiArticoli() {
         return confirm("Eliminare tutti gli articoli inseriti?");
     }
@@ -49,7 +53,7 @@
 
 <asp:Panel runat="server" ID="panelOfferta" Style="height: 100%">
 
-    <div class="w3-container w3-center w3-xlarge" style="height: 5%; margin-bottom: 10px">OFFERTA</div>
+    <div class="w3-container w3-center w3-large" style="height: 5%; margin-bottom: 10px; font-weight:bold">OFFERTA</div>
 
     <div class="w3-row" style="height: 55%; font-size: small;">
         <div class="w3-col" style="height: 80%">
@@ -66,9 +70,10 @@
                         <asp:BoundField DataField="Stampa" HeaderText="Stampa" />
                         <asp:TemplateField HeaderText="Seleziona">
                             <ItemTemplate>
+                                <asp:CheckBox ID="chkDelete" runat="server" />
                                 <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                 <asp:ImageButton ID="imgDown" runat="server" ImageUrl="/Images/arrow-down-icon.png" ToolTip="Sposta giù" CommandName="moveDown" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
-                                <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
+                                <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="$('.loader').show();"/>
                                 <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" CommandName="elimina" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="return confermaEliminazioneArticolo();" />
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -100,6 +105,7 @@
 
     <div style="width: 99%; text-align: center; height: 5%; margin-bottom: 20px;">
         <asp:Button ID="btnEliminaArticoli" runat="server" Text="Elimina tutti gli articoli" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnEliminaArticoli_Click" Style="font-size: smaller; padding: 4px 8px" OnClientClick="return confermaEliminazioneTuttiArticoli();" />
+        <asp:Button ID="btn_CancellazioneMassiva" runat="server" Text="Elimina selezione" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_CancellazioneMassiva_Click" OnClientClick="return confermaEliminazioneMassiva();"/>
         <asp:Button ID="btnRecuperaOfferta" runat="server" Text="Recupera offerta" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" OnClick="btnRecuperaOfferta_Click" Style="font-size: smaller; padding: 4px 8px" />
     </div>
 

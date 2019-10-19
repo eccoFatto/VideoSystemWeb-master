@@ -451,16 +451,20 @@ namespace VideoSystemWeb.Agenda.userControl
         
         protected void btn_CancellazioneMassiva_Click(object sender, EventArgs e)
         {
+            List<DatiArticoliLavorazione> listaArticoliDaEliminare = new List<DatiArticoliLavorazione>();
             for (int i = 0; i < gvArticoliLavorazione.Rows.Count; i++)
             {
                 CheckBox checkboxdelete = ((CheckBox)gvArticoliLavorazione.Rows[i].FindControl("chkDelete"));
 
                 if (checkboxdelete.Checked == true)
                 {
-                    DatiArticoliLavorazione articoloSelezionato = (DatiArticoliLavorazione)gvArticoliLavorazione.Rows[i].DataItem;
-
-                    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Remove(articoloSelezionato);
+                    listaArticoliDaEliminare.Add( SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.ElementAt(i));
                 }
+            }
+
+            foreach (DatiArticoliLavorazione articoloSelezionato in listaArticoliDaEliminare)
+            {
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Remove(articoloSelezionato);
             }
 
             gvArticoliLavorazione.DataSource = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione;
@@ -472,6 +476,8 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 ImportaFigProfInPianoEsterno(); // elimino elemento anche in piano esterno
             }
+            PopolaComboFiltroGiorniLavorazione();
+            RichiediOperazionePopup("UPDATE");
         }
 
 
@@ -887,24 +893,27 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 FiguraProfessionale figuraProfessionale = ListaFigureProfessionali.FirstOrDefault(x => x.IdCollaboratori == datiPianoEsternoLavorazione.IdCollaboratori && x.IdFornitori == datiPianoEsternoLavorazione.IdFornitori && x.Data == datiPianoEsternoLavorazione.Data);
 
-
-                if (importoDiaria > 0) // Aggiungo diaria a listaAricoliLavorazione in dettaglio economico
+                if (string.IsNullOrEmpty(txt_data_InsGenerale.Text) || 
+                    DateTime.Parse(txt_data_InsGenerale.Text).ToShortDateString() == ((DateTime)figuraProfessionale.Data).ToShortDateString())
                 {
-                    AggiungiDiariaAListaArticoli(importoDiaria, figuraProfessionale, figuraProfessionale.Data);
-                }
-                else // Elimino eventuale diaria da listaAricoliLavorazione in dettaglio economico
-                {
-                    CancellaDiariaDaListaArticoli(figuraProfessionale);
-                }
+                    if (importoDiaria > 0) // Aggiungo diaria a listaAricoliLavorazione in dettaglio economico
+                    {
+                        AggiungiDiariaAListaArticoli(importoDiaria, figuraProfessionale, figuraProfessionale.Data);
+                    }
+                    else // Elimino eventuale diaria da listaAricoliLavorazione in dettaglio economico
+                    {
+                        CancellaDiariaDaListaArticoli(figuraProfessionale);
+                    }
 
-                datiPianoEsternoLavorazione.Orario = string.IsNullOrEmpty(txt_orario_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_orario_InsGenerale.Text);
-                datiPianoEsternoLavorazione.Diaria = chk_diaria_InsGenerale.Checked;
-                datiPianoEsternoLavorazione.ImportoDiaria = importoDiaria;
-                datiPianoEsternoLavorazione.IdIntervento = int.Parse(ddl_intervento_InsGenerale.SelectedValue);
-                datiPianoEsternoLavorazione.Albergo = chk_albergo_InsGenerale.Checked;
+                    datiPianoEsternoLavorazione.Orario = string.IsNullOrEmpty(txt_orario_InsGenerale.Text) ? null : (DateTime?)DateTime.Parse(txt_orario_InsGenerale.Text);
+                    datiPianoEsternoLavorazione.Diaria = chk_diaria_InsGenerale.Checked;
+                    datiPianoEsternoLavorazione.ImportoDiaria = importoDiaria;
+                    datiPianoEsternoLavorazione.IdIntervento = int.Parse(ddl_intervento_InsGenerale.SelectedValue);
+                    datiPianoEsternoLavorazione.Albergo = chk_albergo_InsGenerale.Checked;
 
-                figuraProfessionale.Intervento = ddl_intervento_InsGenerale.SelectedItem.Text;
-                figuraProfessionale.Diaria = importoDiaria;
+                    figuraProfessionale.Intervento = ddl_intervento_InsGenerale.SelectedItem.Text;
+                    figuraProfessionale.Diaria = importoDiaria;
+                }
             }
 
             AggiornaTotali();
@@ -1009,7 +1018,33 @@ namespace VideoSystemWeb.Agenda.userControl
             upModificaArticolo.Update();
         }
 
+        protected void btn_CancellazioneMassivaPianoEsterno_Click(object sender, EventArgs e)
+        {
+            List<FiguraProfessionale> listaFigProfDaEliminare = new List<FiguraProfessionale>();
+            for (int i = 0; i < gvFigProfessionali.Rows.Count; i++)
+            {
+                CheckBox checkboxdelete = ((CheckBox)gvFigProfessionali.Rows[i].FindControl("chkDeletePianoEsterno"));
 
+                if (checkboxdelete.Checked == true)
+                {
+                    listaFigProfDaEliminare.Add(ListaFigureProfessionali.ElementAt(i));
+                }
+            }
+
+            foreach (FiguraProfessionale figProfSelezionata in listaFigProfDaEliminare)
+            {
+                ListaFigureProfessionali.Remove(figProfSelezionata);
+            }
+
+            gvFigProfessionali.DataSource = ListaFigureProfessionali;
+            gvFigProfessionali.DataBind();
+
+            // AggiornaTotali();
+            ResetPanelLavorazione();
+            
+            PopolaComboFiltroGiorniLavorazione();
+            RichiediOperazionePopup("UPDATE");
+        }
 
 
         private void ImportaFigProfInPianoEsterno()
@@ -1071,6 +1106,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void ClearPanelInserimentoGenerale()
         {
+            txt_data_InsGenerale.Text =
             txt_orario_InsGenerale.Text =
             txt_diaria_InsGenerale.Text = "";
 
@@ -1399,7 +1435,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     else
                     {
                         ddl_Contratto.DataSource = listaContratti;
-                        ddl_Contratto.DataTextField = "numero_protocollo";
+                        ddl_Contratto.DataTextField = "descrizione";// "numero_protocollo";
                         ddl_Contratto.DataValueField = "id";
                         ddl_Contratto.DataBind();
                         ddl_Contratto.Items.Insert(0, new ListItem("<seleziona>", ""));
@@ -1555,42 +1591,55 @@ namespace VideoSystemWeb.Agenda.userControl
 
             foreach (DatiArticoli datoArticolo in SessionManager.EventoSelezionato.ListaDatiArticoli)
             {
+                Esito esito = new Esito();
+                int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
 
-                for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
+                if (datoArticolo.IdTipoSottogruppo != idSottogruppoPersonaleTecnico)
                 {
-                    DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
-
-                    for (int i = 0; i < datoArticolo.Quantita; i++)
+                    AggiungiDatoArticoloALavorazione(datoArticolo, SessionManager.EventoSelezionato.data_inizio_lavorazione, ref listaDatiArticoliLavorazione);
+                }
+                else
+                {
+                    for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
                     {
-                        DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione
-                        {
-                            Id = 0,
-                            IdDatiLavorazione = 0,
-                            IdArtArticoli = datoArticolo.IdArtArticoli,
-                            IdTipoGenere = datoArticolo.IdTipoGenere,
-                            IdTipoGruppo = datoArticolo.IdTipoGruppo,
-                            IdTipoSottogruppo = datoArticolo.IdTipoSottogruppo,
-                            IdCollaboratori = null,
-                            IdFornitori = null,
-                            IdTipoPagamento = null,
-                            Descrizione = datoArticolo.Descrizione,
-                            DescrizioneLunga = datoArticolo.DescrizioneLunga,
-                            Stampa = datoArticolo.Stampa,
-                            Prezzo = datoArticolo.Prezzo,
-                            Costo = datoArticolo.Costo,
-                            Iva = datoArticolo.Iva,
-                            Data = dataGiornoLav,
-                            NumOccorrenza = i 
-                        };
+                        DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
 
-                        datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out bool firstTime);
-                        listaDatiArticoliLavorazione.Add(datoArticoloLavorazione);
+                        AggiungiDatoArticoloALavorazione(datoArticolo, dataGiornoLav, ref listaDatiArticoliLavorazione);
                     }
-
                 }
             }
             listaDatiArticoliLavorazione = listaDatiArticoliLavorazione.OrderBy(x => x.Data).ThenByDescending(y => y.Costo).ToList<DatiArticoliLavorazione>();
             CreaNuovaLavorazione(listaDatiArticoliLavorazione);
+        }
+
+        private void AggiungiDatoArticoloALavorazione(DatiArticoli datoArticolo, DateTime? dataGiornoLav, ref List<DatiArticoliLavorazione> listaDatiArticoliLavorazione)
+        {
+            for (int i = 0; i < datoArticolo.Quantita; i++)
+            {
+                DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione
+                {
+                    Id = 0,
+                    IdDatiLavorazione = 0,
+                    IdArtArticoli = datoArticolo.IdArtArticoli,
+                    IdTipoGenere = datoArticolo.IdTipoGenere,
+                    IdTipoGruppo = datoArticolo.IdTipoGruppo,
+                    IdTipoSottogruppo = datoArticolo.IdTipoSottogruppo,
+                    IdCollaboratori = null,
+                    IdFornitori = null,
+                    IdTipoPagamento = null,
+                    Descrizione = datoArticolo.Descrizione,
+                    DescrizioneLunga = datoArticolo.DescrizioneLunga,
+                    Stampa = datoArticolo.Stampa,
+                    Prezzo = datoArticolo.Prezzo,
+                    Costo = datoArticolo.Costo,
+                    Iva = datoArticolo.Iva,
+                    Data = dataGiornoLav,
+                    NumOccorrenza = i
+                };
+
+                datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out bool firstTime);
+                listaDatiArticoliLavorazione.Add(datoArticoloLavorazione);
+            }
         }
 
         public void ClearLavorazione()

@@ -280,6 +280,33 @@ namespace VideoSystemWeb.Agenda.userControl
             RichiediOperazionePopup("UPDATE");
         }
 
+        protected void btn_CancellazioneMassiva_Click(object sender, EventArgs e)
+        {
+            List<DatiArticoli> listaArticoliDaEliminare = new List<DatiArticoli>();
+            for (int i = 0; i < gvArticoli.Rows.Count; i++)
+            {
+                CheckBox checkboxdelete = ((CheckBox)gvArticoli.Rows[i].FindControl("chkDelete"));
+
+                if (checkboxdelete.Checked == true)
+                {
+                    listaArticoliDaEliminare.Add(SessionManager.EventoSelezionato.ListaDatiArticoli.ElementAt(i));
+                }
+            }
+
+            foreach (DatiArticoli articoloSelezionato in listaArticoliDaEliminare)
+            {
+                SessionManager.EventoSelezionato.ListaDatiArticoli.Remove(articoloSelezionato);
+            }
+
+            gvArticoli.DataSource = SessionManager.EventoSelezionato.ListaDatiArticoli;
+            gvArticoli.DataBind();
+
+            // AggiornaTotali();
+            ResetPanelOfferta();
+            
+            RichiediOperazionePopup("UPDATE");
+        }
+
         protected void btn_cerca_FiltroRecuperaOfferta_Click(object sender, EventArgs e)
         {
             List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();

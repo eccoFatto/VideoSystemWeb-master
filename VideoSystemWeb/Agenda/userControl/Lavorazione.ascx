@@ -224,15 +224,18 @@
 
         } else if (tipoName == 'PianoEsterno') {
             nomeElemento = '<%=tab_PianoEsterno.ClientID%>';
-
-
         }
+
         if (document.getElementById(nomeElemento).className.indexOf("w3-red") == -1)
             document.getElementById(nomeElemento).className += " w3-red";
     }
 
     function confermaEliminazioneArticolo() {
         return confirm("Eliminare l'articolo corrente?");
+    }
+
+    function confermaEliminazioneMassiva() {
+        return confirm("Eliminare la selezione corrente?");
     }
 
 
@@ -258,18 +261,18 @@
 <asp:HiddenField ID="hf_tabSelezionataLavorazione" runat="server" EnableViewState="true" Value="Lavoraz" />
 
 <asp:Panel runat="server" ID="panelLavorazione" Style="height: 99%">
-    <div class="w3-row">
-        <div class="w3-col">
-            <div class="w3-container w3-center w3-xlarge">LAVORAZIONE</div>
-        </div>
-
-    </div>
+   
 
 
     <div class="w3-container" style="width: 100%; height: 99%; position: relative; padding: 0px;">
 
 <!-- LAVORAZIONE -->
-        <div id="Lavoraz" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 90%; overflow: auto;">
+        <div id="Lavoraz" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 97%; overflow: auto;">
+             <div class="w3-row">
+                <div class="w3-col">
+                    <div class="w3-container w3-center w3-large" style="font-weight:bold">LAVORAZIONE</div>
+                </div>
+            </div>
             <div class="w3-row">
                 <div class="w3-third">
                     <label>Ordine</label><br />
@@ -306,7 +309,12 @@
         </div>
 
 <!-- DETTAGLIO ECONOMICO -->
-        <div id="DettEconomico" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 90%; overflow: auto; display: none">
+        <div id="DettEconomico" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 97%; overflow: auto; display: none">
+            <div class="w3-row">
+                <div class="w3-col">
+                    <div class="w3-container w3-center w3-large" style="font-weight:bold">DETTAGLIO ECONOMICO</div>
+                </div>
+            </div>
             <div class="w3-row" style="height: 60%; font-size: small;">
                 <div class="w3-col" style="height: 80%">
                     <asp:Panel runat="server" ID="panelArticoli" CssClass="round" Style="height: 100%; position: relative; background-color: white; overflow: auto;">
@@ -326,10 +334,10 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Seleziona" HeaderStyle-Width="15%">
                                     <ItemTemplate>
-                                        <asp:CheckBox ID="chkDelete" runat="server" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>'/>
+                                        <asp:CheckBox ID="chkDelete" runat="server" />
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDown" runat="server" ImageUrl="/Images/arrow-down-icon.png" ToolTip="Sposta giù" CommandName="moveDown" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
-                                        <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/Male-user-edit-icon.png" ToolTip="Modifica e aggiungi riferimento" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
+                                        <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/Male-user-edit-icon.png" ToolTip="Modifica e aggiungi riferimento" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="$('.loader').show();" />
                                         <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" CommandName="elimina" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="return confermaEliminazioneArticolo();" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -395,19 +403,19 @@
                     </asp:GridView>
                 </asp:Panel>
 
-                <div class="w3-half">
+                <div class="w3-third">
                     <asp:TextBox ID="txt_FiltroGruppiLavorazione" runat="server" CssClass="w3-round" placeholder="Cerca.." Style="width: 100%; padding: 5px; margin-top: 10px;"></asp:TextBox>
                 </div>
                 
-                <div class="w3-quarter">
-                    <div class="w3-col w3-center-align" style="padding: 20px; text-align:center">
+                <div class="w3-third">
+                    <div class="w3-col w3-center-align" style="padding-top: 15px; padding-bottom: 0px;text-align:center">
                         <label>Filtro data lavorazione</label>
                         <asp:DropDownList ID="ddl_filtroGiorniLavorazioneDettEcon" runat="server" AutoPostBack="true" CssClass=" w3-white w3-border w3-hover-shadow w3-round " OnSelectedIndexChanged="ddl_FiltroGiorniLavorazioneDettEcon_SelectedIndexChanged"></asp:DropDownList>
                     </div>
                 </div>
-                <div class="w3-quarter">
-                    <div class="w3-col w3-center-align" style="padding: 20px; text-align:center">
-                        <asp:Button ID="btn_CancellazioneMassiva" runat="server" Text="Elimina selezione" class=" w3-btn w3-white w3-border w3-border-red w3-round-medium" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_CancellazioneMassiva_Click" OnClientClick="return confermaEliminazioneArticolo();"/>
+                <div class="w3-third">
+                    <div class="w3-col w3-center-align" style="padding-top: 15px; padding-bottom: 0px; text-align:center">
+                        <asp:Button ID="btn_CancellazioneMassiva" runat="server" Text="Elimina selezione" class=" w3-btn w3-white w3-border w3-border-red w3-round-medium" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_CancellazioneMassiva_Click" OnClientClick="return confermaEliminazioneMassiva();"/>
                     </div>
                 </div>
             </div>
@@ -624,7 +632,12 @@
         </div>
 
 <!-- PIANO ESTERNO -->
-        <div id="PianoEsterno" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 90%; overflow: auto; display: none">
+        <div id="PianoEsterno" class="w3-container w3-border tabLavorazione w3-padding-small" style="height: 97%; overflow: auto; display: none">
+            <div class="w3-row">
+                <div class="w3-col">
+                    <div class="w3-container w3-center w3-large" style="font-weight:bold">PIANO ESTERNO</div>
+                </div>
+            </div>
             <div class="w3-row" style="height: 60%; font-size: small;">
                 <div class="w3-col" style="height: 80%">
                     <asp:Panel runat="server" ID="panelFigProf" CssClass="round" Style="height: 100%; position: relative; background-color: white; overflow: auto;">
@@ -641,9 +654,10 @@
                                
                                 <asp:TemplateField HeaderText="Seleziona" HeaderStyle-Width="15%">
                                     <ItemTemplate>
+                                        <asp:CheckBox ID="chkDeletePianoEsterno" runat="server" />
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDown" runat="server" ImageUrl="/Images/arrow-down-icon.png" ToolTip="Sposta giù" CommandName="moveDown" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
-                                        <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
+                                        <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>'  OnClientClick="$('.loader').show();"/>
                                         <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" CommandName="elimina" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="return confermaEliminazioneFigProf();" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
@@ -659,16 +673,16 @@
                 </div>
 
                 <div class="w3-col" style="height: 5%; padding-left: 5px; margin-bottom: 20px;">
-                    <div class="w3-col w3-center-align" style="padding: 20px; text-align:center">
+                    <div class="w3-col w3-center-align" style="padding: 10px; text-align:center">
                         <label>Filtro data lavorazione</label>
                         <asp:DropDownList ID="ddl_FiltroGiorniLavorazione" runat="server" AutoPostBack="true" CssClass=" w3-white w3-border w3-hover-shadow w3-round " OnSelectedIndexChanged="ddl_FiltroGiorniLavorazione_SelectedIndexChanged"></asp:DropDownList>
                     </div>
                 </div>
 
-                <div class="w3-col" style="height: 20%; padding-left: 5px; margin-bottom: 20px; padding-top:20px;">
+                <div class="w3-col" style="height: 20%; padding-left: 5px;  padding-top:20px;">
                     <div class="w3-col " style="padding: 8px; text-align:center">
                         <asp:Button ID="btnImporta" runat="server" Text="Importa" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnImporta_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
-                        
+                        <asp:Button ID="btn_CancellazioneMassivaPianoesterno" runat="server" Text="Elimina selezione" class=" w3-btn w3-white w3-border w3-border-red w3-round-large"  OnClick="btn_CancellazioneMassivaPianoEsterno_Click"  Style="padding: 7px 10px" OnClientClick="return confermaEliminazioneMassiva();"/>
                         <asp:Button ID="btnInserimentoGenerale" runat="server" Text="Inserimento generale" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnInserimentoGenerale_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                     </div>
                     
@@ -764,38 +778,42 @@
                                     </div>
                                     <div class="w3-col round" style="padding: 5px;">
 
-<%--                                        <div class="w3-twothird" style="padding: 5px;">
-                                            <div class="w3-col">--%>
-                                                
-                                                <div class="w3-quarter" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Orario convocazione</label>
-                                                    <asp:TextBox ID="txt_orario_InsGenerale" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;"></asp:TextBox>
-                                                </div>
-                                                <div class="w3-quarter" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Albergo</label><br />
-                                                    <asp:CheckBox ID="chk_albergo_InsGenerale" runat="server" />
-                                                </div>
-                                            <%--</div>
-                                            <div class="w3-col">--%>
-                                                <div class="w3-quarter" style="padding: 5px">
-                                                    <label style="margin-bottom: 0.2rem;">Intervento</label><br />
-                                                    <asp:DropDownList ID="ddl_intervento_InsGenerale" runat="server"></asp:DropDownList>
-                                                </div>
-                                           <%-- </div>--%>
-                                       <%-- </div>--%>
+                                        <div class="w3-half">
+                                            <div class="w3-twothird round" style="padding: 5px; background-color: #cccccc;">
+                                                <label style="margin-bottom: 0.2rem;">Filtro data elementi da modificare</label>
+                                                <asp:TextBox ID="txt_data_InsGenerale" runat="server" class="w3-input w3-border calendar" placeholder="Modifiche applicate a tutte le date" Style="padding: 2px;"></asp:TextBox>
+                                            </div>
 
-                                        <div class="w3-quarter" style="padding: 5px">
-                                            <div class="w3-col">
-                                                <label style="margin-bottom: 0.2rem;">Diaria</label>
-                                                <asp:CheckBox ID="chk_diaria_InsGenerale" runat="server" /><br />
-                                                <div class="w3-row">
-                                                    <asp:RadioButton ID="diaria15_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="Label1" runat="server" Text="15€" />
-                                                </div>
-                                                <div class="w3-row">
-                                                    <asp:RadioButton ID="diaria30_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="Label2" runat="server" Text="30€" />
-                                                </div>
-                                                <div class="w3-row">
-                                                    <asp:RadioButton ID="diariaLibera_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px; float: left" /><asp:TextBox ID="txt_diaria_InsGenerale" runat="server" class="w3-input w3-border w3-disabled" Style="padding: 2px; width: 100px" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                            <div class="w3-third" style="padding: 5px">
+                                                <label style="margin-bottom: 0.2rem;">Orario convocazione</label>
+                                                <asp:TextBox ID="txt_orario_InsGenerale" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;"></asp:TextBox>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="w3-half">
+                                            <div class="w3-third" style="padding: 5px">
+                                                <label style="margin-bottom: 0.2rem;">Albergo</label><br />
+                                                <asp:CheckBox ID="chk_albergo_InsGenerale" runat="server" />
+                                            </div>
+
+                                            <div class="w3-third" style="padding: 5px">
+                                                <label style="margin-bottom: 0.2rem;">Intervento</label><br />
+                                                <asp:DropDownList ID="ddl_intervento_InsGenerale" runat="server"></asp:DropDownList>
+                                            </div>
+
+                                            <div class="w3-third" style="padding: 5px">
+                                                <div class="w3-col">
+                                                    <label style="margin-bottom: 0.2rem;">Diaria</label>
+                                                    <asp:CheckBox ID="chk_diaria_InsGenerale" runat="server" /><br />
+                                                    <div class="w3-row">
+                                                        <asp:RadioButton ID="diaria15_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="Label1" runat="server" Text="15€" />
+                                                    </div>
+                                                    <div class="w3-row">
+                                                        <asp:RadioButton ID="diaria30_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="Label2" runat="server" Text="30€" />
+                                                    </div>
+                                                    <div class="w3-row">
+                                                        <asp:RadioButton ID="diariaLibera_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px; float: left" /><asp:TextBox ID="txt_diaria_InsGenerale" runat="server" class="w3-input w3-border w3-disabled" Style="padding: 2px; width: 100px" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

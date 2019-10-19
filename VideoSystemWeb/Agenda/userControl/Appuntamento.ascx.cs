@@ -290,7 +290,22 @@ namespace VideoSystemWeb.Agenda.userControl
                 }
                 else if (statoEvento == Stato.Instance.STATO_LAVORAZIONE)
                 {
-                    panelAppuntamenti.Enabled = false;
+                    // panelAppuntamenti.Enabled = false;
+                    txt_DataInizioLavorazione.Enabled =
+                    txt_DataFineLavorazione.Enabled =
+                    ddl_Risorse.Enabled =
+                    ddl_Tipologie.Enabled =
+                    ddl_Clienti.Enabled =
+                    txt_Produzione.Enabled =
+                    txt_Lavorazione.Enabled =
+                    txt_Indirizzo.Enabled =
+                    txt_Luogo.Enabled =
+                    tb_Nota.Enabled = false;
+
+                    txt_DurataViaggioAndata.Enabled =
+                    txt_DurataViaggioRitorno.Enabled =
+                    ddl_Risorse.Enabled =
+                    check_tender.Enabled = true;
                 }
                 else if (statoEvento == Stato.Instance.STATO_FATTURA)
                 { }

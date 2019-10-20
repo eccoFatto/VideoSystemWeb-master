@@ -27,39 +27,39 @@
 
         function sottolinea(menu) {
             if (menu == 'menuHome') {
-                $("#menuHome").css({ "text-decoration": "underline" });
+                $("#menuHome").addClass('w3-bottombar')
             } else {
-                $("#menuHome").css({ "text-decoration": "unset" });
+                $("#menuHome").removeClass('w3-bottombar');
             }
 
             if (menu == 'menuAzienda') {
-                $("#menuAzienda").css({ "text-decoration": "underline" });
+                $("#menuAzienda").addClass('w3-bottombar');
             } else {
-                $("#menuAzienda").css({ "text-decoration": "unset" });
+                $("#menuAzienda").removeClass('w3-bottombar');
             }
 
             if (menu == 'menuClienti') {
-                $("#menuClienti").css({ "text-decoration": "underline" });
+                $("#menuClienti").addClass('w3-bottombar');
             } else {
-                $("#menuClienti").css({ "text-decoration": "unset" });
+                $("#menuClienti").removeClass('w3-bottombar');
             }
 
             if (menu == 'menuServizi') {
-                $("#menuServizi").css({ "text-decoration": "underline" });
+                $("#menuServizi").addClass('w3-bottombar');
             } else {
-                $("#menuServizi").css({ "text-decoration": "unset" });
+                $("#menuServizi").removeClass('w3-bottombar');
             }
 
             if (menu == 'menuPhotogallery') {
-                $("#menuPhotogallery").css({ "text-decoration": "underline" });
+                $("#menuPhotogallery").addClass('w3-bottombar');
             } else {
-                $("#menuPhotogallery").css({ "text-decoration": "unset" });
+                $("#menuPhotogallery").removeClass('w3-bottombar');
             }
 
             if (menu == 'menuContatti') {
-                $("#menuContatti").css({ "text-decoration": "underline" });
+                $("#menuContatti").addClass('w3-bottombar');
             } else {
-                $("#menuContatti").css({ "text-decoration": "unset" });
+                $("#menuContatti").removeClass('w3-bottombar');
             }
 
 
@@ -123,9 +123,9 @@
         .content {
         }
 
-        a:hover {
+        /*a:hover {
             text-decoration: underline;
-        }
+        }*/
 
         .mySlides {
             display: none;
@@ -157,25 +157,25 @@
                     <img src="IMMAGINI/logoVSP.png" style="height:90px;width:110px;" alt="Videosystem Production Srl">
                 </td>
                 <td style="width:10%;">
-                    <a href="#" onclick="sottolinea('menuHome');" id="menuHome" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">HOME</a>
+                    <a href="#" onclick="sottolinea('menuHome');" id="menuHome" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">HOME</a>
                 </td>
                 <td style="width:10%;">
-                    <a href="#segnalibroAzienda" onclick="sottolinea('menuAzienda');" id="menuAzienda" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">AZIENDA</a>
+                    <a href="#segnalibroAzienda" onclick="sottolinea('menuAzienda');" id="menuAzienda" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">AZIENDA</a>
                 </td>
                 <td style="width:10%;">
-                    <a href="#segnalibroClienti" onclick="sottolinea('menuClienti');" id="menuClienti" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">CLIENTI</a>
+                    <a href="#segnalibroClienti" onclick="sottolinea('menuClienti');" id="menuClienti" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">CLIENTI</a>
                 </td>
                 <td style="width:10%;">
-                    <a href="#segnalibroServizi" onclick="sottolinea('menuServizi');" id="menuServizi" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">SERVIZI</a>
+                    <a href="#segnalibroServizi" onclick="sottolinea('menuServizi');" id="menuServizi" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">SERVIZI</a>
                 </td>
                 <td style="width:10%;">
-                    <a href="#segnalibroPhotoGallery" onclick="sottolinea('menuPhotogallery');" id="menuPhotogallery" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">GALLERY</a>
+                    <a href="#segnalibroPhotoGallery" onclick="sottolinea('menuPhotogallery');" id="menuPhotogallery" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">GALLERY</a>
                 </td>
                 <td style="width:10%;">
-                    <a href="#segnalibroContatti" onclick="sottolinea('menuContatti');" id="menuContatti" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">CONTATTI</a>
+                    <a href="#segnalibroContatti" onclick="sottolinea('menuContatti');" id="menuContatti" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">CONTATTI</a>
                 </td>
                 <td style="width:10%;">
-                    <a href="../Login.aspx" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">AREA RISERVATA</a>
+                    <a href="../Login.aspx" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">AREA RISERVATA</a>
                 </td>
                 <td style="width:10%;">
                     <img src="IMMAGINI/Italy.png" style="height:25px;width:40px;" alt="Italiano">
@@ -205,15 +205,12 @@
                     </ul>
                     
                     <div class="social" style="text-align:center;">
-                        
-                        <a href="https://www.facebook.com/videosystemproduction/" target='_blank'><img alt='Seguici su Facebook' title='Seguici su Facebook' src="IMMAGINI/FACEBOOK.gif" style="width:50px;margin:15px;" /></a>&#160;&#160;
-                        <a href="https://www.instagram.com/videosystemproduction/" target="_blank"><img src="IMMAGINI/INSTAGRAM.gif" style="width:48px;margin:15px;" alt="Seguici su Instagram" title="Seguici su Instagram" /></a>&#160;&#160;
-                        <a href="https://www.linkedin.com/company/videosystemproduction" target='_blank'><img alt='Seguici su LinkedIn' title='Seguici su LinkedIn' src="IMMAGINI/LINKEDIN.gif" style="width:50px;margin:15px;" /></a>&#160;&#160;
-                        
+                        <a href="https://www.facebook.com/videosystemproduction/" target='_blank'><img alt='Seguici su Facebook' title='Seguici su Facebook' src="IMMAGINI/FACEBOOK.gif" style="width:50px;margin:15px;" onclick="window.open('https://www.facebook.com/videosystemproduction/');" /></a>&#160;&#160;
+                        <a href="https://www.instagram.com/videosystemproduction/" target="_blank"><img src="IMMAGINI/INSTAGRAM.gif" style="width:48px;margin:15px;" alt="Seguici su Instagram" title="Seguici su Instagram" onclick="window.open('https://www.instagram.com/videosystemproduction/');" /></a>&#160;&#160;
+                        <a href="https://www.linkedin.com/company/videosystemproduction" target='_blank'><img alt='Seguici su LinkedIn' title='Seguici su LinkedIn' src="IMMAGINI/LINKEDIN.gif" style="width:50px;margin:15px;" onclick="window.open('https://www.linkedin.com/company/videosystemproduction');" /></a>&#160;&#160;
                     </div>
                 </div>
                 <div class="ws_script" style="position:absolute;left:-99%">
-                    <!--<a href="http://wowslider.net">responsive slider</a>--> by WOWSlider.com v8.8
                 </div>
                 <div class="ws_shadow"></div>
 

@@ -268,12 +268,14 @@
 	color: #ffffff;
 	text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
-#wowslider-container1 a.ws_next:after{
-	content:'\e801';
-}
-#wowslider-container1 a.ws_prev:after{
-	content:'\e800';
-}
+    #wowslider-container1 a.ws_next:after {
+        /*content: '\e801';*/
+        content: url('../IMMAGINI/FRECCIA SX.png')
+    }
+    #wowslider-container1 a.ws_prev:after {
+        /*content: '\e800';*/
+        content: url('../IMMAGINI/FRECCIA DX.png')
+    }
 #wowslider-container1 a.ws_next:hover,
 #wowslider-container1 a.ws_prev:hover{
 	opacity: 0.9;

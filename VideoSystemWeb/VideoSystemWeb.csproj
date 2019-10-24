@@ -502,6 +502,8 @@
     <Content Include="SITO\IMMAGINI\LINKEDIN.gif" />
     <Content Include="SITO\IMMAGINI\logoVSP.jpg" />
     <Content Include="SITO\IMMAGINI\logoVSP.png" />
+    <Content Include="SITO\IMMAGINI\logoVSP_2016.jpg" />
+    <Content Include="SITO\IMMAGINI\logoVSP_2016.png" />
     <Content Include="SITO\IMMAGINI\mail-50.png" />
     <Content Include="SITO\IMMAGINI\MAIL.gif" />
     <Content Include="SITO\IMMAGINI\POSIZIONE.gif" />

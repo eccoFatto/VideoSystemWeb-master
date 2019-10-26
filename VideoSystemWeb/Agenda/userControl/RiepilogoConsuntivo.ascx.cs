@@ -133,8 +133,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
 
-                        pGriglia = new Paragraph("Descrizione Offerte").SetFontSize(10);
-                        cellaGriglia = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetBold();
+                        pGriglia = new Paragraph("Descrizione Offerta").SetFontSize(10);
+                        cellaGriglia = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
 

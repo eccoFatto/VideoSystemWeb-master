@@ -193,7 +193,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     iText.Kernel.Colors.Color coloreIntestazioni = new iText.Kernel.Colors.DeviceRgb(0, 255, 255);
 
                     // INTESTAZIONE OFFERTA
-                    pGriglia = new iText.Layout.Element.Paragraph("Offerta").SetFontSize(10).SetBold();
+                    pGriglia = new iText.Layout.Element.Paragraph("Offerta Numero").SetFontSize(10).SetBold();
                     cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
@@ -219,8 +219,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
-                    pGriglia = new iText.Layout.Element.Paragraph("Descrizione Offerte").SetFontSize(10);
-                    cellaGriglia = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 90).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetBold();
+                    pGriglia = new iText.Layout.Element.Paragraph("Descrizione Offerta").SetFontSize(10);
+                    cellaGriglia = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 90).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 

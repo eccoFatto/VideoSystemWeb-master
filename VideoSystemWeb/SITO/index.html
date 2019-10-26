@@ -9,48 +9,97 @@
     <title>videosystemproduction</title>
     <link rel="stylesheet" href="/Css/w3.css" />
     <link rel="stylesheet" href="/Css/w3-colors-win8.css" />
-    <!--<link href="../fonts/open-sans_[it.allfont.net].ttf" rel="stylesheet" type="text/css" />-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="/Scripts/jquery-3.3.1.min.js"></script>
+
+    <!-- Start WOWSlider.com HEAD section -->
+    <link rel="stylesheet" type="text/css" href="engine1/style.css" />
+    <script type="text/javascript" src="engine1/jquery.js"></script>
+    <!-- End WOWSlider.com HEAD section -->
     <script>
+        var slideIndex = 1;
+
+        var myTimer;
+
+        var slideshowContainer;
+
+ 
+
+
         function sottolinea(menu) {
             if (menu == 'menuHome') {
-                $("#menuHome").css({ "text-decoration": "underline" });
+                //$("#menuHome").addClass('w3-border-bottom');
+                $("#menuHome").css('text-decoration', 'underline');
+                //$("#menuHome").addClass('underline');
+                $("#menuHome").addClass('w3-animate-opacity');
+                
             } else {
-                $("#menuHome").css({ "text-decoration": "unset" });
+                //$("#menuHome").removeClass('w3-border-bottom');
+                $("#menuHome").css('text-decoration', 'none');
+                //$("#menuHome").removeClass('underline');
+                $("#menuHome").removeClass('w3-animate-opacity');
             }
 
             if (menu == 'menuAzienda') {
-                $("#menuAzienda").css({ "text-decoration": "underline" });
+                //$("#menuAzienda").addClass('w3-border-bottom');
+                $("#menuAzienda").css('text-decoration', 'underline');
+                $("#menuAzienda").addClass('w3-animate-opacity');
             } else {
-                $("#menuAzienda").css({ "text-decoration": "unset" });
+                //$("#menuAzienda").removeClass('w3-border-bottom');
+                $("#menuAzienda").css('text-decoration','none');
+                $("#menuAzienda").removeClass('w3-animate-opacity');
             }
 
             if (menu == 'menuClienti') {
-                $("#menuClienti").css({ "text-decoration": "underline" });
+                //$("#menuClienti").addClass('w3-border-bottom');
+                $("#menuClienti").css('text-decoration', 'underline');
+                $("#menuClienti").addClass('w3-animate-opacity');
+                
             } else {
-                $("#menuClienti").css({ "text-decoration": "unset" });
+                //$("#menuClienti").removeClass('w3-border-bottom');
+                $("#menuClienti").css('text-decoration', 'none');
+                $("#menuClienti").removeClass('w3-animate-opacity');
             }
 
             if (menu == 'menuServizi') {
-                $("#menuServizi").css({ "text-decoration": "underline" });
+                //$("#menuServizi").addClass('w3-border-bottom');
+                $("#menuServizi").css('text-decoration', 'underline');
+                $("#menuServizi").addClass('w3-animate-opacity');
             } else {
-                $("#menuServizi").css({ "text-decoration": "unset" });
+                //$("#menuServizi").removeClass('w3-border-bottom');
+                $("#menuServizi").css('text-decoration', 'none');
+                $("#menuServizi").removeClass('w3-animate-opacity');
             }
 
             if (menu == 'menuPhotogallery') {
-                $("#menuPhotogallery").css({ "text-decoration": "underline" });
+                //$("#menuPhotogallery").addClass('w3-border-bottom');
+                $("#menuPhotogallery").css('text-decoration', 'underline');
+                $("#menuPhotogallery").addClass('w3-animate-opacity');
             } else {
-                $("#menuPhotogallery").css({ "text-decoration": "unset" });
-            }
-            
-            if (menu == 'menuContatti') {
-                $("#menuContatti").css({ "text-decoration": "underline" });
-            } else {
-                $("#menuContatti").css({ "text-decoration": "unset"});
+                //$("#menuPhotogallery").removeClass('w3-border-bottom');
+                $("#menuPhotogallery").css('text-decoration', 'none');
+                $("#menuPhotogallery").removeClass('w3-animate-opacity');
             }
 
-            
+            if (menu == 'menuContatti') {
+                //$("#menuContatti").addClass('w3-border-bottom');
+                $("#menuContatti").css('text-decoration', 'underline');
+                $("#menuContatti").addClass('w3-animate-opacity');
+            } else {
+                //$("#menuContatti").removeClass('w3-border-bottom');
+                $("#menuContatti").css('text-decoration', 'none');
+                $("#menuContatti").removeClass('w3-animate-opacity');
+            }
+
+            if (menu == 'menuLogin') {
+                //$("#menuLogin").addClass('w3-border-bottom');
+                $("#menuLogin").css('text-decoration', 'underline');
+                $("#menuLogin").addClass('w3-animate-opacity');
+            } else {
+                //$("#menuLogin").removeClass('w3-border-bottom');
+                $("#menuLogin").css('text-decoration', 'none');
+                $("#menuLogin").removeClass('w3-animate-opacity');
+            }
+
         }
     </script>
     <style>
@@ -85,14 +134,6 @@
                 padding-top: 112px;
             }
 
-        .mySlides {
-            display: none;
-        }
-
-        .mySlidesAuto {
-            display: none;
-        }
-
         .cssBtnTop {
             width: 50px;
             height: 50px;
@@ -113,16 +154,38 @@
             left: 0;
             font-weight: bold;
             font-size: 18px;
-            
+            z-index: 102;
         }
 
         .content {
         }
 
-        a:hover {
-            text-decoration: underline;
+        .mySlides {
+            display: none;
+            height: auto;
+            border: solid 1px black;
         }
 
+        .social {
+            position: absolute;
+            top: 80%;
+            width: auto;
+            left: 50%;
+            margin-left: -100px;
+            z-index: 101;
+        }
+
+        .underline {
+            border-bottom: 3px solid currentColor;
+        }
+
+        .underline--blue {
+            border-bottom-color: blue;
+        }
+
+        .underline--dotted {
+            border-bottom: 3px red dashed;
+        }
     </style>
 
 </head>
@@ -130,322 +193,350 @@
 
     <a href="#" onclick="sottolinea('menuHome');" class="w3-button w3-round-large w3-opacity cssBtnTop">Top</a>
 
-
     <!-- HEADER -->
-    <!--<header class="w3-container w3-text-white w3-center header" id="myHeader">-->
-    <header class="w3-container w3-text-white w3-center cssMenu" id="myHeader">
-        <table style="width:100%">
-            <tr>
-                <td style="width:10%;">
-                    <img src="IMMAGINI/logoVSP.png" style="height:90px;width:100px;" alt="Videosystem Production Srl">
-                </td>
-                <td style="width:10%;">
-                    <a href="#" onclick="sottolinea('menuHome');" id="menuHome" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">HOME</a>
-                </td>
-                <td style="width:10%;">
-                    <a href="#segnalibroAzienda" onclick="sottolinea('menuAzienda');" id="menuAzienda" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">AZIENDA</a>
-                </td>
-                <td style="width:10%;">
-                    <a href="#segnalibroClienti" onclick="sottolinea('menuClienti');" id="menuClienti" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">CLIENTI</a>
-                </td>
-                <td style="width:10%;">
-                    <a href="#segnalibroServizi" onclick="sottolinea('menuServizi');" id="menuServizi" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">SERVIZI</a>
-                </td>
-                <td style="width:10%;">
-                    <a href="#segnalibroPhotoGallery" onclick="sottolinea('menuPhotogallery');" id="menuPhotogallery" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">GALLERY</a>
-                </td>
-                <td style="width:10%;">
-                    <a href="#segnalibroContatti" onclick="sottolinea('menuContatti');" id="menuContatti" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">CONTATTI</a>
-                </td>
-                <td style="width:10%;">
-                    <a href="../Login.aspx" class="w3-bar-item w3-button w3-hover-none w3-hover-text-white" style="padding-top:20px;">AREA RISERVATA</a>
-                </td>
-                <td style="width:10%;">
-                    <img src="IMMAGINI/Italy.png" style="height:25px;width:40px;" alt="Italiano">
-                </td>
-                <td style="width:10%;">
-                    <img src="IMMAGINI/INGHILTERRA.png" style="height:25px;width:40px;" alt="English">
-                </td>
-            </tr>
-        </table>
+    <header class="w3-bar w3-text-white w3-center cssMenu" id="myHeader">
+        <a href="#" onclick="sottolinea('menuHome');" class="w3-bar-item w3-button w3-hover-none w3-left w3-mobile" style="margin:0;padding:0;">
+            <img src="IMMAGINI/logoVSP_2016.png" class="w3-left w3-margin-right" style="height:97px;" alt="Videosystem Production Srl">
+        </a>
+        <a href="#" class="w3-bar-item w3-button w3-right w3-hover-none w3-mobile" style="padding-top:35px;padding-left:0;margin-left:5px;">
+            <img src="IMMAGINI/INGHILTERRA.png" style="height:20px;width:35px;" alt="English">
+        </a>        
+        <a href="#" class="w3-bar-item w3-button w3-right w3-hover-none w3-mobile" style="padding-top:35px;padding-right:0;margin-right:5px;">
+            <img src="IMMAGINI/Italy.png" style="height:20px;width:35px;" alt="Italiano">
+        </a>
+
+        <a href="../Login.aspx" onclick="sottolinea('menuLogin');" id="menuLogin" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-right w3-mobile" style="padding-top:35px;">AREA RISERVATA</a>
+        <a href="#segnalibroContatti" onclick="sottolinea('menuContatti');" id="menuContatti" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-right w3-mobile" style="padding-top:35px;">CONTATTI</a>
+        <a href="#segnalibroPhotoGallery" onclick="sottolinea('menuPhotogallery');" id="menuPhotogallery" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-right w3-mobile" style="padding-top:35px;">GALLERY</a>
+        <a href="#segnalibroServizi" onclick="sottolinea('menuServizi');" id="menuServizi" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-right w3-mobile" style="padding-top:35px;">SERVIZI</a>
+        <a href="#segnalibroClienti" onclick="sottolinea('menuClienti');" id="menuClienti" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-right w3-mobile" style="padding-top:35px;">CLIENTI</a>
+        <a href="#segnalibroAzienda" onclick="sottolinea('menuAzienda');" id="menuAzienda" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-right w3-mobile" style="padding-top:35px;">AZIENDA</a>
+        <a href="#" onclick="sottolinea('menuHome');" id="menuHome" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-right w3-mobile" style="padding-top:35px;text-decoration:underline;">HOME</a>
+
     </header>
 
-    <div class="content">
-        <!-- HOME -->
-        <div class="w3-display-content w3-section" style="width:100%;height:auto;padding-top:84px;">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/1.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/2.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/3.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/4.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/5.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/6.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/7.jpg" style="width:100%">
-            <img class="mySlidesAuto w3-animate-fading" src="IMMAGINI/SLIDEAUTOMATICO/8.jpg" style="width:100%">
-            <div class="w3-display-left w3-container">
-                <img src="IMMAGINI/FRECCIA DX.png"  style="width:40px;" />
+
+
+        <!--<header class="w3-container w3-text-white w3-center cssMenu" id="myHeader">-->
+        <!--<header class="w3-bar w3-text-white w3-center cssMenu" id="myHeader">
+            <table style="width:100%">
+                <tr>
+                    <td style="width:11%;">
+                        <img src="IMMAGINI/logoVSP.png" style="height:97px;width:105px;" alt="Videosystem Production Srl">
+                    </td>
+                    <td style="width:11%;">
+                        <a href="#" onmousemove="window.status('');" onclick="sottolinea('menuHome');" id="menuHome" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-border-bottom w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">HOME</a>
+                    </td>
+                    <td style="width:11%;">
+                        <a href="#segnalibroAzienda" onclick="sottolinea('menuAzienda');" id="menuAzienda" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">AZIENDA</a>
+                    </td>
+                    <td style="width:11%;">
+                        <a href="#segnalibroClienti" onclick="sottolinea('menuClienti');" id="menuClienti" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">CLIENTI</a>
+                    </td>
+                    <td style="width:11%;">
+                        <a href="#segnalibroServizi" onclick="sottolinea('menuServizi');" id="menuServizi" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">SERVIZI</a>
+                    </td>
+                    <td style="width:11%;">
+                        <a href="#segnalibroPhotoGallery" onclick="sottolinea('menuPhotogallery');" id="menuPhotogallery" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">GALLERY</a>
+                    </td>
+                    <td style="width:11%;">
+                        <a href="#segnalibroContatti" onclick="sottolinea('menuContatti');" id="menuContatti" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">CONTATTI</a>
+                    </td>
+                    <td style="width:13%;">
+                        <a href="../Login.aspx" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white" style="padding-top:20px;">AREA RISERVATA</a>
+                    </td>
+                    <td style="width:5%;">
+                        <img src="IMMAGINI/Italy.png" style="height:25px;width:40px;" alt="Italiano">
+                    </td>
+                    <td style="width:5%;">
+                        <img src="IMMAGINI/INGHILTERRA.png" style="height:25px;width:40px;" alt="English">
+                    </td>
+                </tr>
+            </table>
+        </header>-->
+        <!--<header class="w3-bar w3-text-white w3-center cssMenu" id="myHeader">
+            <img src="IMMAGINI/logoVSP.png" class="w3-left w3-margin-left w3-margin-right w3-mobile" style="height:97px;width:105px;" alt="Videosystem Production Srl">
+            <a href="#" onclick="sottolinea('menuHome');" id="menuHome" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-bottombar w3-hover-border-white w3-hover-text-white w3-margin-left w3-margin-top w3-mobile" style="padding-top:20px;" title="Home">HOME</a>
+            <a href="#segnalibroAzienda" onclick="sottolinea('menuAzienda');" id="menuAzienda" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-margin-top w3-mobile" style="padding-top:20px;" title="Azienda">AZIENDA</a>
+            <a href="#segnalibroClienti" onclick="sottolinea('menuClienti');" id="menuClienti" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-margin-top w3-mobile" style="padding-top:20px;" title="">CLIENTI</a>
+            <a href="#segnalibroServizi" onclick="sottolinea('menuServizi');" id="menuServizi" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-margin-top w3-mobile" style="padding-top:20px;" title="stocazzo">SERVIZI</a>
+            <a href="#segnalibroPhotoGallery" onclick="sottolinea('menuPhotogallery');" id="menuPhotogallery" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-margin-top w3-mobile" style="padding-top:20px;" title="">GALLERY</a>
+            <a href="#segnalibroContatti" onclick="sottolinea('menuContatti');" id="menuContatti" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-margin-top w3-mobile" style="padding-top:20px;">CONTATTI</a>
+            <a href="../Login.aspx" class="w3-bar-item w3-button w3-hover-none w3-border-white w3-hover-border-white w3-hover-text-white w3-margin-top w3-mobile" style="padding-top:20px;">AREA RISERVATA</a>
+            <img class="w3-right w3-margin w3-mobile" src="IMMAGINI/Italy.png" style="height:25px;width:40px;" alt="Italiano">
+            <img class="w3-right w3-margin w3-mobile" src="IMMAGINI/INGHILTERRA.png" style="height:25px;width:40px;" alt="English">
+        </header>-->
+
+        <div class="content">
+            <!-- HOME -->
+            <div style="width:100%;height:auto;padding-top:95px;z-index:1;">
+                <!-- INIZIO SLIDER -->
+                <div id="wowslider-container1">
+                    <div class="ws_images">
+                        <ul>
+                            <li><img src="data1/images/1.jpg" alt="1" title="1" id="wows1_0" /></li>
+                            <li><img src="data1/images/2.jpg" alt="2" title="2" id="wows1_1" /></li>
+                            <li><img src="data1/images/3.jpg" alt="3" title="3" id="wows1_2" /></li>
+                            <li><img src="data1/images/4.jpg" alt="4" title="4" id="wows1_3" /></li>
+                            <li><img src="data1/images/5.jpg" alt="5" title="5" id="wows1_4" /></li>
+                            <li><img src="data1/images/6.jpg" alt="6" title="6" id="wows1_5" /></li>
+                            <li><img src="data1/images/7.jpg" alt="7" title="7" id="wows1_6" /></li>
+                            <li><img src="data1/images/8.jpg" alt="8" title="8" id="wows1_7" /></li>
+                        </ul>
+
+                        <div class="social" style="text-align:center;">
+                            <a href="https://www.facebook.com/videosystemproduction/" target='_blank'><img alt='Seguici su Facebook' title='Seguici su Facebook' src="IMMAGINI/FACEBOOK.gif" style="width:50px;margin:15px;" onclick="window.open('https://www.facebook.com/videosystemproduction/');" /></a>&#160;&#160;
+                            <a href="https://www.instagram.com/videosystemproduction/" target="_blank"><img src="IMMAGINI/INSTAGRAM.gif" style="width:48px;margin:15px;" alt="Seguici su Instagram" title="Seguici su Instagram" onclick="window.open('https://www.instagram.com/videosystemproduction/');" /></a>&#160;&#160;
+                            <a href="https://www.linkedin.com/company/videosystemproduction" target='_blank'><img alt='Seguici su LinkedIn' title='Seguici su LinkedIn' src="IMMAGINI/LINKEDIN.gif" style="width:50px;margin:15px;" onclick="window.open('https://www.linkedin.com/company/videosystemproduction');" /></a>&#160;&#160;
+                        </div>
+                    </div>
+                    <div class="ws_script" style="position:absolute;left:-99%">
+                    </div>
+                    <div class="ws_shadow"></div>
+
+                </div>
+                <script type="text/javascript" src="engine1/wowslider.js"></script>
+                <script type="text/javascript" src="engine1/script.js"></script>
+                <!-- FINE SLIDER -->
             </div>
-            <div class="w3-display-right w3-container">
-                <img src="IMMAGINI/FRECCIA SX.png" style="width:40px;" />
-            </div>
-            <div class="w3-display-bottommiddle w3-container">
-                <div align="center">
-                    <a href="https://www.facebook.com/videosystemproduction/" target='_blank'><img alt='Seguici su Facebook' title='Seguici su Facebook' src="IMMAGINI/FACEBOOK.gif" style="width:50px;margin:15px;" /></a>&#160;&#160;
-                    <a href="https://www.instagram.com/videosystemproduction/" target="_blank"><img src="IMMAGINI/INSTAGRAM.gif" style="width:48px;margin:15px;" alt="Seguici su Instagram" title="Seguici su Instagram" /></a>&#160;&#160;
-                    <a href="https://www.linkedin.com/company/videosystemproduction" target='_blank'><img alt='Seguici su LinkedIn' title='Seguici su LinkedIn' src="IMMAGINI/LINKEDIN.gif" style="width:50px;margin:15px;" /></a>&#160;&#160;
+
+
+            <!-- AZIENDA -->
+            <a name="segnalibroAzienda"></a>
+            <div class="w3-cell-row" style="padding-top:120px;">
+                <div class="w3-container">
+                    <p class="pIntestazione">AZIENDA</p>
+                    <div class="w3-row">
+                        <div class="w3-col" style="width:60%">
+                            <p class="w3-xlarge w3-padding-large" style="font-family: 'Open Sans';color:#616d70;font-size:24px;">
+                                La <b>VideoSystem Production srl</b> è un’azienda italiana con sede a Roma che, con passione ed esperienza, opera in tutto il territorio europeo.<br />
+                                Fornisce competenze alla produzione televisiva sul mercato broadcast e industriale basandosi su un team giovane, efficiente e dinamico, attento a ciò che fa la differenza nel prodotto, il dettaglio.<br />
+                                La connessione tra risorse umane, qualificati professionisti del settore e mezzi di ultima generazione di cui dispone l’azienda, garantisce  ai propri clienti un alto standard qualitativo nella realizzazione di produzioni ad alta complessità tecnico-organizzativa.<br />
+                                OB Van, regia fly case, grafica e gruppi elettrogeni sono i servizi che l’azienda offre ai propri clienti.<br />
+                                La VideoSystem Production srl ha collaborato con i principali broadcaster italiani ed europei realizzando: eventi sportivi, istituzionali, teatrali, sfilate di moda, convention, programmi di intrattenimento e informazione.<br />
+                            </p>
+                        </div>
+                        <div class="w3-rest">
+                            <p class="w3-xlarge w3-padding-large" style="font-family: 'Open Sans';color:#616d70;font-size:24px;">
+                                <table class="w3-table" style="font-family: 'Open Sans';color:#616d70;font-size:22px;width:400px;">
+                                    <tr>
+                                        <td><img src="IMMAGINI/POSIZIONE.gif" style="width:48px;" /></td>
+                                        <td>Via Tavarnelle Val di Pesa 34<br />00148 Roma </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="IMMAGINI/TELEFONO.gif" style="width:48px;" /></td>
+                                        <td>06 6553680</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="mailto:produzione@vsproduction.it" target='_blank'><img src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
+                                        <td>PRODUZIONE</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="mailto:info@vsproduction.it" target='_blank'><img src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
+                                        <td>INFO</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <script>
-            var carosello;
-            var myIndex = getRandomInt(0, 7);
-            //alert (myIndex);
-            carousel();
+            <!-- CLIENTI-->
+            <a name="segnalibroClienti"></a>
+            <div class="w3-cell-row" style="padding-top:120px;">
+                <div class="w3-container">
+                    <p class="w3-xlarge" style="font-family: 'Open Sans';color:#616d70;font-size:24px;">Hanno scelto la VIDEOSYSTEM production:</p>
+                    <img src="IMMAGINI/CLIENTI.jpg" style="width:100%;" alt="Clienti">
+                </div>
+            </div>
+            <!-- SERVIZI-->
+            <a name="segnalibroServizi"></a>
+            <div class="w3-cell-row" style="padding-top:120px;">
+                <div class="w3-container">
+                    <p class="pIntestazione">SERVIZI</p>
+                </div>
+                <div class="w3-container">
+                    <img src="IMMAGINI/3.jpg" style="width:100%;" alt="Servizi">
+                </div>
+            </div>
 
-            function carousel() {
-                var i;
-                var x = document.getElementsByClassName("mySlidesAuto");
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";
-                }
-                myIndex++;
-                if (myIndex > x.length) { myIndex = 1 }
-                x[myIndex - 1].style.display = "block";
-                carosello=setTimeout(carousel, 4000); // Change image every 4 seconds
-            }
+            <!-- FOTO GALLERY CON FINESTRA MODALE E SLIDE SHOW-->
+            <div class="w3-cell-row" style="width:100%;">
+                <a name="segnalibroPhotoGallery"></a>
+                <div class="w3-container" style="padding-top:120px;">
+                    <p class="pIntestazione">PHOTO GALLERY</p>
+                </div>
 
-            function getRandomInt(min, max) {
-                min = Math.ceil(min);
-                max = Math.floor(max);
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-        </script>
-
-        <!-- AZIENDA -->
-        <a name="segnalibroAzienda"></a>
-        <div class="w3-cell-row" style="padding-top:140px;">
-            <div class="w3-container">
-                <p class="pIntestazione">AZIENDA</p>
-                <div class="w3-row">
-                    <div class="w3-col" style="width:60%">
-                        <p class="w3-xlarge w3-padding-large" style="font-family: 'Open Sans';color:#616d70;font-size:24px;">
-                            La <b>VideoSystem Production srl</b> è un’azienda italiana con sede a Roma che, con passione ed esperienza, opera in tutto il territorio europeo.<br />
-                            Fornisce competenze alla produzione televisiva sul mercato broadcast e industriale basandosi su un team giovane, efficiente e dinamico, attento a ciò che fa la differenza nel prodotto, il dettaglio.<br />
-                            La connessione tra risorse umane, qualificati professionisti del settore e mezzi di ultima generazione di cui dispone l’azienda, garantisce  ai propri clienti un alto standard qualitativo nella realizzazione di produzioni ad alta complessità tecnico-organizzativa.<br />
-                            OB Van, regia fly case, grafica e gruppi elettrogeni sono i servizi che l’azienda offre ai propri clienti.<br />
-                            La VideoSystem Production srl ha collaborato con i principali broadcaster italiani ed europei realizzando: eventi sportivi, istituzionali, teatrali, sfilate di moda, convention, programmi di intrattenimento e informazione.<br />
-                        </p>
+                <div class="w3-row-padding w3-margin-top">
+                    <div class="w3-third">
+                        <div class="w3-card" onclick="document.getElementById('id01').style.display = 'block'; showDivs(0);">
+                            <img src="IMMAGINI/1 - 1.jpg" class="w3-hover-grayscale" style="width:100%">
+                            <div class="w3-container">
+                                <h5>Stadio Olimpico</h5>
+                            </div>
+                        </div>
                     </div>
-                    <div class="w3-rest">
-                        <p class="w3-xlarge w3-padding-large" style="font-family: 'Open Sans';color:#616d70;font-size:24px;">
-                            <table class="w3-table" style="font-family: 'Open Sans';color:#616d70;font-size:22px;width:400px;">
+
+                    <div class="w3-third">
+                        <div class="w3-card" onclick="document.getElementById('id01').style.display = 'block'; showDivs(1);">
+                            <img src="IMMAGINI/2 - 1.jpg" class="w3-hover-grayscale" style="width:100%">
+                            <div class="w3-container">
+                                <h5>Roma Barcellona</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-third">
+                        <div class="w3-card" onclick="document.getElementById('id01').style.display = 'block'; showDivs(2);">
+                            <img src="IMMAGINI/3 - 1.jpg" class="w3-hover-grayscale" style="width:100%">
+                            <div class="w3-container">
+                                <h5>Papa Francesco</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="id01" class="w3-modal">
+                    <div class="w3-modal-content" style="width:80%;">
+                        <div class="w3-container">
+                            <h2 class="w3-center">Slideshow</h2>
+                            <span onclick="document.getElementById('id01').style.display='none'"
+                                  class="w3-button w3-display-topright">&times;</span>
+                            <div class="w3-content w3-display-container">
+                                <img class="mySlides" src="IMMAGINI/1 - 1.jpg" style="width:100%">
+                                <img class="mySlides" src="IMMAGINI/2 - 1.jpg" style="width:100%">
+                                <img class="mySlides" src="IMMAGINI/3 - 1.jpg" style="width:100%">
+
+                                <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                                <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                            </div>
+                            <footer class="w3-container w3-center" style="width:100%;">
+                                <p>&nbsp;</p>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    var slideIndex = 1;
+                    showDivs(slideIndex);
+
+                    function plusDivs(n) {
+                        showDivs(slideIndex += n);
+                    }
+
+                    function showDivs(n) {
+                        //alert(n);
+                        var i;
+                        var slide = document.getElementsByClassName("mySlides");
+                        if (n > slide.length) { slideIndex = 1 }
+                        if (n < 1) { slideIndex = slide.length };
+                        for (i = 0; i < slide.length; i++) {
+                            slide[i].style.display = "none";
+                        }
+                        slide[slideIndex - 1].style.display = "block";
+                    }
+                </script>
+            </div>
+
+            <!-- CONTATTI -->
+            <div class="w3-cell-row" style="padding-bottom:200px;">
+                <a name="segnalibroContatti"></a>
+                <div class="w3-container w3-white" style="padding-top:120px;">
+                    <p class="pIntestazione">CONTATTI</p>
+                </div>
+                <div class="w3-container w3-white w3-center w3-padding-large">
+
+                    <div class="w3-row-padding w3-margin-top">
+                        <div class="w3-half">
+                            <table class="w3-table w3-xlarge" style="width:60%;font-family: 'Open Sans';color:#616d70;font-size:24px;">
                                 <tr>
-                                    <td><img src="IMMAGINI/POSIZIONE.gif" style="width:48px;" /></td>
+                                    <th colspan="3">LA NOSTRA SEDE</th>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://goo.gl/maps/Jt7YTYfBVd6nZQVd9" target='_blank'><img alt='Mappa ufficio' title='Mappa ufficio' src="IMMAGINI/POSIZIONE.gif" style="width:48px;" /></a></td>
                                     <td>Via Tavarnelle Val di Pesa 34<br />00148 Roma </td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><img src="IMMAGINI/TELEFONO.gif" style="width:48px;" /></td>
-                                    <td>06 6553680</td>
+                                    <td><img alt='Telefono' title='Telefono' src="IMMAGINI/TELEFONO.gif" style="width:48px;" /></td>
+                                    <td>+39 06 65536080</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td><img alt='Voip' title='Voip' src="IMMAGINI/TELEFONO.gif" style="width:48px;" /></td>
+                                    <td>Voip +39 06 92939873</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="3">ALTRI CONTATTI</th>
+                                </tr>
+                                <tr>
+                                    <td><a href="mailto:info@vsproduction.it" target='_blank'><img alt='Invia Mail' title='Invia Mail' src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
+                                    <td>info@vsproduction.it</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="mailto:produzione@vsproduction.it" target='_blank'><img src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
-                                    <td>PRODUZIONE</td>
+                                    <td><a href="mailto:produzione@vsproduction.it" target='_blank'><img alt='Invia Mail' title='Invia Mail' src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
+                                    <td>produzione@vsproduction.it</td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="mailto:info@vsproduction.it" target='_blank'><img src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
-                                    <td>INFO</td>
+                                    <td><a href="mailto:amministrazione@vsproduction.it" target='_blank'><img alt='Invia Mail' title='Invia Mail' src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
+                                    <td>amministrazione@vsproduction.it</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="mailto:tecnica@vsproduction.it" target='_blank'><img alt='Invia Mail' title='Invia Mail' src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
+                                    <td>tecnica@vsproduction.it</td>
                                     <td></td>
                                 </tr>
                             </table>
-                        </p>
+
+                        </div>
+                        <div class="w3-half">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4203.982883639194!2d12.414470141895068!3d41.835515447154606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1325f4dfa19ca075%3A0x594b0e003fc136df!2sVia%20Tavarnelle%20Val%20di%20Pesa%2C%2034%2C%2000148%20Roma%20RM!5e0!3m2!1sit!2sit!4v1570009675112!5m2!1sit!2sit" width="450" height="400" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- CLIENTI-->
-        <a name="segnalibroClienti"></a>
-        <div class="w3-cell-row" style="padding-top:120px;">
-            <div class="w3-container">
-                <p class="w3-xlarge" style="font-family: 'Open Sans';color:#616d70;font-size:24px;">Hanno scelto la VIDEOSYSTEM production:</p>
-                <img src="IMMAGINI/CLIENTI.jpg" style="width:100%;" alt="Clienti">
-            </div>
-        </div>
-        <!-- SERVIZI-->
-        <a name="segnalibroServizi"></a>
-        <div class="w3-cell-row" style="padding-top:120px;">
-            <div class="w3-container">
-                <p class="pIntestazione">SERVIZI</p>
-            </div>
-            <div class="w3-container">
-                <img src="IMMAGINI/3.jpg" style="width:100%;" alt="Servizi">
-            </div>
-        </div>
 
-        <!-- FOTO GALLERY CON FINESTRA MODALE E SLIDE SHOW-->
-        <div class="w3-cell-row" style="width:100%;">
-            <a name="segnalibroPhotoGallery"></a>
-            <div class="w3-container" style="padding-top:120px;">
-                <p class="pIntestazione">PHOTO GALLERY</p>
-            </div>
 
-            <div class="w3-row-padding w3-margin-top">
-                <div class="w3-third">
-                    <div class="w3-card" onclick="document.getElementById('id01').style.display = 'block'; showDivs(0);">
-                        <img src="IMMAGINI/1 - 1.jpg" class="w3-hover-grayscale" style="width:100%">
-                        <div class="w3-container">
-                            <h5>Stadio Olimpico</h5>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="w3-third">
-                    <div class="w3-card" onclick="document.getElementById('id01').style.display = 'block'; showDivs(1);">
-                        <img src="IMMAGINI/2 - 1.jpg" class="w3-hover-grayscale" style="width:100%">
-                        <div class="w3-container">
-                            <h5>Roma Barcellona</h5>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="w3-third">
-                    <div class="w3-card" onclick="document.getElementById('id01').style.display = 'block'; showDivs(2);">
-                        <img src="IMMAGINI/3 - 1.jpg" class="w3-hover-grayscale" style="width:100%">
-                        <div class="w3-container">
-                            <h5>Papa Francesco</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- FOOTER -->
+        <footer class="w3-container w3-left w3-text-white" style="width:100%;background-color:#34675c;">
+            <p>&copy; 2019 - <b>VIDEOSYSTEM Production Srl</b> - Via Tavarnelle Val di Pesa 34 - 00148 Roma, Italia</p>
+            <p>Partita Iva <b>13121341005</b><br />PEC <b>videosystemproduction@arubapec.it</b><br />CODICE SDI <b>M5UXCRM</b></p>
+        </footer>
+        <script>
+            // FUNZIONE JAVASCRIPT PER SCROLL MENU'
+            window.onscroll = function () { scrollMenu() };
 
-            <div id="id01" class="w3-modal">
-                <div class="w3-modal-content" style="width:80%;">
-                    <div class="w3-container">
-                        <h2 class="w3-center">Slideshow</h2>
-                        <span onclick="document.getElementById('id01').style.display='none'"
-                              class="w3-button w3-display-topright">&times;</span>
-                        <div class="w3-content w3-display-container">
-                            <img class="mySlides" src="IMMAGINI/1 - 1.jpg" style="width:100%">
-                            <img class="mySlides" src="IMMAGINI/2 - 1.jpg" style="width:100%">
-                            <img class="mySlides" src="IMMAGINI/3 - 1.jpg" style="width:100%">
+            var header = document.getElementById("myHeader");
+            var sticky = header.offsetTop;
 
-                            <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-                            <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
-                        </div>
-                        <footer class="w3-container w3-center" style="width:100%;">
-                            <p>&nbsp;</p>
-                        </footer>
-                    </div>
-                </div>
-            </div>
-            <script>
-                var slideIndex = 1;
-                showDivs(slideIndex);
+            function scrollMenu() {
 
-                function plusDivs(n) {
-                    showDivs(slideIndex += n);
+                // faccio diventare il menu trasparente quando scrollo
+                if (window.pageYOffset == 0) {
+                    header.classList.remove("w3-opacity-min");
+                } else {
+                    header.classList.add("w3-opacity-min");
                 }
 
-                function showDivs(n) {
-                    //alert(n);
-                    var i;
-                    var slide = document.getElementsByClassName("mySlides");
-                    if (n > slide.length) { slideIndex = 1 }
-                    if (n < 1) { slideIndex = slide.length };
-                    for (i = 0; i < slide.length; i++) {
-                        slide[i].style.display = "none";
-                    }
-                    slide[slideIndex - 1].style.display = "block";
-                }
-            </script>
-        </div>
-
-        <!-- CONTATTI -->
-        <div class="w3-cell-row" style="padding-bottom:200px;">
-            <a name="segnalibroContatti"></a>
-            <div class="w3-container w3-white" style="padding-top:120px;">
-                <p class="pIntestazione">CONTATTI</p>
-            </div>
-            <div class="w3-container w3-white w3-center w3-padding-large">
-
-                <div class="w3-row-padding w3-margin-top">
-                    <div class="w3-half">
-                        <table class="w3-table w3-xlarge" style="width:60%;font-family: 'Open Sans';color:#616d70;font-size:24px;">
-                            <tr>
-                                <th colspan="3">LA NOSTRA SEDE</th>
-                            </tr>
-                            <tr>
-                                <td><a href="https://goo.gl/maps/Jt7YTYfBVd6nZQVd9" target='_blank'><img alt='Mappa ufficio' title='Mappa ufficio' src="IMMAGINI/POSIZIONE.gif" style="width:48px;" /></a></td>
-                                <td>Via Tavarnelle Val di Pesa 34<br />00148 Roma </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><img alt='Telefono' title='Telefono' src="IMMAGINI/TELEFONO.gif" style="width:48px;" /></td>
-                                <td>+39 06 65536080</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td><img alt='Voip' title='Voip' src="IMMAGINI/TELEFONO.gif" style="width:48px;" /></td>
-                                <td>Voip +39 06 92939873</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <th colspan="3">ALTRI CONTATTI</th>
-                            </tr>
-                            <tr>
-                                <td><a href="mailto:info@vsproduction.it" target='_blank'><img alt='Invia Mail' title='Invia Mail' src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
-                                <td>info@vsproduction.it</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><a href="mailto:produzione@vsproduction.it" target='_blank'><img alt='Invia Mail' title='Invia Mail' src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
-                                <td>produzione@vsproduction.it</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><a href="mailto:amministrazione@vsproduction.it" target='_blank'><img alt='Invia Mail' title='Invia Mail' src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
-                                <td>amministrazione@vsproduction.it</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td><a href="mailto:tecnica@vsproduction.it" target='_blank'><img alt='Invia Mail' title='Invia Mail' src="IMMAGINI/MAIL.gif" style="width:48px;" /></a></td>
-                                <td>tecnica@vsproduction.it</td>
-                                <td></td>
-                            </tr>
-                        </table>
-
-                    </div>
-                    <div class="w3-half">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4203.982883639194!2d12.414470141895068!3d41.835515447154606!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1325f4dfa19ca075%3A0x594b0e003fc136df!2sVia%20Tavarnelle%20Val%20di%20Pesa%2C%2034%2C%2000148%20Roma%20RM!5e0!3m2!1sit!2sit!4v1570009675112!5m2!1sit!2sit" width="450" height="400" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="w3-container w3-left w3-text-white" style="width:100%;background-color:#34675c;">
-        <p>&copy; 2019 - <b>VIDEOSYSTEM Production Srl</b> - Via Tavarnelle Val di Pesa 34 - 00148 Roma, Italia</p>
-        <p>Partita Iva <b>13121341005</b><br />PEC <b>videosystemproduction@arubapec.it</b><br />CODICE SDI <b>M5UXCRM</b></p>
-    </footer>
-    <script>
-        // FUNZIONE JAVASCRIPT PER SCROLL MENU'
-        window.onscroll = function () { scrollMenu() };
-
-        var header = document.getElementById("myHeader");
-        var sticky = header.offsetTop;
-
-        function scrollMenu() {
-
-            // faccio diventare il menu trasparente quando scrollo
-            if (window.pageYOffset == 0) {
-                header.classList.remove("w3-opacity-min");
-            } else {
-                header.classList.add("w3-opacity-min");
+                // scrollo il menu
+                //if (window.pageYOffset > sticky) {
+                //    header.classList.add("sticky");
+                //} else {
+                //    header.classList.remove("sticky");
+                //}
             }
-
-        }
-    </script>
+        </script>
+        -->
 </body>
 </html>

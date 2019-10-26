@@ -204,6 +204,15 @@ namespace VideoSystemWeb.Agenda.userControl
         protected global::System.Web.UI.WebControls.Button btn_CancellazioneMassiva;
 
         /// <summary>
+        /// Controllo btn_InserimentoMultiplo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_InserimentoMultiplo;
+
+        /// <summary>
         /// Controllo panelModificaArticolo.
         /// </summary>
         /// <remarks>
@@ -481,6 +490,51 @@ namespace VideoSystemWeb.Agenda.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnOKInserisciDataArticolo;
+
+        /// <summary>
+        /// Controllo panelInserimentoMultiplo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelInserimentoMultiplo;
+
+        /// <summary>
+        /// Controllo txt_DataInserimentoMultiplo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_DataInserimentoMultiplo;
+
+        /// <summary>
+        /// Controllo txt_QuantitaInserimentoMultiplo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_QuantitaInserimentoMultiplo;
+
+        /// <summary>
+        /// Controllo gvInserimentoMultiplo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvInserimentoMultiplo;
+
+        /// <summary>
+        /// Controllo btn_OkInserimentoMultiplo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_OkInserimentoMultiplo;
 
         /// <summary>
         /// Controllo panelFigProf.

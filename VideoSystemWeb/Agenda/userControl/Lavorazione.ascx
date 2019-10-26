@@ -406,16 +406,24 @@
                 <div class="w3-third">
                     <asp:TextBox ID="txt_FiltroGruppiLavorazione" runat="server" CssClass="w3-round" placeholder="Cerca.." Style="width: 100%; padding: 5px; margin-top: 10px;"></asp:TextBox>
                 </div>
+
+                <div class="w3-twothird">
                 
-                <div class="w3-third">
-                    <div class="w3-col w3-center-align" style="padding-top: 15px; padding-bottom: 0px;text-align:center">
-                        <label>Filtro data lavorazione</label>
-                        <asp:DropDownList ID="ddl_filtroGiorniLavorazioneDettEcon" runat="server" AutoPostBack="true" CssClass=" w3-white w3-border w3-hover-shadow w3-round " OnSelectedIndexChanged="ddl_FiltroGiorniLavorazioneDettEcon_SelectedIndexChanged"></asp:DropDownList>
+                    <div class="w3-half">
+                        <div class="w3-col w3-center-align" style="padding-top: 15px; padding-bottom: 0px; padding-left:10px;text-align:center">
+                            <label>Filtro data lavorazione</label>
+                            <asp:DropDownList ID="ddl_filtroGiorniLavorazioneDettEcon" runat="server" AutoPostBack="true" CssClass=" w3-white w3-border w3-hover-shadow w3-round " OnSelectedIndexChanged="ddl_FiltroGiorniLavorazioneDettEcon_SelectedIndexChanged"></asp:DropDownList>
+                        </div>
                     </div>
-                </div>
-                <div class="w3-third">
-                    <div class="w3-col w3-center-align" style="padding-top: 15px; padding-bottom: 0px; text-align:center">
-                        <asp:Button ID="btn_CancellazioneMassiva" runat="server" Text="Elimina selezione" class=" w3-btn w3-white w3-border w3-border-red w3-round-medium" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_CancellazioneMassiva_Click" OnClientClick="return confermaEliminazioneMassiva();"/>
+                    <div class="w3-quarter">
+                        <div class="w3-col w3-center-align" style="padding-top: 15px; padding-bottom: 0px; padding-left:10px; text-align:center">
+                            <asp:Button ID="btn_CancellazioneMassiva" runat="server" Text="Elimina selezione" class=" w3-btn w3-white w3-border w3-border-red w3-round-medium" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_CancellazioneMassiva_Click" OnClientClick="return confermaEliminazioneMassiva();"/>
+                        </div>
+                    </div>
+                    <div class="w3-quarter">
+                        <div class="w3-col w3-center-align" style="padding-top: 15px; padding-bottom: 0px; padding-left:10px; text-align:center">
+                            <asp:Button ID="btn_InserimentoMultiplo" runat="server" Text="Inserimento multiplo" class=" w3-btn w3-white w3-border w3-border-green w3-round-medium" OnClick="btn_InserimentoMultiplo_Click" Style="font-size: smaller; padding: 4px 8px"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -629,6 +637,58 @@
                 </div>
             </div>
 
+<!-- INSERIMENTO MULTIPLO -->
+            <div id="panelInserimentoMultiplo" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
+
+                <div id="divMInserimentoMultiplo" class="w3-modal-content w3-card-4 round" style="position: relative; width: 40%; background-color: white;  height: 90%;">
+                    <div class="w3-row-padding">
+                        <div class="w3-panel w3-blue w3-center w3-round">
+                            <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Selezionare personale tecnico da aggiungere</b> </h5>
+                            <span onclick="document.getElementById('<%= panelInserimentoMultiplo.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                        </div>
+
+                        <div class="w3-col round" style="padding: 5px; position:absolute; height:10%; width: 96%">
+                            <div class="w3-twothird" >
+                                <div class="w3-col" style="width:15%">
+                                    <label style="margin-bottom: 0.2rem;padding:8px;">Data</label>
+                                </div>
+                                <div class="w3-rest" >
+                                    <asp:TextBox ID="txt_DataInserimentoMultiplo" runat="server" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA" ></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="w3-third" >
+                                <div class="w3-half" >
+                                    <label style="margin-bottom: 0.2rem;padding:8px;">Quantità</label>
+                                </div>
+                                <div class="w3-half" >
+                                    <asp:TextBox ID="txt_QuantitaInserimentoMultiplo" runat="server" class="w3-input w3-border" text="1" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w3-col round" style="padding: 5px; margin-bottom:10px; height: 60%; position:absolute;overflow: auto;top:30%; width:96%;">
+                            <asp:GridView ID="gvInserimentoMultiplo" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" DataMember="ID">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Seleziona">
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="chkInserimentoMultiplo" runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="Nome" HeaderText="Descrizione" />
+                                    <asp:BoundField DataField="Descrizione" HeaderText="Descrizione lunga" />
+                                    
+                                </Columns>
+                            </asp:GridView>
+                        </div>
+
+                        <div class="w3-center" style="margin: 10px; position: absolute; bottom:5px;width:96%;">
+                                <asp:Button ID="btn_OkInserimentoMultiplo" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_OkInserimentoMultiplo_Click" />
+                                <button onclick="document.getElementById('<%= panelInserimentoMultiplo.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
 <!-- PIANO ESTERNO -->
@@ -830,8 +890,6 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
-
-
             </div>
         </div>
 

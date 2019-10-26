@@ -31,6 +31,7 @@ namespace VideoSystemWeb.Agenda.userControl
         private const string VIEWSTATE_FP_DETTAGLIOECONOMICO = "FPDettaglioEconomico"; // Figura Professionale selezionata in pannello modifica
         private const string VIEWSTATE_LISTAARTICOLIGRUPPILAVORAZIONE = "listaArticoliGruppiLavorazione";
         private const string VIEWSTATE_LISTAFIGUREPROFESSIONALI = "listaFigureProfessionali";
+        private const string VIEWSTATE_LISTAPERSONALETECNICO = "listaPersonaleTecnico";
         private const string VIEWSTATE_IDARTICOLOLAVORAZIONE = "idArticoloLavorazione";
         private const string VIEWSTATE_IDENTIFICATOREARTICOLOLAVORAZIONE = "identificatoreArticoloLavorazione";
         private const string VIEWSTATE_IDFIGURAPROFESSIONALE = "idFiguraProfessionale";
@@ -83,6 +84,22 @@ namespace VideoSystemWeb.Agenda.userControl
                 ViewState[VIEWSTATE_LISTAFIGUREPROFESSIONALI] = _listaFigureProfessionali;
             }
         }
+
+        List<ArticoliGruppi> ListaPersonaleTecnico  // Elenco di tutto il personale tecnico tra gli articoli
+        {
+            get
+            {
+                if (ViewState[VIEWSTATE_LISTAPERSONALETECNICO] == null)
+                {
+                    ViewState[VIEWSTATE_LISTAPERSONALETECNICO] = GetListaPersonaleTecnico();
+                }
+                return ((List<ArticoliGruppi>)ViewState[VIEWSTATE_LISTAPERSONALETECNICO]);
+            }
+            set
+            {
+                ViewState[VIEWSTATE_LISTAPERSONALETECNICO] = value;
+            }
+        }
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -91,6 +108,10 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 gvGruppiLavorazione.DataSource = ListaArticoliGruppiLavorazione;
                 gvGruppiLavorazione.DataBind();
+
+
+                gvInserimentoMultiplo.DataSource = ListaPersonaleTecnico; 
+                gvInserimentoMultiplo.DataBind();
 
                 PopolaCombo();
 
@@ -105,6 +126,29 @@ namespace VideoSystemWeb.Agenda.userControl
 
 
         #region DETTAGLIO ECONOMICO
+        private List<ArticoliGruppi> GetListaPersonaleTecnico()
+        {
+            Esito esito = new Esito();
+            int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
+
+            List<Art_Articoli> listaArticoliPersonaleTecnico = (Articoli_BLL.Instance.CaricaListaArticoli(ref esito)).Where(x => x.DefaultIdTipoSottogruppo == idSottogruppoPersonaleTecnico).ToList<Art_Articoli>();
+
+            List<ArticoliGruppi> listaArticoliGruppi = new List<ArticoliGruppi>();
+            foreach (Art_Articoli articolo in listaArticoliPersonaleTecnico)
+            {
+                ArticoliGruppi articoloGruppo = new ArticoliGruppi();
+
+                articoloGruppo.Id = IDGenerator.GetId(articoloGruppo, out bool firstTime);
+                articoloGruppo.IdOggetto = articolo.Id;
+                articoloGruppo.Nome = articolo.DefaultDescrizione;
+                articoloGruppo.Descrizione = articolo.DefaultDescrizioneLunga;
+                articoloGruppo.Isgruppo = false;
+
+                listaArticoliGruppi.Add(articoloGruppo);
+            }
+            return listaArticoliGruppi;
+        }
+
         protected void gvGruppiLavorazione_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             ViewState[VIEWSTATE_IDARTICOLOLAVORAZIONE] = Convert.ToString(e.CommandArgument);
@@ -306,7 +350,7 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                articoloSelezionato.Costo = decimal.Parse(txt_Costo.Text);
+                articoloSelezionato.Costo = string.IsNullOrEmpty(txt_Costo.Text)? 0: decimal.Parse(txt_Costo.Text);
                 articoloSelezionato.FP_netto = 0;
                 articoloSelezionato.FP_lordo = 0;
             }
@@ -480,6 +524,52 @@ namespace VideoSystemWeb.Agenda.userControl
             RichiediOperazionePopup("UPDATE");
         }
 
+        protected void btn_InserimentoMultiplo_Click(object sender, EventArgs e)
+        {
+            ClearPanelInserimentoMultiplo();
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriInserimentoMultiplo", script: "javascript: document.getElementById('" + panelInserimentoMultiplo.ClientID + "').style.display='block'", addScriptTags: true);
+            RichiediOperazionePopup("UPDATE");
+        }
+
+        protected void btn_OkInserimentoMultiplo_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txt_DataInserimentoMultiplo.Text))
+            {
+                basePage.ShowWarning("Selezionare una data di inserimento");
+                return;
+            }
+
+            DateTime dataSelezione = DateTime.Parse(txt_DataInserimentoMultiplo.Text);
+            int quantitaSelezione = int.Parse(txt_QuantitaInserimentoMultiplo.Text);
+
+            List<ArticoliGruppi> listaArticoliDaAggiungere = new List<ArticoliGruppi>();
+            for (int i = 0; i < gvInserimentoMultiplo.Rows.Count; i++)
+            {
+                CheckBox checkboxinsert = ((CheckBox)gvInserimentoMultiplo.Rows[i].FindControl("chkInserimentoMultiplo"));
+
+                if (checkboxinsert.Checked == true)
+                {
+                    for (int q = 0; q < quantitaSelezione; q++)
+                    {
+                        listaArticoliDaAggiungere.Add(ListaPersonaleTecnico.ElementAt(i));
+                    }
+                }
+            }
+
+            foreach (ArticoliGruppi articoloSelezionato in listaArticoliDaAggiungere)
+            {
+                AggiungiArticoloAListaArticoli(articoloSelezionato.IdOggetto, dataSelezione);
+            }
+
+            if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione != null && 
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count > 0)
+            {
+                AggiornaTotali();
+                ResetPanelLavorazione();
+                PopolaComboFiltroGiorniLavorazione();
+                RichiediOperazionePopup("UPDATE");
+            }
+        }
 
         protected void CercaFP()
         {
@@ -523,11 +613,20 @@ namespace VideoSystemWeb.Agenda.userControl
 
 
             List<DatiArticoliLavorazione> listaArticoliDelGruppo = Articoli_BLL.Instance.CaricaListaArticoliLavorazioneByIDGruppo(idLavorazione, idGruppo, ref esito);
-            listaArticoliDelGruppo.ForEach(x => { x.Data = data; x.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione(x.IdArtArticoli, data); });
+            //listaArticoliDelGruppo.ForEach(x => { x.Data = data; x.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione(x.IdArtArticoli, data); });
+            int progressivoNumOccorrenza = 0;
+            foreach (DatiArticoliLavorazione articoloDelGruppo in listaArticoliDelGruppo)
+            {
+                articoloDelGruppo.Data = data;
+                articoloDelGruppo.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione() + (progressivoNumOccorrenza++);
+            }
 
 
             SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.AddRange(listaArticoliDelGruppo);
             SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(x => x.Prezzo).ToList();
+
+            
+
 
             lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
         }
@@ -567,7 +666,7 @@ namespace VideoSystemWeb.Agenda.userControl
             datiArticoliLav.UsaCostoFP = articoloLavorazione.UsaCostoFP;
             datiArticoliLav.Consuntivo = false;
 
-            datiArticoliLav.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione(articoloLavorazione.IdArtArticoli, dataGiornoLav);
+            datiArticoliLav.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione();
 
             SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Add(datiArticoliLav);
             SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderBy(y => y.Data).ThenByDescending(x => x.Prezzo).ToList();
@@ -607,6 +706,16 @@ namespace VideoSystemWeb.Agenda.userControl
             div_FiguraProfessionale.Visible = false;
         }
 
+        private void ClearPanelInserimentoMultiplo()
+        {
+            txt_DataInserimentoMultiplo.Text = string.Empty;
+            txt_QuantitaInserimentoMultiplo.Text = "1";
+            for (int i = 0; i < gvInserimentoMultiplo.Rows.Count; i++)
+            {
+                ((CheckBox)gvInserimentoMultiplo.Rows[i].FindControl("chkInserimentoMultiplo")).Checked = false;
+            }
+        }
+
         private void AbilitaCostoFP(bool abilita)
         {
             if (abilita)
@@ -631,11 +740,11 @@ namespace VideoSystemWeb.Agenda.userControl
             }
         }
 
-        private int GetNextNumOccorrenzaDatiArticoliLavorazione(int idArticolo, DateTime data)
+        private int GetNextNumOccorrenzaDatiArticoliLavorazione()
         {
             int numOccorrenza = 0;
 
-            DatiArticoliLavorazione articoloLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.IdArtArticoli == idArticolo && x.Data == data).OrderByDescending(y=>y.NumOccorrenza).FirstOrDefault();
+            DatiArticoliLavorazione articoloLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(y => y.NumOccorrenza).FirstOrDefault();//.Where(x => x.IdArtArticoli == idArticolo && x.Data == data).OrderByDescending(y=>y.NumOccorrenza).FirstOrDefault();
 
             if (articoloLavorazione != null)
             {
@@ -833,14 +942,10 @@ namespace VideoSystemWeb.Agenda.userControl
             AggiornaTotali();
             ResetPanelLavorazione();
 
-
-
             // prendo indice dell'elemento in dattaglio economico per eventuale modifica
             DatiArticoliLavorazione datoArticoloDaModificare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == figuraProfessionale.IdCollaboratori && x.IdFornitori == figuraProfessionale.IdFornitori && x.Data == figuraProfessionale.Data);
             int indiceArticoloDaModificare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(datoArticoloDaModificare);
             //fine
-
-
 
             datiPianoEsterno.Data = string.IsNullOrEmpty(txt_data.Text) ? null : (DateTime?)DateTime.Parse(txt_data.Text);
             datiPianoEsterno.Orario = string.IsNullOrEmpty(txt_orario.Text) ? null : (DateTime?)DateTime.Parse(txt_orario.Text);
@@ -1329,7 +1434,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 articoloLavorazioneDiaria.FP_lordo = importoDiaria;
                 articoloLavorazioneDiaria.Prezzo = articoloDiaria.DefaultPrezzo;
                 articoloLavorazioneDiaria.Consuntivo = false;
-                articoloLavorazioneDiaria.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione(idDiaria, (DateTime)data);
+                articoloLavorazioneDiaria.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione();
 
                 if (figuraProfessionale.Tipo == COLLABORATORE)
                 {
@@ -1407,8 +1512,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
             try
             {
-                
-
                 int idDatiAgenda = SessionManager.EventoSelezionato.id;
                 int idCliente = SessionManager.EventoSelezionato.id_cliente;
 
@@ -1588,7 +1691,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
             // COSTRUISCO LISTA DATI ARTICOLI LAVORAZIONE
             List<DatiArticoliLavorazione> listaDatiArticoliLavorazione = new List<DatiArticoliLavorazione>();
-
+            int numOccorrenza = 0;
             foreach (DatiArticoli datoArticolo in SessionManager.EventoSelezionato.ListaDatiArticoli)
             {
                 Esito esito = new Esito();
@@ -1596,7 +1699,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 if (datoArticolo.IdTipoSottogruppo != idSottogruppoPersonaleTecnico)
                 {
-                    AggiungiDatoArticoloALavorazione(datoArticolo, SessionManager.EventoSelezionato.data_inizio_lavorazione, ref listaDatiArticoliLavorazione);
+                    AggiungiDatoArticoloALavorazione(datoArticolo, SessionManager.EventoSelezionato.data_inizio_lavorazione, ref listaDatiArticoliLavorazione, numOccorrenza++);
                 }
                 else
                 {
@@ -1604,15 +1707,16 @@ namespace VideoSystemWeb.Agenda.userControl
                     {
                         DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
 
-                        AggiungiDatoArticoloALavorazione(datoArticolo, dataGiornoLav, ref listaDatiArticoliLavorazione);
+                        AggiungiDatoArticoloALavorazione(datoArticolo, dataGiornoLav, ref listaDatiArticoliLavorazione, numOccorrenza);
                     }
+                    numOccorrenza++;
                 }
             }
             listaDatiArticoliLavorazione = listaDatiArticoliLavorazione.OrderBy(x => x.Data).ThenByDescending(y => y.Costo).ToList<DatiArticoliLavorazione>();
             CreaNuovaLavorazione(listaDatiArticoliLavorazione);
         }
 
-        private void AggiungiDatoArticoloALavorazione(DatiArticoli datoArticolo, DateTime? dataGiornoLav, ref List<DatiArticoliLavorazione> listaDatiArticoliLavorazione)
+        private void AggiungiDatoArticoloALavorazione(DatiArticoli datoArticolo, DateTime? dataGiornoLav, ref List<DatiArticoliLavorazione> listaDatiArticoliLavorazione, int numOccorrenza)
         {
             for (int i = 0; i < datoArticolo.Quantita; i++)
             {
@@ -1634,7 +1738,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     Costo = datoArticolo.Costo,
                     Iva = datoArticolo.Iva,
                     Data = dataGiornoLav,
-                    NumOccorrenza = i
+                    NumOccorrenza = numOccorrenza// i
                 };
 
                 datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out bool firstTime);

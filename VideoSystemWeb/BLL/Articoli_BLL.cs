@@ -296,9 +296,8 @@ namespace VideoSystemWeb.BLL
             foreach (Art_Gruppi gruppo in listaArt_Gruppi)
             {
                 ArticoliGruppi articoloGruppo = new ArticoliGruppi();
-                bool firstTime;
 
-                articoloGruppo.Id = IDGenerator.GetId(articoloGruppo, out firstTime);
+                articoloGruppo.Id = IDGenerator.GetId(articoloGruppo, out bool firstTime);
                 articoloGruppo.IdOggetto = gruppo.Id;
                 articoloGruppo.Nome = gruppo.Nome;
                 articoloGruppo.Descrizione = gruppo.Descrizione;
@@ -309,9 +308,8 @@ namespace VideoSystemWeb.BLL
             foreach (Art_Articoli articolo in listaArt_Articoli)
             {
                 ArticoliGruppi articoloGruppo = new ArticoliGruppi();
-                bool firstTime;
 
-                articoloGruppo.Id = IDGenerator.GetId(articoloGruppo, out firstTime);
+                articoloGruppo.Id = IDGenerator.GetId(articoloGruppo, out bool firstTime);
                 articoloGruppo.IdOggetto = articolo.Id;
                 articoloGruppo.Nome = articolo.DefaultDescrizione;
                 articoloGruppo.Descrizione = articolo.DefaultDescrizioneLunga;

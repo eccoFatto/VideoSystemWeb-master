@@ -120,6 +120,7 @@ namespace VideoSystemWeb.DAL
                                         articolo.DefaultStampa = riga.Field<bool>("defaultStampa");
                                         articolo.DefaultDescrizione = riga.Field<string>("defaultDescrizione");
                                         articolo.DefaultDescrizioneLunga = riga.Field<string>("defaultDescrizioneLunga");
+                                        articolo.DefaultIdTipoSottogruppo = riga.Field<int>("defaultIdTipoSottogruppo");
                                         articolo.Attivo = riga.Field<bool>("attivo");
 
                                         listaArticoli.Add(articolo);

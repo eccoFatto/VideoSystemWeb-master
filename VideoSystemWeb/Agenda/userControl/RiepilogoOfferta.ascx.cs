@@ -119,7 +119,8 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
             try
             {
-                List<DatiArticoli> listaDatiArticoli = RichiediListaArticoli().Where(x => x.Stampa).ToList<DatiArticoli>();
+
+                List<DatiArticoli> listaDatiArticoli = RichiediListaArticoli() == null? null : RichiediListaArticoli().Where(x => x.Stampa).ToList<DatiArticoli>();
                 if (listaDatiArticoli != null)
                 {
                     // LEGGO I PARAMETRI DI VS

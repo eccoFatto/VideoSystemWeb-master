@@ -226,7 +226,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         div_FiguraProfessionale.Visible = true;
                         hf_IdFiguraProfessionale.Value = figuraProfessionale.Id.ToString();
                         ddl_FPtipoPagamento.SelectedValue = articoloSelezionato.IdTipoPagamento == null ? "" : articoloSelezionato.IdTipoPagamento.ToString();
-                        ddl_Consuntivo.SelectedValue = articoloSelezionato.Consuntivo == null ? "0" : articoloSelezionato.Consuntivo.ToString();
+                        ddl_Consuntivo.SelectedValue = articoloSelezionato.Consuntivo == null ? "" : articoloSelezionato.Consuntivo.ToString();
 
                         AbilitaCostoFP(!string.IsNullOrEmpty(ddl_FPtipoPagamento.SelectedValue));
 
@@ -391,7 +391,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     articoloDaModificare.Descrizione = txt_Descrizione.Text;
                     articoloDaModificare.DescrizioneLunga = txt_DescrizioneLunga.Text;
                     articoloDaModificare.UsaCostoFP = !string.IsNullOrEmpty(ddl_FPtipoPagamento.SelectedValue);
-                    articoloDaModificare.Consuntivo = string.IsNullOrEmpty(ddl_Consuntivo.SelectedValue);
+                    articoloDaModificare.Consuntivo = !string.IsNullOrEmpty(ddl_Consuntivo.SelectedValue);
 
                     if (articoloDaModificare.UsaCostoFP != null && (bool)articoloSelezionato.UsaCostoFP)
                     {

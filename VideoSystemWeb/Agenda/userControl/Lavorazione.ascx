@@ -103,9 +103,10 @@
                 $('#<%=diariaLibera_InsGenerale.ClientID%>').attr("disabled", !this.checked);
             });
 
-            $('#<%=diaria15_InsGenerale.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
-            $('#<%=diaria30_InsGenerale.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
-            $('#<%=diariaLibera_InsGenerale.ClientID%>').attr("disabled", !$('#<%=chk_diaria.ClientID%>').prop("checked"));
+            $('#<%=diaria15_InsGenerale.ClientID%>').attr("disabled", !$('#<%=chk_diaria_InsGenerale.ClientID%>').prop("checked"));
+            $('#<%=diaria30_InsGenerale.ClientID%>').attr("disabled", !$('#<%=chk_diaria_InsGenerale.ClientID%>').prop("checked"));
+            $('#<%=diariaLibera_InsGenerale.ClientID%>').attr("disabled", !$('#<%=chk_diaria_InsGenerale.ClientID%>').prop("checked"));
+
             if ($('#<%=diariaLibera_InsGenerale.ClientID%>').prop("checked")) {
                 $("#<%=txt_diaria_InsGenerale.ClientID%>").attr("readonly", false);
                 $("#<%=txt_diaria_InsGenerale.ClientID%>").removeClass(" w3-disabled");

@@ -261,10 +261,11 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     // AggiornaTotali();
                     ResetPanelLavorazione();
-                    if (ListaFigureProfessionali.Count > 0)
-                    {
-                        ImportaFigProfInPianoEsterno(); // elimino elemento anche in piano esterno
-                    }
+                    //if (ListaFigureProfessionali.Count > 0)
+                    //{
+                    //    ImportaFigProfInPianoEsterno(); // elimino elemento anche in piano esterno
+
+                    //}
 
                     break;
                 case "moveUp":
@@ -391,7 +392,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     articoloDaModificare.Descrizione = txt_Descrizione.Text;
                     articoloDaModificare.DescrizioneLunga = txt_DescrizioneLunga.Text;
                     articoloDaModificare.UsaCostoFP = !string.IsNullOrEmpty(ddl_FPtipoPagamento.SelectedValue);
-                    articoloDaModificare.Consuntivo = !string.IsNullOrEmpty(ddl_Consuntivo.SelectedValue);
+                    articoloDaModificare.Consuntivo = string.IsNullOrEmpty(ddl_Consuntivo.SelectedValue);
 
                     if (articoloDaModificare.UsaCostoFP != null && (bool)articoloSelezionato.UsaCostoFP)
                     {
@@ -418,10 +419,10 @@ namespace VideoSystemWeb.Agenda.userControl
             }
 
             ResetPanelLavorazione();
-            if (ListaFigureProfessionali.Count > 0)
-            {
-                ImportaFigProfInPianoEsterno(); // modifico elemento anche in piano esterno
-            }
+            //if (ListaFigureProfessionali.Count > 0)
+            //{
+            //    ImportaFigProfInPianoEsterno(); // modifico elemento anche in piano esterno
+            //}
             PopolaComboFiltroGiorniLavorazione();
             RichiediOperazionePopup("UPDATE");
         }
@@ -516,10 +517,10 @@ namespace VideoSystemWeb.Agenda.userControl
 
             // AggiornaTotali();
             ResetPanelLavorazione();
-            if (ListaFigureProfessionali.Count > 0)
-            {
-                ImportaFigProfInPianoEsterno(); // elimino elemento anche in piano esterno
-            }
+            //if (ListaFigureProfessionali.Count > 0)
+            //{
+            //    ImportaFigProfInPianoEsterno(); // elimino elemento anche in piano esterno
+            //}
             PopolaComboFiltroGiorniLavorazione();
             RichiediOperazionePopup("UPDATE");
         }
@@ -779,8 +780,6 @@ namespace VideoSystemWeb.Agenda.userControl
             switch (e.CommandName)
             {
                 case "modifica":
-                    
-
                     DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione();
                     // prendo datiPianoEsterno a partire dalla figuraProfessionale selezionata
                     if (figuraProfessionaleSelezionata.IdCollaboratori != null && figuraProfessionaleSelezionata.IdCollaboratori != 0)
@@ -890,7 +889,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnOKModificaPianoEsterno_Click(object sender, EventArgs e)
         {
-            DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione();
             FiguraProfessionale figuraProfessionale = new FiguraProfessionale();
 
             if (ViewState[VIEWSTATE_IDFIGURAPROFESSIONALE] == null)
@@ -905,6 +903,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 figuraProfessionale = ListaFigureProfessionali.FirstOrDefault(x => x.Id == idFiguraProfessionale);
             }
 
+            DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione();
             //prendo datiPianoEsterno a partire dalla figuraProfessionale selezionata
             if (figuraProfessionale.IdCollaboratori != null && figuraProfessionale.IdCollaboratori != 0)
             {
@@ -1191,6 +1190,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 if (ListaFigureProfessionali.Count > 0)
                 {
+
                     lbl_nessunaFiguraProf.Visible = false;
 
                     ddl_FiltroGiorniLavorazione.Attributes.Remove("readonly");
@@ -1229,6 +1229,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void CaricaListaDatiPianoEsternoLavorazione(List<DatiArticoliLavorazione> _listaCollaboratoriFornitori)
         {
+            // salvo la situazione precedente alla modifica per recuperare i dati della diaria e delle note
+            List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione_OLD = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
+
             List<FiguraProfessionale> _listaFigureProfessionali = new List<FiguraProfessionale>();
             List<DatiPianoEsternoLavorazione> _listaDatiPianoEsterno = new List<DatiPianoEsternoLavorazione>();
 
@@ -1247,6 +1250,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
                     datiPianoEsterno.IdCollaboratori = collaboratore.Id;
+
+                    datiPianoEsterno.NumOccorrenza = collabForn.NumOccorrenza; //usato soltanto per identificare un elemento importato da piano esterno
+                    datiPianoEsterno.Id = collabForn.Id; //usato soltanto per identificare un elemento importato da piano esterno
                 }
                 else //FORNITORI
                 {
@@ -1257,6 +1263,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
                     datiPianoEsterno.IdFornitori = fornitore.Id;
+
+                    datiPianoEsterno.NumOccorrenza = collabForn.NumOccorrenza; //usato soltanto per identificare un elemento importato da piano esterno
+                    datiPianoEsterno.Id = collabForn.Id; //usato soltanto per identificare un elemento importato da piano esterno
                 }
 
                 figProf.IdentificatoreOggetto = IDGenerator.GetId(figProf, out bool firstTime);
@@ -1281,7 +1290,32 @@ namespace VideoSystemWeb.Agenda.userControl
                         _listaFigureProfessionali.Add(figProf);
                     }
                 }
-                _listaDatiPianoEsterno.Add(datiPianoEsterno);
+
+                // controllo se l'elemento che sto importando non fosse già presente. In quel caso prendo l'elemento già presente che potrebbe avere dei campi valorizzati
+                if (listaDatiPianoEsternoLavorazione_OLD != null && listaDatiPianoEsternoLavorazione_OLD.Count > 0)
+                {
+                    DatiPianoEsternoLavorazione datiPianoEsterno_OLD = null;
+
+                    datiPianoEsterno_OLD = listaDatiPianoEsternoLavorazione_OLD.FirstOrDefault(x => x.Id == datiPianoEsterno.Id && x.Id != 0 && x.Data == datiPianoEsterno.Data);
+                    if (datiPianoEsterno_OLD == null && datiPianoEsterno.NumOccorrenza != 0)
+                    {
+                        datiPianoEsterno_OLD = listaDatiPianoEsternoLavorazione_OLD.FirstOrDefault(x => x.NumOccorrenza == datiPianoEsterno.NumOccorrenza && x.Data == datiPianoEsterno.Data);
+                    }
+
+                    if (datiPianoEsterno_OLD != null)
+                    {
+                        _listaDatiPianoEsterno.Add(datiPianoEsterno_OLD);
+                    }
+                    else
+                    {
+                        _listaDatiPianoEsterno.Add(datiPianoEsterno);
+                    }
+                }
+                else
+                {
+                    _listaDatiPianoEsterno.Add(datiPianoEsterno);
+                }
+                //_listaDatiPianoEsterno.Add(datiPianoEsterno);
             }
 
             ListaFigureProfessionali = _listaFigureProfessionali;
@@ -1738,7 +1772,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     Costo = datoArticolo.Costo,
                     Iva = datoArticolo.Iva,
                     Data = dataGiornoLav,
-                    NumOccorrenza = numOccorrenza// i
+                    NumOccorrenza = numOccorrenza + i// i
                 };
 
                 datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out bool firstTime);

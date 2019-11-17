@@ -520,6 +520,7 @@ namespace VideoSystemWeb.Agenda.userControl
         protected void btn_InserimentoMultiplo_Click(object sender, EventArgs e)
         {
             ClearPanelInserimentoMultiplo();
+            txt_DataInserimentoMultiplo.Text = SessionManager.EventoSelezionato.data_inizio_impegno.ToString("dd/MM/yyyy");
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriInserimentoMultiplo", script: "javascript: document.getElementById('" + panelInserimentoMultiplo.ClientID + "').style.display='block'", addScriptTags: true);
             RichiediOperazionePopup("UPDATE");
         }

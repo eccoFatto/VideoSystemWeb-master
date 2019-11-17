@@ -1945,6 +1945,14 @@ namespace VideoSystemWeb.DAL
             }
             nota.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(nota);
+
+            SqlParameter numOccorrenza = new SqlParameter("@numOccorrenza", DBNull.Value);
+            if (datoPianoEsternoLavorazione.NumOccorrenza != null)
+            {
+                numOccorrenza = new SqlParameter("@numOccorrenza", datoPianoEsternoLavorazione.NumOccorrenza);
+            }
+            numOccorrenza.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(numOccorrenza);
         }
 
     }

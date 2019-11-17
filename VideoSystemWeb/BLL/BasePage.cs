@@ -354,22 +354,11 @@ namespace VideoSystemWeb.BLL
             messaggio = messaggio.Replace("'", "\\'");
             messaggio = messaggio.Replace("\r\n", "<br/>");
 
-            // spostato nella classe Evento
-            //Anag_Utenti utente = new Anag_Utenti();
-            //try
-            //{
-            //    utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
-            //}
-            //catch (Exception)
-            //{
-            //    utente.username = "ANONIMO";
-            //}
-            
-            //log.Error( utente.username + " - " + messaggio);
-
-            Page page = HttpContext.Current.Handler as Page;
-            ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalError", script: "openError('" + messaggio + "')", addScriptTags: true);
-            
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["DEBUG_MODE"]))
+            {
+                Page page = HttpContext.Current.Handler as Page;
+                ScriptManager.RegisterStartupScript(page, page.GetType(), "apriModalError", script: "openError('" + messaggio + "')", addScriptTags: true);
+            }
         }
 
         public void GestisciErrore(Esito esito, string messaggioErroreSpecifico = null)

@@ -229,7 +229,11 @@ namespace VideoSystemWeb.Agenda
 
         protected void btn_chiudi_Click(object sender, EventArgs e)
         {
-            if (hf_Salvataggio.Value == "1")
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["DEBUG_MODE"]))
+            {
+                ChiudiPopup();
+            }
+            else
             {
                 Esito esito = SalvaEvento();
                 if (esito.Codice == Esito.ESITO_OK)
@@ -243,10 +247,26 @@ namespace VideoSystemWeb.Agenda
                     UpdatePopup();
                 }
             }
-            else
-            {
-                ChiudiPopup();
-            }
+
+
+            //if (hf_Salvataggio.Value == "1")
+            //{
+            //    Esito esito = SalvaEvento();
+            //    if (esito.Codice == Esito.ESITO_OK)
+            //    {
+            //        ChiudiPopup();
+
+            //        //ShowSuccess("Salvataggio eseguito correttamente");
+            //    }
+            //    else
+            //    {
+            //        UpdatePopup();
+            //    }
+            //}
+            //else
+            //{
+            //    ChiudiPopup();
+            //}
         }
 
         protected void btnOfferta_Click(object sender, EventArgs e)

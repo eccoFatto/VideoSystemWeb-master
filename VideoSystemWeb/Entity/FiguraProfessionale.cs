@@ -27,6 +27,7 @@ namespace VideoSystemWeb.Entity
         private int? tipoPagamento;
         private bool isAssunto;
         private string descrizioneArticoloAssociato;
+        private int numOccorrenza;
        
         public int Id { get => id; set => id = value; }
         public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
@@ -86,5 +87,6 @@ namespace VideoSystemWeb.Entity
         public int? TipoPagamento { get => tipoPagamento; set => tipoPagamento = value; }
         public bool IsAssunto { get => isAssunto; set => isAssunto = value; }
         public string DescrizioneArticoloAssociato { get => descrizioneArticoloAssociato; set => descrizioneArticoloAssociato = value; }
+        public int NumOccorrenza { get => numOccorrenza; set => numOccorrenza = value; }
     }
 }

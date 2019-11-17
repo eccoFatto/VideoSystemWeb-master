@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -526,10 +525,12 @@
     <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\7.jpg" />
     <Content Include="SITO\IMMAGINI\SLIDEAUTOMATICO\8.jpg" />
     <Content Include="SITO\IMMAGINI\TELEFONO.gif" />
+    <Content Include="SITO\index.html" />
+    <Content Include="SITO\indexOk2.html" />
     <Content Include="SITO\index - OK.html" />
     <Content Include="SITO\index3.html" />
     <Content Include="SITO\index2.html" />
-    <Content Include="SITO\index.html" />
+    <Content Include="SITO\index4.html" />
     <Content Include="SITO\js\bootstrap-italia.bundle.min.js" />
     <Content Include="SITO\js\bootstrap-italia.min.js" />
     <Content Include="StretchSession.aspx" />

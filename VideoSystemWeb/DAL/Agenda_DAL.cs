@@ -475,13 +475,27 @@ namespace VideoSystemWeb.DAL
                                 if (evento.LavorazioneCorrente != null)
                                 {
                                     // ELIMINO GLI EVENTUALI DATI LAVORAZIONE ASSOCIATI ALL'EVENTO PER SOSTITUIRLI COI NUOVI
-                                    if (evento.LavorazioneCorrente.Id != 0) // caso in cui la lavorazione sia stata appena creata ma non salvata (passaggio da offerta a lavorazione)
+                                    if (evento.LavorazioneCorrente.Id != 0) 
                                     {
                                         CostruisciSP_DeleteDatiArticoliLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
                                         StoreProc.ExecuteNonQuery();
 
                                         CostruisciSP_DeleteDatiPianoEsternoLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
                                         StoreProc.ExecuteNonQuery();
+                                    }
+                                    else // caso in cui la lavorazione sia stata appena creata ma non salvata (passaggio da offerta a lavorazione). Questo caso non dovrebbe sussistere, ma si è verificato. Probabilmente dati sporchi nel db
+                                    {
+                                        
+                                        DatiLavorazione lavorazioneCorrente = Dati_Lavorazione_DAL.Instance.getDatiLavorazioneByIdEvento(evento.id, ref esito);
+
+                                        if (lavorazioneCorrente != null)
+                                        {
+                                            CostruisciSP_DeleteDatiArticoliLavorazione(StoreProc, sda, lavorazioneCorrente.Id);
+                                            StoreProc.ExecuteNonQuery();
+
+                                            CostruisciSP_DeleteDatiPianoEsternoLavorazione(StoreProc, sda, lavorazioneCorrente.Id);
+                                            StoreProc.ExecuteNonQuery();
+                                        }
                                     }
 
                                     CostruisciSP_DeleteDatiLavorazione(StoreProc, sda, evento.id);
@@ -679,13 +693,26 @@ namespace VideoSystemWeb.DAL
                                 StoreProc.Transaction = transaction;
                                 if (evento.LavorazioneCorrente != null)
                                 {
-                                    if (evento.LavorazioneCorrente.Id != 0) // caso in cui la lavorazione sia stata appena creata ma non salvata (passaggio da offerta a lavorazione)
+                                    if (evento.LavorazioneCorrente.Id != 0) 
                                     {
                                         CostruisciSP_DeleteDatiArticoliLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
                                         StoreProc.ExecuteNonQuery();
 
                                         CostruisciSP_DeleteDatiPianoEsternoLavorazione(StoreProc, sda, evento.LavorazioneCorrente.Id);
                                         StoreProc.ExecuteNonQuery();
+                                    }
+                                    else // caso in cui la lavorazione sia stata appena creata ma non salvata (passaggio da offerta a lavorazione). Questo caso non dovrebbe sussistere, ma si è verificato. Probabilmente dati sporchi nel db
+                                    {
+
+                                        DatiLavorazione lavorazioneCorrente = Dati_Lavorazione_DAL.Instance.getDatiLavorazioneByIdEvento(evento.id, ref esito);
+                                        if (lavorazioneCorrente != null)
+                                        {
+                                            CostruisciSP_DeleteDatiArticoliLavorazione(StoreProc, sda, lavorazioneCorrente.Id);
+                                            StoreProc.ExecuteNonQuery();
+
+                                            CostruisciSP_DeleteDatiPianoEsternoLavorazione(StoreProc, sda, lavorazioneCorrente.Id);
+                                            StoreProc.ExecuteNonQuery();
+                                        }
                                     }
 
                                     CostruisciSP_DeleteDatiLavorazione(StoreProc, sda, evento.id);

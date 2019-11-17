@@ -68,8 +68,9 @@ namespace VideoSystemWeb.DAL
                                             datiPianoEsterno.Data = riga.Field<DateTime?>("data");
                                             datiPianoEsterno.Orario = riga.Field<DateTime?>("orario");
                                             datiPianoEsterno.Nota = riga.Field<string>("nota");
+                                            datiPianoEsterno.NumOccorrenza = riga.Field<int>("numOccorrenza");
 
-                                        listaDatiPianoEsterno.Add(datiPianoEsterno);
+                                            listaDatiPianoEsterno.Add(datiPianoEsterno);
                                         }
                                     }
                                     else

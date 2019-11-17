@@ -79,6 +79,7 @@ namespace VideoSystemWeb.Entity
                     figProf.Intervento = datoPianoEsterno.IdIntervento == null ? "" : SessionManager.ListaTipiIntervento.FirstOrDefault(x=>x.id == datoPianoEsterno.IdIntervento).nome;
                     figProf.Diaria = datoPianoEsterno.ImportoDiaria;
                     figProf.Nota = datoPianoEsterno.Nota;
+                    figProf.NumOccorrenza = datoPianoEsterno.NumOccorrenza;
 
                     listaFigureProfessionali.Add(figProf);
                 }

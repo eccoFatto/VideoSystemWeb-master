@@ -193,7 +193,7 @@
                 document.getElementById(nomeElemento).className += " w3-red";
         }
 
-        function confermaChiusura() {
+        <%--function confermaChiusura() {
             var salvataggio = confirm("Salvare le modifiche?\n\nOK: Salva e chiudi\nAnnulla: Chiudi senza salvare");
             
             if (salvataggio) {
@@ -203,7 +203,7 @@
                 $('#<%=hf_Salvataggio.ClientID%>').val("0");
             }
             return true;
-        }
+        }--%>
 
         function confermaEliminazione() {
             var statoCorrente = $("#<%=val_Stato.ClientID%>").text();
@@ -338,9 +338,9 @@
                         <asp:Button ID="btnStampaPianoEsterno" runat="server" Text="Stampa Piano Esterno" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaPianoEsterno_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnStampaConsuntivo" runat="server" Text="Stampa Consuntivo" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaConsuntivo_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
-                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="return confermaChiusura(); " Style="padding: 7px 10px" />
+                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click"  Style="padding: 7px 10px" />
 
-                        <asp:HiddenField ID="hf_Salvataggio" runat="server" />
+                        <%--<asp:HiddenField ID="hf_Salvataggio" runat="server" />--%>
 
                         <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" Style="padding: 7px 10px" />

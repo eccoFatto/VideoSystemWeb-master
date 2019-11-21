@@ -122,7 +122,7 @@
                 tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
             }
             document.getElementById(tipoName).style.display = "block";
-            evt.currentTarget.className += " w3-red";
+            //evt.currentTarget.className += " w3-red";
 
             var nomeElemento = '';
 

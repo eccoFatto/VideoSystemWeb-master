@@ -39,9 +39,9 @@ namespace VideoSystemWeb.Agenda.userControl
         #endregion
 
         #region PARAMETRI CONFIGURAZIONE
-        public string aliquota_RitenutaAcconto;
-        public string quotaFissa_PagamentoMisto;
-        public string diariaLorda;
+        public string aliquota_RitenutaAcconto="0";
+        public string quotaFissa_PagamentoMisto="0";
+        public string diariaLorda="0";
         #endregion
 
         #region VARIABILI LOCALI

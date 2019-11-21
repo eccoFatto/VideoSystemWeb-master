@@ -27,6 +27,8 @@ namespace VideoSystemWeb.BLL
         public static string CFG_CITTA = "CITTA";
         public static string CFG_PROVINCIA = "PROVINCIA";
 
+        public static string CFG_ALLINEAMENTO_DIPENDENTI_AGENDA = "ALLINEAMENTO_DIPENDENTI_AGENDA";
+
         public static DatiAgenda EventoSelezionato
         {
             get
@@ -372,7 +374,20 @@ namespace VideoSystemWeb.BLL
                 {
                     Esito esito = new Esito();
                     List<ColonneAgenda> _listaRisorse = UtilityTipologiche.CaricaColonneAgenda(true, ref esito);
-                    _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<ColonneAgenda>();
+                    if (esito.Codice == 0)
+                    {
+                        // CONTROLLO ALLINEAMENTO DIPENDENTI NELL'AGENDA
+                        string allineamentoDipendentiInAgenda = VideoSystemWeb.DAL.Config_DAL.Instance.GetConfig(ref esito, SessionManager.CFG_ALLINEAMENTO_DIPENDENTI_AGENDA).valore;
+
+                        if (allineamentoDipendentiInAgenda.Equals("DESTRA"))
+                        {
+                            _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<ColonneAgenda>();
+                        }
+                        else
+                        {
+                            _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo == "regie").ThenBy(c => c.sottotipo).ToList<ColonneAgenda>();
+                        }
+                    }
                     HttpContext.Current.Session["listaRisorse"] = _listaRisorse;
                 }
                 return (List<ColonneAgenda>)HttpContext.Current.Session["listaRisorse"];

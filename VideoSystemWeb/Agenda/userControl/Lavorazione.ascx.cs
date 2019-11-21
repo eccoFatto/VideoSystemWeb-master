@@ -433,7 +433,7 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
-                AggiungiArticoloAListaArticoli(articoloGruppo.IdOggetto, dataSelezione);
+                AggiungiArticoloAListaArticoli(articoloGruppo.IdOggetto, dataSelezione, 1);
             }
 
             if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione != null && 
@@ -543,16 +543,17 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 if (checkboxinsert.Checked == true)
                 {
-                    for (int q = 0; q < quantitaSelezione; q++)
-                    {
-                        listaArticoliDaAggiungere.Add(ListaPersonaleTecnico.ElementAt(i));
-                    }
+                    //for (int q = 0; q < quantitaSelezione; q++)
+                    //{
+                    //    listaArticoliDaAggiungere.Add(ListaPersonaleTecnico.ElementAt(i));
+                    //}
+                    listaArticoliDaAggiungere.Add(ListaPersonaleTecnico.ElementAt(i));
                 }
             }
 
             foreach (ArticoliGruppi articoloSelezionato in listaArticoliDaAggiungere)
             {
-                AggiungiArticoloAListaArticoli(articoloSelezionato.IdOggetto, dataSelezione);
+                AggiungiArticoloAListaArticoli(articoloSelezionato.IdOggetto, dataSelezione, quantitaSelezione);
             }
 
             if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione != null && 
@@ -619,7 +620,7 @@ namespace VideoSystemWeb.Agenda.userControl
             lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;
         }
 
-        private void AggiungiArticoloAListaArticoli(int idArticolo, DateTime dataGiornoLav)
+        private void AggiungiArticoloAListaArticoli(int idArticolo, DateTime dataGiornoLav, int quantita)
         {
             Esito esito = new Esito();
             int idLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente == null ? 0 : SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
@@ -642,8 +643,8 @@ namespace VideoSystemWeb.Agenda.userControl
             datiArticoliLav.Descrizione = articoloLavorazione.Descrizione;
             datiArticoliLav.DescrizioneLunga = articoloLavorazione.DescrizioneLunga;
             datiArticoliLav.Stampa = articoloLavorazione.Stampa;
-            datiArticoliLav.Prezzo = articoloLavorazione.Prezzo;
-            datiArticoliLav.Costo = articoloLavorazione.Costo;
+            datiArticoliLav.Prezzo = articoloLavorazione.Prezzo * quantita;
+            datiArticoliLav.Costo = articoloLavorazione.Costo * quantita;
             datiArticoliLav.Iva = articoloLavorazione.Iva;
             datiArticoliLav.Data = dataGiornoLav;
             datiArticoliLav.Tv = articoloLavorazione.Tv;
@@ -1738,33 +1739,34 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 if (datoArticolo.IdTipoSottogruppo != idSottogruppoPersonaleTecnico)
                 {
-                    for (int i = 0; i < datoArticolo.Quantita; i++)
-                    {
-                        numOccorrenza = numOccorrenza + i;
-                        AggiungiDatoArticoloALavorazione(datoArticolo, SessionManager.EventoSelezionato.data_inizio_lavorazione, ref listaDatiArticoliLavorazione, numOccorrenza);
-                    }
-                    numOccorrenza++;
+                    //for (int i = 0; i < datoArticolo.Quantita; i++)
+                    //{
+                    //    numOccorrenza = numOccorrenza + i;
+                        AggiungiDatoArticoloALavorazione(datoArticolo, SessionManager.EventoSelezionato.data_inizio_lavorazione, ref listaDatiArticoliLavorazione, numOccorrenza++, datoArticolo.Quantita);
+                    //}
+                    //numOccorrenza++;
                 }
                 else
                 {
-                    for (int i = 0; i < datoArticolo.Quantita; i++)
-                    {
-                        numOccorrenza = numOccorrenza + i;
+                    //for (int i = 0; i < datoArticolo.Quantita; i++)
+                    //{
+                    //    numOccorrenza = numOccorrenza + i;
                         for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
                         {
                             DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
 
-                            AggiungiDatoArticoloALavorazione(datoArticolo, dataGiornoLav, ref listaDatiArticoliLavorazione, numOccorrenza);
+                            AggiungiDatoArticoloALavorazione(datoArticolo, dataGiornoLav, ref listaDatiArticoliLavorazione, numOccorrenza++, datoArticolo.Quantita);
                         }
-                    }
-                    numOccorrenza++;
+                    //}
+                    //numOccorrenza++;
                 }
             }
             listaDatiArticoliLavorazione = listaDatiArticoliLavorazione.OrderBy(x => x.Data).ThenByDescending(y => y.Costo).ToList<DatiArticoliLavorazione>();
             CreaNuovaLavorazione(listaDatiArticoliLavorazione);
+            AggiornaTotali();
         }
 
-        private void AggiungiDatoArticoloALavorazione(DatiArticoli datoArticolo, DateTime? dataGiornoLav, ref List<DatiArticoliLavorazione> listaDatiArticoliLavorazione, int numOccorrenza)
+        private void AggiungiDatoArticoloALavorazione(DatiArticoli datoArticolo, DateTime? dataGiornoLav, ref List<DatiArticoliLavorazione> listaDatiArticoliLavorazione, int numOccorrenza, int quantita)
         {
             //for (int i = 0; i < datoArticolo.Quantita; i++)
             //{
@@ -1782,8 +1784,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     Descrizione = datoArticolo.Descrizione,
                     DescrizioneLunga = datoArticolo.DescrizioneLunga,
                     Stampa = datoArticolo.Stampa,
-                    Prezzo = datoArticolo.Prezzo,
-                    Costo = datoArticolo.Costo,
+                    Prezzo = datoArticolo.Prezzo * quantita,
+                    Costo = datoArticolo.Costo * quantita,
                     Iva = datoArticolo.Iva,
                     Data = dataGiornoLav,
                     NumOccorrenza = numOccorrenza// i
@@ -1816,11 +1818,11 @@ namespace VideoSystemWeb.Agenda.userControl
             gvFigProfessionali.DataSource = null;
             gvFigProfessionali.DataBind();
 
-            txt_TotPrezzo.Text = "";
-            txt_TotCosto.Text = "";
-            txt_TotLordo.Text = "";
-            txt_TotIva.Text = "";
-            txt_PercRicavo.Text = "";
+            txt_TotPrezzo.Text = txt_TotPrezzo_lavorazione.Text = "";
+            txt_TotCosto.Text = txt_TotCosto_lavorazione.Text = "";
+            txt_TotLordo.Text = txt_TotLordo_lavorazione.Text =
+            txt_TotIva.Text = txt_TotIva_lavorazione.Text = "";
+            txt_PercRicavo.Text = txt_PercRicavo_lavorazione.Text = "";
 
             ResetPanelLavorazione();
         }
@@ -1863,11 +1865,11 @@ namespace VideoSystemWeb.Agenda.userControl
                 }
             }
 
-            txt_TotPrezzo.Text = string.Format("{0:N2}", totPrezzo);
-            txt_TotCosto.Text = string.Format("{0:N2}", totCosto);
-            txt_TotLordo.Text = string.Format("{0:N2}", totLordo);
-            txt_TotIva.Text = string.Format("{0:N2}", totIva);
-            txt_PercRicavo.Text = string.Format("{0:N2}", percRicavo);
+            txt_TotPrezzo.Text = txt_TotPrezzo_lavorazione.Text = string.Format("{0:N2}", totPrezzo);
+            txt_TotCosto.Text = txt_TotCosto_lavorazione.Text = string.Format("{0:N2}", totCosto);
+            txt_TotLordo.Text = txt_TotLordo_lavorazione.Text = string.Format("{0:N2}", totLordo);
+            txt_TotIva.Text = txt_TotIva_lavorazione.Text = string.Format("{0:N2}", totIva);
+            txt_PercRicavo.Text = txt_PercRicavo_lavorazione.Text = string.Format("{0:N2}", percRicavo);
         }
 
         private void ResetPanelLavorazione()

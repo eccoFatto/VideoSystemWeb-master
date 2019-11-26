@@ -112,6 +112,15 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbRagioneSociale;
         
         /// <summary>
+        /// Controllo ddlDestinatario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDestinatario;
+        
+        /// <summary>
         /// Controllo tbDataProtocollo.
         /// </summary>
         /// <remarks>
@@ -407,6 +416,15 @@ namespace VideoSystemWeb.Protocollo {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectCliente;
+        
+        /// <summary>
+        /// Controllo cmbMod_Destinatario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Destinatario;
         
         /// <summary>
         /// Controllo tbMod_DataProtocollo.

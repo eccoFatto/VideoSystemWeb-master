@@ -1200,6 +1200,14 @@ namespace VideoSystemWeb.DAL
             SqlParameter attivo = new SqlParameter("@attivo", protocollo.Attivo);
             attivo.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(attivo);
+
+            SqlParameter pregresso = new SqlParameter("@pregresso", protocollo.Pregresso);
+            pregresso.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(pregresso);
+
+            SqlParameter destinatario = new SqlParameter("@destinatario", protocollo.Destinatario);
+            destinatario.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(destinatario);
         }
 
         protected static void CostruisciSP_InsertEvento(DatiAgenda evento, SqlCommand StoreProc, SqlDataAdapter sda)

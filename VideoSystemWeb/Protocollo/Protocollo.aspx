@@ -98,6 +98,7 @@
             $("#<%=tbLavorazione.ClientID%>").val('');
             $("#<%=tbDescrizione.ClientID%>").val('');
             $("#<%=ddlTipoProtocollo.ClientID%>").val('');
+            $("#<%=ddlDestinatario.ClientID%>").val('');
         }
 
         function azzeraCampiRicercaLavorazione() {
@@ -226,9 +227,17 @@
                 </div>
             </div>
             <div class="w3-row-padding w3-margin-bottom">
-                <div class="w3-half">
+                <div class="w3-quarter">
                     <label>Cliente/Fornitore</label>
                     <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                </div>
+                <div class="w3-quarter">
+                    <label>Destinatario</label>
+                    <asp:DropDownList ID="ddlDestinatario" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                        <asp:ListItem Value="" Text=""></asp:ListItem>
+                        <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
+                        <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
+                    </asp:DropDownList>
                 </div>
                 <div class="w3-quarter" style="position:relative;">
                     <label>Data Prot.</label>
@@ -368,7 +377,7 @@
                                     </div>
                                 </div>
                                 <div class="w3-row-padding">
-                                    <div class="w3-half">
+                                    <div class="w3-quarter">
                                         <label>Cliente/Fornitore</label>
                                         <div class="w3-row">
                                             <div class="w3-threequarter">
@@ -379,6 +388,13 @@
                                                 <asp:ImageButton ID="imgbtnSelectCliente" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round w3-margin-left" Height="40px" Width="40px" ToolTip="Cerca Cliente" OnClientClick="cercaCliente()" />
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Destinatario</label>
+                                        <asp:DropDownList ID="cmbMod_Destinatario" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
+                                            <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
+                                            <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
+                                        </asp:DropDownList>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Data Prot</label>

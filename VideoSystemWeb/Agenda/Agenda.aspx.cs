@@ -685,7 +685,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = SessionManager.EventoSelezionato.id != 0;
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = false;
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_PREVISIONE_IMPEGNO);
                 }
@@ -703,6 +703,7 @@ namespace VideoSystemWeb.Agenda
                     btnElimina.Visible = true;
                     btnStampaPianoEsterno.Visible = false;
                     btnStampaConsuntivo.Visible = false;
+                    btnStampaFattura.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
@@ -718,7 +719,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = true;
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = true;
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = true;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
@@ -1094,6 +1095,31 @@ namespace VideoSystemWeb.Agenda
                 UpdatePopup();
             }
 
+        }
+
+        protected void btnStampaFattura_Click(object sender, EventArgs e)
+        {
+            Esito esito = SalvaEvento();
+            if (esito.Codice == Esito.ESITO_OK)
+            {
+                esito = popupRiepilogoFattura.popolaPannelloFattura(SessionManager.EventoSelezionato);
+                if (esito.Codice == Esito.ESITO_OK)
+                {
+                    upRiepilogoFattura.Update();
+
+                    ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriFattura", script: "javascript: document.getElementById('modalFattura').style.display='block'", addScriptTags: true);
+                }
+                else
+                {
+                    ShowError(esito.Descrizione);
+                }
+            }
+            else
+            {
+                ShowError(esito.Descrizione);
+                UpdatePopup();
+            }
         }
     }
 }

@@ -365,6 +365,8 @@ namespace VideoSystemWeb.Agenda.userControl
                                 protocolloPianoEsterno.Produzione = eventoSelezionato.produzione;
                                 protocolloPianoEsterno.Protocollo_riferimento = "";
                                 protocolloPianoEsterno.Numero_protocollo = numeroProtocollo;
+                                protocolloPianoEsterno.Pregresso = false;
+                                protocolloPianoEsterno.Destinatario = "Cliente";
                                 int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloPianoEsterno, ref esito);
                             }
                             else

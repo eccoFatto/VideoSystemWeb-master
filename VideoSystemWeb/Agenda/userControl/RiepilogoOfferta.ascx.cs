@@ -190,57 +190,60 @@ namespace VideoSystemWeb.Agenda.userControl
                     iText.Layout.Element.Cell cellaGriglia;
 
                     // COLORE INTESTAZIONI
-                    iText.Kernel.Colors.Color coloreIntestazioni = new iText.Kernel.Colors.DeviceRgb(0, 255, 255);
+                    //iText.Kernel.Colors.Color coloreIntestazioni = new iText.Kernel.Colors.DeviceRgb(0, 255, 255);
+                    // COLORE BLU VIDEOSYSTEM
+                    iText.Kernel.Colors.Color coloreIntestazioni = new iText.Kernel.Colors.DeviceRgb(33, 150, 243);
+
 
                     // INTESTAZIONE OFFERTA
                     pGriglia = new iText.Layout.Element.Paragraph("Offerta Numero").SetFontSize(10).SetBold();
-                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
                     pGriglia = new iText.Layout.Element.Paragraph(eventoSelezionato.codice_lavoro).SetFontSize(10).SetBold();
-                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
                     pGriglia = new iText.Layout.Element.Paragraph("").SetFontSize(10);
-                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
                     pGriglia = new iText.Layout.Element.Paragraph("Rif.Prot. " + numeroProtocollo).SetFontSize(10).SetBold();
-                    cellaGriglia = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                    cellaGriglia = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
                     // INTESTAZIONE GRIGLIA
                     pGriglia = new iText.Layout.Element.Paragraph("Codice").SetFontSize(10);
-                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetBold();
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
                     pGriglia = new iText.Layout.Element.Paragraph("Descrizione Offerta").SetFontSize(10);
-                    cellaGriglia = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 90).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
+                    cellaGriglia = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
                     pGriglia = new iText.Layout.Element.Paragraph("Prezzo").SetFontSize(10);
-                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
                     pGriglia = new iText.Layout.Element.Paragraph("Qta").SetFontSize(10);
-                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
                     pGriglia = new iText.Layout.Element.Paragraph("Iva").SetFontSize(10);
-                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
                     pGriglia = new iText.Layout.Element.Paragraph("Totale").SetFontSize(10);
-                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
@@ -485,51 +488,51 @@ namespace VideoSystemWeb.Agenda.userControl
 
                             // PRIMA RIGA GRIGLIA NOTE FOOTER
                             iText.Layout.Element.Paragraph pGrigliaNoteFooter = new iText.Layout.Element.Paragraph("Banca").SetFontSize(9);
-                            iText.Layout.Element.Cell cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            iText.Layout.Element.Cell cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                             tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
                             pGrigliaNoteFooter = new iText.Layout.Element.Paragraph(noteOfferta.Banca).SetFontSize(9);
                             //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1,2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(2);
-                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 90).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
 
                             cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                             tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
                             pGrigliaNoteFooter = new iText.Layout.Element.Paragraph("Timbro e firma per accettazione").SetFontSize(9);
-                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                             tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
                             // SECONDA RIGA GRIGLIA NOTE FOOTER
                             pGrigliaNoteFooter = new iText.Layout.Element.Paragraph("Pagamento").SetFontSize(9);
-                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                             tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
                             pGrigliaNoteFooter = new iText.Layout.Element.Paragraph(noteOfferta.NotaPagamento).SetFontSize(9);
-                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 90).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                             tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
                             pGrigliaNoteFooter = new iText.Layout.Element.Paragraph(" ").SetFontSize(9);
-                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                             tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
                             // TERZA RIGA GRIGLIA NOTE FOOTER
                             pGrigliaNoteFooter = new iText.Layout.Element.Paragraph("Consegna").SetFontSize(9);
-                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                             tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
                             pGrigliaNoteFooter = new iText.Layout.Element.Paragraph(noteOfferta.Consegna.Replace("\r\n", " ")).SetFontSize(9);
-                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 90).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                             tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
                             pGrigliaNoteFooter = new iText.Layout.Element.Paragraph(" ").SetFontSize(9);
-                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 90).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                             tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 

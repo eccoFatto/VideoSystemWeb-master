@@ -15,6 +15,8 @@ namespace VideoSystemWeb.Entity
     //@descrizione varchar(200),
     //@lavorazione varchar(50),
     //@attivo bit
+    //@pregresso bit
+    //@destinatario varchar(30)
 
     public class Protocolli
     {
@@ -32,6 +34,8 @@ namespace VideoSystemWeb.Entity
         private string produzione;
         private DateTime data_inizio_lavorazione;
         private bool attivo;
+        private bool pregresso;
+        private string destinatario;
 
         public int Id { get => id; set => id = value; }
         public string Codice_lavoro { get => codice_lavoro; set => codice_lavoro = value; }
@@ -47,5 +51,7 @@ namespace VideoSystemWeb.Entity
         public DateTime Data_inizio_lavorazione { get => data_inizio_lavorazione; set => data_inizio_lavorazione = value; }
         public int? Id_cliente { get => id_cliente; set => id_cliente = value; }
         public string Lavorazione { get => lavorazione; set => lavorazione = value; }
+        public bool Pregresso { get => pregresso; set => pregresso = value; }
+        public string Destinatario { get => destinatario; set => destinatario = value; }
     }
 }

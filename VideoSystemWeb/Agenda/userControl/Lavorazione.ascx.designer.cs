@@ -96,15 +96,6 @@ namespace VideoSystemWeb.Agenda.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_TotPrezzo_lavorazione;
 
         /// <summary>
-        /// Controllo txt_TotLordo_lavorazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_TotLordo_lavorazione;
-
-        /// <summary>
         /// Controllo txt_TotCosto_lavorazione.
         /// </summary>
         /// <remarks>
@@ -112,15 +103,6 @@ namespace VideoSystemWeb.Agenda.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_TotCosto_lavorazione;
-
-        /// <summary>
-        /// Controllo txt_TotIva_lavorazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_TotIva_lavorazione;
 
         /// <summary>
         /// Controllo txt_PercRicavo_lavorazione.

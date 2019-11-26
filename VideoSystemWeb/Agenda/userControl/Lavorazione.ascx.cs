@@ -1820,8 +1820,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
             txt_TotPrezzo.Text = txt_TotPrezzo_lavorazione.Text = "";
             txt_TotCosto.Text = txt_TotCosto_lavorazione.Text = "";
-            txt_TotLordo.Text = txt_TotLordo_lavorazione.Text =
-            txt_TotIva.Text = txt_TotIva_lavorazione.Text = "";
+            txt_TotLordo.Text = //txt_TotLordo_lavorazione.Text =
+            txt_TotIva.Text = //txt_TotIva_lavorazione.Text = "";
             txt_PercRicavo.Text = txt_PercRicavo_lavorazione.Text = "";
 
             ResetPanelLavorazione();
@@ -1867,8 +1867,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
             txt_TotPrezzo.Text = txt_TotPrezzo_lavorazione.Text = string.Format("{0:N2}", totPrezzo);
             txt_TotCosto.Text = txt_TotCosto_lavorazione.Text = string.Format("{0:N2}", totCosto);
-            txt_TotLordo.Text = txt_TotLordo_lavorazione.Text = string.Format("{0:N2}", totLordo);
-            txt_TotIva.Text = txt_TotIva_lavorazione.Text = string.Format("{0:N2}", totIva);
+            txt_TotLordo.Text =  string.Format("{0:N2}", totLordo);
+            txt_TotIva.Text =  string.Format("{0:N2}", totIva);
             txt_PercRicavo.Text = txt_PercRicavo_lavorazione.Text = string.Format("{0:N2}", percRicavo);
         }
 

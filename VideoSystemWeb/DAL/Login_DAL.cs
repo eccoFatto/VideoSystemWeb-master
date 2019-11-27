@@ -81,7 +81,8 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.Descrizione = "Login_DAL.cs - Connetti " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                //esito.Descrizione = "Login_DAL.cs - Connetti " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Descrizione = "Login_DAL.cs - Connetti " + Environment.NewLine + ex.Message;
             }
         }
 

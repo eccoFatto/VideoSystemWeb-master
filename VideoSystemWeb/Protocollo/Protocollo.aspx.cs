@@ -311,6 +311,8 @@ namespace VideoSystemWeb.Protocollo
             queryRicerca = queryRicerca.Replace("@tipoProtocollo", ddlTipoProtocollo.SelectedValue.ToString().Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@protocolloRiferimento", tbProtocolloRiferimento.Text.Trim().Replace("'","''"));
 
+            queryRicerca = queryRicerca.Replace("@destinatario", ddlDestinatario.SelectedValue.ToString().Trim().Replace("'", "''"));
+
             Esito esito = new Esito();
             DataTable dtProtocolli = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
 
@@ -366,6 +368,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Lavorazione.Text = "";
             tbMod_Descrizione.Text = "";
             cmbMod_Tipologia.SelectedIndex = 0;
+            cmbMod_Destinatario.SelectedIndex = 0;
 
         }
 
@@ -389,10 +392,12 @@ namespace VideoSystemWeb.Protocollo
             if (attivaModifica)
             {
                 cmbMod_Tipologia.Attributes.Add("disabled", "");
+                cmbMod_Destinatario.Attributes.Add("disabled", "");
             }
             else
             {
                 cmbMod_Tipologia.Attributes.Remove("disabled");
+                cmbMod_Destinatario.Attributes.Remove("disabled");
             }
         }
 
@@ -457,6 +462,17 @@ namespace VideoSystemWeb.Protocollo
                         cmbMod_Tipologia.Text = "";
                     }
 
+                    //DESTINATARI
+                    trovati = cmbMod_Destinatario.Items.FindByValue(protocollo.Destinatario.ToString());
+                    if (trovati != null)
+                    {
+                        cmbMod_Destinatario.SelectedValue = trovati.Value;
+                    }
+                    else
+                    {
+                        cmbMod_Destinatario.Text = "Cliente";
+                    }
+
                     if (!string.IsNullOrEmpty(protocollo.PathDocumento))
                     {
                         string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "") + protocollo.PathDocumento;
@@ -499,6 +515,11 @@ namespace VideoSystemWeb.Protocollo
             protocollo.Id = Convert.ToInt16(ViewState["idProtocollo"].ToString());
 
             protocollo.Id_tipo_protocollo = Convert.ToInt32(cmbMod_Tipologia.SelectedValue);
+
+            protocollo.Destinatario = cmbMod_Destinatario.SelectedValue;
+
+            protocollo.Pregresso = false;
+
             if (string.IsNullOrEmpty(tbMod_NumeroProtocollo.Text.Trim()))
             {
                 tbMod_NumeroProtocollo.Text = Protocolli_BLL.Instance.getNumeroProtocollo();

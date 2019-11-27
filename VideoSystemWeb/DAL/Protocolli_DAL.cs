@@ -69,6 +69,8 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Produzione = riga.Field<string>("produzione");
                                         if (!DBNull.Value.Equals(riga["data_inizio_lavorazione"])) protocollo.Data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
                                         protocollo.Attivo = riga.Field<bool>("attivo");
+                                        protocollo.Pregresso= riga.Field<bool>("pregresso");
+                                        protocollo.Destinatario = riga.Field<string>("destinatario");
                                         listaProtocolli.Add(protocollo);
                                     }
                                 }
@@ -125,6 +127,9 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Produzione = riga.Field<string>("produzione");
                                         if (!DBNull.Value.Equals(riga["data_inizio_lavorazione"]))protocollo.Data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
                                         protocollo.Attivo = riga.Field<bool>("attivo");
+                                        protocollo.Pregresso = riga.Field<bool>("pregresso");
+                                        protocollo.Destinatario = riga.Field<string>("destinatario");
+
                                         listaProtocolli.Add(protocollo);
                                     }
                                 }
@@ -176,6 +181,9 @@ namespace VideoSystemWeb.DAL
                                     protocollo.Produzione = dt.Rows[0].Field<string>("produzione");
                                     if (!DBNull.Value.Equals(dt.Rows[0]["data_inizio_lavorazione"]))protocollo.Data_inizio_lavorazione = dt.Rows[0].Field<DateTime>("data_inizio_lavorazione");
                                     protocollo.Attivo = dt.Rows[0].Field<bool>("attivo");
+                                    protocollo.Pregresso = dt.Rows[0].Field<bool>("pregresso");
+                                    protocollo.Destinatario = dt.Rows[0].Field<string>("destinatario");
+
                                 }
                             }
                         }
@@ -233,6 +241,9 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Produzione = riga.Field<string>("produzione");
                                         if (!DBNull.Value.Equals(riga["data_inizio_lavorazione"])) protocollo.Data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
                                         protocollo.Attivo = riga.Field<bool>("attivo");
+                                        protocollo.Pregresso = riga.Field<bool>("pregresso");
+                                        protocollo.Destinatario = riga.Field<string>("destinatario");
+
                                         listaProtocolli.Add(protocollo);
                                     }
                                 }
@@ -336,6 +347,14 @@ namespace VideoSystemWeb.DAL
                             attivo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(attivo);
 
+                            SqlParameter pregresso = new SqlParameter("@pregresso", protocollo.Pregresso);
+                            pregresso.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(pregresso);
+
+                            SqlParameter destinatario = new SqlParameter("@destinatario", protocollo.Destinatario);
+                            destinatario.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(destinatario);
+
                             StoreProc.Connection.Open();
 
                             StoreProc.ExecuteNonQuery();
@@ -435,6 +454,14 @@ namespace VideoSystemWeb.DAL
                             SqlParameter attivo = new SqlParameter("@attivo", protocollo.Attivo);
                             attivo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(attivo);
+
+                            SqlParameter pregresso = new SqlParameter("@pregresso", protocollo.Pregresso);
+                            pregresso.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(pregresso);
+
+                            SqlParameter destinatario = new SqlParameter("@destinatario", protocollo.Destinatario);
+                            destinatario.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(destinatario);
 
                             StoreProc.Connection.Open();
 

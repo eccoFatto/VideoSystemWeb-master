@@ -17,7 +17,7 @@ using System.Configuration;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
-    public partial class RiepilogoConsuntivo : System.Web.UI.UserControl
+    public partial class RiepilogoFattura : System.Web.UI.UserControl
     {
         BasePage basePage = new BasePage();
         protected void Page_Load(object sender, EventArgs e)
@@ -25,10 +25,10 @@ namespace VideoSystemWeb.Agenda.userControl
             if (IsPostBack)
             {
                 ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
-                scriptManager.RegisterPostBackControl(this.btnStampaConsuntivo);
+                scriptManager.RegisterPostBackControl(this.btnStampaFattura);
             }
         }
-        public Esito popolaPannelloConsuntivo(DatiAgenda eventoSelezionato)
+        public Esito popolaPannelloFattura(DatiAgenda eventoSelezionato)
         {
             Esito esito = new Esito();
             try
@@ -55,14 +55,14 @@ namespace VideoSystemWeb.Agenda.userControl
                     cfAppo = Config_BLL.Instance.getConfig(ref esito, "EMAIL");
                     string emailVs = cfAppo.valore;
 
-                    //List<DatiArticoliLavorazione> listaArticoliLavorazione = eventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.Stampa).OrderBy(x => x.Consuntivo).ToList<DatiArticoliLavorazione>();
+                    //List<DatiArticoliLavorazione> listaArticoliLavorazione = eventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.Stampa).OrderBy(x => x.Fattura).ToList<DatiArticoliLavorazione>();
                     List<DatiArticoliLavorazione> listaArticoliLavorazione = eventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.Stampa).ToList<DatiArticoliLavorazione>();
 
                     if (listaArticoliLavorazione!=null)
                     {
 
-                        Protocolli protocolloConsuntivo = new Protocolli();
-                        int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Consuntivo", ref esito).id;
+                        Protocolli protocolloFattura = new Protocolli();
+                        int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
                         List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
                         string numeroProtocollo = "";
                         if (listaProtocolli.Count == 0)
@@ -71,14 +71,14 @@ namespace VideoSystemWeb.Agenda.userControl
                         }
                         else
                         {
-                            protocolloConsuntivo = listaProtocolli.First();
-                            numeroProtocollo = protocolloConsuntivo.Numero_protocollo;
+                            protocolloFattura = listaProtocolli.First();
+                            numeroProtocollo = protocolloFattura.Numero_protocollo;
                         }
 
                         // GESTIONE NOMI FILE PDF
-                        string nomeFile = "Consuntivo_" + eventoSelezionato.codice_lavoro + ".pdf";
-                        string pathConsuntivo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
-                        string mapPathConsuntivo = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
+                        string nomeFile = "Fattura_" + eventoSelezionato.codice_lavoro + ".pdf";
+                        string pathFattura = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
+                        string mapPathFattura = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
                         string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
                         iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
@@ -86,7 +86,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         iText.IO.Image.ImageData imageDNV = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/DNV_2008_ITA2.jpg"));
 
 
-                        PdfWriter wr = new PdfWriter(mapPathConsuntivo);
+                        PdfWriter wr = new PdfWriter(mapPathFattura);
                         PdfDocument doc = new PdfDocument(wr);
                         doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
                         Document document = new Document(doc);
@@ -109,8 +109,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         // COLORE BLU VIDEOSYSTEM
                         iText.Kernel.Colors.Color coloreIntestazioni = new iText.Kernel.Colors.DeviceRgb(33, 150, 243);
 
-                        // INTESTAZIONE CONSUNTIVO
-                        pGriglia = new Paragraph("Consuntivo").SetFontSize(10).SetBold();
+                        // INTESTAZIONE FATTURA
+                        pGriglia = new Paragraph("Fattura").SetFontSize(10).SetBold();
                         cellaGriglia = new Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
@@ -467,52 +467,52 @@ namespace VideoSystemWeb.Agenda.userControl
                         document.Close();
                         wr.Close();
 
-                        if (File.Exists(mapPathConsuntivo))
+                        if (File.Exists(mapPathFattura))
                         {
 
-                            // SE FILE OK INSERISCO O AGGIORNO PROTOCOLLO DI TIPO PIANO ESTERNO
+                            // SE FILE OK INSERISCO O AGGIORNO PROTOCOLLO DI FATTURA
                             if (listaProtocolli.Count == 0)
                             {
                                 //INSERISCO
-                                protocolloConsuntivo.Attivo = true;
-                                protocolloConsuntivo.Cliente = cliente.RagioneSociale.Trim();
-                                protocolloConsuntivo.Codice_lavoro = eventoSelezionato.codice_lavoro;
-                                protocolloConsuntivo.Data_inizio_lavorazione = eventoSelezionato.data_inizio_impegno;
-                                protocolloConsuntivo.Data_protocollo = DateTime.Today;
-                                protocolloConsuntivo.Descrizione = "Consuntivo";
-                                protocolloConsuntivo.Id_cliente = eventoSelezionato.id_cliente;
-                                protocolloConsuntivo.Id_tipo_protocollo = idTipoProtocollo;
-                                protocolloConsuntivo.Lavorazione = eventoSelezionato.lavorazione;
-                                protocolloConsuntivo.PathDocumento = Path.GetFileName(mapPathConsuntivo);
-                                protocolloConsuntivo.Produzione = eventoSelezionato.produzione;
-                                protocolloConsuntivo.Protocollo_riferimento = "";
-                                protocolloConsuntivo.Numero_protocollo = numeroProtocollo;
-                                protocolloConsuntivo.Pregresso = false;
-                                protocolloConsuntivo.Destinatario = "Cliente";
+                                protocolloFattura.Attivo = true;
+                                protocolloFattura.Cliente = cliente.RagioneSociale.Trim();
+                                protocolloFattura.Codice_lavoro = eventoSelezionato.codice_lavoro;
+                                protocolloFattura.Data_inizio_lavorazione = eventoSelezionato.data_inizio_impegno;
+                                protocolloFattura.Data_protocollo = DateTime.Today;
+                                protocolloFattura.Descrizione = "Fattura";
+                                protocolloFattura.Id_cliente = eventoSelezionato.id_cliente;
+                                protocolloFattura.Id_tipo_protocollo = idTipoProtocollo;
+                                protocolloFattura.Lavorazione = eventoSelezionato.lavorazione;
+                                protocolloFattura.PathDocumento = Path.GetFileName(mapPathFattura);
+                                protocolloFattura.Produzione = eventoSelezionato.produzione;
+                                protocolloFattura.Protocollo_riferimento = "";
+                                protocolloFattura.Numero_protocollo = numeroProtocollo;
+                                protocolloFattura.Pregresso = false;
+                                protocolloFattura.Destinatario = "Cliente";
 
-                                int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloConsuntivo, ref esito);
+                                int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloFattura, ref esito);
                             }
                             else
                             {
                                 // AGGIORNO
-                                protocolloConsuntivo.PathDocumento = Path.GetFileName(mapPathConsuntivo);
-                                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloConsuntivo);
+                                protocolloFattura.PathDocumento = Path.GetFileName(mapPathFattura);
+                                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloFattura);
                             }
 
-                            framePdfConsuntivo.Attributes.Remove("src");
-                                framePdfConsuntivo.Attributes.Add("src", pathConsuntivo.Replace("~", ""));
+                            framePdfFattura.Attributes.Remove("src");
+                            framePdfFattura.Attributes.Add("src", pathFattura.Replace("~", ""));
 
-                                DivFramePdfConsuntivo.Visible = true;
-                                framePdfConsuntivo.Visible = true;
+                            DivFramePdfFattura.Visible = true;
+                            framePdfFattura.Visible = true;
 
-                                ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfConsuntivo.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
-                                btnStampaConsuntivo.Attributes.Add("onclick", "window.open('" + pathConsuntivo.Replace("~", "") + "');");
+                            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfFattura.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
+                            btnStampaFattura.Attributes.Add("onclick", "window.open('" + pathFattura.Replace("~", "") + "');");
                             //}
                         }
                         else
                         {
                             esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                            esito.Descrizione = "Il File " + pathConsuntivo.Replace("~", "") + " non è stato creato correttamente!";
+                            esito.Descrizione = "Il File " + pathFattura.Replace("~", "") + " non è stato creato correttamente!";
                         }
                     }
                 }
@@ -521,7 +521,7 @@ namespace VideoSystemWeb.Agenda.userControl
             {
 
                 esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.Descrizione = "popolaPannelloConsuntivo(DatiAgenda eventoSelezionato) " + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Descrizione = "popolaPannelloFattura(DatiAgenda eventoSelezionato) " + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
@@ -530,7 +530,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
 
         #region COMPORTAMENTO ELEMENTI PAGINA
-        protected void btnStampaConsuntivo_Click(object sender, EventArgs e)
+        protected void btnStampaFattura_Click(object sender, EventArgs e)
         {
         }
 

@@ -207,6 +207,9 @@ namespace VideoSystemWeb.Agenda.userControl
                         table.AddHeaderCell(intestazione);
                         intestazione = new Paragraph("Note").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
                         table.AddHeaderCell(intestazione);
+
+
+                        string dataConfronto = "";
                         foreach (DatiPianoEsternoLavorazione dpe in listaDatiPianoEsternoLavorazione)
                         {
 
@@ -236,6 +239,9 @@ namespace VideoSystemWeb.Agenda.userControl
                                 
 
                                 if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
+                                if (telefono.StartsWith("0039")) telefono = telefono.Substring(4);
+                                if (telefono.StartsWith("+39")) telefono = telefono.Substring(3);
+
                                 if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
                             }
                             else if (dpe.IdFornitori != null)
@@ -271,6 +277,17 @@ namespace VideoSystemWeb.Agenda.userControl
 
                             string dataPiano = "";
                             if (dpe.Data != null) dataPiano = dpe.Data.Value.ToShortDateString();
+
+                            // METTO SEPARATORE QUANDO CAMBIA DATA
+                            if (string.IsNullOrEmpty(dataConfronto)) dataConfronto = dataPiano;
+                            if (!string.IsNullOrEmpty(dataConfronto) && !dataConfronto.Equals(dataPiano))
+                            {
+                                dataConfronto = dataPiano;
+                                Cell cellavuota = new Cell(2, 10).SetHeight(10f);
+                                table.AddCell(cellavuota);
+
+                            }
+
 
                             string orario = "";
                             if (dpe.Orario != null) orario = dpe.Orario.Value.ToShortTimeString();
@@ -348,6 +365,8 @@ namespace VideoSystemWeb.Agenda.userControl
                                 protocolloPianoEsterno.Produzione = eventoSelezionato.produzione;
                                 protocolloPianoEsterno.Protocollo_riferimento = "";
                                 protocolloPianoEsterno.Numero_protocollo = numeroProtocollo;
+                                protocolloPianoEsterno.Pregresso = false;
+                                protocolloPianoEsterno.Destinatario = "Cliente";
                                 int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloPianoEsterno, ref esito);
                             }
                             else

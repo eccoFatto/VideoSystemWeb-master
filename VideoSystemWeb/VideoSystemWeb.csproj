@@ -186,6 +186,7 @@
     <Content Include="Agenda\GestioneColonneAgenda.aspx" />
     <Content Include="Agenda\prova.aspx" />
     <Content Include="Agenda\userControl\Appuntamento.ascx" />
+    <Content Include="Agenda\userControl\RiepilogoFattura.ascx" />
     <Content Include="Agenda\userControl\RiepilogoConsuntivo.ascx" />
     <Content Include="Agenda\userControl\RiepilogoPianoEsterno.ascx" />
     <Content Include="Agenda\userControl\Lavorazione.ascx" />
@@ -581,6 +582,13 @@
     </Compile>
     <Compile Include="Agenda\userControl\Appuntamento.ascx.designer.cs">
       <DependentUpon>Appuntamento.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\userControl\RiepilogoFattura.ascx.cs">
+      <DependentUpon>RiepilogoFattura.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\userControl\RiepilogoFattura.ascx.designer.cs">
+      <DependentUpon>RiepilogoFattura.ascx</DependentUpon>
     </Compile>
     <Compile Include="Agenda\userControl\RiepilogoConsuntivo.ascx.cs">
       <DependentUpon>RiepilogoConsuntivo.ascx</DependentUpon>

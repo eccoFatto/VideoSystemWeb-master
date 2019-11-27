@@ -458,7 +458,9 @@ namespace VideoSystemWeb.DAL
                                             Descrizione = "",
                                             Produzione = evento.produzione.Trim(),
                                             Data_inizio_lavorazione = evento.data_inizio_lavorazione,
-                                            Attivo = true
+                                            Attivo = true,
+                                            Pregresso = false,
+                                            Destinatario="Cliente"
                                         };
 
                                         CostruisciSP_InsertProtocollo(StoreProc, sda, iDatiAgendaReturn, protocolloOfferta);

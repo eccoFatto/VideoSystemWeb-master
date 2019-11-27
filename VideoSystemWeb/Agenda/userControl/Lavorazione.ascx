@@ -315,18 +315,12 @@
                     <label style="margin-bottom: 0.2rem;">Totale listino</label><br />
                     <asp:TextBox ID="txt_TotPrezzo_lavorazione" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
                 </div>
-                <%--<div class="w3-col" style="padding: 5px; width: 20%">
-                    <label style="margin-bottom: 0.2rem;">Totale costo lordo</label><br />
-                    <asp:TextBox ID="txt_TotLordo_lavorazione" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
-                </div>--%>
+               
                 <div class="w3-third" style="padding: 5px; ">
                     <label style="margin-bottom: 0.2rem;">Totale costo</label><br />
                     <asp:TextBox ID="txt_TotCosto_lavorazione" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
                 </div>
-                <%--<div class="w3-col" style="padding: 5px; width: 20%">
-                    <label style="margin-bottom: 0.2rem;">Totale IVA</label><br />
-                    <asp:TextBox ID="txt_TotIva_lavorazione" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
-                </div>--%>
+                
                 <div class="w3-third" style="padding: 5px; ">
                     <label style="margin-bottom: 0.2rem;">% Ricavo</label><br />
                     <asp:TextBox ID="txt_PercRicavo_lavorazione" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>

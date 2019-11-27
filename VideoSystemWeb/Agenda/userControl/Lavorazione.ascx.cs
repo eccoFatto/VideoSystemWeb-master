@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
@@ -1820,8 +1821,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
             txt_TotPrezzo.Text = txt_TotPrezzo_lavorazione.Text = "";
             txt_TotCosto.Text = txt_TotCosto_lavorazione.Text = "";
-            txt_TotLordo.Text = //txt_TotLordo_lavorazione.Text =
-            txt_TotIva.Text = //txt_TotIva_lavorazione.Text = "";
+            txt_TotLordo.Text = "";
+            txt_TotIva.Text = "";
             txt_PercRicavo.Text = txt_PercRicavo_lavorazione.Text = "";
 
             ResetPanelLavorazione();
@@ -1870,6 +1871,17 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_TotLordo.Text =  string.Format("{0:N2}", totLordo);
             txt_TotIva.Text =  string.Format("{0:N2}", totIva);
             txt_PercRicavo.Text = txt_PercRicavo_lavorazione.Text = string.Format("{0:N2}", percRicavo);
+
+            if (percRicavo <= 50)
+            {
+                txt_PercRicavo.ForeColor = txt_PercRicavo_lavorazione.ForeColor = Color.Red;
+                txt_PercRicavo.Font.Bold = txt_PercRicavo_lavorazione.Font.Bold = true;
+            }
+            else
+            {
+                txt_PercRicavo.ForeColor = txt_PercRicavo_lavorazione.ForeColor = ColorTranslator.FromHtml("#6D6D6D");
+                txt_PercRicavo.Font.Bold = txt_PercRicavo_lavorazione.Font.Bold = false;
+            }
         }
 
         private void ResetPanelLavorazione()

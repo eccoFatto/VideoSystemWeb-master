@@ -68,7 +68,7 @@ namespace VideoSystemWeb.DAL
                                             datiPianoEsterno.Data = riga.Field<DateTime?>("data");
                                             datiPianoEsterno.Orario = riga.Field<DateTime?>("orario");
                                             datiPianoEsterno.Nota = riga.Field<string>("nota");
-                                            datiPianoEsterno.NumOccorrenza = riga.Field<int>("numOccorrenza");
+                                            datiPianoEsterno.NumOccorrenza = riga.Field<int?>("numOccorrenza")==null? 0: riga.Field<int>("numOccorrenza");
 
                                             listaDatiPianoEsterno.Add(datiPianoEsterno);
                                         }
@@ -86,7 +86,7 @@ namespace VideoSystemWeb.DAL
                 catch (Exception ex)
                 {
                     esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                    esito.Descrizione = "Dati_Articoli_LavorazioneDAL.cs - getDatiPianoEsternoLavorazioneByIdDatiLavorazione " + Environment.NewLine + ex.Message;
+                    esito.Descrizione = "Dati_PianoEsterno_LavorazioneDAL.cs - getDatiPianoEsternoLavorazioneByIdDatiLavorazione " + Environment.NewLine + ex.Message;
 
                     log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
                 }

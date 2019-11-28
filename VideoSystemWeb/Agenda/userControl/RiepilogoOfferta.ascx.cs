@@ -174,7 +174,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
                     Document document = new Document(doc);
 
-                    document.SetMargins(245, 30, 100, 30);
+                    document.SetMargins(245, 30, 110, 30);
 
 
                     // ESTRAPOLO IL CLIENTE

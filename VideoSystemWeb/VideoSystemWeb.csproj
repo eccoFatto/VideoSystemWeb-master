@@ -276,6 +276,7 @@
     <Content Include="messaggioCambioPassword.html" />
     <Content Include="pageError.aspx" />
     <Content Include="Protocollo\Protocollo.aspx" />
+    <Content Include="REPORT\ReportTLTime.aspx" />
     <Content Include="resetPassword.aspx" />
     <Content Include="Scripts\bootstrap-datepicker.it.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
@@ -831,6 +832,13 @@
     <Compile Include="Protocollo\Protocollo.aspx.designer.cs">
       <DependentUpon>Protocollo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="REPORT\ReportTLTime.aspx.cs">
+      <DependentUpon>ReportTLTime.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="REPORT\ReportTLTime.aspx.designer.cs">
+      <DependentUpon>ReportTLTime.aspx</DependentUpon>
+    </Compile>
     <Compile Include="resetPassword.aspx.cs">
       <DependentUpon>resetPassword.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -907,6 +915,7 @@
     <Folder Include="DOCUMENTI\CONSUNTIVI\" />
     <Folder Include="DOCUMENTI\PIANOESTERNO\" />
     <Folder Include="DOCUMENTI\PROTOCOLLI\" />
+    <Folder Include="DOCUMENTI\TLTIME\" />
     <Folder Include="Images\DOCUMENTI\" />
     <Folder Include="LOGS\" />
     <Folder Include="Protocollo\userControl\" />

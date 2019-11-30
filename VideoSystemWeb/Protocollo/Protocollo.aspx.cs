@@ -369,6 +369,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Descrizione.Text = "";
             cmbMod_Tipologia.SelectedIndex = 0;
             cmbMod_Destinatario.SelectedIndex = 0;
+            cbMod_Pregresso.Checked = false;
 
         }
 
@@ -473,6 +474,8 @@ namespace VideoSystemWeb.Protocollo
                         cmbMod_Destinatario.Text = "Cliente";
                     }
 
+                    cbMod_Pregresso.Checked = protocollo.Pregresso;
+
                     if (!string.IsNullOrEmpty(protocollo.PathDocumento))
                     {
                         string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "") + protocollo.PathDocumento;
@@ -498,8 +501,14 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnGestisciProtocollo_Click(object sender, EventArgs e)
         {
-            AttivaDisattivaModificaProtocollo(false);
-            gestisciPulsantiProtocollo("MODIFICA");
+            if (!cbMod_Pregresso.Checked) { 
+                AttivaDisattivaModificaProtocollo(false);
+                gestisciPulsantiProtocollo("MODIFICA");
+            }
+            else
+            {
+                basePage.ShowWarning("I Protocolli pregressi non sono modificabili!");
+            }
 
         }
 

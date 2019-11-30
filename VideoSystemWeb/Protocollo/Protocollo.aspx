@@ -395,6 +395,7 @@
                                             <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
                                             <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
                                         </asp:DropDownList>
+                                        <asp:CheckBox ID="cbMod_Pregresso" runat="server" Visible="false" Checked="false" />
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Data Prot</label>

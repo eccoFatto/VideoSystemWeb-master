@@ -427,6 +427,15 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_Destinatario;
         
         /// <summary>
+        /// Controllo cbMod_Pregresso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbMod_Pregresso;
+        
+        /// <summary>
         /// Controllo tbMod_DataProtocollo.
         /// </summary>
         /// <remarks>

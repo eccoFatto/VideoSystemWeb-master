@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -277,6 +278,7 @@
     <Content Include="pageError.aspx" />
     <Content Include="Protocollo\Protocollo.aspx" />
     <Content Include="resetPassword.aspx" />
+    <Content Include="Scadenzario\userControl\Scadenzario.aspx" />
     <Content Include="Scripts\bootstrap-datepicker.it.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -774,6 +776,7 @@
     <Compile Include="Entity\DatiLavorazione.cs" />
     <Compile Include="Entity\DatiArticoliLavorazione.cs" />
     <Compile Include="Entity\DatiPianoEsternoLavorazione.cs" />
+    <Compile Include="Entity\DatiScadenzario.cs" />
     <Compile Include="Entity\FiguraProfessionale.cs" />
     <Compile Include="Entity\GiorniPagamentoFatture.cs" />
     <Compile Include="Entity\DatiBancari.cs" />
@@ -837,6 +840,13 @@
     </Compile>
     <Compile Include="resetPassword.aspx.designer.cs">
       <DependentUpon>resetPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Scadenzario\userControl\Scadenzario.aspx.cs">
+      <DependentUpon>Scadenzario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Scadenzario\userControl\Scadenzario.aspx.designer.cs">
+      <DependentUpon>Scadenzario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

@@ -29,7 +29,7 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        public Protocolli getProtocolloById(ref Esito esito, int id)
+        public Protocolli getProtocolloById(ref Esito esito, Int64 id)
         {
             Protocolli protocolloREt = Protocolli_DAL.Instance.getProtocolloById(ref esito,id);
 

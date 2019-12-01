@@ -147,7 +147,7 @@ namespace VideoSystemWeb.DAL
             return listaProtocolli;
         }
 
-        public Protocolli getProtocolloById(ref Esito esito, int id)
+        public Protocolli getProtocolloById(ref Esito esito, Int64 id)
         {
             Protocolli protocollo = new Protocolli();
             try

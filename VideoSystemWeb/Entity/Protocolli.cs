@@ -20,7 +20,7 @@ namespace VideoSystemWeb.Entity
 
     public class Protocolli
     {
-        private int id;
+        private Int64 id;
         private string codice_lavoro;       // OTTENUTO DALLA GET CODICE LAVORO DELLA TABELLA TAB_COD_LAV
         private string numero_protocollo;   // OTTENUTO DALLA GET PROTOCOLLO DELLA TABELLA TAB_PROTOCOLLO
         private DateTime? data_protocollo;   // IN AUTOMATICO IN INSERIMENTO METTE LA DATA DEL MOMENTO
@@ -37,7 +37,7 @@ namespace VideoSystemWeb.Entity
         private bool pregresso;
         private string destinatario;
 
-        public int Id { get => id; set => id = value; }
+        public Int64 Id { get => id; set => id = value; }
         public string Codice_lavoro { get => codice_lavoro; set => codice_lavoro = value; }
         public string Numero_protocollo { get => numero_protocollo; set => numero_protocollo = value; }
         public string Cliente { get => cliente; set => cliente = value; }

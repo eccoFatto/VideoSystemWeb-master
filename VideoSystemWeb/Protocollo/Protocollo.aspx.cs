@@ -330,10 +330,23 @@ namespace VideoSystemWeb.Protocollo
 
                 // PRENDO IL PATH DELL'ALLEGATO SE C'E'
                 string pathDocumento = e.Row.Cells[10].Text.Trim();
+
+                CheckBox cbPregresso = (CheckBox)e.Row.Cells[12].Controls[0];
+                
                 ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
                 {
-                    string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "") + pathDocumento;
+                    string pathRelativo = "";
+                    if (cbPregresso.Checked)
+                    {
+                        pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "");
+                    }
+                    else
+                    {
+                        pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
+                    }
+
+                    string pathCompleto = pathRelativo + pathDocumento;
                     myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
                 }
                 else
@@ -418,7 +431,7 @@ namespace VideoSystemWeb.Protocollo
             if (!string.IsNullOrEmpty(idProtocollo))
             {
                 Session["NOME_FILE"] = "";
-                Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt16(idProtocollo));
+                Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt64(idProtocollo));
                 if (esito.Codice == 0)
                 {
                     pulisciCampiDettaglio();
@@ -460,7 +473,15 @@ namespace VideoSystemWeb.Protocollo
                     }
                     else
                     {
-                        cmbMod_Tipologia.Text = "";
+                        //cmbMod_Tipologia.Text = "";
+                        ListItem item = new ListItem
+                        {
+                            Text = protocollo.Id_tipo_protocollo.ToString(),
+                            Value = protocollo.Id_tipo_protocollo.ToString()
+                        };
+                        cmbMod_Tipologia.Items.Add(item);
+
+                        cmbMod_Tipologia.Text = protocollo.Id_tipo_protocollo.ToString();
                     }
 
                     //DESTINATARI
@@ -478,7 +499,18 @@ namespace VideoSystemWeb.Protocollo
 
                     if (!string.IsNullOrEmpty(protocollo.PathDocumento))
                     {
-                        string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "") + protocollo.PathDocumento;
+                        string pathRelativo = "";
+                        // PER IL PREGRESSO IL PATH CAMBIA
+                        if (protocollo.Pregresso)
+                        {
+                            pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "");
+                        }
+                        else
+                        {
+                            pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
+                        }
+
+                        string pathCompleto = pathRelativo + protocollo.PathDocumento;
                         btnViewAttachement.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
                         btnViewAttachement.Enabled = true;
                     }

@@ -299,8 +299,6 @@ namespace VideoSystemWeb.Protocollo
             string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_PROTOCOLLI"];
 
             queryRicerca = queryRicerca.Replace("@numeroProtocollo", tbNumeroProtocollo.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@dataProtocollo", tbDataProtocollo.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@dataLavorazione", tbDataLavorazione.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
@@ -312,6 +310,40 @@ namespace VideoSystemWeb.Protocollo
             queryRicerca = queryRicerca.Replace("@protocolloRiferimento", tbProtocolloRiferimento.Text.Trim().Replace("'","''"));
 
             queryRicerca = queryRicerca.Replace("@destinatario", ddlDestinatario.SelectedValue.ToString().Trim().Replace("'", "''"));
+
+
+            //queryRicerca = queryRicerca.Replace("@dataProtocollo", tbDataProtocollo.Text.Trim().Replace("'", "''"));
+            //queryRicerca = queryRicerca.Replace("@dataLavorazione", tbDataLavorazione.Text.Trim().Replace("'", "''"));
+
+            string queryProtocolloDataProt = "";
+            if (!string.IsNullOrEmpty(tbDataProtocollo.Text))
+            {
+                DateTime dataDa = Convert.ToDateTime(tbDataProtocollo.Text);
+                DateTime dataA = DateTime.Now;
+                queryProtocolloDataProt = " and data_protocollo between '@dataDa' and '@DataA' ";
+                if (!string.IsNullOrEmpty(tbDataProtocolloA.Text))
+                {
+                    dataA = Convert.ToDateTime(tbDataProtocolloA.Text);
+                }
+                queryProtocolloDataProt = queryProtocolloDataProt.Replace("@dataDa", dataDa.ToString("yyyy-MM-ddT00:00:00.000"));
+                queryProtocolloDataProt = queryProtocolloDataProt.Replace("@DataA", dataA.ToString("yyyy-MM-ddT23:59:59.999"));
+            }
+            queryRicerca = queryRicerca.Replace("@dataProtocollo", queryProtocolloDataProt);
+
+            string queryProtocolloDataLav = "";
+            if (!string.IsNullOrEmpty(tbDataLavorazione.Text))
+            {
+                DateTime dataDa = Convert.ToDateTime(tbDataLavorazione.Text);
+                DateTime dataA = DateTime.Now;
+                queryProtocolloDataLav = " and data_inizio_lavorazione between '@dataDa' and '@DataA' ";
+                if (!string.IsNullOrEmpty(tbDataLavorazioneA.Text))
+                {
+                    dataA = Convert.ToDateTime(tbDataLavorazioneA.Text);
+                }
+                queryProtocolloDataLav = queryProtocolloDataLav.Replace("@dataDa", dataDa.ToString("yyyy-MM-ddT00:00:00.000"));
+                queryProtocolloDataLav = queryProtocolloDataLav.Replace("@DataA", dataA.ToString("yyyy-MM-ddT23:59:59.999"));
+            }
+            queryRicerca = queryRicerca.Replace("@dataLavorazione", queryProtocolloDataLav);
 
             Esito esito = new Esito();
             DataTable dtProtocolli = Base_DAL.GetDatiBySql(queryRicerca, ref esito);

@@ -94,6 +94,15 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbDataLavorazione;
         
         /// <summary>
+        /// Controllo tbDataLavorazioneA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbDataLavorazioneA;
+        
+        /// <summary>
         /// Controllo tbDescrizione.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,15 @@ namespace VideoSystemWeb.Protocollo {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDataProtocollo;
+        
+        /// <summary>
+        /// Controllo tbDataProtocolloA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbDataProtocolloA;
         
         /// <summary>
         /// Controllo btnRicercaProtocollo.

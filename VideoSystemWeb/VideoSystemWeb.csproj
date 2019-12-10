@@ -279,7 +279,7 @@
     <Content Include="Protocollo\Protocollo.aspx" />
     <Content Include="REPORT\ReportTLTime.aspx" />
     <Content Include="resetPassword.aspx" />
-    <Content Include="Scadenzario\userControl\Scadenzario.aspx" />
+    <Content Include="Scadenzario\Scadenzario.aspx" />
     <Content Include="Scripts\bootstrap-datepicker.it.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -718,6 +718,7 @@
     </Compile>
     <Compile Include="BLL\Esito.cs" />
     <Compile Include="BLL\Login_BLL.cs" />
+    <Compile Include="BLL\Scadenzario_BLL.cs" />
     <Compile Include="BLL\SessionManager.cs" />
     <Compile Include="BLL\Stampa\BaseStampa.cs" />
     <Compile Include="BLL\Stato.cs" />
@@ -760,6 +761,7 @@
     <Compile Include="DAL\Anag_Qualifiche_Collaboratori_DAL.cs" />
     <Compile Include="DAL\Base_DAL.cs" />
     <Compile Include="DAL\Login_DAL.cs" />
+    <Compile Include="DAL\Scadenzario_DAL.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -849,11 +851,11 @@
     <Compile Include="resetPassword.aspx.designer.cs">
       <DependentUpon>resetPassword.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Scadenzario\userControl\Scadenzario.aspx.cs">
+    <Compile Include="Scadenzario\Scadenzario.aspx.cs">
       <DependentUpon>Scadenzario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Scadenzario\userControl\Scadenzario.aspx.designer.cs">
+    <Compile Include="Scadenzario\Scadenzario.aspx.designer.cs">
       <DependentUpon>Scadenzario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
@@ -929,6 +931,7 @@
     <Folder Include="Images\DOCUMENTI\" />
     <Folder Include="LOGS\" />
     <Folder Include="Protocollo\userControl\" />
+    <Folder Include="Scadenzario\userControl\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

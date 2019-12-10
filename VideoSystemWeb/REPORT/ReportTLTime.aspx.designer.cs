@@ -58,15 +58,6 @@ namespace VideoSystemWeb.REPORT {
         protected global::System.Web.UI.WebControls.Button btnRicercaTLTime;
         
         /// <summary>
-        /// Controllo BtnPulisciCampiRicerca.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnPulisciCampiRicerca;
-        
-        /// <summary>
         /// Controllo btnCreaFileTLTime.
         /// </summary>
         /// <remarks>

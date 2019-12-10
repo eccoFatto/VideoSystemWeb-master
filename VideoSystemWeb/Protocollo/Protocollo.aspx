@@ -92,7 +92,9 @@
             $("#<%=tbRagioneSociale.ClientID%>").val('');
             $("#<%=tbNumeroProtocollo.ClientID%>").val('');
             $("#<%=tbDataProtocollo.ClientID%>").val('');
+            $("#<%=tbDataProtocolloA.ClientID%>").val('');
             $("#<%=tbDataLavorazione.ClientID%>").val('');
+            $("#<%=tbDataLavorazioneA.ClientID%>").val('');
             $("#<%=tbProduzione.ClientID%>").val('');
             $("#<%=tbProtocolloRiferimento.ClientID%>").val('');
             $("#<%=tbLavorazione.ClientID%>").val('');
@@ -218,8 +220,13 @@
                     <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
                 <div class="w3-quarter" style="position:relative;">
-                    <label>Data Lav.</label>
-                    <asp:TextBox ID="tbDataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                    <label>Data Lav. (Da-A)</label>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="position:relative;"><asp:TextBox ID="tbDataLavorazione" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox></td>
+                            <td style="position:relative;"><asp:TextBox ID="tbDataLavorazioneA" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="w3-quarter">
                     <label>Descrizione</label>
@@ -240,8 +247,13 @@
                     </asp:DropDownList>
                 </div>
                 <div class="w3-quarter" style="position:relative;">
-                    <label>Data Prot.</label>
-                    <asp:TextBox ID="tbDataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                    <label>Data Prot. (Da-A)</label>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="position:relative;"><asp:TextBox ID="tbDataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox></td>
+                            <td style="position:relative;"><asp:TextBox ID="tbDataProtocolloA" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox></td>
+                        </tr>
+                    </table>
                 </div>
                 <div class="w3-quarter">
                     <label>&nbsp;</label>

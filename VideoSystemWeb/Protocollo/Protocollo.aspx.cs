@@ -299,8 +299,6 @@ namespace VideoSystemWeb.Protocollo
             string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_PROTOCOLLI"];
 
             queryRicerca = queryRicerca.Replace("@numeroProtocollo", tbNumeroProtocollo.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@dataProtocollo", tbDataProtocollo.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@dataLavorazione", tbDataLavorazione.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
@@ -312,6 +310,40 @@ namespace VideoSystemWeb.Protocollo
             queryRicerca = queryRicerca.Replace("@protocolloRiferimento", tbProtocolloRiferimento.Text.Trim().Replace("'","''"));
 
             queryRicerca = queryRicerca.Replace("@destinatario", ddlDestinatario.SelectedValue.ToString().Trim().Replace("'", "''"));
+
+
+            //queryRicerca = queryRicerca.Replace("@dataProtocollo", tbDataProtocollo.Text.Trim().Replace("'", "''"));
+            //queryRicerca = queryRicerca.Replace("@dataLavorazione", tbDataLavorazione.Text.Trim().Replace("'", "''"));
+
+            string queryProtocolloDataProt = "";
+            if (!string.IsNullOrEmpty(tbDataProtocollo.Text))
+            {
+                DateTime dataDa = Convert.ToDateTime(tbDataProtocollo.Text);
+                DateTime dataA = DateTime.Now;
+                queryProtocolloDataProt = " and data_protocollo between '@dataDa' and '@DataA' ";
+                if (!string.IsNullOrEmpty(tbDataProtocolloA.Text))
+                {
+                    dataA = Convert.ToDateTime(tbDataProtocolloA.Text);
+                }
+                queryProtocolloDataProt = queryProtocolloDataProt.Replace("@dataDa", dataDa.ToString("yyyy-MM-ddT00:00:00.000"));
+                queryProtocolloDataProt = queryProtocolloDataProt.Replace("@DataA", dataA.ToString("yyyy-MM-ddT23:59:59.999"));
+            }
+            queryRicerca = queryRicerca.Replace("@dataProtocollo", queryProtocolloDataProt);
+
+            string queryProtocolloDataLav = "";
+            if (!string.IsNullOrEmpty(tbDataLavorazione.Text))
+            {
+                DateTime dataDa = Convert.ToDateTime(tbDataLavorazione.Text);
+                DateTime dataA = DateTime.Now;
+                queryProtocolloDataLav = " and data_inizio_lavorazione between '@dataDa' and '@DataA' ";
+                if (!string.IsNullOrEmpty(tbDataLavorazioneA.Text))
+                {
+                    dataA = Convert.ToDateTime(tbDataLavorazioneA.Text);
+                }
+                queryProtocolloDataLav = queryProtocolloDataLav.Replace("@dataDa", dataDa.ToString("yyyy-MM-ddT00:00:00.000"));
+                queryProtocolloDataLav = queryProtocolloDataLav.Replace("@DataA", dataA.ToString("yyyy-MM-ddT23:59:59.999"));
+            }
+            queryRicerca = queryRicerca.Replace("@dataLavorazione", queryProtocolloDataLav);
 
             Esito esito = new Esito();
             DataTable dtProtocolli = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
@@ -330,10 +362,23 @@ namespace VideoSystemWeb.Protocollo
 
                 // PRENDO IL PATH DELL'ALLEGATO SE C'E'
                 string pathDocumento = e.Row.Cells[10].Text.Trim();
+
+                CheckBox cbPregresso = (CheckBox)e.Row.Cells[12].Controls[0];
+                
                 ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
                 {
-                    string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "") + pathDocumento;
+                    string pathRelativo = "";
+                    if (cbPregresso.Checked)
+                    {
+                        pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "");
+                    }
+                    else
+                    {
+                        pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
+                    }
+
+                    string pathCompleto = pathRelativo + pathDocumento;
                     myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
                 }
                 else
@@ -418,7 +463,7 @@ namespace VideoSystemWeb.Protocollo
             if (!string.IsNullOrEmpty(idProtocollo))
             {
                 Session["NOME_FILE"] = "";
-                Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt16(idProtocollo));
+                Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt64(idProtocollo));
                 if (esito.Codice == 0)
                 {
                     pulisciCampiDettaglio();
@@ -460,7 +505,15 @@ namespace VideoSystemWeb.Protocollo
                     }
                     else
                     {
-                        cmbMod_Tipologia.Text = "";
+                        //cmbMod_Tipologia.Text = "";
+                        ListItem item = new ListItem
+                        {
+                            Text = protocollo.Id_tipo_protocollo.ToString(),
+                            Value = protocollo.Id_tipo_protocollo.ToString()
+                        };
+                        cmbMod_Tipologia.Items.Add(item);
+
+                        cmbMod_Tipologia.Text = protocollo.Id_tipo_protocollo.ToString();
                     }
 
                     //DESTINATARI
@@ -478,7 +531,18 @@ namespace VideoSystemWeb.Protocollo
 
                     if (!string.IsNullOrEmpty(protocollo.PathDocumento))
                     {
-                        string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "") + protocollo.PathDocumento;
+                        string pathRelativo = "";
+                        // PER IL PREGRESSO IL PATH CAMBIA
+                        if (protocollo.Pregresso)
+                        {
+                            pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "");
+                        }
+                        else
+                        {
+                            pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
+                        }
+
+                        string pathCompleto = pathRelativo + protocollo.PathDocumento;
                         btnViewAttachement.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
                         btnViewAttachement.Enabled = true;
                     }

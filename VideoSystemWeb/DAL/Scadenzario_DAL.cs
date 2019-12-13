@@ -71,18 +71,15 @@ namespace VideoSystemWeb.DAL
                             dataScadenza.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(dataScadenza);
 
-                            SqlParameter importoDare = new SqlParameter("@importoDare", DBNull.Value);
-                            if (scadenza.ImportoDare != null) importoDare = new SqlParameter("@importoDare", scadenza.ImportoDare);
+                            SqlParameter importoDare = new SqlParameter("@importoDare", scadenza.ImportoDare);
                             importoDare.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoDare);
 
-                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", DBNull.Value);
-                            if (scadenza.ImportoDareIva != null) importoDareIva = new SqlParameter("@importoDareIva", scadenza.ImportoDareIva);
+                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", scadenza.ImportoDareIva);
                             importoDareIva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoDareIva);
 
-                            SqlParameter importoVersato = new SqlParameter("@importoVersato", DBNull.Value);
-                            if (scadenza.ImportoVersato != null) importoVersato = new SqlParameter("@importoVersato", scadenza.ImportoVersato);
+                            SqlParameter importoVersato = new SqlParameter("@importoVersato", scadenza.ImportoVersato);
                             importoVersato.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoVersato);
 
@@ -91,18 +88,15 @@ namespace VideoSystemWeb.DAL
                             dataVersamento.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(dataVersamento);
 
-                            SqlParameter importoAvere = new SqlParameter("@importoAvere", DBNull.Value);
-                            if (scadenza.ImportoAvere != null) importoAvere = new SqlParameter("@importoAvere", scadenza.ImportoAvere);
+                            SqlParameter importoAvere = new SqlParameter("@importoAvere", scadenza.ImportoAvere);
                             importoAvere.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoAvere);
 
-                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", DBNull.Value);
-                            if (scadenza.ImportoAvereIva != null) importoAvereIva = new SqlParameter("@importoAvereIva", scadenza.ImportoAvereIva);
+                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", scadenza.ImportoAvereIva);
                             importoAvereIva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoAvereIva);
 
-                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", DBNull.Value);
-                            if (scadenza.ImportoRiscosso != null) importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
+                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
                             importoRiscosso.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoRiscosso);
 
@@ -185,18 +179,15 @@ namespace VideoSystemWeb.DAL
                             dataScadenza.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(dataScadenza);
 
-                            SqlParameter importoDare = new SqlParameter("@importoDare", DBNull.Value);
-                            if (scadenza.ImportoDare != null) importoDare = new SqlParameter("@importoDare", scadenza.ImportoDare);
+                            SqlParameter importoDare = new SqlParameter("@importoDare", scadenza.ImportoDare);
                             importoDare.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoDare);
 
-                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", DBNull.Value);
-                            if (scadenza.ImportoDareIva != null) importoDareIva = new SqlParameter("@importoDareIva", scadenza.ImportoDareIva);
+                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", scadenza.ImportoDareIva);
                             importoDareIva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoDareIva);
 
-                            SqlParameter importoVersato = new SqlParameter("@importoVersato", DBNull.Value);
-                            if (scadenza.ImportoVersato != null) importoVersato = new SqlParameter("@importoVersato", scadenza.ImportoVersato);
+                            SqlParameter importoVersato = new SqlParameter("@importoVersato", scadenza.ImportoVersato);
                             importoVersato.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoVersato);
 
@@ -205,18 +196,15 @@ namespace VideoSystemWeb.DAL
                             dataVersamento.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(dataVersamento);
 
-                            SqlParameter importoAvere = new SqlParameter("@importoAvere", DBNull.Value);
-                            if (scadenza.ImportoAvere != null) importoAvere = new SqlParameter("@importoAvere", scadenza.ImportoAvere);
+                            SqlParameter importoAvere = new SqlParameter("@importoAvere", scadenza.ImportoAvere);
                             importoAvere.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoAvere);
 
-                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", DBNull.Value);
-                            if (scadenza.ImportoAvereIva != null) importoAvereIva = new SqlParameter("@importoAvereIva", scadenza.ImportoAvereIva);
+                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", scadenza.ImportoAvereIva);
                             importoAvereIva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoAvereIva);
 
-                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", DBNull.Value);
-                            if (scadenza.ImportoRiscosso != null) importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
+                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
                             importoRiscosso.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoRiscosso);
 
@@ -265,8 +253,6 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            //StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
-
                             // PARAMETRI PER LOG UTENTE
                             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
                             idUtente.Direction = ParameterDirection.Input;
@@ -285,8 +271,6 @@ namespace VideoSystemWeb.DAL
 
                             StoreProc.ExecuteNonQuery();
 
-                            //int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
-                            //return iReturn;
                         }
                     }
                 }
@@ -296,8 +280,6 @@ namespace VideoSystemWeb.DAL
                 esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
                 esito.Descrizione = "Scadenzario_DAL.cs - DeleteDatiScadenzarioById " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
-
-            //return 0;
         }
 
         public DatiScadenzario GetDatiScadenzarioById(ref Esito esito, int id)

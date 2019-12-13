@@ -69,23 +69,23 @@
         }
 
         function confermaEliminazioneScadenza() {
-            return confirm("Eliminare la scadenza selezionata?");
+            return confirm("Verranno eliminate tutte le voci dello scadenzario riguardanti la fattura cui si riferisce la voce selezionata. Confermare?");
         }
 
         function calcolaImportoIva() {
-            var importo = $('#<%=txt_ImportoDocumento.ClientID%>').val().replace(",", ".");;
-            var iva = $('#<%=txt_Iva.ClientID%>').val().replace(",", ".");;
+            var importo = $('#<%=txt_ImportoDocumento.ClientID%>').val().replace(".", "").replace(",", ".");
+            var iva = $('#<%=txt_Iva.ClientID%>').val().replace(".", "").replace(",", ".");;
             var importoIva = importo * (1 + (iva / 100));
 
             $('#<%=txt_ImportoIva.ClientID%>').val(importoIva.toFixed(2).replace(".", ","));
         }
 
         function calcolaImportoModifica() {
-            var importo = $('#<%=txt_Versato.ClientID%>').val().replace(",",".");
-            var iva = $('#<%=txt_IvaModifica.ClientID%>').val().replace(",", ".");
+            var importo = $('#<%=txt_Versato.ClientID%>').val().replace(".", "").replace(",",".");
+            var iva = $('#<%=txt_IvaModifica.ClientID%>').val().replace(".", "").replace(",", ".");
             var importoIva = importo * (1 + (iva / 100));
-            var imponibile = $('#<%=txt_Imponibile.ClientID%>').val().replace(",", ".");
-            var imponibileIva = $('#<%=txt_ImponibileIva.ClientID%>').val().replace(",", ".");
+            var imponibile = $('#<%=txt_Imponibile.ClientID%>').val().replace(".", "").replace(",", ".");
+            var imponibileIva = $('#<%=txt_ImponibileIva.ClientID%>').val().replace(".", "").replace(",", ".");
 
             $('#<%=txt_VersatoIva.ClientID%>').val(importoIva.toFixed(2).replace(".", ","));
 
@@ -183,7 +183,7 @@
                             </div>
                         </td>
                         <td style="width:20%;">
-                             <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicerca();" />
+                             <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicerca();" OnClick="btnRicercaScadenza_Click"/>
 
                         </td>
                     </tr>
@@ -198,22 +198,23 @@
                     EmptyDataText="Nessuna scadenza trovata" EmptyDataRowStyle-HorizontalAlign="Center" OnRowCommand="gv_scadenze_RowCommand">
                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="Last"/>
                     <Columns>
-                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="5%">
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="8%">
                             <ItemTemplate>
                                 <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/edit.png" ToolTip="Modifica scadenza" ImageAlign="AbsMiddle"  CommandName="modifica" CommandArgument='<%#Eval("id")%>'/>
                                 <asp:ImageButton ID="imgDelete" runat="server" CausesValidation="false" Text="Elimina" ImageUrl="~/Images/delete.png" ToolTip="Elimina scadenza" ImageAlign="AbsMiddle" CommandName="elimina" CommandArgument='<%#Eval("id")%>' OnClientClick="return confermaEliminazioneScadenza();"/>
+                                <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" CommandName="visualizzaDoc" CommandArgument='<%#Eval("id")%>'/>
                             </ItemTemplate>
                         </asp:TemplateField>
                         <asp:BoundField DataField="ImportoDare" HeaderText="Totale dare" DataFormatString="{0:N2}" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="ImportoVersato" HeaderText="Tot. versato" DataFormatString="{0:N2}" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="ProtocolloRiferimento" HeaderText="Documento"  HeaderStyle-Width="10%" />
-                        <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="12%" />
+                        <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="16%" />
                         <asp:BoundField DataField="ImportoAvere" HeaderText="Totale avere" DataFormatString="{0:N2}" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="ImportoRiscosso" HeaderText="Tot. riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="DataScadenza" HeaderText="Scadenza" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" />
+                        <asp:BoundField DataField="DataScadenza" HeaderText="Scadenza" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="IsImportoEstinto" HeaderText="Stato" HeaderStyle-Width="5%" />
-                        <asp:BoundField DataField="Banca" HeaderText="Banca" HeaderStyle-Width="16%" />
-                        <asp:BoundField DataField="DataPagamento" HeaderText="Pagamento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" />
+                        <asp:BoundField DataField="Banca" HeaderText="Banca" HeaderStyle-Width="13%" />
+                        <asp:BoundField DataField="DataPagamento" HeaderText="Pagamento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                     </Columns>
                 </asp:GridView>
             </div>
@@ -225,7 +226,7 @@
 
     <asp:Button runat="server" ID="btnEditScadenza" Style="display: none" OnClick="btnEditScadenza_Click" />
     <asp:Button runat="server" ID="btnInsScadenza" Style="display: none" OnClick="btnInsScadenza_Click" />
-    <asp:Button runat="server" ID="btnCercaScadenza" Style="display: none" OnClick="btnCercaScadenza_Click" />
+    <%--<asp:Button runat="server" ID="btnCercaScadenza" Style="display: none" OnClick="btnCercaScadenza_Click" />--%>
 
     <asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopup_Click" />
 
@@ -249,6 +250,9 @@
                             <div class="w3-bar-item w3-button w3-yellow w3-right">
                                 <div id="btnChiudiPopup" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
                             </div>
+                            <div class="w3-bar-item w3-button w3-yellow w3-right">
+                                <asp:ImageButton ID="btnApriDocumento" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" OnClick="btnApriDocumento_Click"/>
+                            </div>
                         </div>
                     </div>
 
@@ -258,23 +262,23 @@
                                 <div class="w3-row-padding">
                                     <div class="w3-quarter">
                                         <label>Tipo (cliente/fornitore)</label>
-                                        <asp:DropDownList ID="ddl_Tipo" runat="server"  Width="100%" CssClass="w3-input w3-border">
+                                        <asp:DropDownList ID="ddl_Tipo" runat="server" Disabled  Width="100%" CssClass="w3-input w3-border">
                                             <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
                                             <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Cliente/Fornitore</label>
-                                        <asp:TextBox ID="txt_ClienteFornitore" runat="server" CssClass="w3-input w3-border" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="txt_ClienteFornitore" runat="server" Disabled CssClass="w3-input w3-border" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
                                         <label>Data documento</label>
-                                        <asp:TextBox ID="txt_DataDocumento" runat="server" ReadOnly MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="txt_DataDocumento" runat="server" Disabled MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                     
                                     <div class="w3-quarter">
                                         <label>Numero documento</label>
-                                        <asp:TextBox ID="txt_NumeroDocumento" ReadOnly runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""/>
+                                        <asp:TextBox ID="txt_NumeroDocumento" Disabled runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""/>
                                     </div>
                                     
                                 </div>
@@ -323,15 +327,15 @@
                                         
                                         <div class="w3-half w3-padding" >
                                             <label>Imponibile</label>
-                                            <asp:TextBox ID="txt_Imponibile" disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
+                                            <asp:TextBox ID="txt_Imponibile" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
                                         </div>
                                         <div class="w3-half w3-padding" >
                                             <label>Imp. + IVA</label>
-                                            <asp:TextBox ID="txt_ImponibileIva" disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
+                                            <asp:TextBox ID="txt_ImponibileIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
                                         </div>
 
                                         <div class="w3-third w3-padding" >
-                                            <label>Versato</label>
+                                            <asp:Label ID="lbl_VersatoRiscosso" runat="server" Text="Versato"></asp:Label>
                                             <asp:TextBox ID="txt_Versato" runat="server" MaxLength="10" CssClass="w3-input w3-border" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>
                                         </div>
                                         <div class="w3-third w3-padding" >
@@ -339,55 +343,47 @@
                                             <asp:TextBox ID="txt_IvaModifica" runat="server" MaxLength="2" CssClass="w3-input w3-border" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>
                                         </div>
                                         <div class="w3-third w3-padding" >
-                                            <label>Versato + IVA</label>
-                                            <asp:TextBox ID="txt_VersatoIva" disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
+                                            <asp:Label ID="lbl_VersatoRiscossoIVA" runat="server" Text="Versato + IVA"></asp:Label>
+                                            <asp:TextBox ID="txt_VersatoIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
                                         </div>
 
                                         <div class="w3-half w3-padding" >
                                             <label>Totale</label>
-                                            <asp:TextBox ID="txt_Totale" disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
+                                            <asp:TextBox ID="txt_Totale" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
                                         </div>
                                         <div class="w3-half w3-padding" >
                                             <label>Totale + IVA</label>
-                                            <asp:TextBox ID="txt_TotaleIva" disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
+                                            <asp:TextBox ID="txt_TotaleIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
                                         </div>
                                     </div>
 
                                     <div class="w3-half  " >
                                         <div class="w3-half w3-padding" >
                                             <label>Totale documento</label>
-                                            <asp:TextBox ID="txt_TotaleDocumento" disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
+                                            <asp:TextBox ID="txt_TotaleDocumento" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
                                         </div>
                                         <div class="w3-half w3-padding" >
                                             <label>Tot. documento + IVA</label>
-                                            <asp:TextBox ID="txt_TotDocumentoIva" disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
+                                            <asp:TextBox ID="txt_TotDocumentoIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
                                         </div>
 
                                         <div class="w3-half w3-padding" >
                                             <label>Data</label>
-                                            <asp:TextBox ID="txt_DataDocumentoModifica" disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
+                                            <asp:TextBox ID="txt_DataDocumentoModifica" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" />
                                         </div>
                                         <div class="w3-half w3-padding" >
                                             <label>Scadenza</label>
-                                            <asp:TextBox ID="txt_ScadenzaDocumento" disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
+                                            <asp:TextBox ID="txt_ScadenzaDocumento" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" />
                                         </div>
 
                                         <div class="w3-col w3-padding">
                                             <label>Banca</label>
-                                            <asp:TextBox ID="txt_Banca" disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" />
+                                            <asp:DropDownList ID="ddl_BancaModifica" runat="server"  Width="100%" CssClass="w3-input w3-border"/>
                                         </div>
                                     </div>
 
                                 </div>
-
-
-                                <div class="w3-row-padding">
-                                    
-                                    
-                                </div>
-                           
                                 <br />
-                                
                                 <div style="text-align: center;">
                                     <asp:Button ID="btnInserisciScadenza" runat="server" Text="Inserisci Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciScadenza_Click" OnClientClick="return confirm('Confermi inserimento Scadenza?')" />
                                     <asp:Button ID="btnModificaScadenza" runat="server" Text="Modifica Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaScadenza_Click" OnClientClick="return confirm('Confermi modifica Scadenza?')" Visible="false" />

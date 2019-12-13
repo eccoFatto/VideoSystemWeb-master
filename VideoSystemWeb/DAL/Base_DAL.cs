@@ -1796,11 +1796,7 @@ namespace VideoSystemWeb.DAL
             fp_lordo.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(consuntivo);
 
-            SqlParameter numOccorrenza = new SqlParameter("@numOccorrenza", DBNull.Value);
-            if (datoArticoloLavorazione.NumOccorrenza != null)
-            {
-                numOccorrenza = new SqlParameter("@numOccorrenza", datoArticoloLavorazione.NumOccorrenza);
-            }
+            SqlParameter numOccorrenza = new SqlParameter("@numOccorrenza", datoArticoloLavorazione.NumOccorrenza);
             fp_lordo.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(numOccorrenza);
         }
@@ -1954,11 +1950,7 @@ namespace VideoSystemWeb.DAL
             nota.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(nota);
 
-            SqlParameter numOccorrenza = new SqlParameter("@numOccorrenza", DBNull.Value);
-            if (datoPianoEsternoLavorazione.NumOccorrenza != null)
-            {
-                numOccorrenza = new SqlParameter("@numOccorrenza", datoPianoEsternoLavorazione.NumOccorrenza);
-            }
+            SqlParameter numOccorrenza = new SqlParameter("@numOccorrenza", datoPianoEsternoLavorazione.NumOccorrenza);
             numOccorrenza.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(numOccorrenza);
         }

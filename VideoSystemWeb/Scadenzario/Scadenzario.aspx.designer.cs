@@ -159,15 +159,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.Button btnInsScadenza;
 
         /// <summary>
-        /// Controllo btnCercaScadenza.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCercaScadenza;
-
-        /// <summary>
         /// Controllo btnChiudiPopupServer.
         /// </summary>
         /// <remarks>
@@ -220,6 +211,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel innerContainer;
+
+        /// <summary>
+        /// Controllo btnApriDocumento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnApriDocumento;
 
         /// <summary>
         /// Controllo ddl_Tipo.
@@ -411,6 +411,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_ImponibileIva;
 
         /// <summary>
+        /// Controllo lbl_VersatoRiscosso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_VersatoRiscosso;
+
+        /// <summary>
         /// Controllo txt_Versato.
         /// </summary>
         /// <remarks>
@@ -427,6 +436,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_IvaModifica;
+
+        /// <summary>
+        /// Controllo lbl_VersatoRiscossoIVA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_VersatoRiscossoIVA;
 
         /// <summary>
         /// Controllo txt_VersatoIva.
@@ -492,13 +510,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_ScadenzaDocumento;
 
         /// <summary>
-        /// Controllo txt_Banca.
+        /// Controllo ddl_BancaModifica.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_Banca;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_BancaModifica;
 
         /// <summary>
         /// Controllo btnInserisciScadenza.

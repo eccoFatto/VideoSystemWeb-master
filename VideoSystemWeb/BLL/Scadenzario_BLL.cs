@@ -161,5 +161,15 @@ namespace VideoSystemWeb.BLL
         {
             return Scadenzario_DAL.Instance.GetDatiTotaliFatturaByIdDatiScadenzario(idDatiScadenzario, ref esito);
         }
+
+        public List<Protocolli> getFattureNonInScadenzario(ref Esito esito)
+        {
+            return Scadenzario_DAL.Instance.getFattureNonInScadenzario(ref esito);
+        }
+        
+        public List<DatiScadenzario> GetDatiScadenzarioByIdDatiProtocollo(int idDatiProtocollo, ref Esito esito)
+        {
+            return Scadenzario_DAL.Instance.GetDatiScadenzarioByIdDatiProtocollo(idDatiProtocollo, ref esito);
+        }
     }
 }

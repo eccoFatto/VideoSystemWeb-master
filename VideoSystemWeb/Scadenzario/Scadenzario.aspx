@@ -259,6 +259,14 @@
                     <div id="Scadenza" class="w3-container w3-border prot" style="display: block">
                         <div class="w3-container">
                             <p>
+                                <div id="div_Fattura" runat="server" class="w3-row-padding">
+                                    <div class="w3-col">
+                                        <label>Fattura</label>
+                                        <asp:DropDownList ID="ddl_fattura" AutoPostBack="true" OnSelectedIndexChanged="ddl_fattura_SelectedIndexChanged" runat="server"/>
+                                    </div>
+                                    <div class="w3-col">&nbsp;</div>
+                                </div>
+
                                 <div class="w3-row-padding">
                                     <div class="w3-quarter">
                                         <label>Tipo (cliente/fornitore)</label>
@@ -270,6 +278,7 @@
                                     <div class="w3-quarter">
                                         <label>Cliente/Fornitore</label>
                                         <asp:TextBox ID="txt_ClienteFornitore" runat="server" Disabled CssClass="w3-input w3-border" Text=""></asp:TextBox>
+                                        
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
                                         <label>Data documento</label>
@@ -336,7 +345,7 @@
 
                                         <div class="w3-third w3-padding" >
                                             <asp:Label ID="lbl_VersatoRiscosso" runat="server" Text="Versato"></asp:Label>
-                                            <asp:TextBox ID="txt_Versato" runat="server" MaxLength="10" CssClass="w3-input w3-border" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>
+                                            <asp:TextBox ID="txt_Versato" runat="server" MaxLength="10" CssClass="w3-input w3-border" Style="margin-top:8px" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>
                                         </div>
                                         <div class="w3-third w3-padding" >
                                             <label>IVA</label>
@@ -344,7 +353,7 @@
                                         </div>
                                         <div class="w3-third w3-padding" >
                                             <asp:Label ID="lbl_VersatoRiscossoIVA" runat="server" Text="Versato + IVA"></asp:Label>
-                                            <asp:TextBox ID="txt_VersatoIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" DataFormatString="{0:N2}"/>
+                                            <asp:TextBox ID="txt_VersatoIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" Style="margin-top:8px" DataFormatString="{0:N2}"/>
                                         </div>
 
                                         <div class="w3-half w3-padding" >

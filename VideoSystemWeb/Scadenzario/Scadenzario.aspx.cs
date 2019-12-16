@@ -437,6 +437,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             scadenza.Iva = decimal.Parse(txt_Iva.Text);
 
             ValidaCampo(txt_CadenzaGiorni, 0, true, ref esito);
+            ValidaCampo(txt_ClienteFornitore, "", true, ref esito);
+            ValidaCampo(txt_DataDocumento, DateTime.Now, true, ref esito);
 
             if (ddl_Tipo.SelectedValue.ToUpper() == "CLIENTE")
             {
@@ -463,6 +465,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
         private void NascondiErroriValidazione()
         {
+            txt_ClienteFornitore.CssClass = txt_ClienteFornitore.CssClass.Replace("erroreValidazione", "");
+            txt_DataDocumento.CssClass = txt_DataDocumento.CssClass.Replace("erroreValidazione", "");
             txt_ImportoDocumento.CssClass = txt_ImportoDocumento.CssClass.Replace("erroreValidazione", "");
             txt_CadenzaGiorni.CssClass = txt_CadenzaGiorni.CssClass.Replace("erroreValidazione", "");
 

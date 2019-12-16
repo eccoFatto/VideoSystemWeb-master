@@ -312,7 +312,8 @@
                                         <label>Anticipo importo</label>
                                         <asp:TextBox ID="txt_AnticipoImporto" runat="server" MaxLength="10" CssClass="w3-input w3-border" placeholder="0" Text="" onkeypress="return onlyNumbers();" DataFormatString="{0:N2}"></asp:TextBox>
                                     </div>
-
+                                </div>
+                                <div class="w3-row-padding">
                                     <div id="div_CadenzaGiorni" runat="server" class="w3-quarter">
                                         <label>Cadenza giorni</label>
                                         <asp:TextBox ID="txt_CadenzaGiorni" runat="server" CssClass="w3-input w3-border" Text="" onkeypress="return onlyNumbers();"></asp:TextBox>

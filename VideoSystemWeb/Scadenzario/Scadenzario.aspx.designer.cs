@@ -447,15 +447,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_Versato;
 
         /// <summary>
-        /// Controllo lbl_Iva.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_Iva;
-
-        /// <summary>
         /// Controllo txt_IvaModifica.
         /// </summary>
         /// <remarks>

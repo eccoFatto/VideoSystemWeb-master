@@ -100,6 +100,27 @@ namespace VideoSystemWeb.MAGAZZINO
                         cmbMod_Posizione.Items.Add(itemMod);
                     }
 
+                    ddlTipoGruppoMagazzino.Items.Clear();
+                    cmbMod_Gruppo.Items.Clear();
+                    ddlTipoGruppoMagazzino.Items.Add("");
+                    foreach (Tipologica tipologiaGruppo in SessionManager.ListaTipiGruppoMagazzino)
+                    {
+                        ListItem item = new ListItem
+                        {
+                            Text = tipologiaGruppo.nome,
+                            Value = tipologiaGruppo.nome
+                        };
+
+                        ddlTipoGruppoMagazzino.Items.Add(item);
+
+                        ListItem itemMod = new ListItem
+                        {
+                            Text = tipologiaGruppo.nome,
+                            Value = tipologiaGruppo.id.ToString()
+                        };
+
+                        cmbMod_Gruppo.Items.Add(itemMod);
+                    }
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                     AbilitaBottoni(basePage.AbilitazioneInScrittura());
 
@@ -125,11 +146,12 @@ namespace VideoSystemWeb.MAGAZZINO
             queryRicerca = queryRicerca.Replace("@marca", tbMarca.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@modello", tbModello.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@seriale", tbSeriale.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@dataAcquisto", tbDataAcquisto.Text.Trim().Replace("'", "''"));
+            //queryRicerca = queryRicerca.Replace("@dataAcquisto", tbDataAcquisto.Text.Trim().Replace("'", "''"));
 
             queryRicerca = queryRicerca.Replace("@categoria", ddlTipoCategoria.SelectedItem.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@subcategoria", ddlTipoSubCategoria.SelectedItem.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@posizione", ddlTipoPosizioneMagazzino.SelectedItem.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@gruppo", ddlTipoGruppoMagazzino.SelectedItem.Text.Trim().Replace("'", "''"));
 
             Esito esito = new Esito();
             DataTable dtAttrezzature = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
@@ -316,6 +338,7 @@ namespace VideoSystemWeb.MAGAZZINO
             cmbMod_Categoria.CssClass = cmbMod_Categoria.CssClass.Replace("erroreValidazione", "");
             cmbMod_SubCategoria.CssClass = cmbMod_SubCategoria.CssClass.Replace("erroreValidazione", "");
             cmbMod_Posizione.CssClass = cmbMod_Posizione.CssClass.Replace("erroreValidazione", "");
+            cmbMod_Gruppo.CssClass = cmbMod_Gruppo.CssClass.Replace("erroreValidazione", "");
         }
         private void EditAttrezzatura()
         {
@@ -385,6 +408,25 @@ namespace VideoSystemWeb.MAGAZZINO
 
                     }
 
+                    //TIPI GRUPPO
+                    trovati = cmbMod_Gruppo.Items.FindByValue(attrezzatura.Id_gruppo_magazzino.ToString());
+                    if (trovati != null)
+                    {
+                        cmbMod_Gruppo.SelectedValue = trovati.Value;
+                    }
+                    else
+                    {
+                        ListItem item = new ListItem
+                        {
+                            Text = attrezzatura.Id_gruppo_magazzino.ToString(),
+                            Value = attrezzatura.Id_gruppo_magazzino.ToString()
+                        };
+                        cmbMod_Gruppo.Items.Add(item);
+
+                        cmbMod_Gruppo.Text = attrezzatura.Id_gruppo_magazzino.ToString();
+
+                    }
+
                     cbMod_Disponibile.Checked = attrezzatura.Disponibile;
                     cbMod_Garanzia.Checked = attrezzatura.Garanzia;
                 }
@@ -409,6 +451,7 @@ namespace VideoSystemWeb.MAGAZZINO
             cmbMod_Categoria.SelectedIndex = 0;
             cmbMod_SubCategoria.SelectedIndex = 0;
             cmbMod_Posizione.SelectedIndex = 0;
+            cmbMod_Gruppo.SelectedIndex = 0;
             cbMod_Disponibile.Checked = false;
             cbMod_Garanzia.Checked = false;
 
@@ -430,12 +473,14 @@ namespace VideoSystemWeb.MAGAZZINO
                 cmbMod_Categoria.Attributes.Add("disabled", "");
                 cmbMod_SubCategoria.Attributes.Add("disabled", "");
                 cmbMod_Posizione.Attributes.Add("disabled", "");
+                cmbMod_Gruppo.Attributes.Add("disabled", "");
             }
             else
             {
                 cmbMod_Categoria.Attributes.Remove("disabled");
                 cmbMod_SubCategoria.Attributes.Remove("disabled");
                 cmbMod_Posizione.Attributes.Remove("disabled");
+                cmbMod_Gruppo.Attributes.Remove("disabled");
             }
 
             cbMod_Disponibile.Enabled = !attivaModifica;
@@ -518,6 +563,7 @@ namespace VideoSystemWeb.MAGAZZINO
             attrezzatura.Garanzia = cbMod_Garanzia.Checked;
             attrezzatura.Id_categoria = Convert.ToInt32(cmbMod_Categoria.SelectedValue);
             attrezzatura.Id_posizione_magazzino = Convert.ToInt32(cmbMod_Posizione.SelectedValue);
+            attrezzatura.Id_gruppo_magazzino = Convert.ToInt32(cmbMod_Gruppo.SelectedValue);
             if (!string.IsNullOrEmpty(cmbMod_SubCategoria.SelectedValue)) attrezzatura.Id_subcategoria = Convert.ToInt32(cmbMod_SubCategoria.SelectedValue);
             attrezzatura.Marca = BasePage.ValidaCampo(tbMod_Marca, "", true, ref esito);
             attrezzatura.Modello = BasePage.ValidaCampo(tbMod_Modello, "", true, ref esito);

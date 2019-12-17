@@ -35,6 +35,7 @@ namespace VideoSystemWeb.Entity
         private string modello;
         private string note;
         private bool attivo;
+        private int? id_gruppo_magazzino;
 
         public int Id { get => id; set => id = value; }
         public string Cod_vs { get => cod_vs; set => cod_vs = value; }
@@ -50,5 +51,6 @@ namespace VideoSystemWeb.Entity
         public string Modello { get => modello; set => modello = value; }
         public string Note { get => note; set => note = value; }
         public bool Attivo { get => attivo; set => attivo = value; }
+        public int? Id_gruppo_magazzino { get => id_gruppo_magazzino; set => id_gruppo_magazzino = value; }
     }
 }

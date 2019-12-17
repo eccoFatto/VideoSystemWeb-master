@@ -331,7 +331,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO:
                     nomeSP = "InsertTipoPosizioneMagazzino";
                     break;
-
+                case EnumTipologiche.TIPO_GRUPPO_MAGAZZINO:
+                    nomeSP = "InsertTipoGruppoMagazzino";
+                    break;
                 default:
                     break;
             }
@@ -532,7 +534,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO:
                     nomeSP = "UpdateTipoPosizioneMagazzino";
                     break;
-
+                case EnumTipologiche.TIPO_GRUPPO_MAGAZZINO:
+                    nomeSP = "UpdateTipoGruppoMagazzino";
+                    break;
                 default:
                     break;
             }
@@ -730,7 +734,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO:
                     nomeSP = "DeleteTipoPosizioneMagazzino";
                     break;
-
+                case EnumTipologiche.TIPO_GRUPPO_MAGAZZINO:
+                    nomeSP = "DeleteTipoGruppoMagazzino";
+                    break;
                 default:
                     break;
             }
@@ -826,7 +832,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO:
                     nomeSP = "RemoveTipoPosizioneMagazzino";
                     break;
-
+                case EnumTipologiche.TIPO_GRUPPO_MAGAZZINO:
+                    nomeSP = "RemoveTipoGruppoMagazzino";
+                    break;
                 default:
                     break;
             }

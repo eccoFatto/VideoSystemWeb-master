@@ -231,7 +231,18 @@ namespace VideoSystemWeb.Protocollo
                 }
                 //basePage.ShowSuccess("Inserito Protocollo n. " + protocollo.Numero_protocollo);
                 ShowPopMessage("Inserito Protocollo n. " + protocollo.Numero_protocollo);
-                btnEditProtocollo_Click(null, null);
+
+
+
+                if (cmbMod_Tipologia.SelectedItem.Text.ToUpper() == "FATTURA")
+                {
+                    Response.Redirect("/Scadenzario/Scadenzario.aspx?TIPO=" + cmbMod_Destinatario.SelectedValue + "&ID_PROTOCOLLO=" + iRet);
+                }
+                else
+                {
+                    btnEditProtocollo_Click(null, null);
+                }
+                
             }
         }
 

@@ -29,19 +29,22 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        public void AggiornaDatiScadenzario(DatiScadenzario scadenza, string tipoScadenza, decimal importo, decimal iva, ref Esito esito)
+        public void AggiornaDatiScadenzario(DatiScadenzario scadenza, string tipoScadenza, string importo, string iva, string dataScadenza, string banca, ref Esito esito)
         {
             if (tipoScadenza.ToUpper() == "CLIENTE")
             {
                 scadenza.DataRiscossione = DateTime.Now;
-                scadenza.ImportoRiscosso = importo;
+                scadenza.ImportoRiscosso = string.IsNullOrEmpty(importo) ? 0 : decimal.Parse(importo);
+                
             }
             else
             {
                 scadenza.DataVersamento = DateTime.Now;
-                scadenza.ImportoVersato = importo;
+                scadenza.ImportoVersato = string.IsNullOrEmpty(importo) ? 0 : decimal.Parse(importo); ;
             }
-            scadenza.Iva = iva;
+            scadenza.Iva = string.IsNullOrEmpty(iva) ? 0 : decimal.Parse(iva);
+            scadenza.DataScadenza = DateTime.Parse(dataScadenza);
+            scadenza.Banca = banca;
 
             Scadenzario_DAL.Instance.AggiornaDatiScadenzario(scadenza, ref esito);
         }
@@ -135,14 +138,38 @@ namespace VideoSystemWeb.BLL
                                                                   ref esito);
         }
 
-        public void DeleteDatiScadenzario(int idScadenza, ref Esito esito)
+        public void DeleteDatiScadenzario(int idSDatiScadenzario, ref Esito esito)
         {
-            Scadenzario_DAL.Instance.DeleteDatiScadenzarioById(idScadenza, ref esito);
+            List<DatiScadenzario> listaDatiScadenzarioDaCancellare = Scadenzario_DAL.Instance.GetDatiTotaliFatturaByIdDatiScadenzario(idSDatiScadenzario, ref esito);
+
+            
+
+            Scadenzario_DAL.Instance.DeleteDatiScadenzarioById(idSDatiScadenzario, ref esito);
+
+            if (esito.Codice == Esito.ESITO_OK && listaDatiScadenzarioDaCancellare.Count > 0)
+            { 
+                int idProtocollo = listaDatiScadenzarioDaCancellare.ElementAt(0).IdDatiProtocollo;
+                string tipoScadenza = "Cliente";
+                if (listaDatiScadenzarioDaCancellare.ElementAt(0).ImportoDare > 0) tipoScadenza = "Fornitore";
+
+                HttpContext.Current.Response.Redirect("Scadenzario?TIPO=" + tipoScadenza + "&ID_PROTOCOLLO=" + idProtocollo);
+            } 
+
         }
 
-        public List<DatiScadenzario> GetDatiTotaliFatturaByIdDatiScadenzario(int idSDatiScadenzario, ref Esito esito)
+        public List<DatiScadenzario> GetDatiTotaliFatturaByIdDatiScadenzario(int idDatiScadenzario, ref Esito esito)
         {
-            return Scadenzario_DAL.Instance.GetDatiTotaliFatturaByIdDatiScadenzario(idSDatiScadenzario, ref esito);
+            return Scadenzario_DAL.Instance.GetDatiTotaliFatturaByIdDatiScadenzario(idDatiScadenzario, ref esito);
+        }
+
+        public List<Protocolli> getFattureNonInScadenzario(ref Esito esito)
+        {
+            return Scadenzario_DAL.Instance.getFattureNonInScadenzario(ref esito);
+        }
+        
+        public List<DatiScadenzario> GetDatiScadenzarioByIdDatiProtocollo(int idDatiProtocollo, ref Esito esito)
+        {
+            return Scadenzario_DAL.Instance.GetDatiScadenzarioByIdDatiProtocollo(idDatiProtocollo, ref esito);
         }
     }
 }

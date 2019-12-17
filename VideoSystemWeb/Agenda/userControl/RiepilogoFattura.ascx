@@ -14,6 +14,7 @@
         <div class="w3-center w3-padding-small" style="position: relative; background-color: white">
             <asp:Button ID="btnStampaFattura" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-green w3-round-large " Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampaFattura_Click" />
             <button onclick="document.getElementById('modalFattura').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Chiudi</button>
+            <asp:Button ID="btn_ApriScadenzario" runat="server" Text="Vai a Scadenzario" class="w3-btn w3-white w3-border w3-border-blue w3-round-large " Style="font-size: smaller; padding: 4px 8px" OnClick="btn_ApriScadenzario_Click" />
         </div>
 
         <div id="DivFramePdfFattura" runat="server" style=" width:100%; height:90%;" >

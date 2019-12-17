@@ -71,18 +71,15 @@ namespace VideoSystemWeb.DAL
                             dataScadenza.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(dataScadenza);
 
-                            SqlParameter importoDare = new SqlParameter("@importoDare", DBNull.Value);
-                            if (scadenza.ImportoDare != null) importoDare = new SqlParameter("@importoDare", scadenza.ImportoDare);
+                            SqlParameter importoDare = new SqlParameter("@importoDare", scadenza.ImportoDare);
                             importoDare.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoDare);
 
-                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", DBNull.Value);
-                            if (scadenza.ImportoDareIva != null) importoDareIva = new SqlParameter("@importoDareIva", scadenza.ImportoDareIva);
+                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", scadenza.ImportoDareIva);
                             importoDareIva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoDareIva);
 
-                            SqlParameter importoVersato = new SqlParameter("@importoVersato", DBNull.Value);
-                            if (scadenza.ImportoVersato != null) importoVersato = new SqlParameter("@importoVersato", scadenza.ImportoVersato);
+                            SqlParameter importoVersato = new SqlParameter("@importoVersato", scadenza.ImportoVersato);
                             importoVersato.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoVersato);
 
@@ -91,18 +88,15 @@ namespace VideoSystemWeb.DAL
                             dataVersamento.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(dataVersamento);
 
-                            SqlParameter importoAvere = new SqlParameter("@importoAvere", DBNull.Value);
-                            if (scadenza.ImportoAvere != null) importoAvere = new SqlParameter("@importoAvere", scadenza.ImportoAvere);
+                            SqlParameter importoAvere = new SqlParameter("@importoAvere", scadenza.ImportoAvere);
                             importoAvere.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoAvere);
 
-                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", DBNull.Value);
-                            if (scadenza.ImportoAvereIva != null) importoAvereIva = new SqlParameter("@importoAvereIva", scadenza.ImportoAvereIva);
+                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", scadenza.ImportoAvereIva);
                             importoAvereIva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoAvereIva);
 
-                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", DBNull.Value);
-                            if (scadenza.ImportoRiscosso != null) importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
+                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
                             importoRiscosso.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoRiscosso);
 
@@ -185,18 +179,15 @@ namespace VideoSystemWeb.DAL
                             dataScadenza.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(dataScadenza);
 
-                            SqlParameter importoDare = new SqlParameter("@importoDare", DBNull.Value);
-                            if (scadenza.ImportoDare != null) importoDare = new SqlParameter("@importoDare", scadenza.ImportoDare);
+                            SqlParameter importoDare = new SqlParameter("@importoDare", scadenza.ImportoDare);
                             importoDare.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoDare);
 
-                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", DBNull.Value);
-                            if (scadenza.ImportoDareIva != null) importoDareIva = new SqlParameter("@importoDareIva", scadenza.ImportoDareIva);
+                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", scadenza.ImportoDareIva);
                             importoDareIva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoDareIva);
 
-                            SqlParameter importoVersato = new SqlParameter("@importoVersato", DBNull.Value);
-                            if (scadenza.ImportoVersato != null) importoVersato = new SqlParameter("@importoVersato", scadenza.ImportoVersato);
+                            SqlParameter importoVersato = new SqlParameter("@importoVersato", scadenza.ImportoVersato);
                             importoVersato.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoVersato);
 
@@ -205,18 +196,15 @@ namespace VideoSystemWeb.DAL
                             dataVersamento.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(dataVersamento);
 
-                            SqlParameter importoAvere = new SqlParameter("@importoAvere", DBNull.Value);
-                            if (scadenza.ImportoAvere != null) importoAvere = new SqlParameter("@importoAvere", scadenza.ImportoAvere);
+                            SqlParameter importoAvere = new SqlParameter("@importoAvere", scadenza.ImportoAvere);
                             importoAvere.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoAvere);
 
-                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", DBNull.Value);
-                            if (scadenza.ImportoAvereIva != null) importoAvereIva = new SqlParameter("@importoAvereIva", scadenza.ImportoAvereIva);
+                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", scadenza.ImportoAvereIva);
                             importoAvereIva.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoAvereIva);
 
-                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", DBNull.Value);
-                            if (scadenza.ImportoRiscosso != null) importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
+                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
                             importoRiscosso.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoRiscosso);
 
@@ -265,8 +253,6 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            //StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
-
                             // PARAMETRI PER LOG UTENTE
                             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
                             idUtente.Direction = ParameterDirection.Input;
@@ -285,8 +271,6 @@ namespace VideoSystemWeb.DAL
 
                             StoreProc.ExecuteNonQuery();
 
-                            //int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
-                            //return iReturn;
                         }
                     }
                 }
@@ -296,8 +280,6 @@ namespace VideoSystemWeb.DAL
                 esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
                 esito.Descrizione = "Scadenzario_DAL.cs - DeleteDatiScadenzarioById " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
-
-            //return 0;
         }
 
         public DatiScadenzario GetDatiScadenzarioById(ref Esito esito, int id)
@@ -451,7 +433,7 @@ namespace VideoSystemWeb.DAL
             return listaDatiScadenzario;
         }
 
-        public List<DatiScadenzario> GetDatiTotaliFatturaByIdDatiScadenzario(int idSDatiScadenzario, ref Esito esito)
+        public List<DatiScadenzario> GetDatiTotaliFatturaByIdDatiScadenzario(int idDatiScadenzario, ref Esito esito)
         {
             List<DatiScadenzario> listaDatiScadenzario = new List<DatiScadenzario>();
             try
@@ -459,7 +441,7 @@ namespace VideoSystemWeb.DAL
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
                     string query = "select * from dati_scadenzario  a left join dati_protocollo b on a.idDatiProtocollo = b.id " +
-                                   "where idDatiProtocollo = (select idDatiProtocollo from dati_scadenzario where id = " + idSDatiScadenzario.ToString() +")";
+                                   "where idDatiProtocollo = (select idDatiProtocollo from dati_scadenzario where id = " + idDatiScadenzario.ToString() +")";
 
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
@@ -510,10 +492,133 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.Descrizione = "Scadenzario_DAL.cs - getAllDatiScadenzario " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Descrizione = "Scadenzario_DAL.cs - GetDatiTotaliFatturaByIdDatiScadenzario " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return listaDatiScadenzario;
+        }
+
+        public List<DatiScadenzario> GetDatiScadenzarioByIdDatiProtocollo(int idDatiProtocollo, ref Esito esito)
+        {
+            List<DatiScadenzario> listaDatiScadenzario = new List<DatiScadenzario>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "select * from dati_scadenzario " +
+                                   "where idDatiProtocollo = " + idDatiProtocollo;
+
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        DatiScadenzario scadenza = new DatiScadenzario()
+                                        {
+                                            Id = riga.Field<int>("id"),
+                                            IdDatiProtocollo = riga.Field<int>("idDatiProtocollo"),
+                                            Banca = riga.Field<string>("banca"),
+                                            DataScadenza = riga.Field<DateTime?>("dataScadenza"),
+                                            ImportoDare = riga.Field<decimal>("importoDare"),
+                                            ImportoDareIva = riga.Field<decimal>("importoDare"),
+                                            ImportoVersato = riga.Field<decimal>("importoVersato"),
+                                            DataVersamento = riga.Field<DateTime?>("dataVersamento"),
+                                            ImportoAvere = riga.Field<decimal>("importoAvere"),
+                                            ImportoAvereIva = riga.Field<decimal>("importoAvereIva"),
+                                            ImportoRiscosso = riga.Field<decimal>("importoRiscosso"),
+                                            DataRiscossione = riga.Field<DateTime?>("dataRiscossione"),
+
+                                            Note = riga.Field<string>("note"),
+                                            Iva = riga.Field<decimal>("iva"),
+
+                                            //RagioneSocialeClienteFornitore = riga.Field<string>("cliente"),
+                                            //ProtocolloRiferimento = riga.Field<string>("protocollo_riferimento"),
+                                            //DataProtocollo = riga.Field<DateTime?>("data_protocollo"),
+
+                                            //ImportoTotale = 0,
+                                            Cassa = 0
+                                        };
+                                        listaDatiScadenzario.Add(scadenza);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Scadenzario_DAL.cs - GetDatiScadenzarioByIdDatiProtocollo " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaDatiScadenzario;
+        }
+
+        public List<Protocolli> getFattureNonInScadenzario(ref Esito esito)
+        {
+            List<Protocolli> listaProtocolli = new List<Protocolli>();
+            int idTipoFattura =  UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "Select * from dati_protocollo where id_tipo_protocollo = " + idTipoFattura + " and id not in (select idDatiProtocollo from dati_scadenzario)";
+
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        Protocolli protocollo = new Protocolli();
+                                        protocollo.Id = riga.Field<int>("id");
+                                        protocollo.Codice_lavoro = riga.Field<string>("codice_lavoro");
+                                        protocollo.Numero_protocollo = riga.Field<string>("numero_protocollo");
+                                        if (!DBNull.Value.Equals(riga["data_protocollo"])) protocollo.Data_protocollo = riga.Field<DateTime?>("data_protocollo");
+                                        protocollo.Cliente = riga.Field<string>("cliente");
+                                        if (!DBNull.Value.Equals(riga["id_cliente"])) protocollo.Id_cliente = riga.Field<int>("id_cliente");
+                                        protocollo.Id_tipo_protocollo = riga.Field<int>("id_tipo_protocollo");
+                                        protocollo.Protocollo_riferimento = riga.Field<string>("protocollo_riferimento");
+                                        protocollo.PathDocumento = riga.Field<string>("pathDocumento");
+                                        protocollo.Descrizione = riga.Field<string>("descrizione");
+                                        protocollo.Lavorazione = riga.Field<string>("lavorazione");
+                                        protocollo.Produzione = riga.Field<string>("produzione");
+                                        if (!DBNull.Value.Equals(riga["data_inizio_lavorazione"])) protocollo.Data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
+                                        protocollo.Attivo = riga.Field<bool>("attivo");
+                                        protocollo.Pregresso = riga.Field<bool>("pregresso");
+                                        protocollo.Destinatario = riga.Field<string>("destinatario");
+
+                                        listaProtocolli.Add(protocollo);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaProtocolli;
         }
     }
 }

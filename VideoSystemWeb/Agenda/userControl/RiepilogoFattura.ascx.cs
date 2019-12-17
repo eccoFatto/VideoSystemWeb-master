@@ -491,12 +491,16 @@ namespace VideoSystemWeb.Agenda.userControl
                                 protocolloFattura.Destinatario = "Cliente";
 
                                 int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloFattura, ref esito);
+
+                                ViewState["idProtocollo"] = idProtPianoEsterno;
                             }
                             else
                             {
                                 // AGGIORNO
                                 protocolloFattura.PathDocumento = Path.GetFileName(mapPathFattura);
                                 esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloFattura);
+
+                                ViewState["idProtocollo"] = protocolloFattura.Id;
                             }
 
                             framePdfFattura.Attributes.Remove("src");
@@ -533,7 +537,12 @@ namespace VideoSystemWeb.Agenda.userControl
         protected void btnStampaFattura_Click(object sender, EventArgs e)
         {
         }
-
+        
+        protected void btn_ApriScadenzario_Click(object sender, EventArgs e)
+        {
+            string id_DatiProtocollo = ViewState["idProtocollo"].ToString();
+            Response.Redirect("/Scadenzario/Scadenzario.aspx?TIPO=Cliente&ID_PROTOCOLLO=" + id_DatiProtocollo);
+        }
 
         #endregion
 

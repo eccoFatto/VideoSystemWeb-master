@@ -340,7 +340,7 @@ namespace VideoSystemWeb.Agenda
                     string colore = UtilityTipologiche.getParametroDaTipologica(risorsaCorrente, "color", ref esito);
 
                     e.Row.Cells[indiceColonna].Attributes.Add("class", risorsaCorrente.sottotipo);
-                    e.Row.Cells[indiceColonna].Attributes.Add("style", "background-color:" + colore + ";font-size:10pt;text-align:center;width:100px;");
+                    e.Row.Cells[indiceColonna].Attributes.Add("style", "background-color:" + colore + ";font-size:9pt;text-align:center;width:100px;");
                     e.Row.Cells[indiceColonna].Text = risorsaCorrente.nome;
                 }
             }
@@ -351,14 +351,15 @@ namespace VideoSystemWeb.Agenda
             {
                 e.Row.Cells[0].Attributes.Add("class", "first");
 
-                if ((int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 0 || (int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 6)
+                //if ((int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 0 || (int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 6)
+                if ((int)DateTime.Parse(e.Row.Cells[0].Text.Substring(6)).DayOfWeek == 0 || (int)DateTime.Parse(e.Row.Cells[0].Text.Substring(6)).DayOfWeek == 6)
                 {
                     e.Row.Cells[0].Attributes.Add("class", "first festivo");
                 }
 
                 for (int indiceColonna = 1; indiceColonna <= SessionManager.ListaRisorse.Count; indiceColonna++)
                 {
-                    string data = e.Row.Cells[0].Text;
+                    string data = e.Row.Cells[0].Text.Substring(6);
                     ColonneAgenda risorsa = SessionManager.ListaRisorse.ElementAt(indiceColonna - 1);
                     int id_risorsa = risorsa.id;// ((ColonneAgenda)listaRisorse.ElementAt(indiceColonna - 1)).id;
 
@@ -516,7 +517,8 @@ namespace VideoSystemWeb.Agenda
             {
                 DataRow row = table.NewRow();
                 DateTime dataRiga = data.AddDays(indiceRiga);
-                row[0] = dataRiga.ToString("dd/MM/yyyy");
+
+                row[0] = dataRiga.ToString("ddd - dd/MM/yyyy",new System.Globalization.CultureInfo("it-IT")); //dataRiga.ToString("dd/MM/yyyy");
 
                 int indiceColonna = 1;
                 foreach (ColonneAgenda risorsa in SessionManager.ListaRisorse)

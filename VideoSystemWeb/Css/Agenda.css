@@ -108,6 +108,8 @@
     background-color: #FDEDB5;
     width: 100px;
     height: 40px;
+    font-size: .8em;
+    white-space:nowrap;
 }
 
 .festivo{

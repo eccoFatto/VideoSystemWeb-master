@@ -563,7 +563,7 @@ namespace VideoSystemWeb.DAL
             return listaDatiScadenzario;
         }
 
-        public List<Protocolli> getFattureNonInScadenzario(ref Esito esito)
+        public List<Protocolli> getFattureNonInScadenzario(string tipo, ref Esito esito)
         {
             List<Protocolli> listaProtocolli = new List<Protocolli>();
             int idTipoFattura =  UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
@@ -571,7 +571,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "Select * from dati_protocollo where id_tipo_protocollo = " + idTipoFattura + " and id not in (select idDatiProtocollo from dati_scadenzario)";
+                    string query = "Select * from dati_protocollo where id_tipo_protocollo = " + idTipoFattura + " and id not in (select idDatiProtocollo from dati_scadenzario) and (pregresso = 0 or pregresso is NULL) AND destinatario = '" + tipo + "'";
 
                     using (SqlCommand cmd = new SqlCommand(query))
                     {

@@ -33,19 +33,45 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 #region GESTIONE PARAMETRI URL
                 string tipo = string.Empty;
                 int idDatiProtocollo = 0;
+
+                string dataDocumento = string.Empty;
+                string numeroDocumento = string.Empty;
+                string importo = string.Empty;
+                string iva = string.Empty;
+                string importoIva = string.Empty;
+                string banca = string.Empty;
+
+
+
                 if (!string.IsNullOrEmpty(Request.QueryString["TIPO"])) tipo = Request.QueryString["TIPO"];
                 if (!string.IsNullOrEmpty(Request.QueryString["ID_PROTOCOLLO"])) idDatiProtocollo = int.Parse(Request.QueryString["ID_PROTOCOLLO"]);
+
+                if (!string.IsNullOrEmpty(Request.QueryString["DATA_DOC"])) dataDocumento = Request.QueryString["DATA_DOC"];
+                if (!string.IsNullOrEmpty(Request.QueryString["NUM_DOC"])) numeroDocumento = Request.QueryString["NUM_DOC"];
+                if (!string.IsNullOrEmpty(Request.QueryString["IMPORTO"])) importo = Request.QueryString["IMPORTO"];
+                if (!string.IsNullOrEmpty(Request.QueryString["IVA"])) iva = Request.QueryString["IVA"];
+                if (!string.IsNullOrEmpty(Request.QueryString["IMPORTO_IVA"])) importoIva = Request.QueryString["IMPORTO_IVA"];
+                if (!string.IsNullOrEmpty(Request.QueryString["BANCA"])) banca = Request.QueryString["BANCA"];
+
+
 
                 if (!string.IsNullOrEmpty(tipo) && idDatiProtocollo != 0 && Scadenzario_BLL.Instance.GetDatiScadenzarioByIdDatiProtocollo(idDatiProtocollo, ref esito).Count == 0)
                 {
                     div_Fattura.Visible = false;
+                    ddl_Tipo.Attributes.Add("Disabled", "Disabled");
+
                     ViewState["ID_PROTOCOLLO"] = idDatiProtocollo;
 
                     Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, idDatiProtocollo);
                     ddl_Tipo.SelectedValue = tipo;
                     txt_ClienteFornitore.Text = protocollo.Cliente;
                     txt_DataDocumento.Text = protocollo.Data_protocollo==null? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_protocollo).ToString("dd/MM/yyyy");
-                    txt_NumeroDocumento.Text = protocollo.Protocollo_riferimento;
+                    txt_NumeroDocumento.Text = numeroDocumento;// protocollo.Protocollo_riferimento;
+
+                    txt_ImportoDocumento.Text = importo;
+                    txt_Iva.Text = iva;
+                    txt_ImportoIva.Text = importoIva;
+                    ddl_Banca.SelectedValue = banca;
 
                     pnlContainer.Visible = true;
                 }
@@ -91,6 +117,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected void btnInsScadenza_Click(object sender, EventArgs e)
         {
             div_Fattura.Visible = true;
+            ddl_Tipo.Attributes.Remove("Disabled");
+
             ddl_fattura.Items.Clear();
 
             ViewState["idScadenza"] = "";
@@ -98,10 +126,10 @@ namespace VideoSystemWeb.Scadenzario.userControl
             NascondiErroriValidazione();
             gestisciPulsantiScadenza("INSERIMENTO");
 
-            ddl_Tipo.Attributes.Add("Disabled", "Disabled");
+            ddl_Tipo.Attributes.Remove("Disabled");
 
             Esito esito = new Esito();
-            List<Protocolli> listaProtocolloNonInScadenzario = Scadenzario_BLL.Instance.getFattureNonInScadenzario(ref esito);
+            List<Protocolli> listaProtocolloNonInScadenzario = Scadenzario_BLL.Instance.getFattureNonInScadenzario(ddl_Tipo.SelectedValue, ref esito);
 
             if (listaProtocolloNonInScadenzario.Count == 0)
             {
@@ -127,7 +155,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             if (!string.IsNullOrEmpty(ddl_fattura.SelectedValue))
             {
-                ddl_Tipo.Attributes.Remove("Disabled");
                 int idDatiProtocollo = int.Parse(ddl_fattura.SelectedValue);
 
                 ViewState["ID_PROTOCOLLO"] = idDatiProtocollo;
@@ -139,7 +166,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
             else
             {
-                ddl_Tipo.Attributes.Add("Disabled", "Disabled");
                 ViewState["ID_PROTOCOLLO"] = null;
 
                 txt_ClienteFornitore.Text = "";
@@ -148,7 +174,30 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
         }
 
+        protected void ddl_Tipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ddl_fattura.Items.Clear();
+            txt_ClienteFornitore.Text = "";
+            txt_DataDocumento.Text = "";
+            txt_NumeroDocumento.Text = "";
 
+            Esito esito = new Esito();
+            List<Protocolli> listaProtocolloNonInScadenzario = Scadenzario_BLL.Instance.getFattureNonInScadenzario(ddl_Tipo.SelectedValue, ref esito);
+
+            if (listaProtocolloNonInScadenzario.Count == 0)
+            {
+                ddl_fattura.Items.Add(new ListItem("<nessuna fattura trovata>", ""));
+            }
+            else
+            {
+                ddl_fattura.Items.Add(new ListItem("<seleziona una fattura>", ""));
+                foreach (Protocolli protocollo in listaProtocolloNonInScadenzario)
+                {
+                    ddl_fattura.Items.Add(new ListItem("Protocollo: " + protocollo.Numero_protocollo + " - Cliente: " + protocollo.Cliente + " - Lavorazione: " + protocollo.Lavorazione, protocollo.Id.ToString()));
+                }
+            }
+            ddl_fattura.SelectedIndex = 0;
+        }
 
         protected void btnRicercaScadenza_Click(object sender, EventArgs e)
         {
@@ -177,6 +226,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 case "modifica":
                     NascondiErroriValidazione();
                     div_Fattura.Visible = false;
+                    ddl_Tipo.Attributes.Add("Disabled", "Disabled");
                     
                     DatiScadenzario scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenzaSelezionata);
                     
@@ -239,12 +289,12 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             if (ViewState["idScadenza"]!=null)
             {
-                int idScadenza = Convert.ToInt16(ViewState["idScadenza"].ToString());
+                int idScadenza = Convert.ToInt32(ViewState["idScadenza"].ToString());
                 idDatiProtocollo = Scadenzario_BLL.Instance.GetDatiTotaliFatturaByIdDatiScadenzario(idScadenza, ref esito).ElementAt(0).IdDatiProtocollo;
             }
             else if (ViewState["ID_PROTOCOLLO"]!=null)
             {
-                idDatiProtocollo = Convert.ToInt16(ViewState["ID_PROTOCOLLO"].ToString());
+                idDatiProtocollo = Convert.ToInt32(ViewState["ID_PROTOCOLLO"].ToString());
             }
 
             ApriDocumento(idDatiProtocollo);

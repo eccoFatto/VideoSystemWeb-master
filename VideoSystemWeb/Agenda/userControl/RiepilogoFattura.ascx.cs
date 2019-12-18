@@ -198,8 +198,6 @@ namespace VideoSystemWeb.Agenda.userControl
                             {
                                 pGriglia = new Paragraph(descrizioneLunga).SetFontSize(9);
                             }
-                            
-
 
                             cellaGriglia = new Cell(1, 2).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                             cellaGriglia.Add(pGriglia);
@@ -493,6 +491,7 @@ namespace VideoSystemWeb.Agenda.userControl
                                 int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloFattura, ref esito);
 
                                 ViewState["idProtocollo"] = idProtPianoEsterno;
+
                             }
                             else
                             {
@@ -501,7 +500,16 @@ namespace VideoSystemWeb.Agenda.userControl
                                 esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloFattura);
 
                                 ViewState["idProtocollo"] = protocolloFattura.Id;
+
                             }
+
+                            ViewState["importo"] = totPrezzo;
+                            ViewState["iva"] = listaArticoliLavorazione[0].Iva;// totIVA;
+                            ViewState["importoIva"] = totPrezzo + totIVA;
+                            ViewState["banca"] = noteOfferta.Banca;
+                            ViewState["numeroDocumento"] = eventoSelezionato.codice_lavoro;
+
+
 
                             framePdfFattura.Attributes.Remove("src");
                             framePdfFattura.Attributes.Add("src", pathFattura.Replace("~", ""));
@@ -541,7 +549,18 @@ namespace VideoSystemWeb.Agenda.userControl
         protected void btn_ApriScadenzario_Click(object sender, EventArgs e)
         {
             string id_DatiProtocollo = ViewState["idProtocollo"].ToString();
-            Response.Redirect("/Scadenzario/Scadenzario.aspx?TIPO=Cliente&ID_PROTOCOLLO=" + id_DatiProtocollo);
+            string importo = ViewState["importo"].ToString();
+            string iva = ViewState["iva"].ToString();
+            string importoIva = ViewState["importoIva"].ToString();
+            string banca = ViewState["banca"].ToString();
+            string numeroDocumento = ViewState["numeroDocumento"].ToString();
+            Response.Redirect("/Scadenzario/Scadenzario.aspx?TIPO=Cliente" +
+                                                            "&ID_PROTOCOLLO=" + id_DatiProtocollo +
+                                                            "&IMPORTO=" + importo +
+                                                            "&IVA=" + iva +
+                                                            "&IMPORTO_IVA=" + importoIva +
+                                                            "&BANCA=" + banca +
+                                                            "&NUM_DOC=" + numeroDocumento);
         }
 
         #endregion

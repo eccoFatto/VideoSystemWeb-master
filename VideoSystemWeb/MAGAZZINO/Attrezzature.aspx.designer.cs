@@ -76,13 +76,13 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.TextBox tbSeriale;
         
         /// <summary>
-        /// Controllo tbDataAcquisto.
+        /// Controllo ddlTipoGruppoMagazzino.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbDataAcquisto;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoGruppoMagazzino;
         
         /// <summary>
         /// Controllo tbDescrizione.
@@ -317,6 +317,15 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_Posizione;
+        
+        /// <summary>
+        /// Controllo cmbMod_Gruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Gruppo;
         
         /// <summary>
         /// Controllo cbMod_Garanzia.

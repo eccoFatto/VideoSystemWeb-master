@@ -183,6 +183,7 @@
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=CATEGORIE" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologia Categorie</a>
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=SUBCATEGORIE" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologia Sub Categorie</a>
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=POSIZIONI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologia Posizioni</a>
+                        <a href="/Articoli/GestioneArticoli.aspx?TIPO=GRUPPO_MAGAZZINO" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologia Gruppo Magazzino</a>
                     </div>
                 </div>
                 <a href="/REPORT/ReportTLTime.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Report TLTime</a>

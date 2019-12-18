@@ -63,6 +63,7 @@ namespace VideoSystemWeb.DAL
                                         attrezzature.Id_categoria = riga.Field<int>("id_categoria");
                                         if (!DBNull.Value.Equals(riga["id_subcategoria"])) attrezzature.Id_subcategoria = riga.Field<int>("id_subcategoria");
                                         attrezzature.Id_posizione_magazzino = riga.Field<int>("id_posizione_magazzino");
+                                        if (!DBNull.Value.Equals(riga["id_gruppo_magazzino"])) attrezzature.Id_gruppo_magazzino = riga.Field<int>("id_gruppo_magazzino");
                                         attrezzature.Marca = riga.Field<string>("marca");
                                         attrezzature.Modello = riga.Field<string>("modello");
                                         attrezzature.Note = riga.Field<string>("note");
@@ -114,6 +115,7 @@ namespace VideoSystemWeb.DAL
                                     attrezzatura.Id_categoria = dt.Rows[0].Field<int>("id_categoria");
                                     if (!DBNull.Value.Equals(dt.Rows[0]["id_subcategoria"])) attrezzatura.Id_subcategoria = dt.Rows[0].Field<int>("id_subcategoria");
                                     attrezzatura.Id_posizione_magazzino = dt.Rows[0].Field<int>("id_posizione_magazzino");
+                                    if (!DBNull.Value.Equals(dt.Rows[0]["id_gruppo_magazzino"])) attrezzatura.Id_gruppo_magazzino = dt.Rows[0].Field<int>("id_gruppo_magazzino");
                                     attrezzatura.Marca = dt.Rows[0].Field<string>("marca");
                                     attrezzatura.Modello = dt.Rows[0].Field<string>("modello");
                                     attrezzatura.Seriale = dt.Rows[0].Field<string>("seriale");
@@ -194,6 +196,11 @@ namespace VideoSystemWeb.DAL
                             if (attrezzatura.Id_subcategoria != null && attrezzatura.Id_subcategoria > 0) Id_subcategoria = new SqlParameter("@id_subcategoria", attrezzatura.Id_subcategoria);
                             Id_subcategoria.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Id_subcategoria);
+
+                            SqlParameter Id_gruppo_magazzino = new SqlParameter("@id_gruppo_magazzino", DBNull.Value);
+                            if (attrezzatura.Id_gruppo_magazzino != null && attrezzatura.Id_gruppo_magazzino > 0) Id_gruppo_magazzino = new SqlParameter("@id_gruppo_magazzino", attrezzatura.Id_gruppo_magazzino);
+                            Id_gruppo_magazzino.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(Id_gruppo_magazzino);
 
                             SqlParameter Marca = new SqlParameter("@marca", attrezzatura.Marca);
                             Marca.Direction = ParameterDirection.Input;
@@ -298,6 +305,11 @@ namespace VideoSystemWeb.DAL
                             if (attrezzatura.Id_subcategoria != null && attrezzatura.Id_subcategoria > 0) Id_subcategoria = new SqlParameter("@id_subcategoria", attrezzatura.Id_subcategoria);
                             Id_subcategoria.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Id_subcategoria);
+
+                            SqlParameter Id_gruppo_magazzino = new SqlParameter("@id_gruppo_magazzino", DBNull.Value);
+                            if (attrezzatura.Id_gruppo_magazzino != null && attrezzatura.Id_gruppo_magazzino > 0) Id_gruppo_magazzino = new SqlParameter("@id_gruppo_magazzino", attrezzatura.Id_gruppo_magazzino);
+                            Id_gruppo_magazzino.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(Id_gruppo_magazzino);
 
                             SqlParameter Marca = new SqlParameter("@Marca", attrezzatura.Marca);
                             Marca.Direction = ParameterDirection.Input;

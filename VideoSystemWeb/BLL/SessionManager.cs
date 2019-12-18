@@ -474,6 +474,21 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["ListaTipiPosizioniMagazzino"] = value;
             }
         }
+        public static List<Tipologica> ListaTipiGruppoMagazzino
+        {
+            get
+            {
+                if (HttpContext.Current.Session["ListaTipiGruppoMagazzino"] == null || ((List<Tipologica>)HttpContext.Current.Session["ListaTipiGruppoMagazzino"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["ListaTipiGruppoMagazzino"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_GRUPPO_MAGAZZINO);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["ListaTipiGruppoMagazzino"];
+            }
+            set
+            {
+                HttpContext.Current.Session["ListaTipiGruppoMagazzino"] = value;
+            }
+        }
         public static bool VisualizzazioneAutomaticaPopupErrore
         {
             get

@@ -65,6 +65,8 @@ namespace VideoSystemWeb.BLL
                     return "tipo_subcategoria_magazzino";
                 case EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO:
                     return "tipo_posizione_magazzino";
+                case EnumTipologiche.TIPO_GRUPPO_MAGAZZINO:
+                    return "tipo_gruppo_magazzino";
                 default:
                     return string.Empty;
             }
@@ -217,7 +219,8 @@ namespace VideoSystemWeb.BLL
                                     TIPO_INTERVENTO,
                                     TIPO_CATEGORIE_MAGAZZINO,
                                     TIPO_SUB_CATEGORIE_MAGAZZINO,
-                                    TIPO_POSIZIONE_MAGAZZINO}
+                                    TIPO_POSIZIONE_MAGAZZINO,
+                                    TIPO_GRUPPO_MAGAZZINO}
 
     public enum EnumSottotipiRisorse {DIPENDENTI, REGIE, EXTRA}
 }

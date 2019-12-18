@@ -22,7 +22,7 @@ namespace VideoSystemWeb.Articoli.userControl
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // FUNZIONA SE NELLA PAGINA ASPX CHIAMANTE C'E' UN CAMPO HIDDENFIELD COL TIPO ARTICOLO (GENERI/GRUPPI/SOTTOGRUPPI)
+            // FUNZIONA SE NELLA PAGINA ASPX CHIAMANTE C'E' UN CAMPO HIDDENFIELD COL TIPO ARTICOLO (GENERI/GRUPPI/SOTTOGRUPPI/GRUPPO_MAGAZZINO)
             HiddenField tipoArticolo = this.Parent.FindControl("HF_TIPO_ARTICOLO") as HiddenField;
             if (tipoArticolo != null)
             {
@@ -159,6 +159,15 @@ namespace VideoSystemWeb.Articoli.userControl
                     lblTipoArticolo.ForeColor = System.Drawing.Color.Coral;
                     lista = SessionManager.ListaTipiPosizioniMagazzino;
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO;
+                    break;
+                case "GRUPPO_MAGAZZINO":
+                    if (clearLista)
+                    {
+                        SessionManager.ListaTipiGruppoMagazzino.Clear();
+                    }
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.DarkKhaki;
+                    lista = SessionManager.ListaTipiGruppoMagazzino;
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GRUPPO_MAGAZZINO;
                     break;
                 default:
                     if (clearLista)

@@ -572,7 +572,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "Select * from dati_protocollo where id_tipo_protocollo = " + idTipoFattura + " and id not in (select idDatiProtocollo from dati_scadenzario) and (pregresso = 0 or pregresso is NULL) AND destinatario = '" + tipo + "'";
+                    string query = "Select * from dati_protocollo where attivo = 1 and id_tipo_protocollo = " + idTipoFattura + " and id not in (select idDatiProtocollo from dati_scadenzario) and (pregresso = 0 or pregresso is NULL) AND destinatario = '" + tipo + "'";
 
                     using (SqlCommand cmd = new SqlCommand(query))
                     {

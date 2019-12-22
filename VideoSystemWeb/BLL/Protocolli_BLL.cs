@@ -85,6 +85,13 @@ namespace VideoSystemWeb.BLL
             return iREt;
         }
 
+        public string getNumeroFattura()
+        {
+            Esito esito = new Esito();
+            string sREt = Base_DAL.GetNumeroFattura(ref esito);
+
+            return sREt;
+        }
 
         public Esito resetProcotollo(int protocolloIniziale)
         {

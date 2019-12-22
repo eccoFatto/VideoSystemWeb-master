@@ -65,14 +65,18 @@ namespace VideoSystemWeb.Agenda.userControl
                         int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
                         List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(eventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
                         string numeroProtocollo = "";
+                        string numeroFattura = "";
                         if (listaProtocolli.Count == 0)
                         {
                             numeroProtocollo = Protocolli_BLL.Instance.getNumeroProtocollo();
+                            // ESTRAPOLO IL NUMERO FATTURA DALLA TABELLA TAB_NUMERO_FATTURA 
+                            numeroFattura = Protocolli_BLL.Instance.getNumeroFattura();
                         }
                         else
                         {
                             protocolloFattura = listaProtocolli.First();
                             numeroProtocollo = protocolloFattura.Numero_protocollo;
+                            numeroFattura = protocolloFattura.Protocollo_riferimento;
                         }
 
                         // GESTIONE NOMI FILE PDF
@@ -115,15 +119,15 @@ namespace VideoSystemWeb.Agenda.userControl
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(eventoSelezionato.codice_lavoro).SetFontSize(10).SetBold();
-                        cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        pGriglia = new Paragraph(numeroFattura + " - Rif.Lav. " +  eventoSelezionato.codice_lavoro).SetFontSize(10).SetBold();
+                        cellaGriglia = new iText.Layout.Element.Cell(1,2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
 
-                        pGriglia = new Paragraph("").SetFontSize(10);
-                        cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        cellaGriglia.Add(pGriglia);
-                        tbGrigla.AddHeaderCell(cellaGriglia);
+                        //pGriglia = new Paragraph("").SetFontSize(10);
+                        //cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        //cellaGriglia.Add(pGriglia);
+                        //tbGrigla.AddHeaderCell(cellaGriglia);
 
                         pGriglia = new Paragraph("Rif.Prot. " + numeroProtocollo).SetFontSize(10).SetBold();
                         cellaGriglia = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
@@ -483,7 +487,7 @@ namespace VideoSystemWeb.Agenda.userControl
                                 protocolloFattura.Lavorazione = eventoSelezionato.lavorazione;
                                 protocolloFattura.PathDocumento = Path.GetFileName(mapPathFattura);
                                 protocolloFattura.Produzione = eventoSelezionato.produzione;
-                                protocolloFattura.Protocollo_riferimento = "";
+                                protocolloFattura.Protocollo_riferimento = numeroFattura;
                                 protocolloFattura.Numero_protocollo = numeroProtocollo;
                                 protocolloFattura.Pregresso = false;
                                 protocolloFattura.Destinatario = "Cliente";

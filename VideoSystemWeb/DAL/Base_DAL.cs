@@ -884,6 +884,89 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
+        public static string GetNumeroFattura(ref Esito esito)
+        {
+            string ret = "";
+            try
+            {
+                string queryVerificaPresenzaFattureAnno = "select isnull(max(numero_Fattura),'0') as numFatt from tab_numero_fattura where anno_fattura=" + DateTime.Today.Year.ToString();
+                DataTable dtProtocolli = Base_DAL.GetDatiBySql(queryVerificaPresenzaFattureAnno, ref esito);
+                int newNumFatt = 0;
+                if (dtProtocolli.Rows[0]["numFatt"].ToString() == "0")
+                {
+                    newNumFatt = 1;
+                    // INSERISCO NUOVO ANNO E NUMERO_FATTURA = 1 E RESTITUISCO 20200001
+
+                    using (SqlConnection con = new SqlConnection(sqlConstr))
+                    {
+                        using (SqlCommand StoreProc = new SqlCommand("InsertProgressivoFattura"))
+                        {
+                            using (SqlDataAdapter sda = new SqlDataAdapter())
+                            {
+                                StoreProc.Connection = con;
+                                sda.SelectCommand = StoreProc;
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+
+                                SqlParameter anno_fattura = new SqlParameter("@anno_fattura", DateTime.Today.Year);
+                                anno_fattura.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(anno_fattura);
+
+                                SqlParameter numero_fattura = new SqlParameter("@numero_fattura", newNumFatt);
+                                numero_fattura.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(numero_fattura);
+
+                                StoreProc.Connection.Open();
+
+                                StoreProc.ExecuteNonQuery();
+
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    newNumFatt=Convert.ToInt16(dtProtocolli.Rows[0]["numFatt"].ToString()) + 1;
+                    // AGGIORNO RIGA ANNO CON NUMERO FATTURA + 1
+                    using (SqlConnection con = new SqlConnection(sqlConstr))
+                    {
+                        using (SqlCommand StoreProc = new SqlCommand("UpdateProgressivoFattura"))
+                        {
+                            using (SqlDataAdapter sda = new SqlDataAdapter())
+                            {
+                                StoreProc.Connection = con;
+                                sda.SelectCommand = StoreProc;
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+
+                                SqlParameter anno = new SqlParameter("@anno", DateTime.Today.Year);
+                                anno.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(anno);
+
+                                SqlParameter anno_fattura = new SqlParameter("@anno_fattura", DateTime.Today.Year);
+                                anno_fattura.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(anno_fattura);
+
+                                SqlParameter numero_fattura = new SqlParameter("@numero_fattura", newNumFatt);
+                                numero_fattura.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(numero_fattura);
+
+                                StoreProc.Connection.Open();
+
+                                StoreProc.ExecuteNonQuery();
+
+                            }
+                        }
+                    }
+                }
+                ret = DateTime.Today.Year.ToString() + newNumFatt.ToString("0000");
+
+            }
+            catch (Exception ex)
+            {
+
+                esito.Descrizione = ex.Message;
+            }
+            return ret;
+        }
 
         public static int GetProtocollo(ref Esito esito)
         {

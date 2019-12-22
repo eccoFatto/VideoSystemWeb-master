@@ -171,5 +171,10 @@ namespace VideoSystemWeb.BLL
         {
             return Scadenzario_DAL.Instance.GetDatiScadenzarioByIdDatiProtocollo(idDatiProtocollo, ref esito);
         }
+
+        public List<Anag_Clienti_Fornitori> getClientiFornitoriInScadenzario(ref Esito esito)
+        {
+            return Scadenzario_DAL.Instance.getClientiFornitoriInScadenzario(ref esito);
+        }
     }
 }

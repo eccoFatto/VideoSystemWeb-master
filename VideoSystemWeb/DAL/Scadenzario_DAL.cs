@@ -355,7 +355,8 @@ namespace VideoSystemWeb.DAL
             {
                 string filtriRicerca = string.Empty;
                 if (!string.IsNullOrEmpty(tipoAnagrafica)) filtriRicerca += " and b.destinatario = '" + tipoAnagrafica + "'";
-                if (!string.IsNullOrEmpty(codiceAnagrafica)) filtriRicerca += " and b.cliente like '%" + codiceAnagrafica + "%'";
+                if (!string.IsNullOrEmpty(codiceAnagrafica)) filtriRicerca += " and b.cliente like '%" + codiceAnagrafica.Trim() + "%'";
+
                 if (!string.IsNullOrEmpty(numeroFattura)) filtriRicerca += " and b.protocollo_riferimento = '" + numeroFattura + "'";
                 if (!string.IsNullOrEmpty(fatturaPagata))
                 {
@@ -619,6 +620,50 @@ namespace VideoSystemWeb.DAL
             }
 
             return listaProtocolli;
+        }
+
+        public List<Anag_Clienti_Fornitori> getClientiFornitoriInScadenzario(ref Esito esito)
+        {
+            List<Anag_Clienti_Fornitori> listaClientiFornitori = new List<Anag_Clienti_Fornitori>();
+            int idTipoFattura = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "Select distinct cliente from dati_protocollo where id_tipo_protocollo = " + idTipoFattura + " and (pregresso = 0 or pregresso is NULL) order by cliente ";
+
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        Anag_Clienti_Fornitori clienteFornitore = new Anag_Clienti_Fornitori();
+                                        clienteFornitore.Id = 0;
+                                        clienteFornitore.RagioneSociale = riga.Field<string>("cliente");
+
+                                        listaClientiFornitori.Add(clienteFornitore);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaClientiFornitori;
         }
     }
 }

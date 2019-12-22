@@ -28,7 +28,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
             {
                 CaricaCombo();
                 PopolaGrigliaScadenze();
-                
 
                 #region GESTIONE PARAMETRI URL
                 string tipo = string.Empty;
@@ -52,7 +51,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 if (!string.IsNullOrEmpty(Request.QueryString["IVA"])) iva = Request.QueryString["IVA"];
                 if (!string.IsNullOrEmpty(Request.QueryString["IMPORTO_IVA"])) importoIva = Request.QueryString["IMPORTO_IVA"];
                 if (!string.IsNullOrEmpty(Request.QueryString["BANCA"])) banca = Request.QueryString["BANCA"];
-
 
 
                 if (!string.IsNullOrEmpty(tipo) && idDatiProtocollo != 0 && Scadenzario_BLL.Instance.GetDatiScadenzarioByIdDatiProtocollo(idDatiProtocollo, ref esito).Count == 0)
@@ -79,12 +77,16 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 #endregion
             }
 
+            ddl_RagioneSociale.Text = hf_RagioneSociale.Value;
+
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
         private void CaricaCombo()
         {
             Esito esito = new Esito();
+
+            #region BANCA
             List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
             
             foreach (DatiBancari banca in listaDatiBancari)
@@ -94,6 +96,14 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
             ddl_Banca.Items.Add(new ListItem("Cassa", "Cassa"));
             ddl_BancaModifica.Items.Add(new ListItem("Cassa", "Cassa"));
+            #endregion
+
+            #region RAGIONE SOCIALE
+            List<Anag_Clienti_Fornitori> listaClientiFornitori = Scadenzario_BLL.Instance.getClientiFornitoriInScadenzario(ref esito);
+
+            PopolaDDLGenerico(elencoRagioneSociale, listaClientiFornitori);
+
+            #endregion
         }
 
         private void PopolaGrigliaScadenze()
@@ -206,7 +216,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
 
             gv_scadenze.DataSource = Scadenzario_BLL.Instance.GetAllDatiScadenzario(ddl_TipoAnagrafica.SelectedValue,
-                                                                                    ddl_CodiceAnagrafica.SelectedValue,
+                                                                                    // ddl_CodiceAnagrafica.SelectedValue,
+                                                                                    hf_RagioneSociale.Value,
                                                                                     txt_NumeroFattura.Text,
                                                                                     ddlFatturaPagata.SelectedValue,
                                                                                     txt_DataFatturaDa.Text,

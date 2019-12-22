@@ -58,6 +58,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 if (!string.IsNullOrEmpty(tipo) && idDatiProtocollo != 0 && Scadenzario_BLL.Instance.GetDatiScadenzarioByIdDatiProtocollo(idDatiProtocollo, ref esito).Count == 0)
                 {
                     div_Fattura.Visible = false;
+                    div_DatiCreazioneScadenza.Visible = true;
                     ddl_Tipo.Attributes.Add("Disabled", "Disabled");
 
                     ViewState["ID_PROTOCOLLO"] = idDatiProtocollo;
@@ -117,6 +118,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected void btnInsScadenza_Click(object sender, EventArgs e)
         {
             div_Fattura.Visible = true;
+            div_DatiCreazioneScadenza.Visible = true;
             ddl_Tipo.Attributes.Remove("Disabled");
 
             ddl_fattura.Items.Clear();
@@ -226,6 +228,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 case "modifica":
                     NascondiErroriValidazione();
                     div_Fattura.Visible = false;
+                    div_DatiCreazioneScadenza.Visible = false;
                     ddl_Tipo.Attributes.Add("Disabled", "Disabled");
                     
                     DatiScadenzario scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenzaSelezionata);
@@ -492,13 +495,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             if (ddl_Tipo.SelectedValue.ToUpper() == "CLIENTE")
             {
-                scadenza.ImportoAvere = ValidaCampo(txt_ImportoDocumento, 0, true, ref esito); 
+                scadenza.ImportoAvere = ValidaCampo(txt_ImportoDocumento, decimal.Parse("0"), true, ref esito); 
                 scadenza.ImportoAvereIva = scadenza.ImportoAvere * (1 + (decimal.Parse(txt_Iva.Text) / 100));
                 scadenza.ImportoRiscosso = 0;
             }
             else
             {
-                scadenza.ImportoDare = ValidaCampo(txt_ImportoDocumento, 0, true, ref esito); 
+                scadenza.ImportoDare = ValidaCampo(txt_ImportoDocumento, decimal.Parse("0"), true, ref esito); 
                 scadenza.ImportoDareIva = scadenza.ImportoDare * (1 + (decimal.Parse(txt_Iva.Text) / 100));
                 scadenza.ImportoVersato = 0;
             }

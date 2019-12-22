@@ -113,7 +113,7 @@
         <ContentTemplate>
             <div class="w3-row-padding">
                 <div class="w3-quarter">
-                    <label>Tipo Anagrafica</label>
+                    <label>Cliente/Fornitore</label>
                     <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
                         <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
                         <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
@@ -121,7 +121,7 @@
                     </asp:DropDownList>
                 </div>
                 <div class="w3-quarter">
-                    <label>Codice Anagrafica</label>
+                    <label>Ragione Sociale</label>
                     <asp:DropDownList ID="ddl_CodiceAnagrafica" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border"/>
                 </div>
                 <div class="w3-quarter">
@@ -313,7 +313,7 @@
                                         <asp:TextBox ID="txt_AnticipoImporto" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" placeholder="0" Text="" onkeypress="return onlyNumbers();" DataFormatString="{0:N2}"></asp:TextBox>
                                     </div>
                                 </div>
-                                <div class="w3-row-padding">
+                                <div id="div_DatiCreazioneScadenza" runat="server" class="w3-row-padding">
                                     <div id="div_CadenzaGiorni" runat="server" class="w3-quarter">
                                         <label>Cadenza giorni</label>
                                         <asp:TextBox ID="txt_CadenzaGiorni" runat="server" CssClass="w3-input w3-border" Text="" onkeypress="return onlyNumbers();"></asp:TextBox>

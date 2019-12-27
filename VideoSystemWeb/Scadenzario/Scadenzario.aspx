@@ -59,7 +59,8 @@
         // AZZERO TUTTI I CAMPI RICERCA
         function azzeraCampiRicerca() {
             $("#<%=ddl_TipoAnagrafica.ClientID%>").val('');
-            $("#<%=ddl_CodiceAnagrafica.ClientID%>").val('');
+            //$("#< %=ddl_CodiceAnagrafica.ClientID%>").val('');
+            $("#<%=hf_RagioneSociale.ClientID%>").val('');
             $("#<%=txt_NumeroFattura.ClientID%>").val('');
             $("#<%=ddlFatturaPagata.ClientID%>").val('');
             $("#<%=txt_DataFatturaDa.ClientID%>").val('');
@@ -93,6 +94,22 @@
             $('#<%=txt_TotaleIva.ClientID%>').val((imponibileIva - importoIva).toFixed(2).replace(".", ","));
         }
 
+        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+        // GESTIONE DROPDOWN RAGIONE SOCIALE
+            $("#filtroRagioneSociale").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#divRagioneSociale .dropdown-menu li").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            $("#<%=elencoRagioneSociale.ClientID%> .dropdown-item").on("click", function (e) {
+                $("#<%=hf_RagioneSociale.ClientID%>").val($(e.target).text());
+                $("#<%=ddl_RagioneSociale.ClientID%>").val($(e.target).text());
+                $("#<%=ddl_RagioneSociale.ClientID%>").attr("title", $(e.target).text());
+            });
+        });
+
     </script>
 
     <div id="popMessage" class="w3-modal" style="z-index:10000">
@@ -113,7 +130,7 @@
         <ContentTemplate>
             <div class="w3-row-padding">
                 <div class="w3-quarter">
-                    <label>Tipo Anagrafica</label>
+                    <label>Cliente/Fornitore</label>
                     <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
                         <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
                         <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
@@ -121,8 +138,20 @@
                     </asp:DropDownList>
                 </div>
                 <div class="w3-quarter">
-                    <label>Codice Anagrafica</label>
-                    <asp:DropDownList ID="ddl_CodiceAnagrafica" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border"/>
+                    <label>Ragione Sociale</label>
+                    <%--<asp:DropDownList ID="ddl_CodiceAnagrafica" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border"/>--%>
+
+                    <div id="divRagioneSociale" class="dropdown ">
+                        <asp:HiddenField ID="hf_RagioneSociale" runat="server" Value="" />
+                        <asp:Button ID="ddl_RagioneSociale" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
+                        <ul id="elencoRagioneSociale" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px">
+                            <input class="form-control" id="filtroRagioneSociale" type="text" placeholder="Cerca..">
+                        </ul>
+                    </div>
+
+
+
+
                 </div>
                 <div class="w3-quarter">
                     <label>Numero Fattura</label>
@@ -281,12 +310,12 @@
                                         
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
-                                        <label>Data documento</label>
+                                        <label>Data fattura</label>
                                         <asp:TextBox ID="txt_DataDocumento" runat="server" Disabled MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                     
                                     <div class="w3-quarter">
-                                        <label>Numero documento</label>
+                                        <label>Numero fattura</label>
                                         <asp:TextBox ID="txt_NumeroDocumento" Disabled runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""/>
                                     </div>
                                     
@@ -313,7 +342,7 @@
                                         <asp:TextBox ID="txt_AnticipoImporto" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" placeholder="0" Text="" onkeypress="return onlyNumbers();" DataFormatString="{0:N2}"></asp:TextBox>
                                     </div>
                                 </div>
-                                <div class="w3-row-padding">
+                                <div id="div_DatiCreazioneScadenza" runat="server" class="w3-row-padding">
                                     <div id="div_CadenzaGiorni" runat="server" class="w3-quarter">
                                         <label>Cadenza giorni</label>
                                         <asp:TextBox ID="txt_CadenzaGiorni" runat="server" CssClass="w3-input w3-border" Text="" onkeypress="return onlyNumbers();"></asp:TextBox>

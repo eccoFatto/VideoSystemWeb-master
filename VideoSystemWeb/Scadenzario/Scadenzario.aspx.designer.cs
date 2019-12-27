@@ -42,13 +42,31 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.DropDownList ddl_TipoAnagrafica;
 
         /// <summary>
-        /// Controllo ddl_CodiceAnagrafica.
+        /// Controllo hf_RagioneSociale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_CodiceAnagrafica;
+        protected global::System.Web.UI.WebControls.HiddenField hf_RagioneSociale;
+
+        /// <summary>
+        /// Controllo ddl_RagioneSociale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ddl_RagioneSociale;
+
+        /// <summary>
+        /// Controllo elencoRagioneSociale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoRagioneSociale;
 
         /// <summary>
         /// Controllo txt_NumeroFattura.
@@ -346,6 +364,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_AnticipoImporto;
+
+        /// <summary>
+        /// Controllo div_DatiCreazioneScadenza.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_DatiCreazioneScadenza;
 
         /// <summary>
         /// Controllo div_CadenzaGiorni.

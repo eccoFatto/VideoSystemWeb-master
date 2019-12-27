@@ -269,7 +269,7 @@
 
                             </td>
                             <td style="width: 20%;">
-                                <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicerca();" />
+                                <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicerca();" OnClick="BtnPulisciCampiRicerca_Click" />
                             </td>
                         </tr>
                     </table>
@@ -277,17 +277,31 @@
             </div>
 
             <div class="round">
-                <asp:GridView ID="gv_protocolli" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" PageSize="20"  AllowSorting="true" OnSorting="gv_protocolli_Sorting">
+                <asp:GridView ID="gv_protocolli" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" PageSize="20"  AllowSorting="true" OnSorting="gv_protocolli_Sorting" AutoGenerateColumns="false">
                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="Last"/>
                     <Columns>
-                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
-                            <ItemTemplate>
-                                <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza Protocollo" ImageAlign="AbsMiddle" Height="30px" />
-                            </ItemTemplate>
-                        </asp:TemplateField>
+
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
                             <ItemTemplate>
                                 <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Allegato" ImageAlign="AbsMiddle" Height="30px" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                        
+                        <asp:BoundField DataField="id" HeaderText="id" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="Cod. Lav." HeaderText="Cod. Lav." HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="Num. Prot." HeaderText="Num. Prot."  HeaderStyle-Width="11%" />
+                        <asp:BoundField DataField="Data Prot." HeaderText="Data Prot." DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Cliente/Fornitore" HeaderText="Cliente/Fornitore"  HeaderStyle-Width="16%" />
+                        <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="13%" />
+                        <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Tipo" HeaderText="Tipo" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Nome File" HeaderText="Nome File" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Destinatario" HeaderText="Destinatario" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Pregresso" HeaderText="Pregresso" HeaderStyle-Width="8%" />
+
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
+                            <ItemTemplate>
+                                <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza Protocollo" ImageAlign="AbsMiddle" Height="30px" />
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

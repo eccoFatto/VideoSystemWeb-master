@@ -95,13 +95,13 @@ namespace VideoSystemWeb.BLL
 
             if (tipoScadenza.ToUpper() == "CLIENTE")
             {
-                scadenza.ImportoAvere = (scadenza.ImportoAvere - acconto) / numeroRate;
-                scadenza.ImportoAvereIva = (scadenza.ImportoAvereIva - accontoIva) / numeroRate;
+                scadenza.ImportoAvere = (scadenza.ImportoAvere - acconto) / decimal.Parse(numeroRate.ToString());
+                scadenza.ImportoAvereIva = (scadenza.ImportoAvereIva - accontoIva) / decimal.Parse(numeroRate.ToString());
             }
             else
             {
-                scadenza.ImportoDare = (scadenza.ImportoDare - acconto) / numeroRate;
-                scadenza.ImportoDareIva = (scadenza.ImportoDareIva - accontoIva) / numeroRate;
+                scadenza.ImportoDare = (scadenza.ImportoDare - acconto) / decimal.Parse(numeroRate.ToString());
+                scadenza.ImportoDareIva = (scadenza.ImportoDareIva - accontoIva) / decimal.Parse(numeroRate.ToString());
             }
 
             for (int i = 1; i <= numeroRate; i++)
@@ -170,6 +170,11 @@ namespace VideoSystemWeb.BLL
         public List<DatiScadenzario> GetDatiScadenzarioByIdDatiProtocollo(int idDatiProtocollo, ref Esito esito)
         {
             return Scadenzario_DAL.Instance.GetDatiScadenzarioByIdDatiProtocollo(idDatiProtocollo, ref esito);
+        }
+
+        public List<Anag_Clienti_Fornitori> getClientiFornitoriInScadenzario(ref Esito esito)
+        {
+            return Scadenzario_DAL.Instance.getClientiFornitoriInScadenzario(ref esito);
         }
     }
 }

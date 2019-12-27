@@ -28,7 +28,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
             {
                 CaricaCombo();
                 PopolaGrigliaScadenze();
-                
 
                 #region GESTIONE PARAMETRI URL
                 string tipo = string.Empty;
@@ -54,10 +53,10 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 if (!string.IsNullOrEmpty(Request.QueryString["BANCA"])) banca = Request.QueryString["BANCA"];
 
 
-
                 if (!string.IsNullOrEmpty(tipo) && idDatiProtocollo != 0 && Scadenzario_BLL.Instance.GetDatiScadenzarioByIdDatiProtocollo(idDatiProtocollo, ref esito).Count == 0)
                 {
                     div_Fattura.Visible = false;
+                    div_DatiCreazioneScadenza.Visible = true;
                     ddl_Tipo.Attributes.Add("Disabled", "Disabled");
 
                     ViewState["ID_PROTOCOLLO"] = idDatiProtocollo;
@@ -78,12 +77,16 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 #endregion
             }
 
+            ddl_RagioneSociale.Text = hf_RagioneSociale.Value;
+
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
         private void CaricaCombo()
         {
             Esito esito = new Esito();
+
+            #region BANCA
             List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
             
             foreach (DatiBancari banca in listaDatiBancari)
@@ -93,6 +96,14 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
             ddl_Banca.Items.Add(new ListItem("Cassa", "Cassa"));
             ddl_BancaModifica.Items.Add(new ListItem("Cassa", "Cassa"));
+            #endregion
+
+            #region RAGIONE SOCIALE
+            List<Anag_Clienti_Fornitori> listaClientiFornitori = Scadenzario_BLL.Instance.getClientiFornitoriInScadenzario(ref esito);
+
+            PopolaDDLGenerico(elencoRagioneSociale, listaClientiFornitori);
+
+            #endregion
         }
 
         private void PopolaGrigliaScadenze()
@@ -117,6 +128,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected void btnInsScadenza_Click(object sender, EventArgs e)
         {
             div_Fattura.Visible = true;
+            div_DatiCreazioneScadenza.Visible = true;
             ddl_Tipo.Attributes.Remove("Disabled");
 
             ddl_fattura.Items.Clear();
@@ -204,7 +216,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
 
             gv_scadenze.DataSource = Scadenzario_BLL.Instance.GetAllDatiScadenzario(ddl_TipoAnagrafica.SelectedValue,
-                                                                                    ddl_CodiceAnagrafica.SelectedValue,
+                                                                                    // ddl_CodiceAnagrafica.SelectedValue,
+                                                                                    hf_RagioneSociale.Value,
                                                                                     txt_NumeroFattura.Text,
                                                                                     ddlFatturaPagata.SelectedValue,
                                                                                     txt_DataFatturaDa.Text,
@@ -226,6 +239,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 case "modifica":
                     NascondiErroriValidazione();
                     div_Fattura.Visible = false;
+                    div_DatiCreazioneScadenza.Visible = false;
                     ddl_Tipo.Attributes.Add("Disabled", "Disabled");
                     
                     DatiScadenzario scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenzaSelezionata);
@@ -492,13 +506,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             if (ddl_Tipo.SelectedValue.ToUpper() == "CLIENTE")
             {
-                scadenza.ImportoAvere = ValidaCampo(txt_ImportoDocumento, 0, true, ref esito); 
+                scadenza.ImportoAvere = ValidaCampo(txt_ImportoDocumento, decimal.Parse("0"), true, ref esito); 
                 scadenza.ImportoAvereIva = scadenza.ImportoAvere * (1 + (decimal.Parse(txt_Iva.Text) / 100));
                 scadenza.ImportoRiscosso = 0;
             }
             else
             {
-                scadenza.ImportoDare = ValidaCampo(txt_ImportoDocumento, 0, true, ref esito); 
+                scadenza.ImportoDare = ValidaCampo(txt_ImportoDocumento, decimal.Parse("0"), true, ref esito); 
                 scadenza.ImportoDareIva = scadenza.ImportoDare * (1 + (decimal.Parse(txt_Iva.Text) / 100));
                 scadenza.ImportoVersato = 0;
             }

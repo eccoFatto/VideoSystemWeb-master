@@ -372,15 +372,15 @@ namespace VideoSystemWeb.Protocollo
             {
 
                 // PRENDO IL PATH DELL'ALLEGATO SE C'E'
-                string pathDocumento = e.Row.Cells[10].Text.Trim();
+                string pathDocumento = e.Row.Cells[9].Text.Trim();
 
-                CheckBox cbPregresso = (CheckBox)e.Row.Cells[12].Controls[0];
-                
+                //CheckBox cbPregresso = (CheckBox)e.Row.Cells[11].Controls[0];
+                string preg = e.Row.Cells[11].Text.Trim();
                 ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
                 {
                     string pathRelativo = "";
-                    if (cbPregresso.Checked)
+                    if (preg=="True")
                     {
                         pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "");
                     }
@@ -398,7 +398,7 @@ namespace VideoSystemWeb.Protocollo
                 }
 
                 // PRENDO L'ID DEL PROTOCOLLO SELEZIONATO
-                string idProtocolloSelezionato = e.Row.Cells[2].Text;
+                string idProtocolloSelezionato = e.Row.Cells[1].Text;
                 ImageButton myButtonEdit = e.Row.FindControl("imgEdit") as ImageButton;
                 myButtonEdit.Attributes.Add("onclick", "mostraProtocollo('" + idProtocolloSelezionato + "');");
             }
@@ -957,6 +957,15 @@ namespace VideoSystemWeb.Protocollo
             ViewState["SortExpression"] = column;
 
             return sortDirection;
+        }
+
+        protected void BtnPulisciCampiRicerca_Click(object sender, EventArgs e)
+        {
+            // DA CONFIGURAZIONE SCELGO SE VISUALIZZARE SUBITO GLI ULTIMI PROTOCOLLI
+            if (Convert.ToBoolean(ConfigurationManager.AppSettings["VISUALIZZA_ULTIMI_PROTOCOLLI"]))
+            {
+                btnRicercaProtocollo_Click(null, null);
+            }
         }
     }
 }

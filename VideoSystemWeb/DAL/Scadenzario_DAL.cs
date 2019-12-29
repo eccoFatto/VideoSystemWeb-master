@@ -341,7 +341,7 @@ namespace VideoSystemWeb.DAL
         }
 
         public List<DatiScadenzario> GetAllDatiScadenzario(string tipoAnagrafica, 
-                                                           string codiceAnagrafica, 
+                                                           string anagraficaClienteFornitore, 
                                                            string numeroFattura, 
                                                            string fatturaPagata,
                                                            string dataFatturaDa, 
@@ -355,7 +355,7 @@ namespace VideoSystemWeb.DAL
             {
                 string filtriRicerca = string.Empty;
                 if (!string.IsNullOrEmpty(tipoAnagrafica)) filtriRicerca += " and b.destinatario = '" + tipoAnagrafica + "'";
-                if (!string.IsNullOrEmpty(codiceAnagrafica)) filtriRicerca += " and b.cliente like '%" + codiceAnagrafica.Trim() + "%'";
+                if (!string.IsNullOrEmpty(anagraficaClienteFornitore)) filtriRicerca += " and b.cliente = '" + anagraficaClienteFornitore.Trim() + "'";
 
                 if (!string.IsNullOrEmpty(numeroFattura)) filtriRicerca += " and b.protocollo_riferimento = '" + numeroFattura + "'";
                 if (!string.IsNullOrEmpty(fatturaPagata))

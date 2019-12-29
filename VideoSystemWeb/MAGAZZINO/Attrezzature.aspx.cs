@@ -148,10 +148,31 @@ namespace VideoSystemWeb.MAGAZZINO
             queryRicerca = queryRicerca.Replace("@seriale", tbSeriale.Text.Trim().Replace("'", "''"));
             //queryRicerca = queryRicerca.Replace("@dataAcquisto", tbDataAcquisto.Text.Trim().Replace("'", "''"));
 
-            queryRicerca = queryRicerca.Replace("@categoria", ddlTipoCategoria.SelectedItem.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@subcategoria", ddlTipoSubCategoria.SelectedItem.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@posizione", ddlTipoPosizioneMagazzino.SelectedItem.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@gruppo", ddlTipoGruppoMagazzino.SelectedItem.Text.Trim().Replace("'", "''"));
+            // SELEZIONO I CAMPI DROPDOWN SE VALORIZZATI
+            string queryRicercaCampiDropDown = "";
+            if (!string.IsNullOrEmpty(ddlTipoCategoria.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and cat.nome='" + ddlTipoCategoria.SelectedItem.Text.Replace("'", "''") + "' ";
+            }
+            if (!string.IsNullOrEmpty(ddlTipoSubCategoria.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and sub.nome='" + ddlTipoSubCategoria.SelectedItem.Text.Replace("'", "''") + "' ";
+            }
+            if (!string.IsNullOrEmpty(ddlTipoPosizioneMagazzino.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and pos.nome='" + ddlTipoPosizioneMagazzino.SelectedItem.Text.Replace("'", "''") + "' ";
+            }
+            if (!string.IsNullOrEmpty(ddlTipoGruppoMagazzino.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and gruppo.nome='" + ddlTipoGruppoMagazzino.SelectedItem.Text.Replace("'", "''") + "' ";
+            }
+
+            queryRicerca = queryRicerca.Replace("@campiTendina", queryRicercaCampiDropDown.Trim());
+            
+            //queryRicerca = queryRicerca.Replace("@categoria", ddlTipoCategoria.SelectedItem.Text.Trim().Replace("'", "''"));
+            //queryRicerca = queryRicerca.Replace("@subcategoria", ddlTipoSubCategoria.SelectedItem.Text.Trim().Replace("'", "''"));
+            //queryRicerca = queryRicerca.Replace("@posizione", ddlTipoPosizioneMagazzino.SelectedItem.Text.Trim().Replace("'", "''"));
+            //queryRicerca = queryRicerca.Replace("@gruppo", ddlTipoGruppoMagazzino.SelectedItem.Text.Trim().Replace("'", "''"));
 
             Esito esito = new Esito();
             DataTable dtAttrezzature = Base_DAL.GetDatiBySql(queryRicerca, ref esito);

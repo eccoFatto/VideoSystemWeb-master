@@ -342,6 +342,8 @@
                         <asp:Button ID="btnStampaPianoEsterno" runat="server" Text="Stampa Piano Esterno" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaPianoEsterno_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnStampaConsuntivo" runat="server" Text="Stampa Consuntivo" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaConsuntivo_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnStampaFattura" runat="server" Text="Stampa Fattura" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaFattura_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
+                        <asp:Button ID="btnMagazzino" runat="server" Text="Magazzino" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClientClick="alert('Funzionalità associazione attrezzature a lavorazione in implementazione');" Visible="false" Style="padding: 7px 10px" />
+
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click"  Style="padding: 7px 10px" />
 

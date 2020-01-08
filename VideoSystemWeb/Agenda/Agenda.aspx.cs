@@ -687,7 +687,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = SessionManager.EventoSelezionato.id != 0;
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = false;
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnMagazzino.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_PREVISIONE_IMPEGNO);
                 }
@@ -701,6 +701,7 @@ namespace VideoSystemWeb.Agenda
 
                     btnOfferta.Visible = false;
                     btnRiepilogo.Visible = true;
+                    btnMagazzino.Visible = true;
                     btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnElimina.Visible = true;
                     btnStampaPianoEsterno.Visible = false;
@@ -721,7 +722,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = true;
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = true;
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnMagazzino.Visible = true;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
@@ -738,6 +739,7 @@ namespace VideoSystemWeb.Agenda
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = false;
                     btnRiepilogo.Visible = false;
+                    btnMagazzino.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_FATTURA);
                 }
@@ -753,6 +755,7 @@ namespace VideoSystemWeb.Agenda
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = SessionManager.EventoSelezionato.id != 0;
                     btnRiepilogo.Visible = false;
+                    btnMagazzino.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_RIPOSO);
                 }

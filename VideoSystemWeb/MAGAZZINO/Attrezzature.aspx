@@ -84,7 +84,7 @@
             <div class="w3-row-padding">
                 <div class="w3-quarter">
                     <label>Codice Video System</label>
-                    <asp:TextBox ID="tbCodiceVS" runat="server" MaxLength="10" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    <asp:TextBox ID="tbCodiceVS" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
                 <div class="w3-quarter">
                     <label>Categoria</label>
@@ -215,7 +215,7 @@
                                 <div class="w3-row-padding w3-center w3-text-center">
                                     <div class="w3-quarter">
                                         <label>Codice Videosystem</label>
-                                        <asp:TextBox ID="tbMod_CodiceVideoSystem" runat="server" MaxLength="10" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_CodiceVideoSystem" runat="server" MaxLength="20" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Marca</label>

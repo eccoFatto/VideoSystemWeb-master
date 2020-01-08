@@ -119,7 +119,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(numeroFattura + " - Rif.Lav. " +  eventoSelezionato.codice_lavoro).SetFontSize(10).SetBold();
+                        pGriglia = new Paragraph(numeroFattura + "                 Rif.Lav. " +  eventoSelezionato.codice_lavoro).SetFontSize(10).SetBold();
                         cellaGriglia = new iText.Layout.Element.Cell(1,2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);

@@ -320,7 +320,7 @@ namespace VideoSystemWeb.DAL
 
                                     scadenza.RagioneSocialeClienteFornitore = dt.Rows[0].Field<string>("cliente");
                                     scadenza.ProtocolloRiferimento = dt.Rows[0].Field<string>("protocollo_riferimento");
-                                    scadenza.DataProtocollo = dt.Rows[0].Field<DateTime?>("data_protocollo");
+                                    scadenza.DataProtocollo = dt.Rows[0].Field<DateTime?>("data_inizio_lavorazione");
                                     
                                     //scadenza.ImportoTotale = 0;
                                     scadenza.Cassa = 0;

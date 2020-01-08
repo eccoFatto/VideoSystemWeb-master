@@ -236,7 +236,7 @@ namespace VideoSystemWeb.Protocollo
 
                 if (cmbMod_Tipologia.SelectedItem.Text.ToUpper() == "FATTURA")
                 {
-                    Response.Redirect("/Scadenzario/Scadenzario.aspx?TIPO=" + cmbMod_Destinatario.SelectedValue + "&ID_PROTOCOLLO=" + iRet);
+                    Response.Redirect("/Scadenzario/Scadenzario.aspx?TIPO=" + cmbMod_Destinatario.SelectedValue + "&ID_PROTOCOLLO=" + iRet + "&NUM_DOC=" + protocollo.Protocollo_riferimento);
                 }
                 else
                 {

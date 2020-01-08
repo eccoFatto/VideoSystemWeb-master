@@ -372,7 +372,7 @@
                                             <label>Imp. + IVA</label>
                                             <asp:TextBox ID="txt_ImponibileIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
                                         </div>
-
+<%--  --%>
                                         <div class="w3-third w3-padding" >
                                             <asp:Label ID="lbl_VersatoRiscosso" runat="server" Text="Versato"></asp:Label>
                                             <asp:TextBox ID="txt_Versato" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>

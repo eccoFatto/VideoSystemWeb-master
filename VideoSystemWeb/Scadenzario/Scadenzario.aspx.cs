@@ -22,7 +22,9 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected void Page_Load(object sender, EventArgs e)
         {
             Esito esito = new Esito();
-            txt_Iva.Text = Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
+
+            string valoreIVA = Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
+            txt_Iva.Text = valoreIVA;
 
             if (!IsPostBack)
             {
@@ -36,7 +38,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 string dataDocumento = string.Empty;
                 string numeroDocumento = string.Empty;
                 string importo = string.Empty;
-                string iva = string.Empty;
+                string iva = valoreIVA;
                 string importoIva = string.Empty;
                 string banca = string.Empty;
 

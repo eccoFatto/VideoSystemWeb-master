@@ -178,11 +178,14 @@ namespace VideoSystemWeb.MAGAZZINO
             DataTable dtAttrezzature = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gv_attrezzature.DataSource = dtAttrezzature;
             gv_attrezzature.DataBind();
+            //gv_attrezzature.Columns[1].Visible = false;
 
         }
 
         protected void gv_attrezzature_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if(e.Row.Cells.Count>1) e.Row.Cells[1].Visible = false;
+
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 // PRENDO L'ID DELL' ATTREZZATURA SELEZIONATA

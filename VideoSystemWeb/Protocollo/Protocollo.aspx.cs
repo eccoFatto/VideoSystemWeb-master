@@ -596,7 +596,7 @@ namespace VideoSystemWeb.Protocollo
                 ViewState["idProtocollo"] = "0";
             }
 
-            protocollo.Id = Convert.ToInt16(ViewState["idProtocollo"].ToString());
+            protocollo.Id = Convert.ToInt64(ViewState["idProtocollo"].ToString());
 
             protocollo.Id_tipo_protocollo = Convert.ToInt32(cmbMod_Tipologia.SelectedValue);
 

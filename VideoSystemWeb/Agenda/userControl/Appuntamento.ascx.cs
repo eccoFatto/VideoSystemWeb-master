@@ -281,8 +281,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_Clienti.Enabled = false;
                     txt_DurataViaggioAndata.Enabled = true;
                     txt_DurataViaggioRitorno.Enabled = true;
-                    txt_Produzione.Enabled = true;
-                    txt_Lavorazione.Enabled = false;
+                    txt_Produzione.Enabled = false;
+                    txt_Lavorazione.Enabled = true;
                     txt_Indirizzo.Enabled = true;
                     txt_Luogo.Enabled = true;
                     tb_Nota.Enabled = true;

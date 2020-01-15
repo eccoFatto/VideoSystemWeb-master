@@ -368,6 +368,8 @@ namespace VideoSystemWeb.Protocollo
 
         protected void gv_protocolli_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.Cells.Count > 1) e.Row.Cells[1].Visible = false;
+
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
 

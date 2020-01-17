@@ -26,6 +26,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             string valoreIVA = Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
             txt_Iva.Text = valoreIVA;
 
+            CalcolaTotali();
+
             if (!IsPostBack)
             {
                 CaricaCombo();
@@ -41,7 +43,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 string iva = valoreIVA;
                 string importoIva = string.Empty;
                 string banca = string.Empty;
-
 
 
                 if (!string.IsNullOrEmpty(Request.QueryString["TIPO"])) tipo = Request.QueryString["TIPO"];
@@ -109,11 +110,45 @@ namespace VideoSystemWeb.Scadenzario.userControl
             #endregion
         }
 
+        private void CalcolaTotali()
+        {
+            Esito esito = new Esito();
+            List<DatiScadenzario> listaScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "", "", "", "", "", ref esito);
+
+            decimal dare = listaScadenzario.Sum(x=>x.ImportoDare);//new decimal(10032947.94);
+            decimal dareIva = listaScadenzario.Sum(x => x.ImportoDareIva);
+            decimal versato = listaScadenzario.Sum(x => x.ImportoVersato);
+            decimal versatoIva = listaScadenzario.Sum(x => x.ImportoVersato + (x.ImportoVersato / 100 * x.Iva));
+            decimal totaleDare = dare-versato;
+            decimal totaleDareIva = dareIva-versatoIva;
+            
+            decimal avere = listaScadenzario.Sum(x => x.ImportoAvere);
+            decimal avereIva = listaScadenzario.Sum(x => x.ImportoAvereIva);
+            decimal riscosso = listaScadenzario.Sum(x => x.ImportoRiscosso);
+            decimal riscossoIva = listaScadenzario.Sum(x => x.ImportoRiscosso + (x.ImportoRiscosso / 100 * x.Iva));
+            decimal totaleAvere = avere - riscosso;
+            decimal totaleAvereIva = avereIva - riscossoIva;
+
+            lbl_dare.Text = string.Format("{0:C}", dare);
+            lbl_dare_iva.Text = string.Format("{0:C}", dareIva);
+            lbl_versato.Text = string.Format("{0:C}", versato);
+            lbl_versato_iva.Text = string.Format("{0:C}", versatoIva);
+            lbl_totale_dare.Text = string.Format("{0:C}", totaleDare);
+            lbl_totale_dare_iva.Text = string.Format("{0:C}", totaleDareIva);
+
+            lbl_avere.Text = string.Format("{0:C}", avere);
+            lbl_avere_iva.Text = string.Format("{0:C}", avereIva);
+            lbl_riscosso.Text = string.Format("{0:C}", riscosso);
+            lbl_riscosso_iva.Text = string.Format("{0:C}", riscossoIva);
+            lbl_totale_avere.Text = string.Format("{0:C}", totaleAvere);
+            lbl_totale_avere_iva.Text = string.Format("{0:C}", totaleAvereIva);
+        }
+
         private void PopolaGrigliaScadenze()
         {
             Esito esito = new Esito();
 
-            gv_scadenze.DataSource = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "", "","","","",ref esito); 
+            gv_scadenze.DataSource = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "","","","",ref esito); 
             gv_scadenze.DataBind();
         }
 
@@ -276,7 +311,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_IvaModifica.Text = scadenza.Iva.ToString();// Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
                     txt_VersatoIva.Text = (versatoOriscosso * (1 + scadenza.Iva / 100)).ToString("###,##0.00");
                     txt_Totale.Text = ((importoDocumentoDare + importoDocumentoAvere) - (scadenza.ImportoVersato + scadenza.ImportoRiscosso)).ToString("###,##0.00");
-                    txt_IvaModifica.Text = Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
+                    txt_IvaModifica.Text = Math.Truncate(scadenza.Iva).ToString();//Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
                     txt_TotaleIva.Text = ((importoDocumentoDareIva + importoDocumentoAvereIva) - (versatoOriscosso * (1 + scadenza.Iva / 100))).ToString("###,##0.00");
                     txt_TotaleDocumento.Text = (importoDocumentoDare + importoDocumentoAvere).ToString("###,##0.00");
                     txt_TotDocumentoIva.Text = (importoDocumentoDareIva + importoDocumentoAvereIva).ToString("###,##0.00");
@@ -380,6 +415,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     btnChiudiPopup_Click(null, null);
                     PopolaGrigliaScadenze();
                 }
+
+                CalcolaTotali();
             }
         }
 
@@ -472,6 +509,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 ViewState["ID_PROTOCOLLO"] = null;
 
                 PopolaGrigliaScadenze();
+                ddlFatturaPagata.SelectedValue = "0";
+                CalcolaTotali();
             }
         }
 

@@ -149,9 +149,6 @@
                         </ul>
                     </div>
 
-
-
-
                 </div>
                 <div class="w3-quarter">
                     <label>Numero Fattura</label>
@@ -160,9 +157,9 @@
                 <div class="w3-quarter">
                     <label>Pagata</label>
                     <asp:DropDownList ID="ddlFatturaPagata" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
-                        <asp:ListItem Value="" Text="<tutti>" Selected/>
+                        <asp:ListItem Value="" Text="<tutti>" />
                         <asp:ListItem Value="1" Text="Si" />
-                        <asp:ListItem Value="0" Text="No" />
+                        <asp:ListItem Value="0" Text="No" Selected/>
                     </asp:DropDownList>
                 </div>
             </div>
@@ -187,19 +184,119 @@
                     </div>
             </div>
 
-            <div class="w3-row-padding w3-margin-bottom">
-                <div class="w3-quarter">
-                    &nbsp;
+            <div class="w3-row-padding w3-margin-bottom w3-margin-top">
+                <div class="w3-threequarter" style="font-size:.8em;">
+                    <div class="w3-half" style="padding-right:10px;">
+                        <div class="w3-row w3-padding round ">
+                            <div class="w3-row">
+                                <b>Fornitori</b>
+                            </div>
+                            <div class="w3-quarter">
+                                &nbsp;
+                            </div>
+                            <div class="w3-threequarter">
+                                <div class="w3-half" style="text-align:center">
+                                    <b>Imponibile</b>
+                                </div>
+                                <div class="w3-half" style="text-align:center">
+                                    <b>Imponibile + IVA</b>
+                                </div>
+                            </div>
+                            
+
+                            <div class="w3-quarter">
+                                <b>Dare</b>
+                            </div>
+                            <div class="w3-threequarter">
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_dare" runat="server"/>
+                                </div>
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_dare_iva" runat="server"  />
+                                </div>
+                            </div>
+                            <div class="w3-quarter">
+                                <b>Versato</b>
+                            </div>
+                            <div class="w3-threequarter">
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_versato" runat="server" />
+                                </div>
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_versato_iva" runat="server"/>
+                                </div>
+                            </div>
+                            <div class="w3-quarter">
+                                <b>Totale</b>
+                            </div>
+                            <div class="w3-threequarter">
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_totale_dare" runat="server"/>
+                                </div>
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_totale_dare_iva" runat="server" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-half" style="padding-left:10px;">
+                        <div class="w3-row w3-padding round ">
+                            <div class="w3-row">
+                                <b>Clienti</b>
+                            </div>
+                            <div class="w3-quarter">
+                                &nbsp;
+                            </div>
+                            <div class="w3-threequarter">
+                                <div class="w3-half" style="text-align:center">
+                                    <b>Imponibile</b>
+                                </div>
+                                <div class="w3-half" style="text-align:center">
+                                    <b>Imponibile + IVA</b>
+                                </div>
+                            </div>
+
+                            <div class="w3-quarter">
+                                <b>Avere</b>
+                            </div>
+                            <div class="w3-threequarter">
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_avere" runat="server"/>
+                                </div>
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_avere_iva" runat="server"/>
+                            </div>
+                            </div>
+
+                            <div class="w3-quarter">
+                                <b>Riscosso</b>
+                            </div>
+                            <div class="w3-threequarter">
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_riscosso" runat="server"/>
+                                </div>
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_riscosso_iva" runat="server"/>
+                                </div>
+                            </div>
+
+                            <div class="w3-quarter">
+                                <b>Totale</b>
+                            </div>
+                            <div class="w3-threequarter">
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_totale_avere" runat="server" />
+                                </div>
+                                <div class="w3-half" style="text-align:right; padding-right:25px">
+                                    <asp:Label ID="lbl_totale_avere_iva" runat="server"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="w3-quarter">
-                    &nbsp;
-                </div>
-                <div class="w3-quarter">
-                    &nbsp;
-                </div>
+                
 
                 <div class="w3-quarter">
-                    <label></label>
                     <table style="width:100%;">
                     <tr>
                         <td style="width:40%;">                    
@@ -227,26 +324,31 @@
                     EmptyDataText="Nessuna scadenza trovata" EmptyDataRowStyle-HorizontalAlign="Center" OnRowCommand="gv_scadenze_RowCommand">
                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="Last"/>
                     <Columns>
-                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="8%">
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="3%">
                             <ItemTemplate>
-                                <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/edit.png" ToolTip="Modifica scadenza" ImageAlign="AbsMiddle"  CommandName="modifica" CommandArgument='<%#Eval("id")%>'/>
-                                <asp:ImageButton ID="imgDelete" runat="server" CausesValidation="false" Text="Elimina" ImageUrl="~/Images/delete.png" ToolTip="Elimina scadenza" ImageAlign="AbsMiddle" CommandName="elimina" CommandArgument='<%#Eval("id")%>' OnClientClick="return confermaEliminazioneScadenza();"/>
                                 <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" CommandName="visualizzaDoc" CommandArgument='<%#Eval("id")%>'/>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="ImportoDare" HeaderText="Totale dare" DataFormatString="{0:N2}" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoDare" HeaderText="Tot. dare" DataFormatString="{0:N2}" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="ImportoVersato" HeaderText="Tot. versato" DataFormatString="{0:N2}" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="ProtocolloRiferimento" HeaderText="Documento"  HeaderStyle-Width="11%" />
                         <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="16%" />
-                        <asp:BoundField DataField="ImportoAvere" HeaderText="Totale avere" DataFormatString="{0:N2}" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoAvere" HeaderText="Tot. avere" DataFormatString="{0:N2}" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="ImportoRiscosso" HeaderText="Tot. riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="DataScadenza" HeaderText="Scadenza" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="IsImportoEstinto" HeaderText="Stato" HeaderStyle-Width="4%" />
                         <asp:BoundField DataField="Banca" HeaderText="Banca" HeaderStyle-Width="13%" />
                         <asp:BoundField DataField="DataPagamento" HeaderText="Pagamento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="5%">
+                            <ItemTemplate>
+                                <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/edit.png" ToolTip="Modifica scadenza" ImageAlign="AbsMiddle"  CommandName="modifica" CommandArgument='<%#Eval("id")%>'/>
+                                <asp:ImageButton ID="imgDelete" runat="server" CausesValidation="false" Text="Elimina" ImageUrl="~/Images/delete.png" ToolTip="Elimina scadenza" ImageAlign="AbsMiddle" CommandName="elimina" CommandArgument='<%#Eval("id")%>' OnClientClick="return confermaEliminazioneScadenza();"/>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
             </div>
+
         </ContentTemplate>
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="btnRicercaScadenza" EventName="Click" />

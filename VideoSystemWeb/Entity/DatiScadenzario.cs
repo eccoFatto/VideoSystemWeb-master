@@ -44,9 +44,19 @@ namespace VideoSystemWeb.Entity
         public string RagioneSocialeClienteFornitore { get => ragioneSocialeClienteFornitore; set => ragioneSocialeClienteFornitore = value; }
         public string ProtocolloRiferimento { get => protocolloRiferimento; set => protocolloRiferimento = value; }
         public DateTime? DataProtocollo { get => dataProtocollo; set => dataProtocollo = value; }
-        public bool IsImportoEstinto
+        public string IsImportoEstinto
         {
-            get { return ((ImportoDare - importoVersato) == 0 && (ImportoAvere - importoRiscosso) == 0); }
+            get 
+            {
+                if ((ImportoDare - importoVersato) == 0 && (ImportoAvere - importoRiscosso) == 0)
+                {
+                    return "Pagata";
+                }
+                else
+                {
+                    return "Non pagata";
+                }
+            }
         }
         public decimal Cassa { get => cassa; set => cassa = value; }
         public DateTime? DataPagamento

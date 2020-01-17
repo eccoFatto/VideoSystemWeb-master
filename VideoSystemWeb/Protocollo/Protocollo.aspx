@@ -288,16 +288,16 @@
                         </asp:TemplateField>
                         
                         <asp:BoundField DataField="id" HeaderText="id" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="Cod. Lav." HeaderText="Cod. Lav." HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="Num. Prot." HeaderText="Num. Prot."  HeaderStyle-Width="11%" />
+                        <asp:BoundField DataField="Cod. Lav." HeaderText="Cod. Lav." HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="Num. Prot." HeaderText="Num. Prot."  HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="Data Prot." HeaderText="Data Prot." DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="Cliente/Fornitore" HeaderText="Cliente/Fornitore"  HeaderStyle-Width="16%" />
                         <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="13%" />
-                        <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="15%" />
                         <asp:BoundField DataField="Tipo" HeaderText="Tipo" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="Nome File" HeaderText="Nome File" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="Destinatario" HeaderText="Destinatario" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Pregresso" HeaderText="Pregresso" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Pregresso" HeaderText="Pregresso" HeaderStyle-Width="6%" />
 
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
                             <ItemTemplate>
@@ -394,7 +394,7 @@
                                         <asp:TextBox ID="tbMod_Lavorazione" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
-                                        <label>Data Lav</label>
+                                        <label>Data Lavorazione</label>
                                         <asp:TextBox ID="tbMod_DataLavorazione" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
@@ -458,7 +458,7 @@
                                     </div>
                                     <div class="w3-quarter">
                                         <label>&nbsp;</label>
-                                        <asp:Button ID="btnAnnullaCaricamento" runat="server" class="w3-input w3-border w3-round w3-red  w3-center" Width="50px" Text="&times;" ToolTip="Annulla Caricamento File" OnClick="btnAnnullaCaricamento_Click" />
+                                        <asp:Button ID="btnAnnullaCaricamento" runat="server" class="w3-input w3-border w3-circle w3-red  w3-center" Width="50px" Text="&times;" ToolTip="Annulla Caricamento File" OnClick="btnAnnullaCaricamento_Click" />
                                     </div>
 
                                 </div>
@@ -577,7 +577,7 @@
                             <table style="width: 100%;">
                                 <tr>
                                     <td>
-                                        <asp:ImageButton ID="imgInsertCliente" runat="server" CausesValidation="false" Text="Inserisci Cliente" ImageUrl="~/Images/detail-icon.png" ToolTip="Inserisci Cliente" ImageAlign="AbsMiddle" Height="30px" OnClientClick="inserisciCliente();" />
+                                        <asp:Button ID="btnInsertCliente" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClientClick="inserisciCliente();" Text="Inserisci" />
                                     </td>
                                     <td style="width: 50%;">
                                         <asp:Button ID="btnRicercaClienti" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaClienti_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />

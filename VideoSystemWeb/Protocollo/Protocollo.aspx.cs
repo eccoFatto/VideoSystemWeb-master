@@ -855,7 +855,7 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnRicercaClienti_Click(object sender, EventArgs e)
         {
-            string queryRicerca = "SELECT ID, RAGIONESOCIALE FROM anag_clienti_fornitori WHERE ragioneSociale LIKE '%@ragioneSociale%'";
+            string queryRicerca = "SELECT ID, RAGIONESOCIALE as [Ragione Sociale] FROM anag_clienti_fornitori WHERE ragioneSociale LIKE '%@ragioneSociale%'";
 
             queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_RagioneSociale.Text.Trim().Replace("'", "''"));
 

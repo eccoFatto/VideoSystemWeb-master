@@ -60,7 +60,7 @@
             <asp:Panel runat="server" ID="panelArticoli" CssClass="round" Style="height: 100%; position: relative; background-color: white; overflow: auto;">
                 <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Articoli selezionati</p>
                 <asp:Label ID="lbl_selezionareArticolo" runat="server" Text="Selezionare un articolo dalla lista" Style="position: absolute; top: 45%; left: 25%; font-size: large; color: cornflowerblue" />
-                <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvArticoli_RowCommand" DataMember="IdentificatoreOggetto">
+                <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvArticoli_RowCommand" DataMember="IdentificatoreOggetto" OnRowDataBound="gvArticoli_RowDataBound">
                     <Columns>
                         <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
                         <asp:BoundField DataField="Quantita" HeaderText="Q.tà" />

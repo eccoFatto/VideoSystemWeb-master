@@ -329,14 +329,14 @@
                                 <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" CommandName="visualizzaDoc" CommandArgument='<%#Eval("id")%>'/>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="ImportoDare" HeaderText="Tot. dare" DataFormatString="{0:N2}" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="ImportoVersato" HeaderText="Tot. versato" DataFormatString="{0:N2}" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="ProtocolloRiferimento" HeaderText="Documento"  HeaderStyle-Width="11%" />
+                        <asp:BoundField DataField="ImportoDare" HeaderText="Dare" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoVersato" HeaderText="Versato" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ProtocolloRiferimento" HeaderText="Documento"  HeaderStyle-Width="12%" />
                         <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="16%" />
-                        <asp:BoundField DataField="ImportoAvere" HeaderText="Tot. avere" DataFormatString="{0:N2}" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="ImportoRiscosso" HeaderText="Tot. riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoAvere" HeaderText="Avere" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoRiscosso" HeaderText="Riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="DataScadenza" HeaderText="Scadenza" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="IsImportoEstinto" HeaderText="Stato" HeaderStyle-Width="4%" />
+                        <asp:BoundField DataField="IsImportoEstinto" HeaderText="Stato" HeaderStyle-Width="7%" />
                         <asp:BoundField DataField="Banca" HeaderText="Banca" HeaderStyle-Width="13%" />
                         <asp:BoundField DataField="DataPagamento" HeaderText="Pagamento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="5%">

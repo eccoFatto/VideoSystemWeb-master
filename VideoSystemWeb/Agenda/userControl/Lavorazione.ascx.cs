@@ -479,6 +479,12 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
                     ((Label)e.Row.FindControl("lbl_Costo")).Text = string.Format("{0:N2}", rigaCorrente.Costo);
                 }
+
+                if (((DatiArticoliLavorazione)e.Row.DataItem).Consuntivo != null)
+                { 
+                    e.Row.Cells[8].Text = (bool)((DatiArticoliLavorazione)e.Row.DataItem).Consuntivo? "Si" : "No";
+                }
+                e.Row.Cells[9].Text = ((DatiArticoliLavorazione)e.Row.DataItem).Stampa ? "Si" : "No";
             }
         }
 

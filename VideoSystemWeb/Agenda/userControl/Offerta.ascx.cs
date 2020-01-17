@@ -263,6 +263,14 @@ namespace VideoSystemWeb.Agenda.userControl
             RichiediOperazionePopup("UPDATE");
         }
 
+        protected void gvArticoli_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Cells[5].Text = ((DatiArticoli)e.Row.DataItem).Stampa ? "Si" : "No";
+            }
+        }
+
         protected void btnRecuperaOfferta_Click(object sender, EventArgs e)
         {
             ClearRecuperaOfferta();

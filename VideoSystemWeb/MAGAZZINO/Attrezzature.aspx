@@ -88,7 +88,7 @@
                 </div>
                 <div class="w3-quarter">
                     <label>Categoria</label>
-                    <asp:DropDownList ID="ddlTipoCategoria" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                    <asp:DropDownList ID="ddlTipoCategoria" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddlTipoCategoria_SelectedIndexChanged">
                     </asp:DropDownList>
                 </div>
                 <div class="w3-quarter">

@@ -41,33 +41,25 @@ namespace VideoSystemWeb.MAGAZZINO
                         ListItem item = new ListItem
                         {
                             Text = tipologiaCategoria.nome,
-                            Value = tipologiaCategoria.nome
+                            Value = tipologiaCategoria.id.ToString()
                         };
 
                         ddlTipoCategoria.Items.Add(item);
 
-                        ListItem itemMod = new ListItem
-                        {
-                            Text = tipologiaCategoria.nome,
-                            Value = tipologiaCategoria.id.ToString()
+                    ListItem itemMod = new ListItem
+                    {
+                        Text = tipologiaCategoria.nome,
+                        Value = tipologiaCategoria.id.ToString()
                         };
 
                         cmbMod_Categoria.Items.Add(itemMod);
                     }
 
-                    ddlTipoSubCategoria.Items.Clear();
+                    
                     cmbMod_SubCategoria.Items.Clear();
-                    ddlTipoSubCategoria.Items.Add("");
                     cmbMod_SubCategoria.Items.Add("");
                     foreach (Tipologica tipologiaSubCategoria in SessionManager.ListaTipiSubCategorieMagazzino)
                     {
-                        ListItem item = new ListItem
-                        {
-                            Text = tipologiaSubCategoria.nome,
-                            Value = tipologiaSubCategoria.nome
-                        };
-
-                        ddlTipoSubCategoria.Items.Add(item);
 
                         ListItem itemMod = new ListItem
                         {
@@ -77,6 +69,8 @@ namespace VideoSystemWeb.MAGAZZINO
 
                         cmbMod_SubCategoria.Items.Add(itemMod);
                     }
+
+                    riempiComboSubCategoria(0);
 
                     ddlTipoPosizioneMagazzino.Items.Clear();
                     cmbMod_Posizione.Items.Clear();
@@ -135,6 +129,33 @@ namespace VideoSystemWeb.MAGAZZINO
             }
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
 
+        }
+
+        private void riempiComboSubCategoria(int idCategoria)
+        {
+            ddlTipoSubCategoria.Items.Clear();
+            ddlTipoSubCategoria.Items.Add("");
+
+            string queryRicercaSubcategoria = "select * from tipo_subcategoria_magazzino where attivo = 1 ";
+            if (idCategoria > 0)
+            {
+                queryRicercaSubcategoria += "and id in (select distinct id_subcategoria from mag_attrezzature where id_categoria="+idCategoria.ToString()+") ";
+            }
+            queryRicercaSubcategoria += "order by nome";
+            Esito esito = new Esito();
+            DataTable dtSubCategorie = Base_DAL.GetDatiBySql(queryRicercaSubcategoria, ref esito);
+
+            foreach (DataRow tipologiaSubCategoria in dtSubCategorie.Rows)
+            {
+                ListItem item = new ListItem
+                {
+                    Text = tipologiaSubCategoria["nome"].ToString(),
+                    Value = tipologiaSubCategoria["nome"].ToString()
+                };
+
+                ddlTipoSubCategoria.Items.Add(item);
+
+            }
         }
 
         protected void btnRicercaAttrezzatura_Click(object sender, EventArgs e)
@@ -598,5 +619,11 @@ namespace VideoSystemWeb.MAGAZZINO
             return attrezzatura;
         }
 
+        protected void ddlTipoCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string idCategoria = ddlTipoCategoria.SelectedItem.Value;
+            if (string.IsNullOrEmpty(idCategoria)) idCategoria = "0";
+            riempiComboSubCategoria(Convert.ToInt32(idCategoria));
+        }
     }
 }

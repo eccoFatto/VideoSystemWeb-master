@@ -202,8 +202,6 @@
                                     <b>Imponibile + IVA</b>
                                 </div>
                             </div>
-                            
-
                             <div class="w3-quarter">
                                 <b>Dare</b>
                             </div>

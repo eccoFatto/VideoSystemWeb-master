@@ -26,8 +26,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
             string valoreIVA = Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
             txt_Iva.Text = valoreIVA;
 
-            CalcolaTotali();
-
             if (!IsPostBack)
             {
                 CaricaCombo();
@@ -110,10 +108,10 @@ namespace VideoSystemWeb.Scadenzario.userControl
             #endregion
         }
 
-        private void CalcolaTotali()
+        private void CalcolaTotali(List<DatiScadenzario> listaScadenzario)
         {
-            Esito esito = new Esito();
-            List<DatiScadenzario> listaScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "", "", "", "", "", ref esito);
+            //Esito esito = new Esito();
+            //List<DatiScadenzario> listaScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", codiceAnagrafica, "", "", "", "", "", "", ref esito);
 
             decimal dare = listaScadenzario.Sum(x=>x.ImportoDare);//new decimal(10032947.94);
             decimal dareIva = listaScadenzario.Sum(x => x.ImportoDareIva);
@@ -148,7 +146,10 @@ namespace VideoSystemWeb.Scadenzario.userControl
         {
             Esito esito = new Esito();
 
-            gv_scadenze.DataSource = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "","","","",ref esito); 
+            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "","","","",ref esito);
+
+            CalcolaTotali(listaDatiScadenzario);
+            gv_scadenze.DataSource = listaDatiScadenzario;
             gv_scadenze.DataBind();
         }
 
@@ -254,8 +255,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
         {
             Esito esito = new Esito();
 
-            gv_scadenze.DataSource = Scadenzario_BLL.Instance.GetAllDatiScadenzario(ddl_TipoAnagrafica.SelectedValue,
-                                                                                    // ddl_CodiceAnagrafica.SelectedValue,
+            List <DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario(ddl_TipoAnagrafica.SelectedValue,
                                                                                     hf_RagioneSociale.Value,
                                                                                     txt_NumeroFattura.Text,
                                                                                     ddlFatturaPagata.SelectedValue,
@@ -263,6 +263,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                     txt_DataFatturaA.Text,
                                                                                     txt_DataScadenzaDa.Text,
                                                                                     txt_DataScadenzaA.Text, ref esito);
+            CalcolaTotali(listaDatiScadenzario);
+            gv_scadenze.DataSource = listaDatiScadenzario;
             gv_scadenze.DataBind();
         }
 
@@ -415,8 +417,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     btnChiudiPopup_Click(null, null);
                     PopolaGrigliaScadenze();
                 }
-
-                CalcolaTotali();
             }
         }
 
@@ -510,7 +510,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
                 PopolaGrigliaScadenze();
                 ddlFatturaPagata.SelectedValue = "0";
-                CalcolaTotali();
             }
         }
 

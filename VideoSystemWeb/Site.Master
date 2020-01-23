@@ -172,7 +172,15 @@
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=INTERVENTO" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologie Interventi</a>
                     </div>
                 </div>
-                <a class="w3-bar-item w3-button w3-disabled">Report</a>
+
+                <div class="w3-dropdown-hover">
+                    <button class="w3-button w3-yellow" onclick="return false;">Report</button>
+                    <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
+                        <a href="/REPORT/StampaConsulenteLavoro.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Stampa Consulente del Lavoro</a>
+                        <a href="/REPORT/StampaCollaboratori.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Stampa Collaboratori</a>
+                    </div>
+                </div>
+
                 <div class="w3-dropdown-hover">
                     <button class="w3-button w3-yellow" onclick="return false;">Magazzino</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">

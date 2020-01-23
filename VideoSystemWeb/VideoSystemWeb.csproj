@@ -278,6 +278,8 @@
     <Content Include="pageError.aspx" />
     <Content Include="Protocollo\Protocollo.aspx" />
     <Content Include="REPORT\ReportTLTime.aspx" />
+    <Content Include="REPORT\StampaCollaboratori.aspx" />
+    <Content Include="REPORT\StampaConsulenteLavoro.aspx" />
     <Content Include="resetPassword.aspx" />
     <Content Include="Scadenzario\Scadenzario.aspx" />
     <Content Include="Scripts\bootstrap-datepicker.it.min.js" />
@@ -699,6 +701,11 @@
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Dati_Lavorazione_BLL.cs" />
+    <Compile Include="BLL\GridViewHelper\GridViewGroup.cs" />
+    <Compile Include="BLL\GridViewHelper\GridViewGroupList.cs" />
+    <Compile Include="BLL\GridViewHelper\GridViewHelper.cs" />
+    <Compile Include="BLL\GridViewHelper\GridViewSummary.cs" />
+    <Compile Include="BLL\GridViewHelper\GridViewSummaryList.cs" />
     <Compile Include="BLL\Offerta_BLL.cs" />
     <Compile Include="BLL\Config_BLL.cs" />
     <Compile Include="BLL\AttrezzatureMagazzino_BLL.cs" />
@@ -718,6 +725,7 @@
     </Compile>
     <Compile Include="BLL\Esito.cs" />
     <Compile Include="BLL\Login_BLL.cs" />
+    <Compile Include="BLL\Report_BLL.cs" />
     <Compile Include="BLL\Scadenzario_BLL.cs" />
     <Compile Include="BLL\SessionManager.cs" />
     <Compile Include="BLL\Stampa\BaseStampa.cs" />
@@ -761,6 +769,7 @@
     <Compile Include="DAL\Anag_Qualifiche_Collaboratori_DAL.cs" />
     <Compile Include="DAL\Base_DAL.cs" />
     <Compile Include="DAL\Login_DAL.cs" />
+    <Compile Include="DAL\Report_DAL.cs" />
     <Compile Include="DAL\Scadenzario_DAL.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -776,9 +785,12 @@
     <Compile Include="Entity\Anag_Indirizzi_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Qualifiche_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
+    <Compile Include="Entity\DatiFiscaliLavorazione.cs" />
     <Compile Include="Entity\DatiLavorazione.cs" />
     <Compile Include="Entity\DatiArticoliLavorazione.cs" />
     <Compile Include="Entity\DatiPianoEsternoLavorazione.cs" />
+    <Compile Include="Entity\DatiReport.cs" />
+    <Compile Include="Entity\DatiReportRaw.cs" />
     <Compile Include="Entity\DatiScadenzario.cs" />
     <Compile Include="Entity\FiguraProfessionale.cs" />
     <Compile Include="Entity\GiorniPagamentoFatture.cs" />
@@ -843,6 +855,20 @@
     </Compile>
     <Compile Include="REPORT\ReportTLTime.aspx.designer.cs">
       <DependentUpon>ReportTLTime.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="REPORT\StampaCollaboratori.aspx.cs">
+      <DependentUpon>StampaCollaboratori.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="REPORT\StampaCollaboratori.aspx.designer.cs">
+      <DependentUpon>StampaCollaboratori.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="REPORT\StampaConsulenteLavoro.aspx.cs">
+      <DependentUpon>StampaConsulenteLavoro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="REPORT\StampaConsulenteLavoro.aspx.designer.cs">
+      <DependentUpon>StampaConsulenteLavoro.aspx</DependentUpon>
     </Compile>
     <Compile Include="resetPassword.aspx.cs">
       <DependentUpon>resetPassword.aspx</DependentUpon>

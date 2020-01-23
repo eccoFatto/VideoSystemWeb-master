@@ -302,7 +302,7 @@
                         </td>
                         <td style="width:40%;">                    
                             <div id="divBtnInserisciScadenza" runat="server"> 
-                            <div id="clbtnInserisciScadenza" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciScadenza();" >Inserisci</div>
+                                <div id="clbtnInserisciScadenza" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciScadenza();" >Inserisci</div>
 
                             </div>
                         </td>
@@ -320,7 +320,7 @@
                 <asp:GridView ID="gv_scadenze" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" 
                     CssClass="grid" AllowPaging="True" OnPageIndexChanging="gv_scadenze_PageIndexChanging" PageSize="20"  
                     EmptyDataText="Nessuna scadenza trovata" EmptyDataRowStyle-HorizontalAlign="Center" OnRowCommand="gv_scadenze_RowCommand">
-                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="4" FirstPageText="First" LastPageText="Last"/>
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>
                     <Columns>
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="3%">
                             <ItemTemplate>
@@ -472,7 +472,7 @@
                                             <label>Imp. + IVA</label>
                                             <asp:TextBox ID="txt_ImponibileIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
                                         </div>
-<%--  --%>
+
                                         <div class="w3-third w3-padding" >
                                             <asp:Label ID="lbl_VersatoRiscosso" runat="server" Text="Versato"></asp:Label>
                                             <asp:TextBox ID="txt_Versato" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>

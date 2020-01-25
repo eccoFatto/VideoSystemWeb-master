@@ -42,31 +42,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.DropDownList ddl_TipoAnagrafica;
 
         /// <summary>
-        /// Controllo hf_RagioneSociale.
+        /// Controllo txt_RagioneSociale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_RagioneSociale;
-
-        /// <summary>
-        /// Controllo ddl_RagioneSociale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ddl_RagioneSociale;
-
-        /// <summary>
-        /// Controllo elencoRagioneSociale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoRagioneSociale;
+        protected global::System.Web.UI.WebControls.TextBox txt_RagioneSociale;
 
         /// <summary>
         /// Controllo txt_NumeroFattura.

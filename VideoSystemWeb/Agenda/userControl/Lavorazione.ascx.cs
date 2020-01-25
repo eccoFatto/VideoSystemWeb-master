@@ -890,6 +890,24 @@ namespace VideoSystemWeb.Agenda.userControl
                         SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Insert(indexArticolo + 1, datiPianoEsternoLavorazioneSelezionato);
                     }
                     break;
+                case "notaSpese":
+
+                    Esito esito = new Esito();
+                    
+                    esito = popupNotaSpese.PopolaPannelloNotaSpese(SessionManager.EventoSelezionato, figuraProfessionaleSelezionata);
+                    if (esito.Codice == Esito.ESITO_OK)
+                    {
+                        upNotaSpese.Update();
+
+                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriNotaSpese", script: "javascript: document.getElementById('modalNotaSpese').style.display='block'", addScriptTags: true);
+                    }
+                    else
+                    { 
+                        basePage.ShowError(esito.Descrizione);
+                    }
+                    
+
+                    break;
             }
 
             RichiediOperazionePopup("UPDATE");

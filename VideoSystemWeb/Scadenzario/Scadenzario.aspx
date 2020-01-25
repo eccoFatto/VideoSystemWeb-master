@@ -59,8 +59,8 @@
         // AZZERO TUTTI I CAMPI RICERCA
         function azzeraCampiRicerca() {
             $("#<%=ddl_TipoAnagrafica.ClientID%>").val('');
-            //$("#< %=ddl_CodiceAnagrafica.ClientID%>").val('');
-            $("#<%=hf_RagioneSociale.ClientID%>").val('');
+            <%--$("#<%=hf_RagioneSociale.ClientID%>").val('');--%>
+            $("#<%=txt_RagioneSociale.ClientID%>").val('');
             $("#<%=txt_NumeroFattura.ClientID%>").val('');
             $("#<%=ddlFatturaPagata.ClientID%>").val('');
             $("#<%=txt_DataFatturaDa.ClientID%>").val('');
@@ -94,7 +94,7 @@
             $('#<%=txt_TotaleIva.ClientID%>').val((imponibileIva - importoIva).toFixed(2).replace(".", ","));
         }
 
-        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+        <%--Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
         // GESTIONE DROPDOWN RAGIONE SOCIALE
             $("#filtroRagioneSociale").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
@@ -108,7 +108,7 @@
                 $("#<%=ddl_RagioneSociale.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_RagioneSociale.ClientID%>").attr("title", $(e.target).text());
             });
-        });
+        });--%>
 
     </script>
 
@@ -139,15 +139,15 @@
                 </div>
                 <div class="w3-quarter">
                     <label>Ragione Sociale</label>
-                    <%--<asp:DropDownList ID="ddl_CodiceAnagrafica" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border"/>--%>
+                    <asp:TextBox ID="txt_RagioneSociale" runat="server" class="w3-input w3-border" ></asp:TextBox>
 
-                    <div id="divRagioneSociale" class="dropdown ">
+                    <%--<div id="divRagioneSociale" class="dropdown ">
                         <asp:HiddenField ID="hf_RagioneSociale" runat="server" Value="" />
                         <asp:Button ID="ddl_RagioneSociale" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
                         <ul id="elencoRagioneSociale" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px">
                             <input class="form-control" id="filtroRagioneSociale" type="text" placeholder="Cerca..">
                         </ul>
-                    </div>
+                    </div>--%>
 
                 </div>
                 <div class="w3-quarter">

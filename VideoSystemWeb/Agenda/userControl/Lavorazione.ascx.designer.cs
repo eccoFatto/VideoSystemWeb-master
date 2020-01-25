@@ -931,5 +931,23 @@ namespace VideoSystemWeb.Agenda.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_PianoEsterno;
+
+        /// <summary>
+        /// Controllo upNotaSpese.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upNotaSpese;
+
+        /// <summary>
+        /// Controllo popupNotaSpese.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::VideoSystemWeb.Agenda.userControl.NotaSpese popupNotaSpese;
     }
 }

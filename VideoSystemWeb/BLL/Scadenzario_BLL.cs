@@ -118,7 +118,7 @@ namespace VideoSystemWeb.BLL
         }
 
         public List<DatiScadenzario> GetAllDatiScadenzario(string tipoAnagrafica,
-                                                           string codiceAnagrafica,
+                                                           string ragioneSociale,
                                                            string numeroFattura,
                                                            string fatturaPagata,
                                                            string dataFatturaDa,
@@ -128,7 +128,7 @@ namespace VideoSystemWeb.BLL
                                                            ref Esito esito)
         {
             return Scadenzario_DAL.Instance.GetAllDatiScadenzario(tipoAnagrafica,
-                                                                  codiceAnagrafica,
+                                                                  ragioneSociale,
                                                                   numeroFattura,
                                                                   fatturaPagata,
                                                                   dataFatturaDa,

@@ -10,8 +10,13 @@ using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.REPORT
 {
-    public partial class StampaConsulenteLavoro : System.Web.UI.Page
+    public partial class StampaConsulenteLavoro : BasePage
     {
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            CheckIsMobile();
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

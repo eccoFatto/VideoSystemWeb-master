@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Lavorazione.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.Lavorazione" %>
 
+<%@ Register TagPrefix="popup" TagName="NotaSpese" Src="./NotaSpese.ascx" %>
 <script>
 
     $(document).ready(function () {
@@ -738,7 +739,9 @@
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDown" runat="server" ImageUrl="/Images/arrow-down-icon.png" ToolTip="Sposta giù" CommandName="moveDown" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>'  OnClientClick="$('.loader').show();"/>
+                                        <asp:ImageButton ID="imgNotaspese" runat="server" ImageUrl="/Images/notaSpese.png" ToolTip="Stampa nota spese" CommandName="notaSpese" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="$('.loader').show();"/>
                                         <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" CommandName="elimina" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="return confermaEliminazioneFigProf();" />
+                                        
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
@@ -923,4 +926,10 @@
             </div>
         </div>
     </div>
+
+    <asp:UpdatePanel ID="upNotaSpese" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+        <ContentTemplate>
+            <popup:NotaSpese ID="popupNotaSpese" runat="server" />
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Panel>

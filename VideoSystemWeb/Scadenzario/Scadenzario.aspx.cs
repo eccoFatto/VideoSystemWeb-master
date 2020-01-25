@@ -65,7 +65,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, idDatiProtocollo);
                     ddl_Tipo.SelectedValue = tipo;
                     txt_ClienteFornitore.Text = protocollo.Cliente;
-                    //txt_DataDocumento.Text = protocollo.Data_protocollo==null? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_protocollo).ToString("dd/MM/yyyy");
                     txt_DataDocumento.Text = protocollo.Data_inizio_lavorazione == null ? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_inizio_lavorazione).ToString("dd/MM/yyyy");
                     txt_NumeroDocumento.Text = numeroDocumento;// protocollo.Protocollo_riferimento;
 
@@ -79,7 +78,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 #endregion
             }
 
-            ddl_RagioneSociale.Text = hf_RagioneSociale.Value;
+            //ddl_RagioneSociale.Text = hf_RagioneSociale.Value;
 
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
@@ -100,10 +99,10 @@ namespace VideoSystemWeb.Scadenzario.userControl
             ddl_BancaModifica.Items.Add(new ListItem("Cassa", "Cassa"));
             #endregion
 
-            #region RAGIONE SOCIALE
-            List<Anag_Clienti_Fornitori> listaClientiFornitori = Scadenzario_BLL.Instance.getClientiFornitoriInScadenzario(ref esito);
+            #region RAGIONE SOCIALE (SOSTITUITO CON NORMALE TEXTBOX)
+            //List<Anag_Clienti_Fornitori> listaClientiFornitori = Scadenzario_BLL.Instance.getClientiFornitoriInScadenzario(ref esito);
 
-            PopolaDDLGenerico(elencoRagioneSociale, listaClientiFornitori);
+            //PopolaDDLGenerico(elencoRagioneSociale, listaClientiFornitori);
 
             #endregion
         }
@@ -256,13 +255,14 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
 
             List <DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario(ddl_TipoAnagrafica.SelectedValue,
-                                                                                    hf_RagioneSociale.Value,
-                                                                                    txt_NumeroFattura.Text,
-                                                                                    ddlFatturaPagata.SelectedValue,
-                                                                                    txt_DataFatturaDa.Text,
-                                                                                    txt_DataFatturaA.Text,
-                                                                                    txt_DataScadenzaDa.Text,
-                                                                                    txt_DataScadenzaA.Text, ref esito);
+                                                                                                        //hf_RagioneSociale.Value,
+                                                                                                        txt_RagioneSociale.Text,
+                                                                                                        txt_NumeroFattura.Text,
+                                                                                                        ddlFatturaPagata.SelectedValue,
+                                                                                                        txt_DataFatturaDa.Text,
+                                                                                                        txt_DataFatturaA.Text,
+                                                                                                        txt_DataScadenzaDa.Text,
+                                                                                                        txt_DataScadenzaA.Text, ref esito);
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
             gv_scadenze.DataBind();
@@ -419,7 +419,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 }
             }
         }
-
 
         private void gestisciPulsantiScadenza(string stato)
         {

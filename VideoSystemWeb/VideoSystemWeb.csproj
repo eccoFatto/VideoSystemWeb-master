@@ -187,6 +187,7 @@
     <Content Include="Agenda\GestioneColonneAgenda.aspx" />
     <Content Include="Agenda\prova.aspx" />
     <Content Include="Agenda\userControl\Appuntamento.ascx" />
+    <Content Include="Agenda\userControl\NotaSpese.ascx" />
     <Content Include="Agenda\userControl\RiepilogoFattura.ascx" />
     <Content Include="Agenda\userControl\RiepilogoConsuntivo.ascx" />
     <Content Include="Agenda\userControl\RiepilogoPianoEsterno.ascx" />
@@ -266,6 +267,7 @@
     <Content Include="Images\Male-user-accept-icon.png" />
     <Content Include="Images\Male-user-edit-icon.png" />
     <Content Include="Images\Martz90-Circle-Camera.ico" />
+    <Content Include="Images\notaSpese.png" />
     <Content Include="Images\Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" />
     <Content Include="Images\Search.ico" />
     <Content Include="Images\switch.png" />
@@ -587,6 +589,13 @@
     </Compile>
     <Compile Include="Agenda\userControl\Appuntamento.ascx.designer.cs">
       <DependentUpon>Appuntamento.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\userControl\NotaSpese.ascx.cs">
+      <DependentUpon>NotaSpese.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\userControl\NotaSpese.ascx.designer.cs">
+      <DependentUpon>NotaSpese.ascx</DependentUpon>
     </Compile>
     <Compile Include="Agenda\userControl\RiepilogoFattura.ascx.cs">
       <DependentUpon>RiepilogoFattura.ascx</DependentUpon>

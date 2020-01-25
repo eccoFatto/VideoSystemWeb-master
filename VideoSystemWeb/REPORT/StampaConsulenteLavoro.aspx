@@ -121,7 +121,7 @@
                         <asp:Button ID="btnRicerca" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" style="position:absolute;top:27px;" OnClick="btnRicerca_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
                     </div>
                     <div class="w3-half" style="padding-right:10px">
-                        <asp:Button ID="btnStampa" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="position:absolute;top:27px;right:100px" OnClientClick="$('.loader').show();" Text="Stampa" />
+                        <asp:Button ID="btnStampa" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="position:absolute;top:27px;right:100px" OnClientClick="$('.loader').show();" Text="Stampa" OnClick="btnStampa_Click" />
                     </div>
                 </div>
             </div>

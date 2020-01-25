@@ -88,7 +88,7 @@ namespace VideoSystemWeb.DAL
                                        "where  " +
                                        "artLav.idCollaboratori is not null and " +
                                        "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + ") and " +
-                                       "artLav.data between '" + dataInizio.ToString("dd-MM-yyyy") + "' and '" + dataFine.ToString("dd-MM-yyyy") + "' "+ //"' and " +
+                                       "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT23:59:59.999") + "' "+ //"' and " +
                                        //"indColl.priorita = 1 and " +
                                        //"telColl.priorita = 1 " +
                                        
@@ -152,7 +152,7 @@ namespace VideoSystemWeb.DAL
                                              "where  " +
                                              "artLav.idCollaboratori is not null and " +
                                              "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + ") and " +
-                                             "artLav.data between '" + dataInizio.ToString("dd-MM-yyyy") + "' and '" + dataFine.ToString("dd-MM-yyyy") + "' "+//"' and " +
+                                             "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT23:59:59.999") + "' "+//"' and " +
                                              //"indColl.priorita = 1 and " +
                                              //"telColl.priorita = 1 " +
                                              
@@ -184,7 +184,7 @@ namespace VideoSystemWeb.DAL
                                              "where  " +
                                              "artLav.idFornitori is not null and " +
                                              "(artLav.idTipoPagamento is not null) and " +
-                                             "artLav.data between '" + dataInizio.ToString("dd-MM-yyyy") + "' and '" + dataFine.ToString("dd-MM-yyyy") + "' " +
+                                             "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT23:59:59.999") + "' " +
                                              
                                       "order by Nome, data ";
 

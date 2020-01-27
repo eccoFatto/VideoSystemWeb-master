@@ -29,6 +29,10 @@ namespace VideoSystemWeb.Entity
         private decimal fattura;
         private int diaria;
 
+        private int tipoPagamento;
+        private string descrizionePagamento;
+        private decimal rimborsoKm;
+
         public int IdCollaboratore { get => idCollaboratore; set => idCollaboratore = value; }
         public string NomeCollaboratore { get => nomeCollaboratore; set => nomeCollaboratore = value; }
         public string QualificaCollaboratore { get => qualificaCollaboratore; set => qualificaCollaboratore = value; }
@@ -49,5 +53,8 @@ namespace VideoSystemWeb.Entity
         public decimal RitenutaAcconto { get => ritenutaAcconto; set => ritenutaAcconto = value; }
         public decimal Fattura { get => fattura; set => fattura = value; }
         public int Diaria { get => diaria; set => diaria = value; }
+        public int TipoPagamento { get => tipoPagamento; set => tipoPagamento = value; }
+        public string DescrizionePagamento { get => descrizionePagamento; set => descrizionePagamento = value; }
+        public decimal RimborsoKm { get => rimborsoKm; set => rimborsoKm = value; }
     }
 }

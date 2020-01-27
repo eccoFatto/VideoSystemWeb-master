@@ -116,6 +116,17 @@
                     <label>Data fine</label>
                     <asp:TextBox ID="txt_DataFine" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                 </div>
+
+                <div class="w3-quarter">
+                    <label>Nominativo</label>
+                    <asp:TextBox ID="txt_Nominativo" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border" ></asp:TextBox>
+                </div>
+            </div>
+
+            <div class="w3-row-padding" style="position:relative;">
+
+                <div class="w3-threequarter" style="margin-bottom:10px">&nbsp;</div>
+
                 <div class="w3-quarter">
                     <div class="w3-half" style="padding-right:10px">
                         <asp:Button ID="btnRicerca" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" style="position:absolute;top:27px;" OnClick="btnRicerca_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
@@ -139,12 +150,13 @@
                         <asp:BoundField DataField="CodFiscaleCollaboratore" HeaderText="CodFiscaleCollaboratore"  />
 
                         <asp:BoundField DataField="DataLavorazione" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="30%" />
-                        <asp:BoundField DataField="Produzione" HeaderText="Produzione"  HeaderStyle-Width="23%" />
+                        <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="25%" />
+                        <asp:BoundField DataField="Produzione" HeaderText="Produzione"  HeaderStyle-Width="21%" />
                         <asp:BoundField DataField="Cliente" HeaderText="Cliente"  HeaderStyle-Width="20%" />
                         <asp:BoundField DataField="Descrizione" HeaderText="Descrizione"  HeaderStyle-Width="15%" />
                         <asp:BoundField DataField="Assunzione" HeaderText="Assunzione" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="Mista" HeaderText="Mista" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="RimborsoKm" HeaderText="Rimb. Km" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="Diaria" HeaderText="Diaria" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>
                 
                     </Columns>

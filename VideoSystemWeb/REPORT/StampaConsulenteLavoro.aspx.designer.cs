@@ -69,6 +69,15 @@ namespace VideoSystemWeb.REPORT
         protected global::System.Web.UI.WebControls.TextBox txt_DataFine;
 
         /// <summary>
+        /// Controllo txt_Nominativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Nominativo;
+
+        /// <summary>
         /// Controllo btnRicerca.
         /// </summary>
         /// <remarks>

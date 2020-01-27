@@ -18,6 +18,7 @@ namespace VideoSystemWeb.Entity
         private string codFiscaleCollaboratore;
         private List<DatiFiscaliLavorazione> listaDatiFiscali;
 
+
         public int IdCollaboratore { get => idCollaboratore; set => idCollaboratore = value; }
         public string NomeCollaboratore { get => nomeCollaboratore; set => nomeCollaboratore = value; }
         public string QualificaCollaboratore { get => qualificaCollaboratore; set => qualificaCollaboratore = value; }

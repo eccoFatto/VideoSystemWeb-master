@@ -50,6 +50,7 @@ namespace VideoSystemWeb.REPORT
 
             //SUBTOTALE
             helper.RegisterSummary("Mista", SummaryOperation.Sum, "NomeCollaboratore");
+            helper.RegisterSummary("RimborsoKm", SummaryOperation.Sum, "NomeCollaboratore");
             helper.RegisterSummary("Assunzione", SummaryOperation.Sum, "NomeCollaboratore");
             helper.RegisterSummary("RitenutaAcconto", SummaryOperation.Sum, "NomeCollaboratore");
             helper.RegisterSummary("Fattura", SummaryOperation.Sum, "NomeCollaboratore");
@@ -57,6 +58,7 @@ namespace VideoSystemWeb.REPORT
 
             //TOTALE
             helper.RegisterSummary("Mista", SummaryOperation.Sum);
+            helper.RegisterSummary("RimborsoKm", SummaryOperation.Sum);
             helper.RegisterSummary("Assunzione", SummaryOperation.Sum);
             helper.RegisterSummary("RitenutaAcconto", SummaryOperation.Sum);
             helper.RegisterSummary("Fattura", SummaryOperation.Sum);
@@ -81,8 +83,10 @@ namespace VideoSystemWeb.REPORT
             Esito esito = new Esito();
             DateTime dataInizio = DateTime.Parse(txt_DataInizio.Text);
             DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
+            string nominativo = txt_Nominativo.Text;
+            bool soloFornitori = chk_Fornitore.Checked;
 
-            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawCollaboratoriFornitori(dataInizio, dataFine, ref esito);
+            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawCollaboratoriFornitori(dataInizio, dataFine, nominativo, soloFornitori, ref esito);
 
             gv_DatiStampa.DataSource = listaDatiReport;
             gv_DatiStampa.DataBind();
@@ -134,6 +138,7 @@ namespace VideoSystemWeb.REPORT
             row.Cells[3].Text = "<b><i>" + row.Cells[3].Text + "</i></b>";
             row.Cells[4].Text = "<b><i>" + row.Cells[4].Text + "</i></b>";
             row.Cells[5].Text = "<b><i>" + row.Cells[5].Text + "</i></b>";
+            row.Cells[6].Text = "<b><i>" + row.Cells[6].Text + "</i></b>";
         }
 
         private void Helper_GeneralSummary(GridViewRow row)
@@ -146,6 +151,7 @@ namespace VideoSystemWeb.REPORT
             row.Cells[3].Text = "<b>" + row.Cells[3].Text + "</b>";
             row.Cells[4].Text = "<b>" + row.Cells[4].Text + "</b>";
             row.Cells[5].Text = "<b>" + row.Cells[5].Text + "</b>";
+            row.Cells[6].Text = "<b>" + row.Cells[6].Text + "</b>";
         }
 
         protected void btnStampa_Click(object sender, EventArgs e)
@@ -155,8 +161,10 @@ namespace VideoSystemWeb.REPORT
                 Esito esito = new Esito();
                 DateTime dataInizio = DateTime.Parse(txt_DataInizio.Text);
                 DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
+                string nominativo = txt_Nominativo.Text;
+                bool soloFornitori = chk_Fornitore.Checked;
 
-                List<DatiReport> listaDatiReport = Report_BLL.Instance.GetListaDatiReportCollaboratoriFornitori(dataInizio, dataFine, ref esito);
+                List<DatiReport> listaDatiReport = Report_BLL.Instance.GetListaDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, soloFornitori, ref esito);
                 if (esito.Codice == 0 && listaDatiReport != null && listaDatiReport.Count > 0)
                 {
                     // LEGGO I PARAMETRI DI VS
@@ -259,7 +267,7 @@ namespace VideoSystemWeb.REPORT
                         document.Add(pSpazio);
 
                         // CREAZIONE GRIGLIA
-                        iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 70, 130, 110, 110, 110, 50, 50, 50, 50, 50 }).SetWidth(780).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
+                        iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 67, 123, 110, 97, 97, 55, 48, 48, 48, 47, 40 }).SetWidth(780).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
                         Paragraph pGriglia;
                         Cell cellaGriglia;
 
@@ -289,7 +297,7 @@ namespace VideoSystemWeb.REPORT
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
 
-                        pGriglia = new Paragraph("Assunzione").SetFontSize(10);
+                        pGriglia = new Paragraph("Assunz.").SetFontSize(10);
                         cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
@@ -299,7 +307,12 @@ namespace VideoSystemWeb.REPORT
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
 
-                        pGriglia = new Paragraph("Rit.Acconto").SetFontSize(10);
+                        pGriglia = new Paragraph("Rimb. KM").SetFontSize(10);
+                        cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
+                        cellaGriglia.Add(pGriglia);
+                        tbGrigla.AddHeaderCell(cellaGriglia);
+
+                        pGriglia = new Paragraph("Rit. Acconto").SetFontSize(10);
                         cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
@@ -319,6 +332,7 @@ namespace VideoSystemWeb.REPORT
                         decimal ritenutaAcconto = 0;
                         decimal assunzione = 0;
                         decimal mista = 0;
+                        decimal rimborsoKm = 0;
                         int diaria = 0;
 
                         foreach (DatiFiscaliLavorazione datiFiscali in collaboratore.ListaDatiFiscali)
@@ -360,6 +374,12 @@ namespace VideoSystemWeb.REPORT
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
 
+                            rimborsoKm += datiFiscali.RimborsoKm;
+                            pGriglia = new Paragraph(datiFiscali.RimborsoKm.ToString("###,##0.00")).SetFontSize(9);
+                            cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            cellaGriglia.Add(pGriglia);
+                            tbGrigla.AddCell(cellaGriglia);
+
                             ritenutaAcconto += datiFiscali.RitenutaAcconto;
                             pGriglia = new Paragraph(datiFiscali.RitenutaAcconto.ToString("###,##0.00")).SetFontSize(9);
                             cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
@@ -391,6 +411,11 @@ namespace VideoSystemWeb.REPORT
                         tbGrigla.AddCell(cellaGriglia);
 
                         pGriglia = new Paragraph(mista.ToString("###,##0.00")).SetFontSize(9);
+                        cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
+                        cellaGriglia.Add(pGriglia);
+                        tbGrigla.AddCell(cellaGriglia);
+
+                        pGriglia = new Paragraph(rimborsoKm.ToString("###,##0.00")).SetFontSize(9);
                         cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);

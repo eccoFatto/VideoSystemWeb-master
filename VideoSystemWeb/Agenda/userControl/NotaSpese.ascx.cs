@@ -154,15 +154,13 @@ namespace VideoSystemWeb.Agenda.userControl
                         document.Add(pSpazio);
 
                         Paragraph pLuogoData = new Paragraph(cittaVs + ", " + DateTime.Today.ToLongDateString());
+                        pLuogoData.SetFontSize(8);
                         document.Add(pLuogoData);
 
                         document.Add(pSpazio);
 
                         // INTESTAZIONE GRIGLIA
-                        iText.Layout.Element.Table table = new iText.Layout.Element.Table(new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 2 }).UseAllAvailableWidth();
-
-                        //float[] widths = new float[] { 10f, 10f, 10f, 10f, 10f, 10f, 10f, 10f, 20f };
-                        //table.wid  (widths);
+                        iText.Layout.Element.Table table = new iText.Layout.Element.Table(new float[] { 90, 70, 70, 70, 70, 70, 70, 70, 200 }).SetWidth(780);
 
                         Border bordoDoppio = new DoubleBorder(1);
 
@@ -205,7 +203,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         table.AddHeaderCell(intestazione).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER); 
 
                         // CELLE VUOTE
-                        for (int i = 0; i < 13; i++)
+                        for (int i = 0; i < 12; i++)
                         {
                             table.AddCell(new Cell().SetHeight(15));
 
@@ -225,6 +223,13 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         }
                         document.Add(table);
+
+                        Paragraph pFirma = new Paragraph("in fede");
+                        pFirma.SetFontSize(9);
+                        pFirma.SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                        pFirma.SetMarginRight(90);
+                        pFirma.SetMarginTop(13);
+                        document.Add(pFirma);
 
 
                         iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();

@@ -54,8 +54,13 @@ namespace VideoSystemWeb.DAL
             return UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO), tipoPagamento, ref esito).id;
         }
 
-        public DataTable GetDatiReportConsulenteLavoro(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        public DataTable GetDatiReportConsulenteLavoro(DateTime dataInizio, DateTime dataFine, string nominativo, ref Esito esito)
         {
+            string filtroNominativo = string.Empty;
+            if (!string.IsNullOrEmpty(nominativo))
+            {
+                filtroNominativo = "collab.cognome + ' ' + collab.nome like '%" + nominativo + "%' and ";
+            }
             DataTable dtReturn = new DataTable();
             try
             {
@@ -72,9 +77,14 @@ namespace VideoSystemWeb.DAL
                                              "datiAgenda.produzione as Produzione, " +
                                              "clienti.ragioneSociale as Cliente, " +
                                              "artLav.descrizione as Descrizione, " +
-                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoAssunzione + " THEN artLav.fp_lordo ELSE 0 END as Assunzione, " +
-                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN artLav.fp_lordo ELSE 0 END as Mista, " +
-                                             "CASE WHEN (select count(*) from dati_articoli_lavorazione where idCollaboratori = collab.id and data = artLav.data and idArtArticoli = " + idDiaria + ") = 1 THEN 1 ELSE 0 END as Diaria " +
+                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoAssunzione + " THEN artLav.fp_netto ELSE 0 END as Assunzione, " +
+                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN 45 ELSE 0 END as Mista, " +
+
+                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN artLav.fp_netto - 45 ELSE 0 END as RimborsoKm, " +
+
+                                             "CASE WHEN (select count(*) from dati_articoli_lavorazione where idCollaboratori = collab.id and data = artLav.data and idArtArticoli = " + idDiaria + ") = 1 THEN 1 ELSE 0 END as Diaria, " +
+                                             "artLav.idTipoPagamento as TipoPagamento, " +
+                                             "tipoPagam.nome as DescrizioneTipoPagamento " +
 
                                        "from  " +
                                        "dati_articoli_lavorazione artLav  " +
@@ -84,11 +94,13 @@ namespace VideoSystemWeb.DAL
                                        "left join anag_indirizzi_collaboratori indColl on indColl.id = (select top 1 id from anag_indirizzi_collaboratori where id_collaboratore = collab.id ) " +
                                        "left join anag_telefoni_collaboratori telColl on telColl.id = (select top 1 id from anag_telefoni_collaboratori where id_collaboratore = collab.id ) " +
                                        "left join anag_clienti_fornitori clienti on clienti.id = datiAgenda.id_cliente " +
+                                       "left join tipo_pagamento tipoPagam on artLav.idTipoPagamento = tipoPagam.id " +
                                        
                                        "where  " +
+                                       filtroNominativo + 
                                        "artLav.idCollaboratori is not null and " +
                                        "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + ") and " +
-                                       "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT23:59:59.999") + "' "+ //"' and " +
+                                       "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' "+ //"' and " +
                                        
                                        "order by Nome, data";
 
@@ -114,47 +126,72 @@ namespace VideoSystemWeb.DAL
             return dtReturn;
         }
 
-        public DataTable GetDatiReportCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        public DataTable GetDatiReportCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, bool soloFornitori, ref Esito esito)
         {
+            string filtroNominativo = string.Empty;
+            if (!string.IsNullOrEmpty(nominativo))
+            {
+                filtroNominativo = "collab.cognome + ' ' + collab.nome like '%" + nominativo + "%' and ";
+            }
+            string filtroRagioneSociale = string.Empty;
+            if (!string.IsNullOrEmpty(nominativo))
+            {
+                filtroRagioneSociale = "clientiFornitori.ragioneSociale like '%" + nominativo + "%' and ";
+            }
+
             DataTable dtReturn = new DataTable();
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string querySql = "select collab.id as ID, " +
-                                             "collab.cognome + ' ' +  collab.nome as Nome, " +
-                                             "indColl.tipo + ' ' + indColl.indirizzo + ' ' + indColl.numeroCivico as Indirizzo, " +
-                                             "indColl.comune + ' (' + indColl.provincia + ')' as Citta, " +
-                                             "telColl.naz_pref + telColl.numero as Telefono, " +
-                                             "collab.codiceFiscale as CodiceFiscale, " +
-                                             "artLav.data as Data, " +
-                                             "datiAgenda.lavorazione as Lavorazione, " +
-                                             "datiAgenda.produzione as Produzione, " +
-                                             "clienti.ragioneSociale as Cliente, " +
-                                             "artLav.descrizione as Descrizione, " +
-                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoAssunzione + " THEN artLav.fp_lordo ELSE 0 END as Assunzione, " +
-                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN artLav.fp_lordo ELSE 0 END as Mista, " +
-                                             "0 as RitenutaAcconto, " +
-                                             "0 as Fattura, " +
-                                             "CASE WHEN (select count(*) from dati_articoli_lavorazione where idCollaboratori = collab.id and data = artLav.data and idArtArticoli = " + idDiaria + ") = 1 THEN 1 ELSE 0 END as Diaria " +
-                                             
-                                             "from  " +
-                                             "dati_articoli_lavorazione artLav " +
-                                             "left join dati_lavorazione datiLav on datiLav.id = artLav.idDatiLavorazione " +
-                                             "left join tab_dati_agenda datiAgenda on datiAgenda.id = datiLav.idDatiAgenda " +
-                                             "left join anag_collaboratori collab on collab.id=artLav.idCollaboratori " +
-                                             "left join anag_indirizzi_collaboratori indColl on indColl.id = (select top 1 id from anag_indirizzi_collaboratori where id_collaboratore = collab.id ) " +
-                                             "left join anag_telefoni_collaboratori telColl on telColl.id = (select top 1 id from anag_telefoni_collaboratori where id_collaboratore = collab.id ) " +
-                                             "left join anag_clienti_fornitori clienti on clienti.id = datiAgenda.id_cliente " +
-                                             
-                                             "where  " +
-                                             "artLav.idCollaboratori is not null and " +
-                                             "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + ") and " +
-                                             "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT23:59:59.999") + "' "+//"' and " +
-                                             
-                                             "UNION " +
-                                             
-                                      "select clientiFornitori.id as ID, " +
+                    string querySql = "";
+                    string filtroSoloFornitori = "";
+
+                    if (!soloFornitori)
+                    {
+                        filtroSoloFornitori = " and artLav.idTipoPagamento = " + idTipoFattura + " ";
+                        querySql = "select collab.id as ID, " +
+                                                 "collab.cognome + ' ' + collab.nome as Nome, " +
+                                                 "indColl.tipo + ' ' + indColl.indirizzo + ' ' + indColl.numeroCivico as Indirizzo, " +
+                                                 "indColl.comune + ' (' + indColl.provincia + ')' as Citta, " +
+                                                 "telColl.naz_pref + telColl.numero as Telefono, " +
+                                                 "collab.codiceFiscale as CodiceFiscale, " +
+                                                 "artLav.data as Data, " +
+                                                 "datiAgenda.lavorazione as Lavorazione, " +
+                                                 "datiAgenda.produzione as Produzione, " +
+                                                 "clienti.ragioneSociale as Cliente, " +
+                                                 "artLav.descrizione as Descrizione, " +
+                                                 "CASE WHEN artLav.idTipoPagamento = " + idTipoAssunzione + " THEN artLav.fp_netto ELSE 0 END as Assunzione, " +
+                                                 "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN 45 ELSE 0 END as Mista, " +
+
+                                                 "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN artLav.fp_netto - 45 ELSE 0 END as RimborsoKm, " +
+
+                                                 "0 as RitenutaAcconto, " +
+                                                 "0 as Fattura, " +
+                                                 "CASE WHEN (select count(*) from dati_articoli_lavorazione where idCollaboratori = collab.id and data = artLav.data and idArtArticoli = " + idDiaria + ") = 1 THEN 1 ELSE 0 END as Diaria, " +
+                                                 "artLav.idTipoPagamento as TipoPagamento, " +
+                                                 "tipoPagam.nome as DescrizioneTipoPagamento " +
+
+                                                 "from  " +
+                                                 "dati_articoli_lavorazione artLav " +
+                                                 "left join dati_lavorazione datiLav on datiLav.id = artLav.idDatiLavorazione " +
+                                                 "left join tab_dati_agenda datiAgenda on datiAgenda.id = datiLav.idDatiAgenda " +
+                                                 "left join anag_collaboratori collab on collab.id=artLav.idCollaboratori " +
+                                                 "left join anag_indirizzi_collaboratori indColl on indColl.id = (select top 1 id from anag_indirizzi_collaboratori where id_collaboratore = collab.id ) " +
+                                                 "left join anag_telefoni_collaboratori telColl on telColl.id = (select top 1 id from anag_telefoni_collaboratori where id_collaboratore = collab.id ) " +
+                                                 "left join anag_clienti_fornitori clienti on clienti.id = datiAgenda.id_cliente " +
+                                                 "left join tipo_pagamento tipoPagam on artLav.idTipoPagamento = tipoPagam.id " +
+
+                                                 "where  " +
+                                                 filtroNominativo +
+                                                 "artLav.idCollaboratori is not null and " +
+                                                 "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + ") and " +
+                                                 "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' " +//"' and " +
+
+                                                 "UNION ";
+                    }
+
+                    querySql += "select clientiFornitori.id as ID, " +
                                              "clientiFornitori.ragioneSociale as Nome, " +
                                              "clientiFornitori.tipoIndirizzoLegale + ' ' + clientiFornitori.indirizzoLegale + ' ' + clientiFornitori.numeroCivicoLegale as Indirizzo, " +
                                              "clientiFornitori.comuneLegale + ' (' + clientiFornitori.provinciaLegale + ')' as Citta,  " +
@@ -165,23 +202,30 @@ namespace VideoSystemWeb.DAL
                                              "datiAgenda.produzione as Produzione, " +
                                              "clientiFornitori.ragioneSociale as Cliente, " +
                                              "artLav.descrizione as Descrizione, " +
-                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoAssunzione + " THEN artLav.fp_lordo ELSE 0 END as Assunzione, " +
-                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN artLav.fp_lordo ELSE 0 END as Mista, " +
-                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoRitenutaAcconto + " THEN artLav.fp_lordo ELSE 0 END as RitenutaAcconto, " +
-                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoFattura + " THEN artLav.fp_lordo ELSE 0 END as Fattura, " +
-                                             "CASE WHEN (select count(*) from dati_articoli_lavorazione where idFornitori = clientiFornitori.id and data = artLav.data and idArtArticoli = " + idDiaria + ") = 1 THEN 1 ELSE 0 END as Diaria " +
-                                             
+                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoAssunzione + " THEN artLav.fp_netto ELSE 0 END as Assunzione, " +
+                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN 45 ELSE 0 END as Mista, " +
+
+                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN artLav.fp_netto - 45 ELSE 0 END as RimborsoKm, " +
+
+                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoRitenutaAcconto + " THEN artLav.fp_netto ELSE 0 END as RitenutaAcconto, " +
+                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoFattura + " THEN artLav.fp_netto ELSE 0 END as Fattura, " +
+                                             "CASE WHEN (select count(*) from dati_articoli_lavorazione where idFornitori = clientiFornitori.id and data = artLav.data and idArtArticoli = " + idDiaria + ") = 1 THEN 1 ELSE 0 END as Diaria, " +
+                                             "artLav.idTipoPagamento as TipoPagamento, " +
+                                             "tipoPagam.nome as DescrizioneTipoPagamento " +
+
                                              "from  " +
                                              "dati_articoli_lavorazione artLav " +
                                              "left join dati_lavorazione datiLav on datiLav.id = artLav.idDatiLavorazione " +
                                              "left join tab_dati_agenda datiAgenda on datiAgenda.id = datiLav.idDatiAgenda " +
                                              "left join anag_clienti_fornitori clientiFornitori on clientiFornitori.id=artLav.idFornitori " +
-                                             " " +
+                                             "left join tipo_pagamento tipoPagam on artLav.idTipoPagamento = tipoPagam.id " +
+
                                              "where  " +
+                                             filtroRagioneSociale +
                                              "artLav.idFornitori is not null and " +
                                              "(artLav.idTipoPagamento is not null) and " +
-                                             "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT23:59:59.999") + "' " +
-                                             
+                                             "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' " +
+                                             filtroSoloFornitori + 
                                       "order by Nome, data ";
 
 

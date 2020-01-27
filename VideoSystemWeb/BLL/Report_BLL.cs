@@ -30,11 +30,11 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        public List<DatiReport> GetListaDatiReportConsulenteLavoro(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        public List<DatiReport> GetListaDatiReportConsulenteLavoro(DateTime dataInizio, DateTime dataFine, string nominativo, ref Esito esito)
         {
             List<DatiReport> listaReportConsulenteLavoro = new List<DatiReport>();
 
-            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(dataInizio, dataFine, ref esito);
+            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(dataInizio, dataFine, nominativo, ref esito);
             foreach(DataRow riga in dtReportConsulenteLavoro.Rows)
             {
                 DatiReport datiReport = new DatiReport();
@@ -65,8 +65,12 @@ namespace VideoSystemWeb.BLL
                 datiFiscaliLavorazione.Cliente = riga.Field<string>("Cliente");
                 datiFiscaliLavorazione.Descrizione = riga.Field<string>("Descrizione");
                 datiFiscaliLavorazione.Assunzione = riga.Field<decimal>("Assunzione");
-                datiFiscaliLavorazione.Mista = riga.Field<decimal>("Mista");
+                datiFiscaliLavorazione.Mista = (decimal)riga.Field<int>("Mista");
                 datiFiscaliLavorazione.Diaria = riga.Field<int>("Diaria");
+                datiFiscaliLavorazione.RimborsoKm = riga.Field<decimal>("RimborsoKm");
+                datiFiscaliLavorazione.TipoPagamento = riga.Field<int>("TipoPagamento");
+                datiFiscaliLavorazione.DescrizionePagamento = riga.Field<string>("DescrizioneTipoPagamento");
+
 
                 datiReport.ListaDatiFiscali.Add(datiFiscaliLavorazione);
             }                       
@@ -74,11 +78,11 @@ namespace VideoSystemWeb.BLL
             return listaReportConsulenteLavoro;
         }
 
-        public List<DatiReportRaw> GetListaDatiReportRawConsulenteLavoro(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        public List<DatiReportRaw> GetListaDatiReportRawConsulenteLavoro(DateTime dataInizio, DateTime dataFine, string nominativo, ref Esito esito)
         {
             List<DatiReportRaw> listaReportConsulenteLavoro = new List<DatiReportRaw>();
 
-            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(dataInizio, dataFine, ref esito);
+            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(dataInizio, dataFine, nominativo, ref esito);
             foreach (DataRow riga in dtReportConsulenteLavoro.Rows)
             {
                 DatiReportRaw datiReport = new DatiReportRaw();
@@ -99,8 +103,11 @@ namespace VideoSystemWeb.BLL
                 datiReport.Cliente = riga.Field<string>("Cliente");
                 datiReport.Descrizione = riga.Field<string>("Descrizione");
                 datiReport.Assunzione = riga.Field<decimal>("Assunzione");
-                datiReport.Mista = riga.Field<decimal>("Mista");
+                datiReport.Mista = (decimal)riga.Field<int>("Mista");
                 datiReport.Diaria = riga.Field<int>("Diaria");
+                datiReport.RimborsoKm = riga.Field<decimal>("RimborsoKm");
+                datiReport.TipoPagamento = riga.Field<int>("TipoPagamento");
+                datiReport.DescrizionePagamento = riga.Field<string>("DescrizioneTipoPagamento");
 
                 listaReportConsulenteLavoro.Add(datiReport);
 
@@ -109,11 +116,11 @@ namespace VideoSystemWeb.BLL
             return listaReportConsulenteLavoro;
         }
 
-        public List<DatiReport> GetListaDatiReportCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        public List<DatiReport> GetListaDatiReportCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, bool soloFornitori, ref Esito esito)
         {
             List<DatiReport> listaReportCollaboratoriFornitori = new List<DatiReport>();
 
-            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportCollaboratoriFornitori(dataInizio, dataFine, ref esito);
+            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, soloFornitori, ref esito);
             foreach (DataRow riga in dtReportConsulenteLavoro.Rows)
             {
                 DatiReport datiReport = new DatiReport();
@@ -144,10 +151,13 @@ namespace VideoSystemWeb.BLL
                 datiFiscaliLavorazione.Cliente = riga.Field<string>("Cliente");
                 datiFiscaliLavorazione.Descrizione = riga.Field<string>("Descrizione");
                 datiFiscaliLavorazione.Assunzione = riga.Field<decimal>("Assunzione");
-                datiFiscaliLavorazione.Mista = riga.Field<decimal>("Mista");
+                datiFiscaliLavorazione.Mista = (decimal)riga.Field<int>("Mista");
                 datiFiscaliLavorazione.RitenutaAcconto = riga.Field<decimal>("RitenutaAcconto");
                 datiFiscaliLavorazione.Fattura = riga.Field<decimal>("Fattura");
                 datiFiscaliLavorazione.Diaria = riga.Field<int>("Diaria");
+                datiFiscaliLavorazione.RimborsoKm = riga.Field<decimal>("RimborsoKm");
+                datiFiscaliLavorazione.TipoPagamento = riga.Field<int>("TipoPagamento");
+                datiFiscaliLavorazione.DescrizionePagamento = riga.Field<string>("DescrizioneTipoPagamento");
 
                 datiReport.ListaDatiFiscali.Add(datiFiscaliLavorazione);
             }
@@ -155,15 +165,14 @@ namespace VideoSystemWeb.BLL
             return listaReportCollaboratoriFornitori;
         }
 
-        public List<DatiReportRaw> GetListaDatiReportRawCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, ref Esito esito)
+        public List<DatiReportRaw> GetListaDatiReportRawCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, bool soloFornitori,  ref Esito esito)
         {
             List<DatiReportRaw> listaReportCollaboratoriFornitori = new List<DatiReportRaw>();
 
-            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportCollaboratoriFornitori(dataInizio, dataFine, ref esito);
+            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, soloFornitori, ref esito);
             foreach (DataRow riga in dtReportConsulenteLavoro.Rows)
             {
                 DatiReportRaw datiReport = new DatiReportRaw();
-
                 
                 datiReport.IdCollaboratore = riga.Field<int>("ID");
                 datiReport.NomeCollaboratore = riga.Field<string>("Nome");
@@ -181,10 +190,13 @@ namespace VideoSystemWeb.BLL
                 datiReport.Cliente = riga.Field<string>("Cliente");
                 datiReport.Descrizione = riga.Field<string>("Descrizione");
                 datiReport.Assunzione = riga.Field<decimal>("Assunzione");
-                datiReport.Mista = riga.Field<decimal>("Mista");
+                datiReport.Mista = (decimal)riga.Field<int>("Mista");
                 datiReport.RitenutaAcconto = riga.Field<decimal>("RitenutaAcconto");
                 datiReport.Fattura = riga.Field<decimal>("Fattura");
                 datiReport.Diaria = riga.Field<int>("Diaria");
+                datiReport.RimborsoKm = riga.Field<decimal>("RimborsoKm");
+                datiReport.TipoPagamento = riga.Field<int>("TipoPagamento");
+                datiReport.DescrizionePagamento = riga.Field<string>("DescrizioneTipoPagamento");
 
                 listaReportCollaboratoriFornitori.Add(datiReport);
             }

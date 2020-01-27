@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -961,6 +960,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="DOCUMENTI\PREGRESSO\" />
     <Folder Include="DOCUMENTI\PROTOCOLLI\" />
+    <Folder Include="DOCUMENTI\REPORT\" />
     <Folder Include="DOCUMENTI\TLTIME\" />
     <Folder Include="Images\DOCUMENTI\" />
     <Folder Include="LOGS\" />

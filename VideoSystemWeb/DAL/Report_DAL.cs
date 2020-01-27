@@ -89,8 +89,6 @@ namespace VideoSystemWeb.DAL
                                        "artLav.idCollaboratori is not null and " +
                                        "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + ") and " +
                                        "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT23:59:59.999") + "' "+ //"' and " +
-                                       //"indColl.priorita = 1 and " +
-                                       //"telColl.priorita = 1 " +
                                        
                                        "order by Nome, data";
 
@@ -153,8 +151,6 @@ namespace VideoSystemWeb.DAL
                                              "artLav.idCollaboratori is not null and " +
                                              "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + ") and " +
                                              "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT23:59:59.999") + "' "+//"' and " +
-                                             //"indColl.priorita = 1 and " +
-                                             //"telColl.priorita = 1 " +
                                              
                                              "UNION " +
                                              

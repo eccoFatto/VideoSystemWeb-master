@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using VideoSystemWeb.BLL;
+using VideoSystemWeb.BLL.Stampa;
 using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.Agenda.userControl
@@ -836,10 +837,9 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
                     break;
                 case "notaSpese":
-
                     Esito esito = new Esito();
-                    
                     esito = popupNotaSpese.PopolaPannelloNotaSpese(SessionManager.EventoSelezionato, figuraProfessionaleSelezionata);
+                    
                     if (esito.Codice == Esito.ESITO_OK)
                     {
                         upNotaSpese.Update();
@@ -1878,5 +1878,15 @@ namespace VideoSystemWeb.Agenda.userControl
         }
         #endregion
 
+        protected void gvFigProfessionali_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                ImageButton ib = e.Row.FindControl("imgNotaspese") as ImageButton;
+
+                ScriptManager.GetCurrent(Page).RegisterPostBackControl(ib);
+            
+            }
+        }
     }
 }

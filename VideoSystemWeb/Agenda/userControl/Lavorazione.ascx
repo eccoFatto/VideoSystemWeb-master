@@ -725,7 +725,7 @@
                         <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Figure professionali</p>
                         <asp:Label ID="lbl_nessunaFiguraProf" runat="server" Text="Nessuna figura professionale importata" Style="position: absolute; top: 45%; left: 38%; font-size: large; color: cornflowerblue" />
                         <asp:GridView ID="gvFigProfessionali" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" 
-                            OnRowCommand="gvFigProfessionali_RowCommand" DataMember="IdentificatoreOggetto">
+                            OnRowCommand="gvFigProfessionali_RowCommand" DataMember="IdentificatoreOggetto" OnRowDataBound="gvFigProfessionali_RowDataBound">
                             <Columns>
                                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%"/>
 
@@ -739,7 +739,7 @@
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDown" runat="server" ImageUrl="/Images/arrow-down-icon.png" ToolTip="Sposta giù" CommandName="moveDown" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>'  OnClientClick="$('.loader').show();"/>
-                                        <asp:ImageButton ID="imgNotaspese" runat="server" ImageUrl="/Images/notaSpese.png" ToolTip="Stampa nota spese" CommandName="notaSpese" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="$('.loader').show();"/>
+                                        <asp:ImageButton ID="imgNotaspese" runat="server" ImageUrl="/Images/notaSpese.png" ToolTip="Stampa nota spese" CommandName="notaSpese" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" CommandName="elimina" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="return confermaEliminazioneFigProf();" />
                                         
                                     </ItemTemplate>

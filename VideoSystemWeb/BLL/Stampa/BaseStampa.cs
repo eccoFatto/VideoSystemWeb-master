@@ -59,6 +59,7 @@ namespace VideoSystemWeb.BLL.Stampa
 
             return workStream;
         }
+
         public string AddPageNumber(string nomeFileIn,string nomeFileOut, ref Esito esito)
         {
             

@@ -115,16 +115,6 @@ namespace VideoSystemWeb.REPORT
 
         private void Helper_GroupHeader(string groupName, object[] values, GridViewRow row)
         {
-            //if (groupName != "NomeCollaboratore")
-            //{
-            //    values[0] = "Indirizzo: " + values[0];
-            //    values[1] = " - Città: " + values[1];
-            //    values[2] = " - Telefono: " + values[2];
-            //    values[3] = " - Partita IVA: " + values[3];
-
-            //    row.Cells[0].Text = values[0].ToString() + values[1].ToString() + values[2].ToString() + values[3].ToString();
-            //}
-
             row.BackColor = Color.LightGray;
             row.Cells[0].Text = "&nbsp;&nbsp;<b>" + row.Cells[0].Text + "</b>";
         }

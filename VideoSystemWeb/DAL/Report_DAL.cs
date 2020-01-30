@@ -221,7 +221,7 @@ namespace VideoSystemWeb.DAL
                                              "left join tipo_pagamento tipoPagam on artLav.idTipoPagamento = tipoPagam.id " +
 
                                              "where  " +
-                                             "clientiFornitori.tipo = 'Tecnici' and " +
+                                             "clientiFornitori.tipo = 'Tecnici' and " + // serve a discriminare i fornitori che sono anche collaboratori
                                              filtroRagioneSociale +
                                              "artLav.idFornitori is not null and " +
                                              "(artLav.idTipoPagamento is not null) and " +

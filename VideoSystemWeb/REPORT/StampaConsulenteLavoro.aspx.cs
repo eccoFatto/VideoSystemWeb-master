@@ -260,8 +260,9 @@ namespace VideoSystemWeb.REPORT
 
                         pTitolo = new Paragraph("Cod.Fiscale/P.Iva").SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                         tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                        pValore = new Paragraph(collaboratore.CodFiscaleCollaboratore).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
+                        tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                        
                         // AGGIUNGO INTESTAZIONE COLLABORATORE
                         tbIntestazione.AddCell(tbIntestazioneDx).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 

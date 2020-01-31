@@ -562,7 +562,7 @@ namespace VideoSystemWeb.Agenda
             {
                 string colore = UtilityTipologiche.getParametroDaTipologica(stato, "COLOR", ref esito);
 
-                legenda += "<li><div class='boxLegenda' style='background:" + colore + "'/>&nbsp;</div>&nbsp;- " + stato.nome + "</li>";
+                legenda += "<li><div class='boxLegenda' style='background:" + colore + "'>&nbsp;</div>&nbsp;- " + stato.nome + "</li>";
             }
 
             legenda += "</ul>";

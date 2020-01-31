@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NotaSpese.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.NotaSpese" %>
 
+
 <style>
     .cella {
         padding-top:18px;

@@ -919,9 +919,9 @@
         <div class="w3-bar w3-blue w3-round">
             <div class="w3-row">
                 <div class="w3-col" style="width: 100%">
-                    <div class="w3-third w3-center tablinkLav w3-red" style="padding: 3px; cursor: pointer" runat="server" id="tab_Lavorazione" onclick="openTabEventoLavorazione(event, 'Lavoraz')">Lavorazione</div>
-                    <div class="w3-third w3-center tablinkLav" style="padding: 3px; cursor: pointer" runat="server" id="tab_DettEconomico" onclick="openTabEventoLavorazione(event, 'DettEconomico')">Dettaglio economico</div>
-                    <div class="w3-third w3-center tablinkLav" style="padding: 3px; cursor: pointer;" runat="server" id="tab_PianoEsterno" onclick="openTabEventoLavorazione(event, 'PianoEsterno')">Piano esterno</div>
+                    <div class="w3-third w3-center tablinkLav w3-red" style="padding: 3px; cursor: pointer" runat="server" id="tab_Lavorazione" onclick="openTabEventoLavorazione(event, 'Lavoraz');">Lavorazione</div>
+                    <div class="w3-third w3-center tablinkLav" style="padding: 3px; cursor: pointer" runat="server" id="tab_DettEconomico" onclick="openTabEventoLavorazione(event, 'DettEconomico');">Dettaglio economico</div>
+                    <div class="w3-third w3-center tablinkLav" style="padding: 3px; cursor: pointer;" runat="server" id="tab_PianoEsterno" onclick="openTabEventoLavorazione(event, 'PianoEsterno');">Piano esterno</div>
                 </div>
             </div>
         </div>

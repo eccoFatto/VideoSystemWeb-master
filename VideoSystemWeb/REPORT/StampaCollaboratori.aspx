@@ -120,7 +120,7 @@
                 <div class="w3-quarter">
                     <div class="w3-twothird" style="padding-right:10px">
                         <label>Nominativo</label>
-                        <asp:TextBox ID="txt_Nominativo" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border" ></asp:TextBox>
+                        <asp:TextBox ID="txt_Nominativo" runat="server"  Width="100%"  class="w3-input w3-border" ></asp:TextBox>
                     </div>
                     <div class="w3-third" style="padding-right:10px">
                         <label>Solo Forn.</label>
@@ -130,7 +130,18 @@
             </div>
 
             <div class="w3-row-padding" style="position:relative;">
-                <div class="w3-threequarter" style="margin-bottom:10px">&nbsp;</div>
+                <div class="w3-quarter" style="margin-bottom:10px">
+                    <label>Lavorazione</label>
+                    <asp:TextBox ID="txt_Lavorazione" runat="server"  Width="100%"  class="w3-input w3-border" ></asp:TextBox>
+                </div>
+
+                <div class="w3-quarter" style="margin-bottom:10px">
+                    <label>Produzione</label>
+                    <asp:TextBox ID="txt_Produzione" runat="server"  Width="100%"  class="w3-input w3-border" ></asp:TextBox>
+
+                </div>
+
+                <div class="w3-quarter" style="margin-bottom:10px">&nbsp;</div>
 
                 <div class="w3-quarter">
                     <div class="w3-half" style="padding-right:10px">
@@ -140,6 +151,41 @@
                         <asp:Button ID="btnStampa" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="position:absolute;top:27px;right:100px" OnClientClick="$('.loader').show();" Text="Stampa" OnClick="btnStampa_Click" />
                     </div>
                 </div>
+            </div>
+
+            <div class="w3-row-padding" style="position:relative;">
+
+                <div class="w3-threequarter" style="margin-top:10px">
+
+                    <div class="w3-row w3-padding round ">
+                        <div class="w3-row">
+                            <b>Totali</b>
+                        </div>
+                        <div class="w3-col" style="width:20%;padding-right:5px">
+                            <label>Assunzione</label>
+                            <asp:Label ID="lbl_TotAssunzione" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>
+                       <div class="w3-col" style="width:20%;padding-right:5px">
+                            <label>Mista</label>
+                            <asp:Label ID="lbl_TotMista" runat="server" Width="100%" Text="-" ></asp:Label>
+                        </div>
+                        <div class="w3-col" style="width:20%;padding-right:5px">
+                            <label>Rimb. Km</label>
+                            <asp:Label ID="lbl_TotRimbKm" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>
+                        <div class="w3-col" style="width:20%;padding-right:5px">
+                            <label>Ritenuta acconto</label>
+                            <asp:Label ID="lbl_TotRitAcconto" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>
+                        <div class="w3-col" style="width:20%">
+                            <label>Fattura</label>
+                            <asp:Label ID="lbl_TotFattura" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter" style="margin-bottom:10px">&nbsp;</div>
+
             </div>
             <br /><br />
             <div class="round">
@@ -155,16 +201,16 @@
                         <asp:BoundField DataField="CodFiscaleCollaboratore" HeaderText="CodFiscaleCollaboratore"  />
 
                         <asp:BoundField DataField="DataLavorazione" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="22%" />
-                        <asp:BoundField DataField="Produzione" HeaderText="Produzione"  HeaderStyle-Width="14%" />
-                        <asp:BoundField DataField="Cliente" HeaderText="Cliente"  HeaderStyle-Width="18%" />
+                        <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="25%" />
+                        <asp:BoundField DataField="Produzione" HeaderText="Produzione"  HeaderStyle-Width="15%" />
+                        <asp:BoundField DataField="Cliente" HeaderText="Cliente"  HeaderStyle-Width="19%" />
                         <asp:BoundField DataField="Descrizione" HeaderText="Descrizione"  HeaderStyle-Width="14%" />
                         <asp:BoundField DataField="Assunzione" HeaderText="Assunzione" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="Mista" HeaderText="Mista" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="RimborsoKm" HeaderText="Rimb. Km" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="RitenutaAcconto" HeaderText="Ritenuta acconto" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="Fattura" HeaderText="Fattura" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="Diaria" HeaderText="Diaria" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>
+                        <%--<asp:BoundField DataField="Diaria" HeaderText="Diaria" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>--%>
                 
                     </Columns>
                 </asp:GridView>

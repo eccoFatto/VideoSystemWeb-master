@@ -46,7 +46,7 @@ namespace VideoSystemWeb.REPORT
             helper.RegisterGroup(cols, true, true);
             helper.GroupHeader += new GroupEvent(Helper_GroupHeader);
             helper.GroupSummary += new GroupEvent(Helper_GroupSummary);
-            helper.GeneralSummary += new FooterEvent(Helper_GeneralSummary);
+            //helper.GeneralSummary += new FooterEvent(Helper_GeneralSummary);
 
             //SUBTOTALE
             helper.RegisterSummary("Mista", SummaryOperation.Sum, "NomeCollaboratore");
@@ -54,15 +54,15 @@ namespace VideoSystemWeb.REPORT
             helper.RegisterSummary("Assunzione", SummaryOperation.Sum, "NomeCollaboratore");
             helper.RegisterSummary("RitenutaAcconto", SummaryOperation.Sum, "NomeCollaboratore");
             helper.RegisterSummary("Fattura", SummaryOperation.Sum, "NomeCollaboratore");
-            helper.RegisterSummary("Diaria", SummaryOperation.Sum, "NomeCollaboratore");
+            //helper.RegisterSummary("Diaria", SummaryOperation.Sum, "NomeCollaboratore");
 
             //TOTALE
-            helper.RegisterSummary("Mista", SummaryOperation.Sum);
-            helper.RegisterSummary("RimborsoKm", SummaryOperation.Sum);
-            helper.RegisterSummary("Assunzione", SummaryOperation.Sum);
-            helper.RegisterSummary("RitenutaAcconto", SummaryOperation.Sum);
-            helper.RegisterSummary("Fattura", SummaryOperation.Sum);
-            helper.RegisterSummary("Diaria", SummaryOperation.Sum);
+            //helper.RegisterSummary("Mista", SummaryOperation.Sum);
+            //helper.RegisterSummary("RimborsoKm", SummaryOperation.Sum);
+            //helper.RegisterSummary("Assunzione", SummaryOperation.Sum);
+            //helper.RegisterSummary("RitenutaAcconto", SummaryOperation.Sum);
+            //helper.RegisterSummary("Fattura", SummaryOperation.Sum);
+            ////helper.RegisterSummary("Diaria", SummaryOperation.Sum);
 
             helper.ApplyGroupSort();
             #endregion
@@ -84,9 +84,16 @@ namespace VideoSystemWeb.REPORT
             DateTime dataInizio = DateTime.Parse(txt_DataInizio.Text);
             DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
             string nominativo = txt_Nominativo.Text;
+            string lavorazione = txt_Lavorazione.Text;
+            string produzione = txt_Produzione.Text;
+
             bool soloFornitori = chk_Fornitore.Checked;
 
-            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawCollaboratoriFornitori(dataInizio, dataFine, nominativo, soloFornitori, ref esito);
+            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawCollaboratoriFornitori(dataInizio, dataFine, nominativo, lavorazione, produzione, soloFornitori, ref esito);
+
+            Report_BLL.Instance.EliminaCollaboratoriImportoZero(ref listaDatiReport);
+
+            
 
             gv_DatiStampa.DataSource = listaDatiReport;
             gv_DatiStampa.DataBind();
@@ -95,10 +102,22 @@ namespace VideoSystemWeb.REPORT
             if (listaDatiReport.Count > 0)
             {
                 btnStampa.CssClass = btnStampa.CssClass.Replace("w3-disabled", "");
+
+                lbl_TotAssunzione.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Assunzione).ToString()));
+                lbl_TotMista.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Mista).ToString()));
+                lbl_TotRimbKm.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.RimborsoKm).ToString()));
+                lbl_TotRitAcconto.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.RitenutaAcconto).ToString()));
+                lbl_TotFattura.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Fattura).ToString()));
             }
             else
             {
                 btnStampa.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large w3-disabled";
+
+                lbl_TotAssunzione.Text = "-";
+                lbl_TotMista.Text = "-";
+                lbl_TotRimbKm.Text = "-";
+                lbl_TotRitAcconto.Text = "-";
+                lbl_TotFattura.Text = "-";
             }
         }
 
@@ -128,21 +147,21 @@ namespace VideoSystemWeb.REPORT
             row.Cells[3].Text = "<b><i>" + row.Cells[3].Text + "</i></b>";
             row.Cells[4].Text = "<b><i>" + row.Cells[4].Text + "</i></b>";
             row.Cells[5].Text = "<b><i>" + row.Cells[5].Text + "</i></b>";
-            row.Cells[6].Text = "<b><i>" + row.Cells[6].Text + "</i></b>";
+            //row.Cells[6].Text = "<b><i>" + row.Cells[6].Text + "</i></b>";
         }
 
-        private void Helper_GeneralSummary(GridViewRow row)
-        {
-            row.BackColor = Color.Gray;
-            row.Cells[0].HorizontalAlign = HorizontalAlign.Right;
-            row.Cells[0].Text = "<b>Totale</b>";
-            row.Cells[1].Text = "<b>" + row.Cells[1].Text + "</b>";
-            row.Cells[2].Text = "<b>" + row.Cells[2].Text + "</b>";
-            row.Cells[3].Text = "<b>" + row.Cells[3].Text + "</b>";
-            row.Cells[4].Text = "<b>" + row.Cells[4].Text + "</b>";
-            row.Cells[5].Text = "<b>" + row.Cells[5].Text + "</b>";
-            row.Cells[6].Text = "<b>" + row.Cells[6].Text + "</b>";
-        }
+        //private void Helper_GeneralSummary(GridViewRow row)
+        //{
+        //    row.BackColor = Color.Gray;
+        //    row.Cells[0].HorizontalAlign = HorizontalAlign.Right;
+        //    row.Cells[0].Text = "<b>Totale</b>";
+        //    row.Cells[1].Text = "<b>" + row.Cells[1].Text + "</b>";
+        //    row.Cells[2].Text = "<b>" + row.Cells[2].Text + "</b>";
+        //    row.Cells[3].Text = "<b>" + row.Cells[3].Text + "</b>";
+        //    row.Cells[4].Text = "<b>" + row.Cells[4].Text + "</b>";
+        //    row.Cells[5].Text = "<b>" + row.Cells[5].Text + "</b>";
+        //    //row.Cells[6].Text = "<b>" + row.Cells[6].Text + "</b>";
+        //}
 
         protected void btnStampa_Click(object sender, EventArgs e)
         {
@@ -152,9 +171,14 @@ namespace VideoSystemWeb.REPORT
                 DateTime dataInizio = DateTime.Parse(txt_DataInizio.Text);
                 DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
                 string nominativo = txt_Nominativo.Text;
+                string lavorazione = txt_Lavorazione.Text;
+                string produzione = txt_Produzione.Text;
                 bool soloFornitori = chk_Fornitore.Checked;
 
-                List<DatiReport> listaDatiReport = Report_BLL.Instance.GetListaDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, soloFornitori, ref esito);
+                List<DatiReport> listaDatiReport = Report_BLL.Instance.GetListaDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, lavorazione, produzione, soloFornitori, ref esito);
+
+                Report_BLL.Instance.EliminaCollaboratoriImportoZero(ref listaDatiReport);
+
                 if (esito.Codice == 0 && listaDatiReport != null && listaDatiReport.Count > 0)
                 {
                     // LEGGO I PARAMETRI DI VS
@@ -257,7 +281,7 @@ namespace VideoSystemWeb.REPORT
                         document.Add(pSpazio);
 
                         // CREAZIONE GRIGLIA
-                        iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 67, 123, 110, 97, 97, 55, 48, 48, 48, 47, 40 }).SetWidth(780).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
+                        iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 67, 138, 120, 100, 100, 55, 50, 50, 50, 50 }).SetWidth(780).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
                         Paragraph pGriglia;
                         Cell cellaGriglia;
 
@@ -312,10 +336,10 @@ namespace VideoSystemWeb.REPORT
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
 
-                        pGriglia = new Paragraph("Diaria").SetFontSize(10);
-                        cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
-                        cellaGriglia.Add(pGriglia);
-                        tbGrigla.AddHeaderCell(cellaGriglia);
+                        //pGriglia = new Paragraph("Diaria").SetFontSize(10);
+                        //cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
+                        //cellaGriglia.Add(pGriglia);
+                        //tbGrigla.AddHeaderCell(cellaGriglia);
 
                         // TOTALI PARZIALI
                         decimal fattura = 0;
@@ -323,7 +347,7 @@ namespace VideoSystemWeb.REPORT
                         decimal assunzione = 0;
                         decimal mista = 0;
                         decimal rimborsoKm = 0;
-                        int diaria = 0;
+                        //int diaria = 0;
 
                         foreach (DatiFiscaliLavorazione datiFiscali in collaboratore.ListaDatiFiscali)
                         {
@@ -382,11 +406,11 @@ namespace VideoSystemWeb.REPORT
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
 
-                            diaria += datiFiscali.Diaria;
-                            pGriglia = new Paragraph(datiFiscali.Diaria.ToString("###")).SetFontSize(9);
-                            cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
-                            cellaGriglia.Add(pGriglia);
-                            tbGrigla.AddCell(cellaGriglia);
+                            //diaria += datiFiscali.Diaria;
+                            //pGriglia = new Paragraph(datiFiscali.Diaria.ToString("###")).SetFontSize(9);
+                            //cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            //cellaGriglia.Add(pGriglia);
+                            //tbGrigla.AddCell(cellaGriglia);
 
                         }
 
@@ -420,10 +444,10 @@ namespace VideoSystemWeb.REPORT
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(diaria.ToString("##0")).SetFontSize(9);
-                        cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
-                        cellaGriglia.Add(pGriglia);
-                        tbGrigla.AddCell(cellaGriglia);
+                        //pGriglia = new Paragraph(diaria.ToString("##0")).SetFontSize(9);
+                        //cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
+                        //cellaGriglia.Add(pGriglia);
+                        //tbGrigla.AddCell(cellaGriglia);
 
                         // AGGIUNGO TABELLA
                         document.Add(tbGrigla);

@@ -60,7 +60,7 @@ namespace VideoSystemWeb.Agenda.userControl
         //            List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = eventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
         //            if (listaDatiPianoEsternoLavorazione != null)
         //            {
-        //                string nomeFile = "NotaSpese_" + figuraProfessionaleSelezionata.Cognome + "_" + figuraProfessionaleSelezionata.Nome + eventoSelezionato.codice_lavoro + ".pdf";
+        //                string nomeFile = "NotaSpese.pdf";
         //                string pathNotaSpese = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
         //                string mapPathNotaSpese = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
@@ -183,11 +183,11 @@ namespace VideoSystemWeb.Agenda.userControl
         //                table.AddHeaderCell(cella);
 
         //                Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
-        //                table.AddHeaderCell(intestazione).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER); 
+        //                table.AddHeaderCell(intestazione).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
         //                intestazione = new Paragraph("Sofid").SetFontSize(10).SetBold().SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
         //                cella = new Cell().SetBorderLeft(bordoDoppio);
         //                cella.Add(intestazione);
-        //                table.AddHeaderCell(cella).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER); 
+        //                table.AddHeaderCell(cella).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
         //                intestazione = new Paragraph("Carta").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
         //                table.AddHeaderCell(intestazione).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
         //                intestazione = new Paragraph("Contanti").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
@@ -203,7 +203,7 @@ namespace VideoSystemWeb.Agenda.userControl
         //                intestazione = new Paragraph("Pasti").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
         //                table.AddHeaderCell(intestazione).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
         //                intestazione = new Paragraph("Varie").SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
-        //                table.AddHeaderCell(intestazione).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER); 
+        //                table.AddHeaderCell(intestazione).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
 
         //                // CELLE VUOTE
         //                for (int i = 0; i < 12; i++)
@@ -250,6 +250,7 @@ namespace VideoSystemWeb.Agenda.userControl
         //                                                    pageSize.GetWidth() / 2, 30, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
         //                }
 
+        //                //document.Flush();
         //                document.Close();
         //                wr.Close();
 
@@ -428,7 +429,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                             Paragraph intestazione = new Paragraph("Data").SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
                             table.AddHeaderCell(intestazione).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
-                            intestazione = new Paragraph("Sofid").SetFontSize(10).SetBold().SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                            intestazione = new Paragraph("DKV").SetFontSize(10).SetBold().SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
                             cella = new Cell().SetBorderLeft(bordoDoppio);
                             cella.Add(intestazione);
                             table.AddHeaderCell(cella).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);

@@ -122,7 +122,7 @@ namespace VideoSystemWeb.Agenda.userControl
             else
             {
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
-                ScriptManager.RegisterStartupScript(Page, GetType(), "apriTabGiusta", script: "openTabEventoLavorazione(event,'" + hf_tabSelezionataLavorazione.Value + "')", addScriptTags: true);
+                ScriptManager.RegisterStartupScript(Page, GetType(), "apriTabGiusta", script: "openTabEventoLavorazione(event,'" + hf_tabSelezionataLavorazione.Value + "');", addScriptTags: true);
             }
         }
 
@@ -844,7 +844,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     {
                         upNotaSpese.Update();
 
-                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriNotaSpese", script: "javascript: document.getElementById('modalNotaSpese').style.display='block'", addScriptTags: true);
+                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriNotaSpese", script: "javascript: document.getElementById('modalNotaSpese').style.display='block';", addScriptTags: true);
                     }
                     else
                     { 

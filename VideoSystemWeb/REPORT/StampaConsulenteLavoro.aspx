@@ -119,20 +119,45 @@
 
                 <div class="w3-quarter">
                     <label>Nominativo</label>
-                    <asp:TextBox ID="txt_Nominativo" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border" ></asp:TextBox>
+                    <asp:TextBox ID="txt_Nominativo" runat="server" Width="100%"  class="w3-input w3-border" ></asp:TextBox>
                 </div>
             </div>
 
             <div class="w3-row-padding" style="position:relative;">
 
-                <div class="w3-threequarter" style="margin-bottom:10px">&nbsp;</div>
+                <div class="w3-half" style="margin-top:10px">
+
+                    <div class="w3-row w3-padding round ">
+                        <div class="w3-row">
+                            <b>Totali</b>
+                        </div>
+                        <div class="w3-quarter" style="padding-right:5px">
+                            <label>Assunzione</label>
+                            <asp:Label ID="lbl_TotAssunzione" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>
+                       <div class="w3-quarter" style="padding-right:5px">
+                            <label>Mista</label>
+                            <asp:Label ID="lbl_TotMista" runat="server" Width="100%" Text="-" ></asp:Label>
+                        </div>
+                        <div class="w3-quarter" style="padding-right:5px">
+                            <label>Rimb. Km</label>
+                            <asp:Label ID="lbl_TotRimbKm" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>Diaria</label>
+                            <asp:Label ID="lbl_TotDiaria" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-quarter" style="margin-bottom:10px">&nbsp;</div>
 
                 <div class="w3-quarter">
                     <div class="w3-half" style="padding-right:10px">
-                        <asp:Button ID="btnRicerca" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" style="position:absolute;top:27px;" OnClick="btnRicerca_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
+                        <asp:Button ID="btnRicerca" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" style="position:absolute;top:35px;" OnClick="btnRicerca_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
                     </div>
                     <div class="w3-half" style="padding-right:10px">
-                        <asp:Button ID="btnStampa" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="position:absolute;top:27px;right:100px" OnClientClick="$('.loader').show();" Text="Stampa" OnClick="btnStampa_Click" />
+                        <asp:Button ID="btnStampa" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="position:absolute;top:35px;right:100px" OnClientClick="$('.loader').show();" Text="Stampa" OnClick="btnStampa_Click" />
                     </div>
                 </div>
             </div>

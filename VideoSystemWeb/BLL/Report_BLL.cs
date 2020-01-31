@@ -116,11 +116,11 @@ namespace VideoSystemWeb.BLL
             return listaReportConsulenteLavoro;
         }
 
-        public List<DatiReport> GetListaDatiReportCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, bool soloFornitori, ref Esito esito)
+        public List<DatiReport> GetListaDatiReportCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, string lavorazione, string produzione, bool soloFornitori, ref Esito esito)
         {
             List<DatiReport> listaReportCollaboratoriFornitori = new List<DatiReport>();
 
-            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, soloFornitori, ref esito);
+            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, lavorazione, produzione, soloFornitori, ref esito);
             foreach (DataRow riga in dtReportConsulenteLavoro.Rows)
             {
                 DatiReport datiReport = new DatiReport();
@@ -165,11 +165,11 @@ namespace VideoSystemWeb.BLL
             return listaReportCollaboratoriFornitori;
         }
 
-        public List<DatiReportRaw> GetListaDatiReportRawCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, bool soloFornitori,  ref Esito esito)
+        public List<DatiReportRaw> GetListaDatiReportRawCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, string lavorazione, string produzione, bool soloFornitori,  ref Esito esito)
         {
             List<DatiReportRaw> listaReportCollaboratoriFornitori = new List<DatiReportRaw>();
 
-            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, soloFornitori, ref esito);
+            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, lavorazione, produzione, soloFornitori, ref esito);
             foreach (DataRow riga in dtReportConsulenteLavoro.Rows)
             {
                 DatiReportRaw datiReport = new DatiReportRaw();
@@ -202,6 +202,37 @@ namespace VideoSystemWeb.BLL
             }
 
             return listaReportCollaboratoriFornitori;
+        }
+
+        public void EliminaCollaboratoriImportoZero(ref List<DatiReportRaw> listaDatiReport)
+        {
+            var somma =
+                from collab in listaDatiReport
+                group collab by collab.IdCollaboratore into gruppoCollab
+                select new string[2]
+                {
+                    gruppoCollab.Key.ToString(),
+                    (gruppoCollab.Sum(x => x.Assunzione) + gruppoCollab.Sum(x => x.Mista) + gruppoCollab.Sum(x => x.RimborsoKm) + gruppoCollab.Sum(x => x.RitenutaAcconto) + gruppoCollab.Sum(x => x.Fattura)).ToString()
+                };
+
+            foreach (string[] elem in somma)
+            {
+                if (elem[1] == "0") listaDatiReport.RemoveAll(x => x.IdCollaboratore == int.Parse(elem[0]));
+            }
+        }
+
+        public void EliminaCollaboratoriImportoZero(ref List<DatiReport> listaDatiReport)
+        {
+            List<DatiReport> listaDatiReport_APPO = new List<DatiReport>();
+            foreach (DatiReport elem in listaDatiReport)
+            {
+                if ((elem.ListaDatiFiscali.Sum(x => x.Assunzione) + elem.ListaDatiFiscali.Sum(x => x.Mista) + elem.ListaDatiFiscali.Sum(x => x.RimborsoKm) + elem.ListaDatiFiscali.Sum(x => x.RitenutaAcconto) + elem.ListaDatiFiscali.Sum(x => x.Fattura)) > 0)
+                {
+                    listaDatiReport_APPO.Add(elem);
+                }
+            }
+
+            listaDatiReport = listaDatiReport_APPO;
         }
     }
 }

@@ -102,7 +102,8 @@ namespace VideoSystemWeb.REPORT
                         {
                             foreach (DataRow rigaTLT in dtTLT.Rows)
                             {
-                                string riga = rigaTLT[1].ToString() + "," + rigaTLT[2].ToString() + "," + rigaTLT[3].ToString() + "," + rigaTLT[4].ToString() + "," + rigaTLT[5].ToString();
+                                //string riga = "\"" + rigaTLT[1].ToString() + "," + rigaTLT[2].ToString() + "," + rigaTLT[3].ToString() + "," + rigaTLT[4].ToString() + "," + rigaTLT[5].ToString() + "\"";
+                                string riga = "\"" + rigaTLT[6].ToString() + "," + rigaTLT[3].ToString() + "," + rigaTLT[4].ToString() + "," + rigaTLT[5].ToString() + "\"";
                                 file.WriteLine(riga);
                             }
                             file.Flush();

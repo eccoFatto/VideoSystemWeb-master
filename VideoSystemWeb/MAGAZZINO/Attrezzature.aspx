@@ -93,24 +93,24 @@
                 </div>
                 <div class="w3-quarter">
                     <label>Sub Categoria</label>
-                    <asp:DropDownList ID="ddlTipoSubCategoria" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                    <asp:DropDownList ID="ddlTipoSubCategoria" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddlTipoSubCategoria_SelectedIndexChanged">
                     </asp:DropDownList>
                 </div>
+                <div class="w3-quarter">
+                    <label>Gruppo</label>
+                    <asp:DropDownList ID="ddlTipoGruppoMagazzino" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                    </asp:DropDownList>   
+                </div>
+            </div>
+            <div class="w3-row-padding">
                 <div class="w3-quarter">
                     <label>Posizione Magazzino</label>
                     <asp:DropDownList ID="ddlTipoPosizioneMagazzino" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
                     </asp:DropDownList>
                 </div>
-            </div>
-            <div class="w3-row-padding">
                 <div class="w3-quarter">
                     <label>Seriale</label>
                     <asp:TextBox ID="tbSeriale" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                </div>
-                <div class="w3-quarter">
-                    <label>Gruppo</label>
-                    <asp:DropDownList ID="ddlTipoGruppoMagazzino" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
-                    </asp:DropDownList>               
                 </div>
                 <div class="w3-half">
                     <label>Descrizione</label>
@@ -254,13 +254,13 @@
                                         </asp:DropDownList>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>Posizione</label>
-                                        <asp:DropDownList ID="cmbMod_Posizione" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
-                                        </asp:DropDownList>
-                                    </div>
-                                    <div class="w3-quarter">
                                         <label>Gruppo</label>
                                         <asp:DropDownList ID="cmbMod_Gruppo" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
+                                        </asp:DropDownList>                                        
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Posizione</label>
+                                        <asp:DropDownList ID="cmbMod_Posizione" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
                                         </asp:DropDownList>
                                     </div>
                                 </div>

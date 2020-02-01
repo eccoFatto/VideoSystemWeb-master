@@ -58,6 +58,15 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.DropDownList ddlTipoSubCategoria;
         
         /// <summary>
+        /// Controllo ddlTipoGruppoMagazzino.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoGruppoMagazzino;
+        
+        /// <summary>
         /// Controllo ddlTipoPosizioneMagazzino.
         /// </summary>
         /// <remarks>
@@ -74,15 +83,6 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSeriale;
-        
-        /// <summary>
-        /// Controllo ddlTipoGruppoMagazzino.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTipoGruppoMagazzino;
         
         /// <summary>
         /// Controllo tbDescrizione.
@@ -310,15 +310,6 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_SubCategoria;
         
         /// <summary>
-        /// Controllo cmbMod_Posizione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Posizione;
-        
-        /// <summary>
         /// Controllo cmbMod_Gruppo.
         /// </summary>
         /// <remarks>
@@ -326,6 +317,15 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_Gruppo;
+        
+        /// <summary>
+        /// Controllo cmbMod_Posizione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_Posizione;
         
         /// <summary>
         /// Controllo cbMod_Garanzia.

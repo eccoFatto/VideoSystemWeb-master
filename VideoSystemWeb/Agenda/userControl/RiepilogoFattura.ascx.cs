@@ -80,7 +80,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         }
 
                         // GESTIONE NOMI FILE PDF
-                        string nomeFile = "Fattura_" + eventoSelezionato.codice_lavoro + ".pdf";
+                        //string nomeFile = "Fattura_" + eventoSelezionato.codice_lavoro + ".pdf";
+                        string nomeFile = "Fattura_" + numeroFattura + ".pdf";
                         string pathFattura = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
                         string mapPathFattura = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 

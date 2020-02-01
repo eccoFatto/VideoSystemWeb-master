@@ -94,18 +94,13 @@ namespace VideoSystemWeb.MAGAZZINO
                         cmbMod_Posizione.Items.Add(itemMod);
                     }
 
-                    ddlTipoGruppoMagazzino.Items.Clear();
+
+
+                    
                     cmbMod_Gruppo.Items.Clear();
-                    ddlTipoGruppoMagazzino.Items.Add("");
+                    cmbMod_Gruppo.Items.Add("");
                     foreach (Tipologica tipologiaGruppo in SessionManager.ListaTipiGruppoMagazzino)
                     {
-                        ListItem item = new ListItem
-                        {
-                            Text = tipologiaGruppo.nome,
-                            Value = tipologiaGruppo.nome
-                        };
-
-                        ddlTipoGruppoMagazzino.Items.Add(item);
 
                         ListItem itemMod = new ListItem
                         {
@@ -115,6 +110,9 @@ namespace VideoSystemWeb.MAGAZZINO
 
                         cmbMod_Gruppo.Items.Add(itemMod);
                     }
+
+                    riempiComboGruppo(0);
+                    
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                     AbilitaBottoni(basePage.AbilitazioneInScrittura());
 
@@ -150,14 +148,39 @@ namespace VideoSystemWeb.MAGAZZINO
                 ListItem item = new ListItem
                 {
                     Text = tipologiaSubCategoria["nome"].ToString(),
-                    Value = tipologiaSubCategoria["nome"].ToString()
+                    Value = tipologiaSubCategoria["id"].ToString()
                 };
 
                 ddlTipoSubCategoria.Items.Add(item);
 
             }
         }
+        private void riempiComboGruppo(int idSubCategoria)
+        {
+            ddlTipoGruppoMagazzino.Items.Clear();
+            ddlTipoGruppoMagazzino.Items.Add("");
 
+            string queryRicercaGruppo = "select * from tipo_gruppo_magazzino where attivo = 1 ";
+            if (idSubCategoria > 0)
+            {
+                queryRicercaGruppo += "and id in (select distinct id_gruppo_magazzino from mag_attrezzature where id_subcategoria=" + idSubCategoria.ToString() + ") ";
+            }
+            queryRicercaGruppo += "order by nome";
+            Esito esito = new Esito();
+            DataTable dtGruppi = Base_DAL.GetDatiBySql(queryRicercaGruppo, ref esito);
+
+            foreach (DataRow tipologiaGruppo in dtGruppi.Rows)
+            {
+                ListItem item = new ListItem
+                {
+                    Text = tipologiaGruppo["nome"].ToString(),
+                    Value = tipologiaGruppo["id"].ToString()
+                };
+
+                ddlTipoGruppoMagazzino.Items.Add(item);
+
+            }
+        }
         protected void btnRicercaAttrezzatura_Click(object sender, EventArgs e)
         {
             string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_ATTREZZATURE"];
@@ -173,20 +196,24 @@ namespace VideoSystemWeb.MAGAZZINO
             string queryRicercaCampiDropDown = "";
             if (!string.IsNullOrEmpty(ddlTipoCategoria.SelectedItem.Text))
             {
-                queryRicercaCampiDropDown += " and cat.nome='" + ddlTipoCategoria.SelectedItem.Text.Replace("'", "''") + "' ";
+                //queryRicercaCampiDropDown += " and cat.nome='" + ddlTipoCategoria.SelectedItem.Text.Replace("'", "''") + "' ";
+                queryRicercaCampiDropDown += " and cat.id=" + ddlTipoCategoria.SelectedValue + " ";
             }
             if (!string.IsNullOrEmpty(ddlTipoSubCategoria.SelectedItem.Text))
             {
-                queryRicercaCampiDropDown += " and sub.nome='" + ddlTipoSubCategoria.SelectedItem.Text.Replace("'", "''") + "' ";
+                //queryRicercaCampiDropDown += " and sub.nome='" + ddlTipoSubCategoria.SelectedItem.Text.Replace("'", "''") + "' ";
+                queryRicercaCampiDropDown += " and sub.id=" + ddlTipoSubCategoria.SelectedValue + " ";
+            }
+            if (!string.IsNullOrEmpty(ddlTipoGruppoMagazzino.SelectedItem.Text))
+            {
+                //queryRicercaCampiDropDown += " and gruppo.nome='" + ddlTipoGruppoMagazzino.SelectedItem.Text.Replace("'", "''") + "' ";
+                queryRicercaCampiDropDown += " and gruppo.id=" + ddlTipoGruppoMagazzino.SelectedValue + " ";
             }
             if (!string.IsNullOrEmpty(ddlTipoPosizioneMagazzino.SelectedItem.Text))
             {
                 queryRicercaCampiDropDown += " and pos.nome='" + ddlTipoPosizioneMagazzino.SelectedItem.Text.Replace("'", "''") + "' ";
             }
-            if (!string.IsNullOrEmpty(ddlTipoGruppoMagazzino.SelectedItem.Text))
-            {
-                queryRicercaCampiDropDown += " and gruppo.nome='" + ddlTipoGruppoMagazzino.SelectedItem.Text.Replace("'", "''") + "' ";
-            }
+
 
             queryRicerca = queryRicerca.Replace("@campiTendina", queryRicercaCampiDropDown.Trim());
             
@@ -624,6 +651,13 @@ namespace VideoSystemWeb.MAGAZZINO
             string idCategoria = ddlTipoCategoria.SelectedItem.Value;
             if (string.IsNullOrEmpty(idCategoria)) idCategoria = "0";
             riempiComboSubCategoria(Convert.ToInt32(idCategoria));
+        }
+
+        protected void ddlTipoSubCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string idSubCategoria = ddlTipoSubCategoria.SelectedItem.Value;
+            if (string.IsNullOrEmpty(idSubCategoria)) idSubCategoria = "0";
+            riempiComboGruppo(Convert.ToInt32(idSubCategoria));
         }
     }
 }

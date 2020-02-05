@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Lavorazione.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.Lavorazione" %>
 
-<%@ Register TagPrefix="popup" TagName="NotaSpese" Src="./NotaSpese.ascx" %>
+<%@ Register TagPrefix="popup" TagName="NotaSpese" Src="NotaSpese.ascx" %>
 <script>
 
     $(document).ready(function () {

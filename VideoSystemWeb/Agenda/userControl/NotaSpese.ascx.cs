@@ -306,16 +306,21 @@ namespace VideoSystemWeb.Agenda.userControl
                     List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = eventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
                     if (listaDatiPianoEsternoLavorazione != null)
                     {
-                        string nomeFile = "NotaSpese_" + figuraProfessionaleSelezionata.Cognome + "_" + figuraProfessionaleSelezionata.Nome + eventoSelezionato.codice_lavoro + ".pdf";
+                        //string nomeFile = "NotaSpese_" + figuraProfessionaleSelezionata.Cognome + "_" + figuraProfessionaleSelezionata.Nome + eventoSelezionato.codice_lavoro + ".pdf";
+                        string nomeFile = "NotaSpese_.pdf";
+                        string pathNotaSpese = ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"] + nomeFile;
+                        string mapPathNotaSpese = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"]) + nomeFile;
 
                         string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
                         iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
 
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            PdfWriter wr = new PdfWriter(ms);
-                            PdfDocument doc = new PdfDocument(wr);
-                            doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
+                        //using (MemoryStream ms = new MemoryStream())
+                        //{
+                        //PdfWriter wr = new PdfWriter(ms);
+                        //PdfDocument doc = new PdfDocument(wr);
+                        PdfWriter wr = new PdfWriter(mapPathNotaSpese);
+                        PdfDocument doc = new PdfDocument(wr);
+                        doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
                             Document document = new Document(doc);
 
                             document.SetMargins(50, 30, 50, 30);
@@ -498,11 +503,24 @@ namespace VideoSystemWeb.Agenda.userControl
                             document.Close();
                             wr.Close();
 
-                            Response.ContentType = "pdf/application";
-                            Response.AddHeader("content-disposition", "attachment;filename=" + nomeFile);
-                            Response.OutputStream.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
+                        //Response.ContentType = "pdf/application";
+                        //Response.AddHeader("content-disposition", "attachment;filename=" + nomeFile);
+                        //Response.OutputStream.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
 
-                        }
+                        //Response.Flush();
+                        //Response.Close();
+
+
+                        framePdfNotaSpese.Attributes.Remove("src");
+                        framePdfNotaSpese.Attributes.Add("src", pathNotaSpese.Replace("~", ""));
+
+                        DivFramePdfNotaSpese.Visible = true;
+                        framePdfNotaSpese.Visible = true;
+
+                        //ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfNotaSpese.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
+                        btnStampaNotaSpese.Attributes.Add("onclick", "window.open('" + pathNotaSpese.Replace("~", "") + "');");
+
+                        //}
 
                     }
                 }

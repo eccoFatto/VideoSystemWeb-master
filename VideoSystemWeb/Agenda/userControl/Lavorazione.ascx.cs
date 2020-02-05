@@ -844,6 +844,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     {
                         upNotaSpese.Update();
 
+                        //ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
                         ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriNotaSpese", script: "javascript: document.getElementById('modalNotaSpese').style.display='block';", addScriptTags: true);
                     }
                     else

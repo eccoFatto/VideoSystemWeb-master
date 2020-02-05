@@ -906,6 +906,51 @@ namespace VideoSystemWeb.Agenda.userControl
         protected global::System.Web.UI.WebControls.Button btnOKInserimentoGenerale;
 
         /// <summary>
+        /// Controllo panelNotaSpese.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelNotaSpese;
+
+        /// <summary>
+        /// Controllo upNotaSpese.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upNotaSpese;
+
+        /// <summary>
+        /// Controllo btnStampaNotaSpese.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStampaNotaSpese;
+
+        /// <summary>
+        /// Controllo DivFramePdfNotaSpese.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivFramePdfNotaSpese;
+
+        /// <summary>
+        /// Controllo framePdfNotaSpese.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlIframe framePdfNotaSpese;
+
+        /// <summary>
         /// Controllo tab_Lavorazione.
         /// </summary>
         /// <remarks>
@@ -931,23 +976,5 @@ namespace VideoSystemWeb.Agenda.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_PianoEsterno;
-
-        /// <summary>
-        /// Controllo upNotaSpese.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upNotaSpese;
-
-        /// <summary>
-        /// Controllo popupNotaSpese.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::VideoSystemWeb.Agenda.userControl.NotaSpese popupNotaSpese;
     }
 }

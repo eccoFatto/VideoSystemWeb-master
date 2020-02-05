@@ -45,7 +45,7 @@ namespace VideoSystemWeb.REPORT
             helper.RegisterGroup(cols, true, true);
             helper.GroupHeader += new GroupEvent(Helper_GroupHeader);
             helper.GroupSummary += new GroupEvent(Helper_GroupSummary);
-            helper.GeneralSummary += new FooterEvent(Helper_GeneralSummary);
+            //helper.GeneralSummary += new FooterEvent(Helper_GeneralSummary);
 
             //SUBTOTALE
             helper.RegisterSummary("Mista", SummaryOperation.Sum, "NomeCollaboratore");
@@ -54,10 +54,10 @@ namespace VideoSystemWeb.REPORT
             helper.RegisterSummary("Diaria", SummaryOperation.Sum, "NomeCollaboratore");
 
             //TOTALE
-            helper.RegisterSummary("Mista", SummaryOperation.Sum);
-            helper.RegisterSummary("Assunzione", SummaryOperation.Sum);
-            helper.RegisterSummary("RimborsoKm", SummaryOperation.Sum);
-            helper.RegisterSummary("Diaria", SummaryOperation.Sum);
+            //helper.RegisterSummary("Mista", SummaryOperation.Sum);
+            //helper.RegisterSummary("Assunzione", SummaryOperation.Sum);
+            //helper.RegisterSummary("RimborsoKm", SummaryOperation.Sum);
+            //helper.RegisterSummary("Diaria", SummaryOperation.Sum);
 
             helper.ApplyGroupSort();
             #endregion
@@ -80,6 +80,8 @@ namespace VideoSystemWeb.REPORT
             DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
             string nominativo = txt_Nominativo.Text;
 
+            
+
             List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawConsulenteLavoro(dataInizio, dataFine, nominativo, ref esito);
 
             gv_DatiStampa.DataSource = listaDatiReport;
@@ -89,10 +91,20 @@ namespace VideoSystemWeb.REPORT
             if (listaDatiReport.Count > 0)
             {
                 btnStampa.CssClass = btnStampa.CssClass.Replace("w3-disabled", "");
+
+                lbl_TotAssunzione.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x=>x.Assunzione).ToString()));
+                lbl_TotMista.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Mista).ToString()));
+                lbl_TotRimbKm.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.RimborsoKm).ToString()));
+                lbl_TotDiaria.Text = listaDatiReport.Sum(x => x.Diaria).ToString();
             }
             else
             {
                 btnStampa.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large w3-disabled";
+
+                lbl_TotAssunzione.Text = "-";
+                lbl_TotMista.Text = "-";
+                lbl_TotRimbKm.Text = "-";
+                lbl_TotDiaria.Text = "-";
             }
 
             #region VECCHIA GESTIONE
@@ -153,16 +165,16 @@ namespace VideoSystemWeb.REPORT
             row.Cells[4].Text = "<b><i>" + row.Cells[4].Text + "</i></b>";
         }
 
-        private void Helper_GeneralSummary(GridViewRow row)
-        {
-            row.BackColor = Color.Gray;
-            row.Cells[0].HorizontalAlign = HorizontalAlign.Right;
-            row.Cells[0].Text = "<b>Totale</b>";
-            row.Cells[1].Text = "<b>" + row.Cells[1].Text + "</b>";
-            row.Cells[2].Text = "<b>" + row.Cells[2].Text + "</b>";
-            row.Cells[3].Text = "<b>" + row.Cells[3].Text + "</b>";
-            row.Cells[4].Text = "<b>" + row.Cells[4].Text + "</b>";
-        }
+        //private void Helper_GeneralSummary(GridViewRow row)
+        //{
+        //    row.BackColor = Color.Gray;
+        //    row.Cells[0].HorizontalAlign = HorizontalAlign.Right;
+        //    row.Cells[0].Text = "<b>Totale</b>";
+        //    row.Cells[1].Text = "<b>" + row.Cells[1].Text + "</b>";
+        //    row.Cells[2].Text = "<b>" + row.Cells[2].Text + "</b>";
+        //    row.Cells[3].Text = "<b>" + row.Cells[3].Text + "</b>";
+        //    row.Cells[4].Text = "<b>" + row.Cells[4].Text + "</b>";
+        //}
 
         protected void btnStampa_Click(object sender, EventArgs e)
         {

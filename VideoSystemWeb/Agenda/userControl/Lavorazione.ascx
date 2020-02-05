@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Lavorazione.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.Lavorazione" %>
 
-<%@ Register TagPrefix="popup" TagName="NotaSpese" Src="./NotaSpese.ascx" %>
+<%--<%@ Register TagPrefix="popup" TagName="NotaSpese" Src="./NotaSpese.ascx" %>--%>
 <script>
 
     $(document).ready(function () {
@@ -214,7 +214,7 @@
             tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
         }
         document.getElementById(tipoName).style.display = "block";
-        evt.currentTarget.className += " w3-red";
+        //evt.currentTarget.className += " w3-red";
 
         var nomeElemento = '';
 
@@ -725,7 +725,7 @@
                         <p style="text-align: center; font-weight: bold; font-size: medium; margin-bottom: 2px;">Figure professionali</p>
                         <asp:Label ID="lbl_nessunaFiguraProf" runat="server" Text="Nessuna figura professionale importata" Style="position: absolute; top: 45%; left: 38%; font-size: large; color: cornflowerblue" />
                         <asp:GridView ID="gvFigProfessionali" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" 
-                            OnRowCommand="gvFigProfessionali_RowCommand" DataMember="IdentificatoreOggetto" OnRowDataBound="gvFigProfessionali_RowDataBound">
+                            OnRowCommand="gvFigProfessionali_RowCommand" DataMember="IdentificatoreOggetto" >
                             <Columns>
                                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%"/>
 
@@ -913,23 +913,41 @@
                         </ContentTemplate>
                     </asp:UpdatePanel>
                 </div>
+
+<!-- NOTA SPESE -->
+                <div id="panelNotaSpese" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
+                    <asp:UpdatePanel ID="upNotaSpese" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+                        <ContentTemplate>
+                            <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: fixed; top: 5%; width: 70%; left: 15%; overflow: auto; height: 90%; background-color: white">
+                                <div class="w3-center w3-padding-small" style="position: relative; background-color: white">
+                                    <asp:Button ID="btnStampaNotaSpese" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-green w3-round-large " Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampaNotaSpese_Click" />
+                                    <button onclick="document.getElementById('<%= panelNotaSpese.ClientID%>').style.display='none';" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Chiudi</button>
+                                </div>
+
+                                <div id="DivFramePdfNotaSpese" runat="server" style=" width:100%; height:90%;" >
+                                    <iframe id="framePdfNotaSpese" runat="server" src="~/Images/logoVSP_trim.png" style=" width:100%; height:100%;"></iframe>
+                                </div>
+                            </div>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
             </div>
         </div>
 
         <div class="w3-bar w3-blue w3-round">
             <div class="w3-row">
                 <div class="w3-col" style="width: 100%">
-                    <div class="w3-third w3-center tablinkLav w3-red" style="padding: 3px; cursor: pointer" runat="server" id="tab_Lavorazione" onclick="openTabEventoLavorazione(event, 'Lavoraz')">Lavorazione</div>
-                    <div class="w3-third w3-center tablinkLav" style="padding: 3px; cursor: pointer" runat="server" id="tab_DettEconomico" onclick="openTabEventoLavorazione(event, 'DettEconomico')">Dettaglio economico</div>
-                    <div class="w3-third w3-center tablinkLav" style="padding: 3px; cursor: pointer;" runat="server" id="tab_PianoEsterno" onclick="openTabEventoLavorazione(event, 'PianoEsterno')">Piano esterno</div>
+                    <div class="w3-third w3-center tablinkLav w3-red" style="padding: 3px; cursor: pointer" runat="server" id="tab_Lavorazione" onclick="openTabEventoLavorazione(event, 'Lavoraz');">Lavorazione</div>
+                    <div class="w3-third w3-center tablinkLav" style="padding: 3px; cursor: pointer" runat="server" id="tab_DettEconomico" onclick="openTabEventoLavorazione(event, 'DettEconomico');">Dettaglio economico</div>
+                    <div class="w3-third w3-center tablinkLav" style="padding: 3px; cursor: pointer;" runat="server" id="tab_PianoEsterno" onclick="openTabEventoLavorazione(event, 'PianoEsterno');">Piano esterno</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <asp:UpdatePanel ID="upNotaSpese" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+    <%--<asp:UpdatePanel ID="upNotaSpese" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
         <ContentTemplate>
             <popup:NotaSpese ID="popupNotaSpese" runat="server" />
         </ContentTemplate>
-    </asp:UpdatePanel>
+    </asp:UpdatePanel>--%>
 </asp:Panel>

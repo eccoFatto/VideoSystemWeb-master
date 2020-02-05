@@ -1,12 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="NotaSpese.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.NotaSpese" %>
 
 
-<style>
-    .cella {
-        padding-top:18px;
-        vertical-align:top;
-    }
-</style>
+ 
 <div id="modalNotaSpese" class="w3-modal">
     <div class="w3-modal-content  w3-animate-zoom " style="position: fixed; top: 5%; width: 70%; left: 15%; overflow: auto; height: 90%; background-color: transparent">
         <div class="w3-center w3-padding-small" style="position: relative; background-color: white">

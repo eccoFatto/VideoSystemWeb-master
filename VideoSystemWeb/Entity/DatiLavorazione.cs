@@ -72,16 +72,20 @@ namespace VideoSystemWeb.Entity
 
                         figProf = fornitore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
                     }
-                    figProf.Nota = datoArticoloLavorazione.Nota;
-                    figProf.Lordo = datoArticoloLavorazione.FP_lordo;
-                    figProf.Netto = datoArticoloLavorazione.FP_netto;
-                    figProf.Data = datoPianoEsterno.Data;
-                    figProf.Intervento = datoPianoEsterno.IdIntervento == null ? "" : SessionManager.ListaTipiIntervento.FirstOrDefault(x=>x.id == datoPianoEsterno.IdIntervento).nome;
-                    figProf.Diaria = datoPianoEsterno.ImportoDiaria;
-                    figProf.Nota = datoPianoEsterno.Nota;
-                    figProf.NumOccorrenza = datoPianoEsterno.NumOccorrenza;
 
-                    listaFigureProfessionali.Add(figProf);
+                    if (datoArticoloLavorazione != null)
+                    {
+                        figProf.Nota = datoArticoloLavorazione.Nota;
+                        figProf.Lordo = datoArticoloLavorazione.FP_lordo;
+                        figProf.Netto = datoArticoloLavorazione.FP_netto;
+                        figProf.Data = datoPianoEsterno.Data;
+                        figProf.Intervento = datoPianoEsterno.IdIntervento == null ? "" : SessionManager.ListaTipiIntervento.FirstOrDefault(x => x.id == datoPianoEsterno.IdIntervento).nome;
+                        figProf.Diaria = datoPianoEsterno.ImportoDiaria;
+                        figProf.Nota = datoPianoEsterno.Nota;
+                        figProf.NumOccorrenza = datoPianoEsterno.NumOccorrenza;
+
+                        listaFigureProfessionali.Add(figProf);
+                    }
                 }
                 return listaFigureProfessionali;
             }

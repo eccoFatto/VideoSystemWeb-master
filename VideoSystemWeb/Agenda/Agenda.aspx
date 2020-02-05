@@ -103,8 +103,7 @@
             $("#<%=btn_chiudi.ClientID%>").click();
         }
 
-        function openTabEvento(evt, tipoName) {
-
+        function openTabEvento(tipoName) {
             var velocita = 0;
             if ($("#<%=hf_tabSelezionata.ClientID%>").val() != tipoName) {
                 velocita = 300;
@@ -277,7 +276,7 @@
                         <div class="w3-bar w3-blue w3-round">
                             <div class="w3-row">
                                 <div id="div_tabStato" class="w3-col" style="width: 60%">
-                                    <div class="w3-bar-item w3-button tablink w3-red" runat="server" id="tab_Appuntamento" onclick="openTabEvento(event, 'Appuntamento')">Appuntamento</div>
+                                    <div class="w3-bar-item w3-button tablink w3-red" runat="server" id="tab_Appuntamento" onclick="openTabEvento('Appuntamento')">Appuntamento</div>
                                     <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Offerta">Offerta</div>
                                     <div class="w3-bar-item w3-button tablink" runat="server" id="tab_Lavorazione">Lavorazione</div>
                                 </div>
@@ -337,6 +336,7 @@
                         </div>
                     </div>
 
+    <!-- PULSANTI -->
                     <div style="position: absolute; width: 100%; bottom: 0px; text-align: center; height: 7%">
                         <asp:Button ID="btnRiepilogo" runat="server" Text="Stampa Offerta" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btnStampaPianoEsterno" runat="server" Text="Stampa Piano Esterno" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaPianoEsterno_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
@@ -345,13 +345,15 @@
                         <asp:Button ID="btnMagazzino" runat="server" Text="Magazzino" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClientClick="alert('Funzionalità associazione attrezzature a lavorazione in implementazione');" Visible="false" Style="padding: 7px 10px" />
 
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
-                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click"  Style="padding: 7px 10px" />
+                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-yellow w3-round-large" OnClick="btn_chiudi_Click"  Style="padding: 7px 10px" />
 
                         <%--<asp:HiddenField ID="hf_Salvataggio" runat="server" />--%>
 
                         <asp:Button ID="btnElimina" runat="server" Text="Elimina" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btnElimina_Click" OnClientClick="return confermaEliminazione();$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();$('.loader').show();" OnClick="btnLavorazione_Click" Visible="false" Style="padding: 7px 10px" />
+                    
+                        <asp:Button ID="btn_annulla" runat="server" Text="Annulla" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_annulla_Click"  Style="padding: 7px 10px;" />
                     </div>
 
                 </asp:Panel>

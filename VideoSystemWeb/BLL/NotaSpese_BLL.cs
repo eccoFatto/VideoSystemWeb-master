@@ -1,31 +1,36 @@
-﻿using iText.Kernel.Geom;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Web;
+using VideoSystemWeb.Entity;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Borders;
 using iText.Layout.Element;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using VideoSystemWeb.BLL;
-using VideoSystemWeb.Entity;
 
-namespace VideoSystemWeb.Agenda.userControl
+namespace VideoSystemWeb.BLL
 {
-    public partial class NotaSpese : System.Web.UI.UserControl
+    public class NotaSpese_BLL
     {
-        BasePage basePage = new BasePage();
-        protected void Page_Load(object sender, EventArgs e)
+        //singleton
+        private static volatile NotaSpese_BLL instance;
+        private static object objForLock = new Object();
+        private NotaSpese_BLL() { }
+        public static NotaSpese_BLL Instance
         {
-            if (IsPostBack)
+            get
             {
-                ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
-                scriptManager.RegisterPostBackControl(this.btnStampaNotaSpese);
+                if (instance == null)
+                {
+                    lock (objForLock)
+                    {
+                        if (instance == null)
+                            instance = new NotaSpese_BLL();
+                    }
+                }
+                return instance;
             }
         }
 
@@ -62,9 +67,9 @@ namespace VideoSystemWeb.Agenda.userControl
                     {
                         string nomeFile = "NotaSpese.pdf";
                         string pathNotaSpese = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
-                        string mapPathNotaSpese = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
+                        string mapPathNotaSpese = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
-                        string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                        string prefissoUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
                         iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
 
                         PdfWriter wr = new PdfWriter(mapPathNotaSpese);
@@ -253,15 +258,6 @@ namespace VideoSystemWeb.Agenda.userControl
                         //document.Flush();
                         document.Close();
                         wr.Close();
-
-                        framePdfNotaSpese.Attributes.Remove("src");
-                        framePdfNotaSpese.Attributes.Add("src", pathNotaSpese.Replace("~", ""));
-
-                        DivFramePdfNotaSpese.Visible = true;
-                        framePdfNotaSpese.Visible = true;
-
-                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfNotaSpese.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
-                        btnStampaNotaSpese.Attributes.Add("onclick", "window.open('" + pathNotaSpese.Replace("~", "") + "');");
                     }
                 }
             }
@@ -274,8 +270,8 @@ namespace VideoSystemWeb.Agenda.userControl
             return esito;
         }
 
-
-        public Esito PopolaPannelloNotaSpese2(DatiAgenda eventoSelezionato, FiguraProfessionale figuraProfessionaleSelezionata)
+        // stesso metodo di sopra, ma crea uno stream PDF (attualmente non usato)
+        public Esito CreaPdfNotaSpese(DatiAgenda eventoSelezionato, FiguraProfessionale figuraProfessionaleSelezionata)
         {
             Esito esito = new Esito();
             try
@@ -306,21 +302,16 @@ namespace VideoSystemWeb.Agenda.userControl
                     List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = eventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
                     if (listaDatiPianoEsternoLavorazione != null)
                     {
-                        //string nomeFile = "NotaSpese_" + figuraProfessionaleSelezionata.Cognome + "_" + figuraProfessionaleSelezionata.Nome + eventoSelezionato.codice_lavoro + ".pdf";
-                        string nomeFile = "NotaSpese_.pdf";
-                        string pathNotaSpese = ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"] + nomeFile;
-                        string mapPathNotaSpese = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"]) + nomeFile;
+                        string nomeFile = "NotaSpese_" + figuraProfessionaleSelezionata.Cognome + "_" + figuraProfessionaleSelezionata.Nome + eventoSelezionato.codice_lavoro + ".pdf";
 
-                        string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                        string prefissoUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
                         iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
 
-                        //using (MemoryStream ms = new MemoryStream())
-                        //{
-                        //PdfWriter wr = new PdfWriter(ms);
-                        //PdfDocument doc = new PdfDocument(wr);
-                        PdfWriter wr = new PdfWriter(mapPathNotaSpese);
-                        PdfDocument doc = new PdfDocument(wr);
-                        doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            PdfWriter wr = new PdfWriter(ms);
+                            PdfDocument doc = new PdfDocument(wr);
+                            doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
                             Document document = new Document(doc);
 
                             document.SetMargins(50, 30, 50, 30);
@@ -503,24 +494,11 @@ namespace VideoSystemWeb.Agenda.userControl
                             document.Close();
                             wr.Close();
 
-                        //Response.ContentType = "pdf/application";
-                        //Response.AddHeader("content-disposition", "attachment;filename=" + nomeFile);
-                        //Response.OutputStream.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
+                            HttpContext.Current.Response.ContentType = "pdf/application";
+                            HttpContext.Current.Response.AddHeader("content-disposition", "attachment;filename=" + nomeFile);
+                            HttpContext.Current.Response.OutputStream.Write(ms.GetBuffer(), 0, ms.GetBuffer().Length);
 
-                        //Response.Flush();
-                        //Response.Close();
-
-
-                        framePdfNotaSpese.Attributes.Remove("src");
-                        framePdfNotaSpese.Attributes.Add("src", pathNotaSpese.Replace("~", ""));
-
-                        DivFramePdfNotaSpese.Visible = true;
-                        framePdfNotaSpese.Visible = true;
-
-                        //ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfNotaSpese.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
-                        btnStampaNotaSpese.Attributes.Add("onclick", "window.open('" + pathNotaSpese.Replace("~", "") + "');");
-
-                        //}
+                        }
 
                     }
                 }
@@ -528,19 +506,10 @@ namespace VideoSystemWeb.Agenda.userControl
             catch (Exception ex)
             {
                 esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.Descrizione = "PopolaPannelloNotaSpese(DatiAgenda eventoSelezionato, FiguraProfessionale figuraProfessionaleSelezionata) " + ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Descrizione = "CreaPdfNotaSpese(DatiAgenda eventoSelezionato, FiguraProfessionale figuraProfessionaleSelezionata) " + ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
             return esito;
         }
-
-        #region COMPORTAMENTO ELEMENTI PAGINA
-        protected void btnStampaNotaSpese_Click(object sender, EventArgs e)
-        {
-        }
-        #endregion
-
     }
-
-
 }

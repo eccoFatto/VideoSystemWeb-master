@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -121,6 +122,8 @@ namespace VideoSystemWeb.Agenda.userControl
             }
             else
             {
+                framePdfNotaSpese.Attributes.Remove("src");
+
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
                 ScriptManager.RegisterStartupScript(Page, GetType(), "apriTabGiusta", script: "openTabEventoLavorazione(event,'" + hf_tabSelezionataLavorazione.Value + "');", addScriptTags: true);
             }
@@ -837,18 +840,33 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
                     break;
                 case "notaSpese":
+
                     Esito esito = new Esito();
-                    esito = popupNotaSpese.PopolaPannelloNotaSpese(SessionManager.EventoSelezionato, figuraProfessionaleSelezionata);
-                    
+                    esito = NotaSpese_BLL.Instance.PopolaPannelloNotaSpese(SessionManager.EventoSelezionato, figuraProfessionaleSelezionata);
+
                     if (esito.Codice == Esito.ESITO_OK)
                     {
+
+                        string nomeFile = "NotaSpese.pdf";
+                        string pathNotaSpese = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
+
+
+                        framePdfNotaSpese.Attributes.Remove("src");
+                        framePdfNotaSpese.Attributes.Add("src", pathNotaSpese.Replace("~", ""));
+
+                        DivFramePdfNotaSpese.Visible = true;
+                        framePdfNotaSpese.Visible = true;
+
+                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfNotaSpese.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
+                        btnStampaNotaSpese.Attributes.Add("onclick", "window.open('" + pathNotaSpese.Replace("~", "") + "');");
+
+
                         upNotaSpese.Update();
 
-                        //ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
-                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriNotaSpese", script: "javascript: document.getElementById('modalNotaSpese').style.display='block';", addScriptTags: true);
+                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriNotaSpese", script: "javascript: document.getElementById('" + panelNotaSpese.ClientID + "').style.display='block';", addScriptTags: true);
                     }
                     else
-                    { 
+                    {
                         basePage.ShowError(esito.Descrizione);
                     }
 
@@ -857,6 +875,11 @@ namespace VideoSystemWeb.Agenda.userControl
 
             RichiediOperazionePopup("UPDATE");
         }
+
+        protected void btnStampaNotaSpese_Click(object sender, EventArgs e)
+        {
+        }
+
         protected void btnOKModificaPianoEsterno_Click(object sender, EventArgs e)
         {
             FiguraProfessionale figuraProfessionale = new FiguraProfessionale();
@@ -1878,16 +1901,5 @@ namespace VideoSystemWeb.Agenda.userControl
             ddl_FiltroGiorniLavorazione.SelectedIndex = 0;
         }
         #endregion
-
-        protected void gvFigProfessionali_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                ImageButton ib = e.Row.FindControl("imgNotaspese") as ImageButton;
-
-                ScriptManager.GetCurrent(Page).RegisterPostBackControl(ib);
-            
-            }
-        }
     }
 }

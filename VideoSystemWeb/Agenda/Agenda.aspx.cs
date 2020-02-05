@@ -73,7 +73,7 @@ namespace VideoSystemWeb.Agenda
             else
             {
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
-                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento(event,'" + hf_tabSelezionata.Value + "')", addScriptTags: true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento('" + hf_tabSelezionata.Value + "');", addScriptTags: true);
             }
         }
 
@@ -92,19 +92,19 @@ namespace VideoSystemWeb.Agenda
 
             if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
             {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento(event,'Appuntamento');", true);
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Appuntamento');", true);
             }
             else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA)
             {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento(event,'Offerta');", true);
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Offerta');", true);
             }
             else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
             {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento(event,'Lavorazione');", true);
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Lavorazione');", true);
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento(event,'Appuntamento');", true);
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Appuntamento');", true);
             }
 
             AbilitaComponentiPopup();
@@ -194,7 +194,7 @@ namespace VideoSystemWeb.Agenda
                         ShowSuccess("La lavorazione è stata eliminata e l'evento è stato riportato allo stato Offerta");
 
 
-                        ScriptManager.RegisterStartupScript(this, typeof(Page), "passaALavorazione", "openTabEvento(event,'Offerta');", true);
+                        ScriptManager.RegisterStartupScript(this, typeof(Page), "passaALavorazione", "openTabEvento('Offerta');", true);
                     }
                     else
                     {
@@ -248,7 +248,6 @@ namespace VideoSystemWeb.Agenda
                 }
             }
 
-
             //if (hf_Salvataggio.Value == "1")
             //{
             //    Esito esito = SalvaEvento();
@@ -269,6 +268,16 @@ namespace VideoSystemWeb.Agenda
             //}
         }
 
+        // Chiude l'evento senza salvare
+        protected void btn_annulla_Click(object sender, EventArgs e)
+        {
+            pnlContainer.Style.Add("display", "none");
+            upEvento.Update();
+
+            SessionManager.ClearEventoSelezionato();
+
+        }
+
         protected void btnOfferta_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
@@ -285,7 +294,7 @@ namespace VideoSystemWeb.Agenda
 
                 btnLavorazione.Visible = false;
                 UpdatePopup();
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "passaAOfferta", "openTabEvento(event,'Offerta');", true);
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "passaAOfferta", "openTabEvento('Offerta');", true);
             }
             else
             {
@@ -313,7 +322,7 @@ namespace VideoSystemWeb.Agenda
 
                 btnLavorazione.Visible = false;
                 UpdatePopup();
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "passaALavorazione", "openTabEvento(event,'Lavorazione');", true);
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "passaALavorazione", "openTabEvento('Lavorazione');", true);
             }
             else
             {
@@ -693,7 +702,7 @@ namespace VideoSystemWeb.Agenda
                 }
                 else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA)
                 {
-                    tab_Offerta.Attributes["onclick"] = "openTabEvento(event, 'Offerta');";
+                    tab_Offerta.Attributes["onclick"] = "openTabEvento('Offerta');";
                     tab_Offerta.Style.Remove("cursor");
 
                     tab_Lavorazione.Attributes["onclick"] = "return false;";
@@ -713,10 +722,10 @@ namespace VideoSystemWeb.Agenda
                 }
                 else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
                 {
-                    tab_Offerta.Attributes["onclick"] = "openTabEvento(event, 'Offerta');";
+                    tab_Offerta.Attributes["onclick"] = "openTabEvento('Offerta');";
                     tab_Offerta.Style.Remove("cursor");
 
-                    tab_Lavorazione.Attributes["onclick"] = "openTabEvento(event, 'Lavorazione');";
+                    tab_Lavorazione.Attributes["onclick"] = "openTabEvento('Lavorazione');";
                     tab_Lavorazione.Style.Remove("cursor");
 
                     btnOfferta.Visible = false;
@@ -729,10 +738,10 @@ namespace VideoSystemWeb.Agenda
                 }
                 else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
                 {
-                    tab_Offerta.Attributes["onclick"] = "openTabEvento(event, 'Offerta');";
+                    tab_Offerta.Attributes["onclick"] = "openTabEvento('Offerta');";
                     tab_Offerta.Style.Remove("cursor");
 
-                    tab_Lavorazione.Attributes["onclick"] = "openTabEvento(event, 'Lavorazione');";
+                    tab_Lavorazione.Attributes["onclick"] = "openTabEvento('Lavorazione');";
                     tab_Lavorazione.Style.Remove("cursor");
 
                     btnOfferta.Visible = false;

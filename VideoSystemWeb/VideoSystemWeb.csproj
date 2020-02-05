@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -186,7 +187,6 @@
     <Content Include="Agenda\GestioneColonneAgenda.aspx" />
     <Content Include="Agenda\prova.aspx" />
     <Content Include="Agenda\userControl\Appuntamento.ascx" />
-    <Content Include="Agenda\userControl\NotaSpese.ascx" />
     <Content Include="Agenda\userControl\RiepilogoFattura.ascx" />
     <Content Include="Agenda\userControl\RiepilogoConsuntivo.ascx" />
     <Content Include="Agenda\userControl\RiepilogoPianoEsterno.ascx" />
@@ -589,13 +589,6 @@
     <Compile Include="Agenda\userControl\Appuntamento.ascx.designer.cs">
       <DependentUpon>Appuntamento.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Agenda\userControl\NotaSpese.ascx.cs">
-      <DependentUpon>NotaSpese.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Agenda\userControl\NotaSpese.ascx.designer.cs">
-      <DependentUpon>NotaSpese.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Agenda\userControl\RiepilogoFattura.ascx.cs">
       <DependentUpon>RiepilogoFattura.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -714,6 +707,7 @@
     <Compile Include="BLL\GridViewHelper\GridViewHelper.cs" />
     <Compile Include="BLL\GridViewHelper\GridViewSummary.cs" />
     <Compile Include="BLL\GridViewHelper\GridViewSummaryList.cs" />
+    <Compile Include="BLL\NotaSpese_BLL.cs" />
     <Compile Include="BLL\Offerta_BLL.cs" />
     <Compile Include="BLL\Config_BLL.cs" />
     <Compile Include="BLL\AttrezzatureMagazzino_BLL.cs" />

@@ -1237,8 +1237,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     figProf.IdCollaboratori = collabForn.IdCollaboratori;                   
 
                     datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
+                    datiPianoEsterno.IdFornitori = null;
                     datiPianoEsterno.IdCollaboratori = collaboratore.Id;
-
                     datiPianoEsterno.NumOccorrenza = collabForn.NumOccorrenza; //usato soltanto per identificare un elemento importato da piano esterno
                     datiPianoEsterno.Id = collabForn.Id; //usato soltanto per identificare un elemento importato da piano esterno
                 }
@@ -1248,11 +1248,10 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     figProf = fornitore.CreaFiguraProfessionale(collabForn.Descrizione);
                     figProf.IdFornitori = collabForn.IdFornitori;
-                    
 
                     datiPianoEsterno.IdDatiLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.Id;
+                    datiPianoEsterno.IdCollaboratori = null;
                     datiPianoEsterno.IdFornitori = fornitore.Id;
-
                     datiPianoEsterno.NumOccorrenza = collabForn.NumOccorrenza; //usato soltanto per identificare un elemento importato da piano esterno
                     datiPianoEsterno.Id = collabForn.Id; //usato soltanto per identificare un elemento importato da piano esterno
                 }
@@ -1282,15 +1281,23 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
                 }
 
-                // controllo se l'elemento che sto importando non fosse già presente. In quel caso prendo l'elemento già presente che potrebbe avere dei campi valorizzati
+                // controllo se l'elemento che sto importando non sia già presente. In quel caso prendo l'elemento già presente che potrebbe avere dei campi valorizzati
                 if (listaDatiPianoEsternoLavorazione_OLD != null && listaDatiPianoEsternoLavorazione_OLD.Count > 0)
                 {
                     DatiPianoEsternoLavorazione datiPianoEsterno_OLD = null;
 
-                    datiPianoEsterno_OLD = listaDatiPianoEsternoLavorazione_OLD.FirstOrDefault(x => x.Id == datiPianoEsterno.Id && x.Id != 0 && x.Data == datiPianoEsterno.Data);
+                    // controllo che coincidano anche idCollaboratori e idFornitori, perché potrebbero essere variati
+                    datiPianoEsterno_OLD = listaDatiPianoEsternoLavorazione_OLD.FirstOrDefault(x => x.Id == datiPianoEsterno.Id && x.Id != 0 
+                                                                                            && x.Data == datiPianoEsterno.Data 
+                                                                                            && x.IdCollaboratori == datiPianoEsterno.IdCollaboratori 
+                                                                                            && x.IdFornitori == datiPianoEsterno.IdFornitori);
                     if (datiPianoEsterno_OLD == null && datiPianoEsterno.NumOccorrenza != 0)
                     {
-                        datiPianoEsterno_OLD = listaDatiPianoEsternoLavorazione_OLD.FirstOrDefault(x => x.NumOccorrenza == datiPianoEsterno.NumOccorrenza && x.Data == datiPianoEsterno.Data);
+                        // controllo che coincidano anche idCollaboratori e idFornitori, perché potrebbero essere variati
+                        datiPianoEsterno_OLD = listaDatiPianoEsternoLavorazione_OLD.FirstOrDefault(x => x.NumOccorrenza == datiPianoEsterno.NumOccorrenza 
+                                                                                                     && x.Data == datiPianoEsterno.Data 
+                                                                                                     && x.IdCollaboratori == datiPianoEsterno.IdCollaboratori 
+                                                                                                     && x.IdFornitori == datiPianoEsterno.IdFornitori);
                     }
 
                     if (datiPianoEsterno_OLD != null)
@@ -1306,7 +1313,6 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
                     _listaDatiPianoEsterno.Add(datiPianoEsterno);
                 }
-                //_listaDatiPianoEsterno.Add(datiPianoEsterno);
             }
 
             ListaFigureProfessionali = _listaFigureProfessionali;
@@ -1539,6 +1545,12 @@ namespace VideoSystemWeb.Agenda.userControl
                 int idCliente = SessionManager.EventoSelezionato.id_cliente;
 
                 SessionManager.EventoSelezionato.LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
+
+                if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali.Count < SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Count)
+                {
+                    basePage.ShowWarning("Il piano esterno non è correttamente allineato col dettaglio economico. Ripetere l'importazione.");
+                }
+
                 if (esito.Codice != Esito.ESITO_OK)
                 {
                     basePage.ShowError(esito.Descrizione);

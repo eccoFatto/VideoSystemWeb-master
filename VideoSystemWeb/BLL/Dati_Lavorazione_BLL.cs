@@ -42,9 +42,21 @@ namespace VideoSystemWeb.BLL
             {
                 Esito esito2 = new Esito(); // uso un'altra variabile per non sovrascrivere l'esito sopra
                 List<DatiArticoliLavorazione> listaDatiLavorazione = Dati_Articoli_Lavorazione_DAL.Instance.getDatiArticoliLavorazioneByIdDatiLavorazione(ref esito2, datiLavorazione.Id);
+                if (esito2.Codice != Esito.ESITO_OK)
+                {
+                    esito = esito2;
+                    return datiLavorazione;
+                }
                 datiLavorazione.ListaArticoliLavorazione = listaDatiLavorazione;
 
+
                 List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = Dati_PianoEsterno_Lavorazione_DAL.Instance.getDatiPianoEsternoLavorazioneByIdDatiLavorazione(ref esito2, datiLavorazione.Id);
+                if (esito2.Codice != Esito.ESITO_OK)
+                {
+                    esito = esito2;
+                    return datiLavorazione;
+                }
+                
                 datiLavorazione.ListaDatiPianoEsternoLavorazione = listaDatiPianoEsternoLavorazione;
             }
 

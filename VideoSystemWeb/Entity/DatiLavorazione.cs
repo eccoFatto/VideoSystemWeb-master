@@ -55,7 +55,6 @@ namespace VideoSystemWeb.Entity
                             descrizioneArticoloAssociato = articoloAssociato.Descrizione;
                         }
 
-
                         figProf = collaboratore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
                     }
                     else if (datoPianoEsterno.IdFornitori != null && datoPianoEsterno.IdFornitori != 0)

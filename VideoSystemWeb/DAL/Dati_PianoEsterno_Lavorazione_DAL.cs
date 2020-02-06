@@ -55,22 +55,23 @@ namespace VideoSystemWeb.DAL
                                     {
                                         foreach (DataRow riga in dt.Rows)
                                         {
+                                        DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione
+                                        {
+                                            Id = riga.Field<int>("id"),
+                                            IdDatiLavorazione = riga.Field<int>("idDatiLavorazione"),
+                                            IdCollaboratori = riga.Field<int?>("idCollaboratori"),
+                                            IdFornitori = riga.Field<int?>("idFornitori"),
+                                            IdIntervento = riga.Field<int?>("idIntervento"),
+                                            Diaria = riga.Field<bool?>("diaria"),
+                                            ImportoDiaria = riga.Field<decimal?>("importoDiaria"),
+                                            Albergo = riga.Field<bool?>("albergo"),
+                                            Data = riga.Field<DateTime?>("data"),
+                                            Orario = riga.Field<DateTime?>("orario"),
+                                            Nota = riga.Field<string>("nota"),
+                                            NumOccorrenza = riga.Field<int?>("numOccorrenza") == null ? 0 : riga.Field<int>("numOccorrenza")
+                                        };
 
-                                            DatiPianoEsternoLavorazione datiPianoEsterno = new DatiPianoEsternoLavorazione();
-                                            datiPianoEsterno.Id = riga.Field<int>("id");
-                                            datiPianoEsterno.IdDatiLavorazione = riga.Field<int>("idDatiLavorazione");
-                                            datiPianoEsterno.IdCollaboratori = riga.Field<int?>("idCollaboratori");
-                                            datiPianoEsterno.IdFornitori = riga.Field<int?>("idFornitori");
-                                            datiPianoEsterno.IdIntervento = riga.Field<int?>("idIntervento");
-                                            datiPianoEsterno.Diaria = riga.Field<bool?>("diaria");
-                                            datiPianoEsterno.ImportoDiaria = riga.Field<decimal?>("importoDiaria");
-                                            datiPianoEsterno.Albergo = riga.Field<bool?>("albergo");
-                                            datiPianoEsterno.Data = riga.Field<DateTime?>("data");
-                                            datiPianoEsterno.Orario = riga.Field<DateTime?>("orario");
-                                            datiPianoEsterno.Nota = riga.Field<string>("nota");
-                                            datiPianoEsterno.NumOccorrenza = riga.Field<int?>("numOccorrenza")==null? 0: riga.Field<int>("numOccorrenza");
-
-                                            listaDatiPianoEsterno.Add(datiPianoEsterno);
+                                        listaDatiPianoEsterno.Add(datiPianoEsterno);
                                         }
                                     }
                                     else

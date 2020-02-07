@@ -727,7 +727,7 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             int numOccorrenza = 0;
 
-            DatiArticoliLavorazione articoloLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(y => y.NumOccorrenza).FirstOrDefault();//.Where(x => x.IdArtArticoli == idArticolo && x.Data == data).OrderByDescending(y=>y.NumOccorrenza).FirstOrDefault();
+            DatiArticoliLavorazione articoloLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderByDescending(y => y.NumOccorrenza).FirstOrDefault();
 
             if (articoloLavorazione != null)
             {
@@ -766,7 +766,8 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 case "modifica":
                     
-                    DatiPianoEsternoLavorazione datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.NumOccorrenza == figuraProfessionaleSelezionata.NumOccorrenza && x.Data == figuraProfessionaleSelezionata.Data);//new DatiPianoEsternoLavorazione();
+                    DatiPianoEsternoLavorazione datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.NumOccorrenza == figuraProfessionaleSelezionata.NumOccorrenza 
+                                                                                                                                                                          && x.Data == figuraProfessionaleSelezionata.Data);
                     
                     txt_data.Text = figuraProfessionaleSelezionata.Data != null ? ((DateTime)figuraProfessionaleSelezionata.Data).ToString("dd/MM/yyyy") : ((DateTime)SessionManager.EventoSelezionato.data_inizio_lavorazione).ToString("dd/MM/yyyy");
                     ViewState[VIEWSTATE_DATAFIGURAPROFESSIONALESELEZIONATA] = txt_data.Text; // utilizzata per eliminare la giusta diaria in fase di salvataggio;
@@ -803,7 +804,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     gvFigProfessionali.DataSource = ListaFigureProfessionali;
                     gvFigProfessionali.DataBind();
 
-                    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Where(x => x.NumOccorrenza != figuraProfessionaleSelezionata.NumOccorrenza || x.Data != figuraProfessionaleSelezionata.Data).ToList<DatiPianoEsternoLavorazione>();
+                    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Where(x => x.NumOccorrenza != figuraProfessionaleSelezionata.NumOccorrenza 
+                                                                                                                                                                                                          || x.Data != figuraProfessionaleSelezionata.Data).ToList<DatiPianoEsternoLavorazione>();
                     
                     CancellaDiariaDaListaArticoli(figuraProfessionaleSelezionata, figuraProfessionaleSelezionata.Data);
                     ResetPanelLavorazione();
@@ -818,7 +820,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         gvFigProfessionali.DataBind();
 
                         // AGGIORNO LISTADATIPIANOESTERNOLAVORAZIONE
-                         DatiPianoEsternoLavorazione datiPianoEsternoLavorazioneSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.NumOccorrenza == figuraProfessionaleSelezionata.NumOccorrenza && x.Data == figuraProfessionaleSelezionata.Data);
+                         DatiPianoEsternoLavorazione datiPianoEsternoLavorazioneSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.NumOccorrenza == figuraProfessionaleSelezionata.NumOccorrenza 
+                                                                                                                                                                                                     && x.Data == figuraProfessionaleSelezionata.Data);
           
                         SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Remove(datiPianoEsternoLavorazioneSelezionato);
                         SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Insert(indexArticolo - 1, datiPianoEsternoLavorazioneSelezionato);
@@ -833,7 +836,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         gvFigProfessionali.DataBind();
 
                         // AGGIORNO LISTADATIPIANOESTERNOLAVORAZIONE
-                        DatiPianoEsternoLavorazione datiPianoEsternoLavorazioneSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.NumOccorrenza == figuraProfessionaleSelezionata.NumOccorrenza && x.Data == figuraProfessionaleSelezionata.Data);
+                        DatiPianoEsternoLavorazione datiPianoEsternoLavorazioneSelezionato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.NumOccorrenza == figuraProfessionaleSelezionata.NumOccorrenza 
+                                                                                                                                                                                                    && x.Data == figuraProfessionaleSelezionata.Data);
                         
                         SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Remove(datiPianoEsternoLavorazioneSelezionato);
                         SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Insert(indexArticolo + 1, datiPianoEsternoLavorazioneSelezionato);
@@ -895,7 +899,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 figuraProfessionale = ListaFigureProfessionali.FirstOrDefault(x => x.Id == idFiguraProfessionale);
             }
 
-            DatiPianoEsternoLavorazione datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.NumOccorrenza == figuraProfessionale.NumOccorrenza && x.Data == figuraProfessionale.Data);
+            DatiPianoEsternoLavorazione datiPianoEsterno = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.FirstOrDefault(x => x.NumOccorrenza == figuraProfessionale.NumOccorrenza 
+                                                                                                                                                                  && x.Data == figuraProfessionale.Data);
 
             decimal importoDiaria = 0;
             if (diaria15.Checked)
@@ -928,7 +933,9 @@ namespace VideoSystemWeb.Agenda.userControl
             PopolaComboFiltroGiorniLavorazione();
 
             // prendo indice dell'elemento in dattaglio economico per eventuale modifica
-            DatiArticoliLavorazione datoArticoloDaModificare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == figuraProfessionale.IdCollaboratori && x.IdFornitori == figuraProfessionale.IdFornitori && x.Data == figuraProfessionale.Data);
+            DatiArticoliLavorazione datoArticoloDaModificare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == figuraProfessionale.IdCollaboratori 
+                                                                                                                                                              && x.IdFornitori == figuraProfessionale.IdFornitori 
+                                                                                                                                                              && x.Data == figuraProfessionale.Data);
             int indiceArticoloDaModificare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.IndexOf(datoArticoloDaModificare);
             //fine
 
@@ -981,7 +988,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
             foreach (DatiPianoEsternoLavorazione datiPianoEsternoLavorazione in SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione)
             {
-                FiguraProfessionale figuraProfessionale = ListaFigureProfessionali.FirstOrDefault(x => x.IdCollaboratori == datiPianoEsternoLavorazione.IdCollaboratori && x.IdFornitori == datiPianoEsternoLavorazione.IdFornitori && x.Data == datiPianoEsternoLavorazione.Data);
+                FiguraProfessionale figuraProfessionale = ListaFigureProfessionali.FirstOrDefault(x => x.IdCollaboratori == datiPianoEsternoLavorazione.IdCollaboratori 
+                                                                                                    && x.IdFornitori == datiPianoEsternoLavorazione.IdFornitori 
+                                                                                                    && x.Data == datiPianoEsternoLavorazione.Data);
 
                 if (string.IsNullOrEmpty(txt_data_InsGenerale.Text) || 
                     DateTime.Parse(txt_data_InsGenerale.Text).ToShortDateString() == ((DateTime)figuraProfessionale.Data).ToShortDateString())
@@ -1546,9 +1555,11 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 SessionManager.EventoSelezionato.LavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito);
 
-                if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali.Count < SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Count)
+                if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione != null
+                 && SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali != null
+                 && SessionManager.EventoSelezionato.LavorazioneCorrente.ListaFigureProfessionali.Count < SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Count)
                 {
-                    basePage.ShowWarning("Il piano esterno non è correttamente allineato col dettaglio economico. Ripetere l'importazione.");
+                    basePage.ShowWarning("Il piano esterno non è correttamente allineato col dettaglio economico.<br/>Ripetere l'importazione.");
                 }
 
                 if (esito.Codice != Esito.ESITO_OK)
@@ -1562,8 +1573,16 @@ namespace VideoSystemWeb.Agenda.userControl
                 }
                 else
                 {
-                    int idContratto = SessionManager.ListaTipiProtocolli.FirstOrDefault(x => x.nome.ToLower() == "contratto").id;
-                    List<Protocolli> listaContratti = Protocolli_BLL.Instance.GetProtocolliByIdCliente(ref esito, idCliente).Where(x => x.Id_tipo_protocollo == idContratto).ToList();
+                    if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Count == 0)
+                    {
+                        basePage.ShowWarning("Nessun dato trovato nella tabella dati_pianoEsterno_lavorazione");
+                    }
+
+                    Tipologica tipologicaContratto = SessionManager.ListaTipiProtocolli.FirstOrDefault(x => x.nome.ToLower() == "contratto");
+
+                    int idContratto = tipologicaContratto.id;
+
+                    List <Protocolli> listaContratti = Protocolli_BLL.Instance.GetProtocolliByIdCliente(ref esito, idCliente).Where(x => x.Id_tipo_protocollo == idContratto).ToList();
 
                     if (listaContratti.Count() == 0)
                     {

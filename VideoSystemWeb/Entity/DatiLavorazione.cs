@@ -36,54 +36,56 @@ namespace VideoSystemWeb.Entity
         { get
             {
                 listaFigureProfessionali = new List<FiguraProfessionale>();
-
-                foreach (DatiPianoEsternoLavorazione datoPianoEsterno in ListaDatiPianoEsternoLavorazione)
+                if (ListaDatiPianoEsternoLavorazione != null)
                 {
-                    FiguraProfessionale figProf = new FiguraProfessionale();
-                    DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
-
-                    string descrizioneArticoloAssociato = "";
-                    if (datoPianoEsterno.IdCollaboratori != null && datoPianoEsterno.IdCollaboratori != 0)
+                    foreach (DatiPianoEsternoLavorazione datoPianoEsterno in ListaDatiPianoEsternoLavorazione)
                     {
-                        Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdCollaboratori);
-                        datoArticoloLavorazione = ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == datoPianoEsterno.IdCollaboratori);
+                        FiguraProfessionale figProf = new FiguraProfessionale();
+                        DatiArticoliLavorazione datoArticoloLavorazione = new DatiArticoliLavorazione();
 
-                        // prendo descrizione da datiArticoliLavorazione filtrando per data, idCollaboratore e idLavorazione
-                        DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == datoPianoEsterno.IdCollaboratori && x.Data == datoPianoEsterno.Data);
-                        if (articoloAssociato != null)
+                        string descrizioneArticoloAssociato = "";
+                        if (datoPianoEsterno.IdCollaboratori != null && datoPianoEsterno.IdCollaboratori != 0)
                         {
-                            descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                            Anag_Collaboratori collaboratore = SessionManager.ListaAnagraficheCollaboratori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdCollaboratori);
+                            datoArticoloLavorazione = ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == datoPianoEsterno.IdCollaboratori);
+
+                            // prendo descrizione da datiArticoliLavorazione filtrando per data, idCollaboratore e idLavorazione
+                            DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == datoPianoEsterno.IdCollaboratori && x.Data == datoPianoEsterno.Data);
+                            if (articoloAssociato != null)
+                            {
+                                descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                            }
+
+                            figProf = collaboratore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
+                        }
+                        else if (datoPianoEsterno.IdFornitori != null && datoPianoEsterno.IdFornitori != 0)
+                        {
+                            Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdFornitori);
+                            datoArticoloLavorazione = ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == datoPianoEsterno.IdFornitori);
+
+                            // prendo descrizione da datiArticoliLavorazione filtrando per data, idFornitore e idLavorazione
+                            DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == datoPianoEsterno.IdFornitori && x.Data == datoPianoEsterno.Data);
+                            if (articoloAssociato != null)
+                            {
+                                descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                            }
+
+                            figProf = fornitore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
                         }
 
-                        figProf = collaboratore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
-                    }
-                    else if (datoPianoEsterno.IdFornitori != null && datoPianoEsterno.IdFornitori != 0)
-                    {
-                        Anag_Clienti_Fornitori fornitore = SessionManager.ListaAnagraficheFornitori.FirstOrDefault(x => x.Id == datoPianoEsterno.IdFornitori);
-                        datoArticoloLavorazione = ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == datoPianoEsterno.IdFornitori);
-
-                        // prendo descrizione da datiArticoliLavorazione filtrando per data, idFornitore e idLavorazione
-                        DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == datoPianoEsterno.IdFornitori && x.Data == datoPianoEsterno.Data);
-                        if (articoloAssociato != null)
+                        if (datoArticoloLavorazione != null)
                         {
-                            descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                            figProf.Nota = datoArticoloLavorazione.Nota;
+                            figProf.Lordo = datoArticoloLavorazione.FP_lordo;
+                            figProf.Netto = datoArticoloLavorazione.FP_netto;
+                            figProf.Data = datoPianoEsterno.Data;
+                            figProf.Intervento = datoPianoEsterno.IdIntervento == null ? "" : SessionManager.ListaTipiIntervento.FirstOrDefault(x => x.id == datoPianoEsterno.IdIntervento).nome;
+                            figProf.Diaria = datoPianoEsterno.ImportoDiaria;
+                            figProf.Nota = datoPianoEsterno.Nota;
+                            figProf.NumOccorrenza = datoPianoEsterno.NumOccorrenza;
+
+                            listaFigureProfessionali.Add(figProf);
                         }
-
-                        figProf = fornitore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
-                    }
-
-                    if (datoArticoloLavorazione != null)
-                    {
-                        figProf.Nota = datoArticoloLavorazione.Nota;
-                        figProf.Lordo = datoArticoloLavorazione.FP_lordo;
-                        figProf.Netto = datoArticoloLavorazione.FP_netto;
-                        figProf.Data = datoPianoEsterno.Data;
-                        figProf.Intervento = datoPianoEsterno.IdIntervento == null ? "" : SessionManager.ListaTipiIntervento.FirstOrDefault(x => x.id == datoPianoEsterno.IdIntervento).nome;
-                        figProf.Diaria = datoPianoEsterno.ImportoDiaria;
-                        figProf.Nota = datoPianoEsterno.Nota;
-                        figProf.NumOccorrenza = datoPianoEsterno.NumOccorrenza;
-
-                        listaFigureProfessionali.Add(figProf);
                     }
                 }
                 return listaFigureProfessionali;

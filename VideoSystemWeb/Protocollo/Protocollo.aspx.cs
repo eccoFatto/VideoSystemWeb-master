@@ -382,7 +382,7 @@ namespace VideoSystemWeb.Protocollo
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
                 {
                     string pathRelativo = "";
-                    if (preg=="True")
+                    if (preg=="True" || preg=="Si")
                     {
                         pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "");
                     }

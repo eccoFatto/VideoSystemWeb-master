@@ -830,18 +830,15 @@ namespace VideoSystemWeb.Protocollo
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-
-
                 // PRENDO CODICE LAVORAZIONE E CLIENTE/FORNITORE E LI PASSO ALLA FUNZIONE
-                string codLavSelezionato = e.Row.Cells[2].Text;
-                string clienteFornitoreSelezionato = e.Row.Cells[3].Text;
-                string produzioneSelezionata = e.Row.Cells[6].Text;
-                string lavorazioneSelezionata = e.Row.Cells[7].Text;
-
+                string codLavSelezionato = e.Row.Cells[2].Text.Replace("&nbsp;", "").Replace("&#224;", "à");
+                string clienteFornitoreSelezionato = e.Row.Cells[3].Text.Replace("&nbsp;", "").Replace("&#224;", "à");
+                string produzioneSelezionata = e.Row.Cells[6].Text.Replace("&nbsp;", "").Replace("&#224;", "à");
+                string lavorazioneSelezionata = e.Row.Cells[7].Text.Replace("&nbsp;", "").Replace("&#224;", "à");
 
                 ImageButton myButtonEdit = e.Row.FindControl("imgSelect") as ImageButton;
                 //myButtonEdit.Attributes.Add("onclick", "associaCodiceLavorazione('" + codLavSelezionato.Replace("&nbsp;","") + "','" + clienteFornitoreSelezionato.Replace("&nbsp;", "") + "');");
-                myButtonEdit.Attributes.Add("onclick", "associaCodiceLavorazione('" + codLavSelezionato.Replace("&nbsp;", "") + "','" + clienteFornitoreSelezionato.Replace("&nbsp;", "") + "','" + produzioneSelezionata.Replace("&nbsp;", "") + "','" + lavorazioneSelezionata.Replace("&nbsp;", "") + "');");
+                myButtonEdit.Attributes.Add("onclick", "associaCodiceLavorazione('" + codLavSelezionato + "','" + clienteFornitoreSelezionato + "','" + produzioneSelezionata + "','" + lavorazioneSelezionata + "');");
             }
 
             //associaCodiceLavorazione(codLav, cliente)

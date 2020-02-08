@@ -140,6 +140,9 @@
         }
 
         function associaCodiceLavorazione(codLav, cliente, produzione, lavorazione) {
+
+            //alert(codLav + ' ' + cliente + ' ' + produzione + ' ' + lavorazione);
+
             document.getElementById('<%=tbMod_CodiceLavoro.ClientID%>').value = codLav;
             //document.getElementById('<%=tbMod_Cliente.ClientID%>').value = cliente;
             document.getElementById('<%=tbMod_Produzione.ClientID%>').value = produzione;

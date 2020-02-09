@@ -1745,6 +1745,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 Esito esito = new Esito();
                 int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
 
+                // solo il personale tecnico viene replicato per ogni giorno di lavorazione
                 if (datoArticolo.IdTipoSottogruppo != idSottogruppoPersonaleTecnico)
                 {
                     AggiungiDatoArticoloALavorazione(datoArticolo, SessionManager.EventoSelezionato.data_inizio_lavorazione, ref listaDatiArticoliLavorazione, numOccorrenza++, datoArticolo.Quantita);
@@ -1755,8 +1756,9 @@ namespace VideoSystemWeb.Agenda.userControl
                     {
                         DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
 
-                        AggiungiDatoArticoloALavorazione(datoArticolo, dataGiornoLav, ref listaDatiArticoliLavorazione, numOccorrenza++, datoArticolo.Quantita);
+                        AggiungiDatoArticoloALavorazione(datoArticolo, dataGiornoLav, ref listaDatiArticoliLavorazione, numOccorrenza, datoArticolo.Quantita);
                     }
+                    numOccorrenza++;
                 }
             }
             listaDatiArticoliLavorazione = listaDatiArticoliLavorazione.OrderBy(x => x.Data).ThenByDescending(y => y.Costo).ToList<DatiArticoliLavorazione>();

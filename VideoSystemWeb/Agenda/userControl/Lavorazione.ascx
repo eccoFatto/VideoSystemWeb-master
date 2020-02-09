@@ -346,6 +346,7 @@
                                 <%--<asp:BoundField DataField="Id" HeaderText="ID"  HeaderStyle-Width="15%" />
                                 <asp:BoundField DataField="IdentificatoreOggetto" HeaderText="IdentificatoreOggetto" HeaderStyle-Width="15%" />
                                 <asp:BoundField DataField="numOccorrenza" HeaderText="occorrenza" HeaderStyle-Width="15%" />--%>
+
                                 <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="15%" />
                                 <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="15%" />
                                 <asp:TemplateField HeaderText="Collab./Fornitore" HeaderStyle-Width="15%">

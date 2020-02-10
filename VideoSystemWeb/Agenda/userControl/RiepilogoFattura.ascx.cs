@@ -74,9 +74,27 @@ namespace VideoSystemWeb.Agenda.userControl
                         }
                         else
                         {
-                            protocolloFattura = listaProtocolli.First();
-                            numeroProtocollo = protocolloFattura.Numero_protocollo;
-                            numeroFattura = protocolloFattura.Protocollo_riferimento;
+                            bool trovato = false;
+                            foreach (Protocolli protocollo in listaProtocolli)
+                            {
+                                if (protocollo.Destinatario == "Cliente")
+                                {
+                                    //protocolloFattura = listaProtocolli.First();
+                                    numeroProtocollo = protocollo.Numero_protocollo;
+                                    numeroFattura = protocollo.Protocollo_riferimento;
+                                    protocolloFattura = protocollo;
+                                    trovato = true;
+                                    break;
+                                }
+                            }
+                            if (!trovato)
+                            {
+                                numeroProtocollo = Protocolli_BLL.Instance.getNumeroProtocollo();
+                                // ESTRAPOLO IL NUMERO FATTURA DALLA TABELLA TAB_NUMERO_FATTURA 
+                                numeroFattura = Protocolli_BLL.Instance.getNumeroFattura();
+                                listaProtocolli.Clear();
+                            }
+
                         }
 
                         // GESTIONE NOMI FILE PDF

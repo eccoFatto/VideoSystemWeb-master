@@ -67,6 +67,7 @@
             $("#<%=txt_DataFatturaA.ClientID%>").val('');
             $("#<%=txt_DataScadenzaDa.ClientID%>").val('');
             $("#<%=txt_DataScadenzaA.ClientID%>").val('');
+            $("#<%=ddlFatturaPagata.ClientID%>").val('0');
         }
 
         function confermaEliminazioneScadenza() {

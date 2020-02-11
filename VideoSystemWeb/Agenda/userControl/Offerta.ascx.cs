@@ -115,8 +115,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 PopolaCombo();
             }
-
-
         }
 
         #region COMPORTAMENTO ELEMENTI PAGINA
@@ -208,7 +206,6 @@ namespace VideoSystemWeb.Agenda.userControl
                 long identificatoreOggetto = Convert.ToInt64(commandArgs[1]);
                 ViewState[VIEWSTATE_IDENTIFICATOREARTICOLO] = identificatoreOggetto;
                 articoloSelezionato = SessionManager.EventoSelezionato.ListaDatiArticoli.FirstOrDefault(x => x.IdentificatoreOggetto == identificatoreOggetto);
-
             }
             else
             {
@@ -506,7 +503,10 @@ namespace VideoSystemWeb.Agenda.userControl
             btnEliminaArticoli.Visible = (SessionManager.EventoSelezionato.ListaDatiArticoli != null && SessionManager.EventoSelezionato.ListaDatiArticoli.Count > 0);
             lbl_selezionareArticolo.Visible = (SessionManager.EventoSelezionato.ListaDatiArticoli == null || SessionManager.EventoSelezionato.ListaDatiArticoli.Count == 0);
 
-            AggiornaTotali();
+            ViewState[VIEWSTATE_IDENTIFICATOREARTICOLO] = null;
+            ViewState[VIEWSTATE_IDARTICOLO] = null;
+
+           AggiornaTotali();
         }
 
         public void PopolaOfferta()

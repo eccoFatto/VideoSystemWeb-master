@@ -49,7 +49,6 @@ namespace VideoSystemWeb.BLL
                 }
                 datiLavorazione.ListaArticoliLavorazione = listaDatiLavorazione;
 
-
                 List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione = Dati_PianoEsterno_Lavorazione_DAL.Instance.getDatiPianoEsternoLavorazioneByIdDatiLavorazione(ref esito2, datiLavorazione.Id);
                 if (esito2.Codice != Esito.ESITO_OK)
                 {

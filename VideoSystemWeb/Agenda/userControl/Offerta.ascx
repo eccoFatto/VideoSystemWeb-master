@@ -62,6 +62,10 @@
                 <asp:Label ID="lbl_selezionareArticolo" runat="server" Text="Selezionare un articolo dalla lista" Style="position: absolute; top: 45%; left: 25%; font-size: large; color: cornflowerblue" />
                 <asp:GridView ID="gvArticoli" runat="server" AutoGenerateColumns="False" Style="font-size: 8pt; width: 100%; position: relative; background-color: #EEF1F7; text-align: center" OnRowCommand="gvArticoli_RowCommand" DataMember="IdentificatoreOggetto" OnRowDataBound="gvArticoli_RowDataBound">
                     <Columns>
+
+                        <asp:BoundField DataField="id" HeaderText="ID" />
+                        <asp:BoundField DataField="IdentificatoreOggetto" HeaderText="ident. oggetto" />
+
                         <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" />
                         <asp:BoundField DataField="Quantita" HeaderText="Q.tà" />
                         <asp:BoundField DataField="Prezzo" HeaderText="Listino" DataFormatString="{0:N2}" />
@@ -132,9 +136,7 @@
         </div>
     </div>
 
-
-
-
+<!-- MODIFICA ARTICOLO -->
     <div id="panelModificaArticolo" class="w3-modal " style="position: fixed;" runat="server">
         <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 80%; background-color: white; overflow: auto;">
             <div class="w3-row-padding">

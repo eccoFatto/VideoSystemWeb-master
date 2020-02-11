@@ -865,7 +865,7 @@ namespace VideoSystemWeb.Agenda
                         noteOfferta.Pagamento = cliente.Pagamento;
                         noteOfferta.NotaPagamento = cliente.Pagamento.ToString();
                         noteOfferta.Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale + " ";
-                        noteOfferta.Note = "";// "Unicredit Banca: IBAN: IT39H0200805198000103515620", Pagamento = cliente.Pagamento, Consegna = cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + " " + cliente.CapLegale + " " + cliente.ProvinciaLegale + " " };
+                        noteOfferta.Note = "";
                     }
                     
                     esito = Agenda_BLL.Instance.CreaEvento(SessionManager.EventoSelezionato, listaIdTender, noteOfferta);

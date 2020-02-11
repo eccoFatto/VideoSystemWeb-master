@@ -154,8 +154,24 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
                     else
                     {
-                        protocolloOfferta = listaProtocolli.First();
-                        numeroProtocollo = protocolloOfferta.Numero_protocollo;
+                        bool trovato = false;
+                        foreach (Protocolli protocollo in listaProtocolli)
+                        {
+                            if (protocollo.Destinatario == "Cliente")
+                            {
+                                //protocolloOfferta = listaProtocolli.First();
+                                numeroProtocollo = protocollo.Numero_protocollo;
+                                numeroProtocollo = protocollo.Protocollo_riferimento;
+                                protocolloOfferta = protocollo;
+                                trovato = true;
+                                break;
+                            }
+                        }
+                        if (!trovato)
+                        {
+                            protocolloOfferta = listaProtocolli.First();
+                            numeroProtocollo = protocolloOfferta.Numero_protocollo;
+                        }
                     }
 
                     // GESTIONE NOMI FILE PDF
@@ -172,7 +188,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     PdfWriter wr = new PdfWriter(mapPathOfferta);
                     PdfDocument doc = new PdfDocument(wr);
                     doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
-                    Document document = new Document(doc);
+                    //Document document = new Document(doc);
+                    Document document = new Document(doc, iText.Kernel.Geom.PageSize.A4, false);
 
                     document.SetMargins(245, 30, 110, 30);
 
@@ -372,10 +389,10 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     document.Add(tbGrigla);
 
-                    iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
+                    //iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
 
                     int n = doc.GetNumberOfPages();
-
+                    iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(n).GetPageSize();
 
                     // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
                     for (int i = 1; i <= n; i++)

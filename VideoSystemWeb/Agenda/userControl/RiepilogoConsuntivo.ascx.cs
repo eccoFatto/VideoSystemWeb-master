@@ -71,8 +71,24 @@ namespace VideoSystemWeb.Agenda.userControl
                         }
                         else
                         {
-                            protocolloConsuntivo = listaProtocolli.First();
-                            numeroProtocollo = protocolloConsuntivo.Numero_protocollo;
+                            bool trovato = false;
+                            foreach (Protocolli protocollo in listaProtocolli)
+                            {
+                                if (protocollo.Destinatario == "Cliente")
+                                {
+                                    //protocolloConsuntivo = listaProtocolli.First();
+                                    numeroProtocollo = protocollo.Numero_protocollo;
+                                    numeroProtocollo = protocollo.Protocollo_riferimento;
+                                    protocolloConsuntivo = protocollo;
+                                    trovato = true;
+                                    break;
+                                }
+                            }
+                            if (!trovato)
+                            {
+                                protocolloConsuntivo = listaProtocolli.First();
+                                numeroProtocollo = protocolloConsuntivo.Numero_protocollo;
+                            }
                         }
 
                         // GESTIONE NOMI FILE PDF
@@ -89,11 +105,10 @@ namespace VideoSystemWeb.Agenda.userControl
                         PdfWriter wr = new PdfWriter(mapPathConsuntivo);
                         PdfDocument doc = new PdfDocument(wr);
                         doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
-                        Document document = new Document(doc);
+                        //Document document = new Document(doc);
+                        Document document = new Document(doc, iText.Kernel.Geom.PageSize.A4, false);
 
                         document.SetMargins(245, 30, 110, 30);
-
-
 
                         // ESTRAPOLO IL CLIENTE
                         Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
@@ -284,10 +299,11 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         document.Add(tbGrigla);
 
-                        iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
+                        //iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
+                        //int n = doc.GetNumberOfPages();
 
                         int n = doc.GetNumberOfPages();
-
+                        iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(n).GetPageSize();
 
                         // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
                         for (int i = 1; i <= n; i++)

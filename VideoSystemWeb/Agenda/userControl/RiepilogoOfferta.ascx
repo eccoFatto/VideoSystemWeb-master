@@ -42,6 +42,7 @@
             <asp:Button ID="btnStampaOfferta" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-green w3-round-large " Style="font-size: smaller; padding: 8px 4px" />
             <asp:Button ID="btnModificaNote" runat="server" Text="Modifica note" class="w3-btn w3-white w3-border w3-border-orange w3-round-large " Style="font-size: smaller; padding: 8px 4px" OnClick="btnModificaNote_Click" />
             <button onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 8px 4px">Chiudi</button>
+            <asp:CheckBox ID="cbCopriImporti" runat="server" Text="&nbsp;Copri Importi" Checked="false" OnCheckedChanged="cbCopriImporti_CheckedChanged" AutoPostBack="true" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" style="font-size: smaller; padding: 8px 4px" />
         </div>
         <%--<div id="modalRiepilogoContent" runat="server" style="background-color: white;">--%>
 

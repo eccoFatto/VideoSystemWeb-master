@@ -287,29 +287,58 @@ namespace VideoSystemWeb.Agenda.userControl
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new iText.Layout.Element.Paragraph(da.Prezzo.ToString("###,##0.00")).SetFontSize(9);
-                        cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
-                        cellaGriglia.Add(pGriglia);
-                        tbGrigla.AddCell(cellaGriglia);
+                        if (!cbCopriImporti.Checked) { 
+                            pGriglia = new iText.Layout.Element.Paragraph(da.Prezzo.ToString("###,##0.00")).SetFontSize(9);
+                            cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            cellaGriglia.Add(pGriglia);
+                            tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new iText.Layout.Element.Paragraph(da.Quantita.ToString("##0")).SetFontSize(9);
-                        //pGriglia = new iText.Layout.Element.Paragraph(1.ToString("##0")).SetFontSize(9);
-                        cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
-                        cellaGriglia.Add(pGriglia);
-                        tbGrigla.AddCell(cellaGriglia);
+                            pGriglia = new iText.Layout.Element.Paragraph(da.Quantita.ToString("##0")).SetFontSize(9);
+                            //pGriglia = new iText.Layout.Element.Paragraph(1.ToString("##0")).SetFontSize(9);
+                            cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            cellaGriglia.Add(pGriglia);
+                            tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new iText.Layout.Element.Paragraph(da.Iva.ToString("##")).SetFontSize(9);
-                        cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
-                        cellaGriglia.Add(pGriglia);
-                        tbGrigla.AddCell(cellaGriglia);
+                            pGriglia = new iText.Layout.Element.Paragraph(da.Iva.ToString("##")).SetFontSize(9);
+                            cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            cellaGriglia.Add(pGriglia);
+                            tbGrigla.AddCell(cellaGriglia);
 
-                        decimal totale = da.Prezzo * da.Quantita;
-                        //decimal totale = da.Prezzo * 1;
+                            decimal totale = da.Prezzo * da.Quantita;
+                            //decimal totale = da.Prezzo * 1;
 
-                        pGriglia = new iText.Layout.Element.Paragraph(totale.ToString("###,##0.00")).SetFontSize(9);
-                        cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
-                        cellaGriglia.Add(pGriglia);
-                        tbGrigla.AddCell(cellaGriglia);
+                            pGriglia = new iText.Layout.Element.Paragraph(totale.ToString("###,##0.00")).SetFontSize(9);
+                            cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            cellaGriglia.Add(pGriglia);
+                            tbGrigla.AddCell(cellaGriglia);
+                        }
+                        else
+                        {
+                            // NON VISUALIZZO IMPORTI
+                            pGriglia = new iText.Layout.Element.Paragraph("").SetFontSize(9);
+                            cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            cellaGriglia.Add(pGriglia);
+                            tbGrigla.AddCell(cellaGriglia);
+
+                            pGriglia = new iText.Layout.Element.Paragraph(da.Quantita.ToString("##0")).SetFontSize(9);
+                            //pGriglia = new iText.Layout.Element.Paragraph(1.ToString("##0")).SetFontSize(9);
+                            cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            cellaGriglia.Add(pGriglia);
+                            tbGrigla.AddCell(cellaGriglia);
+
+                            pGriglia = new iText.Layout.Element.Paragraph("").SetFontSize(9);
+                            cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            cellaGriglia.Add(pGriglia);
+                            tbGrigla.AddCell(cellaGriglia);
+
+                            decimal totale = da.Prezzo * da.Quantita;
+                            //decimal totale = da.Prezzo * 1;
+
+                            pGriglia = new iText.Layout.Element.Paragraph("").SetFontSize(9);
+                            cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            cellaGriglia.Add(pGriglia);
+                            tbGrigla.AddCell(cellaGriglia);
+                        }
                     }
 
                     // AGGIUNGO UNO SPAZIO
@@ -360,7 +389,14 @@ namespace VideoSystemWeb.Agenda.userControl
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddCell(cellaGriglia);
 
-                    pGriglia = new iText.Layout.Element.Paragraph(totPrezzo.ToString("###,##0.00")).SetFontSize(9);
+                    if (!cbCopriImporti.Checked)
+                    {
+                        pGriglia = new iText.Layout.Element.Paragraph(totPrezzo.ToString("###,##0.00")).SetFontSize(9);
+                    }
+                    else
+                    {
+                        pGriglia = new iText.Layout.Element.Paragraph("").SetFontSize(9);
+                    }
                     cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddCell(cellaGriglia);
@@ -370,8 +406,13 @@ namespace VideoSystemWeb.Agenda.userControl
                     cellaGriglia = new iText.Layout.Element.Cell(1, 3).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddCell(cellaGriglia);
-
-                    pGriglia = new iText.Layout.Element.Paragraph(totIVA.ToString("###,##0.00")).SetFontSize(9);
+                    if (!cbCopriImporti.Checked)
+                    {
+                        pGriglia = new iText.Layout.Element.Paragraph(totIVA.ToString("###,##0.00")).SetFontSize(9);
+                    }
+                    else {
+                        pGriglia = new iText.Layout.Element.Paragraph("").SetFontSize(9);
+                    }
                     cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddCell(cellaGriglia);
@@ -381,8 +422,14 @@ namespace VideoSystemWeb.Agenda.userControl
                     cellaGriglia = new iText.Layout.Element.Cell(1, 3).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddCell(cellaGriglia);
-
-                    pGriglia = new iText.Layout.Element.Paragraph((totPrezzo + totIVA).ToString("###,##0.00")).SetFontSize(9);
+                    if (!cbCopriImporti.Checked)
+                    {
+                        pGriglia = new iText.Layout.Element.Paragraph((totPrezzo + totIVA).ToString("###,##0.00")).SetFontSize(9);
+                    }
+                    else
+                    {
+                        pGriglia = new iText.Layout.Element.Paragraph("").SetFontSize(9);
+                    }
                     cellaGriglia = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddCell(cellaGriglia);
@@ -658,5 +705,16 @@ namespace VideoSystemWeb.Agenda.userControl
         }
         #endregion
 
+        protected void cbCopriImporti_CheckedChanged(object sender, EventArgs e)
+        {
+            DatiAgenda eventoSel = (DatiAgenda)ViewState["eventoSelezionato"];
+            Esito esito = popolaPannelloRiepilogo(eventoSel);
+
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaNote", script: "javascript: aggiornaRiepilogo()", addScriptTags: true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiModificaNote", script: "javascript: document.getElementById('panelModificaNote').style.display='none'", addScriptTags: true);
+            // FACCIO REFRESH SUL FRAME CHE VISUALIZZA IL PDF IN MODO DA VEDERE GLI AGGIORNAMENTI IN TEMPO REALE
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdf.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
+
+        }
     }
 }

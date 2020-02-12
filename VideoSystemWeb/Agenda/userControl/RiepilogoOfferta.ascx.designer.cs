@@ -31,6 +31,15 @@ namespace VideoSystemWeb.Agenda.userControl {
         protected global::System.Web.UI.WebControls.Button btnModificaNote;
         
         /// <summary>
+        /// Controllo cbCopriImporti.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbCopriImporti;
+        
+        /// <summary>
         /// Controllo DivFramePdf.
         /// </summary>
         /// <remarks>

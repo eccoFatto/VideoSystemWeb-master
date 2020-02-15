@@ -207,8 +207,8 @@ namespace VideoSystemWeb.REPORT
                     string pathReport = ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"] + nomeFile;
                     string mapPathReport = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"]) + nomeFile;
 
-                    string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
-                    iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
+                    //string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                    iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/logoVSP_trim.png"));
 
 
                     PdfWriter wr = new PdfWriter(mapPathReport);

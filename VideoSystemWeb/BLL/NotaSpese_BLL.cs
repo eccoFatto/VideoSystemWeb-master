@@ -9,7 +9,7 @@ using iText.Layout;
 using iText.Layout.Borders;
 using iText.Layout.Element;
 using System.IO;
-
+//using System.Web.UI;
 namespace VideoSystemWeb.BLL
 {
     public class NotaSpese_BLL
@@ -69,8 +69,8 @@ namespace VideoSystemWeb.BLL
                         string pathNotaSpese = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
                         string mapPathNotaSpese = HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
-                        string prefissoUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
-                        iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
+                        //string prefissoUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority;
+                        iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(HttpContext.Current.Request.MapPath("~/Images/logoVSP_trim.png"));
 
                         PdfWriter wr = new PdfWriter(mapPathNotaSpese);
 

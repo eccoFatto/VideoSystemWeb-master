@@ -80,15 +80,16 @@ namespace VideoSystemWeb.Agenda.userControl
                         string pathPianoEsterno = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
                         string mapPathPianoEsterno = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
-                        string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
-                        iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
-                        
+                        //string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                        iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/logoVSP_trim.png"));
+
 
                         PdfWriter wr = new PdfWriter(mapPathPianoEsterno);
                         PdfDocument doc = new PdfDocument(wr);
                         doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
                         //doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
-                        Document document = new Document(doc);
+                        //Document document = new Document(doc);
+                        Document document = new Document(doc, iText.Kernel.Geom.PageSize.A4.Rotate(), false);
 
                         //document.SetMargins(90, 30, 50, 30);
                         document.SetMargins(50, 30, 50, 30);
@@ -324,9 +325,9 @@ namespace VideoSystemWeb.Agenda.userControl
                         document.Add(table);
 
 
-                        iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
+                        //iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
                         int n = doc.GetNumberOfPages();
-
+                        iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(n).GetPageSize();
 
                         // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
                         for (int i = 1; i <= n; i++)

@@ -179,9 +179,9 @@ namespace VideoSystemWeb.Agenda.userControl
                     string pathOfferta = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
                     string mapPathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
-                    string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
-                    iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
-
+                    // string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                    //iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
+                    iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/logoVSP_trim.png"));
                     iText.IO.Image.ImageData imageDNV = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/DNV_2008_ITA2.jpg"));
 
 

@@ -64,8 +64,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         string pathNotaSpese = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
                         string mapPathNotaSpese = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
-                        string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
-                        iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
+                        //string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                        iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/logoVSP_trim.png"));
 
                         PdfWriter wr = new PdfWriter(mapPathNotaSpese);
 

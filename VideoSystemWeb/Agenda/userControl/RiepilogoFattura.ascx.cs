@@ -103,8 +103,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         string pathFattura = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
                         string mapPathFattura = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
-                        string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
-                        iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(prefissoUrl + "/Images/logoVSP_trim.png");
+                        //string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                        iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/logoVSP_trim.png"));
 
                         iText.IO.Image.ImageData imageDNV = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/DNV_2008_ITA2.jpg"));
 
@@ -112,7 +112,8 @@ namespace VideoSystemWeb.Agenda.userControl
                         PdfWriter wr = new PdfWriter(mapPathFattura);
                         PdfDocument doc = new PdfDocument(wr);
                         doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
-                        Document document = new Document(doc);
+                        //Document document = new Document(doc);
+                        Document document = new Document(doc, iText.Kernel.Geom.PageSize.A4, false);
 
                         document.SetMargins(245, 30, 110, 30);
 
@@ -305,9 +306,10 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         document.Add(tbGrigla);
 
-                        iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
+                        //iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
 
                         int n = doc.GetNumberOfPages();
+                        iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(n).GetPageSize();
 
 
                         // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA

@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -274,6 +275,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Images\logoVSP.png" />
     <Content Include="MAGAZZINO\Attrezzature.aspx" />
+    <Content Include="MAGAZZINO\Magazzino.aspx" />
     <Content Include="messaggioCambioPassword.html" />
     <Content Include="pageError.aspx" />
     <Content Include="Protocollo\Protocollo.aspx" />
@@ -840,6 +842,13 @@
     </Compile>
     <Compile Include="MAGAZZINO\Attrezzature.aspx.designer.cs">
       <DependentUpon>Attrezzature.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MAGAZZINO\Magazzino.aspx.cs">
+      <DependentUpon>Magazzino.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MAGAZZINO\Magazzino.aspx.designer.cs">
+      <DependentUpon>Magazzino.aspx</DependentUpon>
     </Compile>
     <Compile Include="pageError.aspx.cs">
       <DependentUpon>pageError.aspx</DependentUpon>

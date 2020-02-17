@@ -1135,5 +1135,22 @@ namespace VideoSystemWeb.Agenda
                 UpdatePopup();
             }
         }
+
+
+        protected void btnMagazzino_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int idDatiAgenda = SessionManager.EventoSelezionato.id;
+                Response.Redirect("/MAGAZZINO/Magazzino.aspx?idDatiAgenda=" + idDatiAgenda);
+            }
+            catch (Exception ex)
+            {
+                Esito esito = new Esito();
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                ShowError(esito.Descrizione);
+            }
+        }
     }
 }

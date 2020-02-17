@@ -34,6 +34,12 @@ namespace VideoSystemWeb.BLL
             return noteLavorazioneMagazzino;
         }
 
+        public NoteLavorazioneMagazzino getNoteLavorazioneMagazzinoByIdLavorazione(int idLavorazione, ref Esito esito)
+        {
+            NoteLavorazioneMagazzino noteLavorazioneMagazzino = Note_Lavorazione_Magazzino_DAL.Instance.getNoteLavorazioneMagazzinoByIdLavorazione(idLavorazione, ref esito);
+            return noteLavorazioneMagazzino;
+        }
+
         public int CreaNoteLavorazioneMagazzino(NoteLavorazioneMagazzino noteLavorazioneMagazzino, ref Esito esito)
         {
             int iREt = Note_Lavorazione_Magazzino_DAL.Instance.CreaNoteLavorazioneMagazzino(noteLavorazioneMagazzino, ref esito);

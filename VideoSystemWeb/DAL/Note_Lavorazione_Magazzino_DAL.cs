@@ -71,7 +71,47 @@ namespace VideoSystemWeb.DAL
             return noteLavorazioneMagazzino;
         }
 
-         public int CreaNoteLavorazioneMagazzino(NoteLavorazioneMagazzino noteLavorazioneMagazzino, ref Esito esito)
+        public NoteLavorazioneMagazzino getNoteLavorazioneMagazzinoByIdLavorazione(int idLavorazione, ref Esito esito)
+        {
+            NoteLavorazioneMagazzino noteLavorazioneMagazzino = new NoteLavorazioneMagazzino();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT TOP (1) * FROM note_lavorazione_magazzino where id_Lavorazione = " + idLavorazione.ToString() +
+                                   " and attivo = 1" +
+                                   " order by id desc";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    noteLavorazioneMagazzino.Id = dt.Rows[0].Field<int>("id");
+                                    noteLavorazioneMagazzino.Id_Lavorazione = dt.Rows[0].Field<int>("id_Lavorazione");
+                                    noteLavorazioneMagazzino.Note = dt.Rows[0].Field<string>("note");
+
+                                    noteLavorazioneMagazzino.Attivo = dt.Rows[0].Field<bool>("attivo");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+            return noteLavorazioneMagazzino;
+        }
+
+        public int CreaNoteLavorazioneMagazzino(NoteLavorazioneMagazzino noteLavorazioneMagazzino, ref Esito esito)
         {
             Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
             try

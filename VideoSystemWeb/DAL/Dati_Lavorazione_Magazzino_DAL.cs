@@ -97,7 +97,7 @@ namespace VideoSystemWeb.DAL
             return datiLavorazioneMagazzino;
         }
 
-         public int CreaDatiLavorazioneMagazzino(DatiLavorazioneMagazzino datiLavorazioneMagazzino, ref Esito esito)
+        public int CreaDatiLavorazioneMagazzino(DatiLavorazioneMagazzino datiLavorazioneMagazzino, ref Esito esito)
         {
             Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
             try
@@ -453,6 +453,78 @@ namespace VideoSystemWeb.DAL
             }
 
             return esito;
+        }
+
+        public List<DatiLavorazioneMagazzino> getDatiLavorazioneMagazzinoByIdLavorazione(int idLavorazione, ref Esito esito)
+        {
+            List<DatiLavorazioneMagazzino> listaDatiLavorazioneMagazzino = new List<DatiLavorazioneMagazzino>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM dati_lavorazione_magazzino where id_Lavorazione = " + idLavorazione.ToString();
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        DatiLavorazioneMagazzino datiLavorazioneMagazzino = new DatiLavorazioneMagazzino();
+
+                                        datiLavorazioneMagazzino.Id = riga.Field<int>("id");
+                                        datiLavorazioneMagazzino.Id_Lavorazione = riga.Field<int>("id_Lavorazione");
+                                        datiLavorazioneMagazzino.Descrizione_Camera = riga.Field<string>("descrizione_Camera");
+
+                                        datiLavorazioneMagazzino.Id_Altro1 = riga.Field<int>("id_Altro1");
+                                        datiLavorazioneMagazzino.Id_Altro2 = riga.Field<int>("id_Altro2");
+                                        datiLavorazioneMagazzino.Id_Camera = riga.Field<int>("id_Camera");
+                                        datiLavorazioneMagazzino.Id_Cavalletto = riga.Field<int>("id_Cavalletto");
+                                        datiLavorazioneMagazzino.Id_Cavi = riga.Field<int>("id_Cavi");
+                                        datiLavorazioneMagazzino.Id_Fibra_Trax = riga.Field<int>("id_Fibra_Trax");
+                                        datiLavorazioneMagazzino.Id_Lensholder = riga.Field<int>("id_Lensholder");
+                                        datiLavorazioneMagazzino.Id_Loop = riga.Field<int>("id_Loop");
+                                        datiLavorazioneMagazzino.Id_Mic = riga.Field<int>("id_Mic");
+                                        datiLavorazioneMagazzino.Id_Ottica = riga.Field<int>("id_Ottica");
+                                        datiLavorazioneMagazzino.Id_Testa = riga.Field<int>("id_Testa");
+                                        datiLavorazioneMagazzino.Id_Viewfinder = riga.Field<int>("id_Viewfinder");
+
+                                        datiLavorazioneMagazzino.Nome_Altro1 = riga.Field<string>("nome_Altro1");
+                                        datiLavorazioneMagazzino.Nome_Altro2 = riga.Field<string>("nome_Altro2");
+                                        datiLavorazioneMagazzino.Nome_Camera = riga.Field<string>("nome_Camera");
+                                        datiLavorazioneMagazzino.Nome_Cavalletto = riga.Field<string>("nome_Cavalletto");
+                                        datiLavorazioneMagazzino.Nome_Cavi = riga.Field<string>("nome_Cavi");
+                                        datiLavorazioneMagazzino.Nome_Fibra_Trax = riga.Field<string>("nome_Fibra_Trax");
+                                        datiLavorazioneMagazzino.Nome_Lensholder = riga.Field<string>("nome_Lensholder");
+                                        datiLavorazioneMagazzino.Nome_Loop = riga.Field<string>("nome_Loop");
+                                        datiLavorazioneMagazzino.Nome_Mic = riga.Field<string>("nome_Mic");
+                                        datiLavorazioneMagazzino.Nome_Ottica = riga.Field<string>("nome_Ottica");
+                                        datiLavorazioneMagazzino.Nome_Testa = riga.Field<string>("nome_Testa");
+                                        datiLavorazioneMagazzino.Nome_Viewfinder = riga.Field<string>("nome_Viewfinder");
+
+                                        datiLavorazioneMagazzino.Attivo = dt.Rows[0].Field<bool>("attivo");
+
+                                        listaDatiLavorazioneMagazzino.Add(datiLavorazioneMagazzino);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaDatiLavorazioneMagazzino;
         }
 
     }

@@ -54,5 +54,11 @@ namespace VideoSystemWeb.BLL
 
             return esito;
         }
+
+        public List<DatiLavorazioneMagazzino> getDatiLavorazioneMagazzinoByIdLavorazione(int idLavorazione, ref Esito esito)
+        {
+            List<DatiLavorazioneMagazzino> listaDatiLavorazioneMagazzino = Dati_Lavorazione_Magazzino_DAL.Instance.getDatiLavorazioneMagazzinoByIdLavorazione(idLavorazione, ref esito);
+            return listaDatiLavorazioneMagazzino;
+        }
     }
 }

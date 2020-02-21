@@ -1408,13 +1408,15 @@ namespace VideoSystemWeb.Agenda.userControl
             if (esito.Codice != Esito.ESITO_OK)
             {
                 basePage.ShowError(esito.Descrizione);
-                return;
             }
-            Decimal.TryParse(aliquota_RitenutaAcconto, out decimal aliquotaRitAcc);
-            if (aliquotaRitAcc == 0)
+            else
             {
-                erroriConversione += "<li>L'aliquota per la ritenuta di acconto non è nel formato corretto</li>";
-                aliquota_RitenutaAcconto = "1";
+                Decimal.TryParse(aliquota_RitenutaAcconto, out decimal aliquotaRitAcc);
+                if (aliquotaRitAcc == 0)
+                {
+                    erroriConversione += "<li>L'aliquota per la ritenuta di acconto non è nel formato corretto</li>";
+                    aliquota_RitenutaAcconto = "1";
+                }
             }
             #endregion
 
@@ -1423,13 +1425,15 @@ namespace VideoSystemWeb.Agenda.userControl
             if (esito.Codice != Esito.ESITO_OK)
             {
                 basePage.ShowError(esito.Descrizione);
-                return;
             }
-            Decimal.TryParse(quotaFissa_PagamentoMisto, out decimal quotaPagFisso);
-            if (quotaPagFisso == 0)
+            else
             {
-                erroriConversione += "<li>La quota per la tipologia di pagamento mista non è nel formato corretto</li>";
-                quotaFissa_PagamentoMisto = "0";
+                Decimal.TryParse(quotaFissa_PagamentoMisto, out decimal quotaPagFisso);
+                if (quotaPagFisso == 0)
+                {
+                    erroriConversione += "<li>La quota per la tipologia di pagamento mista non è nel formato corretto</li>";
+                    quotaFissa_PagamentoMisto = "0";
+                }
             }
             #endregion
 
@@ -1438,13 +1442,15 @@ namespace VideoSystemWeb.Agenda.userControl
             if (esito.Codice != Esito.ESITO_OK)
             {
                 basePage.ShowError(esito.Descrizione);
-                return;
             }
-            Decimal.TryParse(diariaLorda, out decimal diaria);
-            if (diaria == 0)
+            else
             {
-                erroriConversione += "<li>Il valore della diaria lorda non è nel formato corretto</li>";
-                diariaLorda = "0";
+                Decimal.TryParse(diariaLorda, out decimal diaria);
+                if (diaria == 0)
+                {
+                    erroriConversione += "<li>Il valore della diaria lorda non è nel formato corretto</li>";
+                    diariaLorda = "0";
+                }
             }
             #endregion
 

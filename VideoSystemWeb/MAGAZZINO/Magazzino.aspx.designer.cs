@@ -7,13 +7,11 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.MAGAZZINO
-{
-
-
-    public partial class Magazzino
-    {
-
+namespace VideoSystemWeb.MAGAZZINO {
+    
+    
+    public partial class Magazzino {
+        
         /// <summary>
         /// Controllo lblMagazzino.
         /// </summary>
@@ -22,7 +20,7 @@ namespace VideoSystemWeb.MAGAZZINO
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMagazzino;
-
+        
         /// <summary>
         /// Controllo UpdatePanelMagazzino.
         /// </summary>
@@ -31,7 +29,7 @@ namespace VideoSystemWeb.MAGAZZINO
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanelMagazzino;
-
+        
         /// <summary>
         /// Controllo lbl_Cliente.
         /// </summary>
@@ -40,7 +38,7 @@ namespace VideoSystemWeb.MAGAZZINO
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Cliente;
-
+        
         /// <summary>
         /// Controllo lbl_Lavorazione.
         /// </summary>
@@ -49,7 +47,7 @@ namespace VideoSystemWeb.MAGAZZINO
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Lavorazione;
-
+        
         /// <summary>
         /// Controllo lbl_Produzione.
         /// </summary>
@@ -58,7 +56,7 @@ namespace VideoSystemWeb.MAGAZZINO
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Produzione;
-
+        
         /// <summary>
         /// Controllo lbl_Tipologia.
         /// </summary>
@@ -67,7 +65,7 @@ namespace VideoSystemWeb.MAGAZZINO
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Tipologia;
-
+        
         /// <summary>
         /// Controllo lbl_DataInizio.
         /// </summary>
@@ -76,7 +74,7 @@ namespace VideoSystemWeb.MAGAZZINO
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_DataInizio;
-
+        
         /// <summary>
         /// Controllo lbl_DataFine.
         /// </summary>
@@ -85,7 +83,7 @@ namespace VideoSystemWeb.MAGAZZINO
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_DataFine;
-
+        
         /// <summary>
         /// Controllo lbl_CodLavoro.
         /// </summary>
@@ -94,7 +92,25 @@ namespace VideoSystemWeb.MAGAZZINO
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_CodLavoro;
-
+        
+        /// <summary>
+        /// Controllo btnInserisciRiga.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnInserisciRiga;
+        
+        /// <summary>
+        /// Controllo gv_attrezzature.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gv_attrezzature;
+        
         /// <summary>
         /// Controllo txt_Note.
         /// </summary>

@@ -52,11 +52,33 @@
             <div class="round">
                 <asp:GridView ID="gv_attrezzature" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_attrezzature_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_attrezzature_PageIndexChanging" PageSize="20" HeaderStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center">
                     <Columns>
-<%--                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
                             <ItemTemplate>
-                                <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza Attrezzatura" ImageAlign="AbsMiddle" Height="30px" />
+                                <asp:ImageButton ID="imgDelete" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/delete.png" ToolTip="Cancella Riga" ImageAlign="AbsMiddle" Height="30px" />
                             </ItemTemplate>
-                        </asp:TemplateField>--%>
+                        </asp:TemplateField>
+                    
+                        <asp:BoundField DataField="id" HeaderText="id" ItemStyle-HorizontalAlign="Right" Visible="false"/>
+                        
+                        
+                        
+                        <asp:BoundField DataField="Cod. Lav." HeaderText="Cod. Lav." HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="Num. Prot." HeaderText="Num. Prot."  HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Data Prot." HeaderText="Data Prot." DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Cliente/Fornitore" HeaderText="Cliente/Fornitore"  HeaderStyle-Width="16%" />
+                        <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="13%" />
+                        <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="15%" />
+                        <asp:BoundField DataField="Tipo" HeaderText="Tipo" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Nome File" HeaderText="Nome File" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Destinatario" HeaderText="Destinatario" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Pregresso" HeaderText="Pregresso" HeaderStyle-Width="6%" />                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                     </Columns>
                 </asp:GridView>
             </div>

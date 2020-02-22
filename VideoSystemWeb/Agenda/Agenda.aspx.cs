@@ -227,45 +227,19 @@ namespace VideoSystemWeb.Agenda
             }
         }
 
+        // la chiusura provoca il salvataggio automatico dell'evento
         protected void btn_chiudi_Click(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["DEBUG_MODE"]))
+            Esito esito = SalvaEvento();
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 ChiudiPopup();
+                //ShowSuccess("Salvataggio eseguito correttamente");
             }
             else
             {
-                Esito esito = SalvaEvento();
-                if (esito.Codice == Esito.ESITO_OK)
-                {
-                    ChiudiPopup();
-
-                    //ShowSuccess("Salvataggio eseguito correttamente");
-                }
-                else
-                {
-                    UpdatePopup();
-                }
+                UpdatePopup();
             }
-
-            //if (hf_Salvataggio.Value == "1")
-            //{
-            //    Esito esito = SalvaEvento();
-            //    if (esito.Codice == Esito.ESITO_OK)
-            //    {
-            //        ChiudiPopup();
-
-            //        //ShowSuccess("Salvataggio eseguito correttamente");
-            //    }
-            //    else
-            //    {
-            //        UpdatePopup();
-            //    }
-            //}
-            //else
-            //{
-            //    ChiudiPopup();
-            //}
         }
 
         // Chiude l'evento senza salvare

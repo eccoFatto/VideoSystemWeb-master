@@ -370,10 +370,10 @@ namespace VideoSystemWeb.DAL
                         filtriRicerca += " and (a.importoAvere <> a.importoRiscosso or a.importoDare != a.importoVersato)";
                     }
                 }
-                if (!string.IsNullOrEmpty(dataFatturaDa)) filtriRicerca += " and b.data_protocollo >= '" + dataFatturaDa + "'";
-                if (!string.IsNullOrEmpty(dataFatturaA)) filtriRicerca += " and b.data_protocollo <= '" + dataFatturaA + "'";
-                if (!string.IsNullOrEmpty(dataScadenzaDa)) filtriRicerca += " and a.dataScadenza >= '" + dataScadenzaDa + "'";
-                if (!string.IsNullOrEmpty(dataScadenzaA)) filtriRicerca += " and a.dataScadenza <= '" + dataScadenzaA + "'";
+                if (!string.IsNullOrEmpty(dataFatturaDa)) filtriRicerca += " and b.data_protocollo >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                if (!string.IsNullOrEmpty(dataFatturaA)) filtriRicerca += " and b.data_protocollo <= '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                if (!string.IsNullOrEmpty(dataScadenzaDa)) filtriRicerca += " and a.dataScadenza >= '" +  (DateTime.Parse(dataScadenzaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                if (!string.IsNullOrEmpty(dataScadenzaA)) filtriRicerca += " and a.dataScadenza <= '" + (DateTime.Parse(dataScadenzaA)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
 
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {

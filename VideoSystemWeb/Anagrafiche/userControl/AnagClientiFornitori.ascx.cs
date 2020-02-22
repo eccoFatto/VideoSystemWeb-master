@@ -605,7 +605,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             try
             {
 
-                if (string.IsNullOrEmpty((string)ViewState["idAzienda"]))
+                if (ViewState["idAzienda"]==null || (string)ViewState["idAzienda"] == "")
                 {
                     ViewState["idAzienda"] = 0;
                 }

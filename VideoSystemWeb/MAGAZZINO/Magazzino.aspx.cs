@@ -53,6 +53,7 @@ namespace VideoSystemWeb.MAGAZZINO
                         int idLavorazione = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito).Id;
                         ViewState[VIEWSTATE_IDLAVORAZIONE_CORRENTE] = idLavorazione;
                         NoteLavorazioneMagazzinoCorrente = GetNoteLavorazioneMagazzino(idLavorazione);
+                        txt_Note.Text = NoteLavorazioneMagazzinoCorrente.Note;
                         cercaRigheLavorazioneMagazzino();
                     }
                     catch (Exception ex)
@@ -122,7 +123,60 @@ namespace VideoSystemWeb.MAGAZZINO
 
         protected void gv_attrezzature_RowDataBound(object sender, GridViewRowEventArgs e)
         {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string id = e.Row.Cells[GetColumnIndexByName(e.Row,"id")].Text;
+                
+                for (int indiceColonna = 2; indiceColonna < gv_attrezzature.Columns.Count; indiceColonna++)
+                {
 
+                    string nomeCampo = GetColumnNameByIndex(e.Row, indiceColonna);
+                    char[] separatore = new char[] {';'};
+                    string[] arNomiCampo = nomeCampo.Split(separatore, StringSplitOptions.RemoveEmptyEntries);
+
+                    
+                    e.Row.Cells[indiceColonna].Attributes["ondblclick"] = "mostracella('" + id + "', '" + indiceColonna.ToString() + "', '" + arNomiCampo[0] + "', '" + arNomiCampo[1] + "'); ";
+                }
+            }
+        }
+
+        int GetColumnIndexByName(GridViewRow row, string SearchColumnName)
+        {
+            int columnIndex = 0;
+            foreach (DataControlFieldCell cell in row.Cells)
+            {
+                if (cell.ContainingField is BoundField)
+                {
+                    if (((BoundField)cell.ContainingField).DataField.Equals(SearchColumnName))
+                    {
+                        break;
+                    }
+                }
+                columnIndex++;
+            }
+            return columnIndex;
+        }
+
+
+        string GetColumnNameByIndex(GridViewRow row, int index)
+        {
+            string ret = "";
+            int columnIndex = 0;
+            foreach (DataControlFieldCell cell in row.Cells)
+            {
+                
+                if (cell.ContainingField is BoundField)
+                {
+                    if (columnIndex == index)
+                    {
+                        ret = ((BoundField)cell.ContainingField).DataField + ";" + ((BoundField)cell.ContainingField).HeaderText;
+
+                        break;
+                    }
+                }
+                columnIndex++;
+            }
+            return ret;
         }
 
         protected void gv_attrezzature_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -174,5 +228,110 @@ namespace VideoSystemWeb.MAGAZZINO
             }
         }
 
+        protected void btnAggiornaNote_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                NoteLavorazioneMagazzinoCorrente.Note = txt_Note.Text.Trim();
+
+                Esito esito = Note_Lavorazione_Magazzino_BLL.Instance.AggiornaNoteLavorazioneMagazzino(NoteLavorazioneMagazzinoCorrente);
+                if (esito.Codice == 0)
+                {
+                    ShowSuccess("Note salvate correttamente!");
+                }
+                else
+                {
+                    ShowError("Errore nel salvataggio Note: " + esito.Descrizione);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Errore nel salvataggio Note: " + ex.Message);
+            }
+
+        }
+
+        protected void gv_attrezzature_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "ELIMINA_RIGA")
+            {
+                try
+                {
+                    Int64 id = Convert.ToInt64(e.CommandArgument);
+
+                    Esito esito = Dati_Lavorazione_Magazzino_BLL.Instance.EliminaDatiLavorazioneMagazzino((int)id);
+                    if (esito.Codice == 0)
+                    {
+                        cercaRigheLavorazioneMagazzino();
+                        ShowSuccess("Riga eliminata correttamente!");
+                    }
+                    else
+                    {
+                        ShowError("Errore nella cancellazione riga: " + esito.Descrizione);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ShowError("Errore nella cancellazione riga: " + ex.Message);
+                }
+            }
+        }
+
+        protected void btnOpenCell_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnEditEvent_Click(object sender, EventArgs e)
+        {
+            int idLavorazioneMagazzino = int.Parse(hfIdColonna.Value);
+            int idColonna = int.Parse(hfIdColonna.Value);
+
+
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabMagazzino('Magazzino');", true);
+
+
+            MostraPopup();
+        }
+
+        private void MostraPopup()
+        {
+
+            pnlContainer.Style.Remove("display");
+
+            Esito esito = new Esito();
+
+
+            lblNumeroColonna.Text = hfIdColonna.Value;
+            lblNumeroRiga.Text = hfIdRiga.Value;
+            lblNomeCampo.Text = hfNomeCampo.Value;
+            lblHeaderCampo.Text = hfHeaderCampo.Value;
+
+            //val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
+            //val_CodiceLavoro.Text = string.IsNullOrEmpty(SessionManager.EventoSelezionato.codice_lavoro) ? "-" : SessionManager.EventoSelezionato.codice_lavoro;
+
+            //popupAppuntamento.ClearAppuntamento();
+            //popupAppuntamento.PopolaAppuntamento();
+
+            //popupOfferta.ClearOfferta();
+            //if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
+            //{
+            //    popupOfferta.PopolaOfferta();
+            //}
+
+            //popupLavorazione.ClearLavorazione();
+            //if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
+            //{
+            //    popupLavorazione.PopolaLavorazione();
+            //}
+            //RiempiCampiIntestazioneEvento();
+
+        }
+
+        protected void btnChiudiPopupServer_Click(object sender, EventArgs e)
+        {
+            pnlContainer.Style.Add("display","none");
+            cercaRigheLavorazioneMagazzino();
+        }
     }
 }

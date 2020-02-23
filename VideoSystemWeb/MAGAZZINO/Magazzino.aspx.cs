@@ -15,6 +15,7 @@ namespace VideoSystemWeb.MAGAZZINO
     {
         #region ELENCO CHIAVI VIEWSTATE
         private const string VIEWSTATE_NOTELAVORAZIONEMAGAZZINO_CORRENTE = "noteLavorazioneMagazzinoCorrente";
+        private const string VIEWSTATE_DATILAVORAZIONEMAGAZZINO_CORRENTE = "datiLavorazioneMagazzinoCorrente";
         private const string VIEWSTATE_IDLAVORAZIONE_CORRENTE = "idLavorazioneCorrente";
         #endregion
 
@@ -27,6 +28,18 @@ namespace VideoSystemWeb.MAGAZZINO
             set
             {
                 ViewState[VIEWSTATE_NOTELAVORAZIONEMAGAZZINO_CORRENTE] = value;
+            }
+        }
+
+        public DatiLavorazioneMagazzino DatiLavorazioneMagazzinoCorrente
+        {
+            get
+            {
+                return (DatiLavorazioneMagazzino)ViewState[VIEWSTATE_DATILAVORAZIONEMAGAZZINO_CORRENTE];
+            }
+            set
+            {
+                ViewState[VIEWSTATE_DATILAVORAZIONEMAGAZZINO_CORRENTE] = value;
             }
         }
 
@@ -102,6 +115,19 @@ namespace VideoSystemWeb.MAGAZZINO
             return noteLavorazioneMagazzino;
         }
 
+        private DatiLavorazioneMagazzino GetDatiLavorazioneMagazzino(int idLavorazioneMagazzino)
+        {
+            Esito esito = new Esito();
+
+            DatiLavorazioneMagazzino datiLavorazioneMagazzino = Dati_Lavorazione_Magazzino_BLL.Instance.getDatiLavorazioneMagazzinoById(idLavorazioneMagazzino, ref esito);
+            if (datiLavorazioneMagazzino == null || datiLavorazioneMagazzino.Id == 0 || esito.Codice!=0)
+            {
+                ShowError("Errore durante la ricerca dei Dati Lavorazione Magazzino con ID " + idLavorazioneMagazzino.ToString() + " " + esito.Descrizione);
+            }
+
+            return datiLavorazioneMagazzino;
+        }
+
         private DatiAgenda CaricaEventoCorrente(int idDatiAgenda)
         {
             Esito esito = new Esito();
@@ -133,9 +159,9 @@ namespace VideoSystemWeb.MAGAZZINO
                     string nomeCampo = GetColumnNameByIndex(e.Row, indiceColonna);
                     char[] separatore = new char[] {';'};
                     string[] arNomiCampo = nomeCampo.Split(separatore, StringSplitOptions.RemoveEmptyEntries);
+                    string valoreSelezionato = e.Row.Cells[indiceColonna].Text.Replace("&nbsp;","");
 
-                    
-                    e.Row.Cells[indiceColonna].Attributes["ondblclick"] = "mostracella('" + id + "', '" + indiceColonna.ToString() + "', '" + arNomiCampo[0] + "', '" + arNomiCampo[1] + "'); ";
+                    e.Row.Cells[indiceColonna].Attributes["ondblclick"] = "mostracella('" + id + "', '" + indiceColonna.ToString() + "', '" + arNomiCampo[0] + "', '" + arNomiCampo[1] + "', '" + valoreSelezionato.Trim() + "'); ";
                 }
             }
         }
@@ -284,7 +310,10 @@ namespace VideoSystemWeb.MAGAZZINO
 
         protected void btnEditEvent_Click(object sender, EventArgs e)
         {
-            int idLavorazioneMagazzino = int.Parse(hfIdColonna.Value);
+            int idLavorazioneMagazzino = int.Parse(hfIdRiga.Value);
+
+            DatiLavorazioneMagazzinoCorrente = GetDatiLavorazioneMagazzino(idLavorazioneMagazzino);
+
             int idColonna = int.Parse(hfIdColonna.Value);
 
 
@@ -306,6 +335,20 @@ namespace VideoSystemWeb.MAGAZZINO
             lblNumeroRiga.Text = hfIdRiga.Value;
             lblNomeCampo.Text = hfNomeCampo.Value;
             lblHeaderCampo.Text = hfHeaderCampo.Value;
+
+            switch (hfNomeCampo.Value)
+            {
+                case "descrizione_Camera":
+                    tbModDescrizioneCamera.Text = hfValoreGriglia.Value.Trim();
+                    phDescrizioneCamera.Visible = true;
+                    phModificaAttrezzature.Visible = false;
+                    break;
+                default:
+                    phDescrizioneCamera.Visible = false;
+                    phModificaAttrezzature.Visible = true;
+                    break;
+            }
+
 
             //val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
             //val_CodiceLavoro.Text = string.IsNullOrEmpty(SessionManager.EventoSelezionato.codice_lavoro) ? "-" : SessionManager.EventoSelezionato.codice_lavoro;
@@ -332,6 +375,33 @@ namespace VideoSystemWeb.MAGAZZINO
         {
             pnlContainer.Style.Add("display","none");
             cercaRigheLavorazioneMagazzino();
+        }
+
+        protected void btnAggiornaDescrizioneCamera_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DatiLavorazioneMagazzinoCorrente.Descrizione_Camera = tbModDescrizioneCamera.Text.Trim();
+
+                Esito esito = Dati_Lavorazione_Magazzino_BLL.Instance.AggiornaDatiLavorazioneMagazzino(DatiLavorazioneMagazzinoCorrente);
+                if (esito.Codice == 0)
+                {
+                    ShowSuccess("Descrizione riga Lavorazione Magazzino salvata correttamente!");
+                }
+                else
+                {
+                    ShowError("Errore nel salvataggio Descrizione riga Lavorazione Magazzino: " + esito.Descrizione);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Errore nel salvataggio Descrizione riga Lavorazione Magazzino: " + ex.Message);
+            }
+        }
+
+        protected void btnModificaAttrezzature_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

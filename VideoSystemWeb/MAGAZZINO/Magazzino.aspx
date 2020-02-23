@@ -6,12 +6,13 @@
         });
 
 
-        function mostracella(id, column, nomeCampo, headerCampo) {
+        function mostracella(id, column, nomeCampo, headerCampo, valore) {
             $('.loader').show();
             $("#<%=hfIdRiga.ClientID%>").val(id);
             $("#<%=hfIdColonna.ClientID%>").val(column);
             $("#<%=hfNomeCampo.ClientID%>").val(nomeCampo);
             $("#<%=hfHeaderCampo.ClientID%>").val(headerCampo);
+            $("#<%=hfValoreGriglia.ClientID%>").val(valore);
             $("#<%=btnEditEvent.ClientID%>").click();
             alert('id: ' + id + ' colonna: ' + column + ' nome campo: ' + nomeCampo + ' header campo: ' + headerCampo);
         }
@@ -22,6 +23,7 @@
             $("#<%=hfIdColonna.ClientID%>").val('');
             $("#<%=hfNomeCampo.ClientID%>").val('');
             $("#<%=hfHeaderCampo.ClientID%>").val('');
+            $("#<%=hfValoreGriglia.ClientID%>").val('');
             $("#<%=btnChiudiPopupServer.ClientID%>").click();
 
         }
@@ -54,6 +56,7 @@
             <asp:HiddenField ID="hfIdColonna" runat="server" Value="" />
             <asp:HiddenField ID="hfNomeCampo" runat="server" Value="" />
             <asp:HiddenField ID="hfHeaderCampo" runat="server" Value="" />
+            <asp:HiddenField ID="hfValoreGriglia" runat="server" Value="" />
 
             <div class="w3-row-padding">
                 <div class="w3-quarter">
@@ -184,7 +187,7 @@
                             <p>
                                 <div class="w3-row-padding">
                                     <div class="w3-quarter">
-                                        <label style="font-weight:bold">Id dati_Lavorazione_Magazzino</label>
+                                        <label style="font-weight:bold">Id Lav.Magazzino</label>
                                         <asp:label ID="lblNumeroRiga" runat="server"></asp:label>
                                     </div>
                                     <div class="w3-quarter">
@@ -201,6 +204,41 @@
                                     </div>
                                 </div>
                                 <br />
+
+                                <asp:PlaceHolder ID="phDescrizioneCamera" runat="server" Visible="false">
+                                    <div class="w3-row-padding">
+                                        <div class="w3-quarter">
+                                            <label style="font-weight:bold">Descrizione Camera:</label>
+                                            <asp:TextBox ID="tbModDescrizioneCamera" runat="server"></asp:TextBox>
+                                        </div>
+                                        <div class="w3-quarter">
+                                            &nbsp;
+                                        </div>
+                                        <div class="w3-quarter">
+                                            &nbsp;
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <asp:Button ID="btnAggiornaDescrizioneCamera" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnAggiornaDescrizioneCamera_Click" OnClientClick="$('.loader').show();" Text="Aggiorna" />
+                                        </div>
+                                    </div>
+                                </asp:PlaceHolder>
+                                <asp:PlaceHolder ID="phModificaAttrezzature" runat="server" Visible="false">
+                                    <div class="w3-row-padding">
+                                        <div class="w3-quarter">
+                                            <label style="font-weight:bold">test:</label>
+                                            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                        </div>
+                                        <div class="w3-quarter">
+                                            &nbsp;
+                                        </div>
+                                        <div class="w3-quarter">
+                                            &nbsp;
+                                        </div>
+                                        <div class="w3-quarter">
+                                            <asp:Button ID="btnModificaAttrezzature" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnModificaAttrezzature_Click" OnClientClick="$('.loader').show();" Text="Aggiorna" />
+                                        </div>
+                                    </div>
+                                </asp:PlaceHolder>
                                 <asp:Label ID="lblStatus" runat="server" Style="font-family: Arial; font-size: small;"></asp:Label>
                                 <br />
                                 <div style="text-align: center;">

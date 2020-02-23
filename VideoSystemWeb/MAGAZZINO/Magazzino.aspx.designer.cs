@@ -67,6 +67,15 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.HiddenField hfHeaderCampo;
         
         /// <summary>
+        /// Controllo hfValoreGriglia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfValoreGriglia;
+        
+        /// <summary>
         /// Controllo lbl_Cliente.
         /// </summary>
         /// <remarks>
@@ -245,6 +254,60 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblHeaderCampo;
+        
+        /// <summary>
+        /// Controllo phDescrizioneCamera.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phDescrizioneCamera;
+        
+        /// <summary>
+        /// Controllo tbModDescrizioneCamera.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbModDescrizioneCamera;
+        
+        /// <summary>
+        /// Controllo btnAggiornaDescrizioneCamera.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAggiornaDescrizioneCamera;
+        
+        /// <summary>
+        /// Controllo phModificaAttrezzature.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phModificaAttrezzature;
+        
+        /// <summary>
+        /// Controllo TextBox1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        
+        /// <summary>
+        /// Controllo btnModificaAttrezzature.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnModificaAttrezzature;
         
         /// <summary>
         /// Controllo lblStatus.

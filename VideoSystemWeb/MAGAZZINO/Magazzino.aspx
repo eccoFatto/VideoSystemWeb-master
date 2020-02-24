@@ -39,6 +39,20 @@
                 document.getElementById(tipoName).style.display = "block";
             }
         }
+
+        // AZZERO TUTTI I CAMPI RICERCA
+        function azzeraCampiRicerca() {
+            $("#<%=tbCodiceVS.ClientID%>").val('');
+            $("#<%=ddlTipoCategoria.ClientID%>").val('');
+            $("#<%=ddlTipoSubCategoria.ClientID%>").val('');
+            $("#<%=tbDescrizione.ClientID%>").val('');
+            $("#<%=tbSeriale.ClientID%>").val('');
+            $("#<%=ddlTipoGruppoMagazzino.ClientID%>").val('');
+            $("#<%=ddlTipoPosizioneMagazzino.ClientID%>").val('');
+            $("#<%=tbMarca.ClientID%>").val('');
+            $("#<%=tbModello.ClientID%>").val('');
+        }
+
     </script>
     <style type="text/css">
       .hiddencol
@@ -223,21 +237,88 @@
                                     </div>
                                 </asp:PlaceHolder>
                                 <asp:PlaceHolder ID="phModificaAttrezzature" runat="server" Visible="false">
-                                    <div class="w3-row-padding">
-                                        <div class="w3-quarter">
-                                            <label style="font-weight:bold">test:</label>
-                                            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-                                        </div>
-                                        <div class="w3-quarter">
-                                            &nbsp;
-                                        </div>
-                                        <div class="w3-quarter">
-                                            &nbsp;
-                                        </div>
-                                        <div class="w3-quarter">
-                                            <asp:Button ID="btnModificaAttrezzature" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnModificaAttrezzature_Click" OnClientClick="$('.loader').show();" Text="Aggiorna" />
-                                        </div>
-                                    </div>
+                                    <%-- RICERCA ATTREZZATURA --%>
+                                    <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
+                                        <ContentTemplate>
+                                            <div class="w3-row-padding">
+                                                <div class="w3-quarter">
+                                                    <label>Codice Video System</label>
+                                                    <asp:TextBox ID="tbCodiceVS" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                                                </div>
+                                                <div class="w3-quarter">
+                                                    <label>Categoria</label>
+                                                    <asp:DropDownList ID="ddlTipoCategoria" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddlTipoCategoria_SelectedIndexChanged">
+                                                    </asp:DropDownList>
+                                                </div>
+                                                <div class="w3-quarter">
+                                                    <label>Sub Categoria</label>
+                                                    <asp:DropDownList ID="ddlTipoSubCategoria" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddlTipoSubCategoria_SelectedIndexChanged">
+                                                    </asp:DropDownList>
+                                                </div>
+                                                <div class="w3-quarter">
+                                                    <label>Gruppo</label>
+                                                    <asp:DropDownList ID="ddlTipoGruppoMagazzino" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                                                    </asp:DropDownList>   
+                                                </div>
+                                            </div>
+                                            <div class="w3-row-padding">
+                                                <div class="w3-quarter">
+                                                    <label>Posizione Magazzino</label>
+                                                    <asp:DropDownList ID="ddlTipoPosizioneMagazzino" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                                                    </asp:DropDownList>
+                                                </div>
+                                                <div class="w3-quarter">
+                                                    <label>Seriale</label>
+                                                    <asp:TextBox ID="tbSeriale" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                                                </div>
+                                                <div class="w3-half">
+                                                    <label>Descrizione</label>
+                                                    <asp:TextBox ID="tbDescrizione" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                                                </div>
+
+                                            </div>
+                                            <div class="w3-row-padding">
+                                                <div class="w3-half">
+                                                    <label>Marca</label>
+                                                    <asp:TextBox ID="tbMarca" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                                                </div>
+                                                <div class="w3-half">
+                                                    <label>Modello</label>
+                                                    <asp:TextBox ID="tbModello" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                                                </div>
+                                            </div>
+                                            <div class="w3-row-padding w3-margin-bottom">
+                                                <div class="w3-half">
+                                                    <label>&nbsp;</label>
+                                                    &nbsp;
+                                                </div>
+                                                <div class="w3-quarter" style="position:relative;">
+                                                    <label>&nbsp;</label>
+                                                    &nbsp;
+                                                </div>
+                                                <div class="w3-quarter">
+                                                    <label>&nbsp;</label>
+                                                    <table style="width: 100%;">
+                                                        <tr>
+                                                            <td style="width: 80%;">
+                                                                <asp:Button ID="btnRicercaAttrezzatura" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaAttrezzatura_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
+                                                            </td>
+                                                            <td style="width: 20%;">
+                                                                <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicerca();" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="round">
+                                                <asp:GridView ID="gvAttrezzatureDaInserire" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvAttrezzatureDaInserire_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvAttrezzatureDaInserire_PageIndexChanging" PageSize="20" HeaderStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center">
+                                                </asp:GridView>
+                                            </div>
+                                        </ContentTemplate>
+                                        <Triggers>
+                                            <asp:AsyncPostBackTrigger ControlID="btnRicercaAttrezzatura" EventName="Click" />
+                                        </Triggers>
+                                    </asp:UpdatePanel>
                                 </asp:PlaceHolder>
                                 <asp:Label ID="lblStatus" runat="server" Style="font-family: Arial; font-size: small;"></asp:Label>
                                 <br />

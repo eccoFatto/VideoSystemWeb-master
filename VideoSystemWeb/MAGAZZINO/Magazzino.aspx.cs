@@ -68,6 +68,7 @@ namespace VideoSystemWeb.MAGAZZINO
                         NoteLavorazioneMagazzinoCorrente = GetNoteLavorazioneMagazzino(idLavorazione);
                         txt_Note.Text = NoteLavorazioneMagazzinoCorrente.Note;
                         cercaRigheLavorazioneMagazzino();
+
                     }
                     catch (Exception ex)
                     {
@@ -344,6 +345,7 @@ namespace VideoSystemWeb.MAGAZZINO
                     phModificaAttrezzature.Visible = false;
                     break;
                 default:
+                    caricaListe();
                     phDescrizioneCamera.Visible = false;
                     phModificaAttrezzature.Visible = true;
                     break;
@@ -403,5 +405,173 @@ namespace VideoSystemWeb.MAGAZZINO
         {
 
         }
+
+        protected void ddlTipoCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string idCategoria = ddlTipoCategoria.SelectedItem.Value;
+            if (string.IsNullOrEmpty(idCategoria)) idCategoria = "0";
+            riempiComboSubCategoria(Convert.ToInt32(idCategoria));
+        }
+
+        protected void ddlTipoSubCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string idSubCategoria = ddlTipoSubCategoria.SelectedItem.Value;
+            if (string.IsNullOrEmpty(idSubCategoria)) idSubCategoria = "0";
+            riempiComboGruppo(Convert.ToInt32(idSubCategoria));
+        }
+
+        protected void btnRicercaAttrezzatura_Click(object sender, EventArgs e)
+        {
+            string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_LAVORAZIONE_MAGAZZINO"];
+
+            queryRicerca = queryRicerca.Replace("@codiceVS", tbCodiceVS.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@descrizione", tbDescrizione.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@marca", tbMarca.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@modello", tbModello.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@seriale", tbSeriale.Text.Trim().Replace("'", "''"));
+
+            // SELEZIONO I CAMPI DROPDOWN SE VALORIZZATI
+            string queryRicercaCampiDropDown = "";
+            if (!string.IsNullOrEmpty(ddlTipoCategoria.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and cat.id=" + ddlTipoCategoria.SelectedValue + " ";
+            }
+            if (!string.IsNullOrEmpty(ddlTipoSubCategoria.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and sub.id=" + ddlTipoSubCategoria.SelectedValue + " ";
+            }
+            if (!string.IsNullOrEmpty(ddlTipoGruppoMagazzino.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and gruppo.id=" + ddlTipoGruppoMagazzino.SelectedValue + " ";
+            }
+            if (!string.IsNullOrEmpty(ddlTipoPosizioneMagazzino.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and pos.nome='" + ddlTipoPosizioneMagazzino.SelectedItem.Text.Replace("'", "''") + "' ";
+            }
+
+
+            queryRicerca = queryRicerca.Replace("@campiTendina", queryRicercaCampiDropDown.Trim());
+
+            Esito esito = new Esito();
+            DataTable dtAttrezzature = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
+            gvAttrezzatureDaInserire.DataSource = dtAttrezzature;
+            gvAttrezzatureDaInserire.DataBind();
+        }
+
+        protected void gvAttrezzatureDaInserire_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string id = e.Row.Cells[GetColumnIndexByName(e.Row, "id")].Text;
+
+                for (int indiceColonna = 0; indiceColonna < e.Row.Cells.Count; indiceColonna++)
+                {
+
+                    string nomeCampo = GetColumnNameByIndex(e.Row, indiceColonna);
+                    char[] separatore = new char[] { ';' };
+                    string[] arNomiCampo = nomeCampo.Split(separatore, StringSplitOptions.RemoveEmptyEntries);
+                    string valoreSelezionato = e.Row.Cells[indiceColonna].Text.Replace("&nbsp;", "");
+
+                    if(arNomiCampo[0]== "Descrizione" || arNomiCampo[0] == "Modello" || arNomiCampo[0] == "Note") { 
+                        //e.Row.Cells[indiceColonna].Attributes["ondblclick"] = "mostracella('" + id + "', '" + indiceColonna.ToString() + "', '" + arNomiCampo[0] + "', '" + arNomiCampo[1] + "', '" + valoreSelezionato.Trim() + "'); ";
+                    }
+                }
+            }
+        }
+
+        protected void gvAttrezzatureDaInserire_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+
+        }
+
+        private void riempiComboSubCategoria(int idCategoria)
+        {
+            ddlTipoSubCategoria.Items.Clear();
+            ddlTipoSubCategoria.Items.Add("");
+
+            string queryRicercaSubcategoria = "select * from tipo_subcategoria_magazzino where attivo = 1 ";
+            if (idCategoria > 0)
+            {
+                queryRicercaSubcategoria += "and id in (select distinct id_subcategoria from mag_attrezzature where id_categoria=" + idCategoria.ToString() + ") ";
+            }
+            queryRicercaSubcategoria += "order by nome";
+            Esito esito = new Esito();
+            DataTable dtSubCategorie = Base_DAL.GetDatiBySql(queryRicercaSubcategoria, ref esito);
+
+            foreach (DataRow tipologiaSubCategoria in dtSubCategorie.Rows)
+            {
+                ListItem item = new ListItem
+                {
+                    Text = tipologiaSubCategoria["nome"].ToString(),
+                    Value = tipologiaSubCategoria["id"].ToString()
+                };
+
+                ddlTipoSubCategoria.Items.Add(item);
+
+            }
+        }
+        private void riempiComboGruppo(int idSubCategoria)
+        {
+            ddlTipoGruppoMagazzino.Items.Clear();
+            ddlTipoGruppoMagazzino.Items.Add("");
+
+            string queryRicercaGruppo = "select * from tipo_gruppo_magazzino where attivo = 1 ";
+            if (idSubCategoria > 0)
+            {
+                queryRicercaGruppo += "and id in (select distinct id_gruppo_magazzino from mag_attrezzature where id_subcategoria=" + idSubCategoria.ToString() + ") ";
+            }
+            queryRicercaGruppo += "order by nome";
+            Esito esito = new Esito();
+            DataTable dtGruppi = Base_DAL.GetDatiBySql(queryRicercaGruppo, ref esito);
+
+            foreach (DataRow tipologiaGruppo in dtGruppi.Rows)
+            {
+                ListItem item = new ListItem
+                {
+                    Text = tipologiaGruppo["nome"].ToString(),
+                    Value = tipologiaGruppo["id"].ToString()
+                };
+
+                ddlTipoGruppoMagazzino.Items.Add(item);
+
+            }
+        }
+
+        private void caricaListe()
+        {
+            ddlTipoCategoria.Items.Clear();
+            ddlTipoCategoria.Items.Add("");
+            foreach (Tipologica tipologiaCategoria in SessionManager.ListaTipiCategorieMagazzino)
+            {
+                ListItem item = new ListItem
+                {
+                    Text = tipologiaCategoria.nome,
+                    Value = tipologiaCategoria.id.ToString()
+                };
+
+                ddlTipoCategoria.Items.Add(item);
+            }
+
+            riempiComboSubCategoria(0);
+
+            ddlTipoPosizioneMagazzino.Items.Clear();
+            ddlTipoPosizioneMagazzino.Items.Add("");
+            foreach (Tipologica tipologiaPosizione in SessionManager.ListaTipiPosizioniMagazzino)
+            {
+                ListItem item = new ListItem
+                {
+                    Text = tipologiaPosizione.nome,
+                    Value = tipologiaPosizione.nome
+                };
+
+                ddlTipoPosizioneMagazzino.Items.Add(item);
+
+            }
+
+
+            riempiComboGruppo(0);
+
+        }
+
     }
 }

@@ -46,10 +46,10 @@ namespace VideoSystemWeb.MAGAZZINO
 
                         ddlTipoCategoria.Items.Add(item);
 
-                    ListItem itemMod = new ListItem
-                    {
-                        Text = tipologiaCategoria.nome,
-                        Value = tipologiaCategoria.id.ToString()
+                        ListItem itemMod = new ListItem
+                        {
+                            Text = tipologiaCategoria.nome,
+                            Value = tipologiaCategoria.id.ToString()
                         };
 
                         cmbMod_Categoria.Items.Add(itemMod);
@@ -93,9 +93,6 @@ namespace VideoSystemWeb.MAGAZZINO
 
                         cmbMod_Posizione.Items.Add(itemMod);
                     }
-
-
-
                     
                     cmbMod_Gruppo.Items.Clear();
                     cmbMod_Gruppo.Items.Add("");

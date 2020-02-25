@@ -5,7 +5,7 @@
             $('.loader').hide();
         });
 
-
+        // VISUALIZZO DATI SELEZIONATI DALLA GRIGLIA
         function mostracella(id, column, nomeCampo, headerCampo, valore) {
             $('.loader').show();
             $("#<%=hfIdRiga.ClientID%>").val(id);
@@ -14,9 +14,10 @@
             $("#<%=hfHeaderCampo.ClientID%>").val(headerCampo);
             $("#<%=hfValoreGriglia.ClientID%>").val(valore);
             $("#<%=btnEditEvent.ClientID%>").click();
-            alert('id: ' + id + ' colonna: ' + column + ' nome campo: ' + nomeCampo + ' header campo: ' + headerCampo);
+            //alert('id: ' + id + ' colonna: ' + column + ' nome campo: ' + nomeCampo + ' header campo: ' + headerCampo);
         }
 
+        // CHIUDO POPUP
         function chiudiPopup() {
             // QUANDO APRO IL POPUP RIPARTE SEMPRE DA MAGAZZINO E NON DALL'ULTIMA TAB APERTA
             $("#<%=hfIdRiga.ClientID%>").val('');
@@ -53,6 +54,16 @@
             $("#<%=tbModello.ClientID%>").val('');
         }
 
+        // SELEZIONO I DATI PER LA MODIFICA DELLA RIGA
+        function selezionaAttrezzaturaDaInserire(idAttrezzatura, valoreAttrezzature) {
+            $('.loader').show();
+            $("#<%=hfIdAttrezzaturaDaModificare.ClientID%>").val(idAttrezzatura);
+            $("#<%=hfValoreAttrezzaturaDaModificare.ClientID%>").val(valoreAttrezzature);
+
+            $("#<%=btnAggiornaRigaLavorazioneMagazzino.ClientID%>").click();
+        }
+
+
     </script>
     <style type="text/css">
       .hiddencol
@@ -66,11 +77,16 @@
     <asp:UpdatePanel ID="UpdatePanelMagazzino" runat="server">
         <ContentTemplate>
 
+            <%-- HiddenField per selezione campi da modificare --%>
             <asp:HiddenField ID="hfIdRiga" runat="server" Value="" />
             <asp:HiddenField ID="hfIdColonna" runat="server" Value="" />
             <asp:HiddenField ID="hfNomeCampo" runat="server" Value="" />
             <asp:HiddenField ID="hfHeaderCampo" runat="server" Value="" />
             <asp:HiddenField ID="hfValoreGriglia" runat="server" Value="" />
+
+            <%-- HiddenField per selezione valore e id campo da modificare --%>
+            <asp:HiddenField ID="hfIdAttrezzaturaDaModificare" runat="server" Value="" />
+            <asp:HiddenField ID="hfValoreAttrezzaturaDaModificare" runat="server" Value="" />
 
             <div class="w3-row-padding">
                 <div class="w3-quarter">
@@ -123,19 +139,19 @@
                     
                         <asp:BoundField DataField="id" ItemStyle-CssClass="hiddencol" HeaderStyle-CssClass="hiddencol"/>
                         
-                        <asp:BoundField DataField="descrizione_Camera" HeaderText="Descrizione" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Camera" HeaderText="Camera" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Fibra_Trax" HeaderText="Fibra/Trax" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Ottica" HeaderText="Ottica" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Viewfinder" HeaderText="Viewfinder" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Loop" HeaderText="Loop" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Mic" HeaderText="Mic" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Testa" HeaderText="Testa" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Lensholder" HeaderText="Lensholder" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Cavalletto" HeaderText="Cavalletto" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Cavi" HeaderText="Cavi" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Altro1" HeaderText="Altro 1" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="nome_Altro2" HeaderText="Altro 2" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="descrizione_Camera" HeaderText="Descrizione" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Camera" HeaderText="Camera" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Fibra_Trax" HeaderText="Fibra/Trax" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Ottica" HeaderText="Ottica" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Viewfinder" HeaderText="Viewfinder" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Loop" HeaderText="Loop" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Mic" HeaderText="Mic" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Testa" HeaderText="Testa" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Lensholder" HeaderText="Lensholder" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Cavalletto" HeaderText="Cavalletto" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Cavi" HeaderText="Cavi" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Altro1" HeaderText="Altro 1" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="nome_Altro2" HeaderText="Altro 2" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Center"/>
 
                         <%--COLONNE CON ID NON VISIBILI--%>
                         <asp:BoundField DataField="id_Camera" HeaderText="id_Camera" ItemStyle-CssClass="hiddencol" HeaderStyle-CssClass="hiddencol"  />
@@ -173,6 +189,7 @@
     </asp:UpdatePanel>
 
     <asp:Button runat="server" ID="btnEditEvent" Style="display: none" OnClick="btnEditEvent_Click" />
+    <asp:Button runat="server" ID="btnAggiornaRigaLavorazioneMagazzino" Style="display: none" OnClick="btnAggiornaRigaLavorazioneMagazzino_Click" />
     <asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopupServer_Click" />
 
     <asp:UpdatePanel ID="upEvento" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">

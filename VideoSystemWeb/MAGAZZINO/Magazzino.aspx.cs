@@ -346,30 +346,15 @@ namespace VideoSystemWeb.MAGAZZINO
                     break;
                 default:
                     caricaListe();
+                    gvAttrezzatureDaInserire.DataSource = new DataTable();
+                    gvAttrezzatureDaInserire.DataBind();
                     phDescrizioneCamera.Visible = false;
                     phModificaAttrezzature.Visible = true;
                     break;
             }
 
 
-            //val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
-            //val_CodiceLavoro.Text = string.IsNullOrEmpty(SessionManager.EventoSelezionato.codice_lavoro) ? "-" : SessionManager.EventoSelezionato.codice_lavoro;
-
-            //popupAppuntamento.ClearAppuntamento();
-            //popupAppuntamento.PopolaAppuntamento();
-
-            //popupOfferta.ClearOfferta();
-            //if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
-            //{
-            //    popupOfferta.PopolaOfferta();
-            //}
-
-            //popupLavorazione.ClearLavorazione();
-            //if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
-            //{
-            //    popupLavorazione.PopolaLavorazione();
-            //}
-            //RiempiCampiIntestazioneEvento();
+            
 
         }
 
@@ -399,11 +384,8 @@ namespace VideoSystemWeb.MAGAZZINO
             {
                 ShowError("Errore nel salvataggio Descrizione riga Lavorazione Magazzino: " + ex.Message);
             }
-        }
 
-        protected void btnModificaAttrezzature_Click(object sender, EventArgs e)
-        {
-
+            btnChiudiPopupServer_Click(null, null);
         }
 
         protected void ddlTipoCategoria_SelectedIndexChanged(object sender, EventArgs e)
@@ -473,7 +455,7 @@ namespace VideoSystemWeb.MAGAZZINO
                     string valoreSelezionato = e.Row.Cells[indiceColonna].Text.Replace("&nbsp;", "");
 
                     if(arNomiCampo[0]== "Descrizione" || arNomiCampo[0] == "Modello" || arNomiCampo[0] == "Note") { 
-                        //e.Row.Cells[indiceColonna].Attributes["ondblclick"] = "mostracella('" + id + "', '" + indiceColonna.ToString() + "', '" + arNomiCampo[0] + "', '" + arNomiCampo[1] + "', '" + valoreSelezionato.Trim() + "'); ";
+                        e.Row.Cells[indiceColonna].Attributes["ondblclick"] = "selezionaAttrezzaturaDaInserire('" + id + "', '" + valoreSelezionato.Trim() + "'); ";
                     }
                 }
             }
@@ -481,7 +463,8 @@ namespace VideoSystemWeb.MAGAZZINO
 
         protected void gvAttrezzatureDaInserire_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            gvAttrezzatureDaInserire.PageIndex = e.NewPageIndex;
+            btnRicercaAttrezzatura_Click(null, null);
         }
 
         private void riempiComboSubCategoria(int idCategoria)
@@ -573,5 +556,87 @@ namespace VideoSystemWeb.MAGAZZINO
 
         }
 
+        protected void btnAggiornaRigaLavorazioneMagazzino_Click(object sender, EventArgs e)
+        {
+            //AGGIORNO I DATI SULLA RIGA SELEZIONATA
+            string idMagazzino = hfIdAttrezzaturaDaModificare.Value;
+            string valoreMagazzino = hfValoreAttrezzaturaDaModificare.Value.Replace("&quot;","").Replace("&nbsp;"," ");
+            string campoDaModificare = hfNomeCampo.Value;
+            string idCampoDaModificare = campoDaModificare.Replace("nome_", "id_");
+
+            switch (campoDaModificare)
+            {
+                case "nome_Camera":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Camera = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Camera = int.Parse(idMagazzino);
+                    break;
+                case "nome_Fibra_Trax":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Fibra_Trax = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Fibra_Trax = int.Parse(idMagazzino);
+                    break;
+                case "nome_Ottica":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Ottica = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Ottica = int.Parse(idMagazzino);
+                    break;
+                case "nome_Viewfinder":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Viewfinder = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Viewfinder = int.Parse(idMagazzino);
+                    break;
+                case "nome_Loop":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Loop = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Loop = int.Parse(idMagazzino);
+                    break;
+                case "nome_Mic":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Mic = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Mic = int.Parse(idMagazzino);
+                    break;
+                case "nome_Testa":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Testa = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Testa = int.Parse(idMagazzino);
+                    break;
+                case "nome_Lensholder":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Lensholder = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Lensholder = int.Parse(idMagazzino);
+                    break;
+                case "nome_Cavalletto":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Cavalletto = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Cavalletto = int.Parse(idMagazzino);
+                    break;
+                case "nome_Cavi":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Cavi = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Cavi = int.Parse(idMagazzino);
+                    break;
+                case "nome_Altro1":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Altro1 = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Altro1 = int.Parse(idMagazzino);
+                    break;
+                case "nome_Altro2":
+                    DatiLavorazioneMagazzinoCorrente.Nome_Altro2 = valoreMagazzino;
+                    DatiLavorazioneMagazzinoCorrente.Id_Altro2 = int.Parse(idMagazzino);
+                    break;
+                default:
+                    break;
+            }
+            try
+            {
+
+                Esito esito = Dati_Lavorazione_Magazzino_BLL.Instance.AggiornaDatiLavorazioneMagazzino(DatiLavorazioneMagazzinoCorrente);
+                if (esito.Codice == 0)
+                {
+                    //cercaRigheLavorazioneMagazzino();
+                    ShowSuccess("Riga aggiornata correttamente!");
+                }
+                else
+                {
+                    ShowError("Errore nell'aggiornamento riga: " + esito.Descrizione);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Errore nell'aggiornamento riga: " + ex.Message);
+            }
+
+            btnChiudiPopupServer_Click(null, null);
+        }
     }
 }

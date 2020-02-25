@@ -76,6 +76,24 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.HiddenField hfValoreGriglia;
         
         /// <summary>
+        /// Controllo hfIdAttrezzaturaDaModificare.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfIdAttrezzaturaDaModificare;
+        
+        /// <summary>
+        /// Controllo hfValoreAttrezzaturaDaModificare.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfValoreAttrezzaturaDaModificare;
+        
+        /// <summary>
         /// Controllo lbl_Cliente.
         /// </summary>
         /// <remarks>
@@ -182,6 +200,15 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEditEvent;
+        
+        /// <summary>
+        /// Controllo btnAggiornaRigaLavorazioneMagazzino.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAggiornaRigaLavorazioneMagazzino;
         
         /// <summary>
         /// Controllo btnChiudiPopupServer.

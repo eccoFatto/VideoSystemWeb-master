@@ -353,9 +353,6 @@ namespace VideoSystemWeb.MAGAZZINO
                     break;
             }
 
-
-            
-
         }
 
         protected void btnChiudiPopupServer_Click(object sender, EventArgs e)
@@ -433,6 +430,16 @@ namespace VideoSystemWeb.MAGAZZINO
 
 
             queryRicerca = queryRicerca.Replace("@campiTendina", queryRicercaCampiDropDown.Trim());
+
+            // NON PROPONGO GLI ID ATTREZZATURA OCCUPATI IN QUESTO PERIODO
+            int idDatiAgenda = int.Parse(Request.QueryString["idDatiAgenda"]);
+            DatiAgenda eventoCorrente = CaricaEventoCorrente(idDatiAgenda);
+            string elencoIdAttrezzatureOccupate = trovaIdAttrezzatureInUso(eventoCorrente.data_inizio_lavorazione, eventoCorrente.data_fine_lavorazione);
+            string notInIdAttrezzatureOccupate = "";
+            if (!string.IsNullOrEmpty(elencoIdAttrezzatureOccupate)) notInIdAttrezzatureOccupate = " and att.id not in (" + elencoIdAttrezzatureOccupate + ") ";
+            queryRicerca = queryRicerca.Replace("@idAttrezzatureOccupate", notInIdAttrezzatureOccupate);
+            
+
 
             Esito esito = new Esito();
             DataTable dtAttrezzature = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
@@ -637,6 +644,62 @@ namespace VideoSystemWeb.MAGAZZINO
             }
 
             btnChiudiPopupServer_Click(null, null);
+        }
+
+        private string trovaIdAttrezzatureInUso(DateTime dataDa, DateTime dataA)
+        {
+            string ret = "";
+            try
+            {
+                string queryRicercaIdInUso = "select lm.id_Altro1,lm.id_Altro2,lm.id_Camera,lm.id_Cavalletto,lm.id_Cavi,lm.id_Fibra_Trax,id_Lensholder,lm.id_Loop, " +
+                "lm.id_Mic,lm.id_Ottica, lm.id_Testa, lm.id_Viewfinder " +
+                ", ag.data_inizio_lavorazione,ag.data_fine_lavorazione,ag.lavorazione,ag.produzione " +
+                "from[dbo].[dati_lavorazione_magazzino] lm " +
+                "left join[dbo].[dati_lavorazione] lav " +
+                "on lm.id_Lavorazione = lav.id " +
+                "left join tab_dati_agenda ag " +
+                "on lav.idDatiAgenda= ag.id " +
+                "where lm.attivo=1 " +
+                //"and ag.data_inizio_impegno>='2020-02-22T00:00:00.000' AND ag.data_fine_lavorazione<='2020-02-23T00:00:00.000'";
+                "and ag.data_inizio_impegno>='" + dataDa.ToString("yyyy-MM-ddT00:00:00.000") + "' AND ag.data_fine_lavorazione<='" + dataA.ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                Esito esito = new Esito();
+                DataTable dtIdAttrezzatureInUso = Base_DAL.GetDatiBySql(queryRicercaIdInUso, ref esito);
+                if (esito.Codice == 0)
+                {
+                    if (dtIdAttrezzatureInUso != null && dtIdAttrezzatureInUso.Rows != null && dtIdAttrezzatureInUso.Rows.Count > 0)
+                    {
+                        foreach (DataRow rigaLavorazioneMagazzino in dtIdAttrezzatureInUso.Rows)
+                        {
+                            if (rigaLavorazioneMagazzino["id_Altro1"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Altro1"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Altro2"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Altro2"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Camera"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Camera"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Cavalletto"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Cavalletto"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Cavi"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Cavi"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Fibra_Trax"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Fibra_Trax"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Lensholder"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Lensholder"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Loop"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Loop"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Mic"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Mic"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Ottica"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Ottica"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Testa"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Testa"].ToString() + ",";
+                            if (rigaLavorazioneMagazzino["id_Viewfinder"].ToString() != "0") ret += rigaLavorazioneMagazzino["id_Viewfinder"].ToString() + ",";
+                        }
+                        if(ret.Length>0 && ret.Substring(ret.Length - 1) == ",")
+                        {
+                            ret = ret.Substring(0, ret.Length - 1);
+                        }
+                    }
+                }
+                else
+                {
+                    ShowError("trovaIdAttrezzatureInUso: " + esito.Descrizione);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ShowError("trovaIdAttrezzatureInUso: " + ex.Message);
+            }
+            return ret;
         }
     }
 }

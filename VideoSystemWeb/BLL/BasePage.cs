@@ -375,5 +375,43 @@ namespace VideoSystemWeb.BLL
                 }
             }
         }
+        public int GetColumnIndexByName(GridViewRow row, string SearchColumnName)
+        {
+            int columnIndex = 0;
+            foreach (DataControlFieldCell cell in row.Cells)
+            {
+                if (cell.ContainingField is BoundField)
+                {
+                    if (((BoundField)cell.ContainingField).DataField.Equals(SearchColumnName))
+                    {
+                        break;
+                    }
+                }
+                columnIndex++;
+            }
+            return columnIndex;
+        }
+
+
+        public string GetColumnNameByIndex(GridViewRow row, int index)
+        {
+            string ret = "";
+            int columnIndex = 0;
+            foreach (DataControlFieldCell cell in row.Cells)
+            {
+
+                if (cell.ContainingField is BoundField)
+                {
+                    if (columnIndex == index)
+                    {
+                        ret = ((BoundField)cell.ContainingField).DataField + ";" + ((BoundField)cell.ContainingField).HeaderText;
+
+                        break;
+                    }
+                }
+                columnIndex++;
+            }
+            return ret;
+        }
     }
 }

@@ -124,8 +124,11 @@
                 </div>
             </div>
             <br />
-            <asp:Button ID="btnInserisciRiga" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnInserisciRiga_Click" OnClientClick="$('.loader').show();" Text="Inserisci Riga" />
-            <br />
+            <div class="w3-bar w3-light-grey">
+                <asp:Button ID="btnInserisciRiga" runat="server" class="w3-bar-item w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnInserisciRiga_Click" OnClientClick="$('.loader').show();" Text="Inserisci Riga" />
+                <asp:Button ID="btnStampa" runat="server" class="w3-bar-item w3-btn w3-white w3-border w3-border-blue w3-round-large w3-right" OnClientClick="$('.loader').show();" Text="Stampa" OnClick="btnStampa_Click" />
+            </div>
+
             <br />
             <div class="round">
                 
@@ -171,17 +174,12 @@
                 </asp:GridView>
             </div>
             <br />
-            <div class="w3-row-padding">
-                <div class="w3-quarter">
-                    <label style="font-weight:bold">Note</label>
-                </div>
-                <div class="w3-half">
-                    &nbsp;
-                </div>
-                 <div class="w3-quarter">
-                    <asp:Button ID="btnAggiornaNote" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnAggiornaNote_Click" OnClientClick="$('.loader').show();" Text="Salva Note" />
-                </div>               
+
+            <div class="w3-bar w3-light-grey">
+                <label class="w3-bar-item" style="font-weight:bold">Note</label>
+                <asp:Button ID="btnAggiornaNote" runat="server" class="w3-bar-item w3-btn w3-white w3-border w3-border-red w3-round-large w3-right" OnClick="btnAggiornaNote_Click" OnClientClick="$('.loader').show();" Text="Salva Note" />
             </div>
+
             <div class="w3-row-padding w3-margin-top">
                 <asp:TextBox ID="txt_Note" runat="server" Rows="5" TextMode="MultiLine" width="100%"/>
             </div>

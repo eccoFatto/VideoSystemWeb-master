@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -702,6 +701,8 @@
     <Compile Include="BLL\Anag_Utenti_BLL.cs" />
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
+    <Compile Include="BLL\Dati_Agenda_Magazzino_BLL.cs" />
+    <Compile Include="BLL\Note_Agenda_Magazzino_BLL.cs" />
     <Compile Include="BLL\Note_Lavorazione_Magazzino_BLL.cs" />
     <Compile Include="BLL\Dati_Lavorazione_Magazzino_BLL.cs" />
     <Compile Include="BLL\Dati_Lavorazione_BLL.cs" />
@@ -754,6 +755,8 @@
     <Compile Include="DAL\Anag_Utenti_DAL.cs" />
     <Compile Include="DAL\Config_DAL.cs" />
     <Compile Include="DAL\Dati_Articoli_Lavorazione_DAL.cs" />
+    <Compile Include="DAL\Dati_Agenda_Magazzino_DAL.cs" />
+    <Compile Include="DAL\Note_Agenda_Magazzino_DAL.cs" />
     <Compile Include="DAL\Note_Lavorazione_Magazzino_DAL.cs" />
     <Compile Include="DAL\Dati_Lavorazione_Magazzino_DAL.cs" />
     <Compile Include="DAL\Dati_Lavorazione_DAL.cs" />
@@ -793,6 +796,8 @@
     <Compile Include="Entity\Anag_Qualifiche_Collaboratori.cs" />
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
     <Compile Include="Entity\DatiFiscaliLavorazione.cs" />
+    <Compile Include="Entity\DatiAgendaMagazzino.cs" />
+    <Compile Include="Entity\NoteAgendaMagazzino.cs" />
     <Compile Include="Entity\NoteLavorazioneMagazzino.cs" />
     <Compile Include="Entity\DatiLavorazioneMagazzino.cs" />
     <Compile Include="Entity\DatiLavorazione.cs" />

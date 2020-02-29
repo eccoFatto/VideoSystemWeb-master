@@ -60,7 +60,7 @@
             $("#<%=hfIdAttrezzaturaDaModificare.ClientID%>").val(idAttrezzatura);
             $("#<%=hfValoreAttrezzaturaDaModificare.ClientID%>").val(valoreAttrezzature);
 
-            $("#<%=btnAggiornaRigaLavorazioneMagazzino.ClientID%>").click();
+            $("#<%=btnAggiornaRigaAgendaMagazzino.ClientID%>").click();
         }
 
 
@@ -187,7 +187,7 @@
     </asp:UpdatePanel>
 
     <asp:Button runat="server" ID="btnEditEvent" Style="display: none" OnClick="btnEditEvent_Click" />
-    <asp:Button runat="server" ID="btnAggiornaRigaLavorazioneMagazzino" Style="display: none" OnClick="btnAggiornaRigaLavorazioneMagazzino_Click" />
+    <asp:Button runat="server" ID="btnAggiornaRigaAgendaMagazzino" Style="display: none" OnClick="btnAggiornaRigaAgendaMagazzino_Click" />
     <asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopupServer_Click" />
 
     <asp:UpdatePanel ID="upEvento" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">

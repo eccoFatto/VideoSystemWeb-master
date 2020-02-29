@@ -74,7 +74,7 @@ namespace VideoSystemWeb.MAGAZZINO
                         ViewState[VIEWSTATE_IDLAVORAZIONE_CORRENTE] = idLavorazione;
                         NoteLavorazioneMagazzinoCorrente = GetNoteLavorazioneMagazzino(idLavorazione);
                         txt_Note.Text = NoteLavorazioneMagazzinoCorrente.Note;
-                        cercaRigheLavorazioneMagazzino();
+                        cercaRigheAgendaMagazzino();
 
                     }
                     catch (Exception ex)
@@ -93,9 +93,9 @@ namespace VideoSystemWeb.MAGAZZINO
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
-        protected void cercaRigheLavorazioneMagazzino()
+        protected void cercaRigheAgendaMagazzino()
         {
-            string queryRicerca = "SELECT * FROM dati_lavorazione_magazzino where attivo = 1 and id_Lavorazione = " + ViewState[VIEWSTATE_IDLAVORAZIONE_CORRENTE].ToString();
+            string queryRicerca = "SELECT * FROM dati_agenda_magazzino where attivo = 1 and id_Agenda = " + ViewState[VIEWSTATE_IDLAVORAZIONE_CORRENTE].ToString();
             Esito esito = new Esito();
             DataTable dtAttrezzature = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gv_attrezzature.DataSource = dtAttrezzature;
@@ -221,7 +221,7 @@ namespace VideoSystemWeb.MAGAZZINO
             Dati_Lavorazione_Magazzino_BLL.Instance.CreaDatiLavorazioneMagazzino(datiLavorazioneMagazzino, ref esito);
 
             if (esito.Codice == 0) {
-                cercaRigheLavorazioneMagazzino();
+                cercaRigheAgendaMagazzino();
             }
         }
 
@@ -259,7 +259,7 @@ namespace VideoSystemWeb.MAGAZZINO
                     Esito esito = Dati_Lavorazione_Magazzino_BLL.Instance.EliminaDatiLavorazioneMagazzino((int)id);
                     if (esito.Codice == 0)
                     {
-                        cercaRigheLavorazioneMagazzino();
+                        cercaRigheAgendaMagazzino();
                         ShowSuccess("Riga eliminata correttamente!");
                     }
                     else
@@ -328,7 +328,7 @@ namespace VideoSystemWeb.MAGAZZINO
         protected void btnChiudiPopupServer_Click(object sender, EventArgs e)
         {
             pnlContainer.Style.Add("display","none");
-            cercaRigheLavorazioneMagazzino();
+            cercaRigheAgendaMagazzino();
         }
 
         protected void btnAggiornaDescrizioneCamera_Click(object sender, EventArgs e)
@@ -533,7 +533,7 @@ namespace VideoSystemWeb.MAGAZZINO
 
         }
 
-        protected void btnAggiornaRigaLavorazioneMagazzino_Click(object sender, EventArgs e)
+        protected void btnAggiornaRigaAgendaMagazzino_Click(object sender, EventArgs e)
         {
             //AGGIORNO I DATI SULLA RIGA SELEZIONATA
             string idMagazzino = hfIdAttrezzaturaDaModificare.Value;
@@ -711,7 +711,7 @@ namespace VideoSystemWeb.MAGAZZINO
 
                     // export SU PDF
 
-                    string nomeFile = "Report_Lavorazione_Magazzino.pdf";
+                    string nomeFile = "Report_Agenda_Magazzino.pdf";
                     string pathReport = ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"] + nomeFile;
                     string mapPathReport = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"]) + nomeFile;
 

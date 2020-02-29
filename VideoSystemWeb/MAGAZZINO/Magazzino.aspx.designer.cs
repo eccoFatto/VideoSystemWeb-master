@@ -211,13 +211,13 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.Button btnEditEvent;
         
         /// <summary>
-        /// Controllo btnAggiornaRigaLavorazioneMagazzino.
+        /// Controllo btnAggiornaRigaAgendaMagazzino.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAggiornaRigaLavorazioneMagazzino;
+        protected global::System.Web.UI.WebControls.Button btnAggiornaRigaAgendaMagazzino;
         
         /// <summary>
         /// Controllo btnChiudiPopupServer.

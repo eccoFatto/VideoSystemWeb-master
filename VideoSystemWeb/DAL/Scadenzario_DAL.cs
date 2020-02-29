@@ -306,7 +306,7 @@ namespace VideoSystemWeb.DAL
                                     scadenza.Banca = dt.Rows[0].Field<string>("banca");
                                     scadenza.DataScadenza = dt.Rows[0].Field<DateTime?>("dataScadenza");
                                     scadenza.ImportoDare = dt.Rows[0].Field<decimal>("importoDare");
-                                    scadenza.ImportoDareIva = dt.Rows[0].Field<decimal>("importoDare");
+                                    scadenza.ImportoDareIva = dt.Rows[0].Field<decimal>("importoDareIva");
                                     scadenza.ImportoVersato = dt.Rows[0].Field<decimal>("importoVersato");
                                     scadenza.DataVersamento = dt.Rows[0].Field<DateTime?>("dataVersamento");
                                     scadenza.ImportoAvere = dt.Rows[0].Field<decimal>("importoAvere");
@@ -400,7 +400,7 @@ namespace VideoSystemWeb.DAL
                                             Banca = riga.Field<string>("banca"),
                                             DataScadenza = riga.Field<DateTime?>("dataScadenza"),
                                             ImportoDare = riga.Field<decimal>("importoDare"),
-                                            ImportoDareIva = riga.Field<decimal>("importoDare"),
+                                            ImportoDareIva = riga.Field<decimal>("importoDareIva"),
                                             ImportoVersato = riga.Field<decimal>("importoVersato"),
                                             DataVersamento = riga.Field<DateTime?>("dataVersamento"),
                                             ImportoAvere = riga.Field<decimal>("importoAvere"),
@@ -465,7 +465,7 @@ namespace VideoSystemWeb.DAL
                                             Banca = riga.Field<string>("banca"),
                                             DataScadenza = riga.Field<DateTime?>("dataScadenza"),
                                             ImportoDare = riga.Field<decimal>("importoDare"),
-                                            ImportoDareIva = riga.Field<decimal>("importoDare"),
+                                            ImportoDareIva = riga.Field<decimal>("importoDareIva"),
                                             ImportoVersato = riga.Field<decimal>("importoVersato"),
                                             DataVersamento = riga.Field<DateTime?>("dataVersamento"),
                                             ImportoAvere = riga.Field<decimal>("importoAvere"),
@@ -530,7 +530,7 @@ namespace VideoSystemWeb.DAL
                                             Banca = riga.Field<string>("banca"),
                                             DataScadenza = riga.Field<DateTime?>("dataScadenza"),
                                             ImportoDare = riga.Field<decimal>("importoDare"),
-                                            ImportoDareIva = riga.Field<decimal>("importoDare"),
+                                            ImportoDareIva = riga.Field<decimal>("importoDareIva"),
                                             ImportoVersato = riga.Field<decimal>("importoVersato"),
                                             DataVersamento = riga.Field<DateTime?>("dataVersamento"),
                                             ImportoAvere = riga.Field<decimal>("importoAvere"),

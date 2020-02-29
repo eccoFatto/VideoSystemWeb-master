@@ -6,13 +6,14 @@
         });
 
         // VISUALIZZO DATI SELEZIONATI DALLA GRIGLIA
-        function mostracella(id, column, nomeCampo, headerCampo, valore) {
+        function mostracella(id, column, nomeCampo, headerCampo, valore, descrizione_camera) {
             $('.loader').show();
             $("#<%=hfIdRiga.ClientID%>").val(id);
             $("#<%=hfIdColonna.ClientID%>").val(column);
             $("#<%=hfNomeCampo.ClientID%>").val(nomeCampo);
             $("#<%=hfHeaderCampo.ClientID%>").val(headerCampo);
             $("#<%=hfValoreGriglia.ClientID%>").val(valore);
+            $("#<%=hfDescrizioneCamera.ClientID%>").val(descrizione_camera);
             $("#<%=btnEditEvent.ClientID%>").click();
             //alert('id: ' + id + ' colonna: ' + column + ' nome campo: ' + nomeCampo + ' header campo: ' + headerCampo);
         }
@@ -59,7 +60,7 @@
             $('.loader').show();
             $("#<%=hfIdAttrezzaturaDaModificare.ClientID%>").val(idAttrezzatura);
             $("#<%=hfValoreAttrezzaturaDaModificare.ClientID%>").val(valoreAttrezzature);
-
+            
             $("#<%=btnAggiornaRigaAgendaMagazzino.ClientID%>").click();
         }
 
@@ -83,6 +84,7 @@
             <asp:HiddenField ID="hfNomeCampo" runat="server" Value="" />
             <asp:HiddenField ID="hfHeaderCampo" runat="server" Value="" />
             <asp:HiddenField ID="hfValoreGriglia" runat="server" Value="" />
+            <asp:HiddenField ID="hfDescrizioneCamera" runat="server" Value="" />
 
             <%-- HiddenField per selezione valore e id campo da modificare --%>
             <asp:HiddenField ID="hfIdAttrezzaturaDaModificare" runat="server" Value="" />
@@ -93,34 +95,35 @@
                     <label style="font-weight:bold">Cliente</label>
                     <asp:label ID="lbl_Cliente" runat="server"></asp:label>
                 </div>
-                <div class="w3-threequarter">
-                    <div class="w3-half">
-                        <label style="font-weight:bold">Lavorazione</label>
-                        <asp:label ID="lbl_Lavorazione" runat="server"></asp:label>
-                    </div>
-                    <div class="w3-half">
-                        <label style="font-weight:bold">Produzione</label>
-                        <asp:label ID="lbl_Produzione" runat="server"></asp:label>
-                    </div>
+                <div class="w3-quarter">
+                    <label style="font-weight:bold">Lavorazione</label>
+                    <asp:label ID="lbl_Lavorazione" runat="server"></asp:label>
                 </div>
-                
-            </div>
-            <div class="w3-row-padding">
+                <div class="w3-quarter">
+                    <label style="font-weight:bold">Produzione</label>
+                    <asp:label ID="lbl_Produzione" runat="server"></asp:label>
+                </div>
                 <div class="w3-quarter">
                     <label style="font-weight:bold">Tipologia</label>
                     <asp:label ID="lbl_Tipologia" runat="server"></asp:label>   
+                </div>                
+            </div>
+            <div class="w3-row-padding">
+                <div class="w3-quarter">
+                    <label style="font-weight:bold">Data inizio/Fine lavorazione</label>
+                    <asp:label ID="lbl_DataInizioFine" runat="server"></asp:label>   
                 </div>
                 <div class="w3-quarter">
-                    <label style="font-weight:bold">Data inizio lavorazione</label>
-                    <asp:label ID="lbl_DataInizio" runat="server"></asp:label>   
+                    <label style="font-weight:bold">Unità</label>
+                    <asp:label ID="lbl_Unita" runat="server"></asp:label>   
                 </div>
                 <div class="w3-quarter">
-                    <label style="font-weight:bold">Data fine lavorazione</label>
-                    <asp:label ID="lbl_DataFine" runat="server"></asp:label>   
+                    <label style="font-weight:bold">Unità Esterna</label>
+                    <asp:label ID="lbl_UnitaEsterna" runat="server"></asp:label>
                 </div>
                 <div class="w3-quarter">
-                    <label style="font-weight:bold">Codice lavoro</label>
-                    <asp:label ID="lbl_CodLavoro" runat="server"></asp:label>
+                    <label style="font-weight:bold">Codice Lavoro</label>
+                    <asp:label ID="lbl_CodiceLavoro" runat="server"></asp:label>
                 </div>
             </div>
             <br />
@@ -215,21 +218,24 @@
                         <div class="w3-container">
                             <p>
                                 <div class="w3-row-padding">
+
                                     <div class="w3-quarter">
-                                        <label style="font-weight:bold">Id Lav.Magazzino</label>
-                                        <asp:label ID="lblNumeroRiga" runat="server"></asp:label>
+                                        <label style="font-weight:bold">Camera</label>
+                                        <asp:label ID="lblNomeCamera" runat="server"></asp:label>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label style="font-weight:bold">Colonna Griglia</label>
-                                        <asp:label ID="lblNumeroColonna" runat="server"></asp:label>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label style="font-weight:bold">Campo</label>
-                                        <asp:label ID="lblNomeCampo" runat="server"></asp:label>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label style="font-weight:bold">Header</label>
+                                        <label style="font-weight:bold">Attrezzatura</label>
                                         <asp:label ID="lblHeaderCampo" runat="server"></asp:label>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <%--<label style="font-weight:bold">Id Lav.Magazzino</label>--%>
+                                        <asp:label ID="lblNumeroRiga" runat="server" Visible="false"></asp:label>
+                                        &nbsp;
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <%--<label style="font-weight:bold">Colonna Griglia</label>--%>
+                                        <asp:label ID="lblNumeroColonna" runat="server" Visible="false"></asp:label>
+                                        &nbsp;
                                     </div>
                                 </div>
                                 <br />

@@ -703,8 +703,6 @@
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Dati_Agenda_Magazzino_BLL.cs" />
     <Compile Include="BLL\Note_Agenda_Magazzino_BLL.cs" />
-    <Compile Include="BLL\Note_Lavorazione_Magazzino_BLL.cs" />
-    <Compile Include="BLL\Dati_Lavorazione_Magazzino_BLL.cs" />
     <Compile Include="BLL\Dati_Lavorazione_BLL.cs" />
     <Compile Include="BLL\GridViewHelper\GridViewGroup.cs" />
     <Compile Include="BLL\GridViewHelper\GridViewGroupList.cs" />
@@ -757,8 +755,6 @@
     <Compile Include="DAL\Dati_Articoli_Lavorazione_DAL.cs" />
     <Compile Include="DAL\Dati_Agenda_Magazzino_DAL.cs" />
     <Compile Include="DAL\Note_Agenda_Magazzino_DAL.cs" />
-    <Compile Include="DAL\Note_Lavorazione_Magazzino_DAL.cs" />
-    <Compile Include="DAL\Dati_Lavorazione_Magazzino_DAL.cs" />
     <Compile Include="DAL\Dati_Lavorazione_DAL.cs" />
     <Compile Include="DAL\Dati_PianoEsterno_Lavorazione_DAL.cs" />
     <Compile Include="DAL\Offerta_DAL.cs" />
@@ -799,7 +795,6 @@
     <Compile Include="Entity\DatiAgendaMagazzino.cs" />
     <Compile Include="Entity\NoteAgendaMagazzino.cs" />
     <Compile Include="Entity\NoteLavorazioneMagazzino.cs" />
-    <Compile Include="Entity\DatiLavorazioneMagazzino.cs" />
     <Compile Include="Entity\DatiLavorazione.cs" />
     <Compile Include="Entity\DatiArticoliLavorazione.cs" />
     <Compile Include="Entity\DatiPianoEsternoLavorazione.cs" />

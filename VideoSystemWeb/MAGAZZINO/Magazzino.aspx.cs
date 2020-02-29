@@ -21,32 +21,32 @@ namespace VideoSystemWeb.MAGAZZINO
     public partial class Magazzino : BasePage
     {
         #region ELENCO CHIAVI VIEWSTATE
-        private const string VIEWSTATE_NOTELAVORAZIONEMAGAZZINO_CORRENTE = "noteLavorazioneMagazzinoCorrente";
-        private const string VIEWSTATE_DATILAVORAZIONEMAGAZZINO_CORRENTE = "datiLavorazioneMagazzinoCorrente";
-        private const string VIEWSTATE_IDLAVORAZIONE_CORRENTE = "idLavorazioneCorrente";
+        private const string VIEWSTATE_NOTEAGENDAMAGAZZINO_CORRENTE = "noteAgendaMagazzinoCorrente";
+        private const string VIEWSTATE_DATIAGENDAMAGAZZINO_CORRENTE = "datiAgendaMagazzinoCorrente";
+        private const string VIEWSTATE_IDAGENDA_CORRENTE = "idAgendaCorrente";
         #endregion
 
-        public NoteLavorazioneMagazzino NoteLavorazioneMagazzinoCorrente
+        public NoteAgendaMagazzino NoteAgendaMagazzinoCorrente
         {
             get
             {
-                return (NoteLavorazioneMagazzino)ViewState[VIEWSTATE_NOTELAVORAZIONEMAGAZZINO_CORRENTE];
+                return (NoteAgendaMagazzino)ViewState[VIEWSTATE_NOTEAGENDAMAGAZZINO_CORRENTE];
             }
             set
             {
-                ViewState[VIEWSTATE_NOTELAVORAZIONEMAGAZZINO_CORRENTE] = value;
+                ViewState[VIEWSTATE_NOTEAGENDAMAGAZZINO_CORRENTE] = value;
             }
         }
 
-        public DatiLavorazioneMagazzino DatiLavorazioneMagazzinoCorrente
+        public DatiAgendaMagazzino DatiAgendaMagazzinoCorrente
         {
             get
             {
-                return (DatiLavorazioneMagazzino)ViewState[VIEWSTATE_DATILAVORAZIONEMAGAZZINO_CORRENTE];
+                return (DatiAgendaMagazzino)ViewState[VIEWSTATE_DATIAGENDAMAGAZZINO_CORRENTE];
             }
             set
             {
-                ViewState[VIEWSTATE_DATILAVORAZIONEMAGAZZINO_CORRENTE] = value;
+                ViewState[VIEWSTATE_DATIAGENDAMAGAZZINO_CORRENTE] = value;
             }
         }
 
@@ -70,10 +70,10 @@ namespace VideoSystemWeb.MAGAZZINO
 
                         PopolaIntestazionePagina(eventoCorrente);
 
-                        int idLavorazione = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito).Id;
-                        ViewState[VIEWSTATE_IDLAVORAZIONE_CORRENTE] = idLavorazione;
-                        NoteLavorazioneMagazzinoCorrente = GetNoteLavorazioneMagazzino(idLavorazione);
-                        txt_Note.Text = NoteLavorazioneMagazzinoCorrente.Note;
+                        //int idLavorazione = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito).Id;
+                        ViewState[VIEWSTATE_IDAGENDA_CORRENTE] = idDatiAgenda;
+                        NoteAgendaMagazzinoCorrente = GetNoteAgendaMagazzino(idDatiAgenda);
+                        txt_Note.Text = NoteAgendaMagazzinoCorrente.Note;
                         cercaRigheAgendaMagazzino();
 
                     }
@@ -95,45 +95,45 @@ namespace VideoSystemWeb.MAGAZZINO
 
         protected void cercaRigheAgendaMagazzino()
         {
-            string queryRicerca = "SELECT * FROM dati_agenda_magazzino where attivo = 1 and id_Agenda = " + ViewState[VIEWSTATE_IDLAVORAZIONE_CORRENTE].ToString();
+            string queryRicerca = "SELECT * FROM dati_agenda_magazzino where attivo = 1 and id_Agenda = " + ViewState[VIEWSTATE_IDAGENDA_CORRENTE].ToString();
             Esito esito = new Esito();
             DataTable dtAttrezzature = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gv_attrezzature.DataSource = dtAttrezzature;
             gv_attrezzature.DataBind();
         }
-        // Prendo la NotaLavorazioneMagazzino per idLavorazione
+        // Prendo la NotaAgendaMagazzino per idAgenda
         // Se non esiste la creo e la inserisco in tabella
-        private NoteLavorazioneMagazzino GetNoteLavorazioneMagazzino(int idLavorazione)
+        private NoteAgendaMagazzino GetNoteAgendaMagazzino(int idAgenda)
         {
             Esito esito = new Esito();
 
-            NoteLavorazioneMagazzino noteLavorazioneMagazzino = Note_Lavorazione_Magazzino_BLL.Instance.getNoteLavorazioneMagazzinoByIdLavorazione(idLavorazione, ref esito);
-            if (noteLavorazioneMagazzino == null || noteLavorazioneMagazzino.Id == 0)
+            NoteAgendaMagazzino noteAgendaMagazzino = Note_Agenda_Magazzino_BLL.Instance.getNoteAgendaMagazzinoByIdAgenda(idAgenda, ref esito);
+            if (noteAgendaMagazzino == null || noteAgendaMagazzino.Id == 0)
             {
-                noteLavorazioneMagazzino = new NoteLavorazioneMagazzino
+                noteAgendaMagazzino = new NoteAgendaMagazzino
                 {
-                    Id_Lavorazione = idLavorazione,
+                    Id_Agenda = idAgenda,
                     Note = string.Empty,
                     Attivo = true
                 };
 
-                Note_Lavorazione_Magazzino_BLL.Instance.CreaNoteLavorazioneMagazzino(noteLavorazioneMagazzino, ref esito);
+                Note_Agenda_Magazzino_BLL.Instance.CreaNoteAgendaMagazzino(noteAgendaMagazzino, ref esito);
             }
 
-            return noteLavorazioneMagazzino;
+            return noteAgendaMagazzino;
         }
 
-        private DatiLavorazioneMagazzino GetDatiLavorazioneMagazzino(int idLavorazioneMagazzino)
+        private DatiAgendaMagazzino GetDatiAgendaMagazzino(int idAgendaMagazzino)
         {
             Esito esito = new Esito();
 
-            DatiLavorazioneMagazzino datiLavorazioneMagazzino = Dati_Lavorazione_Magazzino_BLL.Instance.getDatiLavorazioneMagazzinoById(idLavorazioneMagazzino, ref esito);
-            if (datiLavorazioneMagazzino == null || datiLavorazioneMagazzino.Id == 0 || esito.Codice!=0)
+            DatiAgendaMagazzino datiAgendaMagazzino = Dati_Agenda_Magazzino_BLL.Instance.getDatiAgendaMagazzinoById(idAgendaMagazzino, ref esito);
+            if (datiAgendaMagazzino == null || datiAgendaMagazzino.Id == 0 || esito.Codice!=0)
             {
-                ShowError("Errore durante la ricerca dei Dati Lavorazione Magazzino con ID " + idLavorazioneMagazzino.ToString() + " " + esito.Descrizione);
+                ShowError("Errore durante la ricerca dei Dati Agenda Magazzino con ID " + idAgendaMagazzino.ToString() + " " + esito.Descrizione);
             }
 
-            return datiLavorazioneMagazzino;
+            return datiAgendaMagazzino;
         }
 
         private DatiAgenda CaricaEventoCorrente(int idDatiAgenda)
@@ -146,12 +146,33 @@ namespace VideoSystemWeb.MAGAZZINO
 
         private void PopolaIntestazionePagina(DatiAgenda eventoCorrente)
         {
+            Esito esito = new Esito();
             lbl_Cliente.Text = eventoCorrente.DecodificaCliente;
             lbl_Lavorazione.Text = eventoCorrente.lavorazione;
             lbl_Produzione.Text = eventoCorrente.produzione;
-            lbl_CodLavoro.Text = eventoCorrente.codice_lavoro;
-            lbl_DataInizio.Text = eventoCorrente.data_inizio_lavorazione.ToString("dd/MM/yyyy");
-            lbl_DataFine.Text = eventoCorrente.data_fine_lavorazione.ToString("dd/MM/yyyy");
+            lbl_CodiceLavoro.Text = eventoCorrente.codice_lavoro;
+            lbl_DataInizioFine.Text = eventoCorrente.data_inizio_lavorazione.ToString("dd/MM/yyyy") + "-" + eventoCorrente.data_fine_lavorazione.ToString("dd/MM/yyyy");
+
+            string unita = "";
+            ColonneAgenda colonnaAgenda = UtilityTipologiche.getColonneAgendaById(eventoCorrente.id_colonne_agenda, ref esito);
+            if (esito.Codice == 0 && colonnaAgenda != null)
+            {
+                unita = colonnaAgenda.nome;
+            }
+            lbl_Unita.Text = unita;
+
+            string slistaTender = "";
+            List<DatiTender> listaTender = Dati_Tender_BLL.Instance.getDatiAgendaTenderByIdAgenda(eventoCorrente.id, ref esito);
+            if (esito.Codice == 0 && listaTender != null && listaTender.Count > 0)
+            {
+                foreach (DatiTender tender in listaTender)
+                {
+                    Tipologica tipoTender = UtilityTipologiche.getTipologicaById(EnumTipologiche.TIPO_TENDER, tender.IdTender, ref esito);
+                    if (esito.Codice == 0) slistaTender += " " + tipoTender.nome;
+                }
+                slistaTender = slistaTender.Trim();
+            }
+            lbl_UnitaEsterna.Text = slistaTender;
             lbl_Tipologia.Text = eventoCorrente.DecodificaTipologia;
         }
 
@@ -160,7 +181,8 @@ namespace VideoSystemWeb.MAGAZZINO
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 string id = e.Row.Cells[GetColumnIndexByName(e.Row,"id")].Text;
-                
+                string descrizione_Camera = e.Row.Cells[GetColumnIndexByName(e.Row, "descrizione_Camera")].Text;
+
                 for (int indiceColonna = 2; indiceColonna < gv_attrezzature.Columns.Count; indiceColonna++)
                 {
 
@@ -169,12 +191,10 @@ namespace VideoSystemWeb.MAGAZZINO
                     string[] arNomiCampo = nomeCampo.Split(separatore, StringSplitOptions.RemoveEmptyEntries);
                     string valoreSelezionato = e.Row.Cells[indiceColonna].Text.Replace("&nbsp;","");
 
-                    e.Row.Cells[indiceColonna].Attributes["ondblclick"] = "mostracella('" + id + "', '" + indiceColonna.ToString() + "', '" + arNomiCampo[0] + "', '" + arNomiCampo[1] + "', '" + valoreSelezionato.Trim() + "'); ";
+                    e.Row.Cells[indiceColonna].Attributes["ondblclick"] = "mostracella('" + id + "', '" + indiceColonna.ToString() + "', '" + arNomiCampo[0] + "', '" + arNomiCampo[1] + "', '" + valoreSelezionato.Trim() + "', '" + descrizione_Camera + "' ); ";
                 }
             }
         }
-
-
 
         protected void gv_attrezzature_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -183,42 +203,44 @@ namespace VideoSystemWeb.MAGAZZINO
 
         protected void btnInserisciRiga_Click(object sender, EventArgs e)
         {
-            DatiLavorazioneMagazzino datiLavorazioneMagazzino = new DatiLavorazioneMagazzino();
+            DatiAgendaMagazzino datiAgendaMagazzino = new DatiAgendaMagazzino();
 
             int totRighe = gv_attrezzature.Rows.Count;
 
-            datiLavorazioneMagazzino.Descrizione_Camera = "Camera " + (totRighe+1).ToString();
-            datiLavorazioneMagazzino.Id_Lavorazione = (int)(ViewState[VIEWSTATE_IDLAVORAZIONE_CORRENTE]);
-            datiLavorazioneMagazzino.Attivo = true;
+            int idDatiAgenda = int.Parse(Request.QueryString["idDatiAgenda"]);
 
-            datiLavorazioneMagazzino.Id_Altro1 = 0;
-            datiLavorazioneMagazzino.Id_Altro2 = 0;
-            datiLavorazioneMagazzino.Id_Camera = 0;
-            datiLavorazioneMagazzino.Id_Cavalletto = 0;
-            datiLavorazioneMagazzino.Id_Cavi = 0;
-            datiLavorazioneMagazzino.Id_Fibra_Trax = 0;
-            datiLavorazioneMagazzino.Id_Lensholder = 0;
-            datiLavorazioneMagazzino.Id_Loop = 0;
-            datiLavorazioneMagazzino.Id_Mic = 0;
-            datiLavorazioneMagazzino.Id_Ottica = 0;
-            datiLavorazioneMagazzino.Id_Testa = 0;
-            datiLavorazioneMagazzino.Id_Viewfinder = 0;
+            datiAgendaMagazzino.Descrizione_Camera = "Camera " + (totRighe+1).ToString();
+            datiAgendaMagazzino.Id_Agenda = idDatiAgenda;
+            datiAgendaMagazzino.Attivo = true;
 
-            datiLavorazioneMagazzino.Nome_Altro1 = "";
-            datiLavorazioneMagazzino.Nome_Altro2 = "";
-            datiLavorazioneMagazzino.Nome_Camera = "";
-            datiLavorazioneMagazzino.Nome_Cavalletto = "";
-            datiLavorazioneMagazzino.Nome_Cavi = "";
-            datiLavorazioneMagazzino.Nome_Fibra_Trax = "";
-            datiLavorazioneMagazzino.Nome_Lensholder = "";
-            datiLavorazioneMagazzino.Nome_Loop = "";
-            datiLavorazioneMagazzino.Nome_Mic = "";
-            datiLavorazioneMagazzino.Nome_Ottica = "";
-            datiLavorazioneMagazzino.Nome_Testa = "";
-            datiLavorazioneMagazzino.Nome_Viewfinder = "";
+            datiAgendaMagazzino.Id_Altro1 = 0;
+            datiAgendaMagazzino.Id_Altro2 = 0;
+            datiAgendaMagazzino.Id_Camera = 0;
+            datiAgendaMagazzino.Id_Cavalletto = 0;
+            datiAgendaMagazzino.Id_Cavi = 0;
+            datiAgendaMagazzino.Id_Fibra_Trax = 0;
+            datiAgendaMagazzino.Id_Lensholder = 0;
+            datiAgendaMagazzino.Id_Loop = 0;
+            datiAgendaMagazzino.Id_Mic = 0;
+            datiAgendaMagazzino.Id_Ottica = 0;
+            datiAgendaMagazzino.Id_Testa = 0;
+            datiAgendaMagazzino.Id_Viewfinder = 0;
+
+            datiAgendaMagazzino.Nome_Altro1 = "";
+            datiAgendaMagazzino.Nome_Altro2 = "";
+            datiAgendaMagazzino.Nome_Camera = "";
+            datiAgendaMagazzino.Nome_Cavalletto = "";
+            datiAgendaMagazzino.Nome_Cavi = "";
+            datiAgendaMagazzino.Nome_Fibra_Trax = "";
+            datiAgendaMagazzino.Nome_Lensholder = "";
+            datiAgendaMagazzino.Nome_Loop = "";
+            datiAgendaMagazzino.Nome_Mic = "";
+            datiAgendaMagazzino.Nome_Ottica = "";
+            datiAgendaMagazzino.Nome_Testa = "";
+            datiAgendaMagazzino.Nome_Viewfinder = "";
 
             Esito esito = new Esito();
-            Dati_Lavorazione_Magazzino_BLL.Instance.CreaDatiLavorazioneMagazzino(datiLavorazioneMagazzino, ref esito);
+            Dati_Agenda_Magazzino_BLL.Instance.CreaDatiAgendaMagazzino(datiAgendaMagazzino, ref esito);
 
             if (esito.Codice == 0) {
                 cercaRigheAgendaMagazzino();
@@ -229,9 +251,9 @@ namespace VideoSystemWeb.MAGAZZINO
         {
             try
             {
-                NoteLavorazioneMagazzinoCorrente.Note = txt_Note.Text.Trim();
+                NoteAgendaMagazzinoCorrente.Note = txt_Note.Text.Trim();
 
-                Esito esito = Note_Lavorazione_Magazzino_BLL.Instance.AggiornaNoteLavorazioneMagazzino(NoteLavorazioneMagazzinoCorrente);
+                Esito esito = Note_Agenda_Magazzino_BLL.Instance.AggiornaNoteAgendaMagazzino(NoteAgendaMagazzinoCorrente);
                 if (esito.Codice == 0)
                 {
                     ShowSuccess("Note salvate correttamente!");
@@ -256,7 +278,7 @@ namespace VideoSystemWeb.MAGAZZINO
                 {
                     Int64 id = Convert.ToInt64(e.CommandArgument);
 
-                    Esito esito = Dati_Lavorazione_Magazzino_BLL.Instance.EliminaDatiLavorazioneMagazzino((int)id);
+                    Esito esito = Dati_Agenda_Magazzino_BLL.Instance.EliminaDatiAgendaMagazzino((int)id);
                     if (esito.Codice == 0)
                     {
                         cercaRigheAgendaMagazzino();
@@ -281,9 +303,9 @@ namespace VideoSystemWeb.MAGAZZINO
 
         protected void btnEditEvent_Click(object sender, EventArgs e)
         {
-            int idLavorazioneMagazzino = int.Parse(hfIdRiga.Value);
+            int idAgendaMagazzino = int.Parse(hfIdRiga.Value);
 
-            DatiLavorazioneMagazzinoCorrente = GetDatiLavorazioneMagazzino(idLavorazioneMagazzino);
+            DatiAgendaMagazzinoCorrente = GetDatiAgendaMagazzino(idAgendaMagazzino);
 
             int idColonna = int.Parse(hfIdColonna.Value);
 
@@ -304,7 +326,8 @@ namespace VideoSystemWeb.MAGAZZINO
 
             lblNumeroColonna.Text = hfIdColonna.Value;
             lblNumeroRiga.Text = hfIdRiga.Value;
-            lblNomeCampo.Text = hfNomeCampo.Value;
+            //lblNomeCampo.Text = hfNomeCampo.Value;
+            lblNomeCamera.Text = hfDescrizioneCamera.Value;
             lblHeaderCampo.Text = hfHeaderCampo.Value;
 
             switch (hfNomeCampo.Value)
@@ -335,21 +358,21 @@ namespace VideoSystemWeb.MAGAZZINO
         {
             try
             {
-                DatiLavorazioneMagazzinoCorrente.Descrizione_Camera = tbModDescrizioneCamera.Text.Trim();
+                DatiAgendaMagazzinoCorrente.Descrizione_Camera = tbModDescrizioneCamera.Text.Trim();
 
-                Esito esito = Dati_Lavorazione_Magazzino_BLL.Instance.AggiornaDatiLavorazioneMagazzino(DatiLavorazioneMagazzinoCorrente);
+                Esito esito = Dati_Agenda_Magazzino_BLL.Instance.AggiornaDatiAgendaMagazzino(DatiAgendaMagazzinoCorrente);
                 if (esito.Codice == 0)
                 {
-                    ShowSuccess("Descrizione riga Lavorazione Magazzino salvata correttamente!");
+                    ShowSuccess("Descrizione riga Agenda Magazzino salvata correttamente!");
                 }
                 else
                 {
-                    ShowError("Errore nel salvataggio Descrizione riga Lavorazione Magazzino: " + esito.Descrizione);
+                    ShowError("Errore nel salvataggio Descrizione riga Agenda Magazzino: " + esito.Descrizione);
                 }
             }
             catch (Exception ex)
             {
-                ShowError("Errore nel salvataggio Descrizione riga Lavorazione Magazzino: " + ex.Message);
+                ShowError("Errore nel salvataggio Descrizione riga Agenda Magazzino: " + ex.Message);
             }
 
             btnChiudiPopupServer_Click(null, null);
@@ -371,7 +394,7 @@ namespace VideoSystemWeb.MAGAZZINO
 
         protected void btnRicercaAttrezzatura_Click(object sender, EventArgs e)
         {
-            string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_LAVORAZIONE_MAGAZZINO"];
+            string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_AGENDA_MAGAZZINO"];
 
             queryRicerca = queryRicerca.Replace("@codiceVS", tbCodiceVS.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@descrizione", tbDescrizione.Text.Trim().Replace("'", "''"));
@@ -422,6 +445,7 @@ namespace VideoSystemWeb.MAGAZZINO
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 string id = e.Row.Cells[GetColumnIndexByName(e.Row, "id")].Text;
+                
 
                 for (int indiceColonna = 0; indiceColonna < e.Row.Cells.Count; indiceColonna++)
                 {
@@ -544,52 +568,52 @@ namespace VideoSystemWeb.MAGAZZINO
             switch (campoDaModificare)
             {
                 case "nome_Camera":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Camera = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Camera = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Camera = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Camera = int.Parse(idMagazzino);
                     break;
                 case "nome_Fibra_Trax":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Fibra_Trax = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Fibra_Trax = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Fibra_Trax = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Fibra_Trax = int.Parse(idMagazzino);
                     break;
                 case "nome_Ottica":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Ottica = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Ottica = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Ottica = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Ottica = int.Parse(idMagazzino);
                     break;
                 case "nome_Viewfinder":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Viewfinder = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Viewfinder = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Viewfinder = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Viewfinder = int.Parse(idMagazzino);
                     break;
                 case "nome_Loop":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Loop = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Loop = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Loop = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Loop = int.Parse(idMagazzino);
                     break;
                 case "nome_Mic":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Mic = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Mic = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Mic = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Mic = int.Parse(idMagazzino);
                     break;
                 case "nome_Testa":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Testa = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Testa = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Testa = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Testa = int.Parse(idMagazzino);
                     break;
                 case "nome_Lensholder":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Lensholder = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Lensholder = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Lensholder = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Lensholder = int.Parse(idMagazzino);
                     break;
                 case "nome_Cavalletto":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Cavalletto = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Cavalletto = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Cavalletto = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Cavalletto = int.Parse(idMagazzino);
                     break;
                 case "nome_Cavi":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Cavi = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Cavi = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Cavi = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Cavi = int.Parse(idMagazzino);
                     break;
                 case "nome_Altro1":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Altro1 = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Altro1 = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Altro1 = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Altro1 = int.Parse(idMagazzino);
                     break;
                 case "nome_Altro2":
-                    DatiLavorazioneMagazzinoCorrente.Nome_Altro2 = valoreMagazzino;
-                    DatiLavorazioneMagazzinoCorrente.Id_Altro2 = int.Parse(idMagazzino);
+                    DatiAgendaMagazzinoCorrente.Nome_Altro2 = valoreMagazzino;
+                    DatiAgendaMagazzinoCorrente.Id_Altro2 = int.Parse(idMagazzino);
                     break;
                 default:
                     break;
@@ -597,7 +621,7 @@ namespace VideoSystemWeb.MAGAZZINO
             try
             {
 
-                Esito esito = Dati_Lavorazione_Magazzino_BLL.Instance.AggiornaDatiLavorazioneMagazzino(DatiLavorazioneMagazzinoCorrente);
+                Esito esito = Dati_Agenda_Magazzino_BLL.Instance.AggiornaDatiAgendaMagazzino(DatiAgendaMagazzinoCorrente);
                 if (esito.Codice == 0)
                 {
                     //cercaRigheLavorazioneMagazzino();
@@ -621,15 +645,16 @@ namespace VideoSystemWeb.MAGAZZINO
             string ret = "";
             try
             {
-                string queryRicercaIdInUso = "select lm.id_Altro1,lm.id_Altro2,lm.id_Camera,lm.id_Cavalletto,lm.id_Cavi,lm.id_Fibra_Trax,id_Lensholder,lm.id_Loop, " +
-                "lm.id_Mic,lm.id_Ottica, lm.id_Testa, lm.id_Viewfinder " +
+                string queryRicercaIdInUso = "select am.id_Altro1,am.id_Altro2,am.id_Camera,am.id_Cavalletto,am.id_Cavi,am.id_Fibra_Trax,am.id_Lensholder,am.id_Loop, " +
+                "am.id_Mic,am.id_Ottica, am.id_Testa, am.id_Viewfinder " +
                 ", ag.data_inizio_lavorazione,ag.data_fine_lavorazione,ag.lavorazione,ag.produzione " +
-                "from[dbo].[dati_lavorazione_magazzino] lm " +
-                "left join[dbo].[dati_lavorazione] lav " +
-                "on lm.id_Lavorazione = lav.id " +
+                "from[dbo].[dati_Agenda_magazzino] am " +
+                //"left join[dbo].[dati_lavorazione] lav " +
+                //"on lm.id_Lavorazione = lav.id " +
                 "left join tab_dati_agenda ag " +
-                "on lav.idDatiAgenda= ag.id " +
-                "where lm.attivo=1 " +
+                //"on lav.idDatiAgenda= ag.id " +
+                "on am.id_Agenda= ag.id " +
+                "where am.attivo=1 " +
                 //"and ag.data_inizio_impegno>='2020-02-22T00:00:00.000' AND ag.data_fine_lavorazione<='2020-02-23T00:00:00.000'";
                 "and ag.data_inizio_impegno>='" + dataDa.ToString("yyyy-MM-ddT00:00:00.000") + "' AND ag.data_fine_lavorazione<='" + dataA.ToString("yyyy-MM-ddT00:00:00.000") + "'";
                 Esito esito = new Esito();
@@ -685,9 +710,9 @@ namespace VideoSystemWeb.MAGAZZINO
                 DateTime dataFine = eventoCorrente.data_fine_lavorazione;
 
                 int idLavorazione = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito).Id;
-                List<DatiLavorazioneMagazzino> listaDatiLavorazioneMagazzino = Dati_Lavorazione_Magazzino_BLL.Instance.getDatiLavorazioneMagazzinoByIdLavorazione(idLavorazione, ref esito);
+                List<DatiAgendaMagazzino> listaDatiAgendaMagazzino = Dati_Agenda_Magazzino_BLL.Instance.getDatiAgendaMagazzinoByIdAgenda(idDatiAgenda, ref esito);
 
-                if (esito.Codice == 0 && listaDatiLavorazioneMagazzino != null && listaDatiLavorazioneMagazzino.Count > 0)
+                if (esito.Codice == 0 && listaDatiAgendaMagazzino != null && listaDatiAgendaMagazzino.Count > 0)
                 {
                     // LEGGO I PARAMETRI DI VS
                     Config cfAppo = Config_BLL.Instance.getConfig(ref esito, "PARTITA_IVA");
@@ -745,14 +770,36 @@ namespace VideoSystemWeb.MAGAZZINO
                     Paragraph pValore = new Paragraph(eventoCorrente.lavorazione).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
                     tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                    pTitolo = new Paragraph("Unità").SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                    pTitolo = new Paragraph("Tipologia").SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                     tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
-                    pValore = new Paragraph("").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
+                    pValore = new Paragraph(eventoCorrente.DecodificaTipologia).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
                     tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
-                    pTitolo = new Paragraph("Tender").SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                    string unita = "";
+                    ColonneAgenda colonnaAgenda = UtilityTipologiche.getColonneAgendaById(eventoCorrente.id_colonne_agenda, ref esito);
+                    if (esito.Codice == 0 && colonnaAgenda != null)
+                    {
+                        unita = colonnaAgenda.nome;
+                    }
+                    pTitolo = new Paragraph("Unità").SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                     tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
-                    pValore = new Paragraph("").SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
+                    pValore = new Paragraph(unita).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
+                    tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+
+                    string slistaTender = "";
+                    List<DatiTender> listaTender = Dati_Tender_BLL.Instance.getDatiAgendaTenderByIdAgenda(idDatiAgenda, ref esito);
+                    if(esito.Codice==0 && listaTender!=null && listaTender.Count > 0)
+                    {
+                        foreach (DatiTender tender in listaTender)
+                        {
+                            Tipologica tipoTender = UtilityTipologiche.getTipologicaById(EnumTipologiche.TIPO_TENDER, tender.IdTender, ref esito);
+                            if(esito.Codice==0) slistaTender += " " + tipoTender.nome;
+                        }
+                        slistaTender = slistaTender.Trim();
+                    }
+                    pTitolo = new Paragraph("Unità di Appoggio").SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                    tbIntestazioneDx.AddCell(pTitolo).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                    pValore = new Paragraph(slistaTender).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE);
                     tbIntestazioneDx.AddCell(pValore).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
 
                     pTitolo = new Paragraph("Città").SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER);
@@ -848,69 +895,69 @@ namespace VideoSystemWeb.MAGAZZINO
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
-                    foreach (DatiLavorazioneMagazzino lavorazioneMagazzino in listaDatiLavorazioneMagazzino)
+                    foreach (DatiAgendaMagazzino agendaMagazzino in listaDatiAgendaMagazzino)
                     {
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Descrizione_Camera).SetFontSize(8);
+                        pGriglia = new Paragraph(agendaMagazzino.Descrizione_Camera).SetFontSize(8);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Camera).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Camera).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Fibra_Trax).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Fibra_Trax).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Ottica).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Ottica).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Viewfinder).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Viewfinder).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Loop).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Loop).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Mic).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Mic).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Testa).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Testa).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Lensholder).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Lensholder).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Cavalletto).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Cavalletto).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Cavi).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Cavi).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Altro1).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Altro1).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
 
-                        pGriglia = new Paragraph(lavorazioneMagazzino.Nome_Altro2).SetFontSize(6);
+                        pGriglia = new Paragraph(agendaMagazzino.Nome_Altro2).SetFontSize(6);
                         cellaGriglia = new Cell().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
@@ -923,10 +970,10 @@ namespace VideoSystemWeb.MAGAZZINO
                     pSpazio = new Paragraph(" ");
                     document.Add(pSpazio);
 
-                    NoteLavorazioneMagazzinoCorrente = GetNoteLavorazioneMagazzino(idLavorazione);
+                    NoteAgendaMagazzinoCorrente = GetNoteAgendaMagazzino(idDatiAgenda);
 
                     iText.Layout.Element.Text first = new iText.Layout.Element.Text("Note:").SetFontSize(9).SetBold();
-                    iText.Layout.Element.Text second = new iText.Layout.Element.Text(Environment.NewLine + NoteLavorazioneMagazzinoCorrente.Note.Trim()).SetFontSize(9);
+                    iText.Layout.Element.Text second = new iText.Layout.Element.Text(Environment.NewLine + NoteAgendaMagazzinoCorrente.Note.Trim()).SetFontSize(9);
                     iText.Layout.Element.Paragraph paragraphNote = new iText.Layout.Element.Paragraph().SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.BLACK, 1, 100)).SetPadding(5).Add(first).Add(second);
 
                     document.Add(paragraphNote);

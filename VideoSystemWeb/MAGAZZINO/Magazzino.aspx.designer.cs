@@ -76,6 +76,15 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.HiddenField hfValoreGriglia;
         
         /// <summary>
+        /// Controllo hfDescrizioneCamera.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hfDescrizioneCamera;
+        
+        /// <summary>
         /// Controllo hfIdAttrezzaturaDaModificare.
         /// </summary>
         /// <remarks>
@@ -130,31 +139,40 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.Label lbl_Tipologia;
         
         /// <summary>
-        /// Controllo lbl_DataInizio.
+        /// Controllo lbl_DataInizioFine.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DataInizio;
+        protected global::System.Web.UI.WebControls.Label lbl_DataInizioFine;
         
         /// <summary>
-        /// Controllo lbl_DataFine.
+        /// Controllo lbl_Unita.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DataFine;
+        protected global::System.Web.UI.WebControls.Label lbl_Unita;
         
         /// <summary>
-        /// Controllo lbl_CodLavoro.
+        /// Controllo lbl_UnitaEsterna.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_CodLavoro;
+        protected global::System.Web.UI.WebControls.Label lbl_UnitaEsterna;
+        
+        /// <summary>
+        /// Controllo lbl_CodiceLavoro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_CodiceLavoro;
         
         /// <summary>
         /// Controllo btnInserisciRiga.
@@ -256,6 +274,24 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.Panel innerContainer;
         
         /// <summary>
+        /// Controllo lblNomeCamera.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNomeCamera;
+        
+        /// <summary>
+        /// Controllo lblHeaderCampo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblHeaderCampo;
+        
+        /// <summary>
         /// Controllo lblNumeroRiga.
         /// </summary>
         /// <remarks>
@@ -272,24 +308,6 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblNumeroColonna;
-        
-        /// <summary>
-        /// Controllo lblNomeCampo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNomeCampo;
-        
-        /// <summary>
-        /// Controllo lblHeaderCampo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHeaderCampo;
         
         /// <summary>
         /// Controllo phDescrizioneCamera.

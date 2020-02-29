@@ -608,6 +608,65 @@ namespace VideoSystemWeb.DAL
                                 StoreProc.ExecuteNonQuery();
                                 #endregion
 
+                                #region NOTE_AGENDA_MAGAZZINO
+
+                                StoreProc.CommandText = "DeleteNoteAgendaMagazzinoByIdDatiAgenda";
+                                StoreProc.Parameters.Clear();
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+                                sda.SelectCommand = StoreProc;
+
+                                StoreProc.Parameters.Clear();
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+                                sda.SelectCommand = StoreProc;
+
+                                id_dati_agenda = new SqlParameter("@id_dati_agenda", SqlDbType.Int);
+                                id_dati_agenda.Direction = ParameterDirection.Input;
+                                id_dati_agenda.Value = idEvento;
+                                StoreProc.Parameters.Add(id_dati_agenda);
+
+                                // PARAMETRI PER LOG UTENTE
+                                idUtente = new SqlParameter("@idUtente", utente.id);
+                                idUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idUtente);
+
+                                nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                                nomeUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(nomeUtente);
+                                // FINE PARAMETRI PER LOG UTENTE
+
+                                StoreProc.ExecuteNonQuery();
+                                #endregion
+
+
+                                #region DATI_AGENDA_MAGAZZINO
+
+                                StoreProc.CommandText = "DeleteDatiAgendaMagazzinoByIdDatiAgenda";
+                                StoreProc.Parameters.Clear();
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+                                sda.SelectCommand = StoreProc;
+
+                                StoreProc.Parameters.Clear();
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+                                sda.SelectCommand = StoreProc;
+
+                                id_dati_agenda = new SqlParameter("@id_dati_agenda", SqlDbType.Int);
+                                id_dati_agenda.Direction = ParameterDirection.Input;
+                                id_dati_agenda.Value = idEvento;
+                                StoreProc.Parameters.Add(id_dati_agenda);
+
+                                // PARAMETRI PER LOG UTENTE
+                                idUtente = new SqlParameter("@idUtente", utente.id);
+                                idUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(idUtente);
+
+                                nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                                nomeUtente.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(nomeUtente);
+                                // FINE PARAMETRI PER LOG UTENTE
+
+                                StoreProc.ExecuteNonQuery();
+                                #endregion
+
                                 #region EVENTO
                                 StoreProc.CommandText = "DeleteEvento";
                                 StoreProc.Parameters.Clear();

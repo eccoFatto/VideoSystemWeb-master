@@ -327,7 +327,9 @@ namespace VideoSystemWeb.Agenda.userControl
                             cellaGrigliaInfo.Add(pGrigliaInfo);
                             tbGriglaInfo.AddCell(cellaGrigliaInfo);
 
-                            pGrigliaInfo = new Paragraph(DateTime.Today.ToLongDateString()).SetFontSize(9);
+                            //pGrigliaInfo = new Paragraph(DateTime.Today.ToLongDateString()).SetFontSize(9);
+                            if (string.IsNullOrEmpty(tbDataProtocollo.Text)) tbDataProtocollo.Text = eventoSelezionato.data_inizio_lavorazione.ToShortDateString();
+                            pGrigliaInfo = new Paragraph(Convert.ToDateTime(tbDataProtocollo.Text).ToLongDateString()).SetFontSize(9);
                             cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaInfo.Add(pGrigliaInfo);
                             tbGriglaInfo.AddCell(cellaGrigliaInfo);
@@ -501,7 +503,8 @@ namespace VideoSystemWeb.Agenda.userControl
                                 protocolloFattura.Cliente = cliente.RagioneSociale.Trim();
                                 protocolloFattura.Codice_lavoro = eventoSelezionato.codice_lavoro;
                                 protocolloFattura.Data_inizio_lavorazione = eventoSelezionato.data_inizio_impegno;
-                                protocolloFattura.Data_protocollo = DateTime.Today;
+                                //protocolloFattura.Data_protocollo = DateTime.Today;
+                                protocolloFattura.Data_protocollo = Convert.ToDateTime(tbDataProtocollo.Text);
                                 protocolloFattura.Descrizione = "Fattura";
                                 protocolloFattura.Id_cliente = eventoSelezionato.id_cliente;
                                 protocolloFattura.Id_tipo_protocollo = idTipoProtocollo;
@@ -522,6 +525,7 @@ namespace VideoSystemWeb.Agenda.userControl
                             {
                                 // AGGIORNO
                                 protocolloFattura.PathDocumento = Path.GetFileName(mapPathFattura);
+                                protocolloFattura.Data_protocollo = Convert.ToDateTime(tbDataProtocollo.Text);
                                 esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloFattura);
 
                                 ViewState["idProtocollo"] = protocolloFattura.Id;
@@ -594,6 +598,16 @@ namespace VideoSystemWeb.Agenda.userControl
 
         #endregion
 
+        protected void btnCreaFattura_Click(object sender, EventArgs e)
+        {
+            Esito esito = popolaPannelloFattura(SessionManager.EventoSelezionato);
+
+            //Esito esito = popolaPannelloFattura(SessionManager.EventoSelezionato);
+            if (esito.Codice == Esito.ESITO_OK)
+            {
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfFattura.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
+            }
+        }
     }
 
 }

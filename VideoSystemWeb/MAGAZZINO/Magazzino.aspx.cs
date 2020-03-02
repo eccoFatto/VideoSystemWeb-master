@@ -709,7 +709,7 @@ namespace VideoSystemWeb.MAGAZZINO
                 DateTime dataInizio = eventoCorrente.data_inizio_lavorazione;
                 DateTime dataFine = eventoCorrente.data_fine_lavorazione;
 
-                int idLavorazione = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito).Id;
+                //int idLavorazione = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(idDatiAgenda, ref esito).Id;
                 List<DatiAgendaMagazzino> listaDatiAgendaMagazzino = Dati_Agenda_Magazzino_BLL.Instance.getDatiAgendaMagazzinoByIdAgenda(idDatiAgenda, ref esito);
 
                 if (esito.Codice == 0 && listaDatiAgendaMagazzino != null && listaDatiAgendaMagazzino.Count > 0)

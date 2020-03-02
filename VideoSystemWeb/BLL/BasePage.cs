@@ -16,8 +16,8 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "1.68";
-        public static string dataVersione = "29/02/2020";
+        public static string versione = "1.69";
+        public static string dataVersione = "02/03/2020";
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static T ValidaCampo<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito)

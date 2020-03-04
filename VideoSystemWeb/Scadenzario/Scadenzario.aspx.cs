@@ -24,10 +24,12 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
 
             string valoreIVA = Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
-            txt_Iva.Text = valoreIVA;
+            
 
             if (!IsPostBack)
             {
+                
+
                 CaricaCombo();
                 PopolaGrigliaScadenze();
 
@@ -112,7 +114,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             //Esito esito = new Esito();
             //List<DatiScadenzario> listaScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", codiceAnagrafica, "", "", "", "", "", "", ref esito);
 
-            decimal dare = listaScadenzario.Sum(x=>x.ImportoDare);//new decimal(10032947.94);
+            decimal dare = listaScadenzario.Sum(x=>x.ImportoDare);
             decimal dareIva = listaScadenzario.Sum(x => x.ImportoDareIva);
             decimal versato = listaScadenzario.Sum(x => x.ImportoVersato);
             decimal versatoIva = listaScadenzario.Sum(x => x.ImportoVersato + (x.ImportoVersato / 100 * x.Iva));
@@ -165,6 +167,9 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
         protected void btnInsScadenza_Click(object sender, EventArgs e)
         {
+            Esito esito = new Esito();
+            txt_Iva.Text = Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
+
             div_Fattura.Visible = true;
             div_DatiCreazioneScadenza.Visible = true;
             ddl_Tipo.Attributes.Remove("Disabled");
@@ -178,7 +183,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             ddl_Tipo.Attributes.Remove("Disabled");
 
-            Esito esito = new Esito();
             List<Protocolli> listaProtocolloNonInScadenzario = Scadenzario_BLL.Instance.getFattureNonInScadenzario(ddl_Tipo.SelectedValue, ref esito);
 
             if (listaProtocolloNonInScadenzario.Count == 0)
@@ -310,10 +314,10 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_ImponibileIva.Text = (importoDocumentoDareIva + importoDocumentoAvereIva).ToString("###,##0.00");
                     decimal versatoOriscosso = scadenza.ImportoVersato + scadenza.ImportoRiscosso;
                     txt_Versato.Text = versatoOriscosso.ToString("###,##0.00");
-                    txt_IvaModifica.Text = scadenza.Iva.ToString();// Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
+                    txt_IvaModifica.Text = scadenza.Iva.ToString();
                     txt_VersatoIva.Text = (versatoOriscosso * (1 + scadenza.Iva / 100)).ToString("###,##0.00");
                     txt_Totale.Text = ((importoDocumentoDare + importoDocumentoAvere) - (scadenza.ImportoVersato + scadenza.ImportoRiscosso)).ToString("###,##0.00");
-                    txt_IvaModifica.Text = Math.Truncate(scadenza.Iva).ToString();//Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
+                    txt_IvaModifica.Text = Math.Truncate(scadenza.Iva).ToString();
                     txt_TotaleIva.Text = ((importoDocumentoDareIva + importoDocumentoAvereIva) - (versatoOriscosso * (1 + scadenza.Iva / 100))).ToString("###,##0.00");
                     txt_TotaleDocumento.Text = (importoDocumentoDare + importoDocumentoAvere).ToString("###,##0.00");
                     txt_TotDocumentoIva.Text = (importoDocumentoDareIva + importoDocumentoAvereIva).ToString("###,##0.00");

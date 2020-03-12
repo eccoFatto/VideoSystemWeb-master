@@ -35,7 +35,6 @@ namespace VideoSystemWeb.BLL
             {
                 scadenza.DataRiscossione = DateTime.Now;
                 scadenza.ImportoRiscosso = string.IsNullOrEmpty(importo) ? 0 : decimal.Parse(importo);
-                
             }
             else
             {
@@ -110,6 +109,73 @@ namespace VideoSystemWeb.BLL
 
                 Scadenzario_DAL.Instance.CreaDatiScadenzario(scadenza, ref esito);
             }
+        }
+
+        // USATO PER AGGIUNGERE UN PAGAMENTO AD UNA SCADENZA GIA' ESISTENTE
+        public void AggiungiPagamento(DatiScadenzario scadenzaDaAggiornare, string tipoScadenza, string importoVersato, string iva, string dataScadenza, string banca, string dataAggiungiDocumento, ref Esito esito)
+        {
+            decimal importoVersatoDecimal = decimal.Parse(importoVersato);
+            decimal differenzaImporto = (scadenzaDaAggiornare.ImportoAvere + scadenzaDaAggiornare.ImportoDare) - importoVersatoDecimal;
+
+            #region SCADENZA DA AGGIORNARE
+            scadenzaDaAggiornare.Iva = string.IsNullOrEmpty(iva) ? 0 : decimal.Parse(iva);
+            scadenzaDaAggiornare.DataScadenza = DateTime.Parse(dataScadenza);
+            scadenzaDaAggiornare.Banca = banca;
+
+            if (tipoScadenza.ToUpper() == "CLIENTE")
+            {
+                scadenzaDaAggiornare.DataRiscossione = DateTime.Now;
+                scadenzaDaAggiornare.ImportoRiscosso = string.IsNullOrEmpty(importoVersato) ? 0 : decimal.Parse(importoVersato);
+                scadenzaDaAggiornare.ImportoAvere = scadenzaDaAggiornare.ImportoRiscosso; // La scadenza viene aggiornata con un importo parziale
+                scadenzaDaAggiornare.ImportoAvereIva = scadenzaDaAggiornare.ImportoAvere * (1 + (scadenzaDaAggiornare.Iva) / 100);
+            }
+            else
+            {
+                scadenzaDaAggiornare.DataVersamento = DateTime.Now;
+                scadenzaDaAggiornare.ImportoVersato = string.IsNullOrEmpty(importoVersato) ? 0 : decimal.Parse(importoVersato);
+                scadenzaDaAggiornare.ImportoDare = scadenzaDaAggiornare.ImportoVersato; // La scadenza viene aggiornata con un importo parziale
+                scadenzaDaAggiornare.ImportoDareIva = scadenzaDaAggiornare.ImportoDare * (1 + (scadenzaDaAggiornare.Iva) / 100);
+            }
+            #endregion
+
+            #region SCADENZA DA INSERIRE
+            DatiScadenzario scadenzaDaInserire = new DatiScadenzario();
+            scadenzaDaInserire.Banca = scadenzaDaAggiornare.Banca;
+            scadenzaDaInserire.IdDatiProtocollo = scadenzaDaAggiornare.IdDatiProtocollo;
+            scadenzaDaInserire.DataScadenza = DateTime.Parse(dataAggiungiDocumento);
+            scadenzaDaInserire.DataVersamento = null;
+            scadenzaDaInserire.DataRiscossione = null;
+            scadenzaDaInserire.Iva = scadenzaDaAggiornare.Iva;
+
+            scadenzaDaInserire.ImportoAvere = 0;
+            scadenzaDaInserire.ImportoAvereIva = 0;
+            scadenzaDaInserire.ImportoRiscosso = 0;
+
+            scadenzaDaInserire.ImportoDare = 0;
+            scadenzaDaInserire.ImportoDareIva = 0;
+            scadenzaDaInserire.ImportoVersato = 0;
+
+            if (tipoScadenza.ToUpper() == "CLIENTE")
+            {
+                scadenzaDaInserire.ImportoAvere = differenzaImporto;
+                scadenzaDaInserire.ImportoAvereIva = scadenzaDaInserire.ImportoAvere * (1 + (scadenzaDaAggiornare.Iva) / 100);
+                scadenzaDaInserire.ImportoRiscosso = 0;
+            }
+            else
+            {
+                scadenzaDaInserire.ImportoDare = differenzaImporto;
+                scadenzaDaInserire.ImportoDareIva = scadenzaDaInserire.ImportoDare * (1 + (scadenzaDaAggiornare.Iva) / 100);
+                scadenzaDaInserire.ImportoVersato = 0;
+            }
+
+            scadenzaDaInserire.Note = scadenzaDaAggiornare.Note;
+            scadenzaDaInserire.RagioneSocialeClienteFornitore = scadenzaDaAggiornare.RagioneSocialeClienteFornitore;
+            scadenzaDaInserire.ProtocolloRiferimento = scadenzaDaAggiornare.ProtocolloRiferimento;
+            scadenzaDaInserire.DataProtocollo = scadenzaDaAggiornare.DataProtocollo;
+            scadenzaDaInserire.Cassa = scadenzaDaAggiornare.Cassa;
+            #endregion
+
+            esito = Scadenzario_DAL.Instance.AggiungiPagamento(scadenzaDaAggiornare, scadenzaDaInserire);
         }
 
         public DatiScadenzario GetDatiScadenzarioById(ref Esito esito, int id)

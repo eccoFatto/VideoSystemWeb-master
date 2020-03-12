@@ -28,8 +28,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             if (!IsPostBack)
             {
-                
-
                 CaricaCombo();
                 PopolaGrigliaScadenze();
 
@@ -393,14 +391,22 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
         protected void btnModificaScadenza_Click(object sender, EventArgs e)
         {
-            Esito esito = new Esito();
+            //Esito esito = new Esito();
 
-            int idScadenza = Convert.ToInt16(ViewState["idScadenza"].ToString());
-            DatiScadenzario scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, Convert.ToInt16(idScadenza));
+            //int idScadenza = Convert.ToInt16(ViewState["idScadenza"].ToString());
+            //DatiScadenzario scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, Convert.ToInt16(idScadenza));
 
-            string importoVersato = ValidaCampo(txt_Versato, "", true, ref esito);
-            string iva = ValidaCampo(txt_IvaModifica, "", true, ref esito);
-            string dataScadenza = ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
+            //string importoVersato = ValidaCampo(txt_Versato, "", true, ref esito);
+            //string iva = ValidaCampo(txt_IvaModifica, "", true, ref esito);
+            //string dataScadenza = ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
+
+
+            DatiScadenzario scadenza = new DatiScadenzario();
+            string importoVersato = string.Empty;
+            string iva = string.Empty; 
+            string dataScadenza = string.Empty;
+            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref iva, ref dataScadenza);
+
 
             if (esito.Codice != Esito.ESITO_OK)
             {
@@ -430,7 +436,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             {
                 case "INSERIMENTO":
                     btnInserisciScadenza.Visible = true;
-                    btnModificaScadenza.Visible = false;
+                    btnModificaScadenza.Visible = btnAggiungiPagamento.Visible = false;
 
                     div_CampiModifica.Visible = false;
                     div_CampiInserimento.Visible = true;
@@ -445,7 +451,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     break;
                 case "MODIFICA":
                     btnInserisciScadenza.Visible = false;
-                    btnModificaScadenza.Visible = true;
+                    btnModificaScadenza.Visible = btnAggiungiPagamento.Visible = true;
                    
                     div_CampiModifica.Visible = true;
                     div_CampiInserimento.Visible = false;
@@ -460,7 +466,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     break;
                 default:
                     btnInserisciScadenza.Visible = false;
-                    btnModificaScadenza.Visible = false;
+                    btnModificaScadenza.Visible = btnAggiungiPagamento.Visible = false;
                     
                     break;
             }
@@ -516,9 +522,87 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
         }
 
+        // INSERIMENTO DI UNA ULTERIORE RATA IN CASO DI IMPORTO CHE NON COPRE INTERAMENTE IL DOVUTO
+        protected void btnInserisciPagamento_Click(object sender, EventArgs e)
+        {
+            NascondiErroriValidazione();
+
+            //Esito esito = new Esito();
+            //int idScadenza = Convert.ToInt16(ViewState["idScadenza"].ToString());
+            //DatiScadenzario scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, Convert.ToInt16(idScadenza));
+
+            //string importoVersato = ValidaCampo(txt_Versato, "", true, ref esito);
+            //string iva = ValidaCampo(txt_IvaModifica, "", true, ref esito);
+            //string dataScadenza = ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
+
+            DatiScadenzario scadenza = new DatiScadenzario();
+            string importoVersato = string.Empty;
+            string iva = string.Empty;
+            string dataScadenza = string.Empty;
+            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref iva, ref dataScadenza);
+
+            if (esito.Codice != Esito.ESITO_OK)
+            {
+                ShowError("Controllare i campi evidenziati");
+            }
+            else
+            {
+                decimal importoVersatoDecimal = decimal.Parse(importoVersato);
+
+                decimal differenzaImporto = (scadenza.ImportoAvere + scadenza.ImportoDare) - importoVersatoDecimal;
+                lbl_aggiungiPagamento.Text = differenzaImporto.ToString();
+                txt_DataAggiungiPagamento.Text = string.Empty;
+
+                if (importoVersatoDecimal==0)
+                {
+                    ShowWarning("Valorizzare l'importo versato o riscosso");
+
+                }
+                else if (differenzaImporto > 0)
+                {
+                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriAggiungiPagamento", script: "javascript: document.getElementById('" + panelAggiungiPagamento.ClientID + "').style.display='block'", addScriptTags: true);
+                }
+                else
+                {
+                    ShowWarning("È possibile inserire un nuovo pagamento solo se l'importo versato o riscosso non copre interamente la rata corrente");
+                }
+            }
+        }
+
+        protected void btn_OkAggiungiPagamento_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+            string dataAggiungiDocumento = ValidaCampo(txt_DataAggiungiPagamento, "", true, ref esito);
+
+            if (esito.Codice != Esito.ESITO_OK)
+            {
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriAggiungiPagamento", script: "javascript: document.getElementById('" + panelAggiungiPagamento.ClientID + "').style.display='block'", addScriptTags: true);
+                ShowError("Immettere la data del pagamento");
+            }
+            else
+            {
+                DatiScadenzario scadenzaDaAggiornare = new DatiScadenzario();
+                string importoVersato = string.Empty;
+                string iva = string.Empty;
+                string dataScadenza = string.Empty;
+                esito = PopolaDatiScadenzaDaSalvare(ref scadenzaDaAggiornare, ref importoVersato, ref iva, ref dataScadenza);
+               
+                Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare,  ddl_Tipo.SelectedValue, importoVersato, iva, dataScadenza, ddl_BancaModifica.SelectedValue, dataAggiungiDocumento, ref esito);
+
+                if (esito.Codice == Esito.ESITO_OK)
+                {
+                    ShowSuccess("La scadenza selezionata è stata aggiornata ed è stato aggiunto un nuovo pagamento.");
+
+                    btnChiudiPopup_Click(null, null);
+
+                    PopolaGrigliaScadenze();
+                }
+            }
+        }
+
         private DatiScadenzario CreaOggettoDatiScadenzario(ref Esito esito)
         {
-            int _idDatiProtocollo = ViewState["ID_PROTOCOLLO"] != null ? int.Parse(ViewState["ID_PROTOCOLLO"].ToString()) : 0;// int.Parse(txt_ClienteFornitore.Text); //DA MODIFICARE
+            int _idDatiProtocollo = ViewState["ID_PROTOCOLLO"] != null ? int.Parse(ViewState["ID_PROTOCOLLO"].ToString()) : 0;
 
             Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, _idDatiProtocollo);
             DatiScadenzario scadenza = new DatiScadenzario();
@@ -528,7 +612,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 ViewState["idScadenza"] = "0";
             }
 
-            DateTime? dataFattura = protocollo.Data_inizio_lavorazione;// protocollo.Data_protocollo;
+            DateTime? dataFattura = protocollo.Data_inizio_lavorazione;
 
             scadenza.Id = Convert.ToInt16(ViewState["idScadenza"].ToString());
             scadenza.IdDatiProtocollo = _idDatiProtocollo;
@@ -582,6 +666,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             txt_Versato.CssClass = txt_Versato.CssClass.Replace("erroreValidazione", "");
             txt_IvaModifica.CssClass = txt_IvaModifica.CssClass.Replace("erroreValidazione", "");
             txt_ScadenzaDocumento.CssClass = txt_ScadenzaDocumento.CssClass.Replace("erroreValidazione", "");
+
+            txt_DataAggiungiPagamento.CssClass = txt_DataAggiungiPagamento.CssClass.Replace("erroreValidazione", "");
         }
 
         private void PulisciCampiDettaglio()
@@ -603,6 +689,20 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected void btnChiudiPopup_Click(object sender, EventArgs e)
         {
             pnlContainer.Visible = false;
+        }
+
+        private Esito PopolaDatiScadenzaDaSalvare(ref DatiScadenzario scadenza, ref string importoVersato, ref string iva, ref string dataScadenza)
+        {
+            Esito esito = new Esito();
+
+            int idScadenza = Convert.ToInt16(ViewState["idScadenza"].ToString());
+            scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, Convert.ToInt16(idScadenza));
+
+            importoVersato = ValidaCampo(txt_Versato, "", true, ref esito);
+            iva = ValidaCampo(txt_IvaModifica, "", true, ref esito);
+            dataScadenza = ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
+
+            return esito;
         }
     }
 }

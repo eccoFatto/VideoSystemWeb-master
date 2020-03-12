@@ -27,6 +27,20 @@
                     format: 'DD/MM/YYYY'
                 });
             });
+
+            $('.calendarAggiungiPagamento').datetimepicker({
+                locale: 'it',
+                minDate: new Date(),
+                format: 'DD/MM/YYYY'
+            });
+
+            Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+                $('.calendarAggiungiPagamento').datetimepicker({
+                    locale: 'it',
+                    minDate: new Date(),
+                    format: 'DD/MM/YYYY'
+                });
+            });
         });
 
         // APRO POPUP VISUALIZZAZIONE/MODIFICA SCADENZA
@@ -363,7 +377,7 @@
     <asp:HiddenField ID="hf_idScadenza" runat="server" EnableViewState="true" />
     <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
 
-
+<%--POPUP INSERIMENTO E MODIFICA--%>
     <asp:UpdatePanel ID="upColl" runat="server">
         <ContentTemplate>
             <asp:Panel runat="server" ID="pnlContainer" Visible="false">
@@ -462,58 +476,64 @@
 
                                 </div>
 
-                                <div id="div_CampiModifica" runat="server" class="w3-row-padding" visible="false">
+                                <div id="div_CampiModifica" runat="server" class="w3-row" visible="false">
                                     <div class="w3-half" >
-                                        
-                                        <div class="w3-half w3-padding" >
-                                            <label>Imponibile</label>
-                                            <asp:TextBox ID="txt_Imponibile" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                        <div class="w3-row">
+                                            <div class="w3-half w3-padding" >
+                                                <label>Imponibile</label>
+                                                <asp:TextBox ID="txt_Imponibile" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                            </div>
+                                            <div class="w3-half w3-padding" >
+                                                <label>Imp. + IVA</label>
+                                                <asp:TextBox ID="txt_ImponibileIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                            </div>
                                         </div>
-                                        <div class="w3-half w3-padding" >
-                                            <label>Imp. + IVA</label>
-                                            <asp:TextBox ID="txt_ImponibileIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                        <div class="w3-row">
+                                            <div class="w3-third w3-padding" >
+                                                <label><asp:Label ID="lbl_VersatoRiscosso" runat="server" Text="Versato" /></label>
+                                                <asp:TextBox ID="txt_Versato" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align"  onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>
+                                            </div>
+                                            <div class="w3-third w3-padding" >
+                                                <label>IVA</label>
+                                                <asp:TextBox ID="txt_IvaModifica" runat="server" MaxLength="2" CssClass="w3-input w3-border" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>
+                                            </div>
+                                            <div class="w3-third w3-padding" >
+                                                <asp:Label ID="lbl_VersatoRiscossoIVA" runat="server" Text="Versato + IVA"></asp:Label>
+                                                <asp:TextBox ID="txt_VersatoIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" DataFormatString="{0:N2}"/>
+                                            </div>
                                         </div>
-
-                                        <div class="w3-third w3-padding" >
-                                            <asp:Label ID="lbl_VersatoRiscosso" runat="server" Text="Versato"></asp:Label>
-                                            <asp:TextBox ID="txt_Versato" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>
-                                        </div>
-                                        <div class="w3-third w3-padding" >
-                                            <label>IVA</label>
-                                            <asp:TextBox ID="txt_IvaModifica" runat="server" MaxLength="2" CssClass="w3-input w3-border" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>
-                                        </div>
-                                        <div class="w3-third w3-padding" >
-                                            <asp:Label ID="lbl_VersatoRiscossoIVA" runat="server" Text="Versato + IVA"></asp:Label>
-                                            <asp:TextBox ID="txt_VersatoIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" DataFormatString="{0:N2}"/>
-                                        </div>
-
-                                        <div class="w3-half w3-padding" >
-                                            <label>Totale</label>
-                                            <asp:TextBox ID="txt_Totale" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
-                                        </div>
-                                        <div class="w3-half w3-padding" >
-                                            <label>Totale + IVA</label>
-                                            <asp:TextBox ID="txt_TotaleIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                        <div class="w3-row">
+                                            <div class="w3-half w3-padding" >
+                                                <label>Totale</label>
+                                                <asp:TextBox ID="txt_Totale" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                            </div>
+                                            <div class="w3-half w3-padding" >
+                                                <label>Totale + IVA</label>
+                                                <asp:TextBox ID="txt_TotaleIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="w3-half  " >
-                                        <div class="w3-half w3-padding" >
-                                            <label>Totale documento</label>
-                                            <asp:TextBox ID="txt_TotaleDocumento" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                    <div class="w3-half" >
+                                        <div class="w3-row">
+                                            <div class="w3-half w3-padding" >
+                                                <label>Totale documento</label>
+                                                <asp:TextBox ID="txt_TotaleDocumento" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                            </div>
+                                            <div class="w3-half w3-padding" >
+                                                <label>Tot. documento + IVA</label>
+                                                <asp:TextBox ID="txt_TotDocumentoIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                            </div>
                                         </div>
-                                        <div class="w3-half w3-padding" >
-                                            <label>Tot. documento + IVA</label>
-                                            <asp:TextBox ID="txt_TotDocumentoIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
-                                        </div>
-
-                                        <div class="w3-half w3-padding" >
-                                            <label>Data</label>
-                                            <asp:TextBox ID="txt_DataDocumentoModifica" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" />
-                                        </div>
-                                        <div class="w3-half w3-padding" >
-                                            <label>Scadenza</label>
-                                            <asp:TextBox ID="txt_ScadenzaDocumento" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" />
+                                        <div class="w3-row">
+                                            <div class="w3-half w3-padding" >
+                                                <label>Data</label>
+                                                <asp:TextBox ID="txt_DataDocumentoModifica" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" />
+                                            </div>
+                                            <div class="w3-half w3-padding" >
+                                                <label>Scadenza</label>
+                                                <asp:TextBox ID="txt_ScadenzaDocumento" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" />
+                                            </div>
                                         </div>
 
                                         <div class="w3-col w3-padding">
@@ -526,6 +546,8 @@
                                 <br />
                                 <div style="text-align: center;">
                                     <asp:Button ID="btnInserisciScadenza" runat="server" Text="Inserisci Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciScadenza_Click" OnClientClick="return confirm('Confermi inserimento Scadenza?')" />
+                                    
+                                    <asp:Button ID="btnAggiungiPagamento" runat="server" Text="Aggiungi Pagamento" class="w3-panel w3-blue w3-border w3-round" OnClick="btnInserisciPagamento_Click" />
                                     <asp:Button ID="btnModificaScadenza" runat="server" Text="Modifica Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaScadenza_Click" OnClientClick="return confirm('Confermi modifica Scadenza?')" Visible="false" />
                                 </div>
                                 <p>
@@ -537,6 +559,43 @@
 
                 </asp:Panel>
             </asp:Panel>
+
+<!-- AGGIUNGI PAGAMENTO -->
+
+            <div id="panelAggiungiPagamento" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
+
+                <div id="divAggiungiPagamento" class="w3-modal-content w3-card-4 round" style="position: relative; width: 40%; background-color: white;">
+                    <div class="w3-row-padding">
+                        <div class="w3-panel w3-blue w3-center w3-round">
+                            <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Aggiunta nuovo pagamento</b> </h5>
+                            <span onclick="document.getElementById('<%= panelAggiungiPagamento.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                        </div>
+                        <div>
+                            È in corso la creazione di un nuovo pagamento per coprire l'importo rimanente della rata corrente, che ammonta a € 
+                            <asp:Label ID="lbl_aggiungiPagamento" runat="server" style="font-weight:bold"/><br />
+                            La rata corrente verrà modificata aggiornando l'importo dovuto con quello versato o riscosso. 
+                            <br /><br />
+                            Inserire la data di scadenza del nuovo pagamento.<br /><br />
+                        </div>
+                        <div class="w3-col round" style="padding: 5px; position:relative; height:10%; width: 96%">
+                            <div class="w3-col" style="width:15%">
+                                <label style="margin-bottom: 0.2rem;padding:8px;">Data</label>
+                            </div>
+                            <div class="w3-rest" >
+                                <asp:TextBox ID="txt_DataAggiungiPagamento" runat="server" CssClass="w3-input w3-border calendarAggiungiPagamento" placeholder="GG/MM/AAAA"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="w3-center" style="margin: 10px; position: relative; bottom:5px;width:96%;">
+                        <asp:Button ID="btn_OkAggiungiPagamento" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_OkAggiungiPagamento_Click" />
+                        <button onclick="document.getElementById('<%= panelAggiungiPagamento.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                    </div>
+                </div>
+            </div>
+
         </ContentTemplate>
     </asp:UpdatePanel>
+
+
 </asp:Content>

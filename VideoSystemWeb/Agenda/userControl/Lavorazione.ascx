@@ -704,9 +704,9 @@
                         </div>
 
                         <div class="w3-center" style="margin: 10px; position: absolute; bottom:5px;width:96%;">
-                                <asp:Button ID="btn_OkInserimentoMultiplo" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_OkInserimentoMultiplo_Click" />
-                                <button onclick="document.getElementById('<%= panelInserimentoMultiplo.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
-                            </div>
+                            <asp:Button ID="btn_OkInserimentoMultiplo" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_OkInserimentoMultiplo_Click" />
+                            <button onclick="document.getElementById('<%= panelInserimentoMultiplo.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                        </div>
                     </div>
                 </div>
             </div>

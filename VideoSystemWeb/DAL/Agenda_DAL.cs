@@ -233,7 +233,6 @@ namespace VideoSystemWeb.DAL
             Esito esito = new Esito();
             using (SqlConnection con = new SqlConnection(sqlConstr))
             {
-
                 using (SqlCommand StoreProc = new SqlCommand("InsertEvento"))
                 {
                     using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -371,7 +370,6 @@ namespace VideoSystemWeb.DAL
 
                             log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
                         }
-
                     }
                 }
             }

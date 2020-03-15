@@ -48,7 +48,7 @@ namespace VideoSystemWeb.DAL
 
                             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-                            // PARAMETRI PER LOG UTENTE
+                            #region PARAMETRI PER LOG UTENTE
                             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
                             idUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idUtente);
@@ -56,7 +56,7 @@ namespace VideoSystemWeb.DAL
                             SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
                             nomeUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nomeUtente);
-                            // FINE PARAMETRI PER LOG UTENTE
+                            #endregion
 
                             SqlParameter idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenza.IdDatiProtocollo);
                             idDatiProtocollo.Direction = ParameterDirection.Input;
@@ -150,9 +150,7 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            //StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-                            // PARAMETRI PER LOG UTENTE
+                            #region PARAMETRI PER LOG UTENTE
                             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
                             idUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idUtente);
@@ -160,7 +158,7 @@ namespace VideoSystemWeb.DAL
                             SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
                             nomeUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nomeUtente);
-                            // FINE PARAMETRI PER LOG UTENTE
+                            #endregion
 
                             SqlParameter id = new SqlParameter("@id", scadenza.Id);
                             id.Direction = ParameterDirection.Input;
@@ -238,6 +236,212 @@ namespace VideoSystemWeb.DAL
             }
         }
 
+        // USATO PER AGGIUNGERE UN PAGAMENTO AD UNA SCADENZA GIA' ESISTENTE E AGGIORNARE LA SCADENZA (IN TRANSAZIONE)
+        public Esito AggiungiPagamento(DatiScadenzario scadenzaDaAggiornare, DatiScadenzario scadenzaDaInserire)
+        {
+            Esito esito = new Esito();
+            using (SqlConnection con = new SqlConnection(sqlConstr))
+            {
+                using (SqlCommand StoreProc = new SqlCommand("UpdateDatiScadenzario"))
+                {
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        SqlTransaction transaction;
+                        StoreProc.Connection = con;
+                        StoreProc.Connection.Open();
+                        // Start a local transaction.
+                        transaction = con.BeginTransaction("ScadenzarioTransaction");
+
+                        try
+                        {
+                            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+                            #region AGGIORNAMENTO SCADENZA ESISTENTE
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            #region PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            #endregion
+
+                            SqlParameter id = new SqlParameter("@id", scadenzaDaAggiornare.Id);
+                            id.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id);
+
+                            SqlParameter idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenzaDaAggiornare.IdDatiProtocollo);
+                            idDatiProtocollo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idDatiProtocollo);
+
+                            SqlParameter banca = new SqlParameter("@banca", DBNull.Value);
+                            if (scadenzaDaAggiornare.Banca != null) banca = new SqlParameter("@banca", scadenzaDaAggiornare.Banca);
+                            banca.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(banca);
+
+                            SqlParameter dataScadenza = new SqlParameter("@dataScadenza", scadenzaDaAggiornare.DataScadenza);
+                            dataScadenza.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(dataScadenza);
+
+                            SqlParameter importoDare = new SqlParameter("@importoDare", scadenzaDaAggiornare.ImportoDare);
+                            importoDare.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoDare);
+
+                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", scadenzaDaAggiornare.ImportoDareIva);
+                            importoDareIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoDareIva);
+
+                            SqlParameter importoVersato = new SqlParameter("@importoVersato", scadenzaDaAggiornare.ImportoVersato);
+                            importoVersato.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoVersato);
+
+                            SqlParameter dataVersamento = new SqlParameter("@dataVersamento", DBNull.Value);
+                            if (scadenzaDaAggiornare.DataVersamento != null) dataVersamento = new SqlParameter("@dataVersamento", scadenzaDaAggiornare.DataVersamento);
+                            dataVersamento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(dataVersamento);
+
+                            SqlParameter importoAvere = new SqlParameter("@importoAvere", scadenzaDaAggiornare.ImportoAvere);
+                            importoAvere.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoAvere);
+
+                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", scadenzaDaAggiornare.ImportoAvereIva);
+                            importoAvereIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoAvereIva);
+
+                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenzaDaAggiornare.ImportoRiscosso);
+                            importoRiscosso.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoRiscosso);
+
+                            SqlParameter dataRiscossione = new SqlParameter("@dataRiscossione", DBNull.Value);
+                            if (scadenzaDaAggiornare.DataRiscossione != null) dataRiscossione = new SqlParameter("@dataRiscossione", scadenzaDaAggiornare.DataRiscossione);
+                            dataRiscossione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(dataRiscossione);
+
+                            SqlParameter note = new SqlParameter("@note", DBNull.Value);
+                            if (scadenzaDaAggiornare.Note != null) note = new SqlParameter("@note", scadenzaDaAggiornare.Note);
+                            note.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(note);
+
+                            SqlParameter iva = new SqlParameter("@iva", scadenzaDaAggiornare.Iva);
+                            iva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(iva);
+
+
+                            StoreProc.Transaction = transaction;
+                            StoreProc.ExecuteNonQuery();
+                            #endregion
+
+                            #region CREAZIONE NUOVA SCADENZA
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+                            StoreProc.CommandText = "InsertDatiScadenzario";
+                            StoreProc.Parameters.Clear();
+                            sda.SelectCommand = StoreProc;
+
+                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            #region PARAMETRI PER LOG UTENTE
+                            idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            #endregion
+
+                            idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenzaDaInserire.IdDatiProtocollo);
+                            idDatiProtocollo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idDatiProtocollo);
+
+                            banca = new SqlParameter("@banca", DBNull.Value);
+                            if (scadenzaDaInserire.Banca != null) banca = new SqlParameter("@banca", scadenzaDaInserire.Banca);
+                            banca.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(banca);
+
+                            dataScadenza = new SqlParameter("@dataScadenza", scadenzaDaInserire.DataScadenza);
+                            dataScadenza.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(dataScadenza);
+
+                            importoDare = new SqlParameter("@importoDare", scadenzaDaInserire.ImportoDare);
+                            importoDare.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoDare);
+
+                            importoDareIva = new SqlParameter("@importoDareIva", scadenzaDaInserire.ImportoDareIva);
+                            importoDareIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoDareIva);
+
+                            importoVersato = new SqlParameter("@importoVersato", scadenzaDaInserire.ImportoVersato);
+                            importoVersato.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoVersato);
+
+                            dataVersamento = new SqlParameter("@dataVersamento", DBNull.Value);
+                            if (scadenzaDaInserire.DataVersamento != null) dataVersamento = new SqlParameter("@dataVersamento", scadenzaDaInserire.DataVersamento);
+                            dataVersamento.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(dataVersamento);
+
+                            importoAvere = new SqlParameter("@importoAvere", scadenzaDaInserire.ImportoAvere);
+                            importoAvere.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoAvere);
+
+                            importoAvereIva = new SqlParameter("@importoAvereIva", scadenzaDaInserire.ImportoAvereIva);
+                            importoAvereIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoAvereIva);
+
+                            importoRiscosso = new SqlParameter("@importoRiscosso", scadenzaDaInserire.ImportoRiscosso);
+                            importoRiscosso.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoRiscosso);
+
+                            dataRiscossione = new SqlParameter("@dataRiscossione", DBNull.Value);
+                            if (scadenzaDaInserire.DataRiscossione != null) dataRiscossione = new SqlParameter("@dataRiscossione", scadenzaDaInserire.DataRiscossione);
+                            dataRiscossione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(dataRiscossione);
+
+                            note = new SqlParameter("@note", DBNull.Value);
+                            if (scadenzaDaInserire.Note != null) note = new SqlParameter("@note", scadenzaDaInserire.Note);
+                            note.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(note);
+
+                            iva = new SqlParameter("@iva", scadenzaDaInserire.Iva);
+                            iva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(iva);
+
+                            StoreProc.Transaction = transaction;
+                            StoreProc.ExecuteNonQuery();
+                            #endregion
+
+                            // Attempt to commit the transaction.
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                            esito.Descrizione = "Scadenzario_DAL.cs - AggiungiPagamento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+
+                            try
+                            {
+                                transaction.Rollback();
+                            }
+                            catch (Exception ex2)
+                            {
+                                esito.Descrizione += Environment.NewLine + "ERRORE ROLLBACK: " + ex2.Message;
+                                log.Error(ex2.Message + Environment.NewLine + ex2.StackTrace);
+                            }
+
+                            log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+                        }
+                    }
+                }
+            }
+
+            return esito;
+        }
+
+
         public void DeleteDatiScadenzarioById(int idScadenza, ref Esito esito)
         {
             try
@@ -253,7 +457,7 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            // PARAMETRI PER LOG UTENTE
+                            #region PARAMETRI PER LOG UTENTE
                             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
                             idUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idUtente);
@@ -261,7 +465,7 @@ namespace VideoSystemWeb.DAL
                             SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
                             nomeUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nomeUtente);
-                            // FINE PARAMETRI PER LOG UTENTE
+                            #endregion
 
                             SqlParameter parIdScadenza = new SqlParameter("@id", idScadenza);
                             parIdScadenza.Direction = ParameterDirection.Input;
@@ -313,11 +517,8 @@ namespace VideoSystemWeb.DAL
                                     scadenza.ImportoAvereIva = dt.Rows[0].Field<decimal>("importoAvereIva");
                                     scadenza.ImportoRiscosso = dt.Rows[0].Field<decimal>("importoRiscosso");
                                     scadenza.DataRiscossione = dt.Rows[0].Field<DateTime?>("dataRiscossione");
-
                                     scadenza.Note = dt.Rows[0].Field<string>("note");
-
                                     scadenza.Iva = dt.Rows[0].Field<decimal>("iva");
-
                                     scadenza.RagioneSocialeClienteFornitore = dt.Rows[0].Field<string>("cliente");
                                     scadenza.ProtocolloRiferimento = dt.Rows[0].Field<string>("protocollo_riferimento");
                                     scadenza.DataProtocollo = dt.Rows[0].Field<DateTime?>("data_inizio_lavorazione");
@@ -337,7 +538,6 @@ namespace VideoSystemWeb.DAL
             }
 
             return scadenza;
-
         }
 
         public List<DatiScadenzario> GetAllDatiScadenzario(string tipoAnagrafica, 
@@ -565,7 +765,7 @@ namespace VideoSystemWeb.DAL
             return listaDatiScadenzario;
         }
 
-        public List<Protocolli> getFattureNonInScadenzario(string tipo, ref Esito esito)
+        public List<Protocolli> GetFattureNonInScadenzario(string tipo, ref Esito esito)
         {
             List<Protocolli> listaProtocolli = new List<Protocolli>();
             int idTipoFattura =  UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
@@ -623,7 +823,7 @@ namespace VideoSystemWeb.DAL
             return listaProtocolli;
         }
 
-        public List<Anag_Clienti_Fornitori> getClientiFornitoriInScadenzario(ref Esito esito)
+        public List<Anag_Clienti_Fornitori> GetClientiFornitoriInScadenzario(ref Esito esito)
         {
             List<Anag_Clienti_Fornitori> listaClientiFornitori = new List<Anag_Clienti_Fornitori>();
             int idTipoFattura = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;

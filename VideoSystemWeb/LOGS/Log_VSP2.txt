@@ -3344,3 +3344,72 @@
 2020-02-29 13:51:27,275 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-02-29 13:53:04,834 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-02-29 14:01:16,484 [18] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-05 16:47:04,001 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-05 17:10:19,234 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-06 09:11:35,109 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-06 16:25:48,034 [28] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-06 16:27:12,239 [30] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-07 15:46:48,140 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-07 16:19:09,559 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-07 16:25:08,064 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-07 16:57:12,042 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-07 17:12:48,921 [21] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-08 17:17:36,066 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-08 17:21:59,292 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-08 17:29:12,264 [21] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-08 17:31:22,819 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-09 15:38:59,714 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-09 15:45:27,385 [4] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-09 15:49:41,662 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-09 15:53:03,659 [17] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 14:49:54,629 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 14:50:33,067 [5] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 14:55:03,075 [10] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 14:55:22,398 [16] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 14:58:47,236 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 14:59:20,279 [10] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 15:00:28,591 [13] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 15:01:51,975 [7] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 15:42:36,108 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 15:43:41,137 [13] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 15:45:28,336 [21] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 15:45:57,144 [16] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 15:46:16,524 [28] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 15:46:51,058 [7] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 15:46:51,058 [7] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 15:48:44,544 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 15:50:23,822 [6] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 15:54:43,580 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 16:03:02,845 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 16:03:33,693 [18] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 17:43:12,980 [45] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 17:45:55,059 [34] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 19:36:59,514 [57] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-10 19:37:29,725 [62] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 19:44:01,806 [60] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-10 20:01:23,575 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-11 09:00:40,945 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-11 09:01:52,988 [7] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:06:55,110 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-11 09:08:09,770 [13] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:10:02,832 [21] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:11:15,713 [10] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:15:22,539 [5] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:20:19,020 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-11 09:20:50,398 [10] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:32:50,476 [7] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:32:59,568 [7] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:32:59,568 [7] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:36:10,660 [7] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:37:24,889 [28] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:40:08,165 [32] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 09:43:03,353 [7] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 13:01:08,487 [53] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-11 13:01:59,395 [53] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-11 13:02:10,291 [64] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-12 12:37:23,318 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-12 12:43:56,306 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-12 12:50:28,103 [17] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-03-12 16:59:35,774 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-12 17:13:38,532 [23] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-03-12 17:21:27,439 [19] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

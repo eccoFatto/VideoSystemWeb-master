@@ -231,6 +231,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBtnInserisciScadenza;
 
         /// <summary>
+        /// Controllo clbtnInserisciScadenza.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl clbtnInserisciScadenza;
+
+        /// <summary>
         /// Controllo BtnPulisciCampiRicerca.
         /// </summary>
         /// <remarks>
@@ -319,6 +328,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel innerContainer;
+
+        /// <summary>
+        /// Controllo lbl_IntestazionePopup.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_IntestazionePopup;
 
         /// <summary>
         /// Controllo btnApriDocumento.

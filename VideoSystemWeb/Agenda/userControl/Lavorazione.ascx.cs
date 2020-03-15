@@ -22,13 +22,16 @@ namespace VideoSystemWeb.Agenda.userControl
         public event PopupHandler RichiediOperazionePopup; //evento
         BasePage basePage = new BasePage();
 
+        #region TIPI
         private const int COLLABORATORE = 0;
         private const int FORNITORE = 1;
 
+        
         private const int ID_TIPO_PAGAMENTO_ASSUNZIONE = 1;
         private const int ID_TIPO_PAGAMENTO_MISTA = 2;
         private const int ID_TIPO_PAGAMENTO_RITENUTA_ACCONTO = 3;
         private const int ID_TIPO_PAGAMENTO_FATTURA = 4;
+        #endregion
 
         #region ELENCO CHIAVI VIEWSTATE
         private const string VIEWSTATE_FP_DETTAGLIOECONOMICO = "FPDettaglioEconomico"; // Figura Professionale selezionata in pannello modifica

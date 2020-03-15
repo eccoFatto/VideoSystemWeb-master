@@ -29,9 +29,14 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        #region TIPI
+        private const string TIPO_CLIENTE = "CLIENTE";
+        private const string TIPO_FORNITORE = "FORNITORE";
+        #endregion
+
         public void AggiornaDatiScadenzario(DatiScadenzario scadenza, string tipoScadenza, string importo, string iva, string dataScadenza, string banca, ref Esito esito)
         {
-            if (tipoScadenza.ToUpper() == "CLIENTE")
+            if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
             {
                 scadenza.DataRiscossione = DateTime.Now;
                 scadenza.ImportoRiscosso = string.IsNullOrEmpty(importo) ? 0 : decimal.Parse(importo);
@@ -74,7 +79,7 @@ namespace VideoSystemWeb.BLL
                     Iva = scadenza.Iva
                 };
 
-                if (tipoScadenza.ToUpper() == "CLIENTE")
+                if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
                 {
                     scadenzaAcconto.ImportoRiscosso = acconto;
                     scadenzaAcconto.DataRiscossione = DateTime.Now;
@@ -92,7 +97,7 @@ namespace VideoSystemWeb.BLL
                 Scadenzario_DAL.Instance.CreaDatiScadenzario(scadenzaAcconto, ref esito); // SCRITTURA ACCONTO
             }
 
-            if (tipoScadenza.ToUpper() == "CLIENTE")
+            if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
             {
                 scadenza.ImportoAvere = (scadenza.ImportoAvere - acconto) / decimal.Parse(numeroRate.ToString());
                 scadenza.ImportoAvereIva = (scadenza.ImportoAvereIva - accontoIva) / decimal.Parse(numeroRate.ToString());
@@ -122,7 +127,7 @@ namespace VideoSystemWeb.BLL
             scadenzaDaAggiornare.DataScadenza = DateTime.Parse(dataScadenza);
             scadenzaDaAggiornare.Banca = banca;
 
-            if (tipoScadenza.ToUpper() == "CLIENTE")
+            if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
             {
                 scadenzaDaAggiornare.DataRiscossione = DateTime.Now;
                 scadenzaDaAggiornare.ImportoRiscosso = string.IsNullOrEmpty(importoVersato) ? 0 : decimal.Parse(importoVersato);
@@ -155,7 +160,7 @@ namespace VideoSystemWeb.BLL
             scadenzaDaInserire.ImportoDareIva = 0;
             scadenzaDaInserire.ImportoVersato = 0;
 
-            if (tipoScadenza.ToUpper() == "CLIENTE")
+            if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
             {
                 scadenzaDaInserire.ImportoAvere = differenzaImporto;
                 scadenzaDaInserire.ImportoAvereIva = scadenzaDaInserire.ImportoAvere * (1 + (scadenzaDaAggiornare.Iva) / 100);
@@ -230,7 +235,7 @@ namespace VideoSystemWeb.BLL
 
         public List<Protocolli> getFattureNonInScadenzario(string tipo, ref Esito esito)
         {
-            return Scadenzario_DAL.Instance.getFattureNonInScadenzario(tipo, ref esito);
+            return Scadenzario_DAL.Instance.GetFattureNonInScadenzario(tipo, ref esito);
         }
         
         public List<DatiScadenzario> GetDatiScadenzarioByIdDatiProtocollo(int idDatiProtocollo, ref Esito esito)
@@ -240,7 +245,7 @@ namespace VideoSystemWeb.BLL
 
         public List<Anag_Clienti_Fornitori> getClientiFornitoriInScadenzario(ref Esito esito)
         {
-            return Scadenzario_DAL.Instance.getClientiFornitoriInScadenzario(ref esito);
+            return Scadenzario_DAL.Instance.GetClientiFornitoriInScadenzario(ref esito);
         }
     }
 }

@@ -76,7 +76,7 @@
             <%--$("#<%=hf_RagioneSociale.ClientID%>").val('');--%>
             $("#<%=txt_RagioneSociale.ClientID%>").val('');
             $("#<%=txt_NumeroFattura.ClientID%>").val('');
-            $("#<%=ddlFatturaPagata.ClientID%>").val('');
+            <%--$("#<%=ddlFatturaPagata.ClientID%>").val('');--%>
             $("#<%=txt_DataFatturaDa.ClientID%>").val('');
             $("#<%=txt_DataFatturaA.ClientID%>").val('');
             $("#<%=txt_DataScadenzaDa.ClientID%>").val('');
@@ -199,6 +199,7 @@
                     </div>
             </div>
 
+<%--RIQUADRI DEI TOTALI--%>
             <div class="w3-row-padding w3-margin-bottom w3-margin-top">
                 <div class="w3-threequarter" style="font-size:.8em;">
                     <div class="w3-half" style="padding-right:10px;">
@@ -317,7 +318,7 @@
                         </td>
                         <td style="width:40%;">                    
                             <div id="divBtnInserisciScadenza" runat="server"> 
-                                <div id="clbtnInserisciScadenza" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciScadenza();" >Inserisci</div>
+                                <div id="clbtnInserisciScadenza" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciScadenza();" >Inserisci</div>
 
                             </div>
                         </td>
@@ -333,7 +334,7 @@
 
             <div class="round">
                 <asp:GridView ID="gv_scadenze" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" 
-                    CssClass="grid" AllowPaging="True" OnPageIndexChanging="gv_scadenze_PageIndexChanging" PageSize="20"  
+                    CssClass="grid" AllowPaging="True" OnPageIndexChanging="gv_scadenze_PageIndexChanging" PageSize="20" 
                     EmptyDataText="Nessuna scadenza trovata" EmptyDataRowStyle-HorizontalAlign="Center" OnRowCommand="gv_scadenze_RowCommand">
                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>
                     <Columns>
@@ -390,7 +391,9 @@
 
                     <div class="w3-container">
                         <div class="w3-bar w3-yellow w3-round">
-                            <div class="w3-bar-item w3-button w3-yellow" >Nuova scadenza</div>
+                            <div class="w3-bar-item w3-button w3-yellow" >
+                                <asp:Label runat="server" id="lbl_IntestazionePopup" Text="Nuova scadenza" />
+                            </div>
                             <div class="w3-bar-item w3-button w3-yellow w3-right">
                                 <div id="btnChiudiPopup" class="w3-button w3-yellow w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
                             </div>
@@ -484,7 +487,7 @@
                                                 <asp:TextBox ID="txt_Imponibile" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
                                             </div>
                                             <div class="w3-half w3-padding" >
-                                                <label>Imp. + IVA</label>
+                                                <label>Imponibile + IVA</label>
                                                 <asp:TextBox ID="txt_ImponibileIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
                                             </div>
                                         </div>

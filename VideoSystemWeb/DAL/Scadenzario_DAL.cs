@@ -48,7 +48,7 @@ namespace VideoSystemWeb.DAL
 
                             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-                            // PARAMETRI PER LOG UTENTE
+                            #region PARAMETRI PER LOG UTENTE
                             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
                             idUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idUtente);
@@ -56,7 +56,7 @@ namespace VideoSystemWeb.DAL
                             SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
                             nomeUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nomeUtente);
-                            // FINE PARAMETRI PER LOG UTENTE
+                            #endregion
 
                             SqlParameter idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenza.IdDatiProtocollo);
                             idDatiProtocollo.Direction = ParameterDirection.Input;
@@ -150,7 +150,7 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            // PARAMETRI PER LOG UTENTE
+                            #region PARAMETRI PER LOG UTENTE
                             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
                             idUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idUtente);
@@ -158,7 +158,7 @@ namespace VideoSystemWeb.DAL
                             SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
                             nomeUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nomeUtente);
-                            // FINE PARAMETRI PER LOG UTENTE
+                            #endregion
 
                             SqlParameter id = new SqlParameter("@id", scadenza.Id);
                             id.Direction = ParameterDirection.Input;
@@ -261,7 +261,7 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            // PARAMETRI PER LOG UTENTE
+                            #region PARAMETRI PER LOG UTENTE
                             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
                             idUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idUtente);
@@ -269,7 +269,7 @@ namespace VideoSystemWeb.DAL
                             SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
                             nomeUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nomeUtente);
-                            // FINE PARAMETRI PER LOG UTENTE
+                            #endregion
 
                             SqlParameter id = new SqlParameter("@id", scadenzaDaAggiornare.Id);
                             id.Direction = ParameterDirection.Input;
@@ -344,7 +344,7 @@ namespace VideoSystemWeb.DAL
 
                             StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-                            // PARAMETRI PER LOG UTENTE
+                            #region PARAMETRI PER LOG UTENTE
                             idUtente = new SqlParameter("@idUtente", utente.id);
                             idUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idUtente);
@@ -352,7 +352,7 @@ namespace VideoSystemWeb.DAL
                             nomeUtente = new SqlParameter("@nomeUtente", utente.username);
                             nomeUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nomeUtente);
-                            // FINE PARAMETRI PER LOG UTENTE
+                            #endregion
 
                             idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenzaDaInserire.IdDatiProtocollo);
                             idDatiProtocollo.Direction = ParameterDirection.Input;
@@ -420,7 +420,7 @@ namespace VideoSystemWeb.DAL
                         catch (Exception ex)
                         {
                             esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                            esito.Descrizione = "Scadenzario_DAL.cs - AggiornaDatiScadenzario " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                            esito.Descrizione = "Scadenzario_DAL.cs - AggiungiPagamento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
 
                             try
                             {
@@ -457,7 +457,7 @@ namespace VideoSystemWeb.DAL
                             sda.SelectCommand = StoreProc;
                             StoreProc.CommandType = CommandType.StoredProcedure;
 
-                            // PARAMETRI PER LOG UTENTE
+                            #region PARAMETRI PER LOG UTENTE
                             SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
                             idUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idUtente);
@@ -465,7 +465,7 @@ namespace VideoSystemWeb.DAL
                             SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
                             nomeUtente.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nomeUtente);
-                            // FINE PARAMETRI PER LOG UTENTE
+                            #endregion
 
                             SqlParameter parIdScadenza = new SqlParameter("@id", idScadenza);
                             parIdScadenza.Direction = ParameterDirection.Input;
@@ -517,11 +517,8 @@ namespace VideoSystemWeb.DAL
                                     scadenza.ImportoAvereIva = dt.Rows[0].Field<decimal>("importoAvereIva");
                                     scadenza.ImportoRiscosso = dt.Rows[0].Field<decimal>("importoRiscosso");
                                     scadenza.DataRiscossione = dt.Rows[0].Field<DateTime?>("dataRiscossione");
-
                                     scadenza.Note = dt.Rows[0].Field<string>("note");
-
                                     scadenza.Iva = dt.Rows[0].Field<decimal>("iva");
-
                                     scadenza.RagioneSocialeClienteFornitore = dt.Rows[0].Field<string>("cliente");
                                     scadenza.ProtocolloRiferimento = dt.Rows[0].Field<string>("protocollo_riferimento");
                                     scadenza.DataProtocollo = dt.Rows[0].Field<DateTime?>("data_inizio_lavorazione");
@@ -541,7 +538,6 @@ namespace VideoSystemWeb.DAL
             }
 
             return scadenza;
-
         }
 
         public List<DatiScadenzario> GetAllDatiScadenzario(string tipoAnagrafica, 
@@ -769,7 +765,7 @@ namespace VideoSystemWeb.DAL
             return listaDatiScadenzario;
         }
 
-        public List<Protocolli> getFattureNonInScadenzario(string tipo, ref Esito esito)
+        public List<Protocolli> GetFattureNonInScadenzario(string tipo, ref Esito esito)
         {
             List<Protocolli> listaProtocolli = new List<Protocolli>();
             int idTipoFattura =  UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
@@ -827,7 +823,7 @@ namespace VideoSystemWeb.DAL
             return listaProtocolli;
         }
 
-        public List<Anag_Clienti_Fornitori> getClientiFornitoriInScadenzario(ref Esito esito)
+        public List<Anag_Clienti_Fornitori> GetClientiFornitoriInScadenzario(ref Esito esito)
         {
             List<Anag_Clienti_Fornitori> listaClientiFornitori = new List<Anag_Clienti_Fornitori>();
             int idTipoFattura = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;

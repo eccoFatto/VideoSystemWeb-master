@@ -258,6 +258,16 @@
                     <div style="width: 100%; text-align: left" runat="server" id="divFiltroAgenda">
                     </div>
                 </div>
+                <br />
+                <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
+                    <a href="/Protocollo/Protocollo.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Protocolli</a>
+                </div>
+                <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
+                    <a href="/Scadenzario/Scadenzario.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Scadenzario</a>
+                </div>
+                <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
+                    <a href="/MAGAZZINO/Attrezzature.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Magazzino</a>
+                </div>
             </td>
         </tr>
     </table>

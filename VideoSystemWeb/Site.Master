@@ -178,6 +178,7 @@
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                         <a href="/REPORT/StampaConsulenteLavoro.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Stampa Consulente del Lavoro</a>
                         <a href="/REPORT/StampaCollaboratori.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Stampa Collaboratori</a>
+                        <a href="/REPORT/ReportTLTime.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Report TLTime</a>
                     </div>
                 </div>
 
@@ -194,7 +195,11 @@
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=GRUPPO_MAGAZZINO" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologia Gruppo Magazzino</a>
                     </div>
                 </div>
-                <a href="/REPORT/ReportTLTime.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Report TLTime</a>
+
+                <div class="w3-dropdown-hover">
+                    <button class="w3-button w3-yellow w3-disabled" onclick="return false;" >Statistiche</button>
+                </div>
+
                 <asp:Button runat="server" ID="btnExit" OnClick="btnExit_Click" class="w3-bar-item w3-button w3-right w3-yellow" Text="Esci" />
                 <%--<a href="/Login.aspx" class="w3-bar-item w3-button w3-right" onclick="exitApplication();">Esci</a>--%>
             </div>

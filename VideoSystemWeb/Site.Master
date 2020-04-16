@@ -197,7 +197,11 @@
                 </div>
 
                 <div class="w3-dropdown-hover">
-                    <button class="w3-button w3-yellow w3-disabled" onclick="return false;" >Statistiche</button>
+                    <button class="w3-button w3-yellow" onclick="return false;">Statistiche</button>
+                    <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
+                        <a href="/STATISTICHE/Ricavi.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Ricavi</a>
+                        <a class="w3-bar-item w3-button w3-disabled">Costi</a>
+                    </div>
                 </div>
 
                 <asp:Button runat="server" ID="btnExit" OnClick="btnExit_Click" class="w3-bar-item w3-button w3-right w3-yellow" Text="Esci" />

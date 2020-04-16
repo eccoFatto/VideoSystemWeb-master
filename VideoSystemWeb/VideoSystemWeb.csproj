@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -540,6 +541,7 @@
     <Content Include="SITO\index4.html" />
     <Content Include="SITO\js\bootstrap-italia.bundle.min.js" />
     <Content Include="SITO\js\bootstrap-italia.min.js" />
+    <Content Include="STATISTICHE\Ricavi.aspx" />
     <Content Include="StretchSession.aspx" />
     <Content Include="TEMPLATE\testComboBox.aspx" />
     <Content Include="TEMPLATE\testWord.aspx" />
@@ -733,6 +735,7 @@
     <Compile Include="BLL\Scadenzario_BLL.cs" />
     <Compile Include="BLL\SessionManager.cs" />
     <Compile Include="BLL\Stampa\BaseStampa.cs" />
+    <Compile Include="BLL\Statistiche_BLL.cs" />
     <Compile Include="BLL\Stato.cs" />
     <Compile Include="BLL\UtilityTipologiche.cs" />
     <Compile Include="CONFIG\gestConfig.aspx.cs">
@@ -777,6 +780,7 @@
     <Compile Include="DAL\Login_DAL.cs" />
     <Compile Include="DAL\Report_DAL.cs" />
     <Compile Include="DAL\Scadenzario_DAL.cs" />
+    <Compile Include="DAL\Statistiche_DAL.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -806,6 +810,7 @@
     <Compile Include="Entity\DatiBancari.cs" />
     <Compile Include="Entity\NoteOfferta.cs" />
     <Compile Include="Entity\AttrezzatureMagazzino.cs" />
+    <Compile Include="Entity\StatisticheRicavi.cs" />
     <Compile Include="Entity\Utenti.cs" />
     <Compile Include="Entity\Protocolli.cs" />
     <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />
@@ -913,6 +918,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="STATISTICHE\Ricavi.aspx.cs">
+      <DependentUpon>Ricavi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="STATISTICHE\Ricavi.aspx.designer.cs">
+      <DependentUpon>Ricavi.aspx</DependentUpon>
     </Compile>
     <Compile Include="StretchSession.aspx.cs">
       <DependentUpon>StretchSession.aspx</DependentUpon>

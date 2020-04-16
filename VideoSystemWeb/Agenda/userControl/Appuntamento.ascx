@@ -201,9 +201,7 @@
                             <asp:HiddenField ID="hf_Risorse" runat="server" Value="" ClientIDMode="Static" />
                             <asp:Button ID="btn_Risorse" runat="server" Text="" Style="display: none" OnClick="btn_Risorse_Click" />
                             <asp:Button ID="ddl_Risorse" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divRis" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
-                            <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;">
-                                <input class="form-control" id="filtroRisorse" type="text" placeholder="Cerca..">
-                            </ul>
+                            <ul id="elencoRisorse" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;"></ul>
                         </div>
                     </div>
                 </div>
@@ -216,9 +214,7 @@
                         <div id="divTip" class="dropdown">
                             <asp:HiddenField ID="hf_Tipologie" runat="server" Value="" />
                             <asp:Button ID="ddl_Tipologie" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divTip" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
-                            <ul id="elencoTipologie" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto">
-                                <input class="form-control" id="filtroTipologie" type="text" placeholder="Cerca..">
-                            </ul>
+                            <ul id="elencoTipologie" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto"></ul>
                         </div>
                     </div>
                 </div>
@@ -252,9 +248,7 @@
                         <div id="divClienti" class="dropdown ">
                             <asp:HiddenField ID="hf_Clienti" runat="server" Value="" />
                             <asp:Button ID="ddl_Clienti" runat="server" CssClass="btn btn-primary dropdown-toggle w3-hover-shadow fieldMax" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden;" />
-                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto">
-                                <input class="form-control" id="filtroClienti" type="text" placeholder="Cerca..">
-                            </ul>
+                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto"></ul>
                         </div>
                     </div>
                 </div>

@@ -156,9 +156,11 @@ namespace VideoSystemWeb.BLL
             return abilitazioneScrittura;
         }
 
-        public void PopolaDDLTipologica(HtmlGenericControl listaDaPopolare, List<Tipologica> listaTipologica)
+        public void PopolaDDLTipologica(HtmlGenericControl listaDaPopolare, List<Tipologica> listaTipologica, string nomeFiltro)
         {
-            string elementi = listaDaPopolare.InnerHtml;
+            //string elementi = listaDaPopolare.InnerHtml;
+
+            string elementi = "<input class='form-control' id='" + nomeFiltro + "' type='text' placeholder='Cerca..'>"; // aggiungo elemento vuoto
             foreach (Tipologica tipologica in listaTipologica)
             {
                 elementi += "<li class='dropdown-item'><a class='elemLista' href='#' val='" + tipologica.id.ToString() + "'>" + tipologica.nome + "</a></li>";
@@ -166,9 +168,11 @@ namespace VideoSystemWeb.BLL
             listaDaPopolare.InnerHtml = elementi;
         }
 
-        public void PopolaDDLTipologica(HtmlGenericControl listaDaPopolare, List<ColonneAgenda> listaColonne)
+        public void PopolaDDLTipologica(HtmlGenericControl listaDaPopolare, List<ColonneAgenda> listaColonne, string nomeFiltro)
         {
-            string elementi = listaDaPopolare.InnerHtml;
+            //string elementi = listaDaPopolare.InnerHtml;
+
+            string elementi = "<input class='form-control' id='" + nomeFiltro + "' type='text' placeholder='Cerca..'>"; // aggiungo elemento vuoto
             foreach (ColonneAgenda tipologica in listaColonne)
             {
                 elementi += "<li class='dropdown-item'><a class='elemLista' href='#' val='" + tipologica.id.ToString() + "'>" + tipologica.nome + "</a></li>";
@@ -176,16 +180,44 @@ namespace VideoSystemWeb.BLL
             listaDaPopolare.InnerHtml = elementi;
         }
 
-        public void PopolaDDLGenerico<T>(HtmlGenericControl listaDaPopolare, List<T> lista)
+        public void PopolaDDLGenerico<T>(HtmlGenericControl listaDaPopolare, List<T> lista, string nomeFiltro)
         {
-            string elementi = listaDaPopolare.InnerHtml;
+            //string elementi =  listaDaPopolare.InnerHtml;
 
+            string elementi = "<input class='form-control' id='" + nomeFiltro + "' type='text' placeholder='Cerca..'><li class='dropdown-item'><a class='elemLista' href='#' val=''>&nbsp;</a></li>"; // aggiungo elemento vuoto
             if (lista is List<Anag_Clienti_Fornitori>)
             {
                 foreach (T elem in lista)
                 {
                     Anag_Clienti_Fornitori cliente = ConvertValue<Anag_Clienti_Fornitori>(elem);
                     elementi += "<li class='dropdown-item'><a class='elemLista' href='#' val='" + cliente.Id.ToString() + "'>" + cliente.RagioneSociale + "</a></li>";
+                }
+                listaDaPopolare.InnerHtml = elementi;
+            }
+            else if (lista is List<DatiLavorazione>)
+            {
+                foreach (T elem in lista)
+                {
+                    DatiLavorazione lavorazione = ConvertValue<DatiLavorazione>(elem);
+                    elementi += "<li class='dropdown-item'><a class='elemLista' href='#' val='" + lavorazione.CodiceLavorazione + "'>" + lavorazione.CodiceLavorazione + " - " + lavorazione.DescrizioneLavorazione + "</a></li>";
+                }
+                listaDaPopolare.InnerHtml = elementi;
+            }
+            else if (lista is List<Protocolli>)
+            {
+                foreach (T elem in lista)
+                {
+                    Protocolli protocollo = ConvertValue<Protocolli>(elem);
+                    elementi += "<li class='dropdown-item'><a class='elemLista' href='#' val='" + protocollo.Id.ToString() + "'>" + protocollo.Descrizione + "</a></li>";
+                }
+                listaDaPopolare.InnerHtml = elementi;
+            }
+            else if (lista is List<string>) // caso generico di una lista di astringhe, quindi senza ID
+            {
+                foreach (T elem in lista)
+                {
+                    string stringa = ConvertValue<string>(elem);
+                    elementi += "<li class='dropdown-item'><a class='elemLista' href='#' val='" + stringa + "'>" + stringa + "</a></li>";
                 }
                 listaDaPopolare.InnerHtml = elementi;
             }

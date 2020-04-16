@@ -194,6 +194,13 @@
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=GRUPPO_MAGAZZINO" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologia Gruppo Magazzino</a>
                     </div>
                 </div>
+                <div class="w3-dropdown-hover">
+                    <button class="w3-button w3-yellow" onclick="return false;">Statistiche</button>
+                    <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
+                        <a href="/STATISTICHE/Ricavi.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Ricavi</a>
+                        <a class="w3-bar-item w3-button w3-disabled">Costi</a>
+                    </div>
+                </div>
                 <a href="/REPORT/ReportTLTime.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Report TLTime</a>
                 <asp:Button runat="server" ID="btnExit" OnClick="btnExit_Click" class="w3-bar-item w3-button w3-right w3-yellow" Text="Esci" />
                 <%--<a href="/Login.aspx" class="w3-bar-item w3-button w3-right" onclick="exitApplication();">Esci</a>--%>

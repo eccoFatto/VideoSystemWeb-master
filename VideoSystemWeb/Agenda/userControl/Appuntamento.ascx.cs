@@ -39,8 +39,8 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 List<Anag_Clienti_Fornitori> listaClienti = SessionManager.ListaClientiFornitori.Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
 
-                basePage.PopolaDDLTipologica(elencoTipologie, SessionManager.ListaTipiTipologie);
-                basePage.PopolaDDLGenerico(elencoClienti, listaClienti);
+                basePage.PopolaDDLTipologica(elencoTipologie, SessionManager.ListaTipiTipologie, "filtroTipologie");
+                basePage.PopolaDDLGenerico(elencoClienti, listaClienti, "filtroClienti");
 
                 List<Tipologica> listaTender = SessionManager.ListaTender;
                 foreach (Tipologica tender in listaTender)
@@ -177,8 +177,8 @@ namespace VideoSystemWeb.Agenda.userControl
             Esito esito = new Esito();
             DatiAgenda evento = SessionManager.EventoSelezionato;
 
-            string[] elencoProduzioni = Agenda_BLL.Instance.CaricaElencoProduzioni(ref esito);
-            string[] elencoLavorazioni = Agenda_BLL.Instance.CaricaElencoLavorazioni(ref esito);
+            string[] elencoProduzioni = Agenda_BLL.Instance.CaricaElencoProduzioni(ref esito).ToArray();
+            string[] elencoLavorazioni = Agenda_BLL.Instance.CaricaElencoLavorazioni(ref esito).ToArray();
             ScriptManager.RegisterStartupScript(this, this.GetType(), "setElenchi", "setElenchi(" + Newtonsoft.Json.JsonConvert.SerializeObject(elencoProduzioni) + ", " + Newtonsoft.Json.JsonConvert.SerializeObject(elencoLavorazioni) + ");", true);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "autocompletamento", "autocompletamento();", true);
 
@@ -217,15 +217,15 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 List<ColonneAgenda> listaRisorseNoDipendenti = SessionManager.ListaRisorse.Where(x => x.sottotipo.ToUpper() != EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<ColonneAgenda>();
 
-                elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
-                basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseNoDipendenti);
+                //elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
+                basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseNoDipendenti, "filtroRisorse");
             }
             else 
             {
                 List<ColonneAgenda> listaRisorseSoloDipendenti = SessionManager.ListaRisorse.Where(x => x.sottotipo.ToUpper() == EnumSottotipiRisorse.DIPENDENTI.ToString()).ToList<ColonneAgenda>();
 
-                elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
-                basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseSoloDipendenti);
+                //elencoRisorse.InnerHtml = "<input class='form-control' id='filtroRisorse' type='text' placeholder='Cerca..'>";
+                basePage.PopolaDDLTipologica(elencoRisorse, listaRisorseSoloDipendenti, "filtroRisorse");
             }
 
             txt_DurataViaggioAndata.Text = evento.durata_viaggio_andata.ToString();

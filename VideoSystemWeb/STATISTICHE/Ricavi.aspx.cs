@@ -1,0 +1,201 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using VideoSystemWeb.BLL;
+using VideoSystemWeb.Entity;
+
+namespace VideoSystemWeb.STATISTICHE
+{
+    public partial class Ricavi : BasePage
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                CaricaCombo();
+            }
+
+            #region GRIGLIA CON RAGGRUPPAMENTO RIGHE
+            GridViewHelper helper = new GridViewHelper(this.gv_statistiche);
+            helper.RegisterGroup("Cliente", true, true);
+
+            helper.GroupHeader += new GroupEvent(Helper_GroupHeader);
+            helper.GroupSummary += new GroupEvent(Helper_GroupSummary);
+            helper.GeneralSummary += new FooterEvent(Helper_GeneralSummary);
+
+            //SUBTOTALE
+            helper.RegisterSummary("Listino", SummaryOperation.Sum, "Cliente");
+            helper.RegisterSummary("Costo", SummaryOperation.Sum, "Cliente");
+            helper.RegisterSummary("Ricavo", SummaryOperation.Count, "Cliente");
+
+            //TOTALE
+            helper.RegisterSummary("Listino", SummaryOperation.Sum);
+            helper.RegisterSummary("Costo", SummaryOperation.Sum);
+            helper.RegisterSummary("Ricavo", SummaryOperation.Count);
+
+
+            
+
+            #endregion
+
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
+        }
+
+
+
+        private void Helper_GroupHeader(string groupName, object[] values, GridViewRow row)
+        {
+            row.BackColor = Color.LightGray;
+            row.Cells[0].Text = "&nbsp;&nbsp;<b>" + row.Cells[0].Text + "</b>";
+        }
+
+        private void Helper_GroupSummary(string groupName, object[] values, GridViewRow row)
+        {
+            row.Cells[0].HorizontalAlign = HorizontalAlign.Right;
+
+            decimal listino;
+            decimal costo;
+
+            bool isOkListino = decimal.TryParse(row.Cells[1].Text, out listino);
+            bool isOkCosto = decimal.TryParse(row.Cells[2].Text, out costo);
+
+            decimal ricavo = new decimal(0);
+
+            if (isOkListino && isOkCosto && listino > 0)
+            {
+                ricavo = (listino - costo) / listino;
+            }
+
+            if (chk_Listino.Checked || chk_Costi.Checked || chk_Ricavo.Checked)
+            {
+                row.Cells[0].Text = "<b><i>Subtotale</i></b>";
+                row.Cells[1].Text = "<b><i>" + row.Cells[1].Text + "</i></b>";
+                row.Cells[2].Text = "<b><i>" + row.Cells[2].Text + "</i></b>";
+                row.Cells[3].Text = "<b><i>" + string.Format("{0:P2}", ricavo) + "</i></b>";
+            }
+            row.Cells[1].Visible = chk_Listino.Checked;
+            row.Cells[2].Visible = chk_Costi.Checked;
+            row.Cells[3].Visible = chk_Ricavo.Checked;
+        }
+
+        private void Helper_GeneralSummary(GridViewRow row)
+        {
+            row.BackColor = Color.Gray;
+            row.Cells[0].HorizontalAlign = HorizontalAlign.Right;
+
+            decimal listino;
+            decimal costo;
+
+            bool isOkListino = decimal.TryParse(row.Cells[1].Text, out listino);
+            bool isOkCosto = decimal.TryParse(row.Cells[2].Text, out costo);
+
+            decimal ricavo = new decimal(0);
+
+            if (isOkListino && isOkCosto && listino > 0)
+            {
+                ricavo = (listino - costo) / listino;
+            }
+
+            if (chk_Listino.Checked || chk_Costi.Checked || chk_Ricavo.Checked)
+            {
+                row.Cells[0].Text = "<b>Totale</b>";
+                row.Cells[1].Text = "<b>" + row.Cells[1].Text + "</b>";
+                row.Cells[2].Text = "<b>" + row.Cells[2].Text + "</b>";
+                row.Cells[3].Text = "<b>" + string.Format("{0:P2}", ricavo) + "</b>";
+            }
+            row.Cells[1].Visible = chk_Listino.Checked;
+            row.Cells[2].Visible = chk_Costi.Checked;
+            row.Cells[3].Visible = chk_Ricavo.Checked;
+        }
+
+        private void CaricaCombo()
+        {
+            Esito esito = new Esito();
+            string filtroNomeCliente = hf_NomeCliente.Value;
+            string filtroNomeProduzione = hf_NomeProduzione.Value;
+            string filtroNomeLavorazione = hf_NomeLavorazione.Value;
+            string filtroNomeContratto = hf_NomeContratto.Value;
+
+            List<StatisticheRicavi> listaStatisticheRicavi = Statistiche_BLL.Instance.GetStatisticheRicavi(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, null, null, null, ref esito);
+
+            #region CLIENTE 
+            List<string> listaClienti = listaStatisticheRicavi.Select(item => item.Cliente).Distinct().ToList();
+            elencoClienti.InnerHtml = string.Empty;
+            PopolaDDLGenerico(elencoClienti, listaClienti, "filtroCliente");
+            #endregion
+
+            #region PRODUZIONE 
+            List<string> listaProduzioni = listaStatisticheRicavi.Select(item => item.Produzione).Distinct().ToList();
+            elencoProduzioni.InnerHtml = string.Empty;
+            PopolaDDLGenerico(elencoProduzioni, listaProduzioni, "filtroProduzione");
+            #endregion
+
+            #region LAVORAZIONE
+            List<string> listaLavorazioni = listaStatisticheRicavi.Select(item => item.Lavorazione).Distinct().ToList();
+            elencoLavorazioni.InnerHtml = string.Empty;
+            PopolaDDLGenerico(elencoLavorazioni, listaLavorazioni, "filtroLavorazione");
+            #endregion
+
+            #region CONTRATTI 
+            List<string> listaContratti = listaStatisticheRicavi.Select(item => item.Contratto).Distinct().ToList();
+            elencoContratti.InnerHtml = string.Empty;
+            PopolaDDLGenerico(elencoContratti, listaContratti, "filtroContratto");
+            #endregion
+
+            ddl_Cliente.Text = listaClienti.Contains(filtroNomeCliente) ? filtroNomeCliente : "";
+            ddl_Produzione.Text = listaProduzioni.Contains(filtroNomeProduzione) ? filtroNomeProduzione : "";
+            ddl_Lavorazione.Text = listaLavorazioni.Contains(filtroNomeLavorazione) ? filtroNomeLavorazione : "";
+            ddl_Contratto.Text = listaContratti.Contains(filtroNomeContratto) ? filtroNomeContratto : "";
+        }
+
+        protected void btnEseguiStatistica_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+
+            string filtroNomeCliente = hf_NomeCliente.Value;
+            string filtroNomeProduzione = hf_NomeProduzione.Value;
+            string filtroNomeLavorazione = hf_NomeLavorazione.Value;
+            string filtroNomeContratto = hf_NomeContratto.Value;
+
+            bool? isFatturato;
+            if (string.IsNullOrEmpty(ddlFatturato.SelectedValue))
+            {
+                isFatturato = null;
+            }
+            else
+            {
+                isFatturato = ddlFatturato.SelectedValue == "1";
+            }
+
+            string dataInizio = txt_PeriodoDa.Text;
+            string dataFine = txt_PeriodoA.Text;
+
+            List<StatisticheRicavi> listaStatisticheRicavi = Statistiche_BLL.Instance.GetStatisticheRicavi(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, isFatturato, dataInizio, dataFine, ref esito);
+
+            gv_statistiche.DataSource = listaStatisticheRicavi;
+            gv_statistiche.DataBind();
+        }
+
+        protected void btn_aggiornaFiltri_Click(object sender, EventArgs e)
+        {
+            CaricaCombo();
+        }
+
+        protected void gv_statistiche_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gv_statistiche.PageIndex = e.NewPageIndex;
+            btnEseguiStatistica_Click(null, null);
+        }
+
+        protected void gv_statistiche_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            e.Row.Cells[8].Visible = chk_Listino.Checked;
+            e.Row.Cells[9].Visible = chk_Costi.Checked;
+            e.Row.Cells[10].Visible = chk_Ricavo.Checked;
+        }
+    }
+}

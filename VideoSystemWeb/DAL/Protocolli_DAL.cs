@@ -31,15 +31,20 @@ namespace VideoSystemWeb.DAL
                 return instance;
             }
         }
-        public List<Protocolli> getProtocolli(ref Esito esito, bool soloAttivi = true)
+        public List<Protocolli> getProtocolli(string filtroCliente, string filtroProduzione, string filtroLavorazione, ref Esito esito, bool soloAttivi = true)
         {
             List<Protocolli> listaProtocolli = new List<Protocolli>();
+            string filtri = string.Empty;
+            filtri += soloAttivi ? "" : " AND ATTIVO = 1";
+            filtri += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND cliente = '" + filtroCliente + "'";
+            filtri += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " and produzione = '" + filtroProduzione + "'";
+            filtri += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " and lavorazione = '" + filtroLavorazione + "'";
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM dati_protocollo";
-                    if (soloAttivi) query += " WHERE ATTIVO = 1";
+                    string query = "SELECT * FROM dati_protocollo WHERE 1 = 1" + filtri;
+                   // if (soloAttivi) query += " AND ATTIVO = 1";
                     query += " ORDER BY codice_lavoro,numero_protocollo";
                     using (SqlCommand cmd = new SqlCommand(query))
                     {

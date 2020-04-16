@@ -62,6 +62,11 @@ namespace VideoSystemWeb.BLL
             return datiLavorazione;
         }
 
+        public List<DatiLavorazione> GetAllLavorazioni(ref Esito esito)
+        {
+            return Dati_Lavorazione_DAL.Instance.GetAllLavorazioni(ref esito);
+        }
+
         public int CreaDatiLavorazione(DatiLavorazione datiLavorazione, ref Esito esito)
         {
             int iREt = Dati_Lavorazione_DAL.Instance.CreaDatiLavorazione(datiLavorazione, ref esito);

@@ -76,14 +76,14 @@ namespace VideoSystemWeb.BLL
             return listaDatiAgenda;
         }
 
-        public string[] CaricaElencoProduzioni(ref Esito esito)
+        public List<string> CaricaElencoProduzioni(ref Esito esito)
         {
-            return Agenda_DAL.Instance.CaricaElencoProduzioni(ref esito).ToArray();
+            return Agenda_DAL.Instance.CaricaElencoProduzioni(null, ref esito);
         }
 
-        public string[] CaricaElencoLavorazioni(ref Esito esito)
+        public List<string> CaricaElencoLavorazioni(ref Esito esito)
         {
-            return Agenda_DAL.Instance.CaricaElencoLavorazioni(ref esito).ToArray();
+            return Agenda_DAL.Instance.CaricaElencoLavorazioni(null, null, ref esito).Select(x => x.lavorazione).ToList();
         }
 
         public DatiAgenda GetDatiAgendaById(List<DatiAgenda> listaDatiAgenda, int id)

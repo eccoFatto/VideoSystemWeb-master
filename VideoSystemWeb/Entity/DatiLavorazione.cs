@@ -21,6 +21,8 @@ namespace VideoSystemWeb.Entity
         private List<DatiArticoliLavorazione> listaArticoliLavorazione;
         private List<FiguraProfessionale> listaFigureProfessionali;
         private List<DatiPianoEsternoLavorazione> listaDatiPianoEsternoLavorazione;
+        private string descrizioneLavorazione;
+        private string codiceLavorazione;
 
         public int Id { get => id; set => id = value; }
         public int IdDatiAgenda { get => idDatiAgenda; set => idDatiAgenda = value; }
@@ -92,5 +94,7 @@ namespace VideoSystemWeb.Entity
             }
         }
         public List<DatiPianoEsternoLavorazione> ListaDatiPianoEsternoLavorazione { get => listaDatiPianoEsternoLavorazione; set => listaDatiPianoEsternoLavorazione = value; }
+        public string DescrizioneLavorazione { get => descrizioneLavorazione; set => descrizioneLavorazione = value; }
+        public string CodiceLavorazione { get => codiceLavorazione; set => codiceLavorazione = value; }
     }
 }

@@ -16,6 +16,7 @@ namespace VideoSystemWeb.BLL
         public static string LISTA_TIPI_STATO = "listaStati";
         public static string LISTA_TIPI_TIPOLOGIA = "listaTipiTipologie";
         public static string LISTA_TIPI_QUALIFICA = "listaQualifiche";
+        public static string LISTA_CLIENTI_FORNITORI = "listaClientiFornitori";
 
         // CHIAVI DI TAB_CONFIG
         public static string CFG_IVA = "IVA";
@@ -416,19 +417,20 @@ namespace VideoSystemWeb.BLL
         {
             get
             {
-                if (HttpContext.Current.Session["listaClientiFornitori"] == null || ((List<Anag_Clienti_Fornitori>)HttpContext.Current.Session["listaClientiFornitori"]).Count() == 0)
+                if (HttpContext.Current.Session[LISTA_CLIENTI_FORNITORI] == null || ((List<Anag_Clienti_Fornitori>)HttpContext.Current.Session[LISTA_CLIENTI_FORNITORI]).Count() == 0)
                 {
                     Esito esito = new Esito();
                    
-                    HttpContext.Current.Session["listaClientiFornitori"] = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito);
+                    HttpContext.Current.Session[LISTA_CLIENTI_FORNITORI] = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito);
                 }
-                return (List<Anag_Clienti_Fornitori>)HttpContext.Current.Session["listaClientiFornitori"];
+                return (List<Anag_Clienti_Fornitori>)HttpContext.Current.Session[LISTA_CLIENTI_FORNITORI];
             }
             set
             {
-                HttpContext.Current.Session["listaClientiFornitori"] = value;
+                HttpContext.Current.Session[LISTA_CLIENTI_FORNITORI] = value;
             }
         }
+        
         public static List<Tipologica> ListaTipiCategorieMagazzino
         {
             get

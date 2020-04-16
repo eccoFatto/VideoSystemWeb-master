@@ -54,10 +54,10 @@ namespace VideoSystemWeb.DAL
                                 {
                                     datiLavorazione.Id = dt.Rows[0].Field<int>("id");
                                     datiLavorazione.IdDatiAgenda = dt.Rows[0].Field<int>("idDatiAgenda");
-                                    datiLavorazione.IdContratto = dt.Rows[0].Field<int>("idContratto");
-                                    datiLavorazione.IdReferente = dt.Rows[0].Field<int>("idReferente");
-                                    datiLavorazione.IdCapoTecnico = dt.Rows[0].Field<int>("idCapoTecnico");
-                                    datiLavorazione.IdProduttore = dt.Rows[0].Field<int>("idProduttore");
+                                    datiLavorazione.IdContratto = dt.Rows[0].Field<int?>("idContratto");
+                                    datiLavorazione.IdReferente = dt.Rows[0].Field<int?>("idReferente");
+                                    datiLavorazione.IdCapoTecnico = dt.Rows[0].Field<int?>("idCapoTecnico");
+                                    datiLavorazione.IdProduttore = dt.Rows[0].Field<int?>("idProduttore");
                                     datiLavorazione.Fattura = dt.Rows[0].Field<string>("fattura");
                                     datiLavorazione.Ordine = dt.Rows[0].Field<string>("ordine");
                                     datiLavorazione.NotePianoEsterno = dt.Rows[0].Field<string>("notePianoEsterno");
@@ -70,7 +70,7 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Descrizione = "Dati_Lavorazione_DAL.cs - getDatiLavorazioneById " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
             return datiLavorazione;
         }
@@ -116,11 +116,61 @@ namespace VideoSystemWeb.DAL
             catch (Exception ex)
             {
                 esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
-                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+                esito.Descrizione = "Dati_Lavorazione_DAL.cs - getDatiLavorazioneByIdEvento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
             return datiLavorazione;
         }
 
+        public List<DatiLavorazione> GetAllLavorazioni(ref Esito esito)
+        {
+            List<DatiLavorazione> listaDatiLavorazione = new List<DatiLavorazione>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT a.*, b.lavorazione FROM dati_lavorazione a left join tab_dati_agenda b on a.idDatiAgenda=b.id";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        DatiLavorazione datiLavorazione = new DatiLavorazione
+                                        {
+                                            Id = riga.Field<int>("id"),
+                                            IdDatiAgenda = riga.Field<int>("idDatiAgenda"),
+                                            IdContratto = riga.Field<int?>("idContratto"),
+                                            IdReferente = riga.Field<int?>("idReferente"),
+                                            IdCapoTecnico = riga.Field<int?>("idCapoTecnico"),
+                                            IdProduttore = riga.Field<int?>("idProduttore"),
+                                            Fattura = riga.Field<string>("fattura"),
+                                            Ordine = riga.Field<string>("ordine"),
+                                            NotePianoEsterno = riga.Field<string>("notePianoEsterno"),
+                                            DescrizioneLavorazione = riga.Field<string>("lavorazione")
+                                        };
+
+                                        listaDatiLavorazione.Add(datiLavorazione);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Dati_Lavorazione_DAL.cs - getAllLavorazioni " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+            return listaDatiLavorazione;
+        }
         public int CreaDatiLavorazione(DatiLavorazione datiLavorazione, ref Esito esito)
         {
             Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);

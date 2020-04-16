@@ -816,14 +816,17 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        public List<string> CaricaElencoProduzioni(ref Esito esito)
+        public List<string> CaricaElencoProduzioni(string filtroCliente, ref Esito esito)
         {
             List<string> listaProduzioni = new List<string>();
+            string filtri = string.Empty;
+            filtri += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " and id_cliente = " + filtroCliente;
+
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT produzione FROM " + TABELLA_DATI_AGENDA))
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT produzione FROM " + TABELLA_DATI_AGENDA + " WHERE 1=1" + filtri))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -855,14 +858,18 @@ namespace VideoSystemWeb.DAL
             return listaProduzioni;
         }
 
-        public List<string> CaricaElencoLavorazioni(ref Esito esito)
+        // Prendo i dati della lavorazione dalla tabella tab_dati_agenda
+        public List<DatiAgenda> CaricaElencoLavorazioni(string filtroCliente, string filtroProduzione, ref Esito esito)
         {
-            List<string> listaLavorazioni = new List<string>();
+            List<DatiAgenda> listaLavorazioni = new List<DatiAgenda>();
+            string filtri = string.Empty;
+            filtri += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " and id_cliente = " + filtroCliente;
+            filtri += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " and produzione = '" + filtroProduzione + "'";
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT lavorazione FROM " + TABELLA_DATI_AGENDA))
+                    using (SqlCommand cmd = new SqlCommand("SELECT DISTINCT codice_lavoro, lavorazione FROM " + TABELLA_DATI_AGENDA + " WHERE 1=1" + filtri))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -875,7 +882,13 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-                                        listaLavorazioni.Add(riga.Field<string>("lavorazione"));
+                                        DatiAgenda datiAgenda = new DatiAgenda
+                                        {
+                                            codice_lavoro = riga.Field<string>("codice_lavoro"),
+                                            lavorazione = riga.Field<string>("lavorazione")
+                                        };
+
+                                        listaLavorazioni.Add(datiAgenda);
                                     }
                                 }
                             }

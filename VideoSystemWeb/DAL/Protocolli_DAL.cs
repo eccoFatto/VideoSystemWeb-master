@@ -86,7 +86,7 @@ namespace VideoSystemWeb.DAL
             }
             catch (Exception ex)
             {
-                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Codice = Esito.ESITO_KO_ERRORE_LETTURA_TABELLA;
                 esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
             }
 
@@ -580,7 +580,124 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-        
+        public List<string> GetElencoClientiFornitori(ref Esito esito)
+        {
+            List<string> listaClientiFornitori = new List<string>();
 
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT distinct cliente FROM dati_protocollo order by cliente";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+
+                                        listaClientiFornitori.Add(riga.Field<string>("cliente"));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_LETTURA_TABELLA;
+                esito.Descrizione = "Protocolli_DAL.cs - GetElencoClientiFornitori " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaClientiFornitori;
+        }
+
+        public List<string> GetElencoProduzioni(ref Esito esito)
+        {
+            List<string> listaClientiFornitori = new List<string>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT distinct produzione FROM dati_protocollo order by produzione";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+
+                                        listaClientiFornitori.Add(riga.Field<string>("produzione"));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_LETTURA_TABELLA;
+                esito.Descrizione = "Protocolli_DAL.cs - GetElencoProduzioni " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaClientiFornitori;
+        }
+
+        public List<string> GetElencoLavorazioni(ref Esito esito)
+        {
+            List<string> listaClientiFornitori = new List<string>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT distinct lavorazione FROM dati_protocollo order by lavorazione";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+
+                                        listaClientiFornitori.Add(riga.Field<string>("lavorazione"));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_LETTURA_TABELLA;
+                esito.Descrizione = "Protocolli_DAL.cs - GetElencoLavorazioni " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaClientiFornitori;
+        }
     }
 }

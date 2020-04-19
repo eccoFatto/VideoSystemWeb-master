@@ -4,31 +4,12 @@
         $(document).ready(function () {
             $('.loader').hide();
 
-            $('.calendar').datetimepicker({
-                locale: 'it',
-                format: 'DD/MM/YYYY'
-            });
-
             Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
                 $('.calendar').datetimepicker({
                     locale: 'it',
                     format: 'DD/MM/YYYY'
                 });
             });
-
-            $('#<%=txt_PeriodoDa.ClientID%>').datetimepicker({
-                locale: 'it',
-                format: 'DD/MM/YYYY'
-            }).on('dp.change', function (e) {
-                $('#<%=txt_PeriodoA.ClientID%>').data("DateTimePicker").minDate(e.date)
-            });
-            $('#<%=txt_PeriodoA.ClientID%>').datetimepicker({
-                locale: 'it',
-                format: 'DD/MM/YYYY' 
-            }).on('dp.change', function (e) {
-                $('#<%=txt_PeriodoDa.ClientID%>').data("DateTimePicker").maxDate(e.date)
-            });
-           
         });
 
         // AZZERO TUTTI I CAMPI RICERCA
@@ -50,7 +31,7 @@
             $("#<%=txt_PeriodoDa.ClientID%>").val('');
             $("#<%=txt_PeriodoA.ClientID%>").val('');
 
-            $("#<%=btn_aggiornaFiltri.ClientID%>").click();
+            <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>
         }
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
@@ -67,8 +48,7 @@
                 $("#<%=ddl_Cliente.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Cliente.ClientID%>").attr("title", $(e.target).text());
 
-
-                $("#<%=btn_aggiornaFiltri.ClientID%>").click();
+                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%> //per eliminare aggiornamento filtri commentare questa riga 
             });
 
             // GESTIONE DROPDOWN PRODUZIONE
@@ -83,7 +63,7 @@
                 $("#<%=ddl_Produzione.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Produzione.ClientID%>").attr("title", $(e.target).text());
 
-                $("#<%=btn_aggiornaFiltri.ClientID%>").click();
+                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga 
             });
 
             // GESTIONE DROPDOWN LAVORAZIONE
@@ -98,7 +78,7 @@
                 $("#<%=ddl_Lavorazione.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Lavorazione.ClientID%>").attr("title", $(e.target).text());
 
-                $("#<%=btn_aggiornaFiltri.ClientID%>").click();
+                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga 
             });
 
             // GESTIONE DROPDOWN CONTRATTO
@@ -113,13 +93,13 @@
                 $("#<%=ddl_Contratto.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Contratto.ClientID%>").attr("title", $(e.target).text());
 
-                $("#<%=btn_aggiornaFiltri.ClientID%>").click();
+                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga 
             });
         });
     </script>
 
     <label><asp:Label ID="lblStatisticaRicavi" runat="server" Text="STATISTICA RICAVI" ForeColor="Teal"></asp:Label></label>
-    <asp:Button ID="btn_aggiornaFiltri" runat="server" Text="" OnClick="btn_aggiornaFiltri_Click" style="display:none"/>
+    <%--<asp:Button ID="btn_aggiornaFiltri" runat="server" Text="" OnClick="btn_aggiornaFiltri_Click" style="display:none"/>--%>
 
     <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
         <ContentTemplate>
@@ -215,9 +195,7 @@
 
             <div class="round">
                 <asp:GridView ID="gv_statistiche" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" 
-                    CssClass="grid" AllowPaging="False" OnPageIndexChanging="gv_statistiche_PageIndexChanging" 
-                    EmptyDataText="Nessuna voce trovata per i parametri immessi" EmptyDataRowStyle-HorizontalAlign="Center"
-                    OnRowDataBound="gv_statistiche_RowDataBound">
+                    CssClass="grid" AllowPaging="False"  EmptyDataRowStyle-HorizontalAlign="Center" OnRowDataBound="gv_statistiche_RowDataBound">
                     <%--<PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>--%>
                     <Columns>
                         <asp:BoundField DataField="Cliente" HeaderText="Cliente" HeaderStyle-Width="10%"/>

@@ -152,7 +152,19 @@ namespace VideoSystemWeb.BLL
             return ret;
         }
 
-       
+        public List<string> GetElencoClientiFornitori(ref Esito esito)
+        {
+            return Protocolli_DAL.Instance.GetElencoClientiFornitori(ref esito);
+        }
 
+        public List<string> GetElencoProduzioni(ref Esito esito)
+        {
+            return Protocolli_DAL.Instance.GetElencoProduzioni(ref esito);
+        }
+
+        public List<string> GetElencoLavorazioni(ref Esito esito)
+        {
+            return Protocolli_DAL.Instance.GetElencoLavorazioni(ref esito);
+        }
     }
 }

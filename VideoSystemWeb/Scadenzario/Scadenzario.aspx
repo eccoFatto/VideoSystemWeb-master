@@ -88,15 +88,24 @@
             return confirm("Verranno eliminate tutte le voci dello scadenzario riguardanti la fattura cui si riferisce la voce selezionata. Confermare?");
         }
 
-        function calcolaImportoIva() {
+        // sostituito da calcolaScorporoIva
+        <%--function calcolaImportoIva() {
             var importo = $('#<%=txt_ImportoDocumento.ClientID%>').val().replace(".", "").replace(",", ".");
             var iva = $('#<%=txt_Iva.ClientID%>').val().replace(".", "").replace(",", ".");;
             var importoIva = importo * (1 + (iva / 100));
 
             $('#<%=txt_ImportoIva.ClientID%>').val(importoIva.toFixed(2).replace(".", ","));
+        }--%>
+
+        function calcolaScorporoIva() {
+            var importoIva = $('#<%=txt_ImportoIva.ClientID%>').val().replace(".", "").replace(",", ".");
+            var iva = $('#<%=txt_Iva.ClientID%>').val().replace(".", "").replace(",", ".");;
+            var importo = importoIva / (1 + (iva / 100));
+
+            $('#<%=txt_ImportoDocumento.ClientID%>').val(importo.toFixed(2).replace(".", ","));
         }
 
-        function calcolaImportoModifica() {
+      <%--  function calcolaImportoModifica() {
             var importo = $('#<%=txt_Versato.ClientID%>').val().replace(".", "").replace(",",".");
             var iva = $('#<%=txt_IvaModifica.ClientID%>').val().replace(".", "").replace(",", ".");
             var importoIva = importo * (1 + (iva / 100));
@@ -105,6 +114,20 @@
 
             $('#<%=txt_VersatoIva.ClientID%>').val(importoIva.toFixed(2).replace(".", ","));
 
+            $('#<%=txt_Totale.ClientID%>').val((imponibile - importo).toFixed(2).replace(".", ","));
+            $('#<%=txt_TotaleIva.ClientID%>').val((imponibileIva - importoIva).toFixed(2).replace(".", ","));
+        }--%>
+
+        function calcolaScorporoModifica() {
+            var importoIva = $('#<%=txt_VersatoIva.ClientID%>').val().replace(".", "").replace(",", ".");            
+            var iva = $('#<%=txt_IvaModifica.ClientID%>').val().replace(".", "").replace(",", ".");
+            var importo = importoIva / (1 + (iva / 100));
+            
+            var imponibile = $('#<%=txt_Imponibile.ClientID%>').val().replace(".", "").replace(",", ".");
+            var imponibileIva = $('#<%=txt_ImponibileIva.ClientID%>').val().replace(".", "").replace(",", ".");
+        
+            $('#<%=txt_Versato.ClientID%>').val(importo.toFixed(2).replace(".", ","));
+           
             $('#<%=txt_Totale.ClientID%>').val((imponibile - importo).toFixed(2).replace(".", ","));
             $('#<%=txt_TotaleIva.ClientID%>').val((imponibileIva - importoIva).toFixed(2).replace(".", ","));
         }
@@ -343,12 +366,12 @@
                                 <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" CommandName="visualizzaDoc" CommandArgument='<%#Eval("id")%>'/>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="ImportoDare" HeaderText="Dare" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="ImportoVersato" HeaderText="Versato" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoDareIva" HeaderText="Dare" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoVersatoIva" HeaderText="Versato" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="ProtocolloRiferimento" HeaderText="Documento"  HeaderStyle-Width="12%" />
                         <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="16%" />
-                        <asp:BoundField DataField="ImportoAvere" HeaderText="Avere" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="ImportoRiscosso" HeaderText="Riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoAvereIva" HeaderText="Avere" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoRiscossoIva" HeaderText="Riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="DataScadenza" HeaderText="Scadenza" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="IsImportoEstinto" HeaderText="Stato" HeaderStyle-Width="7%" />
                         <asp:BoundField DataField="Banca" HeaderText="Banca" HeaderStyle-Width="13%" />
@@ -440,17 +463,18 @@
                                 </div>
                                 <div id="div_CampiInserimento" runat="server" class="w3-row-padding" >
                                     <div class="w3-col" style="width:25%">
-                                        <label>Importo documento</label>
-                                        <asp:TextBox ID="txt_ImportoDocumento" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoIva();" DataFormatString="{0:N2}"/>
+                                        <label>Importo con IVA</label>
+                                        <asp:TextBox ID="txt_ImportoIva" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" onkeypress="return onlyNumbers();" onkeyup="calcolaScorporoIva();" DataFormatString="{0:N2}"/>
                                     </div>
                                     <div class="w3-col" style="width:12.5%">
                                         <label>IVA</label>
-                                        <asp:TextBox ID="txt_Iva" runat="server" MaxLength="2" CssClass="w3-input w3-border" Text="" onkeyup="calcolaImportoIva()" onkeypress="return onlyNumbers();"/>
+                                        <asp:TextBox ID="txt_Iva" runat="server" MaxLength="2" CssClass="w3-input w3-border" Text="" onkeyup="calcolaScorporoIva()" onkeypress="return onlyNumbers();"/>
                                     </div>
                                     <div class="w3-col" style="width:25%">
-                                        <label>Importo IVA</label>
-                                        <asp:TextBox ID="txt_ImportoIva" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" disabled onkeypress="return onlyNumbers();" DataFormatString="{0:N2}"/>
+                                        <label>Importo netto</label>
+                                        <asp:TextBox ID="txt_ImportoDocumento" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" disabled  DataFormatString="{0:N2}"/>
                                     </div>
+                                    
                                     <div id="div_NumeroRate" runat="server" class="w3-col" style="width:12.5%">
                                         <label>Numero rate</label>
                                         <asp:TextBox ID="txt_NumeroRate" runat="server" MaxLength="3" CssClass="w3-input w3-border" placeholder="1" Text="" onkeypress="return onlyNumbers();"/>
@@ -481,38 +505,39 @@
 
                                 <div id="div_CampiModifica" runat="server" class="w3-row" visible="false">
                                     <div class="w3-half" >
-                                        <div class="w3-row">
-                                            <div class="w3-half w3-padding" >
-                                                <label>Imponibile</label>
-                                                <asp:TextBox ID="txt_Imponibile" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
-                                            </div>
+                                        <div class="w3-row">                                           
                                             <div class="w3-half w3-padding" >
                                                 <label>Imponibile + IVA</label>
                                                 <asp:TextBox ID="txt_ImponibileIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
                                             </div>
+                                            <div class="w3-half w3-padding" >
+                                                <label>Imponibile</label>
+                                                <asp:TextBox ID="txt_Imponibile" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                            </div>
                                         </div>
                                         <div class="w3-row">
                                             <div class="w3-third w3-padding" >
-                                                <label><asp:Label ID="lbl_VersatoRiscosso" runat="server" Text="Versato" /></label>
-                                                <asp:TextBox ID="txt_Versato" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align"  onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>
+                                                <asp:Label ID="lbl_VersatoRiscossoIVA" runat="server" Text="Versato + IVA"></asp:Label>
+                                                <asp:TextBox ID="txt_VersatoIva"  runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" onkeypress="return onlyNumbers();" onkeyup="calcolaScorporoModifica()" DataFormatString="{0:N2}"/>
                                             </div>
                                             <div class="w3-third w3-padding" >
                                                 <label>IVA</label>
-                                                <asp:TextBox ID="txt_IvaModifica" runat="server" MaxLength="2" CssClass="w3-input w3-border" onkeypress="return onlyNumbers();" onkeyup="calcolaImportoModifica()" DataFormatString="{0:N2}"/>
+                                                <asp:TextBox ID="txt_IvaModifica" runat="server" MaxLength="2" CssClass="w3-input w3-border" onkeypress="return onlyNumbers();" onkeyup="calcolaScorporoModifica()" DataFormatString="{0:N2}"/>
                                             </div>
                                             <div class="w3-third w3-padding" >
-                                                <asp:Label ID="lbl_VersatoRiscossoIVA" runat="server" Text="Versato + IVA"></asp:Label>
-                                                <asp:TextBox ID="txt_VersatoIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" DataFormatString="{0:N2}"/>
+                                                <label><asp:Label ID="lbl_VersatoRiscosso" runat="server" Text="Versato netto" /></label>
+                                                <asp:TextBox ID="txt_Versato" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Disabled DataFormatString="{0:N2}"/>
                                             </div>
+                                            
                                         </div>
                                         <div class="w3-row">
                                             <div class="w3-half w3-padding" >
-                                                <label>Totale</label>
-                                                <asp:TextBox ID="txt_Totale" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
-                                            </div>
-                                            <div class="w3-half w3-padding" >
                                                 <label>Totale + IVA</label>
                                                 <asp:TextBox ID="txt_TotaleIva" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
+                                            </div>
+                                            <div class="w3-half w3-padding" >
+                                                <label>Totale</label>
+                                                <asp:TextBox ID="txt_Totale" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" DataFormatString="{0:N2}"/>
                                             </div>
                                         </div>
                                     </div>

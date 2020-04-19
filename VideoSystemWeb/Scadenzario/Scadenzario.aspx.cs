@@ -89,6 +89,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 #endregion
             }
 
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataFatturaDa.ClientID + "', '" + txt_DataFatturaA.ClientID + "');", true);
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataScadenzaDa.ClientID + "', '" + txt_DataScadenzaA.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
@@ -300,13 +302,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
                     if (importoDocumentoDare > 0) // FORNITORE
                     {
-                        lbl_VersatoRiscosso.Text = "Versato";
+                        lbl_VersatoRiscosso.Text = "Versato netto";
                         lbl_VersatoRiscossoIVA.Text = "Versato + IVA";
                         ddl_Tipo.SelectedValue = "Fornitore";
                     }
                     else // CLIENTE
                     {
-                        lbl_VersatoRiscosso.Text = "Riscosso";
+                        lbl_VersatoRiscosso.Text = "Riscosso netto";
                         lbl_VersatoRiscossoIVA.Text = "Riscosso + IVA";
                         ddl_Tipo.SelectedValue = "Cliente";
                     }

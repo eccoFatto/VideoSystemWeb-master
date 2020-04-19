@@ -42,7 +42,7 @@ namespace VideoSystemWeb.DAL
             filtri += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale = '" + filtroCliente + "' ";
             filtri += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione = '" + filtroProduzione + "' ";
             filtri += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione = '" + filtroLavorazione + "' ";
-            filtri += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND e.descrizione = '" + filtroContratto + "' ";
+            filtri += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione = '" + filtroContratto + "' ";
             if (fatturato != null)
             {
                 filtri += (bool)fatturato ? "and e.protocollo_riferimento is not null " : "and e.protocollo_riferimento is null ";
@@ -54,14 +54,15 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.costo)  + sum(fp_netto)  costo, f.descrizione contratto " +
+                    string query = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto " +
                                     "from tab_dati_agenda a " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente " +
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.id_tipo_protocollo = 4 and destinatario = 'Cliente' " +
-                                    "left join dati_protocollo f on f.codice_lavoro = a.codice_lavoro and f.id_tipo_protocollo = 12 " +
-                                    "where 1=1 " + filtri +
+                                    "left join tipo_protocollo g on  g.nome = 'Fattura' " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente' " +
+                                    "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = 12 " +
+                                    "where a.codice_lavoro is not null " + filtri +
                                     "group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione";
 
                     using (SqlCommand cmd = new SqlCommand(query))

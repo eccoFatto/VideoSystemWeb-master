@@ -68,6 +68,22 @@ namespace VideoSystemWeb.Entity
             }
         }
 
+        public decimal ImportoVersatoIva
+        {
+            get
+            {
+                return ImportoVersato + (ImportoVersato / 100 * Iva);
+            }
+        }
+
+        public decimal ImportoRiscossoIva
+        {
+            get
+            {
+                return ImportoRiscosso + (ImportoRiscosso / 100 * Iva);
+            }
+        }
+
         public decimal Iva { get => iva; set => iva = value; }
     }
 }

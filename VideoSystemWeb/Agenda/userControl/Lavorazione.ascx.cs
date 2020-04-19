@@ -1849,7 +1849,7 @@ namespace VideoSystemWeb.Agenda.userControl
                     {
                         if ((bool)art.UsaCostoFP)
                         {
-                            totCosto += art.FP_netto != null ? (decimal)art.FP_netto : 0;
+                            totCosto += art.FP_lordo != null ? (decimal)art.FP_lordo : 0;
                         }
                         else
                         {

@@ -37,11 +37,9 @@ namespace VideoSystemWeb.STATISTICHE
             helper.RegisterSummary("Costo", SummaryOperation.Sum);
             helper.RegisterSummary("Ricavo", SummaryOperation.Count);
 
-
-            
-
             #endregion
 
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_PeriodoDa.ClientID + "', '" + txt_PeriodoA.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
@@ -114,6 +112,10 @@ namespace VideoSystemWeb.STATISTICHE
 
         private void CaricaCombo()
         {
+            gv_statistiche.DataSource = null;
+            gv_statistiche.DataBind();
+
+
             Esito esito = new Esito();
             string filtroNomeCliente = hf_NomeCliente.Value;
             string filtroNomeProduzione = hf_NomeProduzione.Value;
@@ -176,26 +178,35 @@ namespace VideoSystemWeb.STATISTICHE
 
             List<StatisticheRicavi> listaStatisticheRicavi = Statistiche_BLL.Instance.GetStatisticheRicavi(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, isFatturato, dataInizio, dataFine, ref esito);
 
+            if (listaStatisticheRicavi.Count==0)
+            {
+                ShowWarning("Nessuna voce trovata per i parametri immessi");
+
+            }
+
             gv_statistiche.DataSource = listaStatisticheRicavi;
             gv_statistiche.DataBind();
         }
 
-        protected void btn_aggiornaFiltri_Click(object sender, EventArgs e)
-        {
-            CaricaCombo();
-        }
+        //protected void btn_aggiornaFiltri_Click(object sender, EventArgs e)
+        //{
+        //    CaricaCombo();
+        //}
 
-        protected void gv_statistiche_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gv_statistiche.PageIndex = e.NewPageIndex;
-            btnEseguiStatistica_Click(null, null);
-        }
+        //protected void gv_statistiche_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        //{
+        //    gv_statistiche.PageIndex = e.NewPageIndex;
+        //    btnEseguiStatistica_Click(null, null);
+        //}
 
         protected void gv_statistiche_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            e.Row.Cells[8].Visible = chk_Listino.Checked;
-            e.Row.Cells[9].Visible = chk_Costi.Checked;
-            e.Row.Cells[10].Visible = chk_Ricavo.Checked;
+            if (e.Row.Cells.Count > 1)
+            {
+                e.Row.Cells[8].Visible = chk_Listino.Checked;
+                e.Row.Cells[9].Visible = chk_Costi.Checked;
+                e.Row.Cells[10].Visible = chk_Ricavo.Checked;
+            }
         }
     }
 }

@@ -37,56 +37,116 @@ namespace VideoSystemWeb.Protocollo
             
             if (!Page.IsPostBack)
             {
-                Esito esito = new Esito();
+
+                #region CODICE VETUSTO E SENZA SENSO
+                //Esito esito = new Esito();
+
+                //Session["NOME_FILE"] = "";
+                ////BasePage p = new BasePage();
+                ////Esito esito = basePage.CaricaListeTipologiche();
+
+                ////basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
+                ////ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
+                ////basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
+
+                //// CARICO LE COMBO
+                //if (string.IsNullOrEmpty(esito.Descrizione))
+                //{
+                //    ddlTipoProtocollo.Items.Clear();
+                //    cmbMod_Tipologia.Items.Clear();
+                //    ddlTipoProtocollo.Items.Add("");
+                //    foreach (Tipologica tipologiaProtocollo in SessionManager.ListaTipiProtocolli)
+                    //{
+                    //    ListItem item = new ListItem();
+                    //    item.Text = tipologiaProtocollo.nome;
+                    //    item.Value = tipologiaProtocollo.nome;
+
+                    //    ddlTipoProtocollo.Items.Add(item);
+
+                    //    ListItem itemMod = new ListItem();
+                    //    itemMod.Text = tipologiaProtocollo.nome;
+                    //    itemMod.Value = tipologiaProtocollo.id.ToString();
+
+                    //    cmbMod_Tipologia.Items.Add(itemMod);
+                    //}
+
+                //    // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
+                //    abilitaBottoni(basePage.AbilitazioneInScrittura());
+                //    // DA CONFIGURAZIONE SCELGO SE VISUALIZZARE SUBITO GLI ULTIMI PROTOCOLLI
+                //    if (Convert.ToBoolean(ConfigurationManager.AppSettings["VISUALIZZA_ULTIMI_PROTOCOLLI"]))
+                //    {
+                //        btnRicercaProtocollo_Click(null, null);
+                //    }
+                //}
+                //else
+                //{
+                //    Session["ErrorPageText"] = esito.Descrizione;
+                //    string url = String.Format("~/pageError.aspx");
+                //    Response.Redirect(url, true);
+                //}
+                #endregion
 
                 Session["NOME_FILE"] = "";
-                //BasePage p = new BasePage();
-                //Esito esito = basePage.CaricaListeTipologiche();
 
-                //basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
-                //ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
-                //basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
+                ddlTipoProtocollo.Items.Clear();
+                cmbMod_Tipologia.Items.Clear();
+                ddlTipoProtocollo.Items.Add("");
+                CaricaCombo();
 
-                // CARICO LE COMBO
-                if (string.IsNullOrEmpty(esito.Descrizione))
+                // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
+                abilitaBottoni(basePage.AbilitazioneInScrittura());
+                // DA CONFIGURAZIONE SCELGO SE VISUALIZZARE SUBITO GLI ULTIMI PROTOCOLLI
+                if (Convert.ToBoolean(ConfigurationManager.AppSettings["VISUALIZZA_ULTIMI_PROTOCOLLI"]))
                 {
-                    ddlTipoProtocollo.Items.Clear();
-                    cmbMod_Tipologia.Items.Clear();
-                    ddlTipoProtocollo.Items.Add("");
-                    foreach (Tipologica tipologiaProtocollo in SessionManager.ListaTipiProtocolli)
-                    {
-                        ListItem item = new ListItem();
-                        item.Text = tipologiaProtocollo.nome;
-                        item.Value = tipologiaProtocollo.nome;
-                        
-                        ddlTipoProtocollo.Items.Add(item);
-
-                        ListItem itemMod = new ListItem();
-                        itemMod.Text = tipologiaProtocollo.nome;
-                        itemMod.Value = tipologiaProtocollo.id.ToString();
-
-                        cmbMod_Tipologia.Items.Add(itemMod);
-                    }
-
-                    // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                    abilitaBottoni(basePage.AbilitazioneInScrittura());
-                    // DA CONFIGURAZIONE SCELGO SE VISUALIZZARE SUBITO GLI ULTIMI PROTOCOLLI
-                    if (Convert.ToBoolean(ConfigurationManager.AppSettings["VISUALIZZA_ULTIMI_PROTOCOLLI"]))
-                    {
-                        btnRicercaProtocollo_Click(null, null);
-                    }
-
-
-                }
-                else
-                {
-                    Session["ErrorPageText"] = esito.Descrizione;
-                    string url = String.Format("~/pageError.aspx");
-                    Response.Redirect(url, true);
+                    btnRicercaProtocollo_Click(null, null);
                 }
 
             }
+
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + tbDataLavorazione.ClientID + "', '" + tbDataLavorazioneA.ClientID + "');", true);
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + tbDataProtocollo.ClientID + "', '" + tbDataProtocolloA.ClientID + "');", true);
+
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
+        }
+
+        private void CaricaCombo()
+        {
+            Esito esito = new Esito();
+
+            #region CLIENTE/FORNITORE
+            List<string> listaClientiFornitori = Protocolli_BLL.Instance.GetElencoClientiFornitori(ref esito);
+            elencoClienti.InnerHtml = string.Empty;
+            PopolaDDLGenerico(elencoClienti, listaClientiFornitori, "filtroCliente");
+            #endregion
+
+            #region PRODUZIONE
+            List<string> listaProduzioni = Protocolli_BLL.Instance.GetElencoProduzioni(ref esito);
+            elencoProduzioni.InnerHtml = string.Empty;
+            PopolaDDLGenerico(elencoProduzioni, listaProduzioni, "filtroProduzione");
+            #endregion
+
+            #region LAVORAZIONE
+            List<string> listaLavorazioni = Protocolli_BLL.Instance.GetElencoLavorazioni(ref esito);
+            elencoLavorazioni.InnerHtml = string.Empty;
+            PopolaDDLGenerico(elencoLavorazioni, listaLavorazioni, "filtroLavorazione");
+            #endregion
+
+            #region TIPO PROTOCOLLO
+            foreach (Tipologica tipologiaProtocollo in SessionManager.ListaTipiProtocolli)
+            {
+                ListItem item = new ListItem();
+                item.Text = tipologiaProtocollo.nome;
+                item.Value = tipologiaProtocollo.nome;
+
+                ddlTipoProtocollo.Items.Add(item);
+
+                ListItem itemMod = new ListItem();
+                itemMod.Text = tipologiaProtocollo.nome;
+                itemMod.Value = tipologiaProtocollo.id.ToString();
+
+                cmbMod_Tipologia.Items.Add(itemMod);
+            }
+            #endregion
         }
 
         protected void btnEditProtocollo_Click(object sender, EventArgs e)
@@ -311,10 +371,16 @@ namespace VideoSystemWeb.Protocollo
 
             queryRicerca = queryRicerca.Replace("@numeroProtocollo", tbNumeroProtocollo.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
 
-            queryRicerca = queryRicerca.Replace("@lavorazione", tbLavorazione.Text.Trim().Replace("'", "''"));
+            //queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@cliente", hf_RagioneSociale.Value.Trim().Replace("'", "''"));
+
+            //queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@produzione", hf_Produzione.Value.Trim().Replace("'", "''"));
+
+            //queryRicerca = queryRicerca.Replace("@lavorazione", tbLavorazione.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@lavorazione", hf_Lavorazione.Value.Replace("'", "''"));
+
             queryRicerca = queryRicerca.Replace("@descrizione", tbDescrizione.Text.Trim().Replace("'", "''"));
 
             queryRicerca = queryRicerca.Replace("@tipoProtocollo", ddlTipoProtocollo.SelectedValue.ToString().Trim().Replace("'", "''"));

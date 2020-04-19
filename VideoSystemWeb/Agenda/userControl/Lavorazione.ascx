@@ -318,7 +318,7 @@
                 </div>
                
                 <div class="w3-third" style="padding: 5px; ">
-                    <label style="margin-bottom: 0.2rem;">Totale costo</label><br />
+                    <label style="margin-bottom: 0.2rem;">Totale costo lordo</label><br />
                     <asp:TextBox ID="txt_TotCosto_lavorazione" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
                 </div>
                 

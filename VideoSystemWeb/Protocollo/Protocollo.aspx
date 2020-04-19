@@ -26,6 +26,46 @@
                     locale: 'it',
                     format: 'DD/MM/YYYY'
                 });
+
+
+                // GESTIONE DROPDOWN CLIENTE
+                $("#filtroCliente").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#divCliente .dropdown-menu li").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+                $("#<%=elencoClienti.ClientID%> .dropdown-item").on("click", function (e) {
+                    $("#<%=hf_RagioneSociale.ClientID%>").val($(e.target).text());
+                    $("#<%=ddl_Cliente.ClientID%>").val($(e.target).text());
+                    $("#<%=ddl_Cliente.ClientID%>").attr("title", $(e.target).text());
+                });
+
+                // GESTIONE DROPDOWN PRODUZIONE
+                $("#filtroProduzione").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#divProduzione .dropdown-menu li").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+                $("#<%=elencoProduzioni.ClientID%> .dropdown-item").on("click", function (e) {
+                    $("#<%=hf_Produzione.ClientID%>").val($(e.target).text());
+                    $("#<%=ddl_Produzione.ClientID%>").val($(e.target).text());
+                    $("#<%=ddl_Produzione.ClientID%>").attr("title", $(e.target).text());
+                });
+
+                // GESTIONE DROPDOWN LAVORAZIONE
+                $("#filtroLavorazione").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#divLavorazione .dropdown-menu li").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+                });
+                $("#<%=elencoLavorazioni.ClientID%> .dropdown-item").on("click", function (e) {
+                    $("#<%=hf_Lavorazione.ClientID%>").val($(e.target).text());
+                    $("#<%=ddl_Lavorazione.ClientID%>").val($(e.target).text());
+                    $("#<%=ddl_Lavorazione.ClientID%>").attr("title", $(e.target).text());
+                });
             });
         });
 
@@ -89,16 +129,29 @@
         // AZZERO TUTTI I CAMPI RICERCA
         function azzeraCampiRicerca() {
             $("#<%=tbCodiceLavoro.ClientID%>").val('');
-            $("#<%=tbRagioneSociale.ClientID%>").val('');
+
+            <%--$("#<%=tbRagioneSociale.ClientID%>").val('');--%>
+            $("#<%=hf_RagioneSociale.ClientID%>").val('');
+            $("#<%=ddl_Cliente.ClientID%>").val('');
+
             $("#<%=tbNumeroProtocollo.ClientID%>").val('');
             $("#<%=tbDataProtocollo.ClientID%>").val('');
             $("#<%=tbDataProtocolloA.ClientID%>").val('');
             $("#<%=tbDataLavorazione.ClientID%>").val('');
             $("#<%=tbDataLavorazioneA.ClientID%>").val('');
-            $("#<%=tbProduzione.ClientID%>").val('');
+
+            <%--$("#<%=tbProduzione.ClientID%>").val('');--%>
+            $("#<%=hf_Produzione.ClientID%>").val('');
+            $("#<%=ddl_Produzione.ClientID%>").val('');
+
             $("#<%=tbProtocolloRiferimento.ClientID%>").val('');
-            $("#<%=tbLavorazione.ClientID%>").val('');
+
+            <%--$("#<%=tbLavorazione.ClientID%>").val('');--%>
+            $("#<%=hf_Lavorazione.ClientID%>").val('');
+            $("#<%=ddl_Lavorazione.ClientID%>").val('');
+
             $("#<%=tbDescrizione.ClientID%>").val('');
+
             $("#<%=ddlTipoProtocollo.ClientID%>").val('');
             $("#<%=ddlDestinatario.ClientID%>").val('');
         }
@@ -207,21 +260,6 @@
                     <label>Riferimento Documento</label>
                     <asp:TextBox ID="tbProtocolloRiferimento" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-                <div class="w3-quarter">
-                    <label>Tipo</label>
-                    <asp:DropDownList ID="ddlTipoProtocollo" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
-                    </asp:DropDownList>
-                </div>
-            </div>
-            <div class="w3-row-padding">
-                <div class="w3-quarter">
-                    <label>Produzione</label>
-                    <asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                </div>
-                <div class="w3-quarter">
-                    <label>Lavorazione</label>
-                    <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                </div>
                 <div class="w3-quarter" style="position:relative;">
                     <label>Data Lav. (Da-A)</label>
                     <table style="width:100%;">
@@ -231,23 +269,31 @@
                         </tr>
                     </table>
                 </div>
+                
+            </div>
+            <div class="w3-row-padding">
+                <div class="w3-quarter">
+                    <label>Produzione</label>
+                    <%--<asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>--%>
+                    <div id="divProduzione" class="dropdown ">
+                        <asp:HiddenField ID="hf_Produzione" runat="server" Value=""/>
+                        <asp:Button ID="ddl_Produzione" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
+                        <ul id="elencoProduzioni" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
+                    </div>
+                </div>
+                <div class="w3-quarter">
+                    <label>Lavorazione</label>
+                    <%--<asp:TextBox ID="tbLavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>--%>
+                    <div id="divLavorazione" class="dropdown ">
+                        <asp:HiddenField ID="hf_Lavorazione" runat="server" Value=""/>
+                        <asp:Button ID="ddl_Lavorazione" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
+                        <ul id="elencoLavorazioni" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
+                    </div>
+                </div>
+                
                 <div class="w3-quarter">
                     <label>Descrizione</label>
-                    <asp:TextBox ID="tbDescrizione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                </div>
-            </div>
-            <div class="w3-row-padding w3-margin-bottom">
-                <div class="w3-quarter">
-                    <label>Cliente/Fornitore</label>
-                    <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                </div>
-                <div class="w3-quarter">
-                    <label>Destinatario</label>
-                    <asp:DropDownList ID="ddlDestinatario" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
-                        <asp:ListItem Value="" Text=""></asp:ListItem>
-                        <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
-                        <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
-                    </asp:DropDownList>
+                    <asp:TextBox ID="tbDescrizione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder=""></asp:TextBox>                   
                 </div>
                 <div class="w3-quarter" style="position:relative;">
                     <label>Data Prot. (Da-A)</label>
@@ -257,6 +303,31 @@
                             <td style="position:relative;"><asp:TextBox ID="tbDataProtocolloA" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox></td>
                         </tr>
                     </table>
+                </div>
+            </div>
+            <div class="w3-row-padding w3-margin-bottom">
+                <div class="w3-quarter">
+                    <label>Cliente/Fornitore</label>
+                    <%--<asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>--%>
+                    <div id="divCliente" class="dropdown ">
+                        <asp:HiddenField ID="hf_RagioneSociale" runat="server" Value=""/>
+                        <asp:Button ID="ddl_Cliente" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
+                        <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
+                    </div>
+
+                </div>
+                <div class="w3-quarter">
+                    <label>Destinatario</label>
+                    <asp:DropDownList ID="ddlDestinatario" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                        <asp:ListItem Value="" Text=""></asp:ListItem>
+                        <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
+                        <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="w3-quarter">
+                    <label>Tipo</label>
+                    <asp:DropDownList ID="ddlTipoProtocollo" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                    </asp:DropDownList>
                 </div>
                 <div class="w3-quarter">
                     <label>&nbsp;</label>
@@ -381,6 +452,7 @@
                                         <label>Riferimento Documento</label>
                                         <asp:TextBox ID="tbMod_ProtocolloRiferimento" runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
+
                                     <div class="w3-quarter">
                                         <label>Tipo</label>
                                         <asp:DropDownList ID="cmbMod_Tipologia" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">

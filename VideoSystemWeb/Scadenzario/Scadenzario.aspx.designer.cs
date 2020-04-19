@@ -411,13 +411,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_CampiInserimento;
 
         /// <summary>
-        /// Controllo txt_ImportoDocumento.
+        /// Controllo txt_ImportoIva.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_ImportoDocumento;
+        protected global::System.Web.UI.WebControls.TextBox txt_ImportoIva;
 
         /// <summary>
         /// Controllo txt_Iva.
@@ -429,13 +429,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_Iva;
 
         /// <summary>
-        /// Controllo txt_ImportoIva.
+        /// Controllo txt_ImportoDocumento.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_ImportoIva;
+        protected global::System.Web.UI.WebControls.TextBox txt_ImportoDocumento;
 
         /// <summary>
         /// Controllo div_NumeroRate.
@@ -546,15 +546,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_CampiModifica;
 
         /// <summary>
-        /// Controllo txt_Imponibile.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_Imponibile;
-
-        /// <summary>
         /// Controllo txt_ImponibileIva.
         /// </summary>
         /// <remarks>
@@ -564,31 +555,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_ImponibileIva;
 
         /// <summary>
-        /// Controllo lbl_VersatoRiscosso.
+        /// Controllo txt_Imponibile.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_VersatoRiscosso;
-
-        /// <summary>
-        /// Controllo txt_Versato.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_Versato;
-
-        /// <summary>
-        /// Controllo txt_IvaModifica.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_IvaModifica;
+        protected global::System.Web.UI.WebControls.TextBox txt_Imponibile;
 
         /// <summary>
         /// Controllo lbl_VersatoRiscossoIVA.
@@ -609,13 +582,31 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_VersatoIva;
 
         /// <summary>
-        /// Controllo txt_Totale.
+        /// Controllo txt_IvaModifica.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_Totale;
+        protected global::System.Web.UI.WebControls.TextBox txt_IvaModifica;
+
+        /// <summary>
+        /// Controllo lbl_VersatoRiscosso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_VersatoRiscosso;
+
+        /// <summary>
+        /// Controllo txt_Versato.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Versato;
 
         /// <summary>
         /// Controllo txt_TotaleIva.
@@ -625,6 +616,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_TotaleIva;
+
+        /// <summary>
+        /// Controllo txt_Totale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Totale;
 
         /// <summary>
         /// Controllo txt_TotaleDocumento.

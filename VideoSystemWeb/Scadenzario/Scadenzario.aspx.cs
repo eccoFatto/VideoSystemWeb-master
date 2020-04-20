@@ -415,7 +415,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
                 if (differenzaImporto != 0)
                 {
-                    ShowWarning("L'importo in fase di registrazione non copre totalmente la rata corrente." + Environment.NewLine + "Modificare il valore in " + (scadenza.ImportoAvere + scadenza.ImportoDare) + " oppure selezionare 'Aggiungi pagamento'.");
+                    ShowWarning("L'importo in fase di registrazione non copre totalmente la rata corrente." + Environment.NewLine + "Modificare il valore in " + (scadenza.ImportoAvereIva + scadenza.ImportoDareIva) + " oppure selezionare 'Aggiungi pagamento'.");
                 }
                 else
                 {

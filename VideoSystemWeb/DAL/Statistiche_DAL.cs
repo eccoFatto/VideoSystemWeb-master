@@ -62,7 +62,7 @@ namespace VideoSystemWeb.DAL
                                     "left join tipo_protocollo g on  g.nome = 'Fattura' " +
                                     "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente' " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = 12 " +
-                                    "where a.codice_lavoro is not null " + filtri +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3" + filtri +
                                     "group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione";
 
                     using (SqlCommand cmd = new SqlCommand(query))

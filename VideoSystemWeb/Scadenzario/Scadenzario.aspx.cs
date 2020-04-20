@@ -106,8 +106,23 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 ddl_Banca.Items.Add(new ListItem(banca.Banca, banca.Banca));
                 ddl_BancaModifica.Items.Add(new ListItem(banca.Banca, banca.Banca));
             }
-            ddl_Banca.Items.Add(new ListItem("Cassa", "Cassa"));
-            ddl_BancaModifica.Items.Add(new ListItem("Cassa", "Cassa"));
+            foreach (Tipologica tipologiaBanca in SessionManager.ListaTipiBanca)
+            {
+                ListItem item = new ListItem();
+                item.Text = tipologiaBanca.nome;
+                item.Value = tipologiaBanca.nome;
+
+                ddl_Banca.Items.Add(item);
+
+                ListItem itemMod = new ListItem();
+                itemMod.Text = tipologiaBanca.nome;
+                itemMod.Value = tipologiaBanca.id.ToString();
+
+                ddl_BancaModifica.Items.Add(itemMod);
+            }
+
+            //ddl_Banca.Items.Add(new ListItem("Cassa", "Cassa"));
+            //ddl_BancaModifica.Items.Add(new ListItem("Cassa", "Cassa"));
             #endregion
 
             #region RAGIONE SOCIALE (SOSTITUITO CON NORMALE TEXTBOX)

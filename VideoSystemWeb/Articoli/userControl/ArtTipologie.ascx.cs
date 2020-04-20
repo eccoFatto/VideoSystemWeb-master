@@ -169,6 +169,15 @@ namespace VideoSystemWeb.Articoli.userControl
                     lista = SessionManager.ListaTipiGruppoMagazzino;
                     ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GRUPPO_MAGAZZINO;
                     break;
+                case "BANCA":
+                    if (clearLista)
+                    {
+                        SessionManager.ListaTipiBanca.Clear();
+                    }
+                    lblTipoArticolo.ForeColor = System.Drawing.Color.DarkViolet;
+                    lista = SessionManager.ListaTipiBanca;
+                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_BANCA;
+                    break;
                 default:
                     if (clearLista)
                     {

@@ -334,6 +334,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_GRUPPO_MAGAZZINO:
                     nomeSP = "InsertTipoGruppoMagazzino";
                     break;
+                case EnumTipologiche.TIPO_BANCA:
+                    nomeSP = "InsertTipoBanca";
+                    break;
                 default:
                     break;
             }
@@ -537,6 +540,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_GRUPPO_MAGAZZINO:
                     nomeSP = "UpdateTipoGruppoMagazzino";
                     break;
+                case EnumTipologiche.TIPO_BANCA:
+                    nomeSP = "UpdateTipoBanca";
+                    break;
                 default:
                     break;
             }
@@ -737,6 +743,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_GRUPPO_MAGAZZINO:
                     nomeSP = "DeleteTipoGruppoMagazzino";
                     break;
+                case EnumTipologiche.TIPO_BANCA:
+                    nomeSP = "DeleteTipoBanca";
+                    break;
                 default:
                     break;
             }
@@ -834,6 +843,9 @@ namespace VideoSystemWeb.DAL
                     break;
                 case EnumTipologiche.TIPO_GRUPPO_MAGAZZINO:
                     nomeSP = "RemoveTipoGruppoMagazzino";
+                    break;
+                case EnumTipologiche.TIPO_BANCA:
+                    nomeSP = "RemoveTipoBanca";
                     break;
                 default:
                     break;

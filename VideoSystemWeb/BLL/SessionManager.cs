@@ -491,6 +491,21 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["ListaTipiGruppoMagazzino"] = value;
             }
         }
+        public static List<Tipologica> ListaTipiBanca
+        {
+            get
+            {
+                if (HttpContext.Current.Session["listaTipiBanca"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiBanca"]).Count() == 0)
+                {
+                    HttpContext.Current.Session["listaTipiBanca"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_BANCA);
+                }
+                return (List<Tipologica>)HttpContext.Current.Session["listaTipiBanca"];
+            }
+            set
+            {
+                HttpContext.Current.Session["listaTipiBanca"] = value;
+            }
+        }
         public static bool VisualizzazioneAutomaticaPopupErrore
         {
             get

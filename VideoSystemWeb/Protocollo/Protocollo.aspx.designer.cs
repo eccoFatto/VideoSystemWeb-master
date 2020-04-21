@@ -7,13 +7,11 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.Protocollo
-{
-
-
-    public partial class Protocollo
-    {
-
+namespace VideoSystemWeb.Protocollo {
+    
+    
+    public partial class Protocollo {
+        
         /// <summary>
         /// Controllo lblProtocolli.
         /// </summary>
@@ -22,7 +20,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblProtocolli;
-
+        
         /// <summary>
         /// Controllo UpdatePanelRicerca.
         /// </summary>
@@ -31,7 +29,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
-
+        
         /// <summary>
         /// Controllo tbCodiceLavoro.
         /// </summary>
@@ -40,7 +38,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbCodiceLavoro;
-
+        
         /// <summary>
         /// Controllo tbNumeroProtocollo.
         /// </summary>
@@ -49,7 +47,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbNumeroProtocollo;
-
+        
         /// <summary>
         /// Controllo tbProtocolloRiferimento.
         /// </summary>
@@ -58,7 +56,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbProtocolloRiferimento;
-
+        
         /// <summary>
         /// Controllo tbDataLavorazione.
         /// </summary>
@@ -67,7 +65,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDataLavorazione;
-
+        
         /// <summary>
         /// Controllo tbDataLavorazioneA.
         /// </summary>
@@ -76,61 +74,25 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDataLavorazioneA;
-
+        
         /// <summary>
-        /// Controllo hf_Produzione.
+        /// Controllo tbProduzione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_Produzione;
-
+        protected global::System.Web.UI.WebControls.TextBox tbProduzione;
+        
         /// <summary>
-        /// Controllo ddl_Produzione.
+        /// Controllo tbLavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ddl_Produzione;
-
-        /// <summary>
-        /// Controllo elencoProduzioni.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoProduzioni;
-
-        /// <summary>
-        /// Controllo hf_Lavorazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_Lavorazione;
-
-        /// <summary>
-        /// Controllo ddl_Lavorazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ddl_Lavorazione;
-
-        /// <summary>
-        /// Controllo elencoLavorazioni.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoLavorazioni;
-
+        protected global::System.Web.UI.WebControls.TextBox tbLavorazione;
+        
         /// <summary>
         /// Controllo tbDescrizione.
         /// </summary>
@@ -139,7 +101,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDescrizione;
-
+        
         /// <summary>
         /// Controllo tbDataProtocollo.
         /// </summary>
@@ -148,7 +110,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDataProtocollo;
-
+        
         /// <summary>
         /// Controllo tbDataProtocolloA.
         /// </summary>
@@ -157,34 +119,16 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDataProtocolloA;
-
+        
         /// <summary>
-        /// Controllo hf_RagioneSociale.
+        /// Controllo tbRagioneSociale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_RagioneSociale;
-
-        /// <summary>
-        /// Controllo ddl_Cliente.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ddl_Cliente;
-
-        /// <summary>
-        /// Controllo elencoClienti.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoClienti;
-
+        protected global::System.Web.UI.WebControls.TextBox tbRagioneSociale;
+        
         /// <summary>
         /// Controllo ddlDestinatario.
         /// </summary>
@@ -193,7 +137,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDestinatario;
-
+        
         /// <summary>
         /// Controllo ddlTipoProtocollo.
         /// </summary>
@@ -202,7 +146,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTipoProtocollo;
-
+        
         /// <summary>
         /// Controllo btnRicercaProtocollo.
         /// </summary>
@@ -211,7 +155,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRicercaProtocollo;
-
+        
         /// <summary>
         /// Controllo divBtnInserisciProtocollo.
         /// </summary>
@@ -220,7 +164,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBtnInserisciProtocollo;
-
+        
         /// <summary>
         /// Controllo BtnPulisciCampiRicerca.
         /// </summary>
@@ -229,7 +173,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnPulisciCampiRicerca;
-
+        
         /// <summary>
         /// Controllo gv_protocolli.
         /// </summary>
@@ -238,7 +182,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_protocolli;
-
+        
         /// <summary>
         /// Controllo btnEditProtocollo.
         /// </summary>
@@ -247,7 +191,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEditProtocollo;
-
+        
         /// <summary>
         /// Controllo btnInsProtocollo.
         /// </summary>
@@ -256,7 +200,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInsProtocollo;
-
+        
         /// <summary>
         /// Controllo btnCercaCliente.
         /// </summary>
@@ -265,7 +209,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCercaCliente;
-
+        
         /// <summary>
         /// Controllo btnCercaLavorazione.
         /// </summary>
@@ -274,7 +218,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCercaLavorazione;
-
+        
         /// <summary>
         /// Controllo btnChiudiPopupServer.
         /// </summary>
@@ -283,7 +227,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnChiudiPopupServer;
-
+        
         /// <summary>
         /// Controllo btnChiudiPopupClientiServer.
         /// </summary>
@@ -292,7 +236,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnChiudiPopupClientiServer;
-
+        
         /// <summary>
         /// Controllo btnChiudiPopupLavorazioniServer.
         /// </summary>
@@ -301,7 +245,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnChiudiPopupLavorazioniServer;
-
+        
         /// <summary>
         /// Controllo btnAssociaClienteServer.
         /// </summary>
@@ -310,7 +254,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAssociaClienteServer;
-
+        
         /// <summary>
         /// Controllo hf_idProt.
         /// </summary>
@@ -319,7 +263,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_idProt;
-
+        
         /// <summary>
         /// Controllo hf_tipoOperazione.
         /// </summary>
@@ -328,7 +272,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_tipoOperazione;
-
+        
         /// <summary>
         /// Controllo hf_tabChiamata.
         /// </summary>
@@ -337,7 +281,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_tabChiamata;
-
+        
         /// <summary>
         /// Controllo upColl.
         /// </summary>
@@ -346,7 +290,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upColl;
-
+        
         /// <summary>
         /// Controllo pnlContainer.
         /// </summary>
@@ -355,7 +299,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlContainer;
-
+        
         /// <summary>
         /// Controllo innerContainer.
         /// </summary>
@@ -364,7 +308,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel innerContainer;
-
+        
         /// <summary>
         /// Controllo btnViewAttachement.
         /// </summary>
@@ -373,7 +317,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton btnViewAttachement;
-
+        
         /// <summary>
         /// Controllo tbMod_CodiceLavoro.
         /// </summary>
@@ -382,7 +326,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_CodiceLavoro;
-
+        
         /// <summary>
         /// Controllo imgbtnSelectCodLav.
         /// </summary>
@@ -391,7 +335,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectCodLav;
-
+        
         /// <summary>
         /// Controllo tbMod_NumeroProtocollo.
         /// </summary>
@@ -400,7 +344,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_NumeroProtocollo;
-
+        
         /// <summary>
         /// Controllo tbIdProtocolloDaModificare.
         /// </summary>
@@ -409,7 +353,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbIdProtocolloDaModificare;
-
+        
         /// <summary>
         /// Controllo tbMod_ProtocolloRiferimento.
         /// </summary>
@@ -418,7 +362,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_ProtocolloRiferimento;
-
+        
         /// <summary>
         /// Controllo cmbMod_Tipologia.
         /// </summary>
@@ -427,7 +371,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_Tipologia;
-
+        
         /// <summary>
         /// Controllo tbMod_Produzione.
         /// </summary>
@@ -436,7 +380,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Produzione;
-
+        
         /// <summary>
         /// Controllo tbMod_Lavorazione.
         /// </summary>
@@ -445,7 +389,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Lavorazione;
-
+        
         /// <summary>
         /// Controllo tbMod_DataLavorazione.
         /// </summary>
@@ -454,7 +398,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_DataLavorazione;
-
+        
         /// <summary>
         /// Controllo tbMod_Descrizione.
         /// </summary>
@@ -463,7 +407,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Descrizione;
-
+        
         /// <summary>
         /// Controllo tbMod_Cliente.
         /// </summary>
@@ -472,7 +416,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Cliente;
-
+        
         /// <summary>
         /// Controllo tbMod_IdCliente.
         /// </summary>
@@ -481,7 +425,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField tbMod_IdCliente;
-
+        
         /// <summary>
         /// Controllo imgbtnSelectCliente.
         /// </summary>
@@ -490,7 +434,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectCliente;
-
+        
         /// <summary>
         /// Controllo cmbMod_Destinatario.
         /// </summary>
@@ -499,7 +443,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_Destinatario;
-
+        
         /// <summary>
         /// Controllo cbMod_Pregresso.
         /// </summary>
@@ -508,7 +452,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox cbMod_Pregresso;
-
+        
         /// <summary>
         /// Controllo tbMod_DataProtocollo.
         /// </summary>
@@ -517,7 +461,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_DataProtocollo;
-
+        
         /// <summary>
         /// Controllo tbMod_NomeFile.
         /// </summary>
@@ -526,7 +470,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_NomeFile;
-
+        
         /// <summary>
         /// Controllo fuFileProt.
         /// </summary>
@@ -535,7 +479,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::AjaxControlToolkit.AsyncFileUpload fuFileProt;
-
+        
         /// <summary>
         /// Controllo btnAnnullaCaricamento.
         /// </summary>
@@ -544,7 +488,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnullaCaricamento;
-
+        
         /// <summary>
         /// Controllo lblStatus.
         /// </summary>
@@ -553,7 +497,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblStatus;
-
+        
         /// <summary>
         /// Controllo btnGestisciProtocollo.
         /// </summary>
@@ -562,7 +506,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGestisciProtocollo;
-
+        
         /// <summary>
         /// Controllo btnInserisciProtocollo.
         /// </summary>
@@ -571,7 +515,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInserisciProtocollo;
-
+        
         /// <summary>
         /// Controllo btnModificaProtocollo.
         /// </summary>
@@ -580,7 +524,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnModificaProtocollo;
-
+        
         /// <summary>
         /// Controllo btnEliminaProtocollo.
         /// </summary>
@@ -589,7 +533,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEliminaProtocollo;
-
+        
         /// <summary>
         /// Controllo btnAnnullaProtocollo.
         /// </summary>
@@ -598,7 +542,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnullaProtocollo;
-
+        
         /// <summary>
         /// Controllo PanelLavorazioni.
         /// </summary>
@@ -607,7 +551,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel PanelLavorazioni;
-
+        
         /// <summary>
         /// Controllo Panel3.
         /// </summary>
@@ -616,7 +560,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel Panel3;
-
+        
         /// <summary>
         /// Controllo tbSearch_CodiceLavoro.
         /// </summary>
@@ -625,7 +569,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearch_CodiceLavoro;
-
+        
         /// <summary>
         /// Controllo tbSearch_Cliente.
         /// </summary>
@@ -634,7 +578,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearch_Cliente;
-
+        
         /// <summary>
         /// Controllo tbSearch_Luogo.
         /// </summary>
@@ -643,7 +587,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearch_Luogo;
-
+        
         /// <summary>
         /// Controllo tbSearch_Produzione.
         /// </summary>
@@ -652,7 +596,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearch_Produzione;
-
+        
         /// <summary>
         /// Controllo tbSearch_Lavorazione.
         /// </summary>
@@ -661,7 +605,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearch_Lavorazione;
-
+        
         /// <summary>
         /// Controllo tbSearch_DataInizio.
         /// </summary>
@@ -670,7 +614,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearch_DataInizio;
-
+        
         /// <summary>
         /// Controllo tbSearch_DataFine.
         /// </summary>
@@ -679,7 +623,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearch_DataFine;
-
+        
         /// <summary>
         /// Controllo btnRicercaLavorazioni.
         /// </summary>
@@ -688,7 +632,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRicercaLavorazioni;
-
+        
         /// <summary>
         /// Controllo btnAzzeraCampiRicercaLavorazioni.
         /// </summary>
@@ -697,7 +641,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAzzeraCampiRicercaLavorazioni;
-
+        
         /// <summary>
         /// Controllo gvLavorazioni.
         /// </summary>
@@ -706,7 +650,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvLavorazioni;
-
+        
         /// <summary>
         /// Controllo PanelClienti.
         /// </summary>
@@ -715,7 +659,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel PanelClienti;
-
+        
         /// <summary>
         /// Controllo PanelContLavorazioni.
         /// </summary>
@@ -724,7 +668,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel PanelContLavorazioni;
-
+        
         /// <summary>
         /// Controllo tbSearch_RagioneSociale.
         /// </summary>
@@ -733,7 +677,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbSearch_RagioneSociale;
-
+        
         /// <summary>
         /// Controllo btnInsertCliente.
         /// </summary>
@@ -742,7 +686,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInsertCliente;
-
+        
         /// <summary>
         /// Controllo btnRicercaClienti.
         /// </summary>
@@ -751,7 +695,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRicercaClienti;
-
+        
         /// <summary>
         /// Controllo btnAzzeraCampiRicercaClienti.
         /// </summary>
@@ -760,7 +704,7 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAzzeraCampiRicercaClienti;
-
+        
         /// <summary>
         /// Controllo gvClienti.
         /// </summary>

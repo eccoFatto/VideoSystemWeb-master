@@ -35,11 +35,11 @@
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });
-                $("#<%=elencoClienti.ClientID%> .dropdown-item").on("click", function (e) {
+<%--                $("#<%=elencoClienti.ClientID%> .dropdown-item").on("click", function (e) {
                     $("#<%=hf_RagioneSociale.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Cliente.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Cliente.ClientID%>").attr("title", $(e.target).text());
-                });
+                });--%>
 
                 // GESTIONE DROPDOWN PRODUZIONE
                 $("#filtroProduzione").on("keyup", function () {
@@ -48,11 +48,11 @@
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });
-                $("#<%=elencoProduzioni.ClientID%> .dropdown-item").on("click", function (e) {
+<%--                $("#<%=elencoProduzioni.ClientID%> .dropdown-item").on("click", function (e) {
                     $("#<%=hf_Produzione.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Produzione.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Produzione.ClientID%>").attr("title", $(e.target).text());
-                });
+                });--%>
 
                 // GESTIONE DROPDOWN LAVORAZIONE
                 $("#filtroLavorazione").on("keyup", function () {
@@ -61,11 +61,11 @@
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });
-                $("#<%=elencoLavorazioni.ClientID%> .dropdown-item").on("click", function (e) {
+<%--                $("#<%=elencoLavorazioni.ClientID%> .dropdown-item").on("click", function (e) {
                     $("#<%=hf_Lavorazione.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Lavorazione.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Lavorazione.ClientID%>").attr("title", $(e.target).text());
-                });
+                });--%>
             });
         });
 
@@ -130,9 +130,9 @@
         function azzeraCampiRicerca() {
             $("#<%=tbCodiceLavoro.ClientID%>").val('');
 
-            <%--$("#<%=tbRagioneSociale.ClientID%>").val('');--%>
-            $("#<%=hf_RagioneSociale.ClientID%>").val('');
-            $("#<%=ddl_Cliente.ClientID%>").val('');
+            $("#<%=tbRagioneSociale.ClientID%>").val('');
+<%--            $("#<%=hf_RagioneSociale.ClientID%>").val('');
+            $("#<%=ddl_Cliente.ClientID%>").val('');--%>
 
             $("#<%=tbNumeroProtocollo.ClientID%>").val('');
             $("#<%=tbDataProtocollo.ClientID%>").val('');
@@ -140,15 +140,15 @@
             $("#<%=tbDataLavorazione.ClientID%>").val('');
             $("#<%=tbDataLavorazioneA.ClientID%>").val('');
 
-            <%--$("#<%=tbProduzione.ClientID%>").val('');--%>
-            $("#<%=hf_Produzione.ClientID%>").val('');
-            $("#<%=ddl_Produzione.ClientID%>").val('');
+            $("#<%=tbProduzione.ClientID%>").val('');
+<%--            $("#<%=hf_Produzione.ClientID%>").val('');
+            $("#<%=ddl_Produzione.ClientID%>").val('');--%>
 
             $("#<%=tbProtocolloRiferimento.ClientID%>").val('');
 
-            <%--$("#<%=tbLavorazione.ClientID%>").val('');--%>
-            $("#<%=hf_Lavorazione.ClientID%>").val('');
-            $("#<%=ddl_Lavorazione.ClientID%>").val('');
+            $("#<%=tbLavorazione.ClientID%>").val('');
+<%--            $("#<%=hf_Lavorazione.ClientID%>").val('');
+            $("#<%=ddl_Lavorazione.ClientID%>").val('');--%>
 
             $("#<%=tbDescrizione.ClientID%>").val('');
 
@@ -164,7 +164,6 @@
             $("#<%=tbSearch_Lavorazione.ClientID%>").val('');
             $("#<%=tbSearch_Luogo.ClientID%>").val('');
             $("#<%=tbSearch_Produzione.ClientID%>").val('');
-
         }
 
         function uploadError(sender, args) {
@@ -274,21 +273,21 @@
             <div class="w3-row-padding">
                 <div class="w3-quarter">
                     <label>Produzione</label>
-                    <%--<asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>--%>
-                    <div id="divProduzione" class="dropdown ">
+                    <asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
+<%--                    <div id="divProduzione" class="dropdown ">
                         <asp:HiddenField ID="hf_Produzione" runat="server" Value=""/>
                         <asp:Button ID="ddl_Produzione" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
                         <ul id="elencoProduzioni" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
-                    </div>
+                    </div>--%>
                 </div>
                 <div class="w3-quarter">
                     <label>Lavorazione</label>
-                    <%--<asp:TextBox ID="tbLavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>--%>
-                    <div id="divLavorazione" class="dropdown ">
+                    <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
+<%--                    <div id="divLavorazione" class="dropdown ">
                         <asp:HiddenField ID="hf_Lavorazione" runat="server" Value=""/>
                         <asp:Button ID="ddl_Lavorazione" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
                         <ul id="elencoLavorazioni" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
-                    </div>
+                    </div>--%>
                 </div>
                 
                 <div class="w3-quarter">
@@ -308,12 +307,12 @@
             <div class="w3-row-padding w3-margin-bottom">
                 <div class="w3-quarter">
                     <label>Cliente/Fornitore</label>
-                    <%--<asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>--%>
-                    <div id="divCliente" class="dropdown ">
+                    <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+<%--                    <div id="divCliente" class="dropdown ">
                         <asp:HiddenField ID="hf_RagioneSociale" runat="server" Value=""/>
                         <asp:Button ID="ddl_Cliente" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
                         <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
-                    </div>
+                    </div>--%>
 
                 </div>
                 <div class="w3-quarter">

@@ -113,23 +113,23 @@ namespace VideoSystemWeb.Protocollo
         {
             Esito esito = new Esito();
 
-            #region CLIENTE/FORNITORE
-            List<string> listaClientiFornitori = Protocolli_BLL.Instance.GetElencoClientiFornitori(ref esito);
-            elencoClienti.InnerHtml = string.Empty;
-            PopolaDDLGenerico(elencoClienti, listaClientiFornitori, "filtroCliente");
-            #endregion
+            //#region CLIENTE/FORNITORE
+            //List<string> listaClientiFornitori = Protocolli_BLL.Instance.GetElencoClientiFornitori(ref esito);
+            //elencoClienti.InnerHtml = string.Empty;
+            //PopolaDDLGenerico(elencoClienti, listaClientiFornitori, "filtroCliente");
+            //#endregion
 
-            #region PRODUZIONE
-            List<string> listaProduzioni = Protocolli_BLL.Instance.GetElencoProduzioni(ref esito);
-            elencoProduzioni.InnerHtml = string.Empty;
-            PopolaDDLGenerico(elencoProduzioni, listaProduzioni, "filtroProduzione");
-            #endregion
+            //#region PRODUZIONE
+            //List<string> listaProduzioni = Protocolli_BLL.Instance.GetElencoProduzioni(ref esito);
+            //elencoProduzioni.InnerHtml = string.Empty;
+            //PopolaDDLGenerico(elencoProduzioni, listaProduzioni, "filtroProduzione");
+            //#endregion
 
-            #region LAVORAZIONE
-            List<string> listaLavorazioni = Protocolli_BLL.Instance.GetElencoLavorazioni(ref esito);
-            elencoLavorazioni.InnerHtml = string.Empty;
-            PopolaDDLGenerico(elencoLavorazioni, listaLavorazioni, "filtroLavorazione");
-            #endregion
+            //#region LAVORAZIONE
+            //List<string> listaLavorazioni = Protocolli_BLL.Instance.GetElencoLavorazioni(ref esito);
+            //elencoLavorazioni.InnerHtml = string.Empty;
+            //PopolaDDLGenerico(elencoLavorazioni, listaLavorazioni, "filtroLavorazione");
+            //#endregion
 
             #region TIPO PROTOCOLLO
             foreach (Tipologica tipologiaProtocollo in SessionManager.ListaTipiProtocolli)
@@ -372,14 +372,14 @@ namespace VideoSystemWeb.Protocollo
             queryRicerca = queryRicerca.Replace("@numeroProtocollo", tbNumeroProtocollo.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
 
-            //queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@cliente", hf_RagioneSociale.Value.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@cliente", tbRagioneSociale.Text.Trim().Replace("'", "''"));
+            //queryRicerca = queryRicerca.Replace("@cliente", hf_RagioneSociale.Value.Trim().Replace("'", "''"));
 
-            //queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@produzione", hf_Produzione.Value.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
+            //queryRicerca = queryRicerca.Replace("@produzione", hf_Produzione.Value.Trim().Replace("'", "''"));
 
-            //queryRicerca = queryRicerca.Replace("@lavorazione", tbLavorazione.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@lavorazione", hf_Lavorazione.Value.Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@lavorazione", tbLavorazione.Text.Trim().Replace("'", "''"));
+            //queryRicerca = queryRicerca.Replace("@lavorazione", hf_Lavorazione.Value.Replace("'", "''"));
 
             queryRicerca = queryRicerca.Replace("@descrizione", tbDescrizione.Text.Trim().Replace("'", "''"));
 

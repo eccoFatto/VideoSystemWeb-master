@@ -27,7 +27,7 @@
                     format: 'DD/MM/YYYY'
                 });
 
-
+<%--
                 // GESTIONE DROPDOWN CLIENTE
                 $("#filtroCliente").on("keyup", function () {
                     var value = $(this).val().toLowerCase();
@@ -35,11 +35,11 @@
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });
-<%--                $("#<%=elencoClienti.ClientID%> .dropdown-item").on("click", function (e) {
+                $("#<%=elencoClienti.ClientID%> .dropdown-item").on("click", function (e) {
                     $("#<%=hf_RagioneSociale.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Cliente.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Cliente.ClientID%>").attr("title", $(e.target).text());
-                });--%>
+                });
 
                 // GESTIONE DROPDOWN PRODUZIONE
                 $("#filtroProduzione").on("keyup", function () {
@@ -48,11 +48,11 @@
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });
-<%--                $("#<%=elencoProduzioni.ClientID%> .dropdown-item").on("click", function (e) {
+                $("#<%=elencoProduzioni.ClientID%> .dropdown-item").on("click", function (e) {
                     $("#<%=hf_Produzione.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Produzione.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Produzione.ClientID%>").attr("title", $(e.target).text());
-                });--%>
+                });
 
                 // GESTIONE DROPDOWN LAVORAZIONE
                 $("#filtroLavorazione").on("keyup", function () {
@@ -61,7 +61,7 @@
                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                     });
                 });
-<%--                $("#<%=elencoLavorazioni.ClientID%> .dropdown-item").on("click", function (e) {
+               $("#<%=elencoLavorazioni.ClientID%> .dropdown-item").on("click", function (e) {
                     $("#<%=hf_Lavorazione.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Lavorazione.ClientID%>").val($(e.target).text());
                     $("#<%=ddl_Lavorazione.ClientID%>").attr("title", $(e.target).text());

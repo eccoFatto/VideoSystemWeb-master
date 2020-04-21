@@ -56,7 +56,8 @@ namespace VideoSystemWeb.BLL
         public void CreaDatiScadenzario(DatiScadenzario scadenza, string _acconto, string _iva, string _numeroRate, string tipoScadenza, DateTime? dataPartenzaPagamento, int cadenzaGiorni, ref Esito esito)
         {
             decimal accontoIva = string.IsNullOrEmpty(_acconto) ? 0 : decimal.Parse(_acconto);
-            decimal acconto = decimal.Parse(_acconto) / (1 + (decimal.Parse(_iva) / 100));
+            decimal ivaDecimal = string.IsNullOrEmpty(_iva) ? 0 : decimal.Parse(_iva);
+            decimal acconto = string.IsNullOrEmpty(_acconto) ? 0 : decimal.Parse(_acconto) / (1 + (ivaDecimal / 100));
 
             int numeroRate = string.IsNullOrEmpty(_numeroRate) ? 1 : int.Parse(_numeroRate);
 
@@ -119,7 +120,7 @@ namespace VideoSystemWeb.BLL
         // USATO PER AGGIUNGERE UN PAGAMENTO AD UNA SCADENZA GIA' ESISTENTE
         public void AggiungiPagamento(DatiScadenzario scadenzaDaAggiornare, string tipoScadenza, string importoVersato, string differenzaImportoIva, string iva, string dataScadenza, string banca, string dataAggiungiDocumento, ref Esito esito)
         {
-            decimal importoVersatoDecimal = decimal.Parse(importoVersato);
+            decimal importoVersatoDecimal = string.IsNullOrEmpty(importoVersato) ? 0 : decimal.Parse(importoVersato);
             decimal differenzaImporto = (scadenzaDaAggiornare.ImportoAvere + scadenzaDaAggiornare.ImportoDare) - importoVersatoDecimal;
 
             
@@ -215,8 +216,6 @@ namespace VideoSystemWeb.BLL
         public void DeleteDatiScadenzario(int idSDatiScadenzario, ref Esito esito)
         {
             List<DatiScadenzario> listaDatiScadenzarioDaCancellare = Scadenzario_DAL.Instance.GetDatiTotaliFatturaByIdDatiScadenzario(idSDatiScadenzario, ref esito);
-
-            
 
             Scadenzario_DAL.Instance.DeleteDatiScadenzarioById(idSDatiScadenzario, ref esito);
 

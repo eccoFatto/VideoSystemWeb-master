@@ -410,10 +410,10 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
             else
             {
-                decimal importoVersatoDecimal = decimal.Parse(importoVersato);
-                decimal differenzaImporto = (scadenza.ImportoAvere + scadenza.ImportoDare) - importoVersatoDecimal;
+                //decimal importoVersatoIvaDecimal = decimal.Parse(importoVersato) * (1 + (scadenza.Iva) / 100);
+                decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);// Math.Round((scadenza.ImportoAvereIva + scadenza.ImportoDareIva) - importoVersatoIvaDecimal,2);
 
-                if (differenzaImporto != 0)
+                if (differenzaImportoIva != 0)
                 {
                     ShowWarning("L'importo in fase di registrazione non copre totalmente la rata corrente." + Environment.NewLine + "Modificare il valore in " + (scadenza.ImportoAvereIva + scadenza.ImportoDareIva) + " oppure selezionare 'Aggiungi pagamento'.");
                 }
@@ -547,17 +547,23 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
             else
             {
-                decimal importoVersatoDecimal = decimal.Parse(importoVersato);
-                decimal differenzaImporto = (scadenza.ImportoAvere + scadenza.ImportoDare) - importoVersatoDecimal;
-                lbl_aggiungiPagamento.Text = differenzaImporto.ToString();
+                //decimal importoVersatoDecimal = decimal.Parse(importoVersato);
+                //decimal differenzaImporto = (scadenza.ImportoAvereIva + scadenza.ImportoDareIva) - importoVersatoDecimal;
+
+
+                decimal importoVersatoIvaDecimal = decimal.Parse(importoVersato) * (1 + (scadenza.Iva) / 100);
+                decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);//   Math.Round((scadenza.ImportoAvereIva + scadenza.ImportoDareIva) - importoVersatoIvaDecimal, 2);
+
+
+                lbl_aggiungiPagamento.Text = differenzaImportoIva.ToString();
                 txt_DataAggiungiPagamento.Text = string.Empty;
 
-                if (importoVersatoDecimal==0)
+                if (importoVersatoIvaDecimal==0)
                 {
                     ShowWarning("Valorizzare l'importo versato o riscosso");
 
                 }
-                else if (differenzaImporto > 0)
+                else if (differenzaImportoIva > 0)
                 {
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriAggiungiPagamento", script: "javascript: document.getElementById('" + panelAggiungiPagamento.ClientID + "').style.display='block'", addScriptTags: true);
                 }
@@ -586,7 +592,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 string dataScadenza = string.Empty;
                 esito = PopolaDatiScadenzaDaSalvare(ref scadenzaDaAggiornare, ref importoVersato, ref iva, ref dataScadenza);
                
-                Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare,  ddl_Tipo.SelectedValue, importoVersato, iva, dataScadenza, ddl_BancaModifica.SelectedValue, dataAggiungiDocumento, ref esito);
+                Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare,  ddl_Tipo.SelectedValue, importoVersato, txt_TotaleIva.Text, iva, dataScadenza, ddl_BancaModifica.SelectedValue, dataAggiungiDocumento, ref esito);
 
                 if (esito.Codice == Esito.ESITO_OK)
                 {
@@ -710,8 +716,9 @@ namespace VideoSystemWeb.Scadenzario.userControl
             int idScadenza = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
             scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, Convert.ToInt16(idScadenza));
 
-            importoVersato = ValidaCampo(txt_Versato, "", true, ref esito);
             iva = ValidaCampo(txt_IvaModifica, "", true, ref esito);
+            importoVersato = ValidaCampo(txt_Versato, "", true, ref esito);
+           
             dataScadenza = ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
 
             return esito;

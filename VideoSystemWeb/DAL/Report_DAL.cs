@@ -175,7 +175,7 @@ namespace VideoSystemWeb.DAL
 
                                                  "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN artLav.fp_netto - 45 ELSE 0 END as RimborsoKm, " +
 
-                                                 "0 as RitenutaAcconto, " +
+                                                 "CASE WHEN artLav.idTipoPagamento = " + idTipoRitenutaAcconto + " THEN artLav.fp_netto ELSE 0 END as RitenutaAcconto, " +
                                                  "0 as Fattura, " +
                                                  "CASE WHEN (select count(*) from dati_articoli_lavorazione where idCollaboratori = collab.id and data = artLav.data and idArtArticoli = " + idDiaria + ") > 0 THEN 1 ELSE 0 END as Diaria, " +
                                                  "artLav.idTipoPagamento as TipoPagamento, " +
@@ -196,7 +196,7 @@ namespace VideoSystemWeb.DAL
                                                  filtroLavorazione +
                                                  filtroProduzione +
                                                  "artLav.idCollaboratori is not null and " +
-                                                 "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + ") and " +
+                                                 "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + " or artLav.idTipoPagamento = " + idTipoRitenutaAcconto + ") and " +
                                                  "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' " +//"' and " +
 
                                                  "UNION ";

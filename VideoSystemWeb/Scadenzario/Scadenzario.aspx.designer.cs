@@ -663,6 +663,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_ScadenzaDocumento;
 
         /// <summary>
+        /// Controllo txt_DataVersamentoRiscossione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_DataVersamentoRiscossione;
+
+        /// <summary>
         /// Controllo ddl_BancaModifica.
         /// </summary>
         /// <remarks>

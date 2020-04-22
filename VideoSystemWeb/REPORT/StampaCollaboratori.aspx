@@ -39,10 +39,7 @@
                 var lastDay = new Date(newYear, newMonth, 0).getDate();
                 $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
                 $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
-
             }
-
-
         });
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
@@ -74,7 +71,6 @@
                 var lastDay = new Date(newYear, newMonth, 0).getDate();
                 $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
                 $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
-
             }
         });
     </script>

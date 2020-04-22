@@ -93,11 +93,8 @@ namespace VideoSystemWeb.REPORT
 
             Report_BLL.Instance.EliminaCollaboratoriImportoZero(ref listaDatiReport);
 
-            
-
             gv_DatiStampa.DataSource = listaDatiReport;
             gv_DatiStampa.DataBind();
-
 
             if (listaDatiReport.Count > 0)
             {

@@ -345,6 +345,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_DataDocumentoModifica.Text = scadenza.DataProtocollo != null ? ((DateTime)scadenza.DataProtocollo).ToString("dd/MM/yyyy") : "";
                     txt_ScadenzaDocumento.Text = scadenza.DataScadenza != null ? ((DateTime)scadenza.DataScadenza).ToString("dd/MM/yyyy") : "";
                     ddl_BancaModifica.SelectedValue = scadenza.Banca;
+                    txt_DataVersamentoRiscossione.Text = string.Empty;
 
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaScadenza", script: "javascript: mostraScadenza('" + idScadenzaSelezionata + "');", addScriptTags: true);
                     
@@ -417,7 +418,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             string importoVersato = string.Empty;
             string iva = string.Empty; 
             string dataScadenza = string.Empty;
-            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref iva, ref dataScadenza);
+            string dataVersamentoRiscossione = string.Empty;
+            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
 
             if (esito.Codice != Esito.ESITO_OK)
             {
@@ -434,7 +436,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 }
                 else
                 {
-                    Scadenzario_BLL.Instance.AggiornaDatiScadenzario(scadenza, ddl_Tipo.SelectedValue, importoVersato, iva, dataScadenza, ddl_BancaModifica.SelectedValue, ref esito);
+                    Scadenzario_BLL.Instance.AggiornaDatiScadenzario(scadenza, ddl_Tipo.SelectedValue, importoVersato, iva, dataScadenza, dataVersamentoRiscossione, ddl_BancaModifica.SelectedValue, ref esito);
 
                     if (esito.Codice != Esito.ESITO_OK)
                     {
@@ -554,7 +556,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             string importoVersato = string.Empty;
             string iva = string.Empty;
             string dataScadenza = string.Empty;
-            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref iva, ref dataScadenza);
+            string dataVersamentoRiscossione = string.Empty;
+            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
 
             if (esito.Codice != Esito.ESITO_OK)
             {
@@ -605,9 +608,14 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 string importoVersato = string.Empty;
                 string iva = string.Empty;
                 string dataScadenza = string.Empty;
-                esito = PopolaDatiScadenzaDaSalvare(ref scadenzaDaAggiornare, ref importoVersato, ref iva, ref dataScadenza);
+                string dataVersamentoRiscossione = string.Empty;
+                esito = PopolaDatiScadenzaDaSalvare(ref scadenzaDaAggiornare, ref importoVersato, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
+                if (esito.Codice != Esito.ESITO_OK)
+                {
+                    ShowError("Controllare i campi evidenziati");
+                }
                
-                Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare,  ddl_Tipo.SelectedValue, importoVersato, txt_TotaleIva.Text, iva, dataScadenza, ddl_BancaModifica.SelectedValue, dataAggiungiDocumento, ref esito);
+                Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare,  ddl_Tipo.SelectedValue, importoVersato, txt_TotaleIva.Text, iva, dataScadenza, dataVersamentoRiscossione, ddl_BancaModifica.SelectedValue, dataAggiungiDocumento, ref esito);
 
                 if (esito.Codice == Esito.ESITO_OK)
                 {
@@ -724,7 +732,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             pnlContainer.Visible = false;
         }
 
-        private Esito PopolaDatiScadenzaDaSalvare(ref DatiScadenzario scadenza, ref string importoVersato, ref string iva, ref string dataScadenza)
+        private Esito PopolaDatiScadenzaDaSalvare(ref DatiScadenzario scadenza, ref string importoVersato, ref string iva, ref string dataScadenza, ref string dataVersamentoRiscossione)
         {
             Esito esito = new Esito();
 
@@ -735,6 +743,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             importoVersato = ValidaCampo(txt_Versato, "", true, ref esito);
            
             dataScadenza = ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
+
+            dataVersamentoRiscossione = ValidaCampo(txt_DataVersamentoRiscossione, "", true, ref esito);
 
             return esito;
         }

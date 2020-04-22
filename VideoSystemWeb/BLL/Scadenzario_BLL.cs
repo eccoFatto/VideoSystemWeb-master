@@ -34,16 +34,16 @@ namespace VideoSystemWeb.BLL
         private const string TIPO_FORNITORE = "FORNITORE";
         #endregion
 
-        public void AggiornaDatiScadenzario(DatiScadenzario scadenza, string tipoScadenza, string importo, string iva, string dataScadenza, string banca, ref Esito esito)
+        public void AggiornaDatiScadenzario(DatiScadenzario scadenza, string tipoScadenza, string importo, string iva, string dataScadenza, string dataVersamentoRiscossione, string banca, ref Esito esito)
         {
             if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
             {
-                scadenza.DataRiscossione = DateTime.Now;
+                scadenza.DataRiscossione = DateTime.Parse(dataVersamentoRiscossione); //DateTime.Now;
                 scadenza.ImportoRiscosso = string.IsNullOrEmpty(importo) ? 0 : decimal.Parse(importo);
             }
             else
             {
-                scadenza.DataVersamento = DateTime.Now;
+                scadenza.DataVersamento = DateTime.Parse(dataVersamentoRiscossione); //DateTime.Now;
                 scadenza.ImportoVersato = string.IsNullOrEmpty(importo) ? 0 : decimal.Parse(importo); 
             }
             scadenza.Iva = string.IsNullOrEmpty(iva) ? 0 : decimal.Parse(iva);
@@ -118,7 +118,7 @@ namespace VideoSystemWeb.BLL
         }
 
         // USATO PER AGGIUNGERE UN PAGAMENTO AD UNA SCADENZA GIA' ESISTENTE
-        public void AggiungiPagamento(DatiScadenzario scadenzaDaAggiornare, string tipoScadenza, string importoVersato, string differenzaImportoIva, string iva, string dataScadenza, string banca, string dataAggiungiDocumento, ref Esito esito)
+        public void AggiungiPagamento(DatiScadenzario scadenzaDaAggiornare, string tipoScadenza, string importoVersato, string differenzaImportoIva, string iva, string dataScadenza, string dataVersamentoRiscossione, string banca, string dataAggiungiDocumento, ref Esito esito)
         {
             decimal importoVersatoDecimal = string.IsNullOrEmpty(importoVersato) ? 0 : decimal.Parse(importoVersato);
             decimal differenzaImporto = (scadenzaDaAggiornare.ImportoAvere + scadenzaDaAggiornare.ImportoDare) - importoVersatoDecimal;
@@ -133,14 +133,14 @@ namespace VideoSystemWeb.BLL
 
             if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
             {
-                scadenzaDaAggiornare.DataRiscossione = DateTime.Now;
+                scadenzaDaAggiornare.DataRiscossione = DateTime.Parse(dataVersamentoRiscossione);// DateTime.Now;
                 scadenzaDaAggiornare.ImportoRiscosso = string.IsNullOrEmpty(importoVersato) ? 0 : decimal.Parse(importoVersato);
                 scadenzaDaAggiornare.ImportoAvere = scadenzaDaAggiornare.ImportoRiscosso; // La scadenza viene aggiornata con un importo parziale
                 scadenzaDaAggiornare.ImportoAvereIva = Math.Round(scadenzaDaAggiornare.ImportoRiscosso * (1 + (scadenzaDaAggiornare.Iva) / 100), 2);
             }
             else
             {
-                scadenzaDaAggiornare.DataVersamento = DateTime.Now;
+                scadenzaDaAggiornare.DataVersamento = DateTime.Parse(dataVersamentoRiscossione);// DateTime.Now;
                 scadenzaDaAggiornare.ImportoVersato = string.IsNullOrEmpty(importoVersato) ? 0 : decimal.Parse(importoVersato);
                 scadenzaDaAggiornare.ImportoDare = scadenzaDaAggiornare.ImportoVersato;  // La scadenza viene aggiornata con un importo parziale
                 scadenzaDaAggiornare.ImportoDareIva = Math.Round(scadenzaDaAggiornare.ImportoVersato * (1 + (scadenzaDaAggiornare.Iva) / 100), 2);

@@ -563,10 +563,15 @@
                                                 <asp:TextBox ID="txt_ScadenzaDocumento" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" />
                                             </div>
                                         </div>
-
-                                        <div class="w3-col w3-padding">
-                                            <label>Banca</label>
-                                            <asp:DropDownList ID="ddl_BancaModifica" runat="server"  Width="100%" CssClass="w3-input w3-border"/>
+                                        <div class="w3-row">
+                                            <div class="w3-half w3-padding">
+                                                <label>Data versamento/riscossione</label>
+                                                <asp:TextBox ID="txt_DataVersamentoRiscossione" runat="server"  MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" />
+                                            </div>
+                                            <div class="w3-half w3-padding">
+                                                <label>Banca</label>
+                                                <asp:DropDownList ID="ddl_BancaModifica" runat="server"  CssClass="w3-input w3-border"/>
+                                            </div>
                                         </div>
                                     </div>
 

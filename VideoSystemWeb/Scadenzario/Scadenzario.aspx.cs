@@ -116,7 +116,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
                 ListItem itemMod = new ListItem();
                 itemMod.Text = tipologiaBanca.nome;
-                itemMod.Value = tipologiaBanca.id.ToString();
+                itemMod.Value = tipologiaBanca.nome;
 
                 ddl_BancaModifica.Items.Add(itemMod);
             }

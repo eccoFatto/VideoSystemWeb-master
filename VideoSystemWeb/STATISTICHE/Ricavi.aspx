@@ -195,10 +195,17 @@
 
             <div class="round">
                 <asp:GridView ID="gv_statistiche" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" 
-                    CssClass="grid" AllowPaging="False"  EmptyDataRowStyle-HorizontalAlign="Center" OnRowDataBound="gv_statistiche_RowDataBound">
+                    CssClass="grid" AllowPaging="False"  EmptyDataRowStyle-HorizontalAlign="Center" OnRowDataBound="gv_statistiche_RowDataBound" >
                     <%--<PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>--%>
                     <Columns>
                         <asp:BoundField DataField="Cliente" HeaderText="Cliente" HeaderStyle-Width="10%"/>
+
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="3%">
+                            <ItemTemplate>
+                                <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
                         <asp:BoundField DataField="NumeroFattura" HeaderText="N. Fattura" HeaderStyle-Width="7%"/>
                         <asp:BoundField DataField="Ordine" HeaderText="Ordine" HeaderStyle-Width="7%"/>
                         <asp:BoundField DataField="CodiceLavoro" HeaderText="Codice" HeaderStyle-Width="7%"/>
@@ -209,6 +216,10 @@
                         <asp:BoundField DataField="Listino" HeaderText="Listino" DataFormatString="{0:N2}" HeaderStyle-Width="7%"/>
                         <asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:N2}" HeaderStyle-Width="7%" />
                         <asp:BoundField DataField="Ricavo" HeaderText="Ricavo" DataFormatString="{0:P2}" HeaderStyle-Width="6%" />
+
+                        <asp:BoundField DataField="DocumentoAllegato" HeaderText=""   />
+                        <asp:BoundField DataField="Pregresso" HeaderText=""  />
+
                     </Columns>
                 </asp:GridView>
             </div>

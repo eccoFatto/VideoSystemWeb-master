@@ -21956,3 +21956,27 @@ Si è verificato un errore di rete o specifico dell'istanza mentre si cercava di 
    in VideoSystemWeb.DAL.Config_DAL.GetConfig(Esito& esito, String chiave) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Config_DAL.cs:riga 95
 2020-04-22 12:36:14,135 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-04-22 12:52:54,548 [18] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 13:30:12,600 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 21:52:16,768 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:00:12,861 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:05:42,953 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:10:48,546 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:18:32,083 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:23:59,254 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:31:04,719 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:47:16,570 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:49:27,078 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:52:57,488 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:55:30,238 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 22:57:55,654 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-22 23:00:01,426 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 07:40:54,459 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 07:48:27,608 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 08:08:15,939 [16] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 08:12:53,665 [20] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 08:15:29,278 [20] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 08:19:10,174 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 09:08:26,748 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 09:35:37,128 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 09:38:32,238 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 10:01:09,465 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

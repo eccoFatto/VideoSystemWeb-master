@@ -19,6 +19,8 @@ namespace VideoSystemWeb.Entity
         private decimal? listino;
         private decimal? costo;
         private decimal ricavo;
+        private string documentoAllegato;
+        private bool pregresso;
 
         public int IdCliente { get => idCliente; set => idCliente = value; }
         public string Cliente { get => cliente; set => cliente = value; }
@@ -62,6 +64,7 @@ namespace VideoSystemWeb.Entity
             }
         }
 
-        
+        public string DocumentoAllegato { get => documentoAllegato; set => documentoAllegato = value; }
+        public bool Pregresso { get => pregresso; set => pregresso = value; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Web;
@@ -20,6 +21,17 @@ namespace VideoSystemWeb.STATISTICHE
             }
 
             #region GRIGLIA CON RAGGRUPPAMENTO RIGHE
+            GestioneRaggruppamentoRighe();
+
+            #endregion
+
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_PeriodoDa.ClientID + "', '" + txt_PeriodoA.ClientID + "');", true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
+        }
+
+
+        private void GestioneRaggruppamentoRighe()
+        {
             GridViewHelper helper = new GridViewHelper(this.gv_statistiche);
             helper.RegisterGroup("Cliente", true, true);
 
@@ -36,13 +48,7 @@ namespace VideoSystemWeb.STATISTICHE
             helper.RegisterSummary("Listino", SummaryOperation.Sum);
             helper.RegisterSummary("Costo", SummaryOperation.Sum);
             helper.RegisterSummary("Ricavo", SummaryOperation.Count);
-
-            #endregion
-
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_PeriodoDa.ClientID + "', '" + txt_PeriodoA.ClientID + "');", true);
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
-
 
 
         private void Helper_GroupHeader(string groupName, object[] values, GridViewRow row)
@@ -78,6 +84,8 @@ namespace VideoSystemWeb.STATISTICHE
             row.Cells[1].Visible = chk_Listino.Checked;
             row.Cells[2].Visible = chk_Costi.Checked;
             row.Cells[3].Visible = chk_Ricavo.Checked;
+
+            row.Cells[4].Visible = false;
         }
 
         private void Helper_GeneralSummary(GridViewRow row)
@@ -108,6 +116,8 @@ namespace VideoSystemWeb.STATISTICHE
             row.Cells[1].Visible = chk_Listino.Checked;
             row.Cells[2].Visible = chk_Costi.Checked;
             row.Cells[3].Visible = chk_Ricavo.Checked;
+
+            row.Cells[4].Visible = false;
         }
 
         private void CaricaCombo()
@@ -181,7 +191,6 @@ namespace VideoSystemWeb.STATISTICHE
             if (listaStatisticheRicavi.Count==0)
             {
                 ShowWarning("Nessuna voce trovata per i parametri immessi");
-
             }
 
             gv_statistiche.DataSource = listaStatisticheRicavi;
@@ -203,10 +212,34 @@ namespace VideoSystemWeb.STATISTICHE
         {
             if (e.Row.Cells.Count > 1)
             {
-                e.Row.Cells[8].Visible = chk_Listino.Checked;
-                e.Row.Cells[9].Visible = chk_Costi.Checked;
-                e.Row.Cells[10].Visible = chk_Ricavo.Checked;
+                e.Row.Cells[9].Visible = chk_Listino.Checked;
+                e.Row.Cells[10].Visible = chk_Costi.Checked;
+                e.Row.Cells[11].Visible = chk_Ricavo.Checked;
             }
+
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string pathDocumento =  e.Row.Cells[12].Text.Trim();
+                bool pregresso = false;
+                bool.TryParse(e.Row.Cells[13].Text.Trim(), out pregresso);
+
+                ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
+                if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
+                {
+                    
+                    string pathRelativo = pregresso ? ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "") : ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
+                  
+
+                    string pathCompleto = pathRelativo + pathDocumento;
+                    myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');return false;");
+                }
+                else
+                {
+                    myButton.Attributes.Add("disabled", "true");
+                }
+            }
+            e.Row.Cells[12].Visible = false;
+            e.Row.Cells[13].Visible = false;
         }
     }
 }

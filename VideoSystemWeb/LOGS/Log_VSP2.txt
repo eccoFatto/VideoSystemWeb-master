@@ -21980,3 +21980,18 @@ Si è verificato un errore di rete o specifico dell'istanza mentre si cercava di 
 2020-04-23 09:35:37,128 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-04-23 09:38:32,238 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-04-23 10:01:09,465 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-23 21:25:31,312 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-24 09:09:51,094 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-24 09:39:12,598 [29] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-24 10:03:50,880 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-24 10:06:33,913 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-24 10:08:11,417 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-24 10:24:56,269 [19] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-24 10:36:43,181 [15] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-04-24 10:43:39,045 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-24 10:46:15,112 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-24 13:46:13,802 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-24 13:52:14,573 [15] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-25 10:53:17,132 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-04-25 10:56:34,132 [11] ERROR VideoSystemWeb.BLL.Esito - Claudio - Campo obbligatorio
+2020-04-25 11:52:56,656 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

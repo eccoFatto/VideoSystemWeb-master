@@ -148,6 +148,14 @@
             });
         });--%>
 
+
+        function confermaSaldoTotale()
+        {
+            var importoDaSaldare = $('#<%=txt_ImponibileIva.ClientID%>').val();
+
+            return confirm('È in corso il saldo della rata che ammonta a €' + importoDaSaldare + '. Confermare?')
+
+        }
     </script>
 
     <div id="popMessage" class="w3-modal" style="z-index:10000">
@@ -366,15 +374,15 @@
                                 <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" CommandName="visualizzaDoc" CommandArgument='<%#Eval("id")%>'/>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="ImportoDareIva" HeaderText="Dare" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="ImportoVersatoIva" HeaderText="Versato" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoDareIva" HeaderText="Dare" DataFormatString="{0:N2}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoVersatoIva" HeaderText="Versato" DataFormatString="{0:N2}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="ProtocolloRiferimento" HeaderText="Documento"  HeaderStyle-Width="12%" />
-                        <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="16%" />
-                        <asp:BoundField DataField="ImportoAvereIva" HeaderText="Avere" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="ImportoRiscossoIva" HeaderText="Riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="18%" />
+                        <asp:BoundField DataField="ImportoAvereIva" HeaderText="Avere" DataFormatString="{0:N2}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoRiscossoIva" HeaderText="Riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="DataScadenza" HeaderText="Scadenza" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="IsImportoEstinto" HeaderText="Stato" HeaderStyle-Width="7%" />
-                        <asp:BoundField DataField="Banca" HeaderText="Banca" HeaderStyle-Width="13%" />
+                        <asp:BoundField DataField="Banca" HeaderText="Banca" HeaderStyle-Width="15%" />
                         <asp:BoundField DataField="DataPagamento" HeaderText="Pagamento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="5%">
                             <ItemTemplate>
@@ -394,7 +402,6 @@
 
     <asp:Button runat="server" ID="btnEditScadenza" Style="display: none" OnClick="btnEditScadenza_Click" />
     <asp:Button runat="server" ID="btnInsScadenza" Style="display: none" OnClick="btnInsScadenza_Click" />
-    <%--<asp:Button runat="server" ID="btnCercaScadenza" Style="display: none" OnClick="btnCercaScadenza_Click" />--%>
 
     <asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopup_Click" />
 
@@ -582,6 +589,7 @@
                                     
                                     <asp:Button ID="btnAggiungiPagamento" runat="server" Text="Aggiungi Pagamento" class="w3-panel w3-blue w3-border w3-round" OnClick="btnInserisciPagamento_Click" />
                                     <asp:Button ID="btnModificaScadenza" runat="server" Text="Modifica Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaScadenza_Click" OnClientClick="return confirm('Confermi modifica Scadenza?')" Visible="false" />
+                                    <asp:Button ID="btnSaldoTotale" runat="server" Text="Saldo totale" class="w3-panel w3-green w3-border w3-round" OnClick="btnSaldoTotale_Click" OnClientClick="return confermaSaldoTotale();" Visible="false" />
                                 </div>
                                 <p>
                                 </p>
@@ -594,7 +602,6 @@
             </asp:Panel>
 
 <!-- AGGIUNGI PAGAMENTO -->
-
             <div id="panelAggiungiPagamento" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
 
                 <div id="divAggiungiPagamento" class="w3-modal-content w3-card-4 round" style="position: relative; width: 40%; background-color: white;">
@@ -626,6 +633,7 @@
                     </div>
                 </div>
             </div>
+
 
         </ContentTemplate>
     </asp:UpdatePanel>

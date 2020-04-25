@@ -11,7 +11,7 @@ namespace VideoSystemWeb.DAL
 {
     public class Scadenzario_DAL : Base_DAL
     {
-        //singleton
+        #region SINGLETON
         private static volatile Scadenzario_DAL instance;
         private static object objForLock = new Object();
         private Scadenzario_DAL() { }
@@ -30,6 +30,7 @@ namespace VideoSystemWeb.DAL
                 return instance;
             }
         }
+        #endregion
 
         public int CreaDatiScadenzario(DatiScadenzario scadenza, ref Esito esito)
         {
@@ -62,10 +63,10 @@ namespace VideoSystemWeb.DAL
                             idDatiProtocollo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idDatiProtocollo);
 
-                            SqlParameter banca = new SqlParameter("@banca", DBNull.Value);
-                            if (scadenza.Banca != null) banca = new SqlParameter("@banca", scadenza.Banca);
-                            banca.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(banca);
+                            SqlParameter idTipoBanca = new SqlParameter("@idTipoBanca", DBNull.Value);
+                            if (scadenza.IdTipoBanca != null) idTipoBanca = new SqlParameter("@idTipoBanca", scadenza.IdTipoBanca);
+                            idTipoBanca.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idTipoBanca);
 
                             SqlParameter dataScadenza = new SqlParameter("@dataScadenza", scadenza.DataScadenza);
                             dataScadenza.Direction = ParameterDirection.Input;
@@ -168,10 +169,10 @@ namespace VideoSystemWeb.DAL
                             idDatiProtocollo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idDatiProtocollo);
 
-                            SqlParameter banca = new SqlParameter("@banca", DBNull.Value);
-                            if (scadenza.Banca != null) banca = new SqlParameter("@banca", scadenza.Banca);
-                            banca.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(banca);
+                            SqlParameter idTipoBanca = new SqlParameter("@idTipoBanca", DBNull.Value);
+                            if (scadenza.IdTipoBanca != null) idTipoBanca = new SqlParameter("@idTipoBanca", scadenza.IdTipoBanca);
+                            idTipoBanca.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idTipoBanca);
 
                             SqlParameter dataScadenza = new SqlParameter("@dataScadenza", scadenza.DataScadenza);
                             dataScadenza.Direction = ParameterDirection.Input;
@@ -279,10 +280,10 @@ namespace VideoSystemWeb.DAL
                             idDatiProtocollo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idDatiProtocollo);
 
-                            SqlParameter banca = new SqlParameter("@banca", DBNull.Value);
-                            if (scadenzaDaAggiornare.Banca != null) banca = new SqlParameter("@banca", scadenzaDaAggiornare.Banca);
-                            banca.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(banca);
+                            SqlParameter idTipoBanca = new SqlParameter("@idTipoBanca", DBNull.Value);
+                            if (scadenzaDaAggiornare.IdTipoBanca != null) idTipoBanca = new SqlParameter("@idTipoBanca", scadenzaDaAggiornare.IdTipoBanca);
+                            idTipoBanca.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idTipoBanca);
 
                             SqlParameter dataScadenza = new SqlParameter("@dataScadenza", scadenzaDaAggiornare.DataScadenza);
                             dataScadenza.Direction = ParameterDirection.Input;
@@ -358,10 +359,10 @@ namespace VideoSystemWeb.DAL
                             idDatiProtocollo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idDatiProtocollo);
 
-                            banca = new SqlParameter("@banca", DBNull.Value);
-                            if (scadenzaDaInserire.Banca != null) banca = new SqlParameter("@banca", scadenzaDaInserire.Banca);
-                            banca.Direction = ParameterDirection.Input;
-                            StoreProc.Parameters.Add(banca);
+                            idTipoBanca = new SqlParameter("@idTipoBanca", DBNull.Value);
+                            if (scadenzaDaInserire.IdTipoBanca != null) idTipoBanca = new SqlParameter("@idTipoBanca", scadenzaDaInserire.IdTipoBanca);
+                            idTipoBanca.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idTipoBanca);
 
                             dataScadenza = new SqlParameter("@dataScadenza", scadenzaDaInserire.DataScadenza);
                             dataScadenza.Direction = ParameterDirection.Input;
@@ -441,7 +442,6 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-
         public void DeleteDatiScadenzarioById(int idScadenza, ref Esito esito)
         {
             try
@@ -507,7 +507,7 @@ namespace VideoSystemWeb.DAL
                                 {
                                     scadenza.Id = dt.Rows[0].Field<int>("id");
                                     scadenza.IdDatiProtocollo = dt.Rows[0].Field<int>("idDatiProtocollo");
-                                    scadenza.Banca = dt.Rows[0].Field<string>("banca");
+                                    scadenza.IdTipoBanca = dt.Rows[0].Field<int>("idTipoBanca");
                                     scadenza.DataScadenza = dt.Rows[0].Field<DateTime?>("dataScadenza");
                                     scadenza.ImportoDare = dt.Rows[0].Field<decimal>("importoDare");
                                     scadenza.ImportoDareIva = dt.Rows[0].Field<decimal>("importoDareIva");
@@ -597,7 +597,7 @@ namespace VideoSystemWeb.DAL
                                         {
                                             Id = riga.Field<int>("id"),
                                             IdDatiProtocollo = riga.Field<int>("idDatiProtocollo"),
-                                            Banca = riga.Field<string>("banca"),
+                                            IdTipoBanca = riga.Field<int>("idTipoBanca"),
                                             DataScadenza = riga.Field<DateTime?>("dataScadenza"),
                                             ImportoDare = riga.Field<decimal>("importoDare"),
                                             ImportoDareIva = riga.Field<decimal>("importoDareIva"),
@@ -662,7 +662,7 @@ namespace VideoSystemWeb.DAL
                                         {
                                             Id = riga.Field<int>("id"),
                                             IdDatiProtocollo = riga.Field<int>("idDatiProtocollo"),
-                                            Banca = riga.Field<string>("banca"),
+                                            IdTipoBanca = riga.Field<int>("idTipoBanca"),
                                             DataScadenza = riga.Field<DateTime?>("dataScadenza"),
                                             ImportoDare = riga.Field<decimal>("importoDare"),
                                             ImportoDareIva = riga.Field<decimal>("importoDareIva"),
@@ -727,7 +727,7 @@ namespace VideoSystemWeb.DAL
                                         {
                                             Id = riga.Field<int>("id"),
                                             IdDatiProtocollo = riga.Field<int>("idDatiProtocollo"),
-                                            Banca = riga.Field<string>("banca"),
+                                            IdTipoBanca = riga.Field<int>("idTipoBanca"),
                                             DataScadenza = riga.Field<DateTime?>("dataScadenza"),
                                             ImportoDare = riga.Field<decimal>("importoDare"),
                                             ImportoDareIva = riga.Field<decimal>("importoDareIva"),

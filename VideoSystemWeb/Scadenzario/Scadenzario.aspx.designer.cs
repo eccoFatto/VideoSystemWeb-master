@@ -708,6 +708,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.Button btnModificaScadenza;
 
         /// <summary>
+        /// Controllo btnSaldoTotale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaldoTotale;
+
+        /// <summary>
         /// Controllo panelAggiungiPagamento.
         /// </summary>
         /// <remarks>

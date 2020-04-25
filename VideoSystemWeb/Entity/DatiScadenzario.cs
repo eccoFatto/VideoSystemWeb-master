@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using VideoSystemWeb.BLL;
 
 namespace VideoSystemWeb.Entity
 {
@@ -9,7 +10,7 @@ namespace VideoSystemWeb.Entity
     {
         private int id;
         private int idDatiProtocollo;
-        private string banca;
+        //private string banca;
         private DateTime? dataScadenza;
         private decimal importoDare;
         private decimal importoDareIva;
@@ -26,10 +27,17 @@ namespace VideoSystemWeb.Entity
         private string protocolloRiferimento;
         private DateTime? dataProtocollo;
         private decimal cassa;
+        private int idTipoBanca;
 
         public int Id { get => id; set => id = value; }
         public int IdDatiProtocollo { get => idDatiProtocollo; set => idDatiProtocollo = value; }
-        public string Banca { get => banca; set => banca = value; }
+        public string Banca 
+        {
+            get
+            {
+                return (SessionManager.ListaTipiBanca.FirstOrDefault(x => x.id == IdTipoBanca)).nome;
+            }
+        }
         public DateTime? DataScadenza { get => dataScadenza; set => dataScadenza = value; }
         public decimal ImportoDare { get => importoDare; set => importoDare = value; }
         public decimal ImportoDareIva { get => importoDareIva; set => importoDareIva = value; }
@@ -85,5 +93,6 @@ namespace VideoSystemWeb.Entity
         }
 
         public decimal Iva { get => iva; set => iva = value; }
+        public int IdTipoBanca { get => idTipoBanca; set => idTipoBanca = value; }
     }
 }

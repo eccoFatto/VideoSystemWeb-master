@@ -440,10 +440,15 @@ namespace VideoSystemWeb.Protocollo
             {
 
                 // PRENDO IL PATH DELL'ALLEGATO SE C'E'
-                string pathDocumento = e.Row.Cells[9].Text.Trim();
+                //string pathDocumento = e.Row.Cells[10].Text.Trim();
+                string pathDocumento = e.Row.Cells[GetColumnIndexByName(e.Row, "Nome File")].Text;
 
                 //CheckBox cbPregresso = (CheckBox)e.Row.Cells[11].Controls[0];
-                string preg = e.Row.Cells[11].Text.Trim();
+                //string preg = e.Row.Cells[11].Text.Trim();
+
+
+                string preg = e.Row.Cells[GetColumnIndexByName(e.Row, "Pregresso")].Text;
+
                 ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
                 {
@@ -466,7 +471,8 @@ namespace VideoSystemWeb.Protocollo
                 }
 
                 // PRENDO L'ID DEL PROTOCOLLO SELEZIONATO
-                string idProtocolloSelezionato = e.Row.Cells[1].Text;
+                //string idProtocolloSelezionato = e.Row.Cells[1].Text;
+                string idProtocolloSelezionato = e.Row.Cells[GetColumnIndexByName(e.Row, "id")].Text;
                 ImageButton myButtonEdit = e.Row.FindControl("imgEdit") as ImageButton;
                 myButtonEdit.Attributes.Add("onclick", "mostraProtocollo('" + idProtocolloSelezionato + "');");
             }

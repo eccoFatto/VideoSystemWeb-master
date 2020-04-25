@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="/Css/bootstrap-datetimepicker.min.css" />
     <link rel="stylesheet" href="/Css/w3.css" />
     <link rel="stylesheet" href="/Css/w3-colors-win8.css" />
-    <link rel="stylesheet" href="/Css/easy-autocomplete.min.css">
+    <link rel="stylesheet" href="/Css/easy-autocomplete.min.css" />
     <link rel='stylesheet' href='/Css/Style.css' />
 </head>
 <body>

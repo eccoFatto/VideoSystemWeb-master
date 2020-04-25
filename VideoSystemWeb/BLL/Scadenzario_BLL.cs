@@ -9,7 +9,7 @@ namespace VideoSystemWeb.BLL
 {
     public class Scadenzario_BLL
     {
-        //singleton
+        #region SINGLETON
         private static volatile Scadenzario_BLL instance;
         private static object objForLock = new Object();
         private Scadenzario_BLL() { }
@@ -28,13 +28,14 @@ namespace VideoSystemWeb.BLL
                 return instance;
             }
         }
+        #endregion  
 
         #region TIPI
         private const string TIPO_CLIENTE = "CLIENTE";
         private const string TIPO_FORNITORE = "FORNITORE";
         #endregion
 
-        public void AggiornaDatiScadenzario(DatiScadenzario scadenza, string tipoScadenza, string importo, string iva, string dataScadenza, string dataVersamentoRiscossione, string banca, ref Esito esito)
+        public void AggiornaDatiScadenzario(DatiScadenzario scadenza, string tipoScadenza, string importo, string iva, string dataScadenza, string dataVersamentoRiscossione, int idTipoBanca, ref Esito esito)
         {
             if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
             {
@@ -48,7 +49,7 @@ namespace VideoSystemWeb.BLL
             }
             scadenza.Iva = string.IsNullOrEmpty(iva) ? 0 : decimal.Parse(iva);
             scadenza.DataScadenza = DateTime.Parse(dataScadenza);
-            scadenza.Banca = banca;
+            scadenza.IdTipoBanca = idTipoBanca;
 
             Scadenzario_DAL.Instance.AggiornaDatiScadenzario(scadenza, ref esito);
         }
@@ -66,7 +67,7 @@ namespace VideoSystemWeb.BLL
                 DatiScadenzario scadenzaAcconto = new DatiScadenzario
                 {
                     IdDatiProtocollo = scadenza.IdDatiProtocollo,
-                    Banca = scadenza.Banca,
+                    IdTipoBanca = scadenza.IdTipoBanca,
                     DataScadenza = DateTime.Now,
                     ImportoDare = 0,
                     ImportoDareIva = 0,
@@ -118,7 +119,7 @@ namespace VideoSystemWeb.BLL
         }
 
         // USATO PER AGGIUNGERE UN PAGAMENTO AD UNA SCADENZA GIA' ESISTENTE
-        public void AggiungiPagamento(DatiScadenzario scadenzaDaAggiornare, string tipoScadenza, string importoVersato, string differenzaImportoIva, string iva, string dataScadenza, string dataVersamentoRiscossione, string banca, string dataAggiungiDocumento, ref Esito esito)
+        public void AggiungiPagamento(DatiScadenzario scadenzaDaAggiornare, string tipoScadenza, string importoVersato, string differenzaImportoIva, string iva, string dataScadenza, string dataVersamentoRiscossione, int idTipoBanca, string dataAggiungiDocumento, ref Esito esito)
         {
             decimal importoVersatoDecimal = string.IsNullOrEmpty(importoVersato) ? 0 : decimal.Parse(importoVersato);
             decimal differenzaImporto = (scadenzaDaAggiornare.ImportoAvere + scadenzaDaAggiornare.ImportoDare) - importoVersatoDecimal;
@@ -129,7 +130,7 @@ namespace VideoSystemWeb.BLL
             #region SCADENZA DA AGGIORNARE
             scadenzaDaAggiornare.Iva = string.IsNullOrEmpty(iva) ? 0 : decimal.Parse(iva);
             scadenzaDaAggiornare.DataScadenza = DateTime.Parse(dataScadenza);
-            scadenzaDaAggiornare.Banca = banca;
+            scadenzaDaAggiornare.IdTipoBanca = idTipoBanca;
 
             if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
             {
@@ -149,7 +150,7 @@ namespace VideoSystemWeb.BLL
 
             #region SCADENZA DA INSERIRE
             DatiScadenzario scadenzaDaInserire = new DatiScadenzario();
-            scadenzaDaInserire.Banca = scadenzaDaAggiornare.Banca;
+            scadenzaDaInserire.IdTipoBanca = scadenzaDaAggiornare.IdTipoBanca;
             scadenzaDaInserire.IdDatiProtocollo = scadenzaDaAggiornare.IdDatiProtocollo;
             scadenzaDaInserire.DataScadenza = DateTime.Parse(dataAggiungiDocumento);
             scadenzaDaInserire.DataVersamento = null;
@@ -248,6 +249,41 @@ namespace VideoSystemWeb.BLL
         public List<Anag_Clienti_Fornitori> getClientiFornitoriInScadenzario(ref Esito esito)
         {
             return Scadenzario_DAL.Instance.GetClientiFornitoriInScadenzario(ref esito);
+        }
+
+        public void SaldoTotale(DatiScadenzario scadenza, string tipoScadenza, string dataVersamentoRiscossione, int idTipoBanca, ref Esito esito)
+        {
+            // prendo tutte le scadenze legate a quella selezionata
+            //List<DatiScadenzario> listaScadenzeLegate = Scadenzario_DAL.Instance.GetDatiScadenzarioByIdDatiProtocollo(scadenza.IdDatiProtocollo, ref esito);
+
+            //foreach(DatiScadenzario scadenzaLegata in listaScadenzeLegate)
+            //{
+                //if (scadenzaLegata.IsImportoEstinto.ToUpper() != "PAGATA")
+                //{
+                    if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
+                    {
+                        decimal imponibile = scadenza.ImportoAvere;
+
+                        scadenza.DataRiscossione = DateTime.Parse(dataVersamentoRiscossione);
+                        scadenza.ImportoRiscosso = imponibile;
+                    }
+                    else
+                    {
+                        decimal imponibile = scadenza.ImportoDare;
+
+                        scadenza.DataVersamento = DateTime.Parse(dataVersamentoRiscossione);
+                        scadenza.ImportoVersato = imponibile;
+                    }
+
+                    scadenza.IdTipoBanca = idTipoBanca;
+
+                    Scadenzario_DAL.Instance.AggiornaDatiScadenzario(scadenza, ref esito);
+
+                //}
+
+            //}
+
+            
         }
     }
 }

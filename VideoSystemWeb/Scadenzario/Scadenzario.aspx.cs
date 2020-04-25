@@ -99,26 +99,26 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
 
             #region BANCA
-            List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
+            //List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
             
-            foreach (DatiBancari banca in listaDatiBancari)
-            {
-                ddl_Banca.Items.Add(new ListItem(banca.Banca, banca.Banca));
-                ddl_BancaModifica.Items.Add(new ListItem(banca.Banca, banca.Banca));
-            }
+            //foreach (DatiBancari banca in listaDatiBancari)
+            //{
+            //    ddl_Banca.Items.Add(new ListItem(banca.Banca, banca.Banca));
+            //    ddl_BancaModifica.Items.Add(new ListItem(banca.Banca, banca.Banca));
+            //}
             foreach (Tipologica tipologiaBanca in SessionManager.ListaTipiBanca)
             {
-                ListItem item = new ListItem();
-                item.Text = tipologiaBanca.nome;
-                item.Value = tipologiaBanca.nome;
+                //ListItem item = new ListItem();
+                //item.Text = tipologiaBanca.nome;
+                //item.Value = tipologiaBanca.nome;
 
-                ddl_Banca.Items.Add(item);
+                ddl_Banca.Items.Add(new ListItem(tipologiaBanca.nome, tipologiaBanca.id.ToString()));
 
-                ListItem itemMod = new ListItem();
-                itemMod.Text = tipologiaBanca.nome;
-                itemMod.Value = tipologiaBanca.nome;
+                //ListItem itemMod = new ListItem();
+                //itemMod.Text = tipologiaBanca.nome;
+                //itemMod.Value = tipologiaBanca.nome;
 
-                ddl_BancaModifica.Items.Add(itemMod);
+                ddl_BancaModifica.Items.Add(new ListItem(tipologiaBanca.nome, tipologiaBanca.id.ToString()));
             }
 
             //ddl_Banca.Items.Add(new ListItem("Cassa", "Cassa"));
@@ -183,7 +183,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
               
                 pnlContainer.Visible = true;
             }
-        }
+        }       
 
         protected void btnInsScadenza_Click(object sender, EventArgs e)
         {
@@ -320,12 +320,16 @@ namespace VideoSystemWeb.Scadenzario.userControl
                         lbl_VersatoRiscosso.Text = "Versato netto";
                         lbl_VersatoRiscossoIVA.Text = "Versato + IVA";
                         ddl_Tipo.SelectedValue = "Fornitore";
+
+                        txt_DataVersamentoRiscossione.Text = scadenza.DataVersamento == null? string.Empty : ((DateTime)scadenza.DataVersamento).ToString("dd/MM/yyyy");
                     }
                     else // CLIENTE
                     {
                         lbl_VersatoRiscosso.Text = "Riscosso netto";
                         lbl_VersatoRiscossoIVA.Text = "Riscosso + IVA";
                         ddl_Tipo.SelectedValue = "Cliente";
+
+                        txt_DataVersamentoRiscossione.Text = scadenza.DataRiscossione == null ? string.Empty : ((DateTime)scadenza.DataRiscossione).ToString("dd/MM/yyyy");
                     }
 
                     txt_ClienteFornitore.Text = scadenza.RagioneSocialeClienteFornitore;
@@ -344,8 +348,10 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_TotDocumentoIva.Text = (importoDocumentoDareIva + importoDocumentoAvereIva).ToString("###,##0.00");
                     txt_DataDocumentoModifica.Text = scadenza.DataProtocollo != null ? ((DateTime)scadenza.DataProtocollo).ToString("dd/MM/yyyy") : "";
                     txt_ScadenzaDocumento.Text = scadenza.DataScadenza != null ? ((DateTime)scadenza.DataScadenza).ToString("dd/MM/yyyy") : "";
-                    ddl_BancaModifica.SelectedValue = scadenza.Banca;
-                    txt_DataVersamentoRiscossione.Text = string.Empty;
+
+                    //ddl_BancaModifica.Items.Contains(scadenza.Banca)
+                    ddl_BancaModifica.SelectedValue = scadenza.IdTipoBanca.ToString();//scadenza.Banca;
+                    
 
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaScadenza", script: "javascript: mostraScadenza('" + idScadenzaSelezionata + "');", addScriptTags: true);
                     
@@ -436,7 +442,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 }
                 else
                 {
-                    Scadenzario_BLL.Instance.AggiornaDatiScadenzario(scadenza, ddl_Tipo.SelectedValue, importoVersato, iva, dataScadenza, dataVersamentoRiscossione, ddl_BancaModifica.SelectedValue, ref esito);
+                    Scadenzario_BLL.Instance.AggiornaDatiScadenzario(scadenza, ddl_Tipo.SelectedValue, importoVersato, iva, dataScadenza, dataVersamentoRiscossione, int.Parse(ddl_BancaModifica.SelectedValue), ref esito);
 
                     if (esito.Codice != Esito.ESITO_OK)
                     {
@@ -455,13 +461,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
         }
 
+        
+
         private void gestisciPulsantiScadenza(string stato)
         {
             switch (stato)
             {
                 case "INSERIMENTO":
                     btnInserisciScadenza.Visible = true;
-                    btnModificaScadenza.Visible = btnAggiungiPagamento.Visible = false;
+                    btnModificaScadenza.Visible = btnAggiungiPagamento.Visible = btnSaldoTotale.Visible = false;
 
                     div_CampiModifica.Visible = false;
                     div_CampiInserimento.Visible = true;
@@ -476,7 +484,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     break;
                 case "MODIFICA":
                     btnInserisciScadenza.Visible = false;
-                    btnModificaScadenza.Visible = btnAggiungiPagamento.Visible = true;
+                    btnModificaScadenza.Visible = btnAggiungiPagamento.Visible = btnSaldoTotale.Visible = true;
                    
                     div_CampiModifica.Visible = true;
                     div_CampiInserimento.Visible = false;
@@ -491,7 +499,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     break;
                 default:
                     btnInserisciScadenza.Visible = false;
-                    btnModificaScadenza.Visible = btnAggiungiPagamento.Visible = false;
+                    btnModificaScadenza.Visible = btnAggiungiPagamento.Visible = btnSaldoTotale.Visible = false;
                     
                     break;
             }
@@ -615,7 +623,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     ShowError("Controllare i campi evidenziati");
                 }
                
-                Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare,  ddl_Tipo.SelectedValue, importoVersato, txt_TotaleIva.Text, iva, dataScadenza, dataVersamentoRiscossione, ddl_BancaModifica.SelectedValue, dataAggiungiDocumento, ref esito);
+                Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare,  ddl_Tipo.SelectedValue, importoVersato, txt_TotaleIva.Text, iva, dataScadenza, dataVersamentoRiscossione, int.Parse(ddl_BancaModifica.SelectedValue), dataAggiungiDocumento, ref esito);
 
                 if (esito.Codice == Esito.ESITO_OK)
                 {
@@ -645,7 +653,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             scadenza.Id = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
             scadenza.IdDatiProtocollo = _idDatiProtocollo;
-            scadenza.Banca = ddl_Banca.SelectedValue;
+            scadenza.IdTipoBanca = int.Parse(ddl_Banca.SelectedValue);
             scadenza.DataScadenza = null; // il valore viene calcolato in seguito
             
             scadenza.ImportoDare = 0;
@@ -749,10 +757,55 @@ namespace VideoSystemWeb.Scadenzario.userControl
             return esito;
         }
 
+        private Esito SaldoTotaleScadenza(ref DatiScadenzario scadenza, ref string dataVersamentoRiscossione)
+        {
+            Esito esito = new Esito();
+
+            int idScadenza = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
+            scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, Convert.ToInt16(idScadenza));
+
+            dataVersamentoRiscossione = ValidaCampo(txt_DataVersamentoRiscossione, "", true, ref esito);
+
+            return esito;
+        }
+
         private void AbilitaBottoni(bool isUtenteAbilitatoInScrittura)
         {
             clbtnInserisciScadenza.Visible = isUtenteAbilitatoInScrittura;
             gv_scadenze.Columns[11].Visible = isUtenteAbilitatoInScrittura;
+        }
+
+        protected void btnSaldoTotale_Click(object sender, EventArgs e)
+        {
+
+            DatiScadenzario scadenza = new DatiScadenzario();
+            string importoVersato = string.Empty;
+            string iva = string.Empty;
+            string dataScadenza = string.Empty;
+            string dataVersamentoRiscossione = string.Empty;
+            Esito esito = SaldoTotaleScadenza(ref scadenza, ref dataVersamentoRiscossione);
+
+            if (esito.Codice != Esito.ESITO_OK)
+            {
+                ShowError("Controllare i campi evidenziati");
+            }
+            else
+            {
+                Scadenzario_BLL.Instance.SaldoTotale(scadenza, ddl_Tipo.SelectedValue, dataVersamentoRiscossione, int.Parse(ddl_BancaModifica.SelectedValue), ref esito);
+                if (esito.Codice != Esito.ESITO_OK)
+                {
+                    log.Error(esito.Descrizione);
+                    ShowError(esito.Descrizione);
+                }
+                else
+                {
+                    ShowSuccess("Saldo scadenza effettuato correttamente");
+                    btnChiudiPopup_Click(null, null);
+
+                    PulisciFiltriRicerca();
+                    PopolaGrigliaScadenze();
+                }
+            }
         }
     }
 }

@@ -548,32 +548,26 @@ namespace VideoSystemWeb.DAL
                                                            string dataFatturaA,
                                                            string dataScadenzaDa,
                                                            string dataScadenzaA,
+                                                           string filtroBanca,
                                                            ref Esito esito)
         {
             List<DatiScadenzario> listaDatiScadenzario = new List<DatiScadenzario>();
             try
             {
                 string filtriRicerca = string.Empty;
-                if (!string.IsNullOrEmpty(tipoAnagrafica)) filtriRicerca += " and b.destinatario = '" + tipoAnagrafica + "'";
-                //if (!string.IsNullOrEmpty(anagraficaClienteFornitore)) filtriRicerca += " and b.cliente = '" + anagraficaClienteFornitore.Trim() + "'";
-                if (!string.IsNullOrEmpty(ragioneSociale)) filtriRicerca += " and b.cliente like '%" + ragioneSociale.Trim() + "%'";
+                filtriRicerca += string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
+                filtriRicerca += string.IsNullOrWhiteSpace(ragioneSociale) ? "" : " and b.cliente like '%" + ragioneSociale.Trim() + "%'";
+                filtriRicerca += string.IsNullOrWhiteSpace(numeroFattura) ? "" : " and b.protocollo_riferimento = '" + numeroFattura + "'";
 
-                if (!string.IsNullOrEmpty(numeroFattura)) filtriRicerca += " and b.protocollo_riferimento = '" + numeroFattura + "'";
                 if (!string.IsNullOrEmpty(fatturaPagata))
                 {
-                    if (fatturaPagata == "1")
-                    { 
-                        filtriRicerca += " and (a.importoAvere = a.importoRiscosso and a.importoDare = a.importoVersato)"; 
-                    }
-                    else
-                    {
-                        filtriRicerca += " and (a.importoAvere <> a.importoRiscosso or a.importoDare != a.importoVersato)";
-                    }
+                    filtriRicerca += fatturaPagata == "1" ? " and (a.importoAvere = a.importoRiscosso and a.importoDare = a.importoVersato)" : " and (a.importoAvere <> a.importoRiscosso or a.importoDare != a.importoVersato)";
                 }
-                if (!string.IsNullOrEmpty(dataFatturaDa)) filtriRicerca += " and b.data_protocollo >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
-                if (!string.IsNullOrEmpty(dataFatturaA)) filtriRicerca += " and b.data_protocollo <= '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
-                if (!string.IsNullOrEmpty(dataScadenzaDa)) filtriRicerca += " and a.dataScadenza >= '" +  (DateTime.Parse(dataScadenzaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
-                if (!string.IsNullOrEmpty(dataScadenzaA)) filtriRicerca += " and a.dataScadenza <= '" + (DateTime.Parse(dataScadenzaA)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and b.data_protocollo >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and b.data_protocollo <= '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                filtriRicerca += string.IsNullOrWhiteSpace(dataScadenzaDa) ? "" : " and a.dataScadenza >= '" + (DateTime.Parse(dataScadenzaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                filtriRicerca += string.IsNullOrWhiteSpace(dataScadenzaA) ? "" : " and a.dataScadenza <= '" + (DateTime.Parse(dataScadenzaA)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                filtriRicerca += string.IsNullOrWhiteSpace(filtroBanca) ? "" : " and a.idTipoBanca = " + filtroBanca;
 
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {

@@ -82,6 +82,7 @@
             $("#<%=txt_DataScadenzaDa.ClientID%>").val('');
             $("#<%=txt_DataScadenzaA.ClientID%>").val('');
             $("#<%=ddlFatturaPagata.ClientID%>").val('0');
+            $("#<%=ddl_FiltroBanca.ClientID%>").val('');
         }
 
         function confermaEliminazioneScadenza() {
@@ -177,14 +178,6 @@
             <div class="w3-row-padding">
                 <div class="w3-quarter">
                     <label>Cliente/Fornitore</label>
-                    <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
-                        <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
-                        <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
-                        <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
-                    </asp:DropDownList>
-                </div>
-                <div class="w3-quarter">
-                    <label>Ragione Sociale</label>
                     <asp:TextBox ID="txt_RagioneSociale" runat="server" class="w3-input w3-border" ></asp:TextBox>
 
                     <%--<div id="divRagioneSociale" class="dropdown ">
@@ -196,6 +189,16 @@
                     </div>--%>
 
                 </div>
+
+                <div class="w3-quarter">
+                    <label>Tipo (Cliente/Fornitore)</label>
+                    <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
+                        <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
+                        <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
+                        <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                
                 <div class="w3-quarter">
                     <label>Numero Fattura</label>
                     <asp:TextBox ID="txt_NumeroFattura" runat="server" MaxLength="20" class="w3-input w3-border" ></asp:TextBox>
@@ -209,24 +212,30 @@
                     </asp:DropDownList>
                 </div>
             </div>
+
             <div class="w3-row-padding" style="position:relative;">
-                    <div class="w3-quarter">
-                        <label>Data fattura da</label>
-                        <asp:TextBox ID="txt_DataFatturaDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                    </div>
-                    <div class="w3-quarter">
-                        <label>Data fattura a</label>
-                        <asp:TextBox ID="txt_DataFatturaA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                    </div>
-                
+                    <div class="w3-threequarter w3-row-padding">
+                        <div class="w3-quarter">
+                            <label>Data fattura da</label>
+                            <asp:TextBox ID="txt_DataFatturaDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>Data fattura a</label>
+                            <asp:TextBox ID="txt_DataFatturaA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                        </div>
         
-                    <div class="w3-quarter">
-                        <label>Data scadenza da</label>
-                        <asp:TextBox ID="txt_DataScadenzaDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                        <div class="w3-quarter">
+                            <label>Data scadenza da</label>
+                            <asp:TextBox ID="txt_DataScadenzaDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>Data scadenza a</label>
+                            <asp:TextBox ID="txt_DataScadenzaA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                        </div>
                     </div>
                     <div class="w3-quarter">
-                        <label>Data scadenza a</label>
-                        <asp:TextBox ID="txt_DataScadenzaA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                        <label>Tipologia pagamento</label>
+                        <asp:DropDownList ID="ddl_FiltroBanca" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border"/>
                     </div>
             </div>
 
@@ -413,7 +422,7 @@
         <ContentTemplate>
             <asp:Panel runat="server" ID="pnlContainer" Visible="false">
                 <div class="modalBackground"></div>
-                <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto" Style="height: auto">
+                <asp:Panel runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto" Style="height: 85%">
                     <div class="w3-container w3-center w3-xlarge">
                         GESTIONE SCADENZARIO
                     </div>
@@ -584,7 +593,7 @@
 
                                 </div>
                                 <br />
-                                <div style="text-align: center;">
+                                <div style="text-align: center; width:95%; bottom:30px; position:absolute;">
                                     <asp:Button ID="btnInserisciScadenza" runat="server" Text="Inserisci Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciScadenza_Click" OnClientClick="return confirm('Confermi inserimento Scadenza?')" />
                                     
                                     <asp:Button ID="btnAggiungiPagamento" runat="server" Text="Aggiungi Pagamento" class="w3-panel w3-blue w3-border w3-round" OnClick="btnInserisciPagamento_Click" />

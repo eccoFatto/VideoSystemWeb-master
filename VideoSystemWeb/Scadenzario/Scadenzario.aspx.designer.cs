@@ -33,15 +33,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
 
         /// <summary>
-        /// Controllo ddl_TipoAnagrafica.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_TipoAnagrafica;
-
-        /// <summary>
         /// Controllo txt_RagioneSociale.
         /// </summary>
         /// <remarks>
@@ -49,6 +40,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_RagioneSociale;
+
+        /// <summary>
+        /// Controllo ddl_TipoAnagrafica.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_TipoAnagrafica;
 
         /// <summary>
         /// Controllo txt_NumeroFattura.
@@ -103,6 +103,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_DataScadenzaA;
+
+        /// <summary>
+        /// Controllo ddl_FiltroBanca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_FiltroBanca;
 
         /// <summary>
         /// Controllo lbl_dare.

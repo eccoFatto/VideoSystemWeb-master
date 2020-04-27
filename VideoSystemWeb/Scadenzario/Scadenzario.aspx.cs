@@ -100,12 +100,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             #region BANCA
             //List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
-            
+
             //foreach (DatiBancari banca in listaDatiBancari)
             //{
             //    ddl_Banca.Items.Add(new ListItem(banca.Banca, banca.Banca));
             //    ddl_BancaModifica.Items.Add(new ListItem(banca.Banca, banca.Banca));
             //}
+            ddl_FiltroBanca.Items.Add(new ListItem("<tutti>", ""));
             foreach (Tipologica tipologiaBanca in SessionManager.ListaTipiBanca)
             {
                 //ListItem item = new ListItem();
@@ -119,6 +120,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 //itemMod.Value = tipologiaBanca.nome;
 
                 ddl_BancaModifica.Items.Add(new ListItem(tipologiaBanca.nome, tipologiaBanca.id.ToString()));
+                ddl_FiltroBanca.Items.Add(new ListItem(tipologiaBanca.nome, tipologiaBanca.id.ToString()));
             }
 
             //ddl_Banca.Items.Add(new ListItem("Cassa", "Cassa"));
@@ -167,7 +169,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
         private void PopolaGrigliaScadenze()
         {
             Esito esito = new Esito();
-            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "","","","",ref esito);
+            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "","","","", "", ref esito);
 
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
@@ -206,6 +208,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             List<Protocolli> listaProtocolloNonInScadenzario = Scadenzario_BLL.Instance.getFattureNonInScadenzario(ddl_Tipo.SelectedValue, ref esito);
 
+            string tipoAnagrafica = ddl_Tipo.SelectedItem.Text;
+
             if (listaProtocolloNonInScadenzario.Count == 0)
             {
                 ddl_fattura.Items.Add(new ListItem("<nessuna fattura trovata>", ""));
@@ -215,7 +219,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 ddl_fattura.Items.Add(new ListItem("<seleziona una fattura>", ""));
                 foreach (Protocolli protocollo in listaProtocolloNonInScadenzario)
                 {
-                    ddl_fattura.Items.Add(new ListItem("Protocollo: " + protocollo.Numero_protocollo + " - Cliente: " + protocollo.Cliente + " - Lavorazione: " + protocollo.Lavorazione, protocollo.Id.ToString()));
+                    ddl_fattura.Items.Add(new ListItem("Protocollo: " + protocollo.Numero_protocollo + " - " + tipoAnagrafica + ": " + protocollo.Cliente + " - Lavorazione: " + protocollo.Lavorazione, protocollo.Id.ToString()));
                 }
             }
             ddl_fattura.SelectedIndex = 0;
@@ -259,6 +263,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
             List<Protocolli> listaProtocolloNonInScadenzario = Scadenzario_BLL.Instance.getFattureNonInScadenzario(ddl_Tipo.SelectedValue, ref esito);
 
+            string tipoAnagrafica = ddl_Tipo.SelectedItem.Text; 
+
             if (listaProtocolloNonInScadenzario.Count == 0)
             {
                 ddl_fattura.Items.Add(new ListItem("<nessuna fattura trovata>", ""));
@@ -268,7 +274,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 ddl_fattura.Items.Add(new ListItem("<seleziona una fattura>", ""));
                 foreach (Protocolli protocollo in listaProtocolloNonInScadenzario)
                 {
-                    ddl_fattura.Items.Add(new ListItem("Protocollo: " + protocollo.Numero_protocollo + " - Cliente: " + protocollo.Cliente + " - Lavorazione: " + protocollo.Lavorazione, protocollo.Id.ToString()));
+                    ddl_fattura.Items.Add(new ListItem("Protocollo: " + protocollo.Numero_protocollo + " - " + tipoAnagrafica + ": " + protocollo.Cliente + " - Lavorazione: " + protocollo.Lavorazione, protocollo.Id.ToString()));
                 }
             }
             ddl_fattura.SelectedIndex = 0;
@@ -286,7 +292,9 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                                         txt_DataFatturaDa.Text,
                                                                                                         txt_DataFatturaA.Text,
                                                                                                         txt_DataScadenzaDa.Text,
-                                                                                                        txt_DataScadenzaA.Text, ref esito);
+                                                                                                        txt_DataScadenzaA.Text, 
+                                                                                                        ddl_FiltroBanca.SelectedValue, 
+                                                                                                        ref esito);
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
             gv_scadenze.DataBind();
@@ -436,7 +444,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 //decimal importoVersatoIvaDecimal = decimal.Parse(importoVersato) * (1 + (scadenza.Iva) / 100);
                 decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);// Math.Round((scadenza.ImportoAvereIva + scadenza.ImportoDareIva) - importoVersatoIvaDecimal,2);
 
-                if (differenzaImportoIva != 0)
+                if ((!string.IsNullOrEmpty(importoVersato) && decimal.Parse(importoVersato) != 0) &&  differenzaImportoIva != 0)
                 {
                     ShowWarning("L'importo in fase di registrazione non copre totalmente la rata corrente." + Environment.NewLine + "Modificare il valore in " + (scadenza.ImportoAvereIva + scadenza.ImportoDareIva) + " oppure selezionare 'Aggiungi pagamento'.");
                 }
@@ -752,7 +760,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
            
             dataScadenza = ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
 
-            dataVersamentoRiscossione = ValidaCampo(txt_DataVersamentoRiscossione, "", true, ref esito);
+            dataVersamentoRiscossione = (string.IsNullOrEmpty(importoVersato) || (decimal.Parse(importoVersato))== 0 )? txt_DataVersamentoRiscossione.Text : ValidaCampo(txt_DataVersamentoRiscossione, "", true, ref esito);
 
             return esito;
         }

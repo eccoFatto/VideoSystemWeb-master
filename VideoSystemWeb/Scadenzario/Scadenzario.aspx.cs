@@ -99,38 +99,16 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
 
             #region BANCA
-            //List<DatiBancari> listaDatiBancari = Config_BLL.Instance.getListaDatiBancari(ref esito);
 
-            //foreach (DatiBancari banca in listaDatiBancari)
-            //{
-            //    ddl_Banca.Items.Add(new ListItem(banca.Banca, banca.Banca));
-            //    ddl_BancaModifica.Items.Add(new ListItem(banca.Banca, banca.Banca));
-            //}
             ddl_FiltroBanca.Items.Add(new ListItem("<tutti>", ""));
             foreach (Tipologica tipologiaBanca in SessionManager.ListaTipiBanca)
             {
-                //ListItem item = new ListItem();
-                //item.Text = tipologiaBanca.nome;
-                //item.Value = tipologiaBanca.nome;
-
                 ddl_Banca.Items.Add(new ListItem(tipologiaBanca.nome, tipologiaBanca.id.ToString()));
 
-                //ListItem itemMod = new ListItem();
-                //itemMod.Text = tipologiaBanca.nome;
-                //itemMod.Value = tipologiaBanca.nome;
-
                 ddl_BancaModifica.Items.Add(new ListItem(tipologiaBanca.nome, tipologiaBanca.id.ToString()));
+                
                 ddl_FiltroBanca.Items.Add(new ListItem(tipologiaBanca.nome, tipologiaBanca.id.ToString()));
             }
-
-            //ddl_Banca.Items.Add(new ListItem("Cassa", "Cassa"));
-            //ddl_BancaModifica.Items.Add(new ListItem("Cassa", "Cassa"));
-            #endregion
-
-            #region RAGIONE SOCIALE (SOSTITUITO CON NORMALE TEXTBOX)
-            //List<Anag_Clienti_Fornitori> listaClientiFornitori = Scadenzario_BLL.Instance.getClientiFornitoriInScadenzario(ref esito);
-
-            //PopolaDDLGenerico(elencoRagioneSociale, listaClientiFornitori);
 
             #endregion
         }

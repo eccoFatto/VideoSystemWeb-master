@@ -541,6 +541,7 @@
     <Content Include="SITO\index4.html" />
     <Content Include="SITO\js\bootstrap-italia.bundle.min.js" />
     <Content Include="SITO\js\bootstrap-italia.min.js" />
+    <Content Include="STATISTICHE\Costi.aspx" />
     <Content Include="STATISTICHE\Ricavi.aspx" />
     <Content Include="StretchSession.aspx" />
     <Content Include="TEMPLATE\testComboBox.aspx" />
@@ -918,6 +919,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="STATISTICHE\Costi.aspx.cs">
+      <DependentUpon>Costi.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="STATISTICHE\Costi.aspx.designer.cs">
+      <DependentUpon>Costi.aspx</DependentUpon>
     </Compile>
     <Compile Include="STATISTICHE\Ricavi.aspx.cs">
       <DependentUpon>Ricavi.aspx</DependentUpon>

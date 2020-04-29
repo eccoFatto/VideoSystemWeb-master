@@ -64,5 +64,10 @@ namespace VideoSystemWeb.BLL
         { 
             return Statistiche_DAL.Instance.GetStatisticheRicavi(filtroCliente, filtroProduzione, filtroLavorazione, filtroContratto, fatturato, dataInizio, dataFine, ref esito);
         }
+
+        public List<StatisticheRicavi> GetStatisticheCosti(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroContratto, string filtroGenere, string filtroGruppo, string filtroSottogruppo, bool? fatturato, string dataInizio, string dataFine, ref Esito esito)
+        {
+            return Statistiche_DAL.Instance.GetStatisticheCosti(filtroCliente, filtroProduzione, filtroLavorazione, filtroContratto, filtroGenere, filtroGruppo, filtroSottogruppo, fatturato, dataInizio, dataFine, ref esito);
+        }
     }
 }

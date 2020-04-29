@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Ricavi.aspx.cs" Inherits="VideoSystemWeb.STATISTICHE.Ricavi" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Costi.aspx.cs" Inherits="VideoSystemWeb.STATISTICHE.Costi" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script>
         $(document).ready(function () {
@@ -14,7 +14,6 @@
 
         // AZZERO TUTTI I CAMPI RICERCA
         function azzeraCampiRicerca() {
-            
             $("#<%=hf_NomeCliente.ClientID%>").val('');
             $("#<%=ddl_Cliente.ClientID%>").val('');
 
@@ -35,8 +34,6 @@
             $("#<%=chk_Listino.ClientID%>").prop('checked', true);
             $("#<%=chk_Costi.ClientID%>").prop('checked', true);
             $("#<%=chk_Ricavo.ClientID%>").prop('checked', true);
-
-            <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>
         }
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
@@ -51,14 +48,12 @@
                 $("#divCliente .dropdown-menu li").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
-                
             });
+
             $("#<%=elencoClienti.ClientID%> .dropdown-item").on("click", function (e) {               
                 $("#<%=hf_NomeCliente.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Cliente.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Cliente.ClientID%>").attr("title", $(e.target).text());
-
-                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%> //per eliminare aggiornamento filtri commentare questa riga 
             });
 
             // GESTIONE DROPDOWN PRODUZIONE
@@ -72,8 +67,6 @@
                 $("#<%=hf_NomeProduzione.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Produzione.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Produzione.ClientID%>").attr("title", $(e.target).text());
-
-                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga 
             });
 
             // GESTIONE DROPDOWN LAVORAZIONE
@@ -87,8 +80,6 @@
                 $("#<%=hf_NomeLavorazione.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Lavorazione.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Lavorazione.ClientID%>").attr("title", $(e.target).text());
-
-                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga 
             });
 
             // GESTIONE DROPDOWN CONTRATTO
@@ -102,14 +93,11 @@
                 $("#<%=hf_NomeContratto.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Contratto.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Contratto.ClientID%>").attr("title", $(e.target).text());
-
-                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga 
             });
         });
     </script>
 
-    <label><asp:Label ID="lblStatisticaRicavi" runat="server" Text="STATISTICA RICAVI" ForeColor="Teal"></asp:Label></label>
-    <%--<asp:Button ID="btn_aggiornaFiltri" runat="server" Text="" OnClick="btn_aggiornaFiltri_Click" style="display:none"/>--%>
+    <label><asp:Label ID="lblStatisticaRicavi" runat="server" Text="STATISTICA COSTI" ForeColor="Teal"></asp:Label></label>
 
     <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
         <ContentTemplate>
@@ -151,7 +139,39 @@
                 </div>
             </div>
 
-            <div class="w3-row-padding" style="position:relative;">
+            <div class="w3-row-padding" style="position:relative;margin-top:10px;">
+                <div class="w3-quarter">
+                    <label>Genere</label>
+                    <asp:DropDownList ID="ddl_Genere" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
+                </div>
+
+                <div class="w3-quarter">
+                    <label>Gruppo</label>
+                    <asp:DropDownList ID="ddl_Gruppo" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
+                </div>
+
+                <div class="w3-quarter">
+                    <label>Sottogruppo</label>
+                    <asp:DropDownList ID="ddl_Sottogruppo" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
+                </div>
+                
+                <div class="w3-quarter" style="margin-top:14px;">
+                    <div class="w3-row">
+                        <div class="w3-third">Listino</div>
+                        <div class="w3-twothird"><asp:CheckBox ID="chk_Listino" runat="server" Checked/></div>
+                    </div>
+                    <div class="w3-row">
+                        <div class="w3-third">Costi</div>
+                        <div class="w3-twothird"><asp:CheckBox ID="chk_Costi" runat="server" Checked/></div>
+                    </div>
+                    <div class="w3-row">
+                        <div class="w3-third">Ricavo</div>
+                        <div class="w3-twothird"><asp:CheckBox ID="chk_Ricavo" runat="server" Checked/></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w3-row-padding" style="position:relative; margin-bottom:20px;">
                 <div class="w3-quarter">
                     <label>Fatturato</label>
                     <asp:DropDownList ID="ddlFatturato" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
@@ -171,26 +191,7 @@
                     <asp:TextBox ID="txt_PeriodoA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                 </div>
                 
-                <div class="w3-quarter">
-                    <div class="w3-row">
-                        <div class="w3-third">Listino</div>
-                        <div class="w3-twothird"><asp:CheckBox ID="chk_Listino" runat="server" Checked/></div>
-                    </div>
-                    <div class="w3-row">
-                        <div class="w3-third">Costi</div>
-                        <div class="w3-twothird"><asp:CheckBox ID="chk_Costi" runat="server" Checked/></div>
-                    </div>
-                    <div class="w3-row">
-                        <div class="w3-third">Ricavo</div>
-                        <div class="w3-twothird"><asp:CheckBox ID="chk_Ricavo" runat="server" Checked/></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w3-row-padding w3-margin-bottom w3-margin-top">
-                <div class="w3-threequarter" style="font-size:.8em;"> </div>
-
-                <div class="w3-quarter" style="float:right; text-align:center;">
+                <div class="w3-quarter" style="text-align:center;margin-top:29px;">
                     <div class="row">
                         <div class="w3-half">
                             <asp:Button ID="btnEseguiStatistica" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnEseguiStatistica_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
@@ -200,8 +201,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+
+ 
 
             <div class="round">
                 <asp:GridView ID="gv_statistiche" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" 

@@ -1126,5 +1126,23 @@ namespace VideoSystemWeb.Agenda
                 ShowError(esito.Descrizione);
             }
         }
+
+        protected void btnStampaGiornata_Click(object sender, EventArgs e)
+        {
+
+                Esito esito = popupRiepilogoGiornata.popolaPannelloGiornata();
+                if (esito.Codice != Esito.ESITO_OK)
+                {
+                //    upRiepilogoFattura.Update();
+
+                //    ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+                //    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriFattura", script: "javascript: document.getElementById('modalFattura').style.display='block'", addScriptTags: true);
+                //}
+                //else
+                //{
+                    ShowError(esito.Descrizione);
+                }
+
+        }
     }
 }

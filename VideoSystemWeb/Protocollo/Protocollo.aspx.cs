@@ -418,7 +418,9 @@ namespace VideoSystemWeb.Protocollo
                     dataA = Convert.ToDateTime(tbDataLavorazioneA.Text);
                 }
                 queryProtocolloDataLav = queryProtocolloDataLav.Replace("@dataDa", dataDa.ToString("yyyy-MM-ddT00:00:00.000"));
-                queryProtocolloDataLav = queryProtocolloDataLav.Replace("@DataA", dataA.ToString("yyyy-MM-ddT23:59:59.999"));
+                //queryProtocolloDataLav = queryProtocolloDataLav.Replace("@DataA", dataA.ToString("yyyy-MM-ddT23:59:59.999"));
+                // LA BETWEEN PRENDE PURE IL GIORNO DOPO SE METTI 23:59 e le date non contengono l'orario
+                queryProtocolloDataLav = queryProtocolloDataLav.Replace("@DataA", dataA.ToString("yyyy-MM-ddT00:00:00.000"));
             }
             queryRicerca = queryRicerca.Replace("@dataLavorazione", queryProtocolloDataLav);
 

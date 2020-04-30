@@ -8,12 +8,14 @@ using System.Web.UI.WebControls;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.BLL.Stampa;
 using VideoSystemWeb.Entity;
+using VideoSystemWeb.DAL;
 using iText;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iTextSharp;
 using System.Configuration;
+using System.Data;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
@@ -55,261 +57,98 @@ namespace VideoSystemWeb.Agenda.userControl
                 string emailVs = cfAppo.valore;
 
                 // GESTIONE NOMI FILE PDF
-                string nomeFile = "Giornata_" + tbDataElaborazione.Text.Replace("/","-") + ".pdf";
+                string nomeFile = "RiepilogoGiornata.pdf";
                 string pathGiornata = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
                 string mapPathGiornata = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
                 iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/logoVSP_trim.png"));
-
                 iText.IO.Image.ImageData imageDNV = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/DNV_2008_ITA2.jpg"));
 
 
                 PdfWriter wr = new PdfWriter(mapPathGiornata);
                 PdfDocument doc = new PdfDocument(wr);
-                doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
+                doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4.Rotate());
                 //Document document = new Document(doc);
-                Document document = new Document(doc, iText.Kernel.Geom.PageSize.A4, false);
+                Document document = new Document(doc, iText.Kernel.Geom.PageSize.A4.Rotate(), false);
 
-                document.SetMargins(245, 30, 110, 30);
+                // IMPOSTO LA DATA DI OGGI SE PRIMA ELABORAZIONE
+                if (string.IsNullOrEmpty(tbDataElaborazione.Text.Trim())) tbDataElaborazione.Text = DateTime.Today.ToShortDateString();
 
-                Paragraph pSpazio = new Paragraph(" ");
+                document.SetMargins(90, 35, 50, 35);
+
+                Paragraph pSpazio = new Paragraph("");
                 document.Add(pSpazio);
-
-                // CREAZIONE GRIGLIA
-                iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 80, 80, 80, 80, 80, 80, 50 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
-                Paragraph pGriglia;
-                Cell cellaGriglia;
 
                 // COLORE BLU VIDEOSYSTEM
                 iText.Kernel.Colors.Color coloreIntestazioni = new iText.Kernel.Colors.DeviceRgb(33, 150, 243);
 
-                // INTESTAZIONE FATTURA
-                pGriglia = new Paragraph("colonna 1").SetFontSize(10).SetBold();
-                cellaGriglia = new Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                cellaGriglia.Add(pGriglia);
-                tbGrigla.AddHeaderCell(cellaGriglia);
 
-                pGriglia = new Paragraph("colonna 2").SetFontSize(10).SetBold();
-                cellaGriglia = new iText.Layout.Element.Cell(1,2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                cellaGriglia.Add(pGriglia);
-                tbGrigla.AddHeaderCell(cellaGriglia);
+                DateTime dataTmp = Convert.ToDateTime(tbDataElaborazione.Text.Trim());
+                string sDataTmp = dataTmp.ToString("yyyy-MM-dd") + "T00:00:00.000";
 
-                pGriglia = new Paragraph("colonna 3").SetFontSize(10).SetBold();
-                cellaGriglia = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                cellaGriglia.Add(pGriglia);
-                tbGrigla.AddHeaderCell(cellaGriglia);
+                string queryRicerca = "select da.data_inizio_lavorazione as [Data Inizio] , da.data_fine_lavorazione as [Data Fine], da.durata_lavorazione as Durata " +
+                ",produzione, lavorazione, codice_lavoro,ca.nome,ts.nome,tt.nome, " +
+                "ac.cognome as cognome_operatore,ac.nome as nome_operatore, dal.descrizione as qualifica, dal.descrizioneLunga " +
+                "from[dbo].[tab_dati_agenda] da " +
+                "left join tipo_colonne_agenda ca " +
+                "on da.id_colonne_agenda = ca.id " +
+                "left join tipo_stato ts " +
+                "on da.id_stato = ts.id " +
+                "left join tipo_tipologie tt " +
+                "on da.id_tipologia = tt.id " +
+                "left join dati_lavorazione dl " +
+                "on dl.idDatiAgenda = da.id " +
+                "left join dati_articoli_lavorazione dal " +
+                "on dl.id = dal.idDatiLavorazione " +
+                "left join anag_collaboratori ac " +
+                "on dal.idCollaboratori = ac.id " +
+                "where ac.cognome is not null and dal.descrizione<> 'Diaria' " +
+                "and data_inizio_lavorazione <= '@dataElaborazione' and data_fine_lavorazione >= '@dataElaborazione' " +
+                "order by codice_lavoro, dal.descrizione, ac.cognome, ac.nome";
 
-                // INTESTAZIONE GRIGLIA
-                pGriglia = new Paragraph("int1").SetFontSize(10);
-                cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetBold();
-                cellaGriglia.Add(pGriglia);
-                tbGrigla.AddHeaderCell(cellaGriglia);
+                queryRicerca = queryRicerca.Replace("@dataElaborazione", sDataTmp);
 
-                pGriglia = new Paragraph("int2.3").SetFontSize(10);
-                cellaGriglia = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
-                cellaGriglia.Add(pGriglia);
-                tbGrigla.AddHeaderCell(cellaGriglia);
-
-                pGriglia = new Paragraph("int4").SetFontSize(10);
-                cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
-                cellaGriglia.Add(pGriglia);
-                tbGrigla.AddHeaderCell(cellaGriglia);
-
-                pGriglia = new Paragraph("int5").SetFontSize(10);
-                cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
-                cellaGriglia.Add(pGriglia);
-                tbGrigla.AddHeaderCell(cellaGriglia);
-
-                pGriglia = new Paragraph("int6").SetFontSize(10);
-                cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
-                cellaGriglia.Add(pGriglia);
-                tbGrigla.AddHeaderCell(cellaGriglia);
-
-                pGriglia = new Paragraph("int7").SetFontSize(10);
-                cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
-                cellaGriglia.Add(pGriglia);
-                tbGrigla.AddHeaderCell(cellaGriglia);
-
-                // CICLO LA TABELLA
-
-                // AGGIUNGO UNO SPAZIO
-                pGriglia = new Paragraph(" ").SetFontSize(9);
-                cellaGriglia = new Cell(1,7).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
-                cellaGriglia.Add(pGriglia);
-                tbGrigla.AddCell(cellaGriglia);
-
-
-
-                document.Add(tbGrigla);
-
-                //iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(1).GetPageSize();
+                esito = new Esito();
+                DataTable dtProtocolli = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
+                if (dtProtocolli!=null && dtProtocolli.Rows!=null && dtProtocolli.Rows.Count > 0)
+                {
+                    foreach (DataRow riga in dtProtocolli.Rows)
+                    {
+                        Paragraph pRiga = new Paragraph(riga["produzione"].ToString() + " " + riga["lavorazione"].ToString() + " " + riga["qualifica"].ToString() + " " + riga["cognome_operatore"].ToString() + " " + riga["nome_operatore"].ToString());
+                        document.Add(pRiga);
+                    }
+                }
 
                 int n = doc.GetNumberOfPages();
                 iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(n).GetPageSize();
-
 
                 // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
                 for (int i = 1; i <= n; i++)
                 {
                     // AGGIUNGO LOGO
-                    iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(90, 80).SetFixedPosition(i, 30, 740);
+                    //iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(90, 80).SetFixedPosition(i, 30, 500);
+                    //document.Add(image);
+                    // AGGIUNGO LOGO
+                    iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(i, 20, pageSize.GetHeight() - 80);
                     document.Add(image);
 
-
-                    // CREAZIONE GRIGLIA INFORMAZIONI
-                    iText.Layout.Element.Table tbGriglaInfo = new iText.Layout.Element.Table(new float[] { 70, 230 }).SetWidth(300).SetFixedPosition(i,30, 640, 300);
-                    Paragraph pGrigliaInfo = new Paragraph(cittaVs).SetFontSize(9).SetBold();
-                    iText.Layout.Element.Cell cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaInfo.Add(pGrigliaInfo);
-                    tbGriglaInfo.AddCell(cellaGrigliaInfo);
-
-                    if (string.IsNullOrEmpty(tbDataElaborazione.Text)) tbDataElaborazione.Text = DateTime.Today.ToShortDateString();
-                    pGrigliaInfo = new Paragraph(Convert.ToDateTime(tbDataElaborazione.Text).ToLongDateString()).SetFontSize(9);
-                    cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaInfo.Add(pGrigliaInfo);
-                    tbGriglaInfo.AddCell(cellaGrigliaInfo);
-
-                    pGrigliaInfo = new Paragraph("Produzione:").SetFontSize(9).SetBold();
-                    cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaInfo.Add(pGrigliaInfo);
-                    tbGriglaInfo.AddCell(cellaGrigliaInfo);
-
-                    pGrigliaInfo = new Paragraph("").SetFontSize(9);
-                    cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaInfo.Add(pGrigliaInfo);
-                    tbGriglaInfo.AddCell(cellaGrigliaInfo);
-
-                    pGrigliaInfo = new Paragraph("Lavorazione:").SetFontSize(9).SetBold();
-                    cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaInfo.Add(pGrigliaInfo);
-                    tbGriglaInfo.AddCell(cellaGrigliaInfo);
-
-                    pGrigliaInfo = new Paragraph("").SetFontSize(9);
-                    cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaInfo.Add(pGrigliaInfo);
-                    tbGriglaInfo.AddCell(cellaGrigliaInfo);
-
-                    pGrigliaInfo = new Paragraph("Data Lav.ne:").SetFontSize(9).SetBold();
-                    cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaInfo.Add(pGrigliaInfo);
-                    tbGriglaInfo.AddCell(cellaGrigliaInfo);
-
-                    pGrigliaInfo = new Paragraph(tbDataElaborazione.Text).SetFontSize(9);
-                    cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaInfo.Add(pGrigliaInfo);
-                    tbGriglaInfo.AddCell(cellaGrigliaInfo);
-
-                    document.Add(tbGriglaInfo);
-
-
-                    // CREAZIONE GRIGLIA DESTINATARIO
-                    iText.Layout.Element.Table tbGriglaDest = new iText.Layout.Element.Table(new float[] { 70, 230 }).SetWidth(300).SetFixedPosition(i,350, 650, 300);
-                    Paragraph pGrigliaDest = new Paragraph("Spettabile").SetFontSize(9).SetBold();
-                    iText.Layout.Element.Cell cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaDest.Add(pGrigliaDest);
-                    tbGriglaDest.AddCell(cellaGrigliaDest);
-
-                    pGrigliaDest = new Paragraph("ragione sociale").SetFontSize(9);
-                    cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaDest.Add(pGrigliaDest);
-                    tbGriglaDest.AddCell(cellaGrigliaDest);
-
-                    // INDIRIZZO DESTINATARIO
-                    pGrigliaDest = new Paragraph("Indirizzo").SetFontSize(9).SetBold();
-                    cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaDest.Add(pGrigliaDest);
-                    tbGriglaDest.AddCell(cellaGrigliaDest);
-
-                    pGrigliaDest = new Paragraph("indirizzo" + Environment.NewLine + "cliente operativo").SetFontSize(9);
-                    cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaDest.Add(pGrigliaDest);
-                    tbGriglaDest.AddCell(cellaGrigliaDest);
-
-                    // PARTITA IVA DESTINATARIO
-                    pGrigliaDest = new Paragraph("P.Iva/C.F.").SetFontSize(9).SetBold();
-                    cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaDest.Add(pGrigliaDest);
-                    tbGriglaDest.AddCell(cellaGrigliaDest);
-
-                    string pIvaCF = "123456";
-                    if (string.IsNullOrEmpty(pIvaCF)) pIvaCF = "CLDCLD73L11H501Z";
-
-                    pGrigliaDest = new Paragraph(pIvaCF).SetFontSize(9);
-                    cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                    cellaGrigliaDest.Add(pGrigliaDest);
-                    tbGriglaDest.AddCell(cellaGrigliaDest);
-
-                    document.Add(tbGriglaDest);
-
-
                     // AGGIUNGO LOGO DNV
-                    iText.Layout.Element.Image logoDnv = new iText.Layout.Element.Image(imageDNV).ScaleAbsolute(40, 40).SetFixedPosition(i, 518, 8);
+                    iText.Layout.Element.Image logoDnv = new iText.Layout.Element.Image(imageDNV).ScaleAbsolute(40, 40).SetFixedPosition(i, 780, 8);
                     document.Add(logoDnv);
 
                     //AGGIUNGO NUM.PAGINA
-                    document.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7),
-                        pageSize.GetWidth() - 60, pageSize.GetHeight() - 20, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+                    document.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7), pageSize.GetWidth() - 60, pageSize.GetHeight() - 20, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+
+                    // AGGIUNGO TITOLO
+                    document.ShowTextAligned(new Paragraph("OPERATORI IMPEGNATI PER IL " + tbDataElaborazione.Text.Trim()).SetFontSize(11), 400, pageSize.GetHeight() - 30, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+
                     //AGGIUNGO FOOTER
                     document.ShowTextAligned(new Paragraph(denominazioneVs + " P.IVA " + pIvaVs + Environment.NewLine + "Sede legale: " + toponimoVs + " " + indirizzoVs + " " + civicoVs + " - " + capVs + " " + cittaVs + " " + provinciaVs + " e-mail: " + emailVs ).SetFontSize(7).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER),
                                                     pageSize.GetWidth()/2, 30, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
 
                     if (i == n)
                     {
-                        // NELL'ULTIMA PAGINA AGGIUNGO LA GRIGLIA CON LE NOTE E IL TIMBRO
-                        // CREAZIONE GRIGLIA
-                        iText.Layout.Element.Table tbGriglaNoteFooter = new iText.Layout.Element.Table(new float[] { 80, 70, 180, 70, 30, 30, 70 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetFixedPosition(30, 50,530).SetFixedLayout();
-
-                        // PRIMA RIGA GRIGLIA NOTE FOOTER
-                        Paragraph pGrigliaNoteFooter = new Paragraph("Banca").SetFontSize(9);
-                        iText.Layout.Element.Cell cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                        tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                        pGrigliaNoteFooter = new Paragraph("BANCA").SetFontSize(9);
-                        //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1,2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(2);
-                        cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                                
-                        cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                        tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                        pGrigliaNoteFooter = new Paragraph("Timbro e firma per accettazione").SetFontSize(9);
-                        cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                        tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                        // SECONDA RIGA GRIGLIA NOTE FOOTER
-                        pGrigliaNoteFooter = new Paragraph("Pagamento").SetFontSize(9);
-                        cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                        tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                        pGrigliaNoteFooter = new Paragraph("NOTEPAGAMENTO").SetFontSize(9);
-                        cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                        tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                        pGrigliaNoteFooter = new Paragraph(" ").SetFontSize(9);
-                        cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                        tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                        // TERZA RIGA GRIGLIA NOTE FOOTER
-                        pGrigliaNoteFooter = new Paragraph("Consegna").SetFontSize(9);
-                        cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                        tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                        pGrigliaNoteFooter = new Paragraph("CONSEGNA").SetFontSize(9);
-                        cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                        tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                        pGrigliaNoteFooter = new Paragraph(" ").SetFontSize(9);
-                        cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                        cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                        tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                        document.Add(tbGriglaNoteFooter);
+                        // ULTIMA PAGINA
                     }
                 }
 
@@ -350,9 +189,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
 
         #region COMPORTAMENTO ELEMENTI PAGINA
-        protected void btnStampaGiornata_Click(object sender, EventArgs e)
-        {
-        }
 
         #endregion
 
@@ -364,7 +200,6 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             Esito esito = popolaPannelloGiornata();
 
-            //Esito esito = popolaPannelloFattura(SessionManager.EventoSelezionato);
             if (esito.Codice == Esito.ESITO_OK)
             {
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfGiornata.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);

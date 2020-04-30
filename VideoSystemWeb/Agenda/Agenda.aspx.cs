@@ -1129,19 +1129,19 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnStampaGiornata_Click(object sender, EventArgs e)
         {
+            // STAMPA ELENCO RISORSE UTILIZZATE PER LAVORAZIONI DI UNA STESSA GIORNATA
+            Esito esito = popupRiepilogoGiornata.popolaPannelloGiornata();
+            if (esito.Codice == Esito.ESITO_OK)
+            {
+                upRiepilogoGiornata.Update();
 
-                Esito esito = popupRiepilogoGiornata.popolaPannelloGiornata();
-                if (esito.Codice != Esito.ESITO_OK)
-                {
-                //    upRiepilogoFattura.Update();
-
-                //    ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
-                //    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriFattura", script: "javascript: document.getElementById('modalFattura').style.display='block'", addScriptTags: true);
-                //}
-                //else
-                //{
-                    ShowError(esito.Descrizione);
-                }
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriGiornata", script: "javascript: document.getElementById('modalGiornata').style.display='block'", addScriptTags: true);
+            }
+            else
+            {
+                ShowError(esito.Descrizione);
+            }
 
         }
     }

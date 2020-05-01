@@ -94,6 +94,15 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFiltroAgenda;
         
         /// <summary>
+        /// Controllo btnStampaGiornata.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnStampaGiornata;
+        
+        /// <summary>
         /// Controllo btnEditEvent.
         /// </summary>
         /// <remarks>
@@ -506,6 +515,24 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.RiepilogoFattura popupRiepilogoFattura;
+        
+        /// <summary>
+        /// Controllo upRiepilogoGiornata.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upRiepilogoGiornata;
+        
+        /// <summary>
+        /// Controllo popupRiepilogoGiornata.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::VideoSystemWeb.Agenda.userControl.RiepilogoGiornata popupRiepilogoGiornata;
         
         /// <summary>
         /// Controllo lbl_backgroundAgenda.

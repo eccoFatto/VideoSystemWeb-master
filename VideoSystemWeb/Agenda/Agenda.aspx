@@ -7,6 +7,8 @@
 <%@ Register TagPrefix="popup" TagName="RiepilogoPianoEsterno" Src="~/Agenda/userControl/RiepilogoPianoEsterno.ascx" %>
 <%@ Register TagPrefix="popup" TagName="RiepilogoConsuntivo" Src="~/Agenda/userControl/RiepilogoConsuntivo.ascx" %>
 <%@ Register TagPrefix="popup" TagName="RiepilogoFattura" Src="~/Agenda/userControl/RiepilogoFattura.ascx" %>
+<%@ Register TagPrefix="popup" TagName="RiepilogoGiornata" Src="~/Agenda/userControl/RiepilogoGiornata.ascx" %>
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <script>
@@ -268,6 +270,9 @@
                 <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
                     <a href="/MAGAZZINO/Attrezzature.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Magazzino</a>
                 </div>
+                <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
+                    <asp:Button runat="server" CssClass="w3-bar-item w3-button w3-green w3-border w3-round" ID="btnStampaGiornata" Text="Stampa Giornata" OnClick="btnStampaGiornata_Click" style="width: 80%;" OnClientClick="$('.loader').show();"  />
+                </div>
             </td>
         </tr>
     </table>
@@ -400,6 +405,13 @@
             <popup:RiepilogoFattura ID="popupRiepilogoFattura" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
+
+    <asp:UpdatePanel ID="upRiepilogoGiornata" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+        <ContentTemplate>
+            <popup:RiepilogoGiornata ID="popupRiepilogoGiornata" runat="server" />
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
     <div class="showAgendaBackground" style="display: none">
         <div class="blink" style="position: fixed; width: 100%; bottom: 5%; color:darkred;">
             <asp:Label ID="lbl_backgroundAgenda" Text="Un evento è in fase di modifica" style="font-size:50pt; " runat="server" /><br />

@@ -17,8 +17,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44370</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -187,6 +186,7 @@
     <Content Include="Agenda\GestioneColonneAgenda.aspx" />
     <Content Include="Agenda\prova.aspx" />
     <Content Include="Agenda\userControl\Appuntamento.ascx" />
+    <Content Include="Agenda\userControl\RiepilogoGiornata.ascx" />
     <Content Include="Agenda\userControl\RiepilogoFattura.ascx" />
     <Content Include="Agenda\userControl\RiepilogoConsuntivo.ascx" />
     <Content Include="Agenda\userControl\RiepilogoPianoEsterno.ascx" />
@@ -591,6 +591,13 @@
     </Compile>
     <Compile Include="Agenda\userControl\Appuntamento.ascx.designer.cs">
       <DependentUpon>Appuntamento.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Agenda\userControl\RiepilogoGiornata.ascx.cs">
+      <DependentUpon>RiepilogoGiornata.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Agenda\userControl\RiepilogoGiornata.ascx.designer.cs">
+      <DependentUpon>RiepilogoGiornata.ascx</DependentUpon>
     </Compile>
     <Compile Include="Agenda\userControl\RiepilogoFattura.ascx.cs">
       <DependentUpon>RiepilogoFattura.ascx</DependentUpon>

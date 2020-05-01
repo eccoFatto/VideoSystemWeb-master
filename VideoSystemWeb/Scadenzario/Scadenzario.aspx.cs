@@ -35,7 +35,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             string valoreIVA = Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
             
-
             if (!IsPostBack)
             {
                 CaricaCombo();
@@ -53,7 +52,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 string importoIva = string.Empty;
                 string banca = string.Empty;
 
-
                 if (!string.IsNullOrEmpty(Request.QueryString["TIPO"])) tipo = Request.QueryString["TIPO"];
                 if (!string.IsNullOrEmpty(Request.QueryString["ID_PROTOCOLLO"])) idDatiProtocollo = int.Parse(Request.QueryString["ID_PROTOCOLLO"]);
 
@@ -63,7 +61,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 if (!string.IsNullOrEmpty(Request.QueryString["IVA"])) iva = Request.QueryString["IVA"];
                 if (!string.IsNullOrEmpty(Request.QueryString["IMPORTO_IVA"])) importoIva = Request.QueryString["IMPORTO_IVA"];
                 if (!string.IsNullOrEmpty(Request.QueryString["BANCA"])) banca = Request.QueryString["BANCA"];
-
 
                 if (!string.IsNullOrEmpty(tipo) && idDatiProtocollo != 0 && Scadenzario_BLL.Instance.GetDatiScadenzarioByIdDatiProtocollo(idDatiProtocollo, ref esito).Count == 0)
                 {
@@ -99,7 +96,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
 
             #region BANCA
-
             ddl_FiltroBanca.Items.Add(new ListItem("<tutti>", ""));
             foreach (Tipologica tipologiaBanca in SessionManager.ListaTipiBanca)
             {
@@ -118,14 +114,14 @@ namespace VideoSystemWeb.Scadenzario.userControl
             decimal dare = listaScadenzario.Sum(x=>x.ImportoDare);
             decimal dareIva = listaScadenzario.Sum(x => x.ImportoDareIva);
             decimal versato = listaScadenzario.Sum(x => x.ImportoVersato);
-            decimal versatoIva = listaScadenzario.Sum(x => x.ImportoVersato + (x.ImportoVersato / 100 * x.Iva));
+            decimal versatoIva = listaScadenzario.Sum(x => x.ImportoVersatoIva); //listaScadenzario.Sum(x => x.ImportoVersato + (x.ImportoVersato / 100 * x.Iva));
             decimal totaleDare = dare-versato;
             decimal totaleDareIva = dareIva-versatoIva;
             
             decimal avere = listaScadenzario.Sum(x => x.ImportoAvere);
             decimal avereIva = listaScadenzario.Sum(x => x.ImportoAvereIva);
             decimal riscosso = listaScadenzario.Sum(x => x.ImportoRiscosso);
-            decimal riscossoIva = listaScadenzario.Sum(x => x.ImportoRiscosso + (x.ImportoRiscosso / 100 * x.Iva));
+            decimal riscossoIva = listaScadenzario.Sum(x => x.ImportoRiscossoIva); //listaScadenzario.Sum(x => x.ImportoRiscosso + (x.ImportoRiscosso / 100 * x.Iva));
             decimal totaleAvere = avere - riscosso;
             decimal totaleAvereIva = avereIva - riscossoIva;
 
@@ -321,23 +317,25 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_ClienteFornitore.Text = scadenza.RagioneSocialeClienteFornitore;
                     txt_DataDocumento.Text = scadenza. DataProtocollo.ToString();
                     txt_NumeroDocumento.Text = scadenza.ProtocolloRiferimento;
-                    txt_Imponibile.Text = (scadenza.ImportoDare+scadenza.ImportoAvere).ToString("###,##0.00");//(importoDocumentoDare + importoDocumentoAvere).ToString("###,##0.00");
-                    txt_ImponibileIva.Text = (scadenza.ImportoDareIva + scadenza.ImportoAvereIva).ToString("###,##0.00");//(importoDocumentoDareIva + importoDocumentoAvereIva).ToString("###,##0.00");
+                    txt_Imponibile.Text = (scadenza.ImportoDare+scadenza.ImportoAvere).ToString("###,##0.00");
+                    txt_ImponibileIva.Text = (scadenza.ImportoDareIva + scadenza.ImportoAvereIva).ToString("###,##0.00");
+
                     decimal versatoOriscosso = scadenza.ImportoVersato + scadenza.ImportoRiscosso;
                     txt_Versato.Text = versatoOriscosso.ToString("###,##0.00");
+
+                    decimal versatoOriscossoIva = scadenza.ImportoVersatoIva + scadenza.ImportoRiscossoIva;
+                    txt_VersatoIva.Text = versatoOriscossoIva.ToString("###,##0.00"); //(versatoOriscosso * (1 + scadenza.Iva / 100)).ToString("###,##0.00");
+
                     txt_IvaModifica.Text = scadenza.Iva.ToString();
-                    txt_VersatoIva.Text = (versatoOriscosso * (1 + scadenza.Iva / 100)).ToString("###,##0.00");
-                    txt_Totale.Text = ((scadenza.ImportoDare + scadenza.ImportoAvere) - (scadenza.ImportoVersato + scadenza.ImportoRiscosso)).ToString("###,##0.00"); //((importoDocumentoDare + importoDocumentoAvere) - (scadenza.ImportoVersato + scadenza.ImportoRiscosso)).ToString("###,##0.00");
+                    txt_Totale.Text = ((scadenza.ImportoDare + scadenza.ImportoAvere) - (scadenza.ImportoVersato + scadenza.ImportoRiscosso)).ToString("###,##0.00");
                     txt_IvaModifica.Text = Math.Truncate(scadenza.Iva).ToString();
-                    txt_TotaleIva.Text = ((scadenza.ImportoDareIva + scadenza.ImportoAvereIva) - (versatoOriscosso * (1 + scadenza.Iva / 100))).ToString("###,##0.00");//((importoDocumentoDareIva + importoDocumentoAvereIva) - (versatoOriscosso * (1 + scadenza.Iva / 100))).ToString("###,##0.00");
+                    txt_TotaleIva.Text = ((scadenza.ImportoDareIva + scadenza.ImportoAvereIva) - versatoOriscossoIva).ToString("###,##0.00"); //((scadenza.ImportoDareIva + scadenza.ImportoAvereIva) - (versatoOriscosso * (1 + scadenza.Iva / 100))).ToString("###,##0.00");
                     txt_TotaleDocumento.Text = (importoDocumentoDare + importoDocumentoAvere).ToString("###,##0.00");
                     txt_TotDocumentoIva.Text = (importoDocumentoDareIva + importoDocumentoAvereIva).ToString("###,##0.00");
                     txt_DataDocumentoModifica.Text = scadenza.DataProtocollo != null ? ((DateTime)scadenza.DataProtocollo).ToString("dd/MM/yyyy") : "";
                     txt_ScadenzaDocumento.Text = scadenza.DataScadenza != null ? ((DateTime)scadenza.DataScadenza).ToString("dd/MM/yyyy") : "";
 
-                    //ddl_BancaModifica.Items.Contains(scadenza.Banca)
-                    ddl_BancaModifica.SelectedValue = scadenza.IdTipoBanca.ToString();//scadenza.Banca;
-                    
+                    ddl_BancaModifica.SelectedValue = scadenza.IdTipoBanca.ToString();
 
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaScadenza", script: "javascript: mostraScadenza('" + idScadenzaSelezionata + "');", addScriptTags: true);
                     
@@ -408,10 +406,11 @@ namespace VideoSystemWeb.Scadenzario.userControl
         {
             DatiScadenzario scadenza = new DatiScadenzario();
             string importoVersato = string.Empty;
+            string importoVersatoIva = string.Empty;
             string iva = string.Empty; 
             string dataScadenza = string.Empty;
             string dataVersamentoRiscossione = string.Empty;
-            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
+            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref importoVersatoIva, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
 
             if (esito.Codice != Esito.ESITO_OK)
             {
@@ -419,16 +418,19 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
             else
             {
-                //decimal importoVersatoIvaDecimal = decimal.Parse(importoVersato) * (1 + (scadenza.Iva) / 100);
-                decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);// Math.Round((scadenza.ImportoAvereIva + scadenza.ImportoDareIva) - importoVersatoIvaDecimal,2);
+                decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);
 
-                if ((!string.IsNullOrEmpty(importoVersato) && decimal.Parse(importoVersato) != 0) &&  differenzaImportoIva != 0)
+                if ((!string.IsNullOrEmpty(importoVersato) && decimal.Parse(importoVersato) != 0) &&  differenzaImportoIva > 0)
                 {
                     ShowWarning("L'importo in fase di registrazione non copre totalmente la rata corrente." + Environment.NewLine + "Modificare il valore in " + (scadenza.ImportoAvereIva + scadenza.ImportoDareIva) + " oppure selezionare 'Aggiungi pagamento'.");
                 }
+                else if ((!string.IsNullOrEmpty(importoVersato) && decimal.Parse(importoVersato) != 0) && differenzaImportoIva < 0)
+                {
+                    ShowWarning("L'importo in fase di registrazione eccede la rata corrente." + Environment.NewLine + "È possibile impostare una valore massimo di " + (scadenza.ImportoAvereIva + scadenza.ImportoDareIva) + "€.");
+                }
                 else
                 {
-                    Scadenzario_BLL.Instance.AggiornaDatiScadenzario(scadenza, ddl_Tipo.SelectedValue, importoVersato, iva, dataScadenza, dataVersamentoRiscossione, int.Parse(ddl_BancaModifica.SelectedValue), ref esito);
+                    Scadenzario_BLL.Instance.AggiornaDatiScadenzario(scadenza, ddl_Tipo.SelectedValue, importoVersato, importoVersatoIva, iva, dataScadenza, dataVersamentoRiscossione, int.Parse(ddl_BancaModifica.SelectedValue), ref esito);
 
                     if (esito.Codice != Esito.ESITO_OK)
                     {
@@ -446,8 +448,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 }
             }
         }
-
-        
 
         private void gestisciPulsantiScadenza(string stato)
         {
@@ -496,9 +496,17 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
             DatiScadenzario datiScadenzario = CreaOggettoDatiScadenzario(ref esito);
 
+            string anticipoImportoIva = string.IsNullOrWhiteSpace(txt_AnticipoImporto.Text) ? "0" : txt_AnticipoImporto.Text;
+            decimal ivaDecimal = decimal.Parse(txt_Iva.Text);
+            string anticipoImporto = (decimal.Parse(anticipoImportoIva) / (1 + (ivaDecimal / 100))).ToString();
+
             if (esito.Codice != Esito.ESITO_OK)
             {
                 ShowError("Controllare i campi evidenziati");
+            }
+            else if (decimal.Parse(anticipoImportoIva) >= (datiScadenzario.ImportoDareIva + datiScadenzario.ImportoAvereIva))
+            {
+                ShowError("L'anticipo deve essere inferiore all'intero importo");
             }
             else
             {
@@ -516,8 +524,11 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 int cadenzaGiorni = 30;
                 if (!string.IsNullOrEmpty(txt_CadenzaGiorni.Text)) cadenzaGiorni = int.Parse(txt_CadenzaGiorni.Text);
 
-                Scadenzario_BLL.Instance.CreaDatiScadenzario(datiScadenzario, 
-                                                             txt_AnticipoImporto.Text, 
+                
+
+                Scadenzario_BLL.Instance.CreaDatiScadenzario(datiScadenzario,
+                                                             anticipoImporto,
+                                                             anticipoImportoIva,
                                                              txt_Iva.Text, 
                                                              txt_NumeroRate.Text, 
                                                              ddl_Tipo.SelectedValue,
@@ -548,10 +559,11 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             DatiScadenzario scadenza = new DatiScadenzario();
             string importoVersato = string.Empty;
+            string importoVersatoIva = string.Empty;
             string iva = string.Empty;
             string dataScadenza = string.Empty;
             string dataVersamentoRiscossione = string.Empty;
-            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
+            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref importoVersatoIva, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
 
             if (esito.Codice != Esito.ESITO_OK)
             {
@@ -559,12 +571,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
             else
             {
-                //decimal importoVersatoDecimal = decimal.Parse(importoVersato);
-                //decimal differenzaImporto = (scadenza.ImportoAvereIva + scadenza.ImportoDareIva) - importoVersatoDecimal;
-
-
-                decimal importoVersatoIvaDecimal = decimal.Parse(importoVersato) * (1 + (scadenza.Iva) / 100);
-                decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);//   Math.Round((scadenza.ImportoAvereIva + scadenza.ImportoDareIva) - importoVersatoIvaDecimal, 2);
+                decimal importoVersatoIvaDecimal = decimal.Parse(txt_VersatoIva.Text); // decimal.Parse(importoVersato) * (1 + (scadenza.Iva) / 100);
+                decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);
 
 
                 lbl_aggiungiPagamento.Text = differenzaImportoIva.ToString();
@@ -600,16 +608,17 @@ namespace VideoSystemWeb.Scadenzario.userControl
             {
                 DatiScadenzario scadenzaDaAggiornare = new DatiScadenzario();
                 string importoVersato = string.Empty;
+                string importoVersatoIva = string.Empty;
                 string iva = string.Empty;
                 string dataScadenza = string.Empty;
                 string dataVersamentoRiscossione = string.Empty;
-                esito = PopolaDatiScadenzaDaSalvare(ref scadenzaDaAggiornare, ref importoVersato, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
+                esito = PopolaDatiScadenzaDaSalvare(ref scadenzaDaAggiornare, ref importoVersato, ref importoVersatoIva, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
                 if (esito.Codice != Esito.ESITO_OK)
                 {
                     ShowError("Controllare i campi evidenziati");
                 }
                
-                Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare,  ddl_Tipo.SelectedValue, importoVersato, txt_TotaleIva.Text, iva, dataScadenza, dataVersamentoRiscossione, int.Parse(ddl_BancaModifica.SelectedValue), dataAggiungiDocumento, ref esito);
+                Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare,  ddl_Tipo.SelectedValue, importoVersato, importoVersatoIva, txt_TotaleIva.Text, iva, dataScadenza, dataVersamentoRiscossione, int.Parse(ddl_BancaModifica.SelectedValue), dataAggiungiDocumento, ref esito);
 
                 if (esito.Codice == Esito.ESITO_OK)
                 {
@@ -621,6 +630,17 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     PopolaGrigliaScadenze();
                 }
             }
+        }
+
+        protected void btnTEST_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+            int idScadenzaCorrente = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
+            DatiScadenzario scadenzaCorrente = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenzaCorrente);
+            List<DatiScadenzario> listaScadenzeStessoProtocollo = Scadenzario_BLL.Instance.GetDatiScadenzarioByIdDatiProtocollo(scadenzaCorrente.IdDatiProtocollo, ref esito);
+            List<int> listaIdParenti = new List<int>();
+
+            Scadenzario_BLL.Instance.RicercaParenti(idScadenzaCorrente, listaScadenzeStessoProtocollo, ref listaIdParenti); 
         }
 
         private DatiScadenzario CreaOggettoDatiScadenzario(ref Esito esito)
@@ -658,14 +678,14 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             if (ddl_Tipo.SelectedValue.ToUpper() == TIPO_CLIENTE)
             {
-                scadenza.ImportoAvere = ValidaCampo(txt_ImportoDocumento, decimal.Parse("0"), true, ref esito); 
-                scadenza.ImportoAvereIva = scadenza.ImportoAvere * (1 + (decimal.Parse(txt_Iva.Text) / 100));
+                scadenza.ImportoAvereIva = ValidaCampo(txt_ImportoIva, decimal.Parse("0"), true, ref esito);
+                scadenza.ImportoAvere = string.IsNullOrWhiteSpace(txt_ImportoDocumento.Text) ? 0 :  decimal.Parse(txt_ImportoDocumento.Text);
                 scadenza.ImportoRiscosso = 0;
             }
             else
             {
-                scadenza.ImportoDare = ValidaCampo(txt_ImportoDocumento, decimal.Parse("0"), true, ref esito); 
-                scadenza.ImportoDareIva = scadenza.ImportoDare * (1 + (decimal.Parse(txt_Iva.Text) / 100));
+                scadenza.ImportoDareIva = ValidaCampo(txt_ImportoIva, decimal.Parse("0"), true, ref esito);
+                scadenza.ImportoDare = string.IsNullOrWhiteSpace(txt_ImportoDocumento.Text) ? 0 : decimal.Parse(txt_ImportoDocumento.Text);
                 scadenza.ImportoVersato = 0;
             }
             
@@ -682,10 +702,10 @@ namespace VideoSystemWeb.Scadenzario.userControl
         {
             txt_ClienteFornitore.CssClass = txt_ClienteFornitore.CssClass.Replace("erroreValidazione", "");
             txt_DataDocumento.CssClass = txt_DataDocumento.CssClass.Replace("erroreValidazione", "");
-            txt_ImportoDocumento.CssClass = txt_ImportoDocumento.CssClass.Replace("erroreValidazione", "");
+            txt_ImportoIva.CssClass = txt_ImportoDocumento.CssClass.Replace("erroreValidazione", "");
             txt_CadenzaGiorni.CssClass = txt_CadenzaGiorni.CssClass.Replace("erroreValidazione", "");
 
-            txt_Versato.CssClass = txt_Versato.CssClass.Replace("erroreValidazione", "");
+            txt_VersatoIva.CssClass = txt_Versato.CssClass.Replace("erroreValidazione", "");
             txt_IvaModifica.CssClass = txt_IvaModifica.CssClass.Replace("erroreValidazione", "");
             txt_ScadenzaDocumento.CssClass = txt_ScadenzaDocumento.CssClass.Replace("erroreValidazione", "");
 
@@ -726,7 +746,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             pnlContainer.Visible = false;
         }
 
-        private Esito PopolaDatiScadenzaDaSalvare(ref DatiScadenzario scadenza, ref string importoVersato, ref string iva, ref string dataScadenza, ref string dataVersamentoRiscossione)
+        private Esito PopolaDatiScadenzaDaSalvare(ref DatiScadenzario scadenza, ref string importoVersato, ref string importoVersatoIva, ref string iva, ref string dataScadenza, ref string dataVersamentoRiscossione)
         {
             Esito esito = new Esito();
 
@@ -734,8 +754,9 @@ namespace VideoSystemWeb.Scadenzario.userControl
             scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, Convert.ToInt16(idScadenza));
 
             iva = ValidaCampo(txt_IvaModifica, "", true, ref esito);
-            importoVersato = ValidaCampo(txt_Versato, "", true, ref esito);
-           
+            importoVersato = txt_Versato.Text;// ValidaCampo(txt_Versato, "", true, ref esito);
+            importoVersatoIva = ValidaCampo(txt_VersatoIva, "", true, ref esito);
+
             dataScadenza = ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
 
             dataVersamentoRiscossione = (string.IsNullOrEmpty(importoVersato) || (decimal.Parse(importoVersato))== 0 )? txt_DataVersamentoRiscossione.Text : ValidaCampo(txt_DataVersamentoRiscossione, "", true, ref esito);

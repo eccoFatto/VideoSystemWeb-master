@@ -89,15 +89,6 @@
             return confirm("Verranno eliminate tutte le voci dello scadenzario riguardanti la fattura cui si riferisce la voce selezionata. Confermare?");
         }
 
-        // sostituito da calcolaScorporoIva
-        <%--function calcolaImportoIva() {
-            var importo = $('#<%=txt_ImportoDocumento.ClientID%>').val().replace(".", "").replace(",", ".");
-            var iva = $('#<%=txt_Iva.ClientID%>').val().replace(".", "").replace(",", ".");;
-            var importoIva = importo * (1 + (iva / 100));
-
-            $('#<%=txt_ImportoIva.ClientID%>').val(importoIva.toFixed(2).replace(".", ","));
-        }--%>
-
         function calcolaScorporoIva() {
             var importoIva = $('#<%=txt_ImportoIva.ClientID%>').val().replace(".", "").replace(",", ".");
             var iva = $('#<%=txt_Iva.ClientID%>').val().replace(".", "").replace(",", ".");;
@@ -105,19 +96,6 @@
 
             $('#<%=txt_ImportoDocumento.ClientID%>').val(importo.toFixed(2).replace(".", ","));
         }
-
-      <%--  function calcolaImportoModifica() {
-            var importo = $('#<%=txt_Versato.ClientID%>').val().replace(".", "").replace(",",".");
-            var iva = $('#<%=txt_IvaModifica.ClientID%>').val().replace(".", "").replace(",", ".");
-            var importoIva = importo * (1 + (iva / 100));
-            var imponibile = $('#<%=txt_Imponibile.ClientID%>').val().replace(".", "").replace(",", ".");
-            var imponibileIva = $('#<%=txt_ImponibileIva.ClientID%>').val().replace(".", "").replace(",", ".");
-
-            $('#<%=txt_VersatoIva.ClientID%>').val(importoIva.toFixed(2).replace(".", ","));
-
-            $('#<%=txt_Totale.ClientID%>').val((imponibile - importo).toFixed(2).replace(".", ","));
-            $('#<%=txt_TotaleIva.ClientID%>').val((imponibileIva - importoIva).toFixed(2).replace(".", ","));
-        }--%>
 
         function calcolaScorporoModifica() {
             var importoIva = $('#<%=txt_VersatoIva.ClientID%>').val().replace(".", "").replace(",", ".");            
@@ -155,7 +133,6 @@
             var importoDaSaldare = $('#<%=txt_ImponibileIva.ClientID%>').val();
 
             return confirm('È in corso il saldo della rata che ammonta a €' + importoDaSaldare + '. Confermare?')
-
         }
     </script>
 
@@ -596,9 +573,10 @@
                                 <div style="text-align: center; width:95%; bottom:30px; position:absolute;">
                                     <asp:Button ID="btnInserisciScadenza" runat="server" Text="Inserisci Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciScadenza_Click" OnClientClick="return confirm('Confermi inserimento Scadenza?')" />
                                     
-                                    <asp:Button ID="btnAggiungiPagamento" runat="server" Text="Aggiungi Pagamento" class="w3-panel w3-blue w3-border w3-round" OnClick="btnInserisciPagamento_Click" />
+                                    <asp:Button ID="btnAggiungiPagamento" runat="server" Text="Aggiungi Pagamento" class="w3-panel w3-blue w3-border w3-round" OnClick="btnInserisciPagamento_Click" Visible="false"/>
                                     <asp:Button ID="btnModificaScadenza" runat="server" Text="Modifica Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaScadenza_Click" OnClientClick="return confirm('Confermi modifica Scadenza?')" Visible="false" />
                                     <asp:Button ID="btnSaldoTotale" runat="server" Text="Saldo totale" class="w3-panel w3-green w3-border w3-round" OnClick="btnSaldoTotale_Click" OnClientClick="return confermaSaldoTotale();" Visible="false" />
+                                    <%--<asp:Button ID="btnTEST" runat="server" Text="TEST" class="w3-panel w3-red w3-border w3-round" OnClick="btnTEST_Click"  />--%>
                                 </div>
                                 <p>
                                 </p>

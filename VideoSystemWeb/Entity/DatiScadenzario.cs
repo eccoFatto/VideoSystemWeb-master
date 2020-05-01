@@ -9,16 +9,19 @@ namespace VideoSystemWeb.Entity
     public class DatiScadenzario
     {
         private int id;
+        private int? idPadre;
         private int idDatiProtocollo;
         //private string banca;
         private DateTime? dataScadenza;
         private decimal importoDare;
         private decimal importoDareIva;
         private decimal importoVersato;
+        private decimal importoVersatoIva;
         private DateTime? dataVersamento;
         private decimal importoAvere;
         private decimal importoAvereIva;
         private decimal importoRiscosso;
+        private decimal importoRiscossoIva;
         private DateTime? dataRiscossione;
         private string note;
         private decimal iva;
@@ -76,23 +79,26 @@ namespace VideoSystemWeb.Entity
             }
         }
 
-        public decimal ImportoVersatoIva
-        {
-            get
-            {
-                return ImportoVersato + (ImportoVersato / 100 * Iva);
-            }
-        }
+        //public decimal ImportoVersatoIva
+        //{
+        //    get
+        //    {
+        //        return ImportoVersato + (ImportoVersato / 100 * Iva);
+        //    }
+        //}
 
-        public decimal ImportoRiscossoIva
-        {
-            get
-            {
-                return ImportoRiscosso + (ImportoRiscosso / 100 * Iva);
-            }
-        }
+        //public decimal ImportoRiscossoIva
+        //{
+        //    get
+        //    {
+        //        return ImportoRiscosso + (ImportoRiscosso / 100 * Iva);
+        //    }
+        //}
 
         public decimal Iva { get => iva; set => iva = value; }
         public int IdTipoBanca { get => idTipoBanca; set => idTipoBanca = value; }
+        public int? IdPadre { get => idPadre; set => idPadre = value; }
+        public decimal ImportoVersatoIva { get => importoVersatoIva; set => importoVersatoIva = value; }
+        public decimal ImportoRiscossoIva { get => importoRiscossoIva; set => importoRiscossoIva = value; }
     }
 }

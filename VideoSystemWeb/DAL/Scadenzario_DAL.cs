@@ -59,6 +59,10 @@ namespace VideoSystemWeb.DAL
                             StoreProc.Parameters.Add(nomeUtente);
                             #endregion
 
+                            SqlParameter idPadre = new SqlParameter("@idPadre", DBNull.Value); // idPadre viene usato solo quando si splitta una scadenza (AggiungiPagamento)
+                            idPadre.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idPadre);
+
                             SqlParameter idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenza.IdDatiProtocollo);
                             idDatiProtocollo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idDatiProtocollo);
@@ -84,6 +88,10 @@ namespace VideoSystemWeb.DAL
                             importoVersato.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoVersato);
 
+                            SqlParameter importoVersatoIva = new SqlParameter("@importoVersatoIva", scadenza.ImportoVersatoIva);
+                            importoVersatoIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoVersatoIva);
+
                             SqlParameter dataVersamento = new SqlParameter("@dataVersamento", DBNull.Value);
                             if (scadenza.DataVersamento != null) dataVersamento = new SqlParameter("@dataVersamento", scadenza.DataVersamento);
                             dataVersamento.Direction = ParameterDirection.Input;
@@ -100,6 +108,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
                             importoRiscosso.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoRiscosso);
+
+                            SqlParameter importoRiscossoIva = new SqlParameter("@importoRiscossoIva", scadenza.ImportoRiscossoIva);
+                            importoRiscossoIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoRiscossoIva);
 
                             SqlParameter dataRiscossione = new SqlParameter("@dataRiscossione", DBNull.Value);
                             if (scadenza.DataRiscossione != null) dataRiscossione = new SqlParameter("@dataRiscossione", scadenza.DataRiscossione);
@@ -165,6 +177,11 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id);
 
+                            SqlParameter idPadre = new SqlParameter("@idPadre", DBNull.Value);
+                            if (scadenza.IdPadre != null) idPadre = new SqlParameter("@idPadre", scadenza.IdPadre);
+                            idPadre.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idPadre);
+
                             SqlParameter idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenza.IdDatiProtocollo);
                             idDatiProtocollo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idDatiProtocollo);
@@ -190,6 +207,10 @@ namespace VideoSystemWeb.DAL
                             importoVersato.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoVersato);
 
+                            SqlParameter importoVersatoIva = new SqlParameter("@importoVersatoIva", scadenza.ImportoVersatoIva);
+                            importoVersatoIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoVersatoIva);
+
                             SqlParameter dataVersamento = new SqlParameter("@dataVersamento", DBNull.Value);
                             if (scadenza.DataVersamento != null) dataVersamento = new SqlParameter("@dataVersamento", scadenza.DataVersamento);
                             dataVersamento.Direction = ParameterDirection.Input;
@@ -206,6 +227,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
                             importoRiscosso.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoRiscosso);
+
+                            SqlParameter importoRiscossoIva = new SqlParameter("@importoRiscossoIva", scadenza.ImportoRiscossoIva);
+                            importoRiscossoIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoRiscossoIva);
 
                             SqlParameter dataRiscossione = new SqlParameter("@dataRiscossione", DBNull.Value);
                             if (scadenza.DataRiscossione != null) dataRiscossione = new SqlParameter("@dataRiscossione", scadenza.DataRiscossione);
@@ -276,6 +301,11 @@ namespace VideoSystemWeb.DAL
                             id.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(id);
 
+                            SqlParameter idPadre = new SqlParameter("@idPadre", DBNull.Value);
+                            if (scadenzaDaAggiornare.IdPadre != null) idPadre = new SqlParameter("@idPadre", scadenzaDaAggiornare.IdPadre);
+                            idPadre.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idPadre);
+
                             SqlParameter idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenzaDaAggiornare.IdDatiProtocollo);
                             idDatiProtocollo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idDatiProtocollo);
@@ -301,6 +331,10 @@ namespace VideoSystemWeb.DAL
                             importoVersato.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoVersato);
 
+                            SqlParameter importoVersatoIva = new SqlParameter("@importoVersatoIva", scadenzaDaAggiornare.ImportoVersatoIva);
+                            importoVersatoIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoVersatoIva);
+
                             SqlParameter dataVersamento = new SqlParameter("@dataVersamento", DBNull.Value);
                             if (scadenzaDaAggiornare.DataVersamento != null) dataVersamento = new SqlParameter("@dataVersamento", scadenzaDaAggiornare.DataVersamento);
                             dataVersamento.Direction = ParameterDirection.Input;
@@ -317,6 +351,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenzaDaAggiornare.ImportoRiscosso);
                             importoRiscosso.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoRiscosso);
+
+                            SqlParameter importoRiscossoIva = new SqlParameter("@importoRiscossoIva", scadenzaDaAggiornare.ImportoRiscossoIva);
+                            importoRiscossoIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoRiscossoIva);
 
                             SqlParameter dataRiscossione = new SqlParameter("@dataRiscossione", DBNull.Value);
                             if (scadenzaDaAggiornare.DataRiscossione != null) dataRiscossione = new SqlParameter("@dataRiscossione", scadenzaDaAggiornare.DataRiscossione);
@@ -355,6 +393,10 @@ namespace VideoSystemWeb.DAL
                             StoreProc.Parameters.Add(nomeUtente);
                             #endregion
 
+                            idPadre = new SqlParameter("@idPadre", scadenzaDaInserire.IdPadre);
+                            idPadre.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idPadre);
+
                             idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenzaDaInserire.IdDatiProtocollo);
                             idDatiProtocollo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(idDatiProtocollo);
@@ -380,6 +422,10 @@ namespace VideoSystemWeb.DAL
                             importoVersato.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoVersato);
 
+                            importoVersatoIva = new SqlParameter("@importoVersatoIva", scadenzaDaInserire.ImportoVersatoIva);
+                            importoVersatoIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoVersatoIva);
+
                             dataVersamento = new SqlParameter("@dataVersamento", DBNull.Value);
                             if (scadenzaDaInserire.DataVersamento != null) dataVersamento = new SqlParameter("@dataVersamento", scadenzaDaInserire.DataVersamento);
                             dataVersamento.Direction = ParameterDirection.Input;
@@ -396,6 +442,10 @@ namespace VideoSystemWeb.DAL
                             importoRiscosso = new SqlParameter("@importoRiscosso", scadenzaDaInserire.ImportoRiscosso);
                             importoRiscosso.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(importoRiscosso);
+
+                            importoRiscossoIva = new SqlParameter("@importoRiscossoIva", scadenzaDaInserire.ImportoRiscossoIva);
+                            importoRiscossoIva.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(importoRiscossoIva);
 
                             dataRiscossione = new SqlParameter("@dataRiscossione", DBNull.Value);
                             if (scadenzaDaInserire.DataRiscossione != null) dataRiscossione = new SqlParameter("@dataRiscossione", scadenzaDaInserire.DataRiscossione);
@@ -506,16 +556,19 @@ namespace VideoSystemWeb.DAL
                                 if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
                                 {
                                     scadenza.Id = dt.Rows[0].Field<int>("id");
+                                    scadenza.IdPadre = dt.Rows[0].Field<int?>("idPadre");
                                     scadenza.IdDatiProtocollo = dt.Rows[0].Field<int>("idDatiProtocollo");
                                     scadenza.IdTipoBanca = dt.Rows[0].Field<int>("idTipoBanca");
                                     scadenza.DataScadenza = dt.Rows[0].Field<DateTime?>("dataScadenza");
                                     scadenza.ImportoDare = dt.Rows[0].Field<decimal>("importoDare");
                                     scadenza.ImportoDareIva = dt.Rows[0].Field<decimal>("importoDareIva");
                                     scadenza.ImportoVersato = dt.Rows[0].Field<decimal>("importoVersato");
+                                    scadenza.ImportoVersatoIva = dt.Rows[0].Field<decimal>("importoVersatoIva");
                                     scadenza.DataVersamento = dt.Rows[0].Field<DateTime?>("dataVersamento");
                                     scadenza.ImportoAvere = dt.Rows[0].Field<decimal>("importoAvere");
                                     scadenza.ImportoAvereIva = dt.Rows[0].Field<decimal>("importoAvereIva");
                                     scadenza.ImportoRiscosso = dt.Rows[0].Field<decimal>("importoRiscosso");
+                                    scadenza.ImportoRiscossoIva = dt.Rows[0].Field<decimal>("importoRiscossoIva");
                                     scadenza.DataRiscossione = dt.Rows[0].Field<DateTime?>("dataRiscossione");
                                     scadenza.Note = dt.Rows[0].Field<string>("note");
                                     scadenza.Iva = dt.Rows[0].Field<decimal>("iva");
@@ -590,16 +643,19 @@ namespace VideoSystemWeb.DAL
                                         DatiScadenzario scadenza = new DatiScadenzario()
                                         {
                                             Id = riga.Field<int>("id"),
+                                            IdPadre = riga.Field<int?>("idPadre"),
                                             IdDatiProtocollo = riga.Field<int>("idDatiProtocollo"),
                                             IdTipoBanca = riga.Field<int>("idTipoBanca"),
                                             DataScadenza = riga.Field<DateTime?>("dataScadenza"),
                                             ImportoDare = riga.Field<decimal>("importoDare"),
                                             ImportoDareIva = riga.Field<decimal>("importoDareIva"),
                                             ImportoVersato = riga.Field<decimal>("importoVersato"),
+                                            ImportoVersatoIva = riga.Field<decimal>("importoVersatoIva"),
                                             DataVersamento = riga.Field<DateTime?>("dataVersamento"),
                                             ImportoAvere = riga.Field<decimal>("importoAvere"),
                                             ImportoAvereIva = riga.Field<decimal>("importoAvereIva"),
                                             ImportoRiscosso = riga.Field<decimal>("importoRiscosso"),
+                                            ImportoRiscossoIva = riga.Field<decimal>("importoRiscossoIva"),
                                             DataRiscossione = riga.Field<DateTime?>("dataRiscossione"),
 
                                             Note = riga.Field<string>("note"),
@@ -655,16 +711,19 @@ namespace VideoSystemWeb.DAL
                                         DatiScadenzario scadenza = new DatiScadenzario()
                                         {
                                             Id = riga.Field<int>("id"),
+                                            IdPadre = riga.Field<int?>("idPadre"),
                                             IdDatiProtocollo = riga.Field<int>("idDatiProtocollo"),
                                             IdTipoBanca = riga.Field<int>("idTipoBanca"),
                                             DataScadenza = riga.Field<DateTime?>("dataScadenza"),
                                             ImportoDare = riga.Field<decimal>("importoDare"),
                                             ImportoDareIva = riga.Field<decimal>("importoDareIva"),
                                             ImportoVersato = riga.Field<decimal>("importoVersato"),
+                                            ImportoVersatoIva = riga.Field<decimal>("importoVersatoIva"),
                                             DataVersamento = riga.Field<DateTime?>("dataVersamento"),
                                             ImportoAvere = riga.Field<decimal>("importoAvere"),
                                             ImportoAvereIva = riga.Field<decimal>("importoAvereIva"),
                                             ImportoRiscosso = riga.Field<decimal>("importoRiscosso"),
+                                            ImportoRiscossoIva = riga.Field<decimal>("importoRiscossoIva"),
                                             DataRiscossione = riga.Field<DateTime?>("dataRiscossione"),
 
                                             Note = riga.Field<string>("note"),
@@ -720,16 +779,19 @@ namespace VideoSystemWeb.DAL
                                         DatiScadenzario scadenza = new DatiScadenzario()
                                         {
                                             Id = riga.Field<int>("id"),
+                                            IdPadre = riga.Field<int?>("idPadre"),
                                             IdDatiProtocollo = riga.Field<int>("idDatiProtocollo"),
                                             IdTipoBanca = riga.Field<int>("idTipoBanca"),
                                             DataScadenza = riga.Field<DateTime?>("dataScadenza"),
                                             ImportoDare = riga.Field<decimal>("importoDare"),
                                             ImportoDareIva = riga.Field<decimal>("importoDareIva"),
                                             ImportoVersato = riga.Field<decimal>("importoVersato"),
+                                            ImportoVersatoIva = riga.Field<decimal>("importoVersatoIva"),
                                             DataVersamento = riga.Field<DateTime?>("dataVersamento"),
                                             ImportoAvere = riga.Field<decimal>("importoAvere"),
                                             ImportoAvereIva = riga.Field<decimal>("importoAvereIva"),
                                             ImportoRiscosso = riga.Field<decimal>("importoRiscosso"),
+                                            ImportoRiscossoIva = riga.Field<decimal>("importoRiscossoIva"),
                                             DataRiscossione = riga.Field<DateTime?>("dataRiscossione"),
 
                                             Note = riga.Field<string>("note"),

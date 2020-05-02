@@ -86,9 +86,9 @@ namespace VideoSystemWeb.Agenda.userControl
                 DateTime dataTmp = Convert.ToDateTime(tbDataElaborazione.Text.Trim());
                 string sDataTmp = dataTmp.ToString("yyyy-MM-dd") + "T00:00:00.000";
 
-                string queryRicerca = "select da.data_inizio_lavorazione as [Data Inizio] , da.data_fine_lavorazione as [Data Fine], da.durata_lavorazione as Durata " +
-                ",produzione, lavorazione, codice_lavoro,ca.nome,ts.nome,tt.nome, " +
-                "ac.cognome as cognome_operatore,ac.nome as nome_operatore, dal.descrizione as qualifica, dal.descrizioneLunga " +
+                string queryRicerca = "select dal.descrizione as qualifica,ac.cognome as cognome_operatore, ac.nome as nome_operatore, da.codice_lavoro,produzione,lavorazione " +
+                //", da.durata_lavorazione as Durata , ca.nome,ts.nome,tt.nome " +
+                //", ac.cognome as cognome_operatore,ac.nome as nome_operatore, dal.descrizioneLunga " +
                 "from[dbo].[tab_dati_agenda] da " +
                 "left join tipo_colonne_agenda ca " +
                 "on da.id_colonne_agenda = ca.id " +
@@ -104,19 +104,68 @@ namespace VideoSystemWeb.Agenda.userControl
                 "on dal.idCollaboratori = ac.id " +
                 "where ac.cognome is not null and dal.descrizione<> 'Diaria' " +
                 "and data_inizio_lavorazione <= '@dataElaborazione' and data_fine_lavorazione >= '@dataElaborazione' " +
-                "order by codice_lavoro, dal.descrizione, ac.cognome, ac.nome";
-
+                //"order by codice_lavoro, dal.descrizione, ac.cognome, ac.nome";
+                "group by dal.descrizione ,ac.cognome, ac.nome, da.codice_lavoro,produzione,lavorazione " +
+                "order by qualifica,ac.cognome, ac.nome, codice_lavoro";
                 queryRicerca = queryRicerca.Replace("@dataElaborazione", sDataTmp);
 
                 esito = new Esito();
                 DataTable dtProtocolli = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
                 if (dtProtocolli!=null && dtProtocolli.Rows!=null && dtProtocolli.Rows.Count > 0)
                 {
+
+                    // INTESTAZIONE GRIGLIA
+                    iText.Layout.Element.Table table = new iText.Layout.Element.Table(6).UseAllAvailableWidth(); 
+                    Paragraph intestazione = new Paragraph("Qualifica").SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    table.AddHeaderCell(intestazione);
+                    intestazione = new Paragraph("Cognome").SetFontSize(10).SetBold().SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    table.AddHeaderCell(intestazione);
+                    intestazione = new Paragraph("Nome").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    table.AddHeaderCell(intestazione);
+                    intestazione = new Paragraph("Codice Lavoro").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    table.AddHeaderCell(intestazione);
+                    intestazione = new Paragraph("Produzione").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    table.AddHeaderCell(intestazione);
+                    intestazione = new Paragraph("Lavorazione").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    table.AddHeaderCell(intestazione);
+
+                    string qualifica = "";
+
                     foreach (DataRow riga in dtProtocolli.Rows)
                     {
-                        Paragraph pRiga = new Paragraph(riga["produzione"].ToString() + " " + riga["lavorazione"].ToString() + " " + riga["qualifica"].ToString() + " " + riga["cognome_operatore"].ToString() + " " + riga["nome_operatore"].ToString());
-                        document.Add(pRiga);
+                        string cognome = "";
+                        string nome = "";
+                        string codice_lavoro = "";
+                        string produzione = "";
+                        string lavorazione = "";
+
+                        if (riga["cognome_operatore"] != null) cognome = riga["cognome_operatore"].ToString();
+                        if (riga["nome_operatore"] != null) nome = riga["nome_operatore"].ToString();
+                        if (riga["codice_lavoro"] != null) codice_lavoro = riga["codice_lavoro"].ToString();
+                        if (riga["produzione"] != null) produzione = riga["produzione"].ToString();
+                        if (riga["lavorazione"] != null) lavorazione = riga["lavorazione"].ToString();
+
+                        Cell cellaQualifica = new Cell();
+                        if (!riga["qualifica"].ToString().ToUpper().Equals(qualifica.ToUpper()))
+                        {
+                            Paragraph pQualifica = new Paragraph(riga["qualifica"].ToString()).SetFontSize(8).SetBold();
+                            cellaQualifica.Add(pQualifica);
+                            qualifica = riga["qualifica"].ToString();
+                        }
+                        else
+                        {
+                            Paragraph pQualifica = new Paragraph("").SetFontSize(8).SetBold();
+                            cellaQualifica.Add(pQualifica);
+                        }
+                        table.AddCell(cellaQualifica);
+
+                        table.AddCell(cognome).SetFontSize(8);
+                        table.AddCell(nome).SetFontSize(8);
+                        table.AddCell(codice_lavoro).SetFontSize(8);
+                        table.AddCell(produzione).SetFontSize(8);
+                        table.AddCell(lavorazione).SetFontSize(8);
                     }
+                    document.Add(table);
                 }
 
                 int n = doc.GetNumberOfPages();
@@ -125,9 +174,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
                 for (int i = 1; i <= n; i++)
                 {
-                    // AGGIUNGO LOGO
-                    //iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(90, 80).SetFixedPosition(i, 30, 500);
-                    //document.Add(image);
+
                     // AGGIUNGO LOGO
                     iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(60, 60).SetFixedPosition(i, 20, pageSize.GetHeight() - 80);
                     document.Add(image);

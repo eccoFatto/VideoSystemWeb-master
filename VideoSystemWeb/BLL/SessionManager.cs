@@ -17,6 +17,7 @@ namespace VideoSystemWeb.BLL
         public static string LISTA_TIPI_TIPOLOGIA = "listaTipiTipologie";
         public static string LISTA_TIPI_QUALIFICA = "listaQualifiche";
         public static string LISTA_CLIENTI_FORNITORI = "listaClientiFornitori";
+        public static string DATA_SELEZIONATA = "dataSelezionata";
 
         // CHIAVI DI TAB_CONFIG
         public static string CFG_IVA = "IVA";
@@ -534,6 +535,22 @@ namespace VideoSystemWeb.BLL
             EventoSelezionato.ListaDatiArticoli = null;
             EventoSelezionato.LavorazioneCorrente = null;
             EventoSelezionato = null;
+        }
+
+        public static DateTime DataSelezionata
+        {
+            get
+            {
+                if (HttpContext.Current.Session[DATA_SELEZIONATA] == null)
+                {
+                    HttpContext.Current.Session[DATA_SELEZIONATA] = DateTime.Now;
+                }
+                return (DateTime)HttpContext.Current.Session[DATA_SELEZIONATA];
+            }
+            set
+            {
+                HttpContext.Current.Session[DATA_SELEZIONATA] = value;
+            }
         }
     }
 }

@@ -26,7 +26,8 @@ function datediff(first, second) {
 function controlloCoerenzaDate(id_calendarDataInizio, id_calendarDataFine) {
     $('#' + id_calendarDataInizio).datetimepicker({
         locale: 'it',
-        format: 'DD/MM/YYYY'
+        format: 'DD/MM/YYYY',
+        useCurrent: false //Important! See issue #1075
     });
     $('#' + id_calendarDataFine).datetimepicker({
         locale: 'it',
@@ -37,7 +38,7 @@ function controlloCoerenzaDate(id_calendarDataInizio, id_calendarDataFine) {
     if ($('#' + id_calendarDataInizio).val() != "") {
         var dataInizio = $('#' + id_calendarDataInizio).data('DateTimePicker');
         if (dataInizio != null) {
-            $('#' + id_calendarDataFine).data("DateTimePicker").minDate(new Date(dataInizio.date()));
+            $('#' + id_calendarDataFine).data("DateTimePicker").minDate(new Date(dataInizio.date()));          
         }
     }
 
@@ -49,7 +50,10 @@ function controlloCoerenzaDate(id_calendarDataInizio, id_calendarDataFine) {
     }
 
     $('#' + id_calendarDataInizio).on("dp.change", function (e) {
+        
         $('#' + id_calendarDataFine).data("DateTimePicker").minDate(e.date);
+        $('#' + id_calendarDataFine).val($('#' + id_calendarDataInizio).val()); // setta automaticamente la data fine uguiale alla data inizio
+        
     });
     $('#' + id_calendarDataFine).on("dp.change", function (e) {
         $('#' + id_calendarDataInizio).data("DateTimePicker").maxDate(e.date);

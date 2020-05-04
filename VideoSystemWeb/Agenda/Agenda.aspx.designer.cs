@@ -7,11 +7,13 @@
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.Agenda {
-    
-    
-    public partial class Agenda {
-        
+namespace VideoSystemWeb.Agenda
+{
+
+
+    public partial class Agenda
+    {
+
         /// <summary>
         /// Controllo hf_valoreData.
         /// </summary>
@@ -20,7 +22,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_valoreData;
-        
+
         /// <summary>
         /// Controllo hf_data.
         /// </summary>
@@ -29,7 +31,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_data;
-        
+
         /// <summary>
         /// Controllo hf_risorsa.
         /// </summary>
@@ -38,7 +40,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_risorsa;
-        
+
         /// <summary>
         /// Controllo hf_tabSelezionata.
         /// </summary>
@@ -47,7 +49,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_tabSelezionata;
-        
+
         /// <summary>
         /// Controllo btnsearch.
         /// </summary>
@@ -56,7 +58,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnsearch;
-        
+
         /// <summary>
         /// Controllo UpdatePanelCal.
         /// </summary>
@@ -65,7 +67,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanelCal;
-        
+
         /// <summary>
         /// Controllo gv_scheduler.
         /// </summary>
@@ -74,7 +76,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_scheduler;
-        
+
         /// <summary>
         /// Controllo divLegenda.
         /// </summary>
@@ -83,7 +85,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divLegenda;
-        
+
         /// <summary>
         /// Controllo divFiltroAgenda.
         /// </summary>
@@ -92,7 +94,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFiltroAgenda;
-        
+
         /// <summary>
         /// Controllo btnStampaGiornata.
         /// </summary>
@@ -101,7 +103,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnStampaGiornata;
-        
+
         /// <summary>
         /// Controllo btnEditEvent.
         /// </summary>
@@ -110,7 +112,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEditEvent;
-        
+
         /// <summary>
         /// Controllo upEvento.
         /// </summary>
@@ -119,7 +121,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upEvento;
-        
+
         /// <summary>
         /// Controllo pnlContainer.
         /// </summary>
@@ -128,7 +130,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl pnlContainer;
-        
+
         /// <summary>
         /// Controllo innerContainer.
         /// </summary>
@@ -137,7 +139,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel innerContainer;
-        
+
         /// <summary>
         /// Controllo tab_Appuntamento.
         /// </summary>
@@ -146,7 +148,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_Appuntamento;
-        
+
         /// <summary>
         /// Controllo tab_Offerta.
         /// </summary>
@@ -155,7 +157,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_Offerta;
-        
+
         /// <summary>
         /// Controllo tab_Lavorazione.
         /// </summary>
@@ -164,7 +166,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tab_Lavorazione;
-        
+
         /// <summary>
         /// Controllo lbl_Cliente.
         /// </summary>
@@ -173,7 +175,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Cliente;
-        
+
         /// <summary>
         /// Controllo val_Cliente.
         /// </summary>
@@ -182,7 +184,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label val_Cliente;
-        
+
         /// <summary>
         /// Controllo lbl_Produzione.
         /// </summary>
@@ -191,7 +193,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Produzione;
-        
+
         /// <summary>
         /// Controllo val_Produzione.
         /// </summary>
@@ -200,7 +202,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label val_Produzione;
-        
+
         /// <summary>
         /// Controllo lbl_Lavorazione.
         /// </summary>
@@ -209,7 +211,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Lavorazione;
-        
+
         /// <summary>
         /// Controllo val_Lavorazione.
         /// </summary>
@@ -218,7 +220,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label val_Lavorazione;
-        
+
         /// <summary>
         /// Controllo lbl_Tipologia.
         /// </summary>
@@ -227,7 +229,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Tipologia;
-        
+
         /// <summary>
         /// Controllo val_Tipologia.
         /// </summary>
@@ -236,7 +238,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label val_Tipologia;
-        
+
         /// <summary>
         /// Controllo lbl_DataInizio.
         /// </summary>
@@ -245,7 +247,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_DataInizio;
-        
+
         /// <summary>
         /// Controllo val_DataInizio.
         /// </summary>
@@ -254,7 +256,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label val_DataInizio;
-        
+
         /// <summary>
         /// Controllo lbl_DataFine.
         /// </summary>
@@ -263,7 +265,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_DataFine;
-        
+
         /// <summary>
         /// Controllo val_DataFine.
         /// </summary>
@@ -272,7 +274,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label val_DataFine;
-        
+
         /// <summary>
         /// Controllo lbl_Stato.
         /// </summary>
@@ -281,7 +283,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_Stato;
-        
+
         /// <summary>
         /// Controllo val_Stato.
         /// </summary>
@@ -290,7 +292,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label val_Stato;
-        
+
         /// <summary>
         /// Controllo lbl_CodiceLavoro.
         /// </summary>
@@ -299,7 +301,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_CodiceLavoro;
-        
+
         /// <summary>
         /// Controllo val_CodiceLavoro.
         /// </summary>
@@ -308,7 +310,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label val_CodiceLavoro;
-        
+
         /// <summary>
         /// Controllo mostraAgenda.
         /// </summary>
@@ -317,7 +319,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image mostraAgenda;
-        
+
         /// <summary>
         /// Controllo popupAppuntamento.
         /// </summary>
@@ -326,7 +328,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.Appuntamento popupAppuntamento;
-        
+
         /// <summary>
         /// Controllo popupOfferta.
         /// </summary>
@@ -335,7 +337,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.Offerta popupOfferta;
-        
+
         /// <summary>
         /// Controllo popupLavorazione.
         /// </summary>
@@ -344,7 +346,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.Lavorazione popupLavorazione;
-        
+
         /// <summary>
         /// Controllo btnRiepilogo.
         /// </summary>
@@ -353,7 +355,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRiepilogo;
-        
+
         /// <summary>
         /// Controllo btnStampaPianoEsterno.
         /// </summary>
@@ -362,7 +364,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnStampaPianoEsterno;
-        
+
         /// <summary>
         /// Controllo btnStampaConsuntivo.
         /// </summary>
@@ -371,7 +373,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnStampaConsuntivo;
-        
+
         /// <summary>
         /// Controllo btnStampaFattura.
         /// </summary>
@@ -380,7 +382,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnStampaFattura;
-        
+
         /// <summary>
         /// Controllo btnMagazzino.
         /// </summary>
@@ -389,7 +391,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnMagazzino;
-        
+
         /// <summary>
         /// Controllo btnSalva.
         /// </summary>
@@ -398,7 +400,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSalva;
-        
+
         /// <summary>
         /// Controllo btn_chiudi.
         /// </summary>
@@ -407,7 +409,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_chiudi;
-        
+
         /// <summary>
         /// Controllo btnElimina.
         /// </summary>
@@ -416,7 +418,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnElimina;
-        
+
         /// <summary>
         /// Controllo btnOfferta.
         /// </summary>
@@ -425,7 +427,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnOfferta;
-        
+
         /// <summary>
         /// Controllo btnLavorazione.
         /// </summary>
@@ -434,7 +436,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnLavorazione;
-        
+
         /// <summary>
         /// Controllo btn_annulla.
         /// </summary>
@@ -443,7 +445,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_annulla;
-        
+
         /// <summary>
         /// Controllo upRiepilogoOfferta.
         /// </summary>
@@ -452,7 +454,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upRiepilogoOfferta;
-        
+
         /// <summary>
         /// Controllo popupRiepilogoOfferta.
         /// </summary>
@@ -461,7 +463,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.RiepilogoOfferta popupRiepilogoOfferta;
-        
+
         /// <summary>
         /// Controllo upRiepilogoPianoEsterno.
         /// </summary>
@@ -470,7 +472,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upRiepilogoPianoEsterno;
-        
+
         /// <summary>
         /// Controllo popupRiepilogoPianoEsterno.
         /// </summary>
@@ -479,7 +481,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.RiepilogoPianoEsterno popupRiepilogoPianoEsterno;
-        
+
         /// <summary>
         /// Controllo upRiepilogoConsuntivo.
         /// </summary>
@@ -488,7 +490,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upRiepilogoConsuntivo;
-        
+
         /// <summary>
         /// Controllo popupRiepilogoConsuntivo.
         /// </summary>
@@ -497,7 +499,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.RiepilogoConsuntivo popupRiepilogoConsuntivo;
-        
+
         /// <summary>
         /// Controllo upRiepilogoFattura.
         /// </summary>
@@ -506,7 +508,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upRiepilogoFattura;
-        
+
         /// <summary>
         /// Controllo popupRiepilogoFattura.
         /// </summary>
@@ -515,7 +517,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.RiepilogoFattura popupRiepilogoFattura;
-        
+
         /// <summary>
         /// Controllo upRiepilogoGiornata.
         /// </summary>
@@ -524,7 +526,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upRiepilogoGiornata;
-        
+
         /// <summary>
         /// Controllo popupRiepilogoGiornata.
         /// </summary>
@@ -533,7 +535,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Agenda.userControl.RiepilogoGiornata popupRiepilogoGiornata;
-        
+
         /// <summary>
         /// Controllo lbl_backgroundAgenda.
         /// </summary>
@@ -542,7 +544,7 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_backgroundAgenda;
-        
+
         /// <summary>
         /// Controllo lbl_sottotitoloBGAgenda.
         /// </summary>

@@ -17,12 +17,12 @@
               $('.blink').fadeOut(800).fadeIn(500, blink); 
             })();
 
-
             $('.calendarAgenda').datetimepicker({
                 inline: true,
                 locale: 'it',
                 format: 'DD/MM/YYYY',
-                showTodayButton: true
+                showTodayButton: true,
+                date: new Date(<%=GetDataSelezionata()%>)
             });
 
             $('.calendarAgenda').on('dp.change', function (e) {

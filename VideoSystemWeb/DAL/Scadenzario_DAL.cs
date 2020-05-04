@@ -610,7 +610,7 @@ namespace VideoSystemWeb.DAL
                 string filtriRicerca = string.Empty;
                 filtriRicerca += string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
                 filtriRicerca += string.IsNullOrWhiteSpace(ragioneSociale) ? "" : " and b.cliente like '%" + ragioneSociale.Trim() + "%'";
-                filtriRicerca += string.IsNullOrWhiteSpace(numeroFattura) ? "" : " and b.protocollo_riferimento = '" + numeroFattura + "'";
+                filtriRicerca += string.IsNullOrWhiteSpace(numeroFattura) ? "" : " and b.protocollo_riferimento like '%" + numeroFattura + "%'";
 
                 if (!string.IsNullOrEmpty(fatturaPagata))
                 {
@@ -624,8 +624,9 @@ namespace VideoSystemWeb.DAL
 
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM dati_scadenzario a left join dati_protocollo b on a.idDatiProtocollo = b.id where 1=1";
+                    string query = "SELECT * FROM dati_scadenzario a left join dati_protocollo b on a.idDatiProtocollo = b.id where 1=1 ";
                     query += filtriRicerca;
+                    query += " order by a.id desc";
 
                     using (SqlCommand cmd = new SqlCommand(query))
                     {

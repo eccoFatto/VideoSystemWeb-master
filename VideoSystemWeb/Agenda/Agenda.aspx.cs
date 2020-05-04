@@ -37,6 +37,13 @@ namespace VideoSystemWeb.Agenda
             }
         }
 
+        public string GetDataSelezionata()
+        {
+            long ticks = SessionManager.DataSelezionata.Ticks - DateTime.Parse("01/01/1970 00:00:00").Ticks;
+            ticks /= 10000;
+            return ticks.ToString();
+        }
+
         protected void Page_PreInit(object sender, EventArgs e)
         {
             CheckIsMobile();
@@ -525,6 +532,10 @@ namespace VideoSystemWeb.Agenda
 
         private void AggiornaAgenda()
         {
+            // METTO IN SESSIONE LA DATA SELEZIONATA
+            SessionManager.DataSelezionata = DateTime.ParseExact(hf_valoreData.Value, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
+
             //CARICO SOLO GLI EVENTI VISUALIZZATI
             Esito esito = new Esito();
             ListaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(DateTime.Parse(hf_valoreData.Value), ref esito);

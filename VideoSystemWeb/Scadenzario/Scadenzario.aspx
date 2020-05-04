@@ -131,7 +131,6 @@
         function confermaSaldoTotale()
         {
             var importoDaSaldare = $('#<%=txt_ImponibileIva.ClientID%>').val();
-
             return confirm('È in corso il saldo della rata che ammonta a €' + importoDaSaldare + '. Confermare?')
         }
     </script>

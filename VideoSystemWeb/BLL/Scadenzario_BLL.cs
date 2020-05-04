@@ -292,14 +292,26 @@ namespace VideoSystemWeb.BLL
             Scadenzario_DAL.Instance.AggiornaDatiScadenzario(scadenza, ref esito);
         }
 
-        // metodo ricorsivo che restituisce una lista di tutti gli ID dei parenti di una data scadenza in una lista di scadenze con lo stesso protocollo
-        public void RicercaParenti(int idScadenza, List<DatiScadenzario> listaScadenzeStessoProtocollo, ref List<int> listaIdParenti)
+        // metodo ricorsivo che restituisce una lista di tutti gli ID dei figli di una data scadenza (compreso l'id della scadenza di partenza) in una lista di scadenze con lo stesso protocollo
+
+        public void RicercaFigli(DatiScadenzario scadenzaPadre, List<DatiScadenzario> listaScadenzeStessoProtocollo, ref List<DatiScadenzario> listaFigli)
         {
-            listaIdParenti.Add(idScadenza);
-            DatiScadenzario scadenzaFiglio = listaScadenzeStessoProtocollo.FirstOrDefault(x => x.IdPadre == idScadenza);
+            listaFigli.Add(scadenzaPadre);
+            DatiScadenzario scadenzaFiglio = listaScadenzeStessoProtocollo.FirstOrDefault(x => x.IdPadre == scadenzaPadre.Id);
             if (scadenzaFiglio != null)
             {
-                RicercaParenti(scadenzaFiglio.Id, listaScadenzeStessoProtocollo, ref listaIdParenti);
+                RicercaFigli(scadenzaFiglio, listaScadenzeStessoProtocollo, ref listaFigli);
+            }
+        }
+
+        // restituisce la lista degli id dei figli
+        public void RicercaFigli(int idScadenza, List<DatiScadenzario> listaScadenzeStessoProtocollo, ref List<int> listaIdFigli)
+        {
+            listaIdFigli.Add(idScadenza);
+            List<DatiScadenzario> listaScadenzeFigli = listaScadenzeStessoProtocollo.Where(x => x.IdPadre == idScadenza).ToList<DatiScadenzario>();
+            foreach(DatiScadenzario scadenzaFiglio in listaScadenzeFigli)
+            {
+                RicercaFigli(scadenzaFiglio.Id, listaScadenzeStessoProtocollo, ref listaIdFigli);
             }
         }
     }

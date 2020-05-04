@@ -632,15 +632,17 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
         }
 
-        protected void btnTEST_Click(object sender, EventArgs e)
+        protected List<DatiScadenzario> CaricaListaFigli(DatiScadenzario scadenza)
         {
             Esito esito = new Esito();
-            int idScadenzaCorrente = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
-            DatiScadenzario scadenzaCorrente = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenzaCorrente);
-            List<DatiScadenzario> listaScadenzeStessoProtocollo = Scadenzario_BLL.Instance.GetDatiScadenzarioByIdDatiProtocollo(scadenzaCorrente.IdDatiProtocollo, ref esito);
-            List<int> listaIdParenti = new List<int>();
+            //int idScadenzaCorrente = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
+            //DatiScadenzario scadenzaCorrente = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenzaCorrente);
+            List<DatiScadenzario> listaScadenzeStessoProtocollo = Scadenzario_BLL.Instance.GetDatiScadenzarioByIdDatiProtocollo(scadenza.IdDatiProtocollo, ref esito);
+            List<DatiScadenzario> listaFigli = new List<DatiScadenzario>();
 
-            Scadenzario_BLL.Instance.RicercaParenti(idScadenzaCorrente, listaScadenzeStessoProtocollo, ref listaIdParenti); 
+            Scadenzario_BLL.Instance.RicercaFigli(scadenza, listaScadenzeStessoProtocollo, ref listaFigli);
+
+            return listaFigli;
         }
 
         private DatiScadenzario CreaOggettoDatiScadenzario(ref Esito esito)

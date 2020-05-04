@@ -248,8 +248,8 @@
         <ContentTemplate>
             <div class="w3-row-padding">
                 <div class="w3-quarter">
-                    <label>Codice Lavoro</label>
-                    <asp:TextBox ID="tbCodiceLavoro" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    <label>Cliente/Fornitore</label>
+                    <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
                 <div class="w3-quarter">
                     <label>Numero Protocollo</label>
@@ -306,14 +306,13 @@
             </div>
             <div class="w3-row-padding w3-margin-bottom">
                 <div class="w3-quarter">
-                    <label>Cliente/Fornitore</label>
-                    <asp:TextBox ID="tbRagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
 <%--                    <div id="divCliente" class="dropdown ">
                         <asp:HiddenField ID="hf_RagioneSociale" runat="server" Value=""/>
                         <asp:Button ID="ddl_Cliente" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
                         <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
                     </div>--%>
-
+                    <label>Codice Lavoro</label>
+                    <asp:TextBox ID="tbCodiceLavoro" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
                 <div class="w3-quarter">
                     <label>Destinatario</label>

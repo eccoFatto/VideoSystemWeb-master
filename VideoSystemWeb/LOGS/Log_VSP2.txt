@@ -22008,3 +22008,4 @@ Si è verificato un errore di rete o specifico dell'istanza mentre si cercava di 
 2020-04-27 21:10:58,113 [27] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-04-27 21:17:27,800 [18] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-04-27 21:35:37,031 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-04 22:55:52,828 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

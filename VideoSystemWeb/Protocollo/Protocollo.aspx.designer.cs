@@ -31,13 +31,13 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
         
         /// <summary>
-        /// Controllo tbCodiceLavoro.
+        /// Controllo tbRagioneSociale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbCodiceLavoro;
+        protected global::System.Web.UI.WebControls.TextBox tbRagioneSociale;
         
         /// <summary>
         /// Controllo tbNumeroProtocollo.
@@ -121,13 +121,13 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbDataProtocolloA;
         
         /// <summary>
-        /// Controllo tbRagioneSociale.
+        /// Controllo tbCodiceLavoro.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbRagioneSociale;
+        protected global::System.Web.UI.WebControls.TextBox tbCodiceLavoro;
         
         /// <summary>
         /// Controllo ddlDestinatario.

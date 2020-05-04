@@ -106,7 +106,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 "and data_inizio_lavorazione <= '@dataElaborazione' and data_fine_lavorazione >= '@dataElaborazione' " +
                 //"order by codice_lavoro, dal.descrizione, ac.cognome, ac.nome";
                 "group by dal.descrizione ,ac.cognome, ac.nome, da.codice_lavoro,produzione,lavorazione " +
-                "order by qualifica,ac.cognome, ac.nome, codice_lavoro";
+                //"order by qualifica,ac.cognome, ac.nome, codice_lavoro";
+                "order by codice_lavoro,qualifica,ac.cognome, ac.nome";
                 queryRicerca = queryRicerca.Replace("@dataElaborazione", sDataTmp);
 
                 esito = new Esito();
@@ -115,55 +116,83 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
 
                     // INTESTAZIONE GRIGLIA
-                    iText.Layout.Element.Table table = new iText.Layout.Element.Table(6).UseAllAvailableWidth(); 
-                    Paragraph intestazione = new Paragraph("Qualifica").SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    iText.Layout.Element.Table table = new iText.Layout.Element.Table(3).UseAllAvailableWidth();
+                    //Paragraph intestazione = new Paragraph("Codice Lavoro").SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    //table.AddHeaderCell(intestazione);
+
+                    //intestazione = new Paragraph("Produzione").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    //table.AddHeaderCell(intestazione);
+                    //intestazione = new Paragraph("Lavorazione").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    //table.AddHeaderCell(intestazione);
+                    Paragraph intestazione = new Paragraph("Qualifica").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
                     table.AddHeaderCell(intestazione);
                     intestazione = new Paragraph("Cognome").SetFontSize(10).SetBold().SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
                     table.AddHeaderCell(intestazione);
                     intestazione = new Paragraph("Nome").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
-                    table.AddHeaderCell(intestazione);
-                    intestazione = new Paragraph("Codice Lavoro").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
-                    table.AddHeaderCell(intestazione);
-                    intestazione = new Paragraph("Produzione").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
-                    table.AddHeaderCell(intestazione);
-                    intestazione = new Paragraph("Lavorazione").SetFontSize(10).SetFontSize(10).SetBold().SetBackgroundColor(coloreIntestazioni, 0.7f);
+                    
                     table.AddHeaderCell(intestazione);
 
-                    string qualifica = "";
-
+                    
+                    string codice_lavoro = "";
                     foreach (DataRow riga in dtProtocolli.Rows)
                     {
+                        string qualifica = "";
                         string cognome = "";
                         string nome = "";
-                        string codice_lavoro = "";
+                        
                         string produzione = "";
                         string lavorazione = "";
 
+
+                        //Cell cellaQualifica = new Cell();
+                        //if (!riga["qualifica"].ToString().ToUpper().Equals(qualifica.ToUpper()))
+                        //{
+                        //    Paragraph pQualifica = new Paragraph(riga["qualifica"].ToString()).SetFontSize(8).SetBold();
+                        //    cellaQualifica.Add(pQualifica);
+                        //    qualifica = riga["qualifica"].ToString();
+                        //}
+                        //else
+                        //{
+                        //    Paragraph pQualifica = new Paragraph("").SetFontSize(8).SetBold();
+                        //    cellaQualifica.Add(pQualifica);
+                        //}
+                        //table.AddCell(cellaQualifica);
+
+                        Cell cellaLavorazione = new Cell(1,3);
+                        if (!riga["codice_lavoro"].ToString().ToUpper().Equals(codice_lavoro.ToUpper()))
+                        {
+                            if (riga["produzione"] != null) produzione = riga["produzione"].ToString();
+                            if (riga["lavorazione"] != null) lavorazione = riga["lavorazione"].ToString();
+                            Paragraph pCodiceLavoro = new Paragraph(riga["codice_lavoro"].ToString() + " - Produzione: " + produzione + " - Lavorazione: " + lavorazione).SetFontSize(10).SetBold();
+                            cellaLavorazione.Add(pCodiceLavoro).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER);
+                            codice_lavoro = riga["codice_lavoro"].ToString();
+                            table.AddCell(cellaLavorazione);
+                        }
+                        //else
+                        //{
+                        //    Paragraph pCodiceLavoro = new Paragraph("").SetFontSize(8).SetBold();
+                        //    cellaLavorazione.Add(pCodiceLavoro);
+                        //}
+                        //table.AddCell(cellaLavorazione);
+
+                        if (riga["qualifica"] != null) qualifica = riga["qualifica"].ToString();
                         if (riga["cognome_operatore"] != null) cognome = riga["cognome_operatore"].ToString();
                         if (riga["nome_operatore"] != null) nome = riga["nome_operatore"].ToString();
-                        if (riga["codice_lavoro"] != null) codice_lavoro = riga["codice_lavoro"].ToString();
-                        if (riga["produzione"] != null) produzione = riga["produzione"].ToString();
-                        if (riga["lavorazione"] != null) lavorazione = riga["lavorazione"].ToString();
 
+
+
+                        //table.AddCell(produzione).SetFontSize(8);
+                        //table.AddCell(lavorazione).SetFontSize(8);
                         Cell cellaQualifica = new Cell();
-                        if (!riga["qualifica"].ToString().ToUpper().Equals(qualifica.ToUpper()))
-                        {
-                            Paragraph pQualifica = new Paragraph(riga["qualifica"].ToString()).SetFontSize(8).SetBold();
-                            cellaQualifica.Add(pQualifica);
-                            qualifica = riga["qualifica"].ToString();
-                        }
-                        else
-                        {
-                            Paragraph pQualifica = new Paragraph("").SetFontSize(8).SetBold();
-                            cellaQualifica.Add(pQualifica);
-                        }
+                        Paragraph pQualifica = new Paragraph(qualifica).SetFontSize(9).SetBold();
+                        cellaQualifica.Add(pQualifica).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                         table.AddCell(cellaQualifica);
 
-                        table.AddCell(cognome).SetFontSize(8);
-                        table.AddCell(nome).SetFontSize(8);
-                        table.AddCell(codice_lavoro).SetFontSize(8);
-                        table.AddCell(produzione).SetFontSize(8);
-                        table.AddCell(lavorazione).SetFontSize(8);
+
+                        table.AddCell(cognome).SetFontSize(9);
+                        table.AddCell(nome).SetFontSize(9);
+                        
+
                     }
                     document.Add(table);
                 }

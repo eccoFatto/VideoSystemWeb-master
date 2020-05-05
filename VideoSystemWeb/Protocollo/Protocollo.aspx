@@ -472,8 +472,8 @@
                                         <asp:TextBox ID="tbMod_DataLavorazione" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>Descrizione</label>
-                                        <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="200" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <label>Nome File</label>
+                                        <asp:TextBox ID="tbMod_NomeFile" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding">
@@ -508,8 +508,8 @@
 
                                 <div class="w3-row-padding">
                                     <div class="w3-threequarter">
-                                        <label>Nome File</label>
-                                        <asp:TextBox ID="tbMod_NomeFile" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <label>Descrizione</label>
+                                        <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="200" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>&nbsp;</label>

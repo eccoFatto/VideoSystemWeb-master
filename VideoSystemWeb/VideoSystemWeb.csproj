@@ -279,6 +279,7 @@
     <Content Include="messaggioCambioPassword.html" />
     <Content Include="pageError.aspx" />
     <Content Include="Protocollo\Protocollo.aspx" />
+    <Content Include="REPORT\ReportCollaboratoriPerGiornata.aspx" />
     <Content Include="REPORT\ReportTLTime.aspx" />
     <Content Include="REPORT\StampaCollaboratori.aspx" />
     <Content Include="REPORT\StampaConsulenteLavoro.aspx" />
@@ -877,6 +878,13 @@
     </Compile>
     <Compile Include="Protocollo\Protocollo.aspx.designer.cs">
       <DependentUpon>Protocollo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="REPORT\ReportCollaboratoriPerGiornata.aspx.cs">
+      <DependentUpon>ReportCollaboratoriPerGiornata.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="REPORT\ReportCollaboratoriPerGiornata.aspx.designer.cs">
+      <DependentUpon>ReportCollaboratoriPerGiornata.aspx</DependentUpon>
     </Compile>
     <Compile Include="REPORT\ReportTLTime.aspx.cs">
       <DependentUpon>ReportTLTime.aspx</DependentUpon>

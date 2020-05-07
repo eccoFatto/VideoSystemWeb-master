@@ -31,13 +31,13 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
         
         /// <summary>
-        /// Controllo tbCodiceLavoro.
+        /// Controllo tbRagioneSociale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbCodiceLavoro;
+        protected global::System.Web.UI.WebControls.TextBox tbRagioneSociale;
         
         /// <summary>
         /// Controllo tbNumeroProtocollo.
@@ -121,13 +121,13 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbDataProtocolloA;
         
         /// <summary>
-        /// Controllo tbRagioneSociale.
+        /// Controllo tbCodiceLavoro.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbRagioneSociale;
+        protected global::System.Web.UI.WebControls.TextBox tbCodiceLavoro;
         
         /// <summary>
         /// Controllo ddlDestinatario.
@@ -400,13 +400,13 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbMod_DataLavorazione;
         
         /// <summary>
-        /// Controllo tbMod_Descrizione.
+        /// Controllo tbMod_NomeFile.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Descrizione;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_NomeFile;
         
         /// <summary>
         /// Controllo tbMod_Cliente.
@@ -463,13 +463,13 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.TextBox tbMod_DataProtocollo;
         
         /// <summary>
-        /// Controllo tbMod_NomeFile.
+        /// Controllo tbMod_Descrizione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_NomeFile;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Descrizione;
         
         /// <summary>
         /// Controllo fuFileProt.

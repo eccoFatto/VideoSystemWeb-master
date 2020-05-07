@@ -175,8 +175,8 @@
                 <div class="w3-quarter">
                     <label>Fatturato</label>
                     <asp:DropDownList ID="ddlFatturato" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
-                        <asp:ListItem Value="" Text="<tutti>" />
-                        <asp:ListItem Value="1" Text="Si" Selected/>
+                        <asp:ListItem Value="" Text="<tutti>" Selected/>
+                        <asp:ListItem Value="1" Text="Si" />
                         <asp:ListItem Value="0" Text="No" />
                     </asp:DropDownList>
                 </div>

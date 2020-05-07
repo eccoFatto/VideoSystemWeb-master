@@ -17,11 +17,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
         #region TIPI
         private const string TIPO_CLIENTE = "CLIENTE";
         private const string TIPO_FORNITORE = "FORNITORE";
+        private enum TipoModifica { IMPORTO_ZERO, IMPORTO_TRA_0_E_MAX, IMPORTO_MAX, IMPORTO_UGUALE, NO_FIGLI}
         #endregion
 
         #region ELENCO CHIAVI VIEWSTATE
         private const string VIEWSTATE_ID_SCADENZA = "idScadenza";
         private const string VIEWSTATE_ID_PROTOCOLLO = "ID_PROTOCOLLO";
+        private const string VIEWSTATE_TIPOMODIFICA = "TIPO_MODOFICA";
         #endregion
 
         protected void Page_PreInit(object sender, EventArgs e)
@@ -256,9 +258,31 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
         protected void btnRicercaScadenza_Click(object sender, EventArgs e)
         {
+            //Esito esito = new Esito();
+
+            //List <DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario(ddl_TipoAnagrafica.SelectedValue,
+            //                                                                                            //hf_RagioneSociale.Value,
+            //                                                                                            txt_RagioneSociale.Text,
+            //                                                                                            txt_NumeroFattura.Text,
+            //                                                                                            ddlFatturaPagata.SelectedValue,
+            //                                                                                            txt_DataFatturaDa.Text,
+            //                                                                                            txt_DataFatturaA.Text,
+            //                                                                                            txt_DataScadenzaDa.Text,
+            //                                                                                            txt_DataScadenzaA.Text, 
+            //                                                                                            ddl_FiltroBanca.SelectedValue, 
+            //                                                                                            ref esito);
+            //CalcolaTotali(listaDatiScadenzario);
+            //gv_scadenze.DataSource = listaDatiScadenzario;
+            //gv_scadenze.DataBind();
+
+            RicercaScadenze();
+        }
+
+        private void RicercaScadenze()
+        {
             Esito esito = new Esito();
 
-            List <DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario(ddl_TipoAnagrafica.SelectedValue,
+            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario(ddl_TipoAnagrafica.SelectedValue,
                                                                                                         //hf_RagioneSociale.Value,
                                                                                                         txt_RagioneSociale.Text,
                                                                                                         txt_NumeroFattura.Text,
@@ -266,8 +290,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                                         txt_DataFatturaDa.Text,
                                                                                                         txt_DataFatturaA.Text,
                                                                                                         txt_DataScadenzaDa.Text,
-                                                                                                        txt_DataScadenzaA.Text, 
-                                                                                                        ddl_FiltroBanca.SelectedValue, 
+                                                                                                        txt_DataScadenzaA.Text,
+                                                                                                        ddl_FiltroBanca.SelectedValue,
                                                                                                         ref esito);
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
@@ -404,48 +428,195 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
         protected void btnModificaScadenza_Click(object sender, EventArgs e)
         {
-            DatiScadenzario scadenza = new DatiScadenzario();
-            string importoVersato = string.Empty;
-            string importoVersatoIva = string.Empty;
-            string iva = string.Empty; 
-            string dataScadenza = string.Empty;
-            string dataVersamentoRiscossione = string.Empty;
-            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref importoVersatoIva, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
+            ViewState[VIEWSTATE_TIPOMODIFICA] = null;
+            Esito esito = new Esito();
 
-            if (esito.Codice != Esito.ESITO_OK)
-            {
-                ShowError("Controllare i campi evidenziati");
-            }
-            else
-            {
-                decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);
+            int idScadenza = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
+            DatiScadenzario scadenzaCorrente = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenza);
 
-                if ((!string.IsNullOrEmpty(importoVersato) && decimal.Parse(importoVersato) != 0) &&  differenzaImportoIva > 0)
+            if (esito.Codice == Esito.ESITO_OK)
+            {
+                esito = ValidaDatiScadenzaDaSalvare();
+                
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    ShowWarning("L'importo in fase di registrazione non copre totalmente la rata corrente." + Environment.NewLine + "Modificare il valore in " + (scadenza.ImportoAvereIva + scadenza.ImportoDareIva) + " oppure selezionare 'Aggiungi pagamento'.");
-                }
-                else if ((!string.IsNullOrEmpty(importoVersato) && decimal.Parse(importoVersato) != 0) && differenzaImportoIva < 0)
-                {
-                    ShowWarning("L'importo in fase di registrazione eccede la rata corrente." + Environment.NewLine + "È possibile impostare una valore massimo di " + (scadenza.ImportoAvereIva + scadenza.ImportoDareIva) + "€.");
+                    ShowError("Controllare i campi evidenziati");
+                    return;
                 }
                 else
                 {
-                    Scadenzario_BLL.Instance.AggiornaDatiScadenzario(scadenza, ddl_Tipo.SelectedValue, importoVersato, importoVersatoIva, iva, dataScadenza, dataVersamentoRiscossione, int.Parse(ddl_BancaModifica.SelectedValue), ref esito);
-
-                    if (esito.Codice != Esito.ESITO_OK)
+                    List<DatiScadenzario> listaFigli = CaricaListaFigli(scadenzaCorrente);
+                    if (listaFigli.Count > 1)
                     {
-                        log.Error(esito.Descrizione);
-                        ShowError(esito.Descrizione);
+                        decimal maxImportoIvaDaVersare = listaFigli.Sum(x => x.ImportoAvereIva + x.ImportoDareIva);
+                        decimal maxImportoDaVersare = listaFigli.Sum(x => x.ImportoAvere + x.ImportoDare);
+                        decimal importoVersatoIvaDecimal = decimal.Parse(txt_VersatoIva.Text);
+
+                        if (importoVersatoIvaDecimal > maxImportoIvaDaVersare)
+                        {
+                            esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                            esito.Descrizione = "L'importo in fase di registrazione eccede la rata corrente e le rate ad essa legate." + Environment.NewLine + "È possibile impostare una valore massimo di " + maxImportoIvaDaVersare + "€.";
+                        }
+                        else
+                        {
+                            //DatiScadenzario scadenzaOriginale = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, scadenzaCorrente.Id);
+                            //decimal importoOriginaleScadenzaIva = scadenzaOriginale.ImportoRiscossoIva + scadenzaOriginale.ImportoVersatoIva; //scadenzaCorrente.ImportoRiscossoIva + scadenzaCorrente.ImportoVersatoIva;
+                            decimal importoOriginaleScadenzaIva = scadenzaCorrente.ImportoRiscossoIva + scadenzaCorrente.ImportoVersatoIva;
+
+                            if (importoOriginaleScadenzaIva != importoVersatoIvaDecimal) // AGGIORNAMENTO IMPORTO SCADENZA
+                            {
+                                DateTime dataNuovaScadenza = (DateTime)listaFigli[1].DataScadenza;
+                                decimal importoScadenzaFigli = maxImportoIvaDaVersare - importoVersatoIvaDecimal;
+
+                                if (importoVersatoIvaDecimal == 0) // SE IMPORTO È PARI A 0 VIENE CANCELLATA LA RATA CORRENTE E RIPRISTINATA UN'UNICA RATA DA SALDARE CON IMPORTI DEI FIGLI 
+                                {
+                                    ViewState[VIEWSTATE_TIPOMODIFICA] = TipoModifica.IMPORTO_ZERO;
+
+                                    lblMessaggioPopup.Text = "La scadenza selezionata verrà eliminata.<br/>Tutte le rate precedentemente immesse e legate alla scadenza selezionata verranno sostituite da una rata unica di importo pari a " + importoScadenzaFigli + "€, con scadenza " + ((DateTime)scadenzaCorrente.DataScadenza).ToString("dd/MM/yyyy"); ;
+                                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriPanelModificaScadenzaConFigli", script: "javascript: document.getElementById('" + panelModificaScadenzaConFigli.ClientID + "').style.display='block'", addScriptTags: true);
+                                }
+                                else if (importoScadenzaFigli > 0) // MODIFICA ALLA SCADENZA NON COPRE IMPORTO TOTALE DELLE ALTRE RATE
+                                {
+                                    ViewState[VIEWSTATE_TIPOMODIFICA] = TipoModifica.IMPORTO_TRA_0_E_MAX;
+
+                                    lblMessaggioPopup.Text = "La scadenza selezionata verrà aggiornata.<br/>Tutte le rate precedentemente immesse e legate alla scadenza selezionata verranno sostituite da una rata unica di importo pari a " + importoScadenzaFigli + "€, con scadenza " + dataNuovaScadenza.ToString("dd/MM/yyyy");
+                                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriPanelModificaScadenzaConFigli", script: "javascript: document.getElementById('" + panelModificaScadenzaConFigli.ClientID + "').style.display='block'", addScriptTags: true);
+                                }
+                                else // MODIFICA ALLA SCADENZA COPRE TOTALEMENTE IMPORTO ALTRE RATE
+                                {
+                                    ViewState[VIEWSTATE_TIPOMODIFICA] = TipoModifica.IMPORTO_MAX;
+
+                                    lblMessaggioPopup.Text = "La scadenza selezionata verrà aggiornata.<br/>Il suo importo copre l'ammontare delle altre rate precedentemente immesse, che verranno quindi eliminate.";
+                                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriPanelModificaScadenzaConFigli", script: "javascript: document.getElementById('" + panelModificaScadenzaConFigli.ClientID + "').style.display='block'", addScriptTags: true);
+                                }
+                            }
+                            else // SOLO AGGIORNAMENTO SCADENZA (IMPORTO UGUALE A QUELLO ORIGINALE)
+                            {
+                                ViewState[VIEWSTATE_TIPOMODIFICA] = TipoModifica.IMPORTO_UGUALE;
+
+                                lblMessaggioPopup.Text = "Confermi modifica Scadenza?";
+                                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriPanelModificaScadenzaConFigli", script: "javascript: document.getElementById('" + panelModificaScadenzaConFigli.ClientID + "').style.display='block'", addScriptTags: true);
+                            }
+                        }
+                    }
+                    else // se la scadenza non ha figli deve necessariamente coprire l'importo oppure generare figli
+                    {
+                        decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);
+
+                        if ((!string.IsNullOrEmpty(txt_VersatoIva.Text) && decimal.Parse(txt_VersatoIva.Text) != 0) && differenzaImportoIva > 0)
+                        {
+                            esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                            esito.Descrizione = "L'importo in fase di registrazione non copre totalmente la rata corrente." + Environment.NewLine + "Modificare il valore in " + (scadenzaCorrente.ImportoAvereIva + scadenzaCorrente.ImportoDareIva) + " oppure selezionare 'Aggiungi pagamento'.";
+                        }
+                        else if ((!string.IsNullOrEmpty(txt_VersatoIva.Text) && decimal.Parse(txt_VersatoIva.Text) != 0) && differenzaImportoIva < 0)
+                        {
+                            esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                            esito.Descrizione = "L'importo in fase di registrazione eccede la rata corrente." + Environment.NewLine + "È possibile impostare una valore massimo di " + (scadenzaCorrente.ImportoAvereIva + scadenzaCorrente.ImportoDareIva) + "€.";
+                        }
+                        else
+                        {
+                            ViewState[VIEWSTATE_TIPOMODIFICA] = TipoModifica.NO_FIGLI;
+
+                            lblMessaggioPopup.Text = "Confermi modifica Scadenza?";
+                            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriPanelModificaScadenzaConFigli", script: "javascript: document.getElementById('" + panelModificaScadenzaConFigli.ClientID + "').style.display='block'", addScriptTags: true);
+                        }
+                    }
+                }
+            }
+            if (esito.Codice != Esito.ESITO_OK)
+            {
+                log.Error(esito.Descrizione);
+                ShowError(esito.Descrizione);
+            }
+        }
+
+        protected void btnOKModificaScadenzaConFigli_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+
+            int idScadenza = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
+            DatiScadenzario scadenzaCorrente = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenza);
+
+            List<DatiScadenzario> listaFigli = CaricaListaFigli(scadenzaCorrente);
+            decimal maxImportoIvaDaVersare = listaFigli.Sum(x => x.ImportoAvereIva + x.ImportoDareIva);
+            decimal maxImportoDaVersare = listaFigli.Sum(x => x.ImportoAvere + x.ImportoDare);
+
+            if (ddl_Tipo.SelectedValue.ToUpper() == TIPO_CLIENTE)
+            {
+                scadenzaCorrente.ImportoAvereIva = decimal.Parse(txt_VersatoIva.Text);
+                scadenzaCorrente.ImportoAvere = decimal.Parse(txt_Versato.Text);
+            }
+            else
+            {
+                scadenzaCorrente.ImportoDareIva = decimal.Parse(txt_VersatoIva.Text);
+                scadenzaCorrente.ImportoDare = decimal.Parse(txt_Versato.Text);
+            }
+
+
+            switch ((TipoModifica)ViewState[VIEWSTATE_TIPOMODIFICA])
+            {
+                case TipoModifica.IMPORTO_ZERO: // scadenza corrente e figli eliminati; viene creato un unico figlio con importo pari alla somma totale 
+                    scadenzaCorrente.ImportoVersato = 0;
+                    scadenzaCorrente.ImportoVersatoIva = 0;
+                    scadenzaCorrente.ImportoRiscosso = 0;
+                    scadenzaCorrente.ImportoRiscossoIva = 0;
+
+                    scadenzaCorrente.DataVersamento = null;
+                    scadenzaCorrente.DataRiscossione = null;
+
+                    scadenzaCorrente.ImportoAvereIva = 0;
+                    scadenzaCorrente.ImportoAvere = 0;
+                    scadenzaCorrente.ImportoDareIva = 0;
+                    scadenzaCorrente.ImportoDare = 0;
+
+                    if (ddl_Tipo.SelectedValue.ToUpper() == TIPO_CLIENTE)
+                    {
+                        scadenzaCorrente.ImportoAvereIva = maxImportoIvaDaVersare;
+                        scadenzaCorrente.ImportoAvere = maxImportoDaVersare;
                     }
                     else
                     {
-                        ShowSuccess("Scadenza aggiornata correttamente");
-                        btnChiudiPopup_Click(null, null);
-
-                        PulisciFiltriRicerca();
-                        PopolaGrigliaScadenze();
+                        scadenzaCorrente.ImportoDareIva = maxImportoIvaDaVersare;
+                        scadenzaCorrente.ImportoDare = maxImportoDaVersare;
                     }
-                }
+                    scadenzaCorrente.IdTipoBanca = int.Parse(ddl_Banca.SelectedValue);
+
+                    Scadenzario_BLL.Instance.CancellaFigli_CreaDatiScadenzario(listaFigli, scadenzaCorrente, int.Parse(ddl_BancaModifica.SelectedValue), ref esito);
+                    break;
+                case TipoModifica.IMPORTO_TRA_0_E_MAX: // scadenza corrente aggiornata; figli eliminati e sostituiti da un unico figlio 
+                    listaFigli = listaFigli.Where(x => x.Id != scadenzaCorrente.Id).ToList<DatiScadenzario>();
+                    decimal importoVersatoIvaDecimal = decimal.Parse(txt_VersatoIva.Text);
+                    decimal importoScadenzaFigli = maxImportoIvaDaVersare - importoVersatoIvaDecimal;
+                    DateTime dataNuovaScadenza = (DateTime)listaFigli[0].DataScadenza;
+
+                    Scadenzario_BLL.Instance.CancellaFigli_AggiungiPagamento(listaFigli, scadenzaCorrente, ddl_Tipo.SelectedValue, txt_Versato.Text, txt_VersatoIva.Text, importoScadenzaFigli.ToString(), txt_IvaModifica.Text, txt_ScadenzaDocumento.Text, txt_DataVersamentoRiscossione.Text, int.Parse(ddl_BancaModifica.SelectedValue), dataNuovaScadenza.ToString("dd/MM/yyyy"), ref esito);
+                    break;
+                case TipoModifica.IMPORTO_MAX: // scadenza corrente aggiornata; figli eliminati
+                    listaFigli = listaFigli.Where(x => x.Id != scadenzaCorrente.Id).ToList<DatiScadenzario>();
+                   
+                    Scadenzario_BLL.Instance.CancellaFigli_AggiornaDatiScadenzario(listaFigli, scadenzaCorrente, ddl_Tipo.SelectedValue, txt_Versato.Text, txt_VersatoIva.Text, txt_IvaModifica.Text, txt_ScadenzaDocumento.Text, txt_DataVersamentoRiscossione.Text, int.Parse(ddl_BancaModifica.SelectedValue), ref esito);
+                    break;
+                case TipoModifica.IMPORTO_UGUALE: // modifica senza variazione di importo: figli rimangono invariati 
+                    Scadenzario_BLL.Instance.AggiornaDatiScadenzario(scadenzaCorrente, ddl_Tipo.SelectedValue, txt_Versato.Text, txt_VersatoIva.Text, txt_IvaModifica.Text, txt_ScadenzaDocumento.Text, txt_DataVersamentoRiscossione.Text, int.Parse(ddl_BancaModifica.SelectedValue), ref esito);
+                    break;
+                case TipoModifica.NO_FIGLI: // scadenza senza figli: importo deve essere coperto totalemnte
+                    Scadenzario_BLL.Instance.AggiornaDatiScadenzario(scadenzaCorrente, ddl_Tipo.SelectedValue, txt_Versato.Text, txt_VersatoIva.Text, txt_IvaModifica.Text, txt_ScadenzaDocumento.Text, txt_DataVersamentoRiscossione.Text, int.Parse(ddl_BancaModifica.SelectedValue), ref esito);
+                    break;
+                default:
+                    break;
+            }
+
+            if (esito.Codice != Esito.ESITO_OK)
+            {
+                log.Error(esito.Descrizione);
+                ShowError(esito.Descrizione);
+            }
+            else
+            {
+                ShowSuccess("La scadenza selezionata è stata aggiornata correttemente");
+                btnChiudiPopup_Click(null, null);
+
+                RicercaScadenze();
             }
         }
 
@@ -547,8 +718,9 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
                 ViewState[VIEWSTATE_ID_PROTOCOLLO] = null;
 
-                PulisciFiltriRicerca();
-                PopolaGrigliaScadenze();
+                //PulisciFiltriRicerca();
+                //PopolaGrigliaScadenze();
+                RicercaScadenze();
             }
         }
 
@@ -556,41 +728,55 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected void btnInserisciPagamento_Click(object sender, EventArgs e)
         {
             NascondiErroriValidazione();
+            Esito esito = new Esito();
 
-            DatiScadenzario scadenza = new DatiScadenzario();
-            string importoVersato = string.Empty;
-            string importoVersatoIva = string.Empty;
-            string iva = string.Empty;
-            string dataScadenza = string.Empty;
-            string dataVersamentoRiscossione = string.Empty;
-            Esito esito = PopolaDatiScadenzaDaSalvare(ref scadenza, ref importoVersato, ref importoVersatoIva, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
+            int idScadenza = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
+            DatiScadenzario scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenza);
 
-            if (esito.Codice != Esito.ESITO_OK)
+            if (esito.Codice == Esito.ESITO_OK)
             {
-                ShowError("Controllare i campi evidenziati");
-            }
-            else
-            {
-                decimal importoVersatoIvaDecimal = decimal.Parse(txt_VersatoIva.Text); // decimal.Parse(importoVersato) * (1 + (scadenza.Iva) / 100);
-                decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);
+                //DatiScadenzario scadenza = new DatiScadenzario();
+                //string importoVersato = string.Empty;
+                //string importoVersatoIva = string.Empty;
+                //string iva = string.Empty;
+                //string dataScadenza = string.Empty;
+                //string dataVersamentoRiscossione = string.Empty;
+                
+                //esito = ValidaDatiScadenzaDaSalvare(ref importoVersato, ref importoVersatoIva, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
+                esito = ValidaDatiScadenzaDaSalvare();
 
-
-                lbl_aggiungiPagamento.Text = differenzaImportoIva.ToString();
-                txt_DataAggiungiPagamento.Text = string.Empty;
-
-                if (importoVersatoIvaDecimal==0)
+                if (esito.Codice != Esito.ESITO_OK)
                 {
-                    ShowWarning("Valorizzare l'importo versato o riscosso");
-
-                }
-                else if (differenzaImportoIva > 0)
-                {
-                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriAggiungiPagamento", script: "javascript: document.getElementById('" + panelAggiungiPagamento.ClientID + "').style.display='block'", addScriptTags: true);
+                    ShowError("Controllare i campi evidenziati");
                 }
                 else
                 {
-                    ShowWarning("È possibile inserire un nuovo pagamento solo se l'importo versato o riscosso non copre interamente la rata corrente");
+                    decimal importoVersatoIvaDecimal = decimal.Parse(txt_VersatoIva.Text); // decimal.Parse(importoVersato) * (1 + (scadenza.Iva) / 100);
+                    decimal differenzaImportoIva = decimal.Parse(txt_TotaleIva.Text);
+
+
+                    lbl_aggiungiPagamento.Text = differenzaImportoIva.ToString();
+                    txt_DataAggiungiPagamento.Text = string.Empty;
+
+                    if (importoVersatoIvaDecimal == 0)
+                    {
+                        ShowWarning("Valorizzare l'importo versato o riscosso");
+
+                    }
+                    else if (differenzaImportoIva > 0)
+                    {
+                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriAggiungiPagamento", script: "javascript: document.getElementById('" + panelAggiungiPagamento.ClientID + "').style.display='block'", addScriptTags: true);
+                    }
+                    else
+                    {
+                        ShowWarning("È possibile inserire un nuovo pagamento solo se l'importo versato o riscosso non copre interamente la rata corrente");
+                    }
                 }
+            }
+            else
+            {
+                log.Error(esito.Descrizione);
+                ShowError(esito.Descrizione);
             }
         }
 
@@ -606,28 +792,44 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
             else
             {
-                DatiScadenzario scadenzaDaAggiornare = new DatiScadenzario();
-                string importoVersato = string.Empty;
-                string importoVersatoIva = string.Empty;
-                string iva = string.Empty;
-                string dataScadenza = string.Empty;
-                string dataVersamentoRiscossione = string.Empty;
-                esito = PopolaDatiScadenzaDaSalvare(ref scadenzaDaAggiornare, ref importoVersato, ref importoVersatoIva, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
-                if (esito.Codice != Esito.ESITO_OK)
-                {
-                    ShowError("Controllare i campi evidenziati");
-                }
-               
-                Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare,  ddl_Tipo.SelectedValue, importoVersato, importoVersatoIva, txt_TotaleIva.Text, iva, dataScadenza, dataVersamentoRiscossione, int.Parse(ddl_BancaModifica.SelectedValue), dataAggiungiDocumento, ref esito);
+                int idScadenza = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
+                DatiScadenzario scadenzaDaAggiornare = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenza);
 
                 if (esito.Codice == Esito.ESITO_OK)
                 {
-                    ShowSuccess("La scadenza selezionata è stata aggiornata ed è stato aggiunto un nuovo pagamento.");
 
-                    btnChiudiPopup_Click(null, null);
 
-                    PulisciFiltriRicerca();
-                    PopolaGrigliaScadenze();
+                    //DatiScadenzario scadenzaDaAggiornare = new DatiScadenzario();
+                    //string importoVersato = string.Empty;
+                    //string importoVersatoIva = string.Empty;
+                    //string iva = string.Empty;
+                    //string dataScadenza = string.Empty;
+                    //string dataVersamentoRiscossione = string.Empty;
+                    //esito = ValidaDatiScadenzaDaSalvare(ref importoVersato, ref importoVersatoIva, ref iva, ref dataScadenza, ref dataVersamentoRiscossione);
+                    esito = ValidaDatiScadenzaDaSalvare();
+
+                    if (esito.Codice != Esito.ESITO_OK)
+                    {
+                        ShowError("Controllare i campi evidenziati");
+                    }
+
+                    Scadenzario_BLL.Instance.AggiungiPagamento(scadenzaDaAggiornare, ddl_Tipo.SelectedValue, txt_Versato.Text, txt_VersatoIva.Text, txt_TotaleIva.Text, txt_IvaModifica.Text, txt_ScadenzaDocumento.Text, txt_DataVersamentoRiscossione.Text, int.Parse(ddl_BancaModifica.SelectedValue), dataAggiungiDocumento, ref esito);
+
+                    if (esito.Codice == Esito.ESITO_OK)
+                    {
+                        ShowSuccess("La scadenza selezionata è stata aggiornata ed è stato aggiunto un nuovo pagamento.");
+
+                        btnChiudiPopup_Click(null, null);
+
+                        //PulisciFiltriRicerca();
+                        //PopolaGrigliaScadenze();
+                        RicercaScadenze();
+                    }
+                }
+                else
+                {
+                    log.Error(esito.Descrizione);
+                    ShowError(esito.Descrizione);
                 }
             }
         }
@@ -635,8 +837,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected List<DatiScadenzario> CaricaListaFigli(DatiScadenzario scadenza)
         {
             Esito esito = new Esito();
-            //int idScadenzaCorrente = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
-            //DatiScadenzario scadenzaCorrente = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenzaCorrente);
+
             List<DatiScadenzario> listaScadenzeStessoProtocollo = Scadenzario_BLL.Instance.GetDatiScadenzarioByIdDatiProtocollo(scadenza.IdDatiProtocollo, ref esito);
             List<DatiScadenzario> listaFigli = new List<DatiScadenzario>();
 
@@ -748,20 +949,33 @@ namespace VideoSystemWeb.Scadenzario.userControl
             pnlContainer.Visible = false;
         }
 
-        private Esito PopolaDatiScadenzaDaSalvare(ref DatiScadenzario scadenza, ref string importoVersato, ref string importoVersatoIva, ref string iva, ref string dataScadenza, ref string dataVersamentoRiscossione)
+        //private Esito ValidaDatiScadenzaDaSalvare(ref string importoVersato, ref string importoVersatoIva, ref string iva, ref string dataScadenza, ref string dataVersamentoRiscossione)
+        //{
+        //    Esito esito = new Esito();
+
+        //    //int idScadenza = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
+        //    //scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenza);
+
+        //    iva = ValidaCampo(txt_IvaModifica, "", true, ref esito);
+        //    importoVersato = txt_Versato.Text;
+        //    importoVersatoIva = ValidaCampo(txt_VersatoIva, "", true, ref esito);
+        //    dataScadenza = ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
+        //    dataVersamentoRiscossione = (string.IsNullOrEmpty(importoVersatoIva) || (decimal.Parse(importoVersatoIva))== 0 )? txt_DataVersamentoRiscossione.Text : ValidaCampo(txt_DataVersamentoRiscossione, "", true, ref esito);
+
+        //    return esito;
+        //}
+
+        private Esito ValidaDatiScadenzaDaSalvare()
         {
             Esito esito = new Esito();
 
-            int idScadenza = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
-            scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, Convert.ToInt16(idScadenza));
+            //int idScadenza = Convert.ToInt16(ViewState[VIEWSTATE_ID_SCADENZA].ToString());
+            //scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenza);
 
-            iva = ValidaCampo(txt_IvaModifica, "", true, ref esito);
-            importoVersato = txt_Versato.Text;// ValidaCampo(txt_Versato, "", true, ref esito);
-            importoVersatoIva = ValidaCampo(txt_VersatoIva, "", true, ref esito);
-
-            dataScadenza = ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
-
-            dataVersamentoRiscossione = (string.IsNullOrEmpty(importoVersato) || (decimal.Parse(importoVersato))== 0 )? txt_DataVersamentoRiscossione.Text : ValidaCampo(txt_DataVersamentoRiscossione, "", true, ref esito);
+            ValidaCampo(txt_IvaModifica, "", true, ref esito);
+            ValidaCampo(txt_VersatoIva, "", true, ref esito);
+            ValidaCampo(txt_ScadenzaDocumento, "", true, ref esito);
+            if (!string.IsNullOrWhiteSpace(txt_VersatoIva.Text) && (decimal.Parse(txt_VersatoIva.Text) != 0)) ValidaCampo(txt_DataVersamentoRiscossione, "", true, ref esito);
 
             return esito;
         }
@@ -811,8 +1025,9 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     ShowSuccess("Saldo scadenza effettuato correttamente");
                     btnChiudiPopup_Click(null, null);
 
-                    PulisciFiltriRicerca();
-                    PopolaGrigliaScadenze();
+                    //PulisciFiltriRicerca();
+                    //PopolaGrigliaScadenze();
+                    RicercaScadenze();
                 }
             }
         }

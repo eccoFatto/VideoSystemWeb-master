@@ -66,7 +66,7 @@ namespace VideoSystemWeb.Agenda
 
             if (!IsPostBack)
             {
-                DateTime dataPartenza = DateTime.Now;
+                DateTime dataPartenza = SessionManager.DataSelezionata == null? DateTime.Now : SessionManager.DataSelezionata;
 
                 ListaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito); //CARICO SOLO EVENTI VISUALIZZATI
 

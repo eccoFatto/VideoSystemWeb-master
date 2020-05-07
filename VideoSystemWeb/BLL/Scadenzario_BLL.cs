@@ -56,11 +56,33 @@ namespace VideoSystemWeb.BLL
             Scadenzario_DAL.Instance.AggiornaDatiScadenzario(scadenza, ref esito);
         }
 
+        
+        public void CancellaFigli_AggiornaDatiScadenzario(List<DatiScadenzario> listaFigliScadenza, DatiScadenzario scadenza, string tipoScadenza, string importo, string importoIva, string iva, string dataScadenza, string dataVersamentoRiscossione, int idTipoBanca, ref Esito esito)
+        {
+            if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
+            {
+                scadenza.DataRiscossione = string.IsNullOrEmpty(dataVersamentoRiscossione) ? null : (DateTime?)DateTime.Parse(dataVersamentoRiscossione);
+                scadenza.ImportoRiscosso = string.IsNullOrEmpty(importo) ? 0 : decimal.Parse(importo);
+                scadenza.ImportoRiscossoIva = string.IsNullOrEmpty(importoIva) ? 0 : decimal.Parse(importoIva);
+            }
+            else
+            {
+                scadenza.DataVersamento = string.IsNullOrEmpty(dataVersamentoRiscossione) ? null : (DateTime?)DateTime.Parse(dataVersamentoRiscossione);
+                scadenza.ImportoVersato = string.IsNullOrEmpty(importo) ? 0 : decimal.Parse(importo);
+                scadenza.ImportoVersatoIva = string.IsNullOrEmpty(importoIva) ? 0 : decimal.Parse(importoIva);
+            }
+            scadenza.Iva = string.IsNullOrEmpty(iva) ? 0 : decimal.Parse(iva);
+            scadenza.DataScadenza = DateTime.Parse(dataScadenza);
+            scadenza.IdTipoBanca = idTipoBanca;
+
+            Scadenzario_DAL.Instance.CancellaFigli_AggiornaDatiScadenzario(listaFigliScadenza, scadenza, ref esito);
+        }
+
         public void CreaDatiScadenzario(DatiScadenzario scadenza, string _acconto, string _accontoIva, string _iva, string _numeroRate, string tipoScadenza, DateTime? dataPartenzaPagamento, int cadenzaGiorni, ref Esito esito)
         {
-            decimal accontoIva = string.IsNullOrEmpty(_accontoIva) ? 0 : decimal.Parse(_accontoIva); //string.IsNullOrEmpty(_acconto) ? 0 : decimal.Parse(_acconto);
+            decimal accontoIva = string.IsNullOrEmpty(_accontoIva) ? 0 : decimal.Parse(_accontoIva);
             decimal ivaDecimal = string.IsNullOrEmpty(_iva) ? 0 : decimal.Parse(_iva);
-            decimal acconto = string.IsNullOrEmpty(_acconto) ? 0 : decimal.Parse(_acconto);// string.IsNullOrEmpty(_acconto) ? 0 : decimal.Parse(_acconto) / (1 + (ivaDecimal / 100));
+            decimal acconto = string.IsNullOrEmpty(_acconto) ? 0 : decimal.Parse(_acconto);
 
             int numeroRate = string.IsNullOrEmpty(_numeroRate) ? 1 : int.Parse(_numeroRate);
 
@@ -125,6 +147,86 @@ namespace VideoSystemWeb.BLL
             }
         }
 
+        //public void CancellaFigli_CreaDatiScadenzario(List<DatiScadenzario> listaFigliScadenza, DatiScadenzario scadenza, string _acconto, string _accontoIva, string _iva, string _numeroRate, string tipoScadenza, DateTime? dataPartenzaPagamento, int cadenzaGiorni, ref Esito esito)
+        //{
+        //    decimal accontoIva = string.IsNullOrEmpty(_accontoIva) ? 0 : decimal.Parse(_accontoIva);
+        //    decimal ivaDecimal = string.IsNullOrEmpty(_iva) ? 0 : decimal.Parse(_iva);
+        //    decimal acconto = string.IsNullOrEmpty(_acconto) ? 0 : decimal.Parse(_acconto);
+
+        //    int numeroRate = string.IsNullOrEmpty(_numeroRate) ? 1 : int.Parse(_numeroRate);
+
+        //    if (acconto > 0)
+        //    {
+        //        DatiScadenzario scadenzaAcconto = new DatiScadenzario
+        //        {
+        //            IdPadre = null,
+        //            IdDatiProtocollo = scadenza.IdDatiProtocollo,
+        //            IdTipoBanca = scadenza.IdTipoBanca,
+        //            DataScadenza = DateTime.Now,
+        //            ImportoDare = 0,
+        //            ImportoDareIva = 0,
+        //            ImportoVersato = 0,
+        //            ImportoVersatoIva = 0,
+        //            DataVersamento = null,
+        //            ImportoAvere = 0,
+        //            ImportoAvereIva = 0,
+        //            ImportoRiscosso = 0,
+        //            ImportoRiscossoIva = 0,
+        //            DataRiscossione = null,
+        //            Note = scadenza.Note,
+        //            Iva = scadenza.Iva
+        //        };
+
+        //        if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
+        //        {
+        //            scadenzaAcconto.ImportoRiscosso = acconto;
+        //            scadenzaAcconto.ImportoRiscossoIva = accontoIva;
+        //            scadenzaAcconto.DataRiscossione = DateTime.Now;
+        //            scadenzaAcconto.ImportoAvere = acconto;
+        //            scadenzaAcconto.ImportoAvereIva = accontoIva;
+        //        }
+        //        else
+        //        {
+        //            scadenzaAcconto.ImportoVersato = acconto;
+        //            scadenzaAcconto.ImportoVersatoIva = accontoIva;
+        //            scadenzaAcconto.DataVersamento = DateTime.Now;
+        //            scadenzaAcconto.ImportoDare = acconto;
+        //            scadenzaAcconto.ImportoDareIva = accontoIva;
+        //        }
+
+        //        Scadenzario_DAL.Instance.CreaDatiScadenzario(scadenzaAcconto, ref esito); // SCRITTURA ACCONTO
+        //    }
+
+        //    if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
+        //    {
+        //        scadenza.ImportoAvere = (scadenza.ImportoAvere - acconto) / decimal.Parse(numeroRate.ToString());
+        //        scadenza.ImportoAvereIva = (scadenza.ImportoAvereIva - accontoIva) / decimal.Parse(numeroRate.ToString());
+        //    }
+        //    else
+        //    {
+        //        scadenza.ImportoDare = (scadenza.ImportoDare - acconto) / decimal.Parse(numeroRate.ToString());
+        //        scadenza.ImportoDareIva = (scadenza.ImportoDareIva - accontoIva) / decimal.Parse(numeroRate.ToString());
+        //    }
+
+        //    for (int i = 1; i <= numeroRate; i++)
+        //    {
+        //        scadenza.DataScadenza = ((DateTime)dataPartenzaPagamento).AddDays(cadenzaGiorni * i);
+
+        //        Scadenzario_DAL.Instance.CancellaFigli_CreaDatiScadenzario(listaFigliScadenza, scadenza, ref esito);
+        //    }
+        //}
+
+            //aggiungere banca e idPadre
+        public void CancellaFigli_CreaDatiScadenzario(List<DatiScadenzario> listaFigliScadenza, DatiScadenzario scadenza,  int idTipoBanca, ref Esito esito)
+        {
+            
+            
+            scadenza.IdTipoBanca = idTipoBanca;
+
+            Scadenzario_DAL.Instance.CancellaFigli_CreaDatiScadenzario(listaFigliScadenza, scadenza, ref esito);
+
+        }
+
         // USATO PER AGGIUNGERE UN PAGAMENTO AD UNA SCADENZA GIA' ESISTENTE
         public void AggiungiPagamento(DatiScadenzario scadenzaDaAggiornare, string tipoScadenza, string importoVersato, string importoVersatoIva, string differenzaImportoIva, string iva, string dataScadenza, string dataVersamentoRiscossione, int idTipoBanca, string dataAggiungiDocumento, ref Esito esito)
         {
@@ -145,7 +247,7 @@ namespace VideoSystemWeb.BLL
                 scadenzaDaAggiornare.ImportoRiscosso = string.IsNullOrEmpty(importoVersato) ? 0 : importoVersatoDecimal;
                 scadenzaDaAggiornare.ImportoRiscossoIva = string.IsNullOrEmpty(importoVersatoIva) ? 0 : importoVersatoIvaDecimal;
                 scadenzaDaAggiornare.ImportoAvere = scadenzaDaAggiornare.ImportoRiscosso; // La scadenza viene aggiornata con un importo parziale
-                scadenzaDaAggiornare.ImportoAvereIva = Math.Round(scadenzaDaAggiornare.ImportoRiscosso * (1 + (scadenzaDaAggiornare.Iva) / 100), 2);
+                scadenzaDaAggiornare.ImportoAvereIva = scadenzaDaAggiornare.ImportoRiscossoIva; // Math.Round(scadenzaDaAggiornare.ImportoRiscosso * (1 + (scadenzaDaAggiornare.Iva) / 100), 2);
             }
             else
             {
@@ -153,7 +255,7 @@ namespace VideoSystemWeb.BLL
                 scadenzaDaAggiornare.ImportoVersato = string.IsNullOrEmpty(importoVersato) ? 0 : importoVersatoDecimal;
                 scadenzaDaAggiornare.ImportoVersatoIva = string.IsNullOrEmpty(importoVersato) ? 0 : importoVersatoIvaDecimal;
                 scadenzaDaAggiornare.ImportoDare = scadenzaDaAggiornare.ImportoVersato;  // La scadenza viene aggiornata con un importo parziale
-                scadenzaDaAggiornare.ImportoDareIva = Math.Round(scadenzaDaAggiornare.ImportoVersato * (1 + (scadenzaDaAggiornare.Iva) / 100), 2);
+                scadenzaDaAggiornare.ImportoDareIva = scadenzaDaAggiornare.ImportoVersatoIva; // Math.Round(scadenzaDaAggiornare.ImportoVersato * (1 + (scadenzaDaAggiornare.Iva) / 100), 2);
             }
             #endregion
 
@@ -200,6 +302,79 @@ namespace VideoSystemWeb.BLL
             esito = Scadenzario_DAL.Instance.AggiungiPagamento(scadenzaDaAggiornare, scadenzaDaInserire);
         }
 
+        //aggiungere idPadre
+        public void CancellaFigli_AggiungiPagamento(List<DatiScadenzario> listaFigliScadenza, DatiScadenzario scadenzaDaAggiornare, string tipoScadenza, string importoVersato, string importoVersatoIva, string differenzaImportoIva, string iva, string dataScadenza, string dataVersamentoRiscossione, int idTipoBanca, string dataAggiungiDocumento, ref Esito esito)
+        {
+            decimal importoVersatoDecimal = string.IsNullOrEmpty(importoVersato) ? 0 : decimal.Parse(importoVersato);
+            decimal importoVersatoIvaDecimal = string.IsNullOrEmpty(importoVersatoIva) ? 0 : decimal.Parse(importoVersatoIva);
+            decimal differenzaImporto = (scadenzaDaAggiornare.ImportoAvere + scadenzaDaAggiornare.ImportoDare) - importoVersatoDecimal;
+
+            decimal differenzaImportoIvaDecimal = decimal.Parse(differenzaImportoIva);
+
+            #region SCADENZA DA AGGIORNARE
+            scadenzaDaAggiornare.Iva = string.IsNullOrEmpty(iva) ? 0 : decimal.Parse(iva);
+            scadenzaDaAggiornare.DataScadenza = DateTime.Parse(dataScadenza);
+            scadenzaDaAggiornare.IdTipoBanca = idTipoBanca;
+
+            if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
+            {
+                scadenzaDaAggiornare.DataRiscossione = DateTime.Parse(dataVersamentoRiscossione);
+                scadenzaDaAggiornare.ImportoRiscosso = string.IsNullOrEmpty(importoVersato) ? 0 : importoVersatoDecimal;
+                scadenzaDaAggiornare.ImportoRiscossoIva = string.IsNullOrEmpty(importoVersatoIva) ? 0 : importoVersatoIvaDecimal;
+                scadenzaDaAggiornare.ImportoAvere = scadenzaDaAggiornare.ImportoRiscosso; // La scadenza viene aggiornata con un importo parziale
+                scadenzaDaAggiornare.ImportoAvereIva = scadenzaDaAggiornare.ImportoRiscossoIva; 
+            }
+            else
+            {
+                scadenzaDaAggiornare.DataVersamento = DateTime.Parse(dataVersamentoRiscossione);
+                scadenzaDaAggiornare.ImportoVersato = string.IsNullOrEmpty(importoVersato) ? 0 : importoVersatoDecimal;
+                scadenzaDaAggiornare.ImportoVersatoIva = string.IsNullOrEmpty(importoVersato) ? 0 : importoVersatoIvaDecimal;
+                scadenzaDaAggiornare.ImportoDare = scadenzaDaAggiornare.ImportoVersato;  // La scadenza viene aggiornata con un importo parziale
+                scadenzaDaAggiornare.ImportoDareIva = scadenzaDaAggiornare.ImportoVersatoIva; 
+            }
+            #endregion
+
+            #region SCADENZA DA INSERIRE
+            DatiScadenzario scadenzaDaInserire = new DatiScadenzario();
+            scadenzaDaInserire.IdPadre = scadenzaDaAggiornare.Id;
+            scadenzaDaInserire.IdTipoBanca = scadenzaDaAggiornare.IdTipoBanca;
+            scadenzaDaInserire.IdDatiProtocollo = scadenzaDaAggiornare.IdDatiProtocollo;
+            scadenzaDaInserire.DataScadenza = DateTime.Parse(dataAggiungiDocumento);
+            scadenzaDaInserire.DataVersamento = null;
+            scadenzaDaInserire.DataRiscossione = null;
+            scadenzaDaInserire.Iva = scadenzaDaAggiornare.Iva;
+
+            scadenzaDaInserire.ImportoAvere = 0;
+            scadenzaDaInserire.ImportoAvereIva = 0;
+            scadenzaDaInserire.ImportoRiscosso = 0;
+            scadenzaDaInserire.ImportoRiscossoIva = 0;
+
+            scadenzaDaInserire.ImportoDare = 0;
+            scadenzaDaInserire.ImportoDareIva = 0;
+            scadenzaDaInserire.ImportoVersato = 0;
+            scadenzaDaInserire.ImportoVersatoIva = 0;
+
+            if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
+            {
+                scadenzaDaInserire.ImportoAvere = differenzaImporto;
+                scadenzaDaInserire.ImportoAvereIva = differenzaImportoIvaDecimal;
+            }
+            else
+            {
+                scadenzaDaInserire.ImportoDare = differenzaImporto;
+                scadenzaDaInserire.ImportoDareIva = differenzaImportoIvaDecimal;
+            }
+
+            scadenzaDaInserire.Note = scadenzaDaAggiornare.Note;
+            scadenzaDaInserire.RagioneSocialeClienteFornitore = scadenzaDaAggiornare.RagioneSocialeClienteFornitore;
+            scadenzaDaInserire.ProtocolloRiferimento = scadenzaDaAggiornare.ProtocolloRiferimento;
+            scadenzaDaInserire.DataProtocollo = scadenzaDaAggiornare.DataProtocollo;
+            scadenzaDaInserire.Cassa = scadenzaDaAggiornare.Cassa;
+            #endregion
+
+            Scadenzario_DAL.Instance.CancellaFigli_AggiungiPagamento(listaFigliScadenza, scadenzaDaAggiornare, scadenzaDaInserire, ref esito);
+        }
+
         public DatiScadenzario GetDatiScadenzarioById(ref Esito esito, int id)
         { 
             return Scadenzario_DAL.Instance.GetDatiScadenzarioById(ref esito, id);
@@ -243,6 +418,11 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Response.Redirect("Scadenzario?TIPO=" + tipoScadenza + "&ID_PROTOCOLLO=" + idProtocollo);
             } 
 
+        }
+
+        public void DeleteFigliScadenza(List<DatiScadenzario> listaFigliScadenza, ref Esito esito)
+        {
+            Scadenzario_DAL.Instance.DeleteFigliScadenza(listaFigliScadenza, ref esito);
         }
 
         public List<DatiScadenzario> GetDatiTotaliFatturaByIdDatiScadenzario(int idDatiScadenzario, ref Esito esito)
@@ -297,8 +477,8 @@ namespace VideoSystemWeb.BLL
         public void RicercaFigli(DatiScadenzario scadenzaPadre, List<DatiScadenzario> listaScadenzeStessoProtocollo, ref List<DatiScadenzario> listaFigli)
         {
             listaFigli.Add(scadenzaPadre);
-            DatiScadenzario scadenzaFiglio = listaScadenzeStessoProtocollo.FirstOrDefault(x => x.IdPadre == scadenzaPadre.Id);
-            if (scadenzaFiglio != null)
+            List<DatiScadenzario> listaScadenzeFigli = listaScadenzeStessoProtocollo.Where(x => x.IdPadre == scadenzaPadre.Id).ToList<DatiScadenzario>();
+            foreach (DatiScadenzario scadenzaFiglio in listaScadenzeFigli)
             {
                 RicercaFigli(scadenzaFiglio, listaScadenzeStessoProtocollo, ref listaFigli);
             }

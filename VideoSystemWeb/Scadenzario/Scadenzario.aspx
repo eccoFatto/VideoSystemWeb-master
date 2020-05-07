@@ -573,7 +573,7 @@
                                     <asp:Button ID="btnInserisciScadenza" runat="server" Text="Inserisci Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciScadenza_Click" OnClientClick="return confirm('Confermi inserimento Scadenza?')" />
                                     
                                     <asp:Button ID="btnAggiungiPagamento" runat="server" Text="Aggiungi Pagamento" class="w3-panel w3-blue w3-border w3-round" OnClick="btnInserisciPagamento_Click" Visible="false"/>
-                                    <asp:Button ID="btnModificaScadenza" runat="server" Text="Modifica Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaScadenza_Click" OnClientClick="return confirm('Confermi modifica Scadenza?')" Visible="false" />
+                                    <asp:Button ID="btnModificaScadenza" runat="server" Text="Modifica Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaScadenza_Click"  Visible="false" />
                                     <asp:Button ID="btnSaldoTotale" runat="server" Text="Saldo totale" class="w3-panel w3-green w3-border w3-round" OnClick="btnSaldoTotale_Click" OnClientClick="return confermaSaldoTotale();" Visible="false" />
                                     <%--<asp:Button ID="btnTEST" runat="server" Text="TEST" class="w3-panel w3-red w3-border w3-round" OnClick="btnTEST_Click"  />--%>
                                 </div>
@@ -620,7 +620,27 @@
                 </div>
             </div>
 
+<!-- MODIFICA SCADENZA CON FIGLI -->
+            <div id="panelModificaScadenzaConFigli" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
 
+                <div id="divModificaScadenzaConFigli" class="w3-modal-content w3-card-4 round" style="position: relative; width: 40%; background-color: white;">
+                    <div class="w3-row-padding">
+                        <div class="w3-panel w3-blue w3-center w3-round">
+                            <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Modifica scadenza</b> </h5>
+                            <span onclick="document.getElementById('<%= panelModificaScadenzaConFigli.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                        </div>
+                        <div>
+                            <asp:Label ID="lblMessaggioPopup" runat="server" /><br />
+                        </div>
+                        
+                    </div>
+                    <br /><br />
+                    <div class="w3-center" style="margin: 10px; position: relative; bottom:5px;width:96%;">
+                        <asp:Button ID="btnOKModificaScadenzaConFigli" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOKModificaScadenzaConFigli_Click" />
+                        <button onclick="document.getElementById('<%= panelModificaScadenzaConFigli.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                    </div>
+                </div>
+            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 

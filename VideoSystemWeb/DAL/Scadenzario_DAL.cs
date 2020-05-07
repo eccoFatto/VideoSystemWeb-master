@@ -536,6 +536,88 @@ namespace VideoSystemWeb.DAL
             }
         }
 
+        public void DeleteFigliScadenza(List<DatiScadenzario> listaFigliScadenza, ref Esito esito)
+        {
+            string elencoIdFigli = string.Empty;
+            foreach (DatiScadenzario scadenza in listaFigliScadenza)
+            {
+                elencoIdFigli += scadenza.Id + ", ";
+            }
+            elencoIdFigli = elencoIdFigli.Substring(0, elencoIdFigli.Length - 2);
+
+            using (SqlConnection con = new SqlConnection(sqlConstr))
+            {
+                using (SqlCommand sql = new SqlCommand("Delete from dati_scadenzario where id in (" + elencoIdFigli + ")"))
+                {
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        SqlTransaction transaction;
+                        sql.Connection = con;
+                        sql.Connection.Open();
+                        // Start a local transaction.
+                        transaction = con.BeginTransaction("ScadenzarioTransaction");
+
+                        try
+                        {
+                            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+                            #region CANCELLAZIONE SCADENZE
+                            sql.Connection = con;
+                            sda.SelectCommand = sql;
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+                            #endregion
+
+                            #region SCRITTURA LOG UTENTE
+                            sql.CommandType = CommandType.StoredProcedure;
+                            sql.CommandText = "InsertLog_utenti";
+                            sql.Parameters.Clear();
+                            sda.SelectCommand = sql;
+
+                            #region PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeUtente);
+
+                            SqlParameter nomeTabella = new SqlParameter("@nomeTabella", "dati_scadenzario");
+                            nomeTabella.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeTabella);
+
+                            SqlParameter tipoOperazione = new SqlParameter("@tipoOperazione", "DELETE");
+                            tipoOperazione.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(tipoOperazione);
+
+                            SqlParameter idTabella = new SqlParameter("@idTabella", listaFigliScadenza[0].Id);
+                            idTabella.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idTabella);
+
+                            sql.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+                            #endregion
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+                            #endregion
+
+                            // Attempt to commit the transaction.
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                            esito.Descrizione = "Scadenzario_DAL.cs - DeleteFigliScadenza " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                        }
+
+                    }
+                }
+            }
+                 
+        }
+
         public DatiScadenzario GetDatiScadenzarioById(ref Esito esito, int id)
         {
             DatiScadenzario scadenza = new DatiScadenzario();
@@ -922,6 +1004,623 @@ namespace VideoSystemWeb.DAL
             }
 
             return listaClientiFornitori;
+        }
+
+        public int CancellaFigli_CreaDatiScadenzario(List<DatiScadenzario> listaFigliScadenza, DatiScadenzario scadenza, ref Esito esito)
+        {
+            string elencoIdFigli = string.Empty;
+            foreach (DatiScadenzario scadenzaFiglio in listaFigliScadenza)
+            {
+                elencoIdFigli += scadenzaFiglio.Id + ", ";
+            }
+            elencoIdFigli = elencoIdFigli.Substring(0, elencoIdFigli.Length - 2);
+
+            using (SqlConnection con = new SqlConnection(sqlConstr))
+            {
+                using (SqlCommand sql = new SqlCommand("Delete from dati_scadenzario where id in (" + elencoIdFigli + ")"))
+                {
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        SqlTransaction transaction;
+                        sql.Connection = con;
+                        sql.Connection.Open();
+                        // Start a local transaction.
+                        transaction = con.BeginTransaction("ScadenzarioTransaction");
+
+                        try
+                        {
+                            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+                            #region CANCELLAZIONE SCADENZE
+                            //sql.Connection = con;
+                            sda.SelectCommand = sql;
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+                            #endregion
+
+                            #region SCRITTURA LOG UTENTE CANCELLAZIONE FIGLI
+                            sql.CommandType = CommandType.StoredProcedure;
+                            sql.CommandText = "InsertLog_utenti";
+                            sql.Parameters.Clear();
+                            sda.SelectCommand = sql;
+
+                            #region PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeUtente);
+
+                            SqlParameter nomeTabella = new SqlParameter("@nomeTabella", "dati_scadenzario");
+                            nomeTabella.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeTabella);
+
+                            SqlParameter tipoOperazione = new SqlParameter("@tipoOperazione", "DELETE");
+                            tipoOperazione.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(tipoOperazione);
+
+                            SqlParameter idTabella = new SqlParameter("@idTabella", listaFigliScadenza[0].Id);
+                            idTabella.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idTabella);
+
+                            sql.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+                            #endregion
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+                            #endregion
+
+                            #region CREAZIONE NUOVA SCADENZA
+                            sql.CommandType = CommandType.StoredProcedure;
+                            sql.CommandText = "InsertDatiScadenzario";
+                            sql.Parameters.Clear();
+                            sda.SelectCommand = sql;
+
+                            sql.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            #region PARAMETRI PER LOG UTENTE
+                            idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idUtente);
+
+                            nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeUtente);
+                            #endregion
+
+                            SqlParameter idPadre = new SqlParameter("@idPadre", DBNull.Value); // idPadre viene usato solo quando si splitta una scadenza (AggiungiPagamento)
+                            idPadre.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idPadre);
+
+                            SqlParameter idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenza.IdDatiProtocollo);
+                            idDatiProtocollo.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idDatiProtocollo);
+
+                            SqlParameter idTipoBanca = new SqlParameter("@idTipoBanca", DBNull.Value);
+                            if (scadenza.IdTipoBanca != null) idTipoBanca = new SqlParameter("@idTipoBanca", scadenza.IdTipoBanca);
+                            idTipoBanca.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idTipoBanca);
+
+                            SqlParameter dataScadenza = new SqlParameter("@dataScadenza", scadenza.DataScadenza);
+                            dataScadenza.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataScadenza);
+
+                            SqlParameter importoDare = new SqlParameter("@importoDare", scadenza.ImportoDare);
+                            importoDare.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoDare);
+
+                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", scadenza.ImportoDareIva);
+                            importoDareIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoDareIva);
+
+                            SqlParameter importoVersato = new SqlParameter("@importoVersato", scadenza.ImportoVersato);
+                            importoVersato.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoVersato);
+
+                            SqlParameter importoVersatoIva = new SqlParameter("@importoVersatoIva", scadenza.ImportoVersatoIva);
+                            importoVersatoIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoVersatoIva);
+
+                            SqlParameter dataVersamento = new SqlParameter("@dataVersamento", DBNull.Value);
+                            if (scadenza.DataVersamento != null) dataVersamento = new SqlParameter("@dataVersamento", scadenza.DataVersamento);
+                            dataVersamento.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataVersamento);
+
+                            SqlParameter importoAvere = new SqlParameter("@importoAvere", scadenza.ImportoAvere);
+                            importoAvere.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoAvere);
+
+                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", scadenza.ImportoAvereIva);
+                            importoAvereIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoAvereIva);
+
+                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
+                            importoRiscosso.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoRiscosso);
+
+                            SqlParameter importoRiscossoIva = new SqlParameter("@importoRiscossoIva", scadenza.ImportoRiscossoIva);
+                            importoRiscossoIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoRiscossoIva);
+
+                            SqlParameter dataRiscossione = new SqlParameter("@dataRiscossione", DBNull.Value);
+                            if (scadenza.DataRiscossione != null) dataRiscossione = new SqlParameter("@dataRiscossione", scadenza.DataRiscossione);
+                            dataRiscossione.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataRiscossione);
+
+                            SqlParameter note = new SqlParameter("@note", DBNull.Value);
+                            if (scadenza.Note != null) note = new SqlParameter("@note", scadenza.Note);
+                            note.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(note);
+
+                            SqlParameter iva = new SqlParameter("@iva", scadenza.Iva);
+                            iva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(iva);
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+
+                            int iReturn = Convert.ToInt32(sql.Parameters["@id"].Value);
+                            #endregion
+
+                            // Attempt to commit the transaction.
+                            transaction.Commit();
+
+                            return iReturn;
+                        }
+                        catch (Exception ex)
+                        {
+                            esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                            esito.Descrizione = "Scadenzario_DAL.cs - CancellaFigli_CreaDatiScadenzario " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                        }
+                    }
+                }
+            }
+
+            return 0;
+        }
+
+        public void CancellaFigli_AggiornaDatiScadenzario(List<DatiScadenzario> listaFigliScadenza, DatiScadenzario scadenza, ref Esito esito)
+        {
+            string elencoIdFigli = string.Empty;
+            foreach (DatiScadenzario scadenzaFiglio in listaFigliScadenza)
+            {
+                elencoIdFigli += scadenzaFiglio.Id + ", ";
+            }
+            elencoIdFigli = elencoIdFigli.Substring(0, elencoIdFigli.Length - 2);
+
+            using (SqlConnection con = new SqlConnection(sqlConstr))
+            {
+                using (SqlCommand sql = new SqlCommand("Delete from dati_scadenzario where id in (" + elencoIdFigli + ")"))
+                {
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        SqlTransaction transaction;
+                        sql.Connection = con;
+                        sql.Connection.Open();
+                        // Start a local transaction.
+                        transaction = con.BeginTransaction("ScadenzarioTransaction");
+
+                        try
+                        {
+                            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+                            #region CANCELLAZIONE SCADENZE
+                            //sql.Connection = con;
+                            sda.SelectCommand = sql;
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+                            #endregion
+
+                            #region SCRITTURA LOG UTENTE CANCELLAZIONE FIGLI
+                            sql.CommandType = CommandType.StoredProcedure;
+                            sql.CommandText = "InsertLog_utenti";
+                            sql.Parameters.Clear();
+                            sda.SelectCommand = sql;
+
+                            #region PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeUtente);
+
+                            SqlParameter nomeTabella = new SqlParameter("@nomeTabella", "dati_scadenzario");
+                            nomeTabella.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeTabella);
+
+                            SqlParameter tipoOperazione = new SqlParameter("@tipoOperazione", "DELETE");
+                            tipoOperazione.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(tipoOperazione);
+
+                            SqlParameter idTabella = new SqlParameter("@idTabella", listaFigliScadenza[0].Id);
+                            idTabella.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idTabella);
+
+                            sql.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+                            #endregion
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+                            #endregion
+
+                            #region MODIFICA SCADENZA
+                            sql.CommandType = CommandType.StoredProcedure;
+                            sql.CommandText = "UpdateDatiScadenzario";
+                            sql.Parameters.Clear();
+                            sda.SelectCommand = sql;
+
+                            //sql.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            #region PARAMETRI PER LOG UTENTE
+                            idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idUtente);
+
+                            nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeUtente);
+                            #endregion
+
+                            SqlParameter id = new SqlParameter("@id", scadenza.Id);
+                            id.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(id);
+
+                            SqlParameter idPadre = new SqlParameter("@idPadre", DBNull.Value);
+                            if (scadenza.IdPadre != null) idPadre = new SqlParameter("@idPadre", scadenza.IdPadre);
+                            idPadre.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idPadre);
+
+                            SqlParameter idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenza.IdDatiProtocollo);
+                            idDatiProtocollo.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idDatiProtocollo);
+
+                            SqlParameter idTipoBanca = new SqlParameter("@idTipoBanca", DBNull.Value);
+                            if (scadenza.IdTipoBanca != null) idTipoBanca = new SqlParameter("@idTipoBanca", scadenza.IdTipoBanca);
+                            idTipoBanca.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idTipoBanca);
+
+                            SqlParameter dataScadenza = new SqlParameter("@dataScadenza", scadenza.DataScadenza);
+                            dataScadenza.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataScadenza);
+
+                            SqlParameter importoDare = new SqlParameter("@importoDare", scadenza.ImportoDare);
+                            importoDare.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoDare);
+
+                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", scadenza.ImportoDareIva);
+                            importoDareIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoDareIva);
+
+                            SqlParameter importoVersato = new SqlParameter("@importoVersato", scadenza.ImportoVersato);
+                            importoVersato.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoVersato);
+
+                            SqlParameter importoVersatoIva = new SqlParameter("@importoVersatoIva", scadenza.ImportoVersatoIva);
+                            importoVersatoIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoVersatoIva);
+
+                            SqlParameter dataVersamento = new SqlParameter("@dataVersamento", DBNull.Value);
+                            if (scadenza.DataVersamento != null) dataVersamento = new SqlParameter("@dataVersamento", scadenza.DataVersamento);
+                            dataVersamento.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataVersamento);
+
+                            SqlParameter importoAvere = new SqlParameter("@importoAvere", scadenza.ImportoAvere);
+                            importoAvere.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoAvere);
+
+                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", scadenza.ImportoAvereIva);
+                            importoAvereIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoAvereIva);
+
+                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenza.ImportoRiscosso);
+                            importoRiscosso.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoRiscosso);
+
+                            SqlParameter importoRiscossoIva = new SqlParameter("@importoRiscossoIva", scadenza.ImportoRiscossoIva);
+                            importoRiscossoIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoRiscossoIva);
+
+                            SqlParameter dataRiscossione = new SqlParameter("@dataRiscossione", DBNull.Value);
+                            if (scadenza.DataRiscossione != null) dataRiscossione = new SqlParameter("@dataRiscossione", scadenza.DataRiscossione);
+                            dataRiscossione.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataRiscossione);
+
+                            SqlParameter note = new SqlParameter("@note", DBNull.Value);
+                            if (scadenza.Note != null) note = new SqlParameter("@note", scadenza.Note);
+                            note.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(note);
+
+                            SqlParameter iva = new SqlParameter("@iva", scadenza.Iva);
+                            iva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(iva);
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+
+                            int iReturn = Convert.ToInt32(sql.Parameters["@id"].Value);
+                            #endregion
+
+                            // Attempt to commit the transaction.
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                            esito.Descrizione = "Scadenzario_DAL.cs - CancellaFigli_AggiornaDatiScadenzario " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                        }
+                    }
+                }
+            }
+        }
+
+        public void CancellaFigli_AggiungiPagamento(List<DatiScadenzario> listaFigliScadenza, DatiScadenzario scadenzaDaAggiornare, DatiScadenzario scadenzaDaInserire, ref Esito esito)
+        {
+            string elencoIdFigli = string.Empty;
+            foreach (DatiScadenzario scadenzaFiglio in listaFigliScadenza)
+            {
+                elencoIdFigli += scadenzaFiglio.Id + ", ";
+            }
+            elencoIdFigli = elencoIdFigli.Substring(0, elencoIdFigli.Length - 2);
+
+            using (SqlConnection con = new SqlConnection(sqlConstr))
+            {
+                using (SqlCommand sql = new SqlCommand("Delete from dati_scadenzario where id in (" + elencoIdFigli + ")"))
+                {
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        SqlTransaction transaction;
+                        sql.Connection = con;
+                        sql.Connection.Open();
+                        // Start a local transaction.
+                        transaction = con.BeginTransaction("ScadenzarioTransaction");
+
+                        try
+                        {
+                            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+                            #region CANCELLAZIONE SCADENZE
+                            //sql.Connection = con;
+                            sda.SelectCommand = sql;
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+                            #endregion
+
+                            #region SCRITTURA LOG UTENTE CANCELLAZIONE FIGLI
+                            sql.CommandType = CommandType.StoredProcedure;
+                            sql.CommandText = "InsertLog_utenti";
+                            sql.Parameters.Clear();
+                            sda.SelectCommand = sql;
+
+                            #region PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeUtente);
+
+                            SqlParameter nomeTabella = new SqlParameter("@nomeTabella", "dati_scadenzario");
+                            nomeTabella.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeTabella);
+
+                            SqlParameter tipoOperazione = new SqlParameter("@tipoOperazione", "DELETE");
+                            tipoOperazione.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(tipoOperazione);
+
+                            SqlParameter idTabella = new SqlParameter("@idTabella", listaFigliScadenza[0].Id);
+                            idTabella.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idTabella);
+
+                            sql.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+                            #endregion
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+                            #endregion
+
+                            #region AGGIORNAMENTO SCADENZA ESISTENTE
+                            sql.CommandType = CommandType.StoredProcedure;
+                            sql.CommandText = "UpdateDatiScadenzario";
+                            sql.Parameters.Clear();
+                            sda.SelectCommand = sql;
+
+                            #region PARAMETRI PER LOG UTENTE
+                            idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idUtente);
+
+                            nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeUtente);
+                            #endregion
+
+                            SqlParameter id = new SqlParameter("@id", scadenzaDaAggiornare.Id);
+                            id.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(id);
+
+                            SqlParameter idPadre = new SqlParameter("@idPadre", DBNull.Value);
+                            if (scadenzaDaAggiornare.IdPadre != null) idPadre = new SqlParameter("@idPadre", scadenzaDaAggiornare.IdPadre);
+                            idPadre.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idPadre);
+
+                            SqlParameter idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenzaDaAggiornare.IdDatiProtocollo);
+                            idDatiProtocollo.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idDatiProtocollo);
+
+                            SqlParameter idTipoBanca = new SqlParameter("@idTipoBanca", DBNull.Value);
+                            if (scadenzaDaAggiornare.IdTipoBanca != null) idTipoBanca = new SqlParameter("@idTipoBanca", scadenzaDaAggiornare.IdTipoBanca);
+                            idTipoBanca.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idTipoBanca);
+
+                            SqlParameter dataScadenza = new SqlParameter("@dataScadenza", scadenzaDaAggiornare.DataScadenza);
+                            dataScadenza.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataScadenza);
+
+                            SqlParameter importoDare = new SqlParameter("@importoDare", scadenzaDaAggiornare.ImportoDare);
+                            importoDare.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoDare);
+
+                            SqlParameter importoDareIva = new SqlParameter("@importoDareIva", scadenzaDaAggiornare.ImportoDareIva);
+                            importoDareIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoDareIva);
+
+                            SqlParameter importoVersato = new SqlParameter("@importoVersato", scadenzaDaAggiornare.ImportoVersato);
+                            importoVersato.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoVersato);
+
+                            SqlParameter importoVersatoIva = new SqlParameter("@importoVersatoIva", scadenzaDaAggiornare.ImportoVersatoIva);
+                            importoVersatoIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoVersatoIva);
+
+                            SqlParameter dataVersamento = new SqlParameter("@dataVersamento", DBNull.Value);
+                            if (scadenzaDaAggiornare.DataVersamento != null) dataVersamento = new SqlParameter("@dataVersamento", scadenzaDaAggiornare.DataVersamento);
+                            dataVersamento.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataVersamento);
+
+                            SqlParameter importoAvere = new SqlParameter("@importoAvere", scadenzaDaAggiornare.ImportoAvere);
+                            importoAvere.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoAvere);
+
+                            SqlParameter importoAvereIva = new SqlParameter("@importoAvereIva", scadenzaDaAggiornare.ImportoAvereIva);
+                            importoAvereIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoAvereIva);
+
+                            SqlParameter importoRiscosso = new SqlParameter("@importoRiscosso", scadenzaDaAggiornare.ImportoRiscosso);
+                            importoRiscosso.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoRiscosso);
+
+                            SqlParameter importoRiscossoIva = new SqlParameter("@importoRiscossoIva", scadenzaDaAggiornare.ImportoRiscossoIva);
+                            importoRiscossoIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoRiscossoIva);
+
+                            SqlParameter dataRiscossione = new SqlParameter("@dataRiscossione", DBNull.Value);
+                            if (scadenzaDaAggiornare.DataRiscossione != null) dataRiscossione = new SqlParameter("@dataRiscossione", scadenzaDaAggiornare.DataRiscossione);
+                            dataRiscossione.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataRiscossione);
+
+                            SqlParameter note = new SqlParameter("@note", DBNull.Value);
+                            if (scadenzaDaAggiornare.Note != null) note = new SqlParameter("@note", scadenzaDaAggiornare.Note);
+                            note.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(note);
+
+                            SqlParameter iva = new SqlParameter("@iva", scadenzaDaAggiornare.Iva);
+                            iva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(iva);
+
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+                            #endregion
+
+                            #region CREAZIONE NUOVA SCADENZA
+                            sql.CommandType = CommandType.StoredProcedure;
+                            sql.CommandText = "InsertDatiScadenzario";
+                            sql.Parameters.Clear();
+                            sda.SelectCommand = sql;
+
+                            sql.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            #region PARAMETRI PER LOG UTENTE
+                            idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idUtente);
+
+                            nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(nomeUtente);
+                            #endregion
+
+                            idPadre = new SqlParameter("@idPadre", scadenzaDaInserire.IdPadre);
+                            idPadre.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idPadre);
+
+                            idDatiProtocollo = new SqlParameter("@idDatiProtocollo", scadenzaDaInserire.IdDatiProtocollo);
+                            idDatiProtocollo.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idDatiProtocollo);
+
+                            idTipoBanca = new SqlParameter("@idTipoBanca", DBNull.Value);
+                            if (scadenzaDaInserire.IdTipoBanca != null) idTipoBanca = new SqlParameter("@idTipoBanca", scadenzaDaInserire.IdTipoBanca);
+                            idTipoBanca.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(idTipoBanca);
+
+                            dataScadenza = new SqlParameter("@dataScadenza", scadenzaDaInserire.DataScadenza);
+                            dataScadenza.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataScadenza);
+
+                            importoDare = new SqlParameter("@importoDare", scadenzaDaInserire.ImportoDare);
+                            importoDare.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoDare);
+
+                            importoDareIva = new SqlParameter("@importoDareIva", scadenzaDaInserire.ImportoDareIva);
+                            importoDareIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoDareIva);
+
+                            importoVersato = new SqlParameter("@importoVersato", scadenzaDaInserire.ImportoVersato);
+                            importoVersato.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoVersato);
+
+                            importoVersatoIva = new SqlParameter("@importoVersatoIva", scadenzaDaInserire.ImportoVersatoIva);
+                            importoVersatoIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoVersatoIva);
+
+                            dataVersamento = new SqlParameter("@dataVersamento", DBNull.Value);
+                            if (scadenzaDaInserire.DataVersamento != null) dataVersamento = new SqlParameter("@dataVersamento", scadenzaDaInserire.DataVersamento);
+                            dataVersamento.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataVersamento);
+
+                            importoAvere = new SqlParameter("@importoAvere", scadenzaDaInserire.ImportoAvere);
+                            importoAvere.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoAvere);
+
+                            importoAvereIva = new SqlParameter("@importoAvereIva", scadenzaDaInserire.ImportoAvereIva);
+                            importoAvereIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoAvereIva);
+
+                            importoRiscosso = new SqlParameter("@importoRiscosso", scadenzaDaInserire.ImportoRiscosso);
+                            importoRiscosso.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoRiscosso);
+
+                            importoRiscossoIva = new SqlParameter("@importoRiscossoIva", scadenzaDaInserire.ImportoRiscossoIva);
+                            importoRiscossoIva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(importoRiscossoIva);
+
+                            dataRiscossione = new SqlParameter("@dataRiscossione", DBNull.Value);
+                            if (scadenzaDaInserire.DataRiscossione != null) dataRiscossione = new SqlParameter("@dataRiscossione", scadenzaDaInserire.DataRiscossione);
+                            dataRiscossione.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(dataRiscossione);
+
+                            note = new SqlParameter("@note", DBNull.Value);
+                            if (scadenzaDaInserire.Note != null) note = new SqlParameter("@note", scadenzaDaInserire.Note);
+                            note.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(note);
+
+                            iva = new SqlParameter("@iva", scadenzaDaInserire.Iva);
+                            iva.Direction = ParameterDirection.Input;
+                            sql.Parameters.Add(iva);
+
+                            sql.Transaction = transaction;
+                            sql.ExecuteNonQuery();
+                            #endregion
+
+                            // Attempt to commit the transaction.
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                            esito.Descrizione = "Scadenzario_DAL.cs - CancellaFigli_AggiungiPagamento " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+                        }
+                    }
+                }
+            }
         }
     }
 }

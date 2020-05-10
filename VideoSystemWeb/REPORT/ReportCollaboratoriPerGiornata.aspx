@@ -60,7 +60,7 @@
             </div>
 
             <div class="round">
-                <asp:GridView ID="gv_Collaboratori" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_Collaboratori_RowDataBound" AllowPaging="false" OnPageIndexChanging="gv_Collaboratori_PageIndexChanging" PageSize="20"  AllowSorting="false">
+                <asp:GridView ID="gv_Collaboratori" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_Collaboratori_RowDataBound" AllowPaging="false" OnPageIndexChanging="gv_Collaboratori_PageIndexChanging" PageSize="20"  AllowSorting="false" >
                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>
                 </asp:GridView>
             </div>

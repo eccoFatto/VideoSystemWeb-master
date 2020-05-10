@@ -147,7 +147,8 @@ namespace VideoSystemWeb.REPORT
                 {
                     foreach (DataRow rigaCollaboratore in dtRet.Rows)
                     {
-                        elencoCollaboratori += "," + rigaCollaboratore["nominativo"].ToString();
+                        //elencoCollaboratori += "," + rigaCollaboratore["nominativo"].ToString();
+                        elencoCollaboratori += Environment.NewLine + rigaCollaboratore["nominativo"].ToString();
                     }
                 }
 
@@ -157,7 +158,8 @@ namespace VideoSystemWeb.REPORT
                 ShowError("Errore durante la ricerca dei collaboratori del giorno " + sDataTmp + Environment.NewLine + ex.Message);
             }
 
-            if (elencoCollaboratori.Length > 0 && elencoCollaboratori.Substring(0, 1).Equals(",")) elencoCollaboratori = elencoCollaboratori.Substring(1, elencoCollaboratori.Length - 1);
+            //if (elencoCollaboratori.Length > 2 && elencoCollaboratori.Substring(0, 2).Equals("\r\n")) elencoCollaboratori = elencoCollaboratori.Substring(2, elencoCollaboratori.Length - 2);
+            if (elencoCollaboratori.Length > 2 && elencoCollaboratori.Substring(0, 2).Equals(Environment.NewLine)) elencoCollaboratori = elencoCollaboratori.Substring(2, elencoCollaboratori.Length - 2);
 
             return elencoCollaboratori;
         }
@@ -224,7 +226,18 @@ namespace VideoSystemWeb.REPORT
 
         protected void gv_Collaboratori_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Cells[0].Style.Add("font-weight", "bold");
+                e.Row.Cells[0].Style.Add("vertical-align", "top");
+                for (int i = 1; i < e.Row.Cells.Count; i++)
+                {
+                    string data = e.Row.Cells[i].Text;
+                    data = data.Replace("\r\n", "<br>");
+                    e.Row.Cells[i].Text = data;
+                    e.Row.Cells[i].Style.Add("vertical-align", "top");
+                }
+            }
         }
 
         protected void gv_Collaboratori_PageIndexChanging(object sender, GridViewPageEventArgs e)

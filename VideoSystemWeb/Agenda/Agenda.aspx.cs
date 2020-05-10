@@ -127,10 +127,10 @@ namespace VideoSystemWeb.Agenda
                // ChiudiPopup();
                // ShowSuccess("Salvataggio eseguito correttamente");
             }
-            else
-            {                
-                UpdatePopup();
-            }
+            //else
+            //{                
+            //    UpdatePopup();
+            //}
         }
 
         protected void btnRiepilogo_Click(object sender, EventArgs e)
@@ -878,8 +878,8 @@ namespace VideoSystemWeb.Agenda
             }
             else
             {
-                ShowWarning(esito.Descrizione);
-                popupAppuntamento.PopolaAppuntamento();
+                //ShowWarning(esito.Descrizione);
+                //popupAppuntamento.PopolaAppuntamento();              
             }
 
             return esito;
@@ -979,38 +979,41 @@ namespace VideoSystemWeb.Agenda
         private Esito ValidazioneSalvataggio(List<string> listaIdTender)
         {
             DatiAgenda _eventoSelezionato = SessionManager.EventoSelezionato;
-            Esito esito = new Esito();
-            esito = popupAppuntamento.CreaOggettoSalvataggio(ref _eventoSelezionato);
-
             List<string> listaTenderNonDisponibili = new List<string>();
 
-            if (esito.Codice != Esito.ESITO_OK)
-            {
-                esito.Descrizione = "Controllare i campi evidenziati";
+            Esito esito = popupAppuntamento.CreaOggettoSalvataggio(ref _eventoSelezionato);
 
-            }
-            else if (!IsDisponibileDataRisorsa(_eventoSelezionato))
-            {
-                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.Descrizione = "Non è possibile salvare perché la risorsa è già impiegata nel periodo selezionato";
-            }
-            else if (!IsDisponibileTender(_eventoSelezionato, ref listaTenderNonDisponibili, listaIdTender))
-            {
-                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.Descrizione = "Non è possibile salvare perché le seguenti unità appoggio sono già impiegate nel periodo selezionato:<br/><ul>";
+            //if (esito.Codice != Esito.ESITO_OK)
+            //{
+            //    esito.Descrizione = "Controllare i campi evidenziati";
 
-                foreach (string tender in listaTenderNonDisponibili)
+            //}
+            if (esito.Codice == Esito.ESITO_OK)
+            { 
+                if (!IsDisponibileDataRisorsa(_eventoSelezionato))
                 {
-                    esito.Descrizione += "<li>" + tender + "</li>";
+                    esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.Descrizione = "Non è possibile salvare perché la risorsa è già impiegata nel periodo selezionato";
                 }
-                esito.Descrizione += "</ul>";
+                else if (!IsDisponibileTender(_eventoSelezionato, ref listaTenderNonDisponibili, listaIdTender))
+                {
+                    string messaggioValidazione = "Non è possibile salvare perché le seguenti unità appoggio sono già impiegate nel periodo selezionato:<br/><ul>";
+                    foreach (string tender in listaTenderNonDisponibili)
+                    {
+                        messaggioValidazione += "<li>" + tender + "</li>";
+                    }
+                    messaggioValidazione += "</ul>";
 
-            }
-            else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA && 
-                    (SessionManager.EventoSelezionato.ListaDatiArticoli == null || SessionManager.EventoSelezionato.ListaDatiArticoli.Count == 0))
-            {
-                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.Descrizione = "Non è possibile salvare senza aver associato gli articoli";
+                    esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.Descrizione += messaggioValidazione;
+
+                }
+                else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA &&
+                        (SessionManager.EventoSelezionato.ListaDatiArticoli == null || SessionManager.EventoSelezionato.ListaDatiArticoli.Count == 0))
+                {
+                    esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.Descrizione = "Non è possibile salvare senza aver associato gli articoli";
+                }
             }
             SessionManager.EventoSelezionato = _eventoSelezionato;
             return esito;

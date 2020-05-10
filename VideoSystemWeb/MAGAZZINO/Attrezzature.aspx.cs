@@ -288,11 +288,11 @@ namespace VideoSystemWeb.MAGAZZINO
             Esito esito = new Esito();
             AttrezzatureMagazzino attrezzatura = CreaOggettoAttrezzatura(ref esito);
 
-            if (esito.Codice != Esito.ESITO_OK)
-            {
-                basePage.ShowError("Controllare i campi evidenziati");
-            }
-            else
+            //if (esito.Codice != Esito.ESITO_OK)
+            //{
+            //    basePage.ShowWarning("Controllare i campi evidenziati");
+            //}
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 NascondiErroriValidazione();
 
@@ -327,7 +327,7 @@ namespace VideoSystemWeb.MAGAZZINO
             if (esito.Codice != Esito.ESITO_OK)
             {
                 log.Error(esito.Descrizione);
-                basePage.ShowError("Controllare i campi evidenziati!");
+                //basePage.ShowWarning("Controllare i campi evidenziati!");
             }
             else
             {
@@ -632,7 +632,7 @@ namespace VideoSystemWeb.MAGAZZINO
             attrezzatura.Garanzia = cbMod_Garanzia.Checked;
             attrezzatura.Id_categoria = Convert.ToInt32(cmbMod_Categoria.SelectedValue);
             attrezzatura.Id_posizione_magazzino = Convert.ToInt32(cmbMod_Posizione.SelectedValue);
-            attrezzatura.Id_gruppo_magazzino = Convert.ToInt32(cmbMod_Gruppo.SelectedValue);
+            if (!string.IsNullOrEmpty(cmbMod_Gruppo.SelectedValue)) attrezzatura.Id_gruppo_magazzino = Convert.ToInt32(cmbMod_Gruppo.SelectedValue);
             if (!string.IsNullOrEmpty(cmbMod_SubCategoria.SelectedValue)) attrezzatura.Id_subcategoria = Convert.ToInt32(cmbMod_SubCategoria.SelectedValue);
             attrezzatura.Marca = BasePage.ValidaCampo(tbMod_Marca, "", true, ref esito);
             attrezzatura.Modello = BasePage.ValidaCampo(tbMod_Modello, "", true, ref esito);

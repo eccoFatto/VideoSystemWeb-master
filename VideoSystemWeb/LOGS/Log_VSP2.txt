@@ -22009,3 +22009,96 @@ Si è verificato un errore di rete o specifico dell'istanza mentre si cercava di 
 2020-04-27 21:17:27,800 [18] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-04-27 21:35:37,031 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-04 22:55:52,828 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 10:41:58,866 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 11:02:57,531 [26] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 11:08:40,448 [19] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 11:30:17,412 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 12:51:23,030 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 13:45:02,299 [13] ERROR VideoSystemWeb.BLL.Esito - Claudio - Scadenzario_DAL.cs - getAllDatiScadenzario 
+Impossibile eseguire il cast da DBNull.Value al tipo 'System.Decimal'. Utilizzare un tipo nullable.
+   in System.Data.DataRowExtensions.UnboxT`1.ValueField(Object value)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Scadenzario_DAL.GetAllDatiScadenzario(String tipoAnagrafica, String ragioneSociale, String numeroFattura, String fatturaPagata, String dataFatturaDa, String dataFatturaA, String dataScadenzaDa, String dataScadenzaA, String filtroBanca, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Scadenzario_DAL.cs:riga 726
+2020-05-08 13:46:37,879 [21] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 13:49:06,347 [15] ERROR VideoSystemWeb.BLL.Esito - Claudio - Scadenzario_DAL.cs - getAllDatiScadenzario 
+Impossibile eseguire il cast da DBNull.Value al tipo 'System.Decimal'. Utilizzare un tipo nullable.
+   in System.Data.DataRowExtensions.UnboxT`1.ValueField(Object value)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Scadenzario_DAL.GetAllDatiScadenzario(String tipoAnagrafica, String ragioneSociale, String numeroFattura, String fatturaPagata, String dataFatturaDa, String dataFatturaA, String dataScadenzaDa, String dataScadenzaA, String filtroBanca, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Scadenzario_DAL.cs:riga 726
+2020-05-08 13:50:03,305 [24] ERROR VideoSystemWeb.BLL.Esito - Claudio - Scadenzario_DAL.cs - getAllDatiScadenzario 
+Impossibile eseguire il cast da DBNull.Value al tipo 'System.Decimal'. Utilizzare un tipo nullable.
+   in System.Data.DataRowExtensions.UnboxT`1.ValueField(Object value)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Scadenzario_DAL.GetAllDatiScadenzario(String tipoAnagrafica, String ragioneSociale, String numeroFattura, String fatturaPagata, String dataFatturaDa, String dataFatturaA, String dataScadenzaDa, String dataScadenzaA, String filtroBanca, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Scadenzario_DAL.cs:riga 726
+2020-05-08 15:26:23,311 [52] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 15:44:51,235 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 15:57:39,041 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 20:32:17,147 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 20:43:43,143 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 20:50:17,319 [10] ERROR VideoSystemWeb.Scadenzario.userControl.Scadenzario - Controllare i campi evidenziati
+2020-05-08 20:50:31,746 [7] ERROR VideoSystemWeb.Scadenzario.userControl.Scadenzario - L'importo in fase di registrazione non copre totalmente la rata corrente.
+Modificare il valore in 1000,00 oppure selezionare 'Acconto'.
+2020-05-08 22:10:10,500 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 22:17:39,033 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 22:24:40,116 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 22:30:07,109 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 22:37:03,600 [17] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 22:41:57,093 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 22:44:50,906 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 22:50:17,535 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 22:54:03,183 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 23:07:26,404 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 23:16:35,012 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 23:31:47,247 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 23:47:34,189 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-08 23:50:09,346 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:21:16,319 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:26:59,115 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:28:54,082 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:30:49,203 [7] ERROR VideoSystemWeb.Utente.GestioneUtenti - Controllare i campi evidenziati
+2020-05-09 00:32:27,758 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:33:15,658 [16] ERROR VideoSystemWeb.Utente.GestioneUtenti - Controllare i campi evidenziati
+2020-05-09 00:35:20,508 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:37:49,835 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:39:49,724 [19] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:41:14,325 [19] ERROR VideoSystemWeb.Protocollo.Protocollo - Controllare i campi evidenziati
+2020-05-09 00:43:14,108 [19] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:45:31,004 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:50:11,323 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 00:51:10,393 [10] ERROR VideoSystemWeb.MAGAZZINO.Attrezzature - Controllare i campi evidenziati
+2020-05-09 08:11:27,066 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 09:56:39,514 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 10:07:41,885 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 10:18:10,861 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 10:32:42,329 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 11:12:43,350 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 15:40:53,288 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 15:49:16,767 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 15:51:40,789 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 16:35:06,687 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 16:41:05,505 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 17:05:46,362 [31] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 18:04:23,449 [31] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 18:25:11,949 [31] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-09 19:06:29,096 [29] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 07:58:42,949 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 08:30:32,902 [33] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 08:35:22,871 [25] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 08:37:30,317 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 09:15:13,113 [18] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 09:20:02,663 [18] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 09:24:19,841 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 09:32:18,838 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 09:40:26,240 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 09:43:04,318 [17] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 09:50:31,825 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 09:57:21,805 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 10:01:46,029 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 10:08:09,192 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 20:28:10,742 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 20:44:11,946 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 20:47:59,688 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 20:56:35,717 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 21:02:45,861 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 21:37:42,919 [37] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-10 21:44:28,344 [29] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

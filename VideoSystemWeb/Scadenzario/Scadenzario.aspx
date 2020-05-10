@@ -31,20 +31,30 @@
             $('.calendarAggiungiPagamento').datetimepicker({
                 locale: 'it',
                 minDate: new Date(),
-                format: 'DD/MM/YYYY'
+                format: 'DD/MM/YYYY',
+                useCurrent: false
             });
-
+            
             Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
                 $('.calendarAggiungiPagamento').datetimepicker({
                     locale: 'it',
                     minDate: new Date(),
-                    format: 'DD/MM/YYYY'
+                    format: 'DD/MM/YYYY',
+                    useCurrent: false
+                });
+
+                $('.calendarAggiungiPagamento').on('dp.change', function (e) {
+                    modificaLabelValoriAcconto();
                 });
             });
+
+
+
         });
 
         // APRO POPUP VISUALIZZAZIONE/MODIFICA SCADENZA
         function mostraScadenza(row) {
+            
             $('.loader').show();
             $("#<%=hf_idScadenza.ClientID%>").val(row);
             $("#<%=hf_tipoOperazione.ClientID%>").val('MODIFICA');
@@ -127,11 +137,38 @@
             });
         });--%>
 
+        function modificaLabelValoriAcconto() {
+            var stringaAcconto = $('#<%=txt_VersatoAccontoIva.ClientID%>').val().replace(",", ".");
+            var acconto = parseFloat(stringaAcconto);//.toFixed(2);
+            //alert(acconto);
+            
+            var data = $('#<%=txt_DataVersamentoRiscossione.ClientID%>').val();
+            var parts = data.split('/');
+            var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
+            var dataNuovaRata = mydate.addDays(30);
+            var dataNuovaRataFormattata = ((dataNuovaRata.getDate() > 9) ? dataNuovaRata.getDate() : ('0' + dataNuovaRata.getDate())) + '/' + ((dataNuovaRata.getMonth() > 8) ? (dataNuovaRata.getMonth() + 1) : ('0' + (dataNuovaRata.getMonth() + 1))) + '/' + dataNuovaRata.getFullYear();
 
-        function confermaSaldoTotale()
-        {
-            var importoDaSaldare = $('#<%=txt_ImponibileIva.ClientID%>').val();
-            return confirm('È in corso il saldo della rata che ammonta a €' + importoDaSaldare + '. Confermare?')
+            var stringaMaxImporto = $('#<%=hf_importoScadenzaFigli.ClientID%>').val().replace(",", ".");
+            var maxImporto = parseFloat(stringaMaxImporto);//.toFixed(2);
+            
+            var differenzaImporto = (maxImporto - acconto).toFixed(2);
+            //alert(differenzaImporto);
+
+            //alert(acconto < maxImporto);
+            
+            if (acconto > 0 && acconto < maxImporto && data != '') {
+
+                $('#<%=lbl_ValoriAcconto.ClientID%>').html('Verrà creata una nuova rata di <b>' + differenzaImporto.replace(".", ",") + '€</b> con scadenza <b>' + dataNuovaRataFormattata + "</b>");
+            }
+            else {
+                $('#<%=lbl_ValoriAcconto.ClientID%>').html("Indicare l'importo e la data di versamento o riscossione dell'acconto");
+            }
+        }
+
+        Date.prototype.addDays = function (days) {
+            var date = new Date(this.valueOf());
+            date.setDate(date.getDate() + days);
+            return date;
         }
     </script>
 
@@ -371,8 +408,8 @@
                         <asp:BoundField DataField="DataPagamento" HeaderText="Pagamento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="5%">
                             <ItemTemplate>
-                                <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/edit.png" ToolTip="Modifica scadenza" ImageAlign="AbsMiddle"  CommandName="modifica" CommandArgument='<%#Eval("id")%>'/>
-                                <asp:ImageButton ID="imgDelete" runat="server" CausesValidation="false" Text="Elimina" ImageUrl="~/Images/delete.png" ToolTip="Elimina scadenza" ImageAlign="AbsMiddle" CommandName="elimina" CommandArgument='<%#Eval("id")%>' OnClientClick="return confermaEliminazioneScadenza();"/>
+                                <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/edit.png" ToolTip="Modifica" ImageAlign="AbsMiddle"  CommandName="modifica" CommandArgument='<%#Eval("id")%>'/>
+                                <asp:ImageButton ID="imgDelete" runat="server" CausesValidation="false" Text="Elimina" ImageUrl="~/Images/delete.png" ToolTip="Elimina" ImageAlign="AbsMiddle" CommandName="elimina" CommandArgument='<%#Eval("id")%>'/>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>
@@ -464,7 +501,7 @@
                                     </div>
                                     <div class="w3-col" style="width:25%">
                                         <label>Importo netto</label>
-                                        <asp:TextBox ID="txt_ImportoDocumento" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" disabled  DataFormatString="{0:N2}"/>
+                                        <asp:TextBox ID="txt_ImportoDocumento" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Disabled  DataFormatString="{0:N2}"/>
                                     </div>
                                     
                                     <div id="div_NumeroRate" runat="server" class="w3-col" style="width:12.5%">
@@ -510,11 +547,11 @@
                                         <div class="w3-row">
                                             <div class="w3-third w3-padding" >
                                                 <asp:Label ID="lbl_VersatoRiscossoIVA" runat="server" Text="Versato + IVA"></asp:Label>
-                                                <asp:TextBox ID="txt_VersatoIva"  runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" onkeypress="return onlyNumbers();" onkeyup="calcolaScorporoModifica()" DataFormatString="{0:N2}"/>
+                                                <asp:TextBox ID="txt_VersatoIva"  runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" onkeypress="return onlyNumbers();" onkeyup="calcolaScorporoModifica()" Disabled DataFormatString="{0:N2}"/>
                                             </div>
                                             <div class="w3-third w3-padding" >
                                                 <label>IVA</label>
-                                                <asp:TextBox ID="txt_IvaModifica" runat="server" MaxLength="2" CssClass="w3-input w3-border" onkeypress="return onlyNumbers();" onkeyup="calcolaScorporoModifica()" DataFormatString="{0:N2}"/>
+                                                <asp:TextBox ID="txt_IvaModifica" runat="server" MaxLength="2" CssClass="w3-input w3-border" onkeypress="return onlyNumbers();" onkeyup="calcolaScorporoModifica()" Disabled DataFormatString="{0:N2}"/>
                                             </div>
                                             <div class="w3-third w3-padding" >
                                                 <label><asp:Label ID="lbl_VersatoRiscosso" runat="server" Text="Versato netto" /></label>
@@ -556,11 +593,11 @@
                                             </div>
                                         </div>
                                         <div class="w3-row">
-                                            <div class="w3-half w3-padding">
+                                            <%--<div class="w3-half w3-padding">
                                                 <label>Data versamento/riscossione</label>
                                                 <asp:TextBox ID="txt_DataVersamentoRiscossione" runat="server"  MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" />
-                                            </div>
-                                            <div class="w3-half w3-padding">
+                                            </div>--%>
+                                            <div class="w3-row w3-padding">
                                                 <label>Banca</label>
                                                 <asp:DropDownList ID="ddl_BancaModifica" runat="server"  CssClass="w3-input w3-border"/>
                                             </div>
@@ -569,13 +606,12 @@
 
                                 </div>
                                 <br />
-                                <div style="text-align: center; width:95%; bottom:30px; position:absolute;">
+                                <div style="text-align: center; width:95%; bottom:10px; position:absolute;">
                                     <asp:Button ID="btnInserisciScadenza" runat="server" Text="Inserisci Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciScadenza_Click" OnClientClick="return confirm('Confermi inserimento Scadenza?')" />
                                     
-                                    <asp:Button ID="btnAggiungiPagamento" runat="server" Text="Aggiungi Pagamento" class="w3-panel w3-blue w3-border w3-round" OnClick="btnInserisciPagamento_Click" Visible="false"/>
-                                    <asp:Button ID="btnModificaScadenza" runat="server" Text="Modifica Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaScadenza_Click"  Visible="false" />
-                                    <asp:Button ID="btnSaldoTotale" runat="server" Text="Saldo totale" class="w3-panel w3-green w3-border w3-round" OnClick="btnSaldoTotale_Click" OnClientClick="return confermaSaldoTotale();" Visible="false" />
-                                    <%--<asp:Button ID="btnTEST" runat="server" Text="TEST" class="w3-panel w3-red w3-border w3-round" OnClick="btnTEST_Click"  />--%>
+                                    <asp:Button ID="btnSaldoTotale" runat="server" Text="Saldo" class="w3-panel w3-green w3-border w3-round" OnClick="btnSaldoTotale_Click" Visible="false" />
+                                    <asp:Button ID="btnAcconto" runat="server" Text="Acconto" class="w3-panel w3-blue w3-border w3-round" OnClick="btnAcconto_Click" Visible="false"/>
+                                    <asp:Button ID="btnModificaScadenza" runat="server" Text="Modifica Rata" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaScadenza_Click"  Visible="false" />
                                 </div>
                                 <p>
                                 </p>
@@ -587,38 +623,80 @@
                 </asp:Panel>
             </asp:Panel>
 
-<!-- AGGIUNGI PAGAMENTO -->
-            <div id="panelAggiungiPagamento" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
-
-                <div id="divAggiungiPagamento" class="w3-modal-content w3-card-4 round" style="position: relative; width: 40%; background-color: white;">
+<!-- ACCONTO -->
+            <asp:Panel  id="panelAcconto" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
+                <asp:HiddenField ID="hf_importoScadenzaFigli" runat="server" />
+                <div id="divAcconto" class="w3-modal-content w3-card-4 round" style="position: relative; width: 40%; background-color: white;">
                     <div class="w3-row-padding">
                         <div class="w3-panel w3-blue w3-center w3-round">
-                            <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Aggiunta nuovo pagamento</b> </h5>
-                            <span onclick="document.getElementById('<%= panelAggiungiPagamento.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                            <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Registrazione acconto</b> </h5>
+                            <span onclick="document.getElementById('<%= panelAcconto.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
                         </div>
                         <div>
-                            È in corso la creazione di un nuovo pagamento per coprire l'importo rimanente della rata corrente, che ammonta a € 
-                            <asp:Label ID="lbl_aggiungiPagamento" runat="server" style="font-weight:bold"/><br />
-                            La rata corrente verrà modificata aggiornando l'importo dovuto con quello versato o riscosso. 
-                            <br /><br />
-                            Inserire la data di scadenza del nuovo pagamento.<br /><br />
+                            <asp:Label ID="lbl_MesaggioAcconto" runat="server" ></asp:Label>
+                            <br />
+                            <asp:Label ID="lbl_ValoriAcconto" runat="server" Text="Indicare l'importo e la data di versamento o riscossione dell'acconto"></asp:Label>
                         </div>
+                        <br /><br />
                         <div class="w3-col round" style="padding: 5px; position:relative; height:10%; width: 96%">
-                            <div class="w3-col" style="width:15%">
-                                <label style="margin-bottom: 0.2rem;padding:8px;">Data</label>
+                            <div class="w3-col" style="width:30%">
+                                <asp:Label ID="lbl_VersatoRiscossoAccontoIVA" runat="server" Text="Versato + IVA"></asp:Label>
                             </div>
                             <div class="w3-rest" >
-                                <asp:TextBox ID="txt_DataAggiungiPagamento" runat="server" CssClass="w3-input w3-border calendarAggiungiPagamento" placeholder="GG/MM/AAAA"></asp:TextBox>
+                                <asp:TextBox ID="txt_VersatoAccontoIva"  runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" onkeyup="modificaLabelValoriAcconto(); " onkeypress="return onlyNumbers();"  DataFormatString="{0:N2}"/>
+                            </div>
+                        </div>
+                        
+                        <div class="w3-col round" style="padding: 5px; position:relative; height:10%; width: 96%; margin-top:20px;">
+                            <div class="w3-col" style="width:30%">
+                                <asp:Label id="lbl_DataVersamentoRiscossione" runat="server" style="margin-bottom: 0.2rem;padding:8px;">Data versamento</asp:label>
+                            </div>
+                            <div class="w3-rest" >
+                                <asp:TextBox ID="txt_DataVersamentoRiscossione" runat="server" CssClass="w3-input w3-border calendarAggiungiPagamento" placeholder="GG/MM/AAAA"></asp:TextBox>
+                            
                             </div>
                         </div>
                     </div>
                     <br /><br />
                     <div class="w3-center" style="margin: 10px; position: relative; bottom:5px;width:96%;">
-                        <asp:Button ID="btn_OkAggiungiPagamento" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_OkAggiungiPagamento_Click" />
-                        <button onclick="document.getElementById('<%= panelAggiungiPagamento.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                        <asp:Button ID="btn_OkAcconto" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_OkAcconto_Click" />
+                        <button onclick="document.getElementById('<%= panelAcconto.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
                     </div>
                 </div>
-            </div>
+            </asp:Panel>
+
+<!-- SALDO -->
+            <asp:Panel  id="panelSaldo" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
+                <div id="divSaldo" class="w3-modal-content w3-card-4 round" style="position: relative; width: 30%; background-color: white;">
+                    <div class="w3-row-padding">
+                        <div class="w3-panel w3-blue w3-center w3-round">
+                            <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Saldo rata</b> </h5>
+                            <span onclick="document.getElementById('<%= panelSaldo.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                        </div>
+                        <div>
+                            È in corso il saldo della rata corrente, che ammonta a 
+                            <b><asp:Label ID="lbl_importoSaldo" runat="server" ></asp:Label> €.</b>
+                            <br />
+                            <asp:Label ID="lbl_DataSaldo" runat="server" Text="Indicare la data di versamento o riscossione "></asp:Label>
+                        </div>
+                        <br /><br />
+                        
+                        <div class="w3-col round" style="padding: 5px; position:relative; height:10%; width: 96%; margin-top:20px;">
+                            <div class="w3-col" style="width:20%">
+                                Data
+                            </div>
+                            <div class="w3-rest" >
+                                <asp:TextBox ID="txt_DataSaldo" runat="server" CssClass="w3-input w3-border calendarAggiungiPagamento" placeholder="GG/MM/AAAA"></asp:TextBox>
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="w3-center" style="margin: 10px; position: relative; bottom:5px;width:96%;">
+                        <asp:Button ID="btn_OkSaldo" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_OkSaldo_Click" />
+                        <button onclick="document.getElementById('<%= panelSaldo.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                    </div>
+                </div>
+            </asp:Panel>
 
 <!-- MODIFICA SCADENZA CON FIGLI -->
             <div id="panelModificaScadenzaConFigli" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">

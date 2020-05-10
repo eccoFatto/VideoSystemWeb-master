@@ -13,15 +13,21 @@ namespace VideoSystemWeb.BLL
 
         public static int ESITO_OK = 0;
         
-        public static int ESITO_KO_ERRORE_LETTURA_TABELLA = 1;
-        public static int ESITO_KO_ERRORE_SCRITTURA_TABELLA = 2;
-        public static int ESITO_KO_ERRORE_UPDATE_TABELLA = 3;
-        public static int ESITO_KO_ERRORE_UTENTE_NON_RICONOSCIUTO = 4;
-        public static int ESITO_KO_ERRORE_VALIDAZIONE = 5;
-        public static int ESITO_KO_ERRORE_NO_RISULTATI = 6;
-        public static int ESITO_KO_ERRORE_GENERICO = 99;
+        public const int ESITO_KO_ERRORE_LETTURA_TABELLA = 1;
+        public const int ESITO_KO_ERRORE_SCRITTURA_TABELLA = 2;
+        public const int ESITO_KO_ERRORE_UPDATE_TABELLA = 3;
+        public const int ESITO_KO_ERRORE_UTENTE_NON_RICONOSCIUTO = 4;
+        public const int ESITO_KO_ERRORE_VALIDAZIONE = 5;
+        public const int ESITO_KO_ERRORE_NO_RISULTATI = 6;
+        public const int ESITO_KO_ERRORE_GENERICO = 99;
 
         private string _descrizione;
+
+        public Esito()
+        {
+            this.Codice = ESITO_OK;
+            this.Descrizione = string.Empty;
+        }
 
         public int Codice { get; set; }
        
@@ -50,20 +56,31 @@ namespace VideoSystemWeb.BLL
                         utente.username = "ANONIMO";
                     }
 
-                    log.Error(utente.username + " - " + _descrizione);
+                    //log.Error(utente.username + " - " + _descrizione);
 
                     if (SessionManager.VisualizzazioneAutomaticaPopupErrore)
                     {
-                        basePage.ShowError(_descrizione);
+                       // basePage.ShowError(_descrizione);
+
+                        switch (this.Codice)
+                        {
+                            case ESITO_KO_ERRORE_VALIDAZIONE:
+                                basePage.ShowWarning(_descrizione);
+                                break;
+                            case ESITO_KO_ERRORE_NO_RISULTATI:
+                                basePage.ShowWarning(_descrizione);
+                                break;
+                            default:
+                                basePage.ShowError(_descrizione);
+
+                                log.Error(utente.username + " - " + _descrizione);
+                                break;
+                        }
                     }
                 }
             }
         }
 
-        public Esito()
-        {
-            this.Codice = ESITO_OK;
-            this.Descrizione = string.Empty;
-        }
+        
     }
 }

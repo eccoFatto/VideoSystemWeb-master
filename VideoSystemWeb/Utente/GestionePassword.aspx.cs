@@ -52,11 +52,12 @@ namespace VideoSystemWeb.Utente
         {
             Esito esito = new Esito();
             esito = ControlloCampiObbligatori();
-            if (esito.Codice != Esito.ESITO_OK)
-            {
-                esito.Descrizione = "Controllare i campi evidenziati";
-            }
-            else if (!ControlloNuovaPassword())
+            //if (esito.Codice != Esito.ESITO_OK)
+            //{
+            //    esito.Descrizione = "Controllare i campi evidenziati";
+            //}
+            //else 
+            if (!ControlloNuovaPassword())
             {
                 esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
                 esito.Descrizione = "Errore nella convalida delle nuove Password";

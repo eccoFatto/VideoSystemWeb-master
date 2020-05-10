@@ -573,7 +573,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 //panelErrore.Style.Remove("display");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
-                basePage.ShowError("Controllare i campi evidenziati");
+                basePage.ShowWarning("Controllare i campi evidenziati");
             }
             else
             {

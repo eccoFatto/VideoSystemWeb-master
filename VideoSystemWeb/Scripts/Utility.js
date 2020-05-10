@@ -52,7 +52,7 @@ function controlloCoerenzaDate(id_calendarDataInizio, id_calendarDataFine) {
     $('#' + id_calendarDataInizio).on("dp.change", function (e) {
         
         $('#' + id_calendarDataFine).data("DateTimePicker").minDate(e.date);
-        $('#' + id_calendarDataFine).val($('#' + id_calendarDataInizio).val()); // setta automaticamente la data fine uguiale alla data inizio
+        $('#' + id_calendarDataFine).val($('#' + id_calendarDataInizio).val()); // setta automaticamente la data fine uguale alla data inizio
         
     });
     $('#' + id_calendarDataFine).on("dp.change", function (e) {

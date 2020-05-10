@@ -43,7 +43,7 @@ namespace VideoSystemWeb.BLL
             {
                 campo.CssClass += " erroreValidazione";
                 esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.Descrizione = "Campo obbligatorio";
+                esito.Descrizione = "Controllare i campi evidenziati";
             }
             else
             {
@@ -61,7 +61,7 @@ namespace VideoSystemWeb.BLL
                 {
                     campo.CssClass += " erroreValidazione";
                     esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                    esito.Descrizione = "Controllare il campo";
+                    esito.Descrizione = "Controllare i campi evidenziati";
                 }
             }
 
@@ -78,7 +78,7 @@ namespace VideoSystemWeb.BLL
             {
                 campo.CssClass += " erroreValidazione";
                 esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.Descrizione = "Campo obbligatorio";
+                esito.Descrizione = "Controllare i campi evidenziati";
             }
             else
             {
@@ -96,7 +96,7 @@ namespace VideoSystemWeb.BLL
                 {
                     campo.CssClass += " erroreValidazione";
                     esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                    esito.Descrizione = "Controllare il campo";
+                    esito.Descrizione = "Controllare i campi evidenziati";
                 }
             }
 
@@ -135,7 +135,7 @@ namespace VideoSystemWeb.BLL
                 {
                     t.CssClass += " erroreValidazione";
                     esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                    esito.Descrizione = "Campo obbligatorio";
+                    esito.Descrizione = "Controllare i campi evidenziati";
                     return t.Text;
                 }
             }
@@ -364,6 +364,7 @@ namespace VideoSystemWeb.BLL
         }
         public void ShowSuccess(string messaggio)
         {
+            messaggio = messaggio.Replace("\\", "/");
             messaggio = messaggio.Replace("'", "\\'");
             messaggio = messaggio.Replace("\r\n", "<br/>");
 
@@ -373,6 +374,7 @@ namespace VideoSystemWeb.BLL
 
         public void ShowWarning(string messaggio)
         {
+            messaggio = messaggio.Replace("\\", "/");
             messaggio = messaggio.Replace("'", "\\'");
             messaggio = messaggio.Replace("\r\n", "<br/>");
 

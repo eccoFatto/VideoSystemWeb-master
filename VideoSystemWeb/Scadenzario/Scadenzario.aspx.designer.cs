@@ -672,15 +672,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_ScadenzaDocumento;
 
         /// <summary>
-        /// Controllo txt_DataVersamentoRiscossione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_DataVersamentoRiscossione;
-
-        /// <summary>
         /// Controllo ddl_BancaModifica.
         /// </summary>
         /// <remarks>
@@ -699,13 +690,22 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.Button btnInserisciScadenza;
 
         /// <summary>
-        /// Controllo btnAggiungiPagamento.
+        /// Controllo btnSaldoTotale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAggiungiPagamento;
+        protected global::System.Web.UI.WebControls.Button btnSaldoTotale;
+
+        /// <summary>
+        /// Controllo btnAcconto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAcconto;
 
         /// <summary>
         /// Controllo btnModificaScadenza.
@@ -717,49 +717,130 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.Button btnModificaScadenza;
 
         /// <summary>
-        /// Controllo btnSaldoTotale.
+        /// Controllo panelAcconto.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSaldoTotale;
+        protected global::System.Web.UI.WebControls.Panel panelAcconto;
 
         /// <summary>
-        /// Controllo panelAggiungiPagamento.
+        /// Controllo hf_importoScadenzaFigli.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelAggiungiPagamento;
+        protected global::System.Web.UI.WebControls.HiddenField hf_importoScadenzaFigli;
 
         /// <summary>
-        /// Controllo lbl_aggiungiPagamento.
+        /// Controllo lbl_MesaggioAcconto.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_aggiungiPagamento;
+        protected global::System.Web.UI.WebControls.Label lbl_MesaggioAcconto;
 
         /// <summary>
-        /// Controllo txt_DataAggiungiPagamento.
+        /// Controllo lbl_ValoriAcconto.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_DataAggiungiPagamento;
+        protected global::System.Web.UI.WebControls.Label lbl_ValoriAcconto;
 
         /// <summary>
-        /// Controllo btn_OkAggiungiPagamento.
+        /// Controllo lbl_VersatoRiscossoAccontoIVA.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_OkAggiungiPagamento;
+        protected global::System.Web.UI.WebControls.Label lbl_VersatoRiscossoAccontoIVA;
+
+        /// <summary>
+        /// Controllo txt_VersatoAccontoIva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_VersatoAccontoIva;
+
+        /// <summary>
+        /// Controllo lbl_DataVersamentoRiscossione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DataVersamentoRiscossione;
+
+        /// <summary>
+        /// Controllo txt_DataVersamentoRiscossione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_DataVersamentoRiscossione;
+
+        /// <summary>
+        /// Controllo btn_OkAcconto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_OkAcconto;
+
+        /// <summary>
+        /// Controllo panelSaldo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panelSaldo;
+
+        /// <summary>
+        /// Controllo lbl_importoSaldo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_importoSaldo;
+
+        /// <summary>
+        /// Controllo lbl_DataSaldo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DataSaldo;
+
+        /// <summary>
+        /// Controllo txt_DataSaldo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_DataSaldo;
+
+        /// <summary>
+        /// Controllo btn_OkSaldo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_OkSaldo;
 
         /// <summary>
         /// Controllo panelModificaScadenzaConFigli.

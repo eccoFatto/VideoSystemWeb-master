@@ -267,7 +267,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 log.Error(esito.Descrizione);
                 //panelErrore.Style.Add("display","block");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
-                basePage.ShowError("Controllare i campi evidenziati!");
+                basePage.ShowWarning("Controllare i campi evidenziati!");
                 AttivaDisattivaModificaAnagrafica(false);
             }
             else
@@ -845,7 +845,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 //panelErrore.Style.Add("display", "block");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
                 AttivaDisattivaModificaAnagrafica(false);
-                basePage.ShowError("Controllare i campi evidenziati");
+                basePage.ShowWarning("Controllare i campi evidenziati");
             }
             else
             {

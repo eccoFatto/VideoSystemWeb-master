@@ -116,7 +116,7 @@ namespace VideoSystemWeb.Articoli
             {
                 //panelErrore.Style.Add("display", "block");
                 //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
-                ShowError("Controllare i campi evidenziati");
+                ShowWarning("Controllare i campi evidenziati");
             }
             else
             {

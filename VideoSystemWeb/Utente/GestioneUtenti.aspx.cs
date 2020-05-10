@@ -164,11 +164,11 @@ namespace VideoSystemWeb.Utente
             Esito esito = new Esito();
             Utenti utente = CreaOggettoUtente(ref esito);
 
-            if (esito.Codice != Esito.ESITO_OK)
-            {
-                basePage.ShowError("Controllare i campi evidenziati");
-            }
-            else
+            //if (esito.Codice != Esito.ESITO_OK)
+            //{
+            //    basePage.ShowWarning("Controllare i campi evidenziati");
+            //}
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 NascondiErroriValidazione();
 
@@ -201,7 +201,7 @@ namespace VideoSystemWeb.Utente
             if (esito.Codice != Esito.ESITO_OK)
             {
                 log.Error(esito.Descrizione);
-                basePage.ShowError("Controllare i campi evidenziati!");
+                //basePage.ShowWarning("Controllare i campi evidenziati!");
             }
             else
             {

@@ -717,6 +717,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.Button btnModificaScadenza;
 
         /// <summary>
+        /// Controllo btnEliminaFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminaFattura;
+
+        /// <summary>
         /// Controllo panelAcconto.
         /// </summary>
         /// <remarks>
@@ -868,5 +877,23 @@ namespace VideoSystemWeb.Scadenzario.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnOKModificaScadenzaConFigli;
+
+        /// <summary>
+        /// Controllo panelEliminaFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelEliminaFattura;
+
+        /// <summary>
+        /// Controllo btnOkEliminaFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOkEliminaFattura;
     }
 }

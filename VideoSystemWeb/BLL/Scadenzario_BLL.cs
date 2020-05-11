@@ -410,14 +410,15 @@ namespace VideoSystemWeb.BLL
 
             Scadenzario_DAL.Instance.DeleteDatiScadenzarioById(idDatiScadenzario, ref esito);
 
-            if (esito.Codice == Esito.ESITO_OK && listaDatiScadenzarioDaCancellare.Count > 0)
-            { 
-                int idProtocollo = listaDatiScadenzarioDaCancellare.ElementAt(0).IdDatiProtocollo;
-                string tipoScadenza = "Cliente";
-                if (listaDatiScadenzarioDaCancellare.ElementAt(0).ImportoDare > 0) tipoScadenza = "Fornitore";
+            // decommentare le righe seguenti se dopo la cancellazione si intende aprire la maschera di inserimento per inserire di nuovo la fattura eliminata
+            //if (esito.Codice == Esito.ESITO_OK && listaDatiScadenzarioDaCancellare.Count > 0)
+            //{ 
+            //    int idProtocollo = listaDatiScadenzarioDaCancellare.ElementAt(0).IdDatiProtocollo;
+            //    string tipoScadenza = "Cliente";
+            //    if (listaDatiScadenzarioDaCancellare.ElementAt(0).ImportoDare > 0) tipoScadenza = "Fornitore";
 
-                HttpContext.Current.Response.Redirect("Scadenzario?TIPO=" + tipoScadenza + "&ID_PROTOCOLLO=" + idProtocollo);
-            } 
+            //    HttpContext.Current.Response.Redirect("Scadenzario?TIPO=" + tipoScadenza + "&ID_PROTOCOLLO=" + idProtocollo);
+            //} 
 
         }
 

@@ -607,9 +607,10 @@
                                 <div style="text-align: center; width:95%; bottom:10px; position:absolute;">
                                     <asp:Button ID="btnInserisciScadenza" runat="server" Text="Inserisci Scadenza" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciScadenza_Click" OnClientClick="return confirm('Confermi inserimento Scadenza?')" />
                                     
-                                    <asp:Button ID="btnSaldoTotale" runat="server" Text="Saldo" class="w3-panel w3-green w3-border w3-round" OnClick="btnSaldoTotale_Click" Visible="false" />
-                                    <asp:Button ID="btnAcconto" runat="server" Text="Acconto" class="w3-panel w3-blue w3-border w3-round" OnClick="btnAcconto_Click" Visible="false"/>
-                                    <asp:Button ID="btnModificaScadenza" runat="server" Text="Modifica Rata" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaScadenza_Click"  Visible="false" />
+                                    <asp:Button ID="btnSaldoTotale" runat="server" Text="Saldo" CssClass="w3-panel w3-green w3-border w3-round" OnClick="btnSaldoTotale_Click" Visible="false" />
+                                    <asp:Button ID="btnAcconto" runat="server" Text="Acconto" CssClass="w3-panel w3-blue w3-border w3-round" OnClick="btnAcconto_Click" Visible="false"/>
+                                    <asp:Button ID="btnModificaScadenza" runat="server" Text="Modifica Rata" CssClass="w3-panel w3-green w3-border w3-round" OnClick="btnModificaScadenza_Click"  Visible="false" />
+                                    <asp:Button ID="btnEliminaFattura" runat="server" Text="Elimina" CssClass="w3-panel w3-red w3-border w3-round" style="position:absolute; right:20px;" OnClick="btnEliminaFattura_Click"  Visible="false" />
                                 </div>
                                 <p>
                                 </p>
@@ -658,7 +659,7 @@
                     <br /><br />
                     <div class="w3-center" style="margin: 10px; position: relative; bottom:5px;width:96%;">
                         <asp:Button ID="btn_OkAcconto" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_OkAcconto_Click" />
-                        <button onclick="document.getElementById('<%= panelAcconto.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                        <button onclick="document.getElementById('<%= panelAcconto.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-gray w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
                     </div>
                 </div>
             </asp:Panel>
@@ -691,7 +692,7 @@
                     <br /><br />
                     <div class="w3-center" style="margin: 10px; position: relative; bottom:5px;width:96%;">
                         <asp:Button ID="btn_OkSaldo" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btn_OkSaldo_Click" />
-                        <button onclick="document.getElementById('<%= panelSaldo.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                        <button onclick="document.getElementById('<%= panelSaldo.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-gray w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
                     </div>
                 </div>
             </asp:Panel>
@@ -713,7 +714,31 @@
                     <br /><br />
                     <div class="w3-center" style="margin: 10px; position: relative; bottom:5px;width:96%;">
                         <asp:Button ID="btnOKModificaScadenzaConFigli" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOKModificaScadenzaConFigli_Click" />
-                        <button onclick="document.getElementById('<%= panelModificaScadenzaConFigli.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                        <button onclick="document.getElementById('<%= panelModificaScadenzaConFigli.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-gray w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                    </div>
+                </div>
+            </div>
+
+<!-- ELIMINA RATE FATTURA -->
+            <div id="panelEliminaFattura" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
+
+                <div id="divEliminaFattura" class="w3-modal-content w3-card-4 round" style="position: relative; width: 40%; background-color: white;">
+                    <div class="w3-row-padding">
+                        <div class="w3-panel w3-red w3-center w3-round">
+                            <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Eliminazione rate</b> </h5>
+                            <span onclick="document.getElementById('<%= panelEliminaFattura.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                        </div>
+                        <div>
+                            È in corso l'eliminazione della presente rata e di tutte le altre rate legate alla stessa fattura.
+                            <br />
+                            Confermare l'operazione?
+                        </div>
+                        
+                    </div>
+                    <br /><br />
+                    <div class="w3-center" style="margin: 10px; position: relative; bottom:5px;width:96%;">
+                        <asp:Button ID="btnOkEliminaFattura" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOkEliminaFattura_Click" />
+                        <button onclick="document.getElementById('<%= panelEliminaFattura.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-gray w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
                     </div>
                 </div>
             </div>

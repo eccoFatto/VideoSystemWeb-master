@@ -30,7 +30,6 @@
 
             $('.calendarAggiungiPagamento').datetimepicker({
                 locale: 'it',
-                minDate: new Date(),
                 format: 'DD/MM/YYYY',
                 useCurrent: false
             });
@@ -38,7 +37,6 @@
             Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
                 $('.calendarAggiungiPagamento').datetimepicker({
                     locale: 'it',
-                    minDate: new Date(),
                     format: 'DD/MM/YYYY',
                     useCurrent: false
                 });

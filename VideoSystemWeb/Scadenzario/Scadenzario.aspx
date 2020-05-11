@@ -641,7 +641,7 @@
                                 <asp:Label ID="lbl_VersatoRiscossoAccontoIVA" runat="server" Text="Versato + IVA"></asp:Label>
                             </div>
                             <div class="w3-rest" >
-                                <asp:TextBox ID="txt_VersatoAccontoIva"  runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" Style="margin-top:8px" onkeyup="modificaLabelValoriAcconto(); " onkeypress="return onlyNumbers();"  DataFormatString="{0:N2}"/>
+                                <asp:TextBox ID="txt_VersatoAccontoIva"  runat="server" MaxLength="10" CssClass="w3-input w3-border " Style="margin-top:8px" onkeyup="modificaLabelValoriAcconto(); " onkeypress="return onlyNumbers();"  DataFormatString="{0:N2}"/>
                             </div>
                         </div>
                         

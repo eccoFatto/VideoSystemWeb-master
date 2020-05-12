@@ -22112,3 +22112,4 @@ Modificare il valore in 1000,00 oppure selezionare 'Acconto'.
 2020-05-11 21:11:34,106 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-11 21:14:40,460 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-11 21:19:21,444 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-12 21:15:16,881 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

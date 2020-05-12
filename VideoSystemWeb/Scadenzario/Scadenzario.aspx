@@ -156,7 +156,7 @@
             
             if (acconto > 0 && acconto < maxImporto && data != '') {
 
-                $('#<%=lbl_ValoriAcconto.ClientID%>').html('Verrà creata una nuova rata di <b>' + differenzaImporto.replace(".", ",") + '€</b> con scadenza <b>' + dataNuovaRataFormattata + "</b>");
+                $('#<%=lbl_ValoriAcconto.ClientID%>').html('Verrà creata una nuova rata di <b>' + differenzaImporto.replace(".", ",") + ' €</b> con scadenza <b>' + dataNuovaRataFormattata + "</b>");
             }
             else {
                 $('#<%=lbl_ValoriAcconto.ClientID%>').html("Indicare l'importo e la data di versamento o riscossione dell'acconto");
@@ -520,7 +520,7 @@
                                         <label>A partire da</label>
                                         <asp:DropDownList ID="ddl_APartireDa" runat="server"  Width="100%" CssClass="w3-input w3-border">
                                             <asp:ListItem Value="0" Text="Data fattura"></asp:ListItem>
-                                            <asp:ListItem Value="1" Text="Fine mese"></asp:ListItem>
+                                            <asp:ListItem Value="1" Text="Fine mese" Selected></asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
                                     <div id="div_Banca" runat="server" class="w3-half">

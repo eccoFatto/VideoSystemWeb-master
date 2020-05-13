@@ -87,8 +87,8 @@
             <%--$("#<%=ddlFatturaPagata.ClientID%>").val('');--%>
             $("#<%=txt_DataFatturaDa.ClientID%>").val('');
             $("#<%=txt_DataFatturaA.ClientID%>").val('');
-            $("#<%=txt_DataScadenzaDa.ClientID%>").val('');
-            $("#<%=txt_DataScadenzaA.ClientID%>").val('');
+            $("#<%=txt_DataDa.ClientID%>").val('');
+            $("#<%=txt_DataA.ClientID%>").val('');
             $("#<%=ddlFatturaPagata.ClientID%>").val('0');
             $("#<%=ddl_FiltroBanca.ClientID%>").val('');
         }
@@ -208,7 +208,7 @@
                 
                 <div class="w3-quarter">
                     <label>Numero Fattura</label>
-                    <asp:TextBox ID="txt_NumeroFattura" runat="server" MaxLength="20" class="w3-input w3-border" ></asp:TextBox>
+                    <asp:TextBox ID="txt_NumeroFattura" runat="server" MaxLength="20" class="w3-input w3-border" />
                 </div>
                 <div class="w3-quarter">
                     <label>Pagata</label>
@@ -232,12 +232,12 @@
                         </div>
         
                         <div class="w3-quarter">
-                            <label>Data scadenza da</label>
-                            <asp:TextBox ID="txt_DataScadenzaDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                            <label>Data scad. da</label>
+                            <asp:TextBox ID="txt_DataDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                         </div>
                         <div class="w3-quarter">
-                            <label>Data scadenza a</label>
-                            <asp:TextBox ID="txt_DataScadenzaA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                            <label>Data scad. a</label>
+                            <asp:TextBox ID="txt_DataA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                         </div>
                     </div>
                     <div class="w3-quarter">

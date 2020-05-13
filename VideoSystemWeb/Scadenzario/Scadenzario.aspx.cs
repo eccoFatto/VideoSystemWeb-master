@@ -89,7 +89,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataFatturaDa.ClientID + "', '" + txt_DataFatturaA.ClientID + "');", true);
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataScadenzaDa.ClientID + "', '" + txt_DataScadenzaA.ClientID + "');", true);
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataDa.ClientID + "', '" + txt_DataA.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
@@ -322,8 +322,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                                         ddlFatturaPagata.SelectedValue,
                                                                                                         txt_DataFatturaDa.Text,
                                                                                                         txt_DataFatturaA.Text,
-                                                                                                        txt_DataScadenzaDa.Text,
-                                                                                                        txt_DataScadenzaA.Text,
+                                                                                                        txt_DataDa.Text,
+                                                                                                        txt_DataA.Text,
                                                                                                         ddl_FiltroBanca.SelectedValue,
                                                                                                         ref esito);
             CalcolaTotali(listaDatiScadenzario);
@@ -596,8 +596,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             txt_NumeroFattura.Text =
             txt_DataFatturaDa.Text =
             txt_DataFatturaA.Text =
-            txt_DataScadenzaDa.Text =
-            txt_DataScadenzaA.Text = string.Empty;
+            txt_DataDa.Text =
+            txt_DataA.Text = string.Empty;
         }
 
         private void AbilitaBottoni(bool isUtenteAbilitatoInScrittura)

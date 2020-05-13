@@ -87,22 +87,22 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_DataFatturaA;
 
         /// <summary>
-        /// Controllo txt_DataScadenzaDa.
+        /// Controllo txt_DataDa.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_DataScadenzaDa;
+        protected global::System.Web.UI.WebControls.TextBox txt_DataDa;
 
         /// <summary>
-        /// Controllo txt_DataScadenzaA.
+        /// Controllo txt_DataA.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_DataScadenzaA;
+        protected global::System.Web.UI.WebControls.TextBox txt_DataA;
 
         /// <summary>
         /// Controllo ddl_FiltroBanca.

@@ -180,7 +180,7 @@
                         <a href="/REPORT/StampaConsulenteLavoro.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Stampa Consulente del Lavoro</a>
                         <a href="/REPORT/StampaCollaboratori.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Stampa Collaboratori</a>
                         <a href="/REPORT/ReportTLTime.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Report TLTime</a>
-                        <a href="/REPORT/ReportCollaboratoriPerGiornata.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Report Collaboratori per Giornata</a>
+                        <a href="/REPORT/ReportCollaboratoriPerGiornataNew.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Report Collaboratori per Giornata</a>
                     </div>
                 </div>
 

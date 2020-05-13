@@ -280,9 +280,11 @@
     <Content Include="pageError.aspx" />
     <Content Include="Protocollo\Protocollo.aspx" />
     <Content Include="REPORT\ReportCollaboratoriPerGiornata.aspx" />
+    <Content Include="REPORT\ReportCollaboratoriPerGiornataNew.aspx" />
     <Content Include="REPORT\ReportTLTime.aspx" />
     <Content Include="REPORT\StampaCollaboratori.aspx" />
     <Content Include="REPORT\StampaConsulenteLavoro.aspx" />
+    <Content Include="REPORT\userControl\collaboratoriPerGiornata.ascx" />
     <Content Include="resetPassword.aspx" />
     <Content Include="Scadenzario\Scadenzario.aspx" />
     <Content Include="Scripts\bootstrap-datepicker.it.min.js" />
@@ -886,6 +888,13 @@
     <Compile Include="REPORT\ReportCollaboratoriPerGiornata.aspx.designer.cs">
       <DependentUpon>ReportCollaboratoriPerGiornata.aspx</DependentUpon>
     </Compile>
+    <Compile Include="REPORT\ReportCollaboratoriPerGiornataNew.aspx.cs">
+      <DependentUpon>ReportCollaboratoriPerGiornataNew.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="REPORT\ReportCollaboratoriPerGiornataNew.aspx.designer.cs">
+      <DependentUpon>ReportCollaboratoriPerGiornataNew.aspx</DependentUpon>
+    </Compile>
     <Compile Include="REPORT\ReportTLTime.aspx.cs">
       <DependentUpon>ReportTLTime.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -906,6 +915,13 @@
     </Compile>
     <Compile Include="REPORT\StampaConsulenteLavoro.aspx.designer.cs">
       <DependentUpon>StampaConsulenteLavoro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="REPORT\userControl\collaboratoriPerGiornata.ascx.cs">
+      <DependentUpon>collaboratoriPerGiornata.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="REPORT\userControl\collaboratoriPerGiornata.ascx.designer.cs">
+      <DependentUpon>collaboratoriPerGiornata.ascx</DependentUpon>
     </Compile>
     <Compile Include="resetPassword.aspx.cs">
       <DependentUpon>resetPassword.aspx</DependentUpon>

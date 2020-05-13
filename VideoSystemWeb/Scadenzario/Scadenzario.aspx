@@ -137,8 +137,7 @@
 
         function modificaLabelValoriAcconto() {
             var stringaAcconto = $('#<%=txt_VersatoAccontoIva.ClientID%>').val().replace(",", ".");
-            var acconto = parseFloat(stringaAcconto);//.toFixed(2);
-            //alert(acconto);
+            var acconto = parseFloat(stringaAcconto);
             
             var data = $('#<%=txt_DataVersamentoRiscossione.ClientID%>').val();
             var parts = data.split('/');
@@ -147,12 +146,9 @@
             var dataNuovaRataFormattata = ((dataNuovaRata.getDate() > 9) ? dataNuovaRata.getDate() : ('0' + dataNuovaRata.getDate())) + '/' + ((dataNuovaRata.getMonth() > 8) ? (dataNuovaRata.getMonth() + 1) : ('0' + (dataNuovaRata.getMonth() + 1))) + '/' + dataNuovaRata.getFullYear();
 
             var stringaMaxImporto = $('#<%=hf_importoScadenzaFigli.ClientID%>').val().replace(",", ".");
-            var maxImporto = parseFloat(stringaMaxImporto);//.toFixed(2);
+            var maxImporto = parseFloat(stringaMaxImporto);
             
             var differenzaImporto = (maxImporto - acconto).toFixed(2);
-            //alert(differenzaImporto);
-
-            //alert(acconto < maxImporto);
             
             if (acconto > 0 && acconto < maxImporto && data != '') {
 
@@ -529,7 +525,7 @@
                                     </div>
 
                                 </div>
-
+<!-- MODIFICA -->
                                 <div id="div_CampiModifica" runat="server" class="w3-row" visible="false">
                                     <div class="w3-half" >
                                         <div class="w3-row">                                           

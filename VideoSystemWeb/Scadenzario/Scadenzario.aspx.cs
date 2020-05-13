@@ -167,46 +167,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
         }
 
-        protected void btnInsScadenza_Click(object sender, EventArgs e)
-        {
-            lbl_IntestazionePopup.Text = "Nuova scadenza";
-            Esito esito = new Esito();
-            txt_Iva.Text = Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
-
-            div_Fattura.Visible = true;
-            div_DatiCreazioneScadenza.Visible = true;
-            ddl_Tipo.Attributes.Remove("Disabled");
-
-            ddl_fattura.Items.Clear();
-
-            ViewState[VIEWSTATE_ID_SCADENZA] = "";
-            PulisciCampiDettaglio();
-            NascondiErroriValidazione();
-            gestisciPulsantiScadenza("INSERIMENTO");
-
-            ddl_Tipo.Attributes.Remove("Disabled");
-
-            List<Protocolli> listaProtocolloNonInScadenzario = Scadenzario_BLL.Instance.getFattureNonInScadenzario(ddl_Tipo.SelectedValue, ref esito);
-
-            string tipoAnagrafica = ddl_Tipo.SelectedItem.Text;
-
-            if (listaProtocolloNonInScadenzario.Count == 0)
-            {
-                ddl_fattura.Items.Add(new ListItem("<nessuna fattura trovata>", ""));
-            }
-            else
-            {
-                ddl_fattura.Items.Add(new ListItem("<seleziona una fattura>", ""));
-                foreach (Protocolli protocollo in listaProtocolloNonInScadenzario)
-                {
-                    ddl_fattura.Items.Add(new ListItem("Protocollo: " + protocollo.Numero_protocollo + " - " + tipoAnagrafica + ": " + protocollo.Cliente + " - Lavorazione: " + protocollo.Lavorazione, protocollo.Id.ToString()));
-                }
-            }
-            ddl_fattura.SelectedIndex = 0;
-
-            pnlContainer.Visible = true;
-        }
-
         protected void ddl_fattura_SelectedIndexChanged(object sender, EventArgs e)
         {
             Esito esito = new Esito();
@@ -308,7 +268,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
                     ViewState[VIEWSTATE_TIPOMODIFICA] = TipoModifica.IMPORTO_ZERO;
 
-                    lblMessaggioPopup.Text = "La scadenza selezionata verrà eliminata.<br/>Tutte le rate precedentemente immesse e legate alla scadenza selezionata verranno sostituite da una rata unica di importo pari a " + importoScadenzaFigli + "€, con scadenza " + ((DateTime)scadenzaSelezionata.DataScadenza).ToString("dd/MM/yyyy"); ;
+                    lblMessaggioPopup.Text = "La scadenza selezionata verrà eliminata.<br/>Tutte le rate precedentemente immesse e legate alla scadenza selezionata verranno sostituite da una rata unica di importo pari a <b>" + importoScadenzaFigli + " €</b>, con scadenza <b>" + ((DateTime)scadenzaSelezionata.DataScadenza).ToString("dd/MM/yyyy") + "</b>"; 
                     ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriPanelModificaScadenzaConFigli", script: "javascript: document.getElementById('" + panelModificaScadenzaConFigli.ClientID + "').style.display='block'", addScriptTags: true);
 
                     break;
@@ -342,65 +302,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
         {
             gv_scadenze.PageIndex = e.NewPageIndex;
             btnRicercaScadenza_Click(null, null);
-        }
-
-        protected void btnInserisciScadenza_Click(object sender, EventArgs e)
-        {
-            Esito esito = new Esito();
-            DatiScadenzario datiScadenzario = CreaOggettoDatiScadenzario(ref esito);
-
-            string anticipoImportoIva = string.IsNullOrWhiteSpace(txt_AnticipoImporto.Text) ? "0" : txt_AnticipoImporto.Text;
-            decimal ivaDecimal = decimal.Parse(txt_Iva.Text);
-            string anticipoImporto = (decimal.Parse(anticipoImportoIva) / (1 + (ivaDecimal / 100))).ToString();
-
-            if (esito.Codice == Esito.ESITO_OK)
-            {
-                if (decimal.Parse(anticipoImportoIva) >= (datiScadenzario.ImportoDareIva + datiScadenzario.ImportoAvereIva))
-                {
-                    ShowWarning("L'anticipo deve essere inferiore all'intero importo");
-                }
-                else
-                {
-                    NascondiErroriValidazione();
-
-                    if (string.IsNullOrEmpty(txt_NumeroRate.Text) || txt_NumeroRate.Text == "0") txt_NumeroRate.Text = "1";
-
-                    DateTime? dataPartenzaPagamento = datiScadenzario.DataProtocollo == null ? DateTime.Now : datiScadenzario.DataProtocollo;
-                    if (ddl_APartireDa.SelectedValue == "1") // INIZIO CALCOLO SCADENZA DA FINE MESE
-                    {
-                        dataPartenzaPagamento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1);
-                        dataPartenzaPagamento = ((DateTime)dataPartenzaPagamento).AddDays(-1);
-                    }
-
-                    int cadenzaGiorni = 30;
-                    if (!string.IsNullOrEmpty(txt_CadenzaGiorni.Text)) cadenzaGiorni = int.Parse(txt_CadenzaGiorni.Text);
-
-
-
-                    Scadenzario_BLL.Instance.CreaDatiScadenzario(datiScadenzario,
-                                                                 anticipoImporto,
-                                                                 anticipoImportoIva,
-                                                                 txt_Iva.Text,
-                                                                 txt_NumeroRate.Text,
-                                                                 ddl_Tipo.SelectedValue,
-                                                                 dataPartenzaPagamento,
-                                                                 cadenzaGiorni,
-                                                                 ref esito);
-
-                    if (esito.Codice != Esito.ESITO_OK)
-                    {
-                        if (esito.Codice != Esito.ESITO_KO_ERRORE_VALIDAZIONE) log.Error(esito.Descrizione);
-                        ShowError(esito.Descrizione);
-                    }
-
-                    ShowSuccess("Scadenza inserita correttamente");
-                    btnChiudiPopup_Click(null, null);
-
-                    ViewState[VIEWSTATE_ID_PROTOCOLLO] = null;
-
-                    RicercaScadenze();
-                }
-            }
         }
 
         protected void btnChiudiPopup_Click(object sender, EventArgs e)
@@ -706,6 +607,107 @@ namespace VideoSystemWeb.Scadenzario.userControl
         }
         #endregion
 
+        #region INSERIMENTO
+        protected void btnInsScadenza_Click(object sender, EventArgs e)
+        {
+            lbl_IntestazionePopup.Text = "Nuova scadenza";
+            Esito esito = new Esito();
+            txt_Iva.Text = Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
+
+            div_Fattura.Visible = true;
+            div_DatiCreazioneScadenza.Visible = true;
+            ddl_Tipo.Attributes.Remove("Disabled");
+
+            ddl_fattura.Items.Clear();
+
+            ViewState[VIEWSTATE_ID_SCADENZA] = "";
+            PulisciCampiDettaglio();
+            NascondiErroriValidazione();
+            gestisciPulsantiScadenza("INSERIMENTO");
+
+            ddl_Tipo.Attributes.Remove("Disabled");
+
+            List<Protocolli> listaProtocolloNonInScadenzario = Scadenzario_BLL.Instance.getFattureNonInScadenzario(ddl_Tipo.SelectedValue, ref esito);
+
+            string tipoAnagrafica = ddl_Tipo.SelectedItem.Text;
+
+            if (listaProtocolloNonInScadenzario.Count == 0)
+            {
+                ddl_fattura.Items.Add(new ListItem("<nessuna fattura trovata>", ""));
+            }
+            else
+            {
+                ddl_fattura.Items.Add(new ListItem("<seleziona una fattura>", ""));
+                foreach (Protocolli protocollo in listaProtocolloNonInScadenzario)
+                {
+                    ddl_fattura.Items.Add(new ListItem("Protocollo: " + protocollo.Numero_protocollo + " - " + tipoAnagrafica + ": " + protocollo.Cliente + " - Lavorazione: " + protocollo.Lavorazione, protocollo.Id.ToString()));
+                }
+            }
+            ddl_fattura.SelectedIndex = 0;
+
+            pnlContainer.Visible = true;
+        }
+
+        protected void btnInserisciScadenza_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+            DatiScadenzario datiScadenzario = CreaOggettoDatiScadenzario(ref esito);
+
+            string anticipoImportoIva = string.IsNullOrWhiteSpace(txt_AnticipoImporto.Text) ? "0" : txt_AnticipoImporto.Text;
+            decimal ivaDecimal = decimal.Parse(txt_Iva.Text);
+            string anticipoImporto = (decimal.Parse(anticipoImportoIva) / (1 + (ivaDecimal / 100))).ToString();
+
+            if (esito.Codice == Esito.ESITO_OK)
+            {
+                if (decimal.Parse(anticipoImportoIva) >= (datiScadenzario.ImportoDareIva + datiScadenzario.ImportoAvereIva))
+                {
+                    ShowWarning("L'anticipo deve essere inferiore all'intero importo");
+                }
+                else
+                {
+                    NascondiErroriValidazione();
+
+                    if (string.IsNullOrEmpty(txt_NumeroRate.Text) || txt_NumeroRate.Text == "0") txt_NumeroRate.Text = "1";
+
+                    DateTime? dataPartenzaPagamento = datiScadenzario.DataProtocollo == null ? DateTime.Now : datiScadenzario.DataProtocollo;
+                    if (ddl_APartireDa.SelectedValue == "1") // INIZIO CALCOLO SCADENZA DA FINE MESE
+                    {
+                        dataPartenzaPagamento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1);
+                        dataPartenzaPagamento = ((DateTime)dataPartenzaPagamento).AddDays(-1);
+                    }
+
+                    int cadenzaGiorni = 30;
+                    if (!string.IsNullOrEmpty(txt_CadenzaGiorni.Text)) cadenzaGiorni = int.Parse(txt_CadenzaGiorni.Text);
+
+
+
+                    Scadenzario_BLL.Instance.CreaDatiScadenzario(datiScadenzario,
+                                                                 anticipoImporto,
+                                                                 anticipoImportoIva,
+                                                                 txt_Iva.Text,
+                                                                 txt_NumeroRate.Text,
+                                                                 ddl_Tipo.SelectedValue,
+                                                                 dataPartenzaPagamento,
+                                                                 cadenzaGiorni,
+                                                                 ref esito);
+
+                    if (esito.Codice != Esito.ESITO_OK)
+                    {
+                        if (esito.Codice != Esito.ESITO_KO_ERRORE_VALIDAZIONE) log.Error(esito.Descrizione);
+                        ShowError(esito.Descrizione);
+                    }
+
+                    ShowSuccess("Scadenza inserita correttamente");
+                    btnChiudiPopup_Click(null, null);
+
+                    ViewState[VIEWSTATE_ID_PROTOCOLLO] = null;
+
+                    RicercaScadenze();
+                }
+            }
+        }
+        #endregion
+
         #region MODIFICA
         protected void btnModificaScadenza_Click(object sender, EventArgs e)
         {
@@ -997,7 +999,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     }
                     else
                     {
-                        DateTime dataNuovaScadenza = DateTime.Parse(txt_DataVersamentoRiscossione.Text).AddDays(30);
+                        DateTime dataNuovaScadenza = dataVersamentoRiscossione.AddDays(30);
 
                         if (listaFigli.Count > 1)
                         {

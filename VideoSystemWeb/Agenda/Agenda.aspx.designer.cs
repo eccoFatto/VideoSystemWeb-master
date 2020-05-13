@@ -526,13 +526,13 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.UpdatePanel upRiepilogoGiornata;
         
         /// <summary>
-        /// Controllo RiepilogoGiornata1.
+        /// Controllo popupRiepilogoGiornata.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::VideoSystemWeb.REPORT.userControl.collaboratoriPerGiornata RiepilogoGiornata1;
+        protected global::VideoSystemWeb.Agenda.userControl.RiepilogoGiornata popupRiepilogoGiornata;
         
         /// <summary>
         /// Controllo lbl_backgroundAgenda.

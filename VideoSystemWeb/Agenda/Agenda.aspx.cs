@@ -1143,19 +1143,22 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnStampaGiornata_Click(object sender, EventArgs e)
         {
-            // STAMPA ELENCO RISORSE UTILIZZATE PER LAVORAZIONI DI UNA STESSA GIORNATA
-            Esito esito = popupRiepilogoGiornata.popolaPannelloGiornata();
-            if (esito.Codice == Esito.ESITO_OK)
-            {
-                upRiepilogoGiornata.Update();
+            //// STAMPA ELENCO RISORSE UTILIZZATE PER LAVORAZIONI DI UNA STESSA GIORNATA
+            //Esito esito = popupRiepilogoGiornata.popolaPannelloGiornata();
+            //if (esito.Codice == Esito.ESITO_OK)
+            //{
+            //    upRiepilogoGiornata.Update();
 
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
-                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriGiornata", script: "javascript: document.getElementById('modalGiornata').style.display='block'", addScriptTags: true);
-            }
-            else
-            {
-                ShowError(esito.Descrizione);
-            }
+            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+            //    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriGiornata", script: "javascript: document.getElementById('modalGiornata').style.display='block'", addScriptTags: true);
+            //}
+            //else
+            //{
+            //    ShowError(esito.Descrizione);
+            //}
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+            DateTime dataPartenza = SessionManager.DataSelezionata == null ? DateTime.Now : SessionManager.DataSelezionata;
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriGiornata", script: "window.open('/REPORT/ReportCollaboratoriPerGiornataNew.aspx?dataRicerca=" + dataPartenza.ToShortDateString()+ "','ReportCollaboratoriWindow', 'width = 800, height = 600')", addScriptTags: true);
 
         }
     }

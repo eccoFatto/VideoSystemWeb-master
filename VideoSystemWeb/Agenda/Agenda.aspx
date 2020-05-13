@@ -409,8 +409,8 @@
 
     <asp:UpdatePanel ID="upRiepilogoGiornata" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
         <ContentTemplate>
-            <%--<popup:RiepilogoGiornata ID="popupRiepilogoGiornata" runat="server" />--%>
-            <popup:ReportCollaboratori ID="RiepilogoGiornata1" runat="server" />
+            <popup:RiepilogoGiornata ID="popupRiepilogoGiornata" runat="server" />
+            <%--<popup:ReportCollaboratori ID="RiepilogoGiornata1" runat="server" />--%>
         </ContentTemplate>
     </asp:UpdatePanel>
 

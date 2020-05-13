@@ -22,10 +22,15 @@ namespace VideoSystemWeb.REPORT.userControl
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
-            {
-                // IMPOSTO LA DATA AL GIORNO DI OGGI
+            {   // IMPOSTO LA DATA AL GIORNO DI OGGI
                 DateTime dataRicerca = DateTime.Today;
                 tbDataRicerca.Text = dataRicerca.ToShortDateString();
+                if (Request.QueryString["dataRicerca"] != null) {
+                    // IMPOSTO LA DATA AL GIORNO PASSATO NELLA PAGINA
+                    dataRicerca = Convert.ToDateTime(Request.QueryString["dataRicerca"]);
+                    tbDataRicerca.Text = dataRicerca.ToShortDateString();
+                    btnRicercaCollaboratori_Click(null, null);
+                }
             }
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
 

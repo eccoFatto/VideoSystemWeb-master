@@ -509,14 +509,29 @@
                                 </div>
                                 <div id="div_DatiCreazioneScadenza" runat="server" class="w3-row-padding">
                                     <div id="div_CadenzaGiorni" runat="server" class="w3-quarter">
-                                        <label>Cadenza giorni</label>
-                                        <asp:TextBox ID="txt_CadenzaGiorni" runat="server" CssClass="w3-input w3-border" Text="" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                        <label>Posticipo pagamento (mesi)</label>
+                                        <%--<asp:TextBox ID="txt_CadenzaGiorni" runat="server" CssClass="w3-input w3-border" Text="" onkeypress="return onlyNumbers();"></asp:TextBox>--%>
+                                        <asp:DropDownList ID="ddl_PosticipoPagamento" runat="server"  Width="100%" CssClass="w3-input w3-border">
+                                            <asp:ListItem Value="0" Text="0"></asp:ListItem>
+                                            <asp:ListItem Value="1" Text="1"></asp:ListItem>
+                                            <asp:ListItem Value="2" Text="2"></asp:ListItem>
+                                            <asp:ListItem Value="3" Text="3"></asp:ListItem>
+                                            <asp:ListItem Value="4" Text="4"></asp:ListItem>
+                                            <asp:ListItem Value="5" Text="5"></asp:ListItem>
+                                            <asp:ListItem Value="6" Text="6"></asp:ListItem>
+                                            <asp:ListItem Value="7" Text="7"></asp:ListItem>
+                                            <asp:ListItem Value="8" Text="8"></asp:ListItem>
+                                            <asp:ListItem Value="9" Text="9"></asp:ListItem>
+                                            <asp:ListItem Value="10" Text="10"></asp:ListItem>
+                                            <asp:ListItem Value="11" Text="11"></asp:ListItem>
+                                            <asp:ListItem Value="12" Text="12"></asp:ListItem>
+                                        </asp:DropDownList>
                                     </div>
                                     <div id="div_APartireDa" runat="server" class="w3-quarter">
                                         <label>A partire da</label>
                                         <asp:DropDownList ID="ddl_APartireDa" runat="server"  Width="100%" CssClass="w3-input w3-border">
                                             <asp:ListItem Value="0" Text="Data fattura"></asp:ListItem>
-                                            <asp:ListItem Value="1" Text="Fine mese" Selected></asp:ListItem>
+                                            <asp:ListItem Value="1" Text="Fine mese" Selected="True"></asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
                                     <div id="div_Banca" runat="server" class="w3-half">

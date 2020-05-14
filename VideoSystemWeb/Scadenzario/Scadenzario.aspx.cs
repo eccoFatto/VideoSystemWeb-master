@@ -458,7 +458,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             scadenza.DataRiscossione = null;
             scadenza.Iva = decimal.Parse(txt_Iva.Text);
 
-            ValidaCampo(txt_CadenzaGiorni, 0, true, ref esito);
+            //ValidaCampo(txt_CadenzaGiorni, 0, true, ref esito);
             ValidaCampo(txt_ClienteFornitore, "", true, ref esito);
             ValidaCampo(txt_DataDocumento, DateTime.Now, true, ref esito);
 
@@ -501,7 +501,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_Iva.Attributes.Remove("disabled");
                     txt_NumeroRate.Attributes.Remove("disabled");
                     txt_AnticipoImporto.Attributes.Remove("disabled");
-                    txt_CadenzaGiorni.Attributes.Remove("disabled");
+                    //txt_CadenzaGiorni.Attributes.Remove("disabled");
                     ddl_APartireDa.Attributes.Remove("disabled");
 
                     break;
@@ -516,7 +516,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_Iva.Attributes.Add("disabled", "disabled");
                     txt_NumeroRate.Attributes.Add("disabled", "disabled");
                     txt_AnticipoImporto.Attributes.Add("disabled", "disabled");
-                    txt_CadenzaGiorni.Attributes.Add("disabled", "disabled");
+                    //txt_CadenzaGiorni.Attributes.Add("disabled", "disabled");
                     ddl_APartireDa.Attributes.Add("disabled", "disabled");
 
                     break;
@@ -555,7 +555,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             txt_ClienteFornitore.CssClass = txt_ClienteFornitore.CssClass.Replace("erroreValidazione", "");
             txt_DataDocumento.CssClass = txt_DataDocumento.CssClass.Replace("erroreValidazione", "");
             txt_ImportoIva.CssClass = txt_ImportoDocumento.CssClass.Replace("erroreValidazione", "");
-            txt_CadenzaGiorni.CssClass = txt_CadenzaGiorni.CssClass.Replace("erroreValidazione", "");
+            //txt_CadenzaGiorni.CssClass = txt_CadenzaGiorni.CssClass.Replace("erroreValidazione", "");
 
             txt_VersatoIva.CssClass = txt_Versato.CssClass.Replace("erroreValidazione", "");
             txt_IvaModifica.CssClass = txt_IvaModifica.CssClass.Replace("erroreValidazione", "");
@@ -576,6 +576,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             ddl_Tipo.SelectedIndex =
             ddl_APartireDa.SelectedIndex =
             ddl_Banca.SelectedIndex = 0;
+            ddl_PosticipoPagamento.SelectedIndex = 0;
 
             txt_ClienteFornitore.Text =
             txt_DataDocumento.Text =
@@ -583,8 +584,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             txt_ImportoDocumento.Text =
             txt_ImportoIva.Text =
             txt_NumeroRate.Text =
-            txt_AnticipoImporto.Text =
-            txt_CadenzaGiorni.Text = string.Empty;
+            txt_AnticipoImporto.Text = string.Empty;
+            //txt_CadenzaGiorni.Text = string.Empty;
         }
 
         private void PulisciFiltriRicerca()
@@ -669,15 +670,26 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
                     if (string.IsNullOrEmpty(txt_NumeroRate.Text) || txt_NumeroRate.Text == "0") txt_NumeroRate.Text = "1";
 
-                    DateTime? dataPartenzaPagamento = datiScadenzario.DataProtocollo == null ? DateTime.Now : datiScadenzario.DataProtocollo;
-                    if (ddl_APartireDa.SelectedValue == "1") // INIZIO CALCOLO SCADENZA DA FINE MESE
+                    int posticipoPagamento = int.Parse(ddl_PosticipoPagamento.SelectedValue);
+                    //DateTime? dataPartenzaPagamento = datiScadenzario.DataProtocollo == null ? DateTime.Now : datiScadenzario.DataProtocollo;
+                    
+                    DateTime dataPartenzaPagamento;
+                    
+                    if (ddl_APartireDa.SelectedValue == "0") // INIZIO CALCOLO SCADENZA DATA FATTURA
                     {
-                        dataPartenzaPagamento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1);
-                        dataPartenzaPagamento = ((DateTime)dataPartenzaPagamento).AddDays(-1);
+                        dataPartenzaPagamento = datiScadenzario.DataProtocollo == null ? DateTime.Now : (DateTime)datiScadenzario.DataProtocollo;
                     }
+                    else  // INIZIO CALCOLO SCADENZA DA FINE MESE
+                    {
+                        //dataPartenzaPagamento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1);
+                        dataPartenzaPagamento = DateTime.Now;
+                    }
+                    //prendo ultimo giorno del mese successivo
+                    dataPartenzaPagamento = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(posticipoPagamento + 1);
+                    dataPartenzaPagamento = ((DateTime)dataPartenzaPagamento).AddDays(-1);
 
                     int cadenzaGiorni = 30;
-                    if (!string.IsNullOrEmpty(txt_CadenzaGiorni.Text)) cadenzaGiorni = int.Parse(txt_CadenzaGiorni.Text);
+                    //if (!string.IsNullOrEmpty(txt_CadenzaGiorni.Text)) cadenzaGiorni = int.Parse(txt_CadenzaGiorni.Text);
 
 
 

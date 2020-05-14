@@ -78,7 +78,7 @@ namespace VideoSystemWeb.BLL
             Scadenzario_DAL.Instance.CancellaFigli_AggiornaDatiScadenzario(listaFigliScadenza, scadenza, ref esito);
         }
 
-        public void CreaDatiScadenzario(DatiScadenzario scadenza, string _acconto, string _accontoIva, string _iva, string _numeroRate, string tipoScadenza, DateTime? dataPartenzaPagamento, int cadenzaGiorni, ref Esito esito)
+        public void CreaDatiScadenzario(DatiScadenzario scadenza, string _acconto, string _accontoIva, string _iva, string _numeroRate, string tipoScadenza, DateTime dataPartenzaPagamento, int cadenzaGiorni, ref Esito esito)
         {
             decimal accontoIva = string.IsNullOrEmpty(_accontoIva) ? 0 : decimal.Parse(_accontoIva);
             decimal ivaDecimal = string.IsNullOrEmpty(_iva) ? 0 : decimal.Parse(_iva);
@@ -141,7 +141,9 @@ namespace VideoSystemWeb.BLL
 
             for (int i = 1; i <= numeroRate; i++)
             {
-                scadenza.DataScadenza = ((DateTime)dataPartenzaPagamento).AddDays(cadenzaGiorni * i);
+                //scadenza.DataScadenza = ((DateTime)dataPartenzaPagamento).AddDays(cadenzaGiorni * i);
+                DateTime scadenzaRata = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(i + 1);// ((DateTime)dataPartenzaPagamento).AddMonths(i+1);
+                scadenza.DataScadenza = scadenzaRata.AddDays(-1);
 
                 Scadenzario_DAL.Instance.CreaDatiScadenzario(scadenza, ref esito);
             }

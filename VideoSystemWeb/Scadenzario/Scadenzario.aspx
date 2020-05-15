@@ -502,10 +502,10 @@
                                         <label>Numero rate</label>
                                         <asp:TextBox ID="txt_NumeroRate" runat="server" MaxLength="3" CssClass="w3-input w3-border" placeholder="1" Text="" onkeypress="return onlyNumbers();"/>
                                     </div>
-                                    <div id="div_AnticipoImporto" runat="server" class="w3-col" style="width:25%">
+                                    <%--<div id="div_AnticipoImporto" runat="server" class="w3-col" style="width:25%">
                                         <label>Anticipo importo</label>
                                         <asp:TextBox ID="txt_AnticipoImporto" runat="server" MaxLength="10" CssClass="w3-input w3-border w3-right-align" placeholder="0" Text="" onkeypress="return onlyNumbers();" DataFormatString="{0:N2}"></asp:TextBox>
-                                    </div>
+                                    </div>--%>
                                 </div>
                                 <div id="div_DatiCreazioneScadenza" runat="server" class="w3-row-padding">
                                     <div id="div_CadenzaGiorni" runat="server" class="w3-quarter">

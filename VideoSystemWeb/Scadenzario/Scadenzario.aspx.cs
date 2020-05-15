@@ -500,7 +500,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_ImportoDocumento.Attributes.Remove("ReadOnly");
                     txt_Iva.Attributes.Remove("disabled");
                     txt_NumeroRate.Attributes.Remove("disabled");
-                    txt_AnticipoImporto.Attributes.Remove("disabled");
+                    //txt_AnticipoImporto.Attributes.Remove("disabled");
                     //txt_CadenzaGiorni.Attributes.Remove("disabled");
                     ddl_APartireDa.Attributes.Remove("disabled");
 
@@ -515,7 +515,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_ImportoDocumento.Attributes.Add("ReadOnly", "ReadOnly");
                     txt_Iva.Attributes.Add("disabled", "disabled");
                     txt_NumeroRate.Attributes.Add("disabled", "disabled");
-                    txt_AnticipoImporto.Attributes.Add("disabled", "disabled");
+                    //txt_AnticipoImporto.Attributes.Add("disabled", "disabled");
                     //txt_CadenzaGiorni.Attributes.Add("disabled", "disabled");
                     ddl_APartireDa.Attributes.Add("disabled", "disabled");
 
@@ -583,8 +583,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             txt_NumeroDocumento.Text =
             txt_ImportoDocumento.Text =
             txt_ImportoIva.Text =
-            txt_NumeroRate.Text =
-            txt_AnticipoImporto.Text = string.Empty;
+            txt_NumeroRate.Text = string.Empty;
+            //txt_AnticipoImporto.Text = 
             //txt_CadenzaGiorni.Text = string.Empty;
         }
 
@@ -656,7 +656,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
             DatiScadenzario datiScadenzario = CreaOggettoDatiScadenzario(ref esito);
 
-            string anticipoImportoIva = string.IsNullOrWhiteSpace(txt_AnticipoImporto.Text) ? "0" : txt_AnticipoImporto.Text;
+            //anticipo importo è stato disattivato
+            string anticipoImportoIva = "0";// string.IsNullOrWhiteSpace(txt_AnticipoImporto.Text) ? "0" : txt_AnticipoImporto.Text;
             decimal ivaDecimal = decimal.Parse(txt_Iva.Text);
             string anticipoImporto = (decimal.Parse(anticipoImportoIva) / (1 + (ivaDecimal / 100))).ToString();
 

@@ -465,24 +465,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_NumeroRate;
 
         /// <summary>
-        /// Controllo div_AnticipoImporto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_AnticipoImporto;
-
-        /// <summary>
-        /// Controllo txt_AnticipoImporto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_AnticipoImporto;
-
-        /// <summary>
         /// Controllo div_DatiCreazioneScadenza.
         /// </summary>
         /// <remarks>

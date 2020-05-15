@@ -646,6 +646,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
             ddl_fattura.SelectedIndex = 0;
 
+            ddl_APartireDa.SelectedIndex = 1;
+
             pnlContainer.Visible = true;
         }
 

@@ -39,10 +39,10 @@ namespace VideoSystemWeb.DAL
             List<StatisticheRicavi> listaStatisticheRicavi = new List<StatisticheRicavi>();
 
             string filtri = string.Empty;
-            filtri += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale = '" + filtroCliente + "' ";
-            filtri += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione = '" + filtroProduzione + "' ";
-            filtri += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione = '" + filtroLavorazione + "' ";
-            filtri += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione = '" + filtroContratto + "' ";
+            filtri += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente + "%' ";
+            filtri += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione + "%' ";
+            filtri += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
+            filtri += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
             if (fatturato != null)
             {
                 filtri += (bool)fatturato ? "and e.protocollo_riferimento is not null " : "and e.protocollo_riferimento is null ";
@@ -120,10 +120,10 @@ namespace VideoSystemWeb.DAL
             List<StatisticheRicavi> listaStatisticheRicavi = new List<StatisticheRicavi>();
 
             string filtri = string.Empty;
-            filtri += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale = '" + filtroCliente + "' ";
-            filtri += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione = '" + filtroProduzione + "' ";
-            filtri += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione = '" + filtroLavorazione + "' ";
-            filtri += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione = '" + filtroContratto + "' ";
+            filtri += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente + "%' ";
+            filtri += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione + "%' ";
+            filtri += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
+            filtri += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
 
             filtri += string.IsNullOrWhiteSpace(filtroGenere) ? "" : " AND d.idTipoGenere = '" + filtroGenere + "' ";
             filtri += string.IsNullOrWhiteSpace(filtroGruppo) ? "" : " AND d.idTipoGruppo = '" + filtroGruppo + "' ";

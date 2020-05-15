@@ -18,7 +18,11 @@ namespace VideoSystemWeb.STATISTICHE
             if (!IsPostBack)
             {
                 CaricaCombo();
+
+                ddlFatturato.SelectedIndex = 1;
             }
+
+            
 
             #region GRIGLIA CON RAGGRUPPAMENTO RIGHE
             GestioneRaggruppamentoRighe();
@@ -122,56 +126,56 @@ namespace VideoSystemWeb.STATISTICHE
 
         private void CaricaCombo()
         {
-            gv_statistiche.DataSource = null;
-            gv_statistiche.DataBind();
+            //gv_statistiche.DataSource = null;
+            //gv_statistiche.DataBind();
 
 
-            Esito esito = new Esito();
-            string filtroNomeCliente = hf_NomeCliente.Value;
-            string filtroNomeProduzione = hf_NomeProduzione.Value;
-            string filtroNomeLavorazione = hf_NomeLavorazione.Value;
-            string filtroNomeContratto = hf_NomeContratto.Value;
+            //Esito esito = new Esito();
+            //string filtroNomeCliente = hf_NomeCliente.Value;
+            //string filtroNomeProduzione = hf_NomeProduzione.Value;
+            //string filtroNomeLavorazione = hf_NomeLavorazione.Value;
+            //string filtroNomeContratto = hf_NomeContratto.Value;
 
-            List<StatisticheRicavi> listaStatisticheRicavi = Statistiche_BLL.Instance.GetStatisticheRicavi(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, null, null, null, ref esito);
+            //List<StatisticheRicavi> listaStatisticheRicavi = Statistiche_BLL.Instance.GetStatisticheRicavi(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, null, null, null, ref esito);
 
-            #region CLIENTE 
-            List<string> listaClienti = listaStatisticheRicavi.Select(item => item.Cliente).Distinct().ToList();
-            elencoClienti.InnerHtml = string.Empty;
-            PopolaDDLGenerico(elencoClienti, listaClienti, "filtroCliente");
-            #endregion
+            //#region CLIENTE 
+            //List<string> listaClienti = listaStatisticheRicavi.Select(item => item.Cliente).Distinct().ToList();
+            //elencoClienti.InnerHtml = string.Empty;
+            //PopolaDDLGenerico(elencoClienti, listaClienti, "filtroCliente");
+            //#endregion
 
-            #region PRODUZIONE 
-            List<string> listaProduzioni = listaStatisticheRicavi.Select(item => item.Produzione).Distinct().ToList();
-            elencoProduzioni.InnerHtml = string.Empty;
-            PopolaDDLGenerico(elencoProduzioni, listaProduzioni, "filtroProduzione");
-            #endregion
+            //#region PRODUZIONE 
+            //List<string> listaProduzioni = listaStatisticheRicavi.Select(item => item.Produzione).Distinct().ToList();
+            //elencoProduzioni.InnerHtml = string.Empty;
+            //PopolaDDLGenerico(elencoProduzioni, listaProduzioni, "filtroProduzione");
+            //#endregion
 
-            #region LAVORAZIONE
-            List<string> listaLavorazioni = listaStatisticheRicavi.Select(item => item.Lavorazione).Distinct().ToList();
-            elencoLavorazioni.InnerHtml = string.Empty;
-            PopolaDDLGenerico(elencoLavorazioni, listaLavorazioni, "filtroLavorazione");
-            #endregion
+            //#region LAVORAZIONE
+            //List<string> listaLavorazioni = listaStatisticheRicavi.Select(item => item.Lavorazione).Distinct().ToList();
+            //elencoLavorazioni.InnerHtml = string.Empty;
+            //PopolaDDLGenerico(elencoLavorazioni, listaLavorazioni, "filtroLavorazione");
+            //#endregion
 
-            #region CONTRATTI 
-            List<string> listaContratti = listaStatisticheRicavi.Select(item => item.Contratto).Distinct().ToList();
-            elencoContratti.InnerHtml = string.Empty;
-            PopolaDDLGenerico(elencoContratti, listaContratti, "filtroContratto");
-            #endregion
+            //#region CONTRATTI 
+            //List<string> listaContratti = listaStatisticheRicavi.Select(item => item.Contratto).Distinct().ToList();
+            //elencoContratti.InnerHtml = string.Empty;
+            //PopolaDDLGenerico(elencoContratti, listaContratti, "filtroContratto");
+            //#endregion
 
-            ddl_Cliente.Text = listaClienti.Contains(filtroNomeCliente) ? filtroNomeCliente : "";
-            ddl_Produzione.Text = listaProduzioni.Contains(filtroNomeProduzione) ? filtroNomeProduzione : "";
-            ddl_Lavorazione.Text = listaLavorazioni.Contains(filtroNomeLavorazione) ? filtroNomeLavorazione : "";
-            ddl_Contratto.Text = listaContratti.Contains(filtroNomeContratto) ? filtroNomeContratto : "";
+            //ddl_Cliente.Text = listaClienti.Contains(filtroNomeCliente) ? filtroNomeCliente : "";
+            //ddl_Produzione.Text = listaProduzioni.Contains(filtroNomeProduzione) ? filtroNomeProduzione : "";
+            //ddl_Lavorazione.Text = listaLavorazioni.Contains(filtroNomeLavorazione) ? filtroNomeLavorazione : "";
+            //ddl_Contratto.Text = listaContratti.Contains(filtroNomeContratto) ? filtroNomeContratto : "";
         }
 
         protected void btnEseguiStatistica_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
 
-            string filtroNomeCliente = hf_NomeCliente.Value;
-            string filtroNomeProduzione = hf_NomeProduzione.Value;
-            string filtroNomeLavorazione = hf_NomeLavorazione.Value;
-            string filtroNomeContratto = hf_NomeContratto.Value;
+            string filtroNomeCliente = txt_Cliente.Text;// hf_NomeCliente.Value;
+            string filtroNomeProduzione = txt_Produzione.Text;// hf_NomeProduzione.Value;
+            string filtroNomeLavorazione = txt_Lavorazione.Text;// hf_NomeLavorazione.Value;
+            string filtroNomeContratto = txt_Contratto.Text;// hf_NomeContratto.Value;
 
             bool? isFatturato;
             if (string.IsNullOrEmpty(ddlFatturato.SelectedValue))

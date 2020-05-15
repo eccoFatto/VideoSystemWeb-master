@@ -33,112 +33,40 @@ namespace VideoSystemWeb.STATISTICHE
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
 
         /// <summary>
-        /// Controllo hf_NomeCliente.
+        /// Controllo txt_Cliente.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_NomeCliente;
+        protected global::System.Web.UI.WebControls.TextBox txt_Cliente;
 
         /// <summary>
-        /// Controllo ddl_Cliente.
+        /// Controllo txt_Produzione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ddl_Cliente;
+        protected global::System.Web.UI.WebControls.TextBox txt_Produzione;
 
         /// <summary>
-        /// Controllo elencoClienti.
+        /// Controllo txt_Lavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoClienti;
+        protected global::System.Web.UI.WebControls.TextBox txt_Lavorazione;
 
         /// <summary>
-        /// Controllo hf_NomeProduzione.
+        /// Controllo txt_Contratto.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_NomeProduzione;
-
-        /// <summary>
-        /// Controllo ddl_Produzione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ddl_Produzione;
-
-        /// <summary>
-        /// Controllo elencoProduzioni.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoProduzioni;
-
-        /// <summary>
-        /// Controllo hf_NomeLavorazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_NomeLavorazione;
-
-        /// <summary>
-        /// Controllo ddl_Lavorazione.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ddl_Lavorazione;
-
-        /// <summary>
-        /// Controllo elencoLavorazioni.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoLavorazioni;
-
-        /// <summary>
-        /// Controllo hf_NomeContratto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hf_NomeContratto;
-
-        /// <summary>
-        /// Controllo ddl_Contratto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ddl_Contratto;
-
-        /// <summary>
-        /// Controllo elencoContratti.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elencoContratti;
+        protected global::System.Web.UI.WebControls.TextBox txt_Contratto;
 
         /// <summary>
         /// Controllo ddl_Genere.

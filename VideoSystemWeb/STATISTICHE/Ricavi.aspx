@@ -15,17 +15,21 @@
         // AZZERO TUTTI I CAMPI RICERCA
         function azzeraCampiRicerca() {
             
-            $("#<%=hf_NomeCliente.ClientID%>").val('');
-            $("#<%=ddl_Cliente.ClientID%>").val('');
+            <%--$("#<%=hf_NomeCliente.ClientID%>").val('');
+            $("#<%=ddl_Cliente.ClientID%>").val('');--%>
+            $("#<%=txt_Cliente.ClientID%>").val('');
 
-            $("#<%=hf_NomeProduzione.ClientID%>").val('');
-            $("#<%=ddl_Produzione.ClientID%>").val('');
+            <%--$("#<%=hf_NomeProduzione.ClientID%>").val('');
+            $("#<%=ddl_Produzione.ClientID%>").val('');--%>
+            $("#<%=txt_Produzione.ClientID%>").val('');
 
-            $("#<%=hf_NomeLavorazione.ClientID%>").val('');
-            $("#<%=ddl_Lavorazione.ClientID%>").val('');
+            <%--$("#<%=hf_NomeLavorazione.ClientID%>").val('');
+            $("#<%=ddl_Lavorazione.ClientID%>").val('');--%>
+            $("#<%=txt_Lavorazione.ClientID%>").val('');
 
-            $("#<%=hf_NomeContratto.ClientID%>").val('');
-            $("#<%=ddl_Contratto.ClientID%>").val('');
+           <%-- $("#<%=hf_NomeContratto.ClientID%>").val('');
+            $("#<%=ddl_Contratto.ClientID%>").val('');--%>
+            $("#<%=txt_Contratto.ClientID%>").val('');
 
             $("#<%=ddlFatturato.ClientID%>").val('1');
 
@@ -39,7 +43,7 @@
             <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>
         }
 
-        Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+        <%--Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
             $("#<%=ddl_Cliente.ClientID%>").val(($("#<%=hf_NomeCliente.ClientID%>").val()));
             $("#<%=ddl_Produzione.ClientID%>").val($("#<%=hf_NomeProduzione.ClientID%>").val());
             $("#<%=ddl_Lavorazione.ClientID%>").val($("#<%=hf_NomeLavorazione.ClientID%>").val());
@@ -59,7 +63,7 @@
                 $("#<%=ddl_Cliente.ClientID%>").attr("title", $(e.target).text());
 
                 <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%> //per eliminare aggiornamento filtri commentare questa riga 
-            });
+            <%--});
 
             // GESTIONE DROPDOWN PRODUZIONE
             $("#filtroProduzione").on("keyup", function () {
@@ -73,8 +77,8 @@
                 $("#<%=ddl_Produzione.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Produzione.ClientID%>").attr("title", $(e.target).text());
 
-                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga 
-            });
+                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga
+            <%--});
 
             // GESTIONE DROPDOWN LAVORAZIONE
             $("#filtroLavorazione").on("keyup", function () {
@@ -88,8 +92,8 @@
                 $("#<%=ddl_Lavorazione.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Lavorazione.ClientID%>").attr("title", $(e.target).text());
 
-                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga 
-            });
+                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga
+            <%--});
 
             // GESTIONE DROPDOWN CONTRATTO
             $("#filtroContratto").on("keyup", function () {
@@ -103,9 +107,9 @@
                 $("#<%=ddl_Contratto.ClientID%>").val($(e.target).text());
                 $("#<%=ddl_Contratto.ClientID%>").attr("title", $(e.target).text());
 
-                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga 
-            });
-        });
+                <%--$("#<%=btn_aggiornaFiltri.ClientID%>").click();--%>  //per eliminare aggiornamento filtri commentare questa riga
+            <%--});
+        });--%>
     </script>
 
     <label><asp:Label ID="lblStatisticaRicavi" runat="server" Text="STATISTICA RICAVI" ForeColor="Teal"></asp:Label></label>
@@ -116,38 +120,42 @@
             <div class="w3-row-padding">
                 <div class="w3-quarter">
                     <label>Cliente</label>
-                    <div id="divCliente" class="dropdown ">
+                    <%--<div id="divCliente" class="dropdown ">
                         <asp:HiddenField ID="hf_NomeCliente" runat="server" Value=""/>
                         <asp:Button ID="ddl_Cliente" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
                         <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
-                    </div>
+                    </div>--%>
+                    <asp:TextBox ID="txt_Cliente" runat="server"  Width="100%"  class="w3-input w3-border " />
                 </div>
 
                 <div class="w3-quarter">
                     <label>Produzione</label>
-                    <div id="divProduzione" class="dropdown ">
+                    <%--<div id="divProduzione" class="dropdown ">
                         <asp:HiddenField ID="hf_NomeProduzione" runat="server" Value="" />
                         <asp:Button ID="ddl_Produzione" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divProduzione" Text="" Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
                         <ul id="elencoProduzioni" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
-                    </div>
+                    </div>--%>
+                    <asp:TextBox ID="txt_Produzione" runat="server"  Width="100%"  class="w3-input w3-border " />
                 </div>
 
                 <div class="w3-quarter">
                     <label>Lavorazione</label>
-                    <div id="divLavorazione" class="dropdown ">
+                    <%--<div id="divLavorazione" class="dropdown ">
                         <asp:HiddenField ID="hf_NomeLavorazione" runat="server" Value="" />
                         <asp:Button ID="ddl_Lavorazione" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divLavorazione" Text="" Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
                         <ul id="elencoLavorazioni" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
-                    </div>
+                    </div>--%>
+                    <asp:TextBox ID="txt_Lavorazione" runat="server"  Width="100%"  class="w3-input w3-border " />
                 </div>
 
                 <div class="w3-quarter">
                     <label>Contratto</label>
-                    <div id="divContratto" class="dropdown ">
+                    <%--<div id="divContratto" class="dropdown ">
                         <asp:HiddenField ID="hf_NomeContratto" runat="server" Value="" />
                         <asp:Button ID="ddl_Contratto" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divContratto" Text="" Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
                         <ul id="elencoContratti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
-                    </div>
+                    </div>--%>
+                    <asp:TextBox ID="txt_Contratto" runat="server"  Width="100%"  class="w3-input w3-border " />
                 </div>
             </div>
 
@@ -156,7 +164,7 @@
                     <label>Fatturato</label>
                     <asp:DropDownList ID="ddlFatturato" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
                         <asp:ListItem Value="" Text="<tutti>" />
-                        <asp:ListItem Value="1" Text="Si" Selected/>
+                        <asp:ListItem Value="1" Text="Si" />
                         <asp:ListItem Value="0" Text="No" />
                     </asp:DropDownList>
                 </div>
@@ -196,7 +204,7 @@
                             <asp:Button ID="btnEseguiStatistica" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnEseguiStatistica_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
                         </div>
                         <div class="w3-half">
-                            <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicerca(); return false;" />
+                            <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicerca();" OnClick="btnEseguiStatistica_Click"/>
                         </div>
                     </div>
                 </div>

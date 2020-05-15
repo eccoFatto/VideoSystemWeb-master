@@ -687,7 +687,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                         dataPartenzaPagamento = DateTime.Now;
                     }
                     //prendo ultimo giorno del mese successivo
-                    dataPartenzaPagamento = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(posticipoPagamento + 1);
+                    dataPartenzaPagamento = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(posticipoPagamento);
                     dataPartenzaPagamento = ((DateTime)dataPartenzaPagamento).AddDays(-1);
 
                     int cadenzaGiorni = 30;

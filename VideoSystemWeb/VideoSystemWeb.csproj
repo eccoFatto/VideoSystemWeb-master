@@ -279,8 +279,9 @@
     <Content Include="messaggioCambioPassword.html" />
     <Content Include="pageError.aspx" />
     <Content Include="Protocollo\Protocollo.aspx" />
+    <Content Include="REPORT\ReportCollaboratoriPerGiornataExt.aspx" />
+    <Content Include="REPORT\ReportCollaboratoriPerGiornataOld.aspx" />
     <Content Include="REPORT\ReportCollaboratoriPerGiornata.aspx" />
-    <Content Include="REPORT\ReportCollaboratoriPerGiornataNew.aspx" />
     <Content Include="REPORT\ReportTLTime.aspx" />
     <Content Include="REPORT\StampaCollaboratori.aspx" />
     <Content Include="REPORT\StampaConsulenteLavoro.aspx" />
@@ -881,19 +882,26 @@
     <Compile Include="Protocollo\Protocollo.aspx.designer.cs">
       <DependentUpon>Protocollo.aspx</DependentUpon>
     </Compile>
+    <Compile Include="REPORT\ReportCollaboratoriPerGiornataExt.aspx.cs">
+      <DependentUpon>ReportCollaboratoriPerGiornataExt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="REPORT\ReportCollaboratoriPerGiornataExt.aspx.designer.cs">
+      <DependentUpon>ReportCollaboratoriPerGiornataExt.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="REPORT\ReportCollaboratoriPerGiornataOld.aspx.cs">
+      <DependentUpon>ReportCollaboratoriPerGiornataOld.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="REPORT\ReportCollaboratoriPerGiornataOld.aspx.designer.cs">
+      <DependentUpon>ReportCollaboratoriPerGiornataOld.aspx</DependentUpon>
+    </Compile>
     <Compile Include="REPORT\ReportCollaboratoriPerGiornata.aspx.cs">
       <DependentUpon>ReportCollaboratoriPerGiornata.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="REPORT\ReportCollaboratoriPerGiornata.aspx.designer.cs">
       <DependentUpon>ReportCollaboratoriPerGiornata.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="REPORT\ReportCollaboratoriPerGiornataNew.aspx.cs">
-      <DependentUpon>ReportCollaboratoriPerGiornataNew.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="REPORT\ReportCollaboratoriPerGiornataNew.aspx.designer.cs">
-      <DependentUpon>ReportCollaboratoriPerGiornataNew.aspx</DependentUpon>
     </Compile>
     <Compile Include="REPORT\ReportTLTime.aspx.cs">
       <DependentUpon>ReportTLTime.aspx</DependentUpon>

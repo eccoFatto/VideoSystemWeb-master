@@ -8,6 +8,7 @@
 <%@ Register TagPrefix="popup" TagName="RiepilogoConsuntivo" Src="~/Agenda/userControl/RiepilogoConsuntivo.ascx" %>
 <%@ Register TagPrefix="popup" TagName="RiepilogoFattura" Src="~/Agenda/userControl/RiepilogoFattura.ascx" %>
 <%@ Register TagPrefix="popup" TagName="RiepilogoGiornata" Src="~/Agenda/userControl/RiepilogoGiornata.ascx" %>
+<%@ Register TagPrefix="popup" TagName="ReportCollaboratori" Src="~/REPORT/userControl/collaboratoriPerGiornata.ascx" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -271,7 +272,7 @@
                     <a href="/MAGAZZINO/Attrezzature.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Magazzino</a>
                 </div>
                 <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
-                    <asp:Button runat="server" CssClass="w3-bar-item w3-button w3-green w3-border w3-round" ID="btnStampaGiornata" Text="Stampa Giornata" OnClick="btnStampaGiornata_Click" style="width: 80%;" OnClientClick="$('.loader').show();" Visible="false" />
+                    <asp:Button runat="server" CssClass="w3-bar-item w3-button w3-green w3-border w3-round" ID="btnStampaGiornata" Text="Collab. per Giornata" OnClick="btnStampaGiornata_Click" style="width: 80%;" OnClientClick="$('.loader').show();" Visible="true" />
                 </div>
             </td>
         </tr>
@@ -359,6 +360,8 @@
                         <asp:Button ID="btnStampaFattura" runat="server" Text="Stampa Fattura" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaFattura_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnMagazzino" runat="server" Text="Magazzino" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnMagazzino_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
 
+                        <asp:Button ID="btnElencoLavoratoriPerGiornata" runat="server" Text="Collab. impegnati" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnElencoLavoratoriPerGiornata_Click" OnClientClick="$('.loader').show();" Visible="true" Style="padding: 7px 10px" />
+
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-yellow w3-round-large" OnClick="btn_chiudi_Click"  Style="padding: 7px 10px" />
 
@@ -409,6 +412,7 @@
     <asp:UpdatePanel ID="upRiepilogoGiornata" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
         <ContentTemplate>
             <popup:RiepilogoGiornata ID="popupRiepilogoGiornata" runat="server" />
+            <%--<popup:ReportCollaboratori ID="RiepilogoGiornata1" runat="server" />--%>
         </ContentTemplate>
     </asp:UpdatePanel>
 

@@ -12,29 +12,29 @@ using VideoSystemWeb.DAL;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace VideoSystemWeb.REPORT.userControl
+namespace VideoSystemWeb.REPORT
 {
-    public partial class collaboratoriPerGiornata : System.Web.UI.UserControl
+    public partial class ReportCollaboratoriPerGiornataOld : BasePage
     {
         BasePage basePage = new BasePage();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        protected void Page_PreInit(object sender, EventArgs e)
+        {
+            CheckIsMobile();
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
-            {   // IMPOSTO LA DATA AL GIORNO DI OGGI
+            {
+                // IMPOSTO LA DATA AL GIORNO DI OGGI
                 DateTime dataRicerca = DateTime.Today;
                 tbDataRicerca.Text = dataRicerca.ToShortDateString();
-                if (Request.QueryString["dataRicerca"] != null) {
-                    // IMPOSTO LA DATA AL GIORNO PASSATO NELLA PAGINA
-                    dataRicerca = Convert.ToDateTime(Request.QueryString["dataRicerca"]);
-                    tbDataRicerca.Text = dataRicerca.ToShortDateString();
-                    btnRicercaCollaboratori_Click(null, null);
-                }
             }
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
-
         }
+
         DataTable getLavorazioniDelGiorno(string sDataTmp)
         {
             DataTable dtRet = new DataTable();
@@ -62,11 +62,11 @@ namespace VideoSystemWeb.REPORT.userControl
                 queryRicercaLavorazioniDelGiorno = queryRicercaLavorazioniDelGiorno.Replace("@dataElaborazione", sDataTmp);
                 Esito esito = new Esito();
                 dtRet = Base_DAL.GetDatiBySql(queryRicercaLavorazioniDelGiorno, ref esito);
-
+                
             }
             catch (Exception ex)
             {
-                basePage.ShowError("Errore durante la ricerca delle lavorazioni del giorno " + sDataTmp + Environment.NewLine + ex.Message);
+                ShowError("Errore durante la ricerca delle lavorazioni del giorno " + sDataTmp + Environment.NewLine + ex.Message);
             }
             return dtRet;
         }
@@ -103,7 +103,7 @@ namespace VideoSystemWeb.REPORT.userControl
             }
             catch (Exception ex)
             {
-                basePage.ShowError("Errore durante la ricerca delle Qualifiche del giorno " + sDataTmp + Environment.NewLine + ex.Message);
+                ShowError("Errore durante la ricerca delle Qualifiche del giorno " + sDataTmp + Environment.NewLine + ex.Message);
             }
             return dtRet;
         }
@@ -143,7 +143,7 @@ namespace VideoSystemWeb.REPORT.userControl
                 Esito esito = new Esito();
 
                 dtRet = Base_DAL.GetDatiBySql(ricercaCollaboratori, ref esito);
-                if (dtRet != null && dtRet.Rows != null && dtRet.Rows.Count > 0)
+                if(dtRet!=null && dtRet.Rows!=null && dtRet.Rows.Count > 0)
                 {
                     foreach (DataRow rigaCollaboratore in dtRet.Rows)
                     {
@@ -155,7 +155,7 @@ namespace VideoSystemWeb.REPORT.userControl
             }
             catch (Exception ex)
             {
-                basePage.ShowError("Errore durante la ricerca dei collaboratori del giorno " + sDataTmp + Environment.NewLine + ex.Message);
+                ShowError("Errore durante la ricerca dei collaboratori del giorno " + sDataTmp + Environment.NewLine + ex.Message);
             }
 
             //if (elencoCollaboratori.Length > 2 && elencoCollaboratori.Substring(0, 2).Equals("\r\n")) elencoCollaboratori = elencoCollaboratori.Substring(2, elencoCollaboratori.Length - 2);
@@ -176,7 +176,7 @@ namespace VideoSystemWeb.REPORT.userControl
             DataTable dtLavorazioniDelGiorno = getLavorazioniDelGiorno(sDataTmp);
             Session["TaskTableLavorazioniDelGiorno"] = dtLavorazioniDelGiorno;
 
-            if (dtLavorazioniDelGiorno != null && dtLavorazioniDelGiorno.Rows != null && dtLavorazioniDelGiorno.Rows.Count > 0)
+            if (dtLavorazioniDelGiorno!=null && dtLavorazioniDelGiorno.Rows!=null && dtLavorazioniDelGiorno.Rows.Count>0)
             {
                 // CREO L'ELENCO DELLE COLONNE CON LE LAVORAZIONI TROVATE
                 DataTable dt = new DataTable();
@@ -206,7 +206,7 @@ namespace VideoSystemWeb.REPORT.userControl
                             string codLav = dtLavorazioniDelGiorno.Rows[i]["codice_lavoro"].ToString();
                             // ESTRAPOLO LE FIGURE
                             string elencoCollaboratori = getCollaboratoriByCodiceQualifica(sDataTmp, codLav, qualifica);
-                            dr[i + 1] = elencoCollaboratori;
+                            dr[i+1] = elencoCollaboratori;
                         }
                         //for (int i = 1; i < dt.Columns.Count; i++)
                         //{
@@ -249,7 +249,6 @@ namespace VideoSystemWeb.REPORT.userControl
         {
 
         }
-
 
     }
 }

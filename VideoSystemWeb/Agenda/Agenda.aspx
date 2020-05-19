@@ -154,6 +154,7 @@
                 $('#<%=btnStampaPianoEsterno.ClientID%>').hide();
                 $('#<%=btnStampaConsuntivo.ClientID%>').hide();
                 $('#<%=btnStampaFattura.ClientID%>').hide();
+                $('#<%=btnEliminaFattura.ClientID%>').hide();
 
             } else if (tipoName == 'Offerta') {
                 nomeElemento = '<%=tab_Offerta.ClientID%>';
@@ -177,6 +178,7 @@
                 $('#<%=btnStampaPianoEsterno.ClientID%>').hide();
                 $('#<%=btnStampaConsuntivo.ClientID%>').hide();
                 $('#<%=btnStampaFattura.ClientID%>').hide();
+                $('#<%=btnEliminaFattura.ClientID%>').hide();
 
             } else if (tipoName == 'Lavorazione') {
                 nomeElemento = '<%=tab_Lavorazione.ClientID%>';
@@ -194,6 +196,7 @@
                 $('#<%=btnStampaPianoEsterno.ClientID%>').show();
                 $('#<%=btnStampaConsuntivo.ClientID%>').show();
                 $('#<%=btnStampaFattura.ClientID%>').show();
+                $('#<%=btnEliminaFattura.ClientID%>').show();
             }
             if (document.getElementById(nomeElemento).className.indexOf("w3-red") == -1)
                 document.getElementById(nomeElemento).className += " w3-red";
@@ -358,6 +361,9 @@
                         <asp:Button ID="btnStampaPianoEsterno" runat="server" Text="Stampa Piano Esterno" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaPianoEsterno_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnStampaConsuntivo" runat="server" Text="Stampa Consuntivo" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaConsuntivo_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnStampaFattura" runat="server" Text="Stampa Fattura" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaFattura_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
+
+                        <asp:Button ID="btnEliminaFattura" runat="server" Text="Elimina Fattura" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnEliminaFattura_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
+
                         <asp:Button ID="btnMagazzino" runat="server" Text="Magazzino" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnMagazzino_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
 
                         <asp:Button ID="btnElencoLavoratoriPerGiornata" runat="server" Text="Collab. impegnati" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnElencoLavoratoriPerGiornata_Click" OnClientClick="$('.loader').show();" Visible="true" Style="padding: 7px 10px" />
@@ -422,4 +428,29 @@
             <asp:Label ID="lbl_sottotitoloBGAgenda" Text="Fare clic per tornare alla visualizzazione evento" style="font-size:20pt;"  runat="server" />
         </div>
     </div>
+
+    <!-- ELIMINA FATTURA -->
+    <div id="panelEliminaFattura" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
+
+        <div id="divEliminaFattura" class="w3-modal-content w3-card-4 round" style="position: relative; width: 40%; background-color: white;">
+            <div class="w3-row-padding">
+                <div class="w3-panel w3-red w3-center w3-round">
+                    <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Eliminazione Fattura</b> </h5>
+                    <span onclick="document.getElementById('<%= panelEliminaFattura.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                </div>
+                <div>
+                    Eliminando la fattura verranno eliminate anche le eventuali rate dello scadenzario associate.
+                    <br />
+                    Confermare l'operazione?
+                </div>
+                        
+            </div>
+            <br /><br />
+            <div class="w3-center" style="margin: 10px; position: relative; bottom:5px;width:96%;">
+                <asp:Button ID="btnOkEliminaFattura" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOkEliminaFattura_Click" />
+                <button onclick="document.getElementById('<%= panelEliminaFattura.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-gray w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+            </div>
+        </div>
+    </div>
+
 </asp:Content>

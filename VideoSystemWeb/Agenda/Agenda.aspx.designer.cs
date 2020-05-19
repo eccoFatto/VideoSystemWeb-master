@@ -382,6 +382,15 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.WebControls.Button btnStampaFattura;
         
         /// <summary>
+        /// Controllo btnEliminaFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminaFattura;
+        
+        /// <summary>
         /// Controllo btnMagazzino.
         /// </summary>
         /// <remarks>
@@ -560,5 +569,23 @@ namespace VideoSystemWeb.Agenda {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_sottotitoloBGAgenda;
+        
+        /// <summary>
+        /// Controllo panelEliminaFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelEliminaFattura;
+        
+        /// <summary>
+        /// Controllo btnOkEliminaFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOkEliminaFattura;
     }
 }

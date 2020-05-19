@@ -22127,3 +22127,12 @@ Modificare il valore in 1000,00 oppure selezionare 'Acconto'.
 2020-05-15 07:23:55,469 [20] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-15 21:10:23,708 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-15 21:14:59,517 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-19 21:40:45,861 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-19 21:45:02,731 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-19 21:48:36,743 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-19 21:50:51,105 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-19 21:52:53,209 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-19 22:02:52,368 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-19 22:16:50,038 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-19 22:21:17,821 [24] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-19 22:34:30,770 [17] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

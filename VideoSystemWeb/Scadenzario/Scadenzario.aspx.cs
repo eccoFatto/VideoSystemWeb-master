@@ -75,7 +75,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, idDatiProtocollo);
                     ddl_Tipo.SelectedValue = tipo;
                     txt_ClienteFornitore.Text = protocollo.Cliente;
-                    txt_DataDocumento.Text = protocollo.Data_inizio_lavorazione == null ? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_inizio_lavorazione).ToString("dd/MM/yyyy");
+                    txt_DataDocumento.Text = protocollo.Data_protocollo == null ? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_protocollo).ToString("dd/MM/yyyy"); //protocollo.Data_inizio_lavorazione == null ? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_inizio_lavorazione).ToString("dd/MM/yyyy");
                     txt_NumeroDocumento.Text = numeroDocumento;
 
                     txt_ImportoDocumento.Text = importo;
@@ -179,7 +179,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
                 Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, idDatiProtocollo);
                 txt_ClienteFornitore.Text = protocollo.Cliente;
-                txt_DataDocumento.Text = protocollo.Data_inizio_lavorazione == null ? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_inizio_lavorazione).ToString("dd/MM/yyyy");
+                txt_DataDocumento.Text = protocollo.Data_protocollo == null ? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_protocollo).ToString("dd/MM/yyyy");//protocollo.Data_inizio_lavorazione == null ? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_inizio_lavorazione).ToString("dd/MM/yyyy");
                 txt_NumeroDocumento.Text = protocollo.Protocollo_riferimento;
             }
             else

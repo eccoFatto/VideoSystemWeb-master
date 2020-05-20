@@ -33,7 +33,13 @@ namespace VideoSystemWeb.STATISTICHE
         private void GestioneRaggruppamentoRighe()
         {
             GridViewHelper helper = new GridViewHelper(this.gv_statistiche);
+            //string[] colonneRaggruppate = { "Cliente", "CodiceLavoro" };
+
             helper.RegisterGroup("Cliente", true, true);
+            helper.RegisterGroup("CodiceLavoro", true, true);
+            // helper.RegisterGroup(colonneRaggruppate, true, true);
+            //helper.ApplyGroupSort();
+
 
             helper.GroupHeader += new GroupEvent(Helper_GroupHeader);
             helper.GroupSummary += new GroupEvent(Helper_GroupSummary);
@@ -53,8 +59,17 @@ namespace VideoSystemWeb.STATISTICHE
 
         private void Helper_GroupHeader(string groupName, object[] values, GridViewRow row)
         {
-            row.BackColor = Color.LightGray;
-            row.Cells[0].Text = "&nbsp;&nbsp;<b>" + row.Cells[0].Text + "</b>";
+            if (groupName == "Cliente")
+            {
+                row.BackColor = Color.FromArgb(0, 64, 128);
+                row.ForeColor = Color.White;
+                row.Cells[0].Text = "&nbsp;&nbsp;<b>Cliente:&nbsp;" + row.Cells[0].Text + "</b>";
+            }
+            else if (groupName == "CodiceLavoro")
+            {
+                row.BackColor = Color.LightGray;
+                row.Cells[0].Text = "&nbsp;&nbsp;&nbsp;&nbsp;<i><b>Codice lavorazione:&nbsp;" + row.Cells[0].Text + "</b></i>";
+            }
         }
 
         private void Helper_GroupSummary(string groupName, object[] values, GridViewRow row)
@@ -214,7 +229,7 @@ namespace VideoSystemWeb.STATISTICHE
             string dataInizio = txt_PeriodoDa.Text;
             string dataFine = txt_PeriodoA.Text;
 
-            List<StatisticheRicavi> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, filtroGenere, filtroGruppo, filtroSottogruppo, isFatturato, dataInizio, dataFine, ref esito);
+            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, filtroGenere, filtroGruppo, filtroSottogruppo, isFatturato, dataInizio, dataFine, ref esito);
 
             if (listaStatisticheCosti.Count == 0)
             {

@@ -22136,3 +22136,55 @@ Modificare il valore in 1000,00 oppure selezionare 'Acconto'.
 2020-05-19 22:16:50,038 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-19 22:21:17,821 [24] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-19 22:34:30,770 [17] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 21:17:14,096 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 21:17:50,838 [6] ERROR VideoSystemWeb.BLL.Esito - Claudio - Statistiche_DAL.cs - GetStatisticheCosti Sintassi non corretta in prossimità di 'UNION'.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Statistiche_DAL.GetStatisticheCosti(String filtroCliente, String filtroProduzione, String filtroLavorazione, String filtroContratto, String filtroGenere, String filtroGruppo, String filtroSottogruppo, Nullable`1 fatturato, String dataInizio, String dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Statistiche_DAL.cs:riga 265
+2020-05-20 21:21:31,317 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 21:21:48,764 [6] ERROR VideoSystemWeb.BLL.Esito - Claudio - Statistiche_DAL.cs - GetStatisticheCosti Sintassi non corretta in prossimità della parola chiave 'by'.
+Sintassi non corretta in prossimità della parola chiave 'by'.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Statistiche_DAL.GetStatisticheCosti(String filtroCliente, String filtroProduzione, String filtroLavorazione, String filtroContratto, String filtroGenere, String filtroGruppo, String filtroSottogruppo, Nullable`1 fatturato, String dataInizio, String dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Statistiche_DAL.cs:riga 269
+2020-05-20 21:23:43,806 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 21:35:16,508 [16] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 21:41:34,104 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 21:49:18,030 [19] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 21:52:56,071 [20] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 21:57:44,669 [23] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 22:01:17,443 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 22:09:30,113 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 22:12:33,929 [21] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 22:13:38,601 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 22:23:30,645 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 22:27:21,729 [21] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-20 22:32:52,324 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -822,6 +823,7 @@
     <Compile Include="Entity\DatiBancari.cs" />
     <Compile Include="Entity\NoteOfferta.cs" />
     <Compile Include="Entity\AttrezzatureMagazzino.cs" />
+    <Compile Include="Entity\StatisticheCosti.cs" />
     <Compile Include="Entity\StatisticheRicavi.cs" />
     <Compile Include="Entity\Utenti.cs" />
     <Compile Include="Entity\Protocolli.cs" />

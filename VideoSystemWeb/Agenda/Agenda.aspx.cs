@@ -1181,22 +1181,32 @@ namespace VideoSystemWeb.Agenda
             if (listaProtocolli.Count > 0)
             {
                 string numeroFattura = "";
+                int idFattura = 0;
                 foreach (Protocolli protocollo in listaProtocolli)
                 {
                     if (protocollo.Destinatario == "Cliente")
                     {
                         numeroFattura = protocollo.Protocollo_riferimento;
+                        idFattura = Convert.ToInt32(protocollo.Id);
                          break;
                     }
                 }
                 if (!string.IsNullOrEmpty(numeroFattura))
                 {
                     // SE IL NUMERO FATTURA ESISTE LA DEVO CANCELLARE
-                    ShowSuccess("Fattura trovata: " + numeroFattura);
-                }
+                    esito = Protocolli_BLL.Instance.EliminaFattura(idFattura);
+                    if (esito.Codice > 0)
+                    {
+                        ShowError("Errore durante la cancellazione della fattura: " + numeroFattura + Environment.NewLine + esito.Descrizione);
+                    }
+                    else
+                    {
+                        ShowSuccess("Fattura n. " + numeroFattura + " Cancellata correttamente.");
+                    }
+                 }
                 else
                 {
-                    ShowWarning("Fattura NON Esistente!");
+                    ShowWarning("Fattura NON Trovata!");
                 }
             }
         }

@@ -700,72 +700,118 @@ namespace VideoSystemWeb.DAL
             return listaClientiFornitori;
         }
 
-        //public Esito EliminaFattura(string numeroFattura)
-        //{
-        //    Esito esito = new Esito();
-        //    try
-        //    {
-        //        using (SqlConnection con = new SqlConnection(sqlConstr))
-        //        {
-        //            using (SqlCommand StoreProc = new SqlCommand("DeleteFatturaByNumeroFattura"))
-        //            {
-        //                using (SqlDataAdapter sda = new SqlDataAdapter())
-        //                {
-        //                    SqlTransaction transaction;
-        //                    StoreProc.Connection = con;
-        //                    StoreProc.Connection.Open();
-        //                    // Start a local transaction.
-        //                    transaction = con.BeginTransaction("DeleteFattura");
+        public Esito EliminaFattura(int idProtocollo)
+        {
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteDatiScadenzarioByIdProtocollo"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            SqlTransaction transaction;
+                            StoreProc.Connection = con;
+                            StoreProc.Connection.Open();
+                            // Start a local transaction.
+                            transaction = con.BeginTransaction("DeleteFattura");
 
-        //                    try
-        //                    {
-        //                        StoreProc.Transaction = transaction;
+                            try
+                            {
+                                StoreProc.Transaction = transaction;
 
-        //                        //CostruisciSP_DeleteRateScadenzarioByNumeroFattura(StoreProc, sda, numeroFattura);
-        //                        //StoreProc.ExecuteNonQuery();
+                                CostruisciSP_DeleteDatiScadenzarioByIdProtocollo(StoreProc, sda, idProtocollo);
+                                StoreProc.ExecuteNonQuery();
 
-        //                        //CostruisciSP_DeleteProtocolloByNumeroFattura(StoreProc, sda, evento.LavorazioneCorrente.Id);
-        //                        //StoreProc.ExecuteNonQuery();
+                                CostruisciSP_DeleteProtocollo(StoreProc, sda, idProtocollo);
+                                StoreProc.ExecuteNonQuery();
 
+                                // Attempt to commit the transaction.
+                                transaction.Commit();
 
+                            }
+                            catch (Exception ex)
+                            {
+                                esito.Codice = Esito.ESITO_KO_ERRORE_UPDATE_TABELLA;
+                                esito.Descrizione = "Protocolli_DAL.cs - EliminaFattura" + Environment.NewLine + ex.Message;
 
-        //                        // Attempt to commit the transaction.
-        //                        transaction.Commit();
+                                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
 
-        //                        // aggiorno id della lavorazione corrente 
-        //                        SessionManager.EventoSelezionato.LavorazioneCorrente.Id = 0;
-        //                    }
-        //                    catch (Exception ex)
-        //                    {
-        //                        esito.Codice = Esito.ESITO_KO_ERRORE_UPDATE_TABELLA;
-        //                        esito.Descrizione = "Protocolli_DAL.cs - EliminaFattura" + Environment.NewLine + ex.Message;
+                                try
+                                {
+                                    transaction.Rollback();
+                                }
+                                catch (Exception ex2)
+                                {
+                                    esito.Descrizione += Environment.NewLine + "ERRORE ROLLBACK: " + ex2.Message;
+                                    log.Error(ex2.Message + Environment.NewLine + ex2.StackTrace);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Protocolli_DAL.cs - id Fattura " + idProtocollo.ToString() + Environment.NewLine + ex.Message;
 
-        //                        log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
 
-        //                        try
-        //                        {
-        //                            transaction.Rollback();
-        //                        }
-        //                        catch (Exception ex2)
-        //                        {
-        //                            esito.Descrizione += Environment.NewLine + "ERRORE ROLLBACK: " + ex2.Message;
-        //                            log.Error(ex2.Message + Environment.NewLine + ex2.StackTrace);
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-        //        esito.Descrizione = "Protocolli_DAL.cs - Fattura " + numeroFattura + Environment.NewLine + ex.Message;
+            return esito;
+        }
 
-        //        log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
-        //    }
+        protected static void CostruisciSP_DeleteDatiScadenzarioByIdProtocollo(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiProtocollo)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
 
-        //    return esito;
-        //}
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "DeleteDatiScadenzarioByIdProtocollo";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            SqlParameter parIdDatiProtocollo = new SqlParameter("@idDatiProtocollo", idDatiProtocollo);
+            parIdDatiProtocollo.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parIdDatiProtocollo);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+        }
+
+        protected static void CostruisciSP_DeleteProtocollo(SqlCommand StoreProc, SqlDataAdapter sda, int id)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "DeleteProtocollo";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            SqlParameter parId = new SqlParameter("@id", id);
+            parId.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parId);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
+
+        }
 
     }
 }

@@ -166,5 +166,12 @@ namespace VideoSystemWeb.BLL
         {
             return Protocolli_DAL.Instance.GetElencoLavorazioni(ref esito);
         }
+
+        public Esito EliminaFattura(int idProtocollo)
+        {
+            Esito esito = Protocolli_DAL.Instance.EliminaFattura(idProtocollo);
+
+            return esito;
+        }
     }
 }

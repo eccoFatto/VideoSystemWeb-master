@@ -681,7 +681,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = SessionManager.EventoSelezionato.id != 0;
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnMagazzino.Visible = false;
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnEliminaFattura.Visible = btnMagazzino.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_PREVISIONE_IMPEGNO);
                 }
@@ -701,6 +701,7 @@ namespace VideoSystemWeb.Agenda
                     btnStampaPianoEsterno.Visible = false;
                     btnStampaConsuntivo.Visible = false;
                     btnStampaFattura.Visible = false;
+                    btnEliminaFattura.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
@@ -716,7 +717,7 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = true;
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnMagazzino.Visible = true;
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnEliminaFattura.Visible = btnMagazzino.Visible = true;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
@@ -1158,21 +1159,19 @@ namespace VideoSystemWeb.Agenda
         protected void btnStampaGiornata_Click(object sender, EventArgs e)
         {
             //// STAMPA ELENCO RISORSE UTILIZZATE PER LAVORAZIONI DI UNA STESSA GIORNATA
-            //Esito esito = popupRiepilogoGiornata.popolaPannelloGiornata();
-            //if (esito.Codice == Esito.ESITO_OK)
-            //{
-            //    upRiepilogoGiornata.Update();
-
-            //    ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
-            //    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriGiornata", script: "javascript: document.getElementById('modalGiornata').style.display='block'", addScriptTags: true);
-            //}
-            //else
-            //{
-            //    ShowError(esito.Descrizione);
-            //}
             ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
             DateTime dataPartenza = SessionManager.DataSelezionata == null ? DateTime.Now : SessionManager.DataSelezionata;
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriGiornata", script: "window.open('/REPORT/ReportCollaboratoriPerGiornataExt.aspx?dataRicerca=" + dataPartenza.ToShortDateString()+ "','ReportCollaboratoriWindow', 'width = 800, height = 600')", addScriptTags: true);
+
+        }
+
+        protected void btnEliminaFattura_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "eliminaFattura", script: "javascript: document.getElementById('" + panelEliminaFattura.ClientID + "').style.display='block'", addScriptTags: true);
+        }
+
+        protected void btnOkEliminaFattura_Click(object sender, EventArgs e)
+        {
 
         }
     }

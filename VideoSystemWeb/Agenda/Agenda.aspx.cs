@@ -1172,7 +1172,33 @@ namespace VideoSystemWeb.Agenda
 
         protected void btnOkEliminaFattura_Click(object sender, EventArgs e)
         {
-
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "aggiornaAgenda", "aggiornaAgenda();", true);
+            // VEDO SE ESISTE IL NUMERO FATTURA
+            Protocolli protocolloFattura = new Protocolli();
+            Esito esito = new Esito();
+            int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
+            List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(SessionManager.EventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
+            if (listaProtocolli.Count > 0)
+            {
+                string numeroFattura = "";
+                foreach (Protocolli protocollo in listaProtocolli)
+                {
+                    if (protocollo.Destinatario == "Cliente")
+                    {
+                        numeroFattura = protocollo.Protocollo_riferimento;
+                         break;
+                    }
+                }
+                if (!string.IsNullOrEmpty(numeroFattura))
+                {
+                    // SE IL NUMERO FATTURA ESISTE LA DEVO CANCELLARE
+                    ShowSuccess("Fattura trovata: " + numeroFattura);
+                }
+                else
+                {
+                    ShowWarning("Fattura NON Esistente!");
+                }
+            }
         }
     }
 }

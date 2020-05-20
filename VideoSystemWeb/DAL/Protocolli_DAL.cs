@@ -699,5 +699,73 @@ namespace VideoSystemWeb.DAL
 
             return listaClientiFornitori;
         }
+
+        //public Esito EliminaFattura(string numeroFattura)
+        //{
+        //    Esito esito = new Esito();
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(sqlConstr))
+        //        {
+        //            using (SqlCommand StoreProc = new SqlCommand("DeleteFatturaByNumeroFattura"))
+        //            {
+        //                using (SqlDataAdapter sda = new SqlDataAdapter())
+        //                {
+        //                    SqlTransaction transaction;
+        //                    StoreProc.Connection = con;
+        //                    StoreProc.Connection.Open();
+        //                    // Start a local transaction.
+        //                    transaction = con.BeginTransaction("DeleteFattura");
+
+        //                    try
+        //                    {
+        //                        StoreProc.Transaction = transaction;
+
+        //                        //CostruisciSP_DeleteRateScadenzarioByNumeroFattura(StoreProc, sda, numeroFattura);
+        //                        //StoreProc.ExecuteNonQuery();
+
+        //                        //CostruisciSP_DeleteProtocolloByNumeroFattura(StoreProc, sda, evento.LavorazioneCorrente.Id);
+        //                        //StoreProc.ExecuteNonQuery();
+
+
+
+        //                        // Attempt to commit the transaction.
+        //                        transaction.Commit();
+
+        //                        // aggiorno id della lavorazione corrente 
+        //                        SessionManager.EventoSelezionato.LavorazioneCorrente.Id = 0;
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        esito.Codice = Esito.ESITO_KO_ERRORE_UPDATE_TABELLA;
+        //                        esito.Descrizione = "Protocolli_DAL.cs - EliminaFattura" + Environment.NewLine + ex.Message;
+
+        //                        log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+
+        //                        try
+        //                        {
+        //                            transaction.Rollback();
+        //                        }
+        //                        catch (Exception ex2)
+        //                        {
+        //                            esito.Descrizione += Environment.NewLine + "ERRORE ROLLBACK: " + ex2.Message;
+        //                            log.Error(ex2.Message + Environment.NewLine + ex2.StackTrace);
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+        //        esito.Descrizione = "Protocolli_DAL.cs - Fattura " + numeroFattura + Environment.NewLine + ex.Message;
+
+        //        log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+        //    }
+
+        //    return esito;
+        //}
+
     }
 }

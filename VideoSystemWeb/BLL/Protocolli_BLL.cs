@@ -94,6 +94,13 @@ namespace VideoSystemWeb.BLL
             return sREt;
         }
 
+        public Esito resetNumeroFattura(int annoFattura, int numeroFattura)
+        {
+            Esito esito = Base_DAL.ResetNumeroFattura(annoFattura, numeroFattura);
+
+            return esito;
+        }
+
         public Esito resetProcotollo(int protocolloIniziale)
         {
             Esito esito = Base_DAL.ResetProtocollo(protocolloIniziale);
@@ -119,6 +126,7 @@ namespace VideoSystemWeb.BLL
             }
             return ret;
         }
+
         public int getCodiceLavorazione(ref Esito esito)
         {
             int iREt = Base_DAL.GetCodiceLavorazione(ref esito);
@@ -167,9 +175,9 @@ namespace VideoSystemWeb.BLL
             return Protocolli_DAL.Instance.GetElencoLavorazioni(ref esito);
         }
 
-        public Esito EliminaFattura(int idProtocollo)
+        public Esito EliminaFattura(int idProtocollo, string numeroFattura)
         {
-            Esito esito = Protocolli_DAL.Instance.EliminaFattura(idProtocollo);
+            Esito esito = Protocolli_DAL.Instance.EliminaFattura(idProtocollo, numeroFattura);
 
             return esito;
         }

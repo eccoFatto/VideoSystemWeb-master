@@ -980,6 +980,61 @@ namespace VideoSystemWeb.DAL
             return ret;
         }
 
+        public static Esito ResetNumeroFattura(int anno, int numFatt)
+        {
+            Esito esito = new Esito();
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("resetNumeroFattura"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            SqlParameter annoFattura = new SqlParameter("@anno_fattura", SqlDbType.Int);
+                            annoFattura.Direction = ParameterDirection.Input;
+                            annoFattura.Value = anno;
+                            StoreProc.Parameters.Add(annoFattura);
+
+                            SqlParameter numeroFattura = new SqlParameter("@numero_fattura", SqlDbType.Int);
+                            numeroFattura.Direction = ParameterDirection.Input;
+                            numeroFattura.Value = numFatt;
+                            StoreProc.Parameters.Add(numeroFattura);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - ResetNumeroFattura " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return esito;
+
+        }
+
         public static int GetProtocollo(ref Esito esito)
         {
             try
@@ -1016,7 +1071,7 @@ namespace VideoSystemWeb.DAL
             }
             return 0;
         }
-
+   
         public static Esito ResetProtocollo(int protIniziale)
         {
             Esito esito = new Esito();

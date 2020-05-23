@@ -33,27 +33,36 @@ namespace VideoSystemWeb.STATISTICHE
         private void GestioneRaggruppamentoRighe()
         {
             GridViewHelper helper = new GridViewHelper(this.gv_statistiche);
-            //string[] colonneRaggruppate = { "Cliente", "CodiceLavoro" };
+            //string[] colonneRaggruppate = new string[2];
+            //colonneRaggruppate[0] = "Cliente";
+            //colonneRaggruppate[1] = "CodiceLavoro";
 
-            helper.RegisterGroup("Cliente", true, true);
+            
             helper.RegisterGroup("CodiceLavoro", true, true);
-            // helper.RegisterGroup(colonneRaggruppate, true, true);
+            helper.RegisterGroup("Cliente", true, true);
+            //helper.RegisterGroup(colonneRaggruppate, true, true);
             //helper.ApplyGroupSort();
 
+
+
+            //SUBTOTALE
+            helper.RegisterSummary("Listino", SummaryOperation.Sum, "CodiceLavoro");
+            helper.RegisterSummary("Costo", SummaryOperation.Sum, "CodiceLavoro");
+            helper.RegisterSummary("Ricavo", SummaryOperation.Count, "CodiceLavoro");
+
+            ////helper.RegisterSummary("Listino", SummaryOperation.Sum, "Cliente");
+            ////helper.RegisterSummary("Costo", SummaryOperation.Sum, "Cliente");
+            ////helper.RegisterSummary("Ricavo", SummaryOperation.Count, "Cliente");
+
+            ////TOTALE
+            helper.RegisterSummary("Listino", SummaryOperation.Sum);
+            helper.RegisterSummary("Costo", SummaryOperation.Sum);
+            helper.RegisterSummary("Ricavo", SummaryOperation.Count);
 
             helper.GroupHeader += new GroupEvent(Helper_GroupHeader);
             helper.GroupSummary += new GroupEvent(Helper_GroupSummary);
             helper.GeneralSummary += new FooterEvent(Helper_GeneralSummary);
 
-            //SUBTOTALE
-            helper.RegisterSummary("Listino", SummaryOperation.Sum, "Cliente");
-            helper.RegisterSummary("Costo", SummaryOperation.Sum, "Cliente");
-            helper.RegisterSummary("Ricavo", SummaryOperation.Count, "Cliente");
-
-            //TOTALE
-            helper.RegisterSummary("Listino", SummaryOperation.Sum);
-            helper.RegisterSummary("Costo", SummaryOperation.Sum);
-            helper.RegisterSummary("Ricavo", SummaryOperation.Count);
         }
 
 
@@ -98,7 +107,7 @@ namespace VideoSystemWeb.STATISTICHE
             }
             row.Cells[1].Visible = chk_Listino.Checked;
             row.Cells[2].Visible = chk_Costi.Checked;
-            row.Cells[3].Visible = chk_Ricavo.Checked;
+            row.Cells[3].Visible = chk_Ricavo.Checked && ddl_Genere.SelectedValue == "" && ddl_Gruppo.SelectedValue == "" && ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
 
             row.Cells[4].Visible = false;
         }
@@ -130,7 +139,7 @@ namespace VideoSystemWeb.STATISTICHE
             }
             row.Cells[1].Visible = chk_Listino.Checked;
             row.Cells[2].Visible = chk_Costi.Checked;
-            row.Cells[3].Visible = chk_Ricavo.Checked;
+            row.Cells[3].Visible = chk_Ricavo.Checked && ddl_Genere.SelectedValue == "" && ddl_Gruppo.SelectedValue == "" && ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
 
             row.Cells[4].Visible = false;
         }
@@ -246,7 +255,7 @@ namespace VideoSystemWeb.STATISTICHE
             {
                 e.Row.Cells[9].Visible = chk_Listino.Checked;
                 e.Row.Cells[10].Visible = chk_Costi.Checked;
-                e.Row.Cells[11].Visible = chk_Ricavo.Checked;
+                e.Row.Cells[11].Visible = chk_Ricavo.Checked && ddl_Genere.SelectedValue == "" && ddl_Gruppo.SelectedValue == "" && ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
             }
 
             if (e.Row.RowType == DataControlRowType.DataRow)

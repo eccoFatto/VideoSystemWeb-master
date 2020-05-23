@@ -125,9 +125,12 @@ namespace VideoSystemWeb.DAL
             filtri += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
             filtri += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
 
+            string filtriListino = filtri; // i filtri seguenti devono essere applicati solo alle categorie costi
+
             filtri += string.IsNullOrWhiteSpace(filtroGenere) ? "" : " AND d.idTipoGenere = '" + filtroGenere + "' ";
             filtri += string.IsNullOrWhiteSpace(filtroGruppo) ? "" : " AND d.idTipoGruppo = '" + filtroGruppo + "' ";
             filtri += string.IsNullOrWhiteSpace(filtroSottogruppo) ? "" : " AND d.idTipoSottogruppo = '" + filtroContratto + "' ";
+
 
             if (fatturato != null)
             {
@@ -164,11 +167,11 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.prezzo > 0 " + filtri +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3  and d.prezzo > 0 " + filtriListino +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso " +
                     #region COLLABORATORI
                                     "UNION " +
-                                    "select distinct 2 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, k.nome gruppo, '' fornitore, 0 listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso  " +
+                                    "select distinct 2 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, k.nome gruppo, '' fornitore, sum(d.prezzo) listino, sum(d.fp_lordo) costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso  " +
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
@@ -203,40 +206,40 @@ namespace VideoSystemWeb.DAL
                     #endregion
 
                     #region TRASFERIMENTI
-                                    "UNION " +
-                                    "select distinct 4 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, k.nome gruppo, '' fornitore, sum(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso  " +
-                                    "from tab_dati_agenda a  " +
-                                    "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
-                                    "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
-                                    "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
-                                    "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
-                                    "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
-                                    "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
-                                    "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
-                                    "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
-                                    "left join tipo_gruppo k on k.nome = 'Trasferimenti' " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo=k.id " + filtri +
-                                    " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, k.nome " +
+                                    //"UNION " +
+                                    //"select distinct 4 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, k.nome gruppo, '' fornitore, sum(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso  " +
+                                    //"from tab_dati_agenda a  " +
+                                    //"left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
+                                    //"left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
+                                    //"left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
+                                    //"left join tipo_protocollo g on  g.nome = 'Fattura'  " +
+                                    //"left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
+                                    //"left join tipo_protocollo i on  i.nome = 'Contratto'  " +
+                                    //"left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
+                                    //"left join tipo_protocollo j on  j.nome = 'Offerta'  " +
+                                    //"left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
+                                    //"left join tipo_gruppo k on k.nome = 'Trasferimenti' " +
+                                    //"where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo=k.id " + filtri +
+                                    //" group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, k.nome " +
                     #endregion
 
                     #region ALBERGO
-                                    "UNION " +
-                                    "select distinct 5 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, l.nome gruppo, k.ragioneSociale fornitore, sum(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso  " +
-                                    "from tab_dati_agenda a  " +
-                                    "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
-                                    "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
-                                    "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
-                                    "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
-                                    "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
-                                    "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
-                                    "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
-                                    "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
-                                    "left join anag_clienti_fornitori k on d.idFornitori = k.id " +
-                                    "left join tipo_gruppo l on l.nome = 'Albergo' " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo=l.id " + filtri +
-                                    " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, l.nome, k.ragioneSociale " +
+                                    //"UNION " +
+                                    //"select distinct 5 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, l.nome gruppo, k.ragioneSociale fornitore, sum(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso  " +
+                                    //"from tab_dati_agenda a  " +
+                                    //"left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
+                                    //"left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
+                                    //"left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
+                                    //"left join tipo_protocollo g on  g.nome = 'Fattura'  " +
+                                    //"left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
+                                    //"left join tipo_protocollo i on  i.nome = 'Contratto'  " +
+                                    //"left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
+                                    //"left join tipo_protocollo j on  j.nome = 'Offerta'  " +
+                                    //"left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
+                                    //"left join anag_clienti_fornitori k on d.idFornitori = k.id " +
+                                    //"left join tipo_gruppo l on l.nome = 'Albergo' " +
+                                    //"where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo=l.id " + filtri +
+                                    //" group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, l.nome, k.ragioneSociale " +
                     #endregion
 
                     #region TUTTO IL RESTO
@@ -253,7 +256,7 @@ namespace VideoSystemWeb.DAL
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
                                     "left join anag_clienti_fornitori k on d.idFornitori = k.id " +
-                                    "left join tipo_gruppo l on l.nome not in ('Albergo', 'Collaboratori', 'Diaria', 'Trasferimenti') " +
+                                    "left join tipo_gruppo l on l.nome not in ('Collaboratori', 'Diaria') " +
                                     "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo=l.id " + filtri +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, l.nome, k.ragioneSociale " +
                     #endregion

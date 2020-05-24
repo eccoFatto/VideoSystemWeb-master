@@ -568,8 +568,6 @@ namespace VideoSystemWeb.Agenda.userControl
             return esito;
         }
 
-
-
         #region COMPORTAMENTO ELEMENTI PAGINA
         protected void btnStampaFattura_Click(object sender, EventArgs e)
         {

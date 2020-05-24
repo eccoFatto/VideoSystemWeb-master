@@ -596,6 +596,7 @@ namespace VideoSystemWeb.Agenda
                 string datatFine = evento.data_fine_lavorazione.ToString("dd/MM/yyyy");
                 string lavorazione = evento.lavorazione;
                 string luogo = evento.luogo;
+                string numeroFattura = string.IsNullOrEmpty(evento.numeroFattura) ? "-" : evento.numeroFattura;
 
                 string tender = "-";
                 List<DatiTender> listaTenderEvento = Dati_Tender_BLL.Instance.getDatiAgendaTenderByIdAgenda(evento.id, ref esito);
@@ -616,7 +617,14 @@ namespace VideoSystemWeb.Agenda
                     intestazioneAnteprima = "Codice lavoro: " + evento.codice_lavoro;
                 }
 
-                string contenuto = "<p style='text-align:center;font-weight:bold; background-color:white;color:black;'>" + intestazioneAnteprima + "</p><p style='text-align:left;font-weight:normal;background-color:white;color:black;'><b>Tipo impegno:</b> " + stato + "<br/><b>Cliente:</b> " + cliente + "<br/><b>Lavorazione:</b> " + lavorazione + "<br/><b>Produzione:</b> " + produzione + "<br/><b>Tipologia:</b> " + tipologia + "<br/><b>Data inizio:</b> " + dataInizio + "&nbsp;&nbsp;<b>Data fine:</b> " + datatFine + "<br/><b>Luogo:</b> " + luogo + "<br/><b>Tender:</b> " + tender + "</p>";
+                string contenuto =  "<p style='text-align:center;font-weight:bold; background-color:white;color:black;'>" + intestazioneAnteprima + "</p>"+
+                                    "<p style='text-align:left;font-weight:normal;background-color:white;color:black;'><b>Tipo impegno:</b> " + stato + "<br/>" + 
+                                    "<b>Cliente:</b> " + cliente + "<br/><b>Lavorazione:</b> " + lavorazione + "<br/>" + 
+                                    "<b>Produzione:</b> " + produzione + "<br/><b>Tipologia:</b> " + tipologia + "<br/>" + 
+                                    "<b>Data inizio:</b> " + dataInizio + "&nbsp;&nbsp;<b>Data fine:</b> " + datatFine + "<br/>" + 
+                                    "<b>Luogo:</b> " + luogo + "<br/>" + 
+                                    "<b>Tender:</b> " + tender + "<br/>" +
+                                    "<b>Numero fattura:</b> " + numeroFattura+ "</p>";
                 LiteralControl anteprima = new LiteralControl(contenuto);
 
                 innerPanel.Controls.Add(anteprima);
@@ -770,13 +778,13 @@ namespace VideoSystemWeb.Agenda
             popupAppuntamento.PopolaAppuntamento();
 
             popupOfferta.ClearOfferta();
-            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
+            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
             {
                 popupOfferta.PopolaOfferta();
             }
 
             popupLavorazione.ClearLavorazione();
-            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
+            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
             {
                 popupLavorazione.PopolaLavorazione();
             }
@@ -819,6 +827,7 @@ namespace VideoSystemWeb.Agenda
                 SessionManager.EventoSelezionato.durata_viaggio_andata = 0;
                 SessionManager.EventoSelezionato.durata_viaggio_ritorno = 0;
                 SessionManager.EventoSelezionato.id_stato = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString() ? Stato.Instance.STATO_RIPOSO : Stato.Instance.STATO_PREVISIONE_IMPEGNO;
+                
             }
 
             return SessionManager.EventoSelezionato;
@@ -1124,7 +1133,6 @@ namespace VideoSystemWeb.Agenda
                 UpdatePopup();
             }
         }
-
 
         protected void btnMagazzino_Click(object sender, EventArgs e)
         {

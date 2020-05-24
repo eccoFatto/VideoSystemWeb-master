@@ -30,6 +30,7 @@ namespace VideoSystemWeb.Entity
         public string codice_lavoro { get; set; }
         public string nota { get; set; }
         public int id_stato { get; set; }
+        public string numeroFattura { get; set; }
 
         public List<DatiArticoli> ListaDatiArticoli { get; set; }
         public DatiLavorazione LavorazioneCorrente { get; set; }

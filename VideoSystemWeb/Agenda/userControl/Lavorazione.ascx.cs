@@ -1622,7 +1622,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         if (SessionManager.EventoSelezionato.LavorazioneCorrente != null)
                         {
                             txt_Ordine.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Ordine;
-                            txt_Fattura.Text = SessionManager.EventoSelezionato.LavorazioneCorrente.Fattura;
+                            txt_Fattura.Text = SessionManager.EventoSelezionato.numeroFattura; //SessionManager.EventoSelezionato.LavorazioneCorrente.Fattura;
                             ddl_Contratto.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdContratto.ToString();
                             ddl_Referente.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdReferente.ToString();
                             ddl_Capotecnico.SelectedValue = SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico == null ? "" : SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico.ToString();

@@ -22209,3 +22209,148 @@ Sintassi non corretta in prossimità della parola chiave 'by'.
 2020-05-23 09:11:45,691 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-23 09:20:35,499 [29] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-23 09:22:59,799 [37] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-23 16:55:55,769 [32] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-23 16:56:01,078 [22] ERROR VideoSystemWeb.BLL.Esito - Claudio - Agenda_DAL.cs - CaricaDatiAgenda Il nome di oggetto 'tab_dati_agendaa' non è valido.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Agenda_DAL.CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 139
+2020-05-23 16:56:01,078 [22] ERROR VideoSystemWeb.DAL.Base_DAL - Il nome di oggetto 'tab_dati_agendaa' non è valido.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Agenda_DAL.CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 139
+2020-05-23 16:59:25,139 [18] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-23 16:59:29,960 [23] ERROR VideoSystemWeb.BLL.Esito - Claudio - Agenda_DAL.cs - CaricaDatiAgenda Il nome di colonna 'numero_protocollo' non è valido.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Agenda_DAL.CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 140
+2020-05-23 16:59:29,961 [23] ERROR VideoSystemWeb.DAL.Base_DAL - Il nome di colonna 'numero_protocollo' non è valido.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Agenda_DAL.CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 140
+2020-05-23 17:00:31,525 [17] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-23 18:41:50,397 [76] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 15:53:21,301 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 15:57:22,431 [13] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 15:57:27,199 [11] ERROR VideoSystemWeb.BLL.Esito - Claudio - Agenda_DAL.cs - CaricaDatiAgenda Il nome di colonna 'protocollo_rifrimento' non è valido.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Agenda_DAL.CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 140
+2020-05-24 15:57:27,200 [11] ERROR VideoSystemWeb.DAL.Base_DAL - Il nome di colonna 'protocollo_rifrimento' non è valido.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Agenda_DAL.CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 140
+2020-05-24 15:58:16,950 [13] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 15:58:22,000 [12] ERROR VideoSystemWeb.BLL.Esito - Claudio - Agenda_DAL.cs - CaricaDatiAgenda La colonna 'numero_protocollo' non appartiene alla tabella .
+   in System.Data.DataRow.GetDataColumn(String columnName)
+   in System.Data.DataRow.get_Item(String columnName)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Agenda_DAL.CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 145
+2020-05-24 15:58:22,001 [12] ERROR VideoSystemWeb.DAL.Base_DAL - La colonna 'numero_protocollo' non appartiene alla tabella .
+   in System.Data.DataRow.GetDataColumn(String columnName)
+   in System.Data.DataRow.get_Item(String columnName)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Agenda_DAL.CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 145
+2020-05-24 15:59:57,505 [11] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 16:10:40,883 [18] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 16:15:46,818 [14] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 16:17:53,544 [18] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 16:18:08,082 [19] ERROR VideoSystemWeb.BLL.Esito - Claudio - Agenda_DAL.cs - CaricaDatiAgenda La colonna 'b.id' non appartiene alla tabella .
+   in System.Data.DataRow.GetDataColumn(String columnName)
+   in System.Data.DataRow.get_Item(String columnName)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Agenda_DAL.CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 145
+2020-05-24 16:18:08,082 [19] ERROR VideoSystemWeb.DAL.Base_DAL - La colonna 'b.id' non appartiene alla tabella .
+   in System.Data.DataRow.GetDataColumn(String columnName)
+   in System.Data.DataRow.get_Item(String columnName)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Agenda_DAL.CaricaDatiAgenda(DateTime dataInizio, DateTime dataFine, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Agenda_DAL.cs:riga 145
+2020-05-24 16:19:10,520 [13] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 22:03:26,649 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 22:11:34,119 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 22:18:59,469 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 22:23:59,848 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-05-24 22:27:23,382 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

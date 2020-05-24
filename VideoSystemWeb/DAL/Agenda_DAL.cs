@@ -13,8 +13,10 @@ namespace VideoSystemWeb.DAL
     public class Agenda_DAL : Base_DAL
     {
         private const string TABELLA_DATI_AGENDA = "tab_dati_agenda";
+        private const string TABELLA_DATI_PROTOCOLLO = "dati_protocollo";
+        private const string TABELLA_TIPO_STATO = "tipo_stato";
 
-        //singleton
+        # region SINGLETON
         private static volatile Agenda_DAL instance;
         private static object objForLock = new Object();
 
@@ -40,6 +42,7 @@ namespace VideoSystemWeb.DAL
         {
             return CaricaColonneAgenda(true, ref esito);
         }
+        #endregion
 
         public List<DatiAgenda> CaricaDatiAgenda(ref Esito esito)
         {
@@ -115,12 +118,18 @@ namespace VideoSystemWeb.DAL
             string dataDa = dataInizio.ToString("yyyy-MM-ddT00:00:00.000");
             string dataA = dataFine.ToString("yyyy-MM-ddT23:59:59.999");
 
+            //string sql = "SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_impegno between '" + dataDa + "' and '" + dataA + "' OR data_fine_impegno between '" + dataDa + "' and '" + dataA + "'";
+            string sql = "SELECT a.*, c.protocollo_riferimento, b.id idFattura FROM " + TABELLA_DATI_AGENDA + " a " +
+                         " left join " + TABELLA_TIPO_STATO + " b on b.nome = 'fattura'" + 
+                         " left join " + TABELLA_DATI_PROTOCOLLO + " c on a.codice_lavoro = c.codice_lavoro and b.attivo = 1 and c.id_tipo_protocollo = b.id and c.pregresso = 0 and c.destinatario = 'cliente'" + 
+                         " WHERE data_inizio_impegno between '" + dataDa + "' and '" + dataA + "' OR data_fine_impegno between '" + dataDa + "' and '" + dataA + "'";
+
             List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_impegno between '" + dataDa + "' and '" + dataA + "' OR data_fine_impegno between '" + dataDa + "' and '" + dataA + "'"))
+                    using (SqlCommand cmd = new SqlCommand(sql))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())
                         {
@@ -137,7 +146,7 @@ namespace VideoSystemWeb.DAL
                                         {
                                             id = riga.Field<int>("id"),
                                             id_colonne_agenda = riga.Field<int>("id_colonne_agenda"),
-                                            id_stato = riga.Field<int>("id_stato"),
+                                            id_stato = string.IsNullOrEmpty(riga.Field<string>("protocollo_riferimento"))? riga.Field<int>("id_stato") : riga.Field<int>("idFattura"),
                                             data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione"),
                                             data_fine_lavorazione = riga.Field<DateTime>("data_fine_lavorazione"),
                                             durata_lavorazione = riga.Field<int>("durata_lavorazione"),
@@ -155,7 +164,8 @@ namespace VideoSystemWeb.DAL
                                             indirizzo = riga.Field<string>("indirizzo"),
                                             luogo = riga.Field<string>("luogo"),
                                             codice_lavoro = riga.Field<string>("codice_lavoro"),
-                                            nota = riga.Field<string>("nota")
+                                            nota = riga.Field<string>("nota"), 
+                                            numeroFattura = string.IsNullOrEmpty(riga.Field<string>("protocollo_riferimento")) ? string.Empty : riga.Field<string>("protocollo_riferimento"),
                                         };
 
                                         listaDatiAgenda.Add(datoAgenda);
@@ -908,7 +918,5 @@ namespace VideoSystemWeb.DAL
 
             return listaLavorazioni;
         }
-
-        
     }
 }

@@ -1202,7 +1202,7 @@ namespace VideoSystemWeb.Agenda
                 if (!string.IsNullOrEmpty(numeroFattura))
                 {
                     // SE IL NUMERO FATTURA ESISTE LA DEVO CANCELLARE
-                    esito = Protocolli_BLL.Instance.EliminaFattura(idFattura);
+                    esito = Protocolli_BLL.Instance.EliminaFattura(idFattura, numeroFattura);
                     if (esito.Codice > 0)
                     {
                         ShowError("Errore durante la cancellazione della fattura: " + numeroFattura + Environment.NewLine + esito.Descrizione);

@@ -926,10 +926,21 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnRicercaClienti_Click(object sender, EventArgs e)
         {
-            string queryRicerca = "SELECT ID, RAGIONESOCIALE as [Ragione Sociale] FROM anag_clienti_fornitori WHERE ragioneSociale LIKE '%@ragioneSociale%'";
+            string queryRicerca = "";
+            switch (ddlSceltaClienteCollaboratore.Text)
+            {
+                case "Cliente":
+                    queryRicerca = "SELECT ID, RAGIONESOCIALE as [Ragione Sociale] FROM anag_clienti_fornitori WHERE ragioneSociale LIKE '%@ragioneSociale%'";
+                    queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_RagioneSociale.Text.Trim().Replace("'", "''"));
+                    break;
+                case "Collaboratore":
+                    queryRicerca = "SELECT ID, COGNOME + ' ' + NOME as [Ragione Sociale] FROM anag_collaboratori WHERE cognome LIKE '%@ragioneSociale%'";
+                    queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_RagioneSociale.Text.Trim().Replace("'", "''"));
 
-            queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_RagioneSociale.Text.Trim().Replace("'", "''"));
-
+                    break;
+                default:
+                    break;
+            }
 
             Esito esito = new Esito();
             DataTable dtClienti = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
@@ -942,8 +953,6 @@ namespace VideoSystemWeb.Protocollo
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-
-
                 // PRENDO ID E CLIENTE/FORNITORE E LI PASSO ALLA FUNZIONE
                 string idClienteSelezionato = e.Row.Cells[1].Text;
                 string clienteSelezionato = e.Row.Cells[2].Text;
@@ -973,18 +982,42 @@ namespace VideoSystemWeb.Protocollo
                 tbMod_IdCliente.Value = null;
                 PanelClienti.Visible = false;
             }
-            else { 
-                Esito esito = new Esito();
-                Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
-                if (esito.Codice != 0)
+            else {
+
+                switch (ddlSceltaClienteCollaboratore.Text)
                 {
-                    ShowError(esito.Descrizione);
+                    case "Cliente":
+                        
+                        Esito esito = new Esito();
+                        Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
+                        if (esito.Codice != 0)
+                        {
+                            ShowError(esito.Descrizione);
+                        }
+                        else
+                        {
+                            tbMod_Cliente.Text = cliente.RagioneSociale;
+                            PanelClienti.Visible = false;
+                        }
+                        break;
+                    case "Collaboratore":
+                        esito = new Esito();
+                        Anag_Collaboratori collaboratore = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
+                        if (esito.Codice != 0)
+                        {
+                            ShowError(esito.Descrizione);
+                        }
+                        else
+                        {
+                            tbMod_Cliente.Text = collaboratore.Cognome + " " + collaboratore.Nome;
+                            PanelClienti.Visible = false;
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    tbMod_Cliente.Text = cliente.RagioneSociale;
-                    PanelClienti.Visible = false;
-                }
+
+
             }
         }
 

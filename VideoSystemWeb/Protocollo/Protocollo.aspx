@@ -631,17 +631,30 @@
             <asp:Panel runat="server" ID="PanelClienti" Visible="false">
                 <div class="modalBackground"></div>
                 <asp:Panel runat="server" ID="PanelContLavorazioni" CssClass="containerPopupStandard round" ScrollBars="Auto">
-                    <div class="w3-container">
+                    <br />
+                    <div class="w3-container w3-padding w3-margin">
                         <!-- RICERCA CLIENTI -->
                         <div class="w3-bar w3-orange w3-round">
-                            <div class="w3-bar-item w3-button w3-orange">Ricerca Clienti</div>
+                            <div class="w3-bar-item w3-button w3-orange">Ricerca Clienti\Collaboratori
+                            </div>
                             <div class="w3-bar-item w3-button w3-orange w3-right">
                                 <div id="btnChiudiPopupClienti" class="w3-button w3-orange w3-small w3-round" onclick="chiudiPopupClienti();">Chiudi</div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="w3-row-padding">
+                    <div class="w3-row-padding w3-padding w3-margin">
+                        <div class="w3-half">
+                            <label>Cliente\Collaboratore</label>
+                            <asp:DropDownList ID="ddlSceltaClienteCollaboratore" runat="server" Width="100%" class="w3-input w3-border">
+                                <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
+                                <asp:ListItem Value="Collaboratore" Text="Collaboratore"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div class="w3-half">
+                            &nbsp;
+                        </div>
+                    </div>  
+                    <div class="w3-row-padding w3-padding w3-margin">
                         <div class="w3-threequarter">
                             <label>Ragione Sociale</label>
                             <asp:TextBox ID="tbSearch_RagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
@@ -663,7 +676,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="round">
+                    <div class="round w3-padding w3-margin">
                         <asp:GridView ID="gvClienti" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvClienti_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvClienti_PageIndexChanging" PageSize="20">
                             <Columns>
                                 <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
@@ -674,6 +687,7 @@
                             </Columns>
                         </asp:GridView>
                     </div>
+                    <br />
                 </asp:Panel>
             </asp:Panel>
             <!-- FINE POPUP RICERCA CLIENTI -->

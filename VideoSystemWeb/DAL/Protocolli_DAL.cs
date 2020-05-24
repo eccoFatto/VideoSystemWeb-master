@@ -700,7 +700,7 @@ namespace VideoSystemWeb.DAL
             return listaClientiFornitori;
         }
 
-        public Esito EliminaFattura(int idProtocollo)
+        public Esito EliminaFattura(int idProtocollo, string numeroFattura)
         {
             Esito esito = new Esito();
             try
@@ -720,12 +720,30 @@ namespace VideoSystemWeb.DAL
                             try
                             {
                                 StoreProc.Transaction = transaction;
+                                // SE NUMERO FATTURA = ULTIMO NUMERO FATTURA EMESSO, DOPO LA CANCELLAZIONE LO RIPORTO A -1
+                                bool swUltimaFattura = isultimaFattura(numeroFattura, ref esito);
 
                                 CostruisciSP_DeleteDatiScadenzarioByIdProtocollo(StoreProc, sda, idProtocollo);
                                 StoreProc.ExecuteNonQuery();
 
                                 CostruisciSP_DeleteProtocollo(StoreProc, sda, idProtocollo);
                                 StoreProc.ExecuteNonQuery();
+
+                                if (swUltimaFattura)
+                                {
+                                    // RIPORTO INDIETRO LA FATTURA DI UNO
+                                    string annoFattura = numeroFattura.Substring(0, 4);
+                                    int iAnnoFattura = Convert.ToInt32(annoFattura);
+                                    string progFattura = numeroFattura.Substring(4, numeroFattura.Length - 4);
+                                    int iFatt = Convert.ToInt32(progFattura);
+                                    iFatt = iFatt - 1;
+                                    esito = Base_DAL.ResetNumeroFattura(iAnnoFattura, iFatt);
+                                    if (esito.Codice > 0)
+                                    {
+                                        Exception ex = new Exception(esito.Descrizione);
+                                        throw ex;
+                                    }
+                                }
 
                                 // Attempt to commit the transaction.
                                 transaction.Commit();
@@ -813,5 +831,45 @@ namespace VideoSystemWeb.DAL
 
         }
 
+        protected bool isultimaFattura(string numeroFattura, ref Esito esito)
+        {
+            string annoFattura = numeroFattura.Substring(0, 4);
+            string progFattura = numeroFattura.Substring(4, numeroFattura.Length-4);
+            int iFatt = Convert.ToInt32(progFattura);
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM tab_numero_fattura WHERE anno_fattura = " + annoFattura + " AND numero_fattura = " + iFatt.ToString();
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    // SE TROVO LA FATTURA RIPORTO TRUE
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_LETTURA_TABELLA;
+                esito.Descrizione = "Protocolli_DAL.cs - isultimaFattura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+            return false;
+        }
     }
 }

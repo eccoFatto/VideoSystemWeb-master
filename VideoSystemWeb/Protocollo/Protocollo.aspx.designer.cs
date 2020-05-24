@@ -670,6 +670,15 @@ namespace VideoSystemWeb.Protocollo {
         protected global::System.Web.UI.WebControls.Panel PanelContLavorazioni;
         
         /// <summary>
+        /// Controllo ddlSceltaClienteCollaboratore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSceltaClienteCollaboratore;
+        
+        /// <summary>
         /// Controllo tbSearch_RagioneSociale.
         /// </summary>
         /// <remarks>

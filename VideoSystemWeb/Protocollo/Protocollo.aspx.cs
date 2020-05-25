@@ -337,23 +337,33 @@ namespace VideoSystemWeb.Protocollo
         protected void btnEliminaProtocollo_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
-
             if (!string.IsNullOrEmpty((string)ViewState["idProtocollo"]))
             {
-                //esito = Protocolli_BLL.Instance.EliminaProtocollo(Convert.ToInt32(ViewState["idProtocollo"].ToString()));
-                esito = Protocolli_BLL.Instance.RemoveProtocollo(Convert.ToInt32(ViewState["idProtocollo"].ToString()));
-                if (esito.Codice != Esito.ESITO_OK)
+                Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt64((string)ViewState["idProtocollo"]));
+                if (esito.Codice == 0)
                 {
-                    basePage.ShowError(esito.Descrizione);
-                    AttivaDisattivaModificaProtocollo(true);
-                }
-                else
-                {
-                    AttivaDisattivaModificaProtocollo(true);
-                    pnlContainer.Visible = false;
-                    btnRicercaProtocollo_Click(null, null);
-                }
 
+                    if(protocollo.Id_tipo_protocollo == Stato.Instance.STATO_FATTURA && protocollo.Pregresso==false && protocollo.Destinatario=="Cliente")
+                    {
+                        ShowError("Il protocollo selezionato è di tipo fattura attiva, eliminarlo dall'apposita procedura in lavorazione.");
+                    }
+                    else
+                    { 
+                        //esito = Protocolli_BLL.Instance.EliminaProtocollo(Convert.ToInt32(ViewState["idProtocollo"].ToString()));
+                        esito = Protocolli_BLL.Instance.RemoveProtocollo(Convert.ToInt32(ViewState["idProtocollo"].ToString()));
+                        if (esito.Codice != Esito.ESITO_OK)
+                        {
+                            basePage.ShowError(esito.Descrizione);
+                            AttivaDisattivaModificaProtocollo(true);
+                        }
+                        else
+                        {
+                            AttivaDisattivaModificaProtocollo(true);
+                            pnlContainer.Visible = false;
+                            btnRicercaProtocollo_Click(null, null);
+                        }
+                    }
+                }
             }
 
         }

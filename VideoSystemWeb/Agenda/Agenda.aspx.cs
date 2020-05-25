@@ -741,8 +741,11 @@ namespace VideoSystemWeb.Agenda
                     btnOfferta.Visible = false;
                     btnLavorazione.Visible = false;
                     btnElimina.Visible = false;
-                    btnRiepilogo.Visible = false;
-                    btnMagazzino.Visible = false;
+
+                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnEliminaFattura.Visible = btnMagazzino.Visible = true;
+
+                    //btnRiepilogo.Visible = false;
+                    //btnMagazzino.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_FATTURA);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_FATTURA);

@@ -729,6 +729,10 @@ namespace VideoSystemWeb.DAL
                                 CostruisciSP_DeleteProtocollo(StoreProc, sda, idProtocollo);
                                 StoreProc.ExecuteNonQuery();
 
+                                // DEVO PORTARE ANCHE LO STATO DELLA LAVORAZIONE A LAVORAZIONE (E NON PIU' A FATTURATA)
+                                //CostruisciSP_AggiornaStatoLavorazione(StoreProc, sda, id dati agenda????);
+                                //StoreProc.ExecuteNonQuery();
+
                                 if (swUltimaFattura)
                                 {
                                     // RIPORTO INDIETRO LA FATTURA DI UNO

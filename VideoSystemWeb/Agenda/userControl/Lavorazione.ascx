@@ -283,7 +283,7 @@
 
                 <div class="w3-third">
                     <label>Fattura</label><br />
-                    <asp:TextBox ID="txt_Fattura" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round w3-disabled" Enabled="false"></asp:TextBox>
+                    <asp:TextBox ID="txt_Fattura" runat="server" CssClass=" w3-white w3-border w3-hover-shadow w3-round w3-disabled" style="font-weight:bold;opacity:0.8;" Enabled="false"></asp:TextBox>
                 </div>
 
                 <div class="w3-third">

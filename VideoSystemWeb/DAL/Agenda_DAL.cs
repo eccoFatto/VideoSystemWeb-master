@@ -121,7 +121,7 @@ namespace VideoSystemWeb.DAL
             //string sql = "SELECT * FROM " + TABELLA_DATI_AGENDA + " WHERE data_inizio_impegno between '" + dataDa + "' and '" + dataA + "' OR data_fine_impegno between '" + dataDa + "' and '" + dataA + "'";
             string sql = "SELECT a.*, c.protocollo_riferimento, b.id idFattura FROM " + TABELLA_DATI_AGENDA + " a " +
                          " left join " + TABELLA_TIPO_STATO + " b on b.nome = 'fattura'" + 
-                         " left join " + TABELLA_DATI_PROTOCOLLO + " c on a.codice_lavoro = c.codice_lavoro and b.attivo = 1 and c.id_tipo_protocollo = b.id and c.pregresso = 0 and c.destinatario = 'cliente'" + 
+                         " left join " + TABELLA_DATI_PROTOCOLLO + " c on a.codice_lavoro = c.codice_lavoro and b.attivo = 1 and c.attivo=1 and c.id_tipo_protocollo = b.id and c.pregresso = 0 and c.destinatario = 'cliente'" + 
                          " WHERE data_inizio_impegno between '" + dataDa + "' and '" + dataA + "' OR data_fine_impegno between '" + dataDa + "' and '" + dataA + "'";
 
             List<DatiAgenda> listaDatiAgenda = new List<DatiAgenda>();

@@ -745,6 +745,7 @@ namespace VideoSystemWeb.Agenda
                     btnMagazzino.Visible = false;
 
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_FATTURA);
+                    popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_FATTURA);
                 }
                 else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_RIPOSO)
                 {

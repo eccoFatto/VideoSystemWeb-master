@@ -109,6 +109,10 @@ namespace VideoSystemWeb.Agenda
             {
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Lavorazione');", true);
             }
+            else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Lavorazione');", true);
+            }
             else
             {
                 ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Appuntamento');", true);

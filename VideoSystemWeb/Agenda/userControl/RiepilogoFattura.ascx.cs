@@ -538,8 +538,6 @@ namespace VideoSystemWeb.Agenda.userControl
                             ViewState["banca"] = noteOfferta.Banca;
                             ViewState["numeroDocumento"] = eventoSelezionato.codice_lavoro;
 
-
-
                             framePdfFattura.Attributes.Remove("src");
                             framePdfFattura.Attributes.Add("src", pathFattura.Replace("~", ""));
 

@@ -175,9 +175,9 @@ namespace VideoSystemWeb.BLL
             return Protocolli_DAL.Instance.GetElencoLavorazioni(ref esito);
         }
 
-        public Esito EliminaFattura(int idProtocollo, string numeroFattura)
+        public Esito EliminaFattura(int idProtocollo, string numeroFattura, int idDatiAgenta)
         {
-            Esito esito = Protocolli_DAL.Instance.EliminaFattura(idProtocollo, numeroFattura);
+            Esito esito = Protocolli_DAL.Instance.EliminaFattura(idProtocollo, numeroFattura, idDatiAgenta);
 
             return esito;
         }

@@ -700,7 +700,7 @@ namespace VideoSystemWeb.DAL
             return listaClientiFornitori;
         }
 
-        public Esito EliminaFattura(int idProtocollo, string numeroFattura)
+        public Esito EliminaFattura(int idProtocollo, string numeroFattura, int idDatiAgenta)
         {
             Esito esito = new Esito();
             try
@@ -730,8 +730,8 @@ namespace VideoSystemWeb.DAL
                                 StoreProc.ExecuteNonQuery();
 
                                 // DEVO PORTARE ANCHE LO STATO DELLA LAVORAZIONE A LAVORAZIONE (E NON PIU' A FATTURATA)
-                                //CostruisciSP_AggiornaStatoLavorazione(StoreProc, sda, id dati agenda????);
-                                //StoreProc.ExecuteNonQuery();
+                                CostruisciSP_AggiornaStatoLavorazione(StoreProc, sda, idDatiAgenta, Stato.Instance.STATO_LAVORAZIONE);
+                                StoreProc.ExecuteNonQuery();
 
                                 if (swUltimaFattura)
                                 {
@@ -833,6 +833,34 @@ namespace VideoSystemWeb.DAL
             StoreProc.Parameters.Add(nomeUtente);
             // FINE PARAMETRI PER LOG UTENTE
 
+        }
+
+        protected static void CostruisciSP_AggiornaStatoLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiAgenda, int idStato)
+        {
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            StoreProc.CommandType = CommandType.StoredProcedure;
+            StoreProc.CommandText = "UdateStatoDatiAgenda";
+            StoreProc.Parameters.Clear();
+            sda.SelectCommand = StoreProc;
+
+            SqlParameter parId = new SqlParameter("@id", idDatiAgenda);
+            parId.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parId);
+
+            SqlParameter parIdStato = new SqlParameter("@id_stato", idStato);
+            parIdStato.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(parIdStato);
+
+            // PARAMETRI PER LOG UTENTE
+            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+            idUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(idUtente);
+
+            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+            nomeUtente.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(nomeUtente);
+            // FINE PARAMETRI PER LOG UTENTE
         }
 
         protected bool isultimaFattura(string numeroFattura, ref Esito esito)

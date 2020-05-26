@@ -1200,10 +1200,13 @@ namespace VideoSystemWeb.Agenda
             Esito esito = new Esito();
             int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
             List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(SessionManager.EventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
+
+            
             if (listaProtocolli.Count > 0)
             {
                 string numeroFattura = "";
                 int idFattura = 0;
+                int idDatiAgenta = SessionManager.EventoSelezionato.id;
                 foreach (Protocolli protocollo in listaProtocolli)
                 {
                     if (protocollo.Destinatario == "Cliente")
@@ -1216,13 +1219,16 @@ namespace VideoSystemWeb.Agenda
                 if (!string.IsNullOrEmpty(numeroFattura))
                 {
                     // SE IL NUMERO FATTURA ESISTE LA DEVO CANCELLARE
-                    esito = Protocolli_BLL.Instance.EliminaFattura(idFattura, numeroFattura);
+                    esito = Protocolli_BLL.Instance.EliminaFattura(idFattura, numeroFattura, idDatiAgenta);
                     if (esito.Codice > 0)
                     {
                         ShowError("Errore durante la cancellazione della fattura: " + numeroFattura + Environment.NewLine + esito.Descrizione);
                     }
                     else
                     {
+                        TextBox tbFatt = (TextBox) popupLavorazione.FindControl("txt_Fattura");
+                        tbFatt.Text = "";
+                        SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_LAVORAZIONE;
                         ShowSuccess("Fattura n. " + numeroFattura + " Cancellata correttamente.");
                     }
                  }
@@ -1230,6 +1236,10 @@ namespace VideoSystemWeb.Agenda
                 {
                     ShowWarning("Fattura NON Trovata!");
                 }
+            }
+            else
+            {
+                ShowWarning("Fattura NON Trovata!");
             }
         }
     }

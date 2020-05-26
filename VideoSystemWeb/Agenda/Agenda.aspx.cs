@@ -847,7 +847,13 @@ namespace VideoSystemWeb.Agenda
 
             Esito esito = new Esito();
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
-            DatiLavorazione datiLavorazione = SessionManager.EventoSelezionato.id_stato != Stato.Instance.STATO_LAVORAZIONE ? null :  popupLavorazione.CreaDatiLavorazione();
+
+            DatiLavorazione datiLavorazione = null;
+            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
+            {
+                datiLavorazione = popupLavorazione.CreaDatiLavorazione();
+            }
+
             SessionManager.EventoSelezionato.LavorazioneCorrente = datiLavorazione;
 
             esito = ValidazioneSalvataggio(listaIdTender);

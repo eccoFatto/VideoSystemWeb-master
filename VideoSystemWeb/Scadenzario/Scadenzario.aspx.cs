@@ -392,7 +392,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             }
 
             txt_ClienteFornitore.Text = scadenza.RagioneSocialeClienteFornitore;
-            txt_DataDocumento.Text = scadenza.DataProtocollo.ToString();
+            txt_DataDocumento.Text = scadenza.DataFattura.ToString();// scadenza.DataProtocollo.ToString();
             txt_NumeroDocumento.Text = scadenza.ProtocolloRiferimento;
             txt_Imponibile.Text = (scadenza.ImportoDare + scadenza.ImportoAvere).ToString("###,##0.00");
             txt_ImponibileIva.Text = (scadenza.ImportoDareIva + scadenza.ImportoAvereIva).ToString("###,##0.00");
@@ -409,7 +409,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             txt_TotaleIva.Text = ((scadenza.ImportoDareIva + scadenza.ImportoAvereIva) - versatoOriscossoIva).ToString("###,##0.00"); 
             txt_TotaleDocumento.Text = (importoDocumentoDare + importoDocumentoAvere).ToString("###,##0.00");
             txt_TotDocumentoIva.Text = (importoDocumentoDareIva + importoDocumentoAvereIva).ToString("###,##0.00");
-            txt_DataDocumentoModifica.Text = scadenza.DataProtocollo != null ? ((DateTime)scadenza.DataProtocollo).ToString("dd/MM/yyyy") : "";
+            txt_DataProtocolloModifica.Text = scadenza.DataProtocollo != null ? ((DateTime)scadenza.DataProtocollo).ToString("dd/MM/yyyy") : "";
             txt_ScadenzaDocumento.Text = scadenza.DataScadenza != null ? ((DateTime)scadenza.DataScadenza).ToString("dd/MM/yyyy") : "";
 
             ddl_BancaModifica.SelectedValue = scadenza.IdTipoBanca.ToString();
@@ -478,7 +478,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             scadenza.Note = string.Empty;
             scadenza.RagioneSocialeClienteFornitore = string.Empty;
             scadenza.ProtocolloRiferimento = string.Empty;
-            scadenza.DataProtocollo = dataFattura;
+            scadenza.DataProtocollo = protocollo.Data_protocollo;//dataFattura;
             scadenza.Cassa = 0;
 
             return scadenza;

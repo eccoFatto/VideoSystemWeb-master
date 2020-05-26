@@ -636,13 +636,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_TotDocumentoIva;
 
         /// <summary>
-        /// Controllo txt_DataDocumentoModifica.
+        /// Controllo txt_DataProtocolloModifica.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_DataDocumentoModifica;
+        protected global::System.Web.UI.WebControls.TextBox txt_DataProtocolloModifica;
 
         /// <summary>
         /// Controllo txt_ScadenzaDocumento.

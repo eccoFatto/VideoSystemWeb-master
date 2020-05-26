@@ -593,8 +593,8 @@
                                         </div>
                                         <div class="w3-row">
                                             <div class="w3-half w3-padding" >
-                                                <label>Data</label>
-                                                <asp:TextBox ID="txt_DataDocumentoModifica" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" />
+                                                <label>Data protocollo</label>
+                                                <asp:TextBox ID="txt_DataProtocolloModifica" Disabled runat="server" MaxLength="10" CssClass="w3-input w3-border" />
                                             </div>
                                             <div class="w3-half w3-padding" >
                                                 <label>Scadenza</label>

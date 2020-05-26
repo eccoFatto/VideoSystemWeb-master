@@ -29,6 +29,7 @@ namespace VideoSystemWeb.Entity
         private string ragioneSocialeClienteFornitore;
         private string protocolloRiferimento;
         private DateTime? dataProtocollo;
+        private DateTime? dataFattura;
         private decimal cassa;
         private int idTipoBanca;
 
@@ -100,5 +101,6 @@ namespace VideoSystemWeb.Entity
         public int? IdPadre { get => idPadre; set => idPadre = value; }
         public decimal ImportoVersatoIva { get => importoVersatoIva; set => importoVersatoIva = value; }
         public decimal ImportoRiscossoIva { get => importoRiscossoIva; set => importoRiscossoIva = value; }
+        public DateTime? DataFattura { get => dataFattura; set => dataFattura = value; }
     }
 }

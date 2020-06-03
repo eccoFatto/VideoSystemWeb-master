@@ -479,6 +479,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             scadenza.RagioneSocialeClienteFornitore = string.Empty;
             scadenza.ProtocolloRiferimento = string.Empty;
             scadenza.DataProtocollo = protocollo.Data_protocollo;//dataFattura;
+            scadenza.DataFattura = protocollo.Data_inizio_lavorazione;
             scadenza.Cassa = 0;
 
             return scadenza;
@@ -680,7 +681,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     
                     if (ddl_APartireDa.SelectedValue == "0") // INIZIO CALCOLO SCADENZA DATA FATTURA
                     {
-                        dataPartenzaPagamento = datiScadenzario.DataProtocollo == null ? DateTime.Now : (DateTime)datiScadenzario.DataProtocollo;
+                        dataPartenzaPagamento = datiScadenzario.DataFattura == null ? DateTime.Now : (DateTime)datiScadenzario.DataFattura;
                     }
                     else  // INIZIO CALCOLO SCADENZA DA FINE MESE
                     {
@@ -688,7 +689,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                         dataPartenzaPagamento = DateTime.Now;
                     }
                     //prendo ultimo giorno del mese successivo
-                    dataPartenzaPagamento = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(posticipoPagamento);
+                    dataPartenzaPagamento = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(posticipoPagamento+1);
                     dataPartenzaPagamento = ((DateTime)dataPartenzaPagamento).AddDays(-1);
 
                     int cadenzaGiorni = 30;

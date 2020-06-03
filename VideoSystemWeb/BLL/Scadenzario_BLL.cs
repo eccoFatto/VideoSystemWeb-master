@@ -142,7 +142,7 @@ namespace VideoSystemWeb.BLL
             for (int i = 1; i <= numeroRate; i++)
             {
                 //scadenza.DataScadenza = ((DateTime)dataPartenzaPagamento).AddDays(cadenzaGiorni * i);
-                DateTime scadenzaRata = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(i + 1);// ((DateTime)dataPartenzaPagamento).AddMonths(i+1);
+                DateTime scadenzaRata = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(i);// ((DateTime)dataPartenzaPagamento).AddMonths(i+1);
                 scadenza.DataScadenza = scadenzaRata.AddDays(-1);
 
                 Scadenzario_DAL.Instance.CreaDatiScadenzario(scadenza, ref esito);

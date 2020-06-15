@@ -658,7 +658,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             DatiScadenzario datiScadenzario = CreaOggettoDatiScadenzario(ref esito);
 
             //anticipo importo è stato disattivato
-            string anticipoImportoIva = "0";// string.IsNullOrWhiteSpace(txt_AnticipoImporto.Text) ? "0" : txt_AnticipoImporto.Text;
+            string anticipoImportoIva = "0";
             decimal ivaDecimal = decimal.Parse(txt_Iva.Text);
             string anticipoImporto = (decimal.Parse(anticipoImportoIva) / (1 + (ivaDecimal / 100))).ToString();
 
@@ -675,37 +675,41 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     if (string.IsNullOrEmpty(txt_NumeroRate.Text) || txt_NumeroRate.Text == "0") txt_NumeroRate.Text = "1";
 
                     int posticipoPagamento = int.Parse(ddl_PosticipoPagamento.SelectedValue);
-                    //DateTime? dataPartenzaPagamento = datiScadenzario.DataProtocollo == null ? DateTime.Now : datiScadenzario.DataProtocollo;
                     
                     DateTime dataPartenzaPagamento;
                     
                     if (ddl_APartireDa.SelectedValue == "0") // INIZIO CALCOLO SCADENZA DATA FATTURA
                     {
                         dataPartenzaPagamento = datiScadenzario.DataFattura == null ? DateTime.Now : (DateTime)datiScadenzario.DataFattura;
-                    }
-                    else  // INIZIO CALCOLO SCADENZA DA FINE MESE
-                    {
-                        //dataPartenzaPagamento = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1);
-                        dataPartenzaPagamento = DateTime.Now;
-                    }
-                    //prendo ultimo giorno del mese successivo
-                    dataPartenzaPagamento = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(posticipoPagamento+1);
-                    dataPartenzaPagamento = ((DateTime)dataPartenzaPagamento).AddDays(-1);
+                        dataPartenzaPagamento = dataPartenzaPagamento.AddMonths(posticipoPagamento); 
 
-                    int cadenzaGiorni = 30;
-                    //if (!string.IsNullOrEmpty(txt_CadenzaGiorni.Text)) cadenzaGiorni = int.Parse(txt_CadenzaGiorni.Text);
-
-
-
-                    Scadenzario_BLL.Instance.CreaDatiScadenzario(datiScadenzario,
+                        Scadenzario_BLL.Instance.CreaDatiScadenzario(datiScadenzario,
                                                                  anticipoImporto,
                                                                  anticipoImportoIva,
                                                                  txt_Iva.Text,
                                                                  txt_NumeroRate.Text,
                                                                  ddl_Tipo.SelectedValue,
                                                                  dataPartenzaPagamento,
-                                                                 cadenzaGiorni,
+                                                                 false,
                                                                  ref esito);
+                    }
+                    else  // INIZIO CALCOLO SCADENZA DA FINE MESE
+                    {
+                        dataPartenzaPagamento = DateTime.Now;
+                        //prendo ultimo giorno del mese successivo
+                        dataPartenzaPagamento = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(posticipoPagamento + 1);
+                        dataPartenzaPagamento = ((DateTime)dataPartenzaPagamento).AddDays(-1);
+
+                        Scadenzario_BLL.Instance.CreaDatiScadenzario(datiScadenzario,
+                                                                 anticipoImporto,
+                                                                 anticipoImportoIva,
+                                                                 txt_Iva.Text,
+                                                                 txt_NumeroRate.Text,
+                                                                 ddl_Tipo.SelectedValue,
+                                                                 dataPartenzaPagamento,
+                                                                 true,
+                                                                 ref esito);
+                    }
 
                     if (esito.Codice != Esito.ESITO_OK)
                     {

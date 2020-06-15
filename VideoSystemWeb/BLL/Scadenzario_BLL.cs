@@ -78,7 +78,7 @@ namespace VideoSystemWeb.BLL
             Scadenzario_DAL.Instance.CancellaFigli_AggiornaDatiScadenzario(listaFigliScadenza, scadenza, ref esito);
         }
 
-        public void CreaDatiScadenzario(DatiScadenzario scadenza, string _acconto, string _accontoIva, string _iva, string _numeroRate, string tipoScadenza, DateTime dataPartenzaPagamento, int cadenzaGiorni, ref Esito esito)
+        public void CreaDatiScadenzario(DatiScadenzario scadenza, string _acconto, string _accontoIva, string _iva, string _numeroRate, string tipoScadenza, DateTime dataPartenzaPagamento, bool scadenzaFineMese, ref Esito esito)
         {
             decimal accontoIva = string.IsNullOrEmpty(_accontoIva) ? 0 : decimal.Parse(_accontoIva);
             decimal ivaDecimal = string.IsNullOrEmpty(_iva) ? 0 : decimal.Parse(_iva);
@@ -139,11 +139,20 @@ namespace VideoSystemWeb.BLL
                 scadenza.ImportoDareIva = (scadenza.ImportoDareIva - accontoIva) / decimal.Parse(numeroRate.ToString());
             }
 
-            for (int i = 1; i <= numeroRate; i++)
+            scadenza.DataScadenza = dataPartenzaPagamento;
+            Scadenzario_DAL.Instance.CreaDatiScadenzario(scadenza, ref esito);
+
+            for (int i = 1; i < numeroRate; i++)
             {
-                //scadenza.DataScadenza = ((DateTime)dataPartenzaPagamento).AddDays(cadenzaGiorni * i);
-                DateTime scadenzaRata = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(i);// ((DateTime)dataPartenzaPagamento).AddMonths(i+1);
-                scadenza.DataScadenza = scadenzaRata.AddDays(-1);
+                if (scadenzaFineMese)
+                {
+                    DateTime scadenzaRata = new DateTime(dataPartenzaPagamento.Year, dataPartenzaPagamento.Month, 1).AddMonths(i + 1);
+                    scadenza.DataScadenza = scadenzaRata.AddDays(-1);
+                }
+                else //se selezionata scadenza 'data fattura' viene presa la data della fattura e incrementata di 30 gg in ogni rata (V.mail 4/6/2020)
+                {
+                    scadenza.DataScadenza = dataPartenzaPagamento.AddDays(30 * i);
+                }
 
                 Scadenzario_DAL.Instance.CreaDatiScadenzario(scadenza, ref esito);
             }

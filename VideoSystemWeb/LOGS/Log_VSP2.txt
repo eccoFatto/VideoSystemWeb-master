@@ -22362,3 +22362,6 @@ Sintassi non corretta in prossimità della parola chiave 'by'.
 2020-05-26 17:31:41,526 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-26 17:34:10,880 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-05-26 17:35:37,171 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-06-06 15:20:07,607 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-06-06 15:31:29,932 [17] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-06-06 15:38:14,017 [13] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

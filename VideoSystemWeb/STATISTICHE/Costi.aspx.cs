@@ -33,26 +33,29 @@ namespace VideoSystemWeb.STATISTICHE
         private void GestioneRaggruppamentoRighe()
         {
             GridViewHelper helper = new GridViewHelper(this.gv_statistiche);
-            //string[] colonneRaggruppate = new string[2];
-            //colonneRaggruppate[0] = "Cliente";
-            //colonneRaggruppate[1] = "CodiceLavoro";
 
-            
-            helper.RegisterGroup("CodiceLavoro", true, true);
-            helper.RegisterGroup("Cliente", true, true);
-            //helper.RegisterGroup(colonneRaggruppate, true, true);
-            //helper.ApplyGroupSort();
-
-
+            #region RAGGRUPPAMENTO
+            string[] colonneRaggruppate = new string[2];
+            colonneRaggruppate[0] = "Cliente";
+            colonneRaggruppate[1] = "CodiceLavoro";
+            helper.RegisterGroup(colonneRaggruppate, true, true);
 
             //SUBTOTALE
-            helper.RegisterSummary("Listino", SummaryOperation.Sum, "CodiceLavoro");
-            helper.RegisterSummary("Costo", SummaryOperation.Sum, "CodiceLavoro");
-            helper.RegisterSummary("Ricavo", SummaryOperation.Count, "CodiceLavoro");
+            helper.RegisterSummary("Listino", SummaryOperation.Sum, "Cliente+CodiceLavoro");
+            helper.RegisterSummary("Costo", SummaryOperation.Sum, "Cliente+CodiceLavoro");
+            helper.RegisterSummary("Ricavo", SummaryOperation.Count, "Cliente+CodiceLavoro");
+            #endregion
 
-            ////helper.RegisterSummary("Listino", SummaryOperation.Sum, "Cliente");
-            ////helper.RegisterSummary("Costo", SummaryOperation.Sum, "Cliente");
-            ////helper.RegisterSummary("Ricavo", SummaryOperation.Count, "Cliente");
+            #region SOTTOGRUPPO
+            //helper.RegisterGroup("Cliente", true, true);
+            //helper.RegisterGroup("CodiceLavoro", true, true);
+
+
+            ////SUBTOTALE
+            //helper.RegisterSummary("Listino", SummaryOperation.Sum, "CodiceLavoro");
+            //helper.RegisterSummary("Costo", SummaryOperation.Sum, "CodiceLavoro");
+            //helper.RegisterSummary("Ricavo", SummaryOperation.Count, "CodiceLavoro");
+            #endregion
 
             ////TOTALE
             helper.RegisterSummary("Listino", SummaryOperation.Sum);
@@ -62,9 +65,7 @@ namespace VideoSystemWeb.STATISTICHE
             helper.GroupHeader += new GroupEvent(Helper_GroupHeader);
             helper.GroupSummary += new GroupEvent(Helper_GroupSummary);
             helper.GeneralSummary += new FooterEvent(Helper_GeneralSummary);
-
         }
-
 
         private void Helper_GroupHeader(string groupName, object[] values, GridViewRow row)
         {
@@ -78,6 +79,16 @@ namespace VideoSystemWeb.STATISTICHE
             {
                 row.BackColor = Color.LightGray;
                 row.Cells[0].Text = "&nbsp;&nbsp;&nbsp;&nbsp;<i><b>Codice lavorazione:&nbsp;" + row.Cells[0].Text + "</b></i>";
+            }
+            else //raggruppamento
+            {
+                string titolo = row.Cells[0].Text;
+                string cliente = titolo.Substring(0, titolo.LastIndexOf(" - "));
+                string codiceLavorazione = titolo.Substring(titolo.LastIndexOf(" - ")+3);
+
+                row.BackColor = Color.FromArgb(0, 64, 128);
+                row.ForeColor = Color.White;
+                row.Cells[0].Text = "&nbsp;&nbsp;<b>Cliente:&nbsp;" + cliente + "&nbsp;-&nbsp;Codice lavorazione:&nbsp;" + codiceLavorazione + "</b>";
             }
         }
 

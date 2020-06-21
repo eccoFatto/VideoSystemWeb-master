@@ -768,6 +768,9 @@
                         <asp:Button ID="btnImporta" runat="server" Text="Importa" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnImporta_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btn_CancellazioneMassivaPianoesterno" runat="server" Text="Elimina selezione" class=" w3-btn w3-white w3-border w3-border-red w3-round-large"  OnClick="btn_CancellazioneMassivaPianoEsterno_Click"  Style="padding: 7px 10px" OnClientClick="return confermaEliminazioneMassiva();"/>
                         <asp:Button ID="btnInserimentoGenerale" runat="server" Text="Inserimento generale" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnInserimentoGenerale_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
+                    
+                        <asp:Button ID="btnExpWhatsapp" runat="server" Text="Esporta File Whatsapp" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnExpWhatsapp_Click"  OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
+                    
                     </div>
                     
                 </div>

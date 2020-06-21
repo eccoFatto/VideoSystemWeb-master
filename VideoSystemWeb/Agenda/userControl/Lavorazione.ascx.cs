@@ -1943,5 +1943,100 @@ namespace VideoSystemWeb.Agenda.userControl
             ddl_FiltroGiorniLavorazione.SelectedIndex = 0;
         }
         #endregion
+
+        protected void btnExpWhatsapp_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty( SessionManager.EventoSelezionato.codice_lavoro))
+            {
+                if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione != null)
+                {
+                    // GESTIONE NOMI FILE TLTIME
+                    string nomeFile = "Export_Whatsapp_" + SessionManager.EventoSelezionato.codice_lavoro + ".txt";
+                    string pathWhatsapp = ConfigurationManager.AppSettings["PATH_DOCUMENTI_WHATSAPP"] + nomeFile;
+                    string mapPathWhatsapp = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_WHATSAPP"]) + nomeFile;
+                    using (System.IO.StreamWriter file = new System.IO.StreamWriter(mapPathWhatsapp))
+                    {
+                        // INSERISCO RIGA INTESTAZIONE
+                        string riga = "NAME;NUMBER;VARIABLE_1;VARIABLE_2;VARIABLE_3;VARIABLE_4;VARIABLE_5";
+                        file.WriteLine(riga);
+                        List<DatiPianoEsternoLavorazione> pe = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
+                        foreach (DatiPianoEsternoLavorazione dpe in pe)
+                        {
+                            string collaboratoreFornitore = "";
+                            string telefono = "";
+                            string qualifica = "";
+                            string citta = "";
+                            string descrizioneArticoloAssociato = "";
+                            Esito esito = new Esito();
+                            if (dpe.IdCollaboratori != null)
+                            {
+                                Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(dpe.IdCollaboratori.Value, ref esito);
+                                collaboratoreFornitore = coll.Cognome.Trim() + " " + coll.Nome.Trim();
+
+                                // prendo descrizione da datiArticoliLavorazione filtrando per data, idCollaboratore e idLavorazione
+                                DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == coll.Id && x.Data == dpe.Data);
+                                if (articoloAssociato != null)
+                                {
+                                    descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                                }
+
+                                FiguraProfessionale fp = coll.CreaFiguraProfessionale(descrizioneArticoloAssociato);
+                                //if (fp!=null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                                if (fp != null && !string.IsNullOrEmpty(fp.DescrizioneArticoloAssociato)) qualifica = fp.DescrizioneArticoloAssociato;
+                                if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
+                                if (telefono.StartsWith("0039")) telefono = telefono.Substring(4);
+                                if (telefono.StartsWith("+39")) telefono = telefono.Substring(3);
+
+                                if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
+                            }
+                            else if (dpe.IdFornitori != null)
+                            {
+                                Anag_Clienti_Fornitori clienteFornitore = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(dpe.IdFornitori.Value, ref esito);
+                                collaboratoreFornitore = clienteFornitore.RagioneSociale.Trim();
+
+                                // prendo descrizione da datiArticoliLavorazione filtrando per data, idFornitore e idLavorazione
+                                DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == clienteFornitore.Id && x.Data == dpe.Data);
+                                if (articoloAssociato != null)
+                                {
+                                    descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                                }
+
+                                FiguraProfessionale fp = clienteFornitore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
+                                //if (fp != null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                                if (fp != null && !string.IsNullOrEmpty(fp.DescrizioneArticoloAssociato)) qualifica = fp.DescrizioneArticoloAssociato;
+                                if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
+                                if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
+                            }
+
+                            //string riga = "NAME;NUMBER;VARIABLE_1;VARIABLE_2;VARIABLE_3;VARIABLE_4;VARIABLE_5";
+                            DateTime dataPe = DateTime.Today;
+                            if (dpe.Data != null) dataPe = Convert.ToDateTime(dpe.Data);
+
+                            DateTime orarioPe = DateTime.Today;
+                            if (dpe.Orario != null) orarioPe = Convert.ToDateTime(dpe.Orario);
+
+                            riga = collaboratoreFornitore.Replace(";","|") +";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + SessionManager.EventoSelezionato.luogo.Replace(";", "|") +";" + dataPe.ToShortDateString() +";" + orarioPe.ToShortTimeString() +";" + citta.Replace(";","");
+                            file.WriteLine(riga);
+                        }
+                        file.Flush();
+                        file.Close();
+                        if (System.IO.File.Exists(mapPathWhatsapp))
+                        {
+                            Page page = HttpContext.Current.Handler as Page;
+                            ScriptManager.RegisterStartupScript(page, page.GetType(), "apriExportWhatsapp", script: "window.open('" + pathWhatsapp.Replace("~", "") + "')", addScriptTags: true);
+
+                        }
+                    }
+                }
+                else
+                {
+                    basePage.ShowWarning("Piano Esterno Inesistente");
+                }
+            }
+            else
+            {
+                basePage.ShowWarning("Codice lavorazione Inesistente");
+            }
+        }
     }
 }

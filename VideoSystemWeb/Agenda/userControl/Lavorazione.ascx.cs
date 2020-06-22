@@ -2015,7 +2015,17 @@ namespace VideoSystemWeb.Agenda.userControl
                             DateTime orarioPe = DateTime.Today;
                             if (dpe.Orario != null) orarioPe = Convert.ToDateTime(dpe.Orario);
 
-                            riga = collaboratoreFornitore.Replace(";","|") +";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + SessionManager.EventoSelezionato.luogo.Replace(";", "|") +";" + dataPe.ToShortDateString() +";" + orarioPe.ToShortTimeString() +";" + citta.Replace(";","");
+                            //riga = collaboratoreFornitore.Replace(";","|") +";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + SessionManager.EventoSelezionato.luogo.Replace(";", "|") +";" + dataPe.ToShortDateString() +";" + orarioPe.ToShortTimeString() +";" + citta.Replace(";","");
+
+                            string capotecnico = ddl_Capotecnico.SelectedItem.Text;
+                            if (SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico != null)
+                            {
+                                int idCT = Convert.ToInt32( SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico);
+                                esito = new Esito();
+                                Entity.Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(idCT,ref esito);
+                                if(esito.Codice==0 && coll != null) capotecnico = coll.Cognome + " " + coll.Nome;
+                            }
+                            riga = collaboratoreFornitore.Replace(";", "|") + ";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + SessionManager.EventoSelezionato.lavorazione.Replace(";", "|") + ";" + orarioPe.ToShortTimeString() + ";" + SessionManager.EventoSelezionato.indirizzo.Replace(";", "") + " " + SessionManager.EventoSelezionato.luogo.Replace(";", "") + ";" + capotecnico;
                             file.WriteLine(riga);
                         }
                         file.Flush();

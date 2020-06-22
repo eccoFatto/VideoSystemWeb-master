@@ -1,0 +1,9 @@
+NAME;NUMBER;VARIABLE_1;VARIABLE_2;VARIABLE_3;VARIABLE_4;VARIABLE_5
+Alfieri Francesco;3391748339;Convention;Convention Auditorium del 05/02/2020;20:00;;2023
+Borioni Andrea;3468632163;Convention;Convention Auditorium del 05/02/2020;20:00;;2023
+Colantonio Marco;3404073157;Convention;Convention Auditorium del 05/02/2020;20:00;;2023
+Alfieri Francesco;3391748339;Convention;Convention Auditorium del 05/02/2020;07:30;;2023
+Graziosi Valerio;3290382232;Convention;Convention Auditorium del 05/02/2020;07:30;;2023
+Quattrocchi Giosaf;3891665215;Convention;Convention Auditorium del 05/02/2020;07:30;;2023
+Colantonio Marco;3404073157;Convention;Convention Auditorium del 05/02/2020;07:30;;2023
+Borioni Andrea;3468632163;Convention;Convention Auditorium del 05/02/2020;07:30;;2023

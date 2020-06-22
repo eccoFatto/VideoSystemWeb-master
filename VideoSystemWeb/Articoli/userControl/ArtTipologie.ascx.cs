@@ -292,7 +292,7 @@ namespace VideoSystemWeb.Articoli.userControl
                     esito = UtilityTipologiche.EliminaTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], Convert.ToInt32(tbIdTipologiaDaModificare.Text.Trim()));
                     if (esito.Codice != Esito.ESITO_OK)
                     {
-                        if(esito.Descrizione.IndexOf("conflitto con il vincolo REFERENCE") > -1)
+                        if (esito.Descrizione.IndexOf("conflitto con il vincolo REFERENCE") > -1 || esito.Descrizione.IndexOf("conflicted with the REFERENCE constraint") > -1)
                         {
                             basePage.ShowWarning("Attenzione, la tipologia selezionata è associata ad altri record, prima di eliminarla è necessario eliminare i record associati");
                         }

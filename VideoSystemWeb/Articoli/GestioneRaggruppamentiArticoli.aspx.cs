@@ -160,7 +160,7 @@ namespace VideoSystemWeb.Articoli
                         //panelErrore.Style.Add("display", "block");
                         //lbl_MessaggioErrore.Text = esito.descrizione;
                         //ShowError(esito.Descrizione);
-                        if (esito.Descrizione.IndexOf("conflitto con il vincolo REFERENCE") > -1)
+                        if (esito.Descrizione.IndexOf("conflitto con il vincolo REFERENCE") > -1  || esito.Descrizione.IndexOf("conflicted with the REFERENCE constraint")>-1) 
                         {
                             basePage.ShowWarning("Attenzione, il raggruppamento selezionato è associato ad altri record, prima di eliminarlo è necessario eliminare i record associati");
                         }

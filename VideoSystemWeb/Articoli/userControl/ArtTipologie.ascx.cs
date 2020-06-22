@@ -288,11 +288,19 @@ namespace VideoSystemWeb.Articoli.userControl
                 try
                 {
                     NascondiErroriValidazione();
-                    esito = UtilityTipologiche.RemoveTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], Convert.ToInt32(tbIdTipologiaDaModificare.Text.Trim()));
-
+                    //esito = UtilityTipologiche.RemoveTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], Convert.ToInt32(tbIdTipologiaDaModificare.Text.Trim()));
+                    esito = UtilityTipologiche.EliminaTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], Convert.ToInt32(tbIdTipologiaDaModificare.Text.Trim()));
                     if (esito.Codice != Esito.ESITO_OK)
                     {
-                        basePage.ShowError(esito.Descrizione);
+                        if(esito.Descrizione.IndexOf("conflitto con il vincolo REFERENCE") > -1)
+                        {
+                            basePage.ShowWarning("Attenzione, la tipologia selezionata è associata ad altri record, prima di eliminarla è necessario eliminare i record associati");
+                        }
+                        else
+                        {
+                            basePage.ShowError(esito.Descrizione);
+                        }
+                        
                     }
                     else
                     {

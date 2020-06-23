@@ -152,14 +152,22 @@ namespace VideoSystemWeb.Articoli
                 try
                 {
                     NascondiErroriValidazione();
-                    //Esito esito = Art_Gruppi_BLL.Instance.EliminaGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
-                    Esito esito = Art_Gruppi_BLL.Instance.RemoveGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()));
+                    Esito esito = Art_Gruppi_BLL.Instance.EliminaGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()), ((Anag_Utenti)Session[SessionManager.UTENTE]));
+                    //Esito esito = Art_Gruppi_BLL.Instance.RemoveGruppo(Convert.ToInt32(tbIdRaggruppamentoDaModificare.Text.Trim()));
 
                     if (esito.Codice != Esito.ESITO_OK)
                     {
                         //panelErrore.Style.Add("display", "block");
                         //lbl_MessaggioErrore.Text = esito.descrizione;
-                        ShowError(esito.Descrizione);
+                        //ShowError(esito.Descrizione);
+                        if (esito.Descrizione.IndexOf("conflitto con il vincolo REFERENCE") > -1  || esito.Descrizione.IndexOf("conflicted with the REFERENCE constraint")>-1) 
+                        {
+                            basePage.ShowWarning("Attenzione, il raggruppamento selezionato è associato ad altri record, prima di eliminarlo è necessario eliminare i record associati");
+                        }
+                        else
+                        {
+                            basePage.ShowError(esito.Descrizione);
+                        }
                     }
                     else
                     {

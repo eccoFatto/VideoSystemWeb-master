@@ -298,10 +298,10 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_Clienti.Enabled =
                     txt_Produzione.Enabled =
                     txt_Lavorazione.Enabled =
-                    txt_Indirizzo.Enabled =
-                    txt_Luogo.Enabled =
                     tb_Nota.Enabled = false;
 
+                    txt_Indirizzo.Enabled =
+                    txt_Luogo.Enabled = 
                     txt_DurataViaggioAndata.Enabled =
                     txt_DurataViaggioRitorno.Enabled =
                     ddl_Risorse.Enabled =
@@ -317,10 +317,10 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_Clienti.Enabled =
                     txt_Produzione.Enabled =
                     txt_Lavorazione.Enabled =
-                    txt_Indirizzo.Enabled =
-                    txt_Luogo.Enabled =
                     tb_Nota.Enabled = false;
 
+                    txt_Indirizzo.Enabled =
+                    txt_Luogo.Enabled =
                     txt_DurataViaggioAndata.Enabled =
                     txt_DurataViaggioRitorno.Enabled =
                     ddl_Risorse.Enabled =

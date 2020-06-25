@@ -82,7 +82,10 @@ namespace VideoSystemWeb.DAL
 
                                              "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN artLav.fp_netto - 45 ELSE 0 END as RimborsoKm, " +
 
-                                             "CASE WHEN (select count(*) from dati_articoli_lavorazione where idCollaboratori = collab.id and data = artLav.data and idArtArticoli = " + idDiaria + ") > 0 THEN 1 ELSE 0 END as Diaria, " +
+                                             //"CASE WHEN (select count(*) from dati_articoli_lavorazione where idCollaboratori = collab.id and data = artLav.data and idArtArticoli = " + idDiaria + ") > 0 THEN 1 ELSE 0 END as Diaria, " +
+                                             "CASE WHEN (select count(*) from dati_pianoEsterno_lavorazione where idCollaboratori = collab.id and data = artLav.data and diaria = 1) > 0 THEN 1 ELSE 0 END as Diaria, " +
+                                             "CASE WHEN(select count(*) from dati_pianoEsterno_lavorazione where idCollaboratori = collab.id and data = artLav.data and albergo = 1) > 0 THEN 1 ELSE 0 END as Albergo, " +
+
                                              "artLav.idTipoPagamento as TipoPagamento, " +
                                              "tipoPagam.nome as DescrizioneTipoPagamento " +
 

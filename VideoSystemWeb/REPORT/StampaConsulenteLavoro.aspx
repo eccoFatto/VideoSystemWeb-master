@@ -131,21 +131,25 @@
                         <div class="w3-row">
                             <b>Totali</b>
                         </div>
-                        <div class="w3-quarter" style="padding-right:5px">
+                        <div class="w3-col" style="padding-right:2px;width:19%">
                             <label>Assunzione</label>
                             <asp:Label ID="lbl_TotAssunzione" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
-                       <div class="w3-quarter" style="padding-right:5px">
+                       <div class="w3-col" style="padding-right:5px;width:19%">
                             <label>Mista</label>
                             <asp:Label ID="lbl_TotMista" runat="server" Width="100%" Text="-" ></asp:Label>
                         </div>
-                        <div class="w3-quarter" style="padding-right:5px">
+                        <div class="w3-col" style="padding-right:5px;width:19%">
                             <label>Rimb. Km</label>
                             <asp:Label ID="lbl_TotRimbKm" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
-                        <div class="w3-quarter">
+                        <div class="w3-col" style="padding-right:5px;width:19%">
                             <label>Diaria</label>
                             <asp:Label ID="lbl_TotDiaria" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>
+                        <div class="w3-col" style="width:19%">
+                            <label>Albergo</label>
+                            <asp:Label ID="lbl_TotAlbergo" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
                     </div>
                 </div>
@@ -183,6 +187,7 @@
                         <asp:BoundField DataField="Mista" HeaderText="Mista" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="RimborsoKm" HeaderText="Rimb. Km" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="Diaria" HeaderText="Diaria" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="Albergo" HeaderText="Albergo" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>
                 
                     </Columns>
                 </asp:GridView>

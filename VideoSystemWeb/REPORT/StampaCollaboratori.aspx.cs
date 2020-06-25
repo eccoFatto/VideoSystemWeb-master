@@ -131,7 +131,15 @@ namespace VideoSystemWeb.REPORT
 
         private void Helper_GroupHeader(string groupName, object[] values, GridViewRow row)
         {
-            row.BackColor = Color.LightGray;
+            if (groupName == "NomeCollaboratore")
+            {
+                row.BackColor = Color.FromArgb(0, 64, 128);
+                row.ForeColor = Color.White;
+            }
+            else
+            {
+                row.BackColor = Color.LightGray;
+            }
             row.Cells[0].Text = "&nbsp;&nbsp;<b>" + row.Cells[0].Text + "</b>";
         }
 

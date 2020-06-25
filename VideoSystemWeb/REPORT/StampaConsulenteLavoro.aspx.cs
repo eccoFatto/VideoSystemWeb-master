@@ -52,6 +52,7 @@ namespace VideoSystemWeb.REPORT
             helper.RegisterSummary("Assunzione", SummaryOperation.Sum, "NomeCollaboratore");
             helper.RegisterSummary("RimborsoKm", SummaryOperation.Sum, "NomeCollaboratore");
             helper.RegisterSummary("Diaria", SummaryOperation.Sum, "NomeCollaboratore");
+            helper.RegisterSummary("Albergo", SummaryOperation.Sum, "NomeCollaboratore");
 
             //TOTALE
             //helper.RegisterSummary("Mista", SummaryOperation.Sum);
@@ -96,6 +97,7 @@ namespace VideoSystemWeb.REPORT
                 lbl_TotMista.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Mista).ToString()));
                 lbl_TotRimbKm.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.RimborsoKm).ToString()));
                 lbl_TotDiaria.Text = listaDatiReport.Sum(x => x.Diaria).ToString();
+                lbl_TotAlbergo.Text = listaDatiReport.Sum(x => x.Albergo).ToString();
             }
             else
             {
@@ -105,6 +107,7 @@ namespace VideoSystemWeb.REPORT
                 lbl_TotMista.Text = "-";
                 lbl_TotRimbKm.Text = "-";
                 lbl_TotDiaria.Text = "-";
+                lbl_TotAlbergo.Text = "-";
             }
 
             #region VECCHIA GESTIONE
@@ -141,17 +144,15 @@ namespace VideoSystemWeb.REPORT
 
         private void Helper_GroupHeader(string groupName, object[] values, GridViewRow row)
         {
-            //if (groupName != "NomeCollaboratore")
-            //{
-            //    values[0] = "Indirizzo: " + values[0];
-            //    values[1] = " - Città: " + values[1];
-            //    values[2] = " - Telefono: " + values[2];
-            //    values[3] = " - Partita IVA: " + values[3];
-
-            //    row.Cells[0].Text = values[0].ToString() + values[1].ToString() + values[2].ToString() + values[3].ToString();
-            //}
-
-            row.BackColor = Color.LightGray;
+            if (groupName == "NomeCollaboratore")
+            {
+                row.BackColor = Color.FromArgb(0, 64, 128);
+                row.ForeColor = Color.White;
+            }
+            else
+            {
+                row.BackColor = Color.LightGray;
+            }
             row.Cells[0].Text = "&nbsp;&nbsp;<b>" + row.Cells[0].Text + "</b>";
         }
 
@@ -163,6 +164,7 @@ namespace VideoSystemWeb.REPORT
             row.Cells[2].Text = "<b><i>" + row.Cells[2].Text + "</i></b>";
             row.Cells[3].Text = "<b><i>" + row.Cells[3].Text + "</i></b>";
             row.Cells[4].Text = "<b><i>" + row.Cells[4].Text + "</i></b>";
+            row.Cells[5].Text = "<b><i>" + row.Cells[5].Text + "</i></b>";
         }
 
         //private void Helper_GeneralSummary(GridViewRow row)
@@ -288,7 +290,7 @@ namespace VideoSystemWeb.REPORT
                         document.Add(pSpazio);
 
                         // CREAZIONE GRIGLIA
-                        iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 67, 135, 112, 113, 110, 30, 65, 54, 54, 40 }).SetWidth(780).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
+                        iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 60, 123, 103, 108, 107, 30, 65, 50, 50, 38, 46 }).SetWidth(780).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
                         Paragraph pGriglia;
                         Cell cellaGriglia;
 
@@ -343,12 +345,18 @@ namespace VideoSystemWeb.REPORT
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddHeaderCell(cellaGriglia);
 
+                        pGriglia = new Paragraph("Albergo").SetFontSize(10);
+                        cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
+                        cellaGriglia.Add(pGriglia);
+                        tbGrigla.AddHeaderCell(cellaGriglia);
+
                         // TOTALI PARZIALI
                         int quantita = 0;
                         decimal assunzione = 0;
                         decimal mista = 0;
                         decimal rimborsoKm = 0;
                         int diaria = 0;
+                        int albergo = 0;
 
                         foreach (DatiFiscaliLavorazione datiFiscali in collaboratore.ListaDatiFiscali)
                         {
@@ -407,7 +415,11 @@ namespace VideoSystemWeb.REPORT
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
 
-
+                            albergo += datiFiscali.Albergo;
+                            pGriglia = new Paragraph(datiFiscali.Albergo.ToString("###")).SetFontSize(9);
+                            cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                            cellaGriglia.Add(pGriglia);
+                            tbGrigla.AddCell(cellaGriglia);
                         }
 
                         pGriglia = new Paragraph("TOTALI").SetFontSize(9);
@@ -438,6 +450,11 @@ namespace VideoSystemWeb.REPORT
                         tbGrigla.AddCell(cellaGriglia);
 
                         pGriglia = new Paragraph(diaria.ToString("##0")).SetFontSize(9);
+                        cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
+                        cellaGriglia.Add(pGriglia);
+                        tbGrigla.AddCell(cellaGriglia);
+
+                        pGriglia = new Paragraph(albergo.ToString("##0")).SetFontSize(9);
                         cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);

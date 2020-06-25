@@ -67,6 +67,7 @@ namespace VideoSystemWeb.BLL
                 datiFiscaliLavorazione.Assunzione = riga.Field<decimal>("Assunzione");
                 datiFiscaliLavorazione.Mista = (decimal)riga.Field<int>("Mista");
                 datiFiscaliLavorazione.Diaria = riga.Field<int>("Diaria");
+                datiFiscaliLavorazione.Albergo = riga.Field<int>("Albergo");
                 datiFiscaliLavorazione.RimborsoKm = riga.Field<decimal>("RimborsoKm");
                 datiFiscaliLavorazione.TipoPagamento = riga.Field<int>("TipoPagamento");
                 datiFiscaliLavorazione.DescrizionePagamento = riga.Field<string>("DescrizioneTipoPagamento");
@@ -105,6 +106,7 @@ namespace VideoSystemWeb.BLL
                 datiReport.Assunzione = riga.Field<decimal>("Assunzione");
                 datiReport.Mista = (decimal)riga.Field<int>("Mista");
                 datiReport.Diaria = riga.Field<int>("Diaria");
+                datiReport.Albergo = riga.Field<int>("Albergo");
                 datiReport.RimborsoKm = riga.Field<decimal>("RimborsoKm");
                 datiReport.TipoPagamento = riga.Field<int>("TipoPagamento");
                 datiReport.DescrizionePagamento = riga.Field<string>("DescrizioneTipoPagamento");

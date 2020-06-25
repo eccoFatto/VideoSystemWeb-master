@@ -28,6 +28,7 @@ namespace VideoSystemWeb.Entity
         private decimal ritenutaAcconto;
         private decimal fattura;
         private int diaria;
+        private int albergo;
 
         private int tipoPagamento;
         private string descrizionePagamento;
@@ -53,6 +54,7 @@ namespace VideoSystemWeb.Entity
         public decimal RitenutaAcconto { get => ritenutaAcconto; set => ritenutaAcconto = value; }
         public decimal Fattura { get => fattura; set => fattura = value; }
         public int Diaria { get => diaria; set => diaria = value; }
+        public int Albergo { get => albergo; set => albergo = value; }
         public int TipoPagamento { get => tipoPagamento; set => tipoPagamento = value; }
         public string DescrizionePagamento { get => descrizionePagamento; set => descrizionePagamento = value; }
         public decimal RimborsoKm { get => rimborsoKm; set => rimborsoKm = value; }

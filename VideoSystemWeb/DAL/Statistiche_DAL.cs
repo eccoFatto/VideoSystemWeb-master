@@ -115,30 +115,31 @@ namespace VideoSystemWeb.DAL
             return listaStatisticheRicavi;
         }
 
-        public List<StatisticheCosti> GetStatisticheCosti(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroContratto, string filtroGenere, string filtroGruppo, string filtroSottogruppo, bool? fatturato, string dataInizio, string dataFine, ref Esito esito)
+        public List<StatisticheCosti> GetStatisticheCosti(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroContratto, string filtroGenere, string filtroGruppo, string filtroSottogruppo, bool? fatturato, string dataInizio, string dataFine, string filtroFornitore, ref Esito esito)
         {
             List<StatisticheCosti> listaStatisticheCosti = new List<StatisticheCosti>();
 
-            string filtri = string.Empty;
-            filtri += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente + "%' ";
-            filtri += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione + "%' ";
-            filtri += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
-            filtri += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
+            string filtriLavorazione = string.Empty;
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
 
             if (fatturato != null)
             {
-                filtri += (bool)fatturato ? "and e.protocollo_riferimento is not null " : "and e.protocollo_riferimento is null ";
+                filtriLavorazione += (bool)fatturato ? "and e.protocollo_riferimento is not null " : "and e.protocollo_riferimento is null ";
             }
-            filtri += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND a.data_inizio_lavorazione >= '" + dataInizio.Substring(6) + "-" + dataInizio.Substring(3, 2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'";
+            filtriLavorazione += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND a.data_inizio_lavorazione >= '" + dataInizio.Substring(6) + "-" + dataInizio.Substring(3, 2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'";
             // il filtro dataFine viene eseguito su dataInizioLavorazione, e non su dataFineLavorazione
-            filtri += string.IsNullOrWhiteSpace(dataFine) ? "" : " AND a.data_inizio_lavorazione <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000'";
+            filtriLavorazione += string.IsNullOrWhiteSpace(dataFine) ? "" : " AND a.data_inizio_lavorazione <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000'";
 
 
-            string filtriListino = filtri; // i filtri seguenti devono essere applicati solo alle categorie costi
+            string filtriCosti = string.Empty; ; // i filtri seguenti devono essere applicati solo alle categorie costi
 
-            filtri += string.IsNullOrWhiteSpace(filtroGenere) ? "" : " AND d.idTipoGenere = '" + filtroGenere + "' ";
-            filtri += string.IsNullOrWhiteSpace(filtroGruppo) ? "" : " AND d.idTipoGruppo = '" + filtroGruppo + "' ";
-            filtri += string.IsNullOrWhiteSpace(filtroSottogruppo) ? "" : " AND d.idTipoSottogruppo = '" + filtroContratto + "' ";
+            filtriCosti += string.IsNullOrWhiteSpace(filtroGenere) ? "" : " AND d.idTipoGenere = '" + filtroGenere + "' ";
+            filtriCosti += string.IsNullOrWhiteSpace(filtroGruppo) ? "" : " AND d.idTipoGruppo = '" + filtroGruppo + "' ";
+            filtriCosti += string.IsNullOrWhiteSpace(filtroSottogruppo) ? "" : " AND d.idTipoSottogruppo = '" + filtroContratto + "' ";
+            filtriCosti += string.IsNullOrWhiteSpace(filtroFornitore) ? "" : "AND forn.ragioneSociale like '%" + filtroFornitore + "%' ";
 
             try
             {
@@ -168,7 +169,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3  and d.prezzo > 0 " + filtriListino +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3  and d.prezzo > 0 " + filtriLavorazione +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso " +
                     #region COLLABORATORI
                                     "UNION " +
@@ -184,7 +185,8 @@ namespace VideoSystemWeb.DAL
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
                                     "left join tipo_gruppo k on k.nome = 'Collaboratori' " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo = k.id " + filtri +
+                                    "left join anag_clienti_fornitori forn on d.idFornitori = forn.id " +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo = k.id " + filtriLavorazione + filtriCosti +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, k.nome " +
                     #endregion
 
@@ -202,7 +204,8 @@ namespace VideoSystemWeb.DAL
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
                                     "left join tipo_gruppo k on k.nome = 'Diaria' " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and  d.idTipoGruppo=k.id " + filtri +
+                                    "left join anag_clienti_fornitori forn on d.idFornitori = forn.id " +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and  d.idTipoGruppo=k.id " + filtriLavorazione + filtriCosti +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, k.nome " +
                     #endregion
 
@@ -245,7 +248,7 @@ namespace VideoSystemWeb.DAL
 
                     #region TUTTO IL RESTO
                                     "UNION " +
-                                    "select distinct 6 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, l.nome gruppo, k.ragioneSociale fornitore, sum(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso  " +
+                                    "select distinct 6 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, l.nome gruppo, forn.ragioneSociale fornitore, sum(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso  " +
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
@@ -256,10 +259,10 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
-                                    "left join anag_clienti_fornitori k on d.idFornitori = k.id " +
+                                    "left join anag_clienti_fornitori forn on d.idFornitori = forn.id " +
                                     "left join tipo_gruppo l on l.nome not in ('Collaboratori', 'Diaria') " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo=l.id " + filtri +
-                                    " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, l.nome, k.ragioneSociale " +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo=l.id " + filtriLavorazione + filtriCosti +
+                                    " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, l.nome, forn.ragioneSociale " +
                     #endregion
                                     " order by cliente, a.codice_lavoro, progressivo";
 

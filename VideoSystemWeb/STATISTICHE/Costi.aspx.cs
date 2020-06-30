@@ -249,7 +249,9 @@ namespace VideoSystemWeb.STATISTICHE
             string dataInizio = txt_PeriodoDa.Text;
             string dataFine = txt_PeriodoA.Text;
 
-            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, filtroGenere, filtroGruppo, filtroSottogruppo, isFatturato, dataInizio, dataFine, ref esito);
+            string filtroFornitore = txt_Fornitore.Text;
+
+            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, filtroGenere, filtroGruppo, filtroSottogruppo, isFatturato, dataInizio, dataFine, filtroFornitore, ref esito);
 
             if (listaStatisticheCosti.Count == 0)
             {

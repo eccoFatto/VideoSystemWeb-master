@@ -12,6 +12,7 @@ using VideoSystemWeb.DAL;
 using System.IO;
 using System.Text.RegularExpressions;
 using AjaxControlToolkit;
+using System.Collections;
 namespace VideoSystemWeb.Anagrafiche.userControl
 {
     public partial class AnagCollaboratori : System.Web.UI.UserControl
@@ -78,6 +79,10 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                     AbilitaBottoni(basePage.AbilitazioneInScrittura());
 
+
+                // CREO LA SESSION DEI COLLABORATORI A CUI INVIARE MESSAGGI WHATSAPP
+                Hashtable htCollaboratoriWhatsapp = new Hashtable();
+                Session[SessionManager.LISTA_COLLABORATORI_PER_INVIO_WHATSAPP] = htCollaboratoriWhatsapp;
 
                 //}
                 //else
@@ -160,11 +165,27 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 // PRENDO L'ID DEL COLLABORATORE SELEZIONATO
 
-                string idCollaboratoreSelezionato = e.Row.Cells[0].Text;
+                CheckBox cbw = (CheckBox) e.Row.Cells[0].Controls[1];
+                string idCollaboratoreSelezionato = e.Row.Cells[1].Text;
 
+                Hashtable htCollaboratoriWhatsapp = (Hashtable)Session[SessionManager.LISTA_COLLABORATORI_PER_INVIO_WHATSAPP];
+
+                if (htCollaboratoriWhatsapp.ContainsKey(idCollaboratoreSelezionato))
+                {
+                    cbw.Checked = true;
+                }
+                else
+                {
+                    cbw.Checked = false;
+                }
+                int conta = 0;
                 foreach (TableCell item in e.Row.Cells)
                 {
-                    item.Attributes["onclick"] = "mostraCollaboratore('" + idCollaboratoreSelezionato + "');";
+                    if (conta > 0)
+                    {
+                        item.Attributes["onclick"] = "mostraCollaboratore('" + idCollaboratoreSelezionato + "');";
+                    }
+                    conta++;
                 }
             }
         }
@@ -2002,5 +2023,118 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
         }
 
+        protected void cbwhatsapp_CheckedChanged(object sender, EventArgs e)
+        {
+
+            Hashtable htCollaboratoriWhatsapp = (Hashtable)Session[SessionManager.LISTA_COLLABORATORI_PER_INVIO_WHATSAPP];
+
+            GridViewRow row = (GridViewRow)(((CheckBox)sender).NamingContainer);
+            string idSelezionato = row.Cells[1].Text;
+
+            CheckBox chkSelect = (CheckBox)sender;
+            if (chkSelect.Checked)
+            {
+                try
+                {
+                    if (!htCollaboratoriWhatsapp.ContainsKey(idSelezionato))
+                    {
+                        Esito esito = new Esito();
+                        Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(Convert.ToInt32(idSelezionato), ref esito);
+                        if (esito.Codice == 0) { 
+                            htCollaboratoriWhatsapp.Add(idSelezionato, coll.Cognome + " " + coll.Nome + "|" + coll.Telefoni[0].NumeroCompleto);
+                            //basePage.ShowError("ho selezionato la checkbox " + idSelezionato + " " + coll.Cognome + " " + coll.Nome);
+                        }
+                        else
+                        {
+                            basePage.ShowError(esito.Descrizione);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    basePage.ShowError(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    htCollaboratoriWhatsapp.Remove(idSelezionato);
+                    //basePage.ShowError("ho annullato la selezione della checkbox " + idSelezionato);
+                }
+                catch (Exception ex)
+                {
+
+                    basePage.ShowError(ex.Message);
+                }
+
+            }
+
+        }
+
+        protected void btnApriElencoWhatsapp_Click(object sender, EventArgs e)
+        {
+            Hashtable htCollaboratoriWhatsapp = (Hashtable)Session[SessionManager.LISTA_COLLABORATORI_PER_INVIO_WHATSAPP];
+
+            lbElencoDestinatariWhatsapp.Items.Clear();
+
+            foreach (DictionaryEntry s in htCollaboratoriWhatsapp)
+            {
+                ListItem li = new ListItem(s.Value.ToString(), s.Key.ToString());
+                lbElencoDestinatariWhatsapp.Items.Add(li);
+            }
+
+            
+            pnlWhatsapp.Visible = true;
+        }
+
+        protected void btnExportWhatsapp_Click(object sender, EventArgs e)
+        {
+            // GESTIONE NOMI FILE WHATSAPP
+            string nomeFile = "Export_Whatsapp.txt";
+            string pathWhatsapp = ConfigurationManager.AppSettings["PATH_DOCUMENTI_WHATSAPP"] + nomeFile;
+            string mapPathWhatsapp = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_WHATSAPP"]) + nomeFile;
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(mapPathWhatsapp))
+            {
+                // INSERISCO RIGA INTESTAZIONE
+                string riga = "NAME;NUMBER";
+                file.WriteLine(riga);
+                foreach (ListItem item in lbElencoDestinatariWhatsapp.Items)
+                {
+                    string[] arNominativo = item.Text.Split('|');
+                    string numero = "";
+                    string nome = "";
+
+                    if (arNominativo.Length > 1)
+                    {
+                        nome = arNominativo[0];
+                        numero = arNominativo[1];
+                    }
+
+                    riga = nome + ";" + numero;
+                    file.WriteLine(riga);
+                }
+                file.Flush();
+                file.Close();
+                if (System.IO.File.Exists(mapPathWhatsapp))
+                {
+                    Page page = HttpContext.Current.Handler as Page;
+                    ScriptManager.RegisterStartupScript(page, page.GetType(), "apriExportWhatsapp", script: "window.open('" + pathWhatsapp.Replace("~", "") + "')", addScriptTags: true);
+
+                }
+
+            }
+        }
+
+            protected void btnResetElenco_Click(object sender, EventArgs e)
+        {
+            Hashtable htCollaboratoriWhatsapp = new Hashtable();
+            Session[SessionManager.LISTA_COLLABORATORI_PER_INVIO_WHATSAPP] = htCollaboratoriWhatsapp;
+            lbElencoDestinatariWhatsapp.Items.Clear();
+            btnRicercaCollaboratori_Click(null, null);
+            pnlWhatsapp.Visible = false;
+        }
     }
 }

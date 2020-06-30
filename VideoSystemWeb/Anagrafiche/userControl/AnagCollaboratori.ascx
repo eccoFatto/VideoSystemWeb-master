@@ -39,6 +39,13 @@
         $("#<%=btnInsCollaboratore.ClientID%>").click();
     }
 
+
+    function apriElencoWhatsapp() {
+        $('.loader').show();
+        $("#<%=btnApriElencoWhatsapp.ClientID%>").click();
+    }
+
+
     // APRO LE TAB DETTAGLIO COLLABORATORE
     function openDettaglioAnagrafica(tipoName) {
         $("#<%=hf_tabChiamata.ClientID%>").val(tipoName);
@@ -82,7 +89,11 @@
         //alert(pannelloPopup.id);
         pannelloPopup.style.display = "none";
     }
-    
+
+    function chiudiPopupWhatsapp() {
+        var pannelloPopup = document.getElementById('<%=pnlWhatsapp.ClientID%>');
+        pannelloPopup.style.display = "none";
+    }
 
 
 </script>
@@ -144,16 +155,21 @@
                 <label></label>
                 <table style="width:100%;">
                     <tr>
-                        <td style="width:40%;">                    
+                        <td style="width:25%;">                    
                             <asp:Button ID="btnRicercaCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaCollaboratori_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
                         </td>
-                        <td style="width:40%;">                    
+                        <td style="width:25%;">                    
                             <div id="divBtnInserisciCollaboratori" runat="server"> 
                                 <%--<button id="clientBtnInserisciCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-red w3-round-large" value="Inserisci" onclick="inserisciCollaboratore();">Inserisci</button>--%>
                                 <div id="BtnInserisciCollaboratori" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciCollaboratore();">Inserisci</div>
                             </div>
                         </td>
-                        <td style="width:20%;">
+                        <td style="width:25%;">                    
+                            <div id="divElencoWhatsapp" runat="server"> 
+                                <div id="BtnElencoWhatsapp" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="apriElencoWhatsapp();">Whatsapp</div>
+                            </div>
+                        </td>
+                        <td style="width:25%;">
                             <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;"  OnClientClick="azzeraCampiRicerca();" />
                         </td>
                     </tr>
@@ -163,6 +179,13 @@
 
         <div class="round">
             <asp:GridView ID="gv_collaboratori" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_collaboratori_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_collaboratori_PageIndexChanging" PageSize="20" >
+                <Columns>
+                    <asp:TemplateField HeaderText="whatsapp">
+                        <ItemTemplate>
+                            <asp:CheckBox runat="server" id="cbwhatsapp" AutoPostBack="true" Checked='false' Enabled='true' OnCheckedChanged="cbwhatsapp_CheckedChanged"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
             </asp:GridView>
         </div>
         
@@ -176,10 +199,38 @@
 
 <asp:Button runat="server" ID="btnEditCollaboratore" Style="display: none" OnClick="EditCollaboratore_Click"/>
 <asp:Button runat="server" ID="btnInsCollaboratore" Style="display: none" OnClick="InserisciCollaboratori_Click"/>
-
+<asp:Button runat="server" ID="btnApriElencoWhatsapp" Style="display: none" OnClick="btnApriElencoWhatsapp_Click"/>
+ 
 <asp:HiddenField ID="hf_idColl" runat="server" EnableViewState="true" />
 <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
 <asp:HiddenField ID="hf_tabChiamata" runat="server" EnableViewState="true" Value="Anagrafica" />
+
+<!-- PANNELLO WHATSAPP -->
+<asp:UpdatePanel ID="upWhatsapp" runat="server" UpdateMode="Conditional">
+    <ContentTemplate>
+        <asp:Panel  runat="server" ID="pnlWhatsapp" visible="false" >
+            <div class="modalBackground" ></div>
+            <asp:Panel  runat="server" ID="innerContainerWhatsapp" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                <div class="w3-row-padding w3-margin w3-center w3-large w3-red w3-round" >
+                    ELENCO COLLABORATORI PER INVIO MESSAGGIO WHATSAPP
+                </div>
+                <div class="w3-container">
+                    <div class="w3-bar w3-red w3-round">
+                        <div class="w3-bar-item w3-button w3-red w3-right">
+                            <div id="btnChiudiPopupWhatsapp" class="w3-button w3-green w3-small w3-round" onclick="chiudiPopupWhatsapp();">Chiudi</div>
+                        </div>
+                    </div>
+                    <div class="round">
+                        <asp:ListBox runat="server" ID="lbElencoDestinatariWhatsapp" Rows="10" Width="100%"></asp:ListBox>
+                    </div>
+                    <asp:Button ID="btnExportWhatsapp" runat="server" class="w3-btn w3-green w3-padding-16 w3-margin-top" Text="Crea File" OnClick="btnExportWhatsapp_Click" />
+                    <asp:Button ID="btnResetElenco" runat="server" class="w3-btn w3-red w3-padding-16 w3-margin-top" Text="Azzera Elenco" OnClick="btnResetElenco_Click"  OnClientClick="return confirm('Confermi azzeramento elenco Whatsapp?');" />
+                </div>
+            </asp:Panel>
+        </asp:Panel>
+    </ContentTemplate>
+</asp:UpdatePanel>
+<!-- FINE PANNELLO WHATSAPP -->
 
 <asp:UpdatePanel ID="upColl" runat="server" UpdateMode="Conditional">
     <ContentTemplate>

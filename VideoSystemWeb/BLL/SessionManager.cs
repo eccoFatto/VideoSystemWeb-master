@@ -31,6 +31,10 @@ namespace VideoSystemWeb.BLL
 
         public static string CFG_ALLINEAMENTO_DIPENDENTI_AGENDA = "ALLINEAMENTO_DIPENDENTI_AGENDA";
 
+
+        public static string LISTA_COLLABORATORI_PER_INVIO_WHATSAPP = "LISTA_COLLABORATORI_PER_INVIO_WHATSAPP";
+        public static string LISTA_CLIENTIFORNITORI_PER_INVIO_WHATSAPP = "LISTA_CLIENTIFORNITORI_PER_INVIO_WHATSAPP";
+
         public static DatiAgenda EventoSelezionato
         {
             get

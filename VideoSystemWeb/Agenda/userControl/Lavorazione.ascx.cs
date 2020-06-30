@@ -1958,7 +1958,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
 
 
-                    // GESTIONE NOMI FILE TLTIME
+                    // GESTIONE NOMI FILE WHATSAPP
                     string nomeFile = "Export_Whatsapp_" + SessionManager.EventoSelezionato.codice_lavoro + ".txt";
                     string pathWhatsapp = ConfigurationManager.AppSettings["PATH_DOCUMENTI_WHATSAPP"] + nomeFile;
                     string mapPathWhatsapp = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_WHATSAPP"]) + nomeFile;

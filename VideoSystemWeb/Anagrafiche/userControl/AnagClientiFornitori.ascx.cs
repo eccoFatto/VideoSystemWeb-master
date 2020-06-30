@@ -11,7 +11,7 @@ using VideoSystemWeb.Entity;
 using VideoSystemWeb.DAL;
 using System.IO;
 using System.Text.RegularExpressions;
-
+using System.Collections;
 namespace VideoSystemWeb.Anagrafiche.userControl
 {
     public partial class AnagClientiFornitori : System.Web.UI.UserControl
@@ -96,6 +96,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     Response.Redirect(url, true);
                 }
 
+                // CREO LA SESSION DEI CLIENTI/FORNITORI A CUI INVIARE MESSAGGI WHATSAPP
+                Hashtable htClientiFornitoriWhatsapp = new Hashtable();
+                Session[SessionManager.LISTA_CLIENTIFORNITORI_PER_INVIO_WHATSAPP] = htClientiFornitoriWhatsapp;
             }
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAzienda('" + hf_tabChiamata.Value + "');", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
@@ -383,8 +386,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             queryRicerca = queryRicerca.Replace("@ClienteFornitore", ClienteFornitore);
 
-            queryRicerca = queryRicerca.Replace("@cognome", TbReferente.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@codiceFiscale", tbCF.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@comune", tbComune.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@provincia", tbProvincia.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@partitaIva", TbPiva.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@ragioneSociale", tbRagioneSociale.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@tipo", ddlTipoAzienda.SelectedValue.ToString().Trim().Replace("'", "''"));
@@ -403,12 +406,17 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 // PRENDO L'ID DELL'AZIENDA SELEZIONATA
 
-                string idAziendaSelezionata = e.Row.Cells[0].Text;
-
+                string idAziendaSelezionata = e.Row.Cells[1].Text;
+                int conta = 0;
                 foreach (TableCell item in e.Row.Cells)
                 {
-                    item.Attributes["onclick"] = "mostraAzienda('" + idAziendaSelezionata + "');";
+                    if (conta > 0) { 
+                        item.Attributes["onclick"] = "mostraAzienda('" + idAziendaSelezionata + "');";
+                        //item.Attributes["ondoubleclick"] = "mostraAzienda('" + idAziendaSelezionata + "');";
+                    }
+                    conta++;
                 }
+                
             }
 
         }
@@ -1000,5 +1008,21 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         }
 
+        protected void cbwhatsapp_CheckedChanged(object sender, EventArgs e)
+        {
+            GridViewRow row = (GridViewRow)(((CheckBox)sender).NamingContainer);
+            string idSelezionato = row.Cells[1].Text;
+
+            CheckBox chkSelect = (CheckBox)sender;
+            if (chkSelect.Checked)
+            {
+                basePage.ShowError("ho selezionato la checkbox " + idSelezionato);
+            }
+            else
+            {
+                basePage.ShowError("ho annullato la selezione della checkbox " + idSelezionato);
+            }
+            
+        }
     }
 }

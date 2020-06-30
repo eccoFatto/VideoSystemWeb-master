@@ -50,9 +50,9 @@
     }
     // AZZERO TUTTI I CAMPI RICERCA
     function azzeraCampiRicerca() {
-        $("#<%=tbCF.ClientID%>").val('');
+        $("#<%=tbComune.ClientID%>").val('');
         $("#<%=tbRagioneSociale.ClientID%>").val('');
-        $("#<%=TbReferente.ClientID%>").val('');
+        $("#<%=tbProvincia.ClientID%>").val('');
         $("#<%=TbPiva.ClientID%>").val('');
         $("#<%=tbCodiceIdentificativo.ClientID%>").val('');
         $("#<%=ddlTipoAzienda.ClientID%>").val('');
@@ -104,12 +104,14 @@
                 <asp:TextBox ID="TbPiva" runat="server" MaxLength="11" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
             <div class="w3-quarter">
-                <label>Codice Fiscale</label>
-                <asp:TextBox ID="tbCF" runat="server" MaxLength="16" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                <label>Comune</label>
+                <%--<asp:TextBox ID="tbCF" runat="server" MaxLength="16" class="w3-input w3-border" placeholder=""></asp:TextBox>--%>
+                <asp:TextBox ID="tbComune" runat="server" MaxLength="16" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
             <div class="w3-quarter">
-                <label>Referente</label>
-                <asp:TextBox ID="TbReferente" runat="server" class="w3-input w3-border" placeholder="" ></asp:TextBox>
+                <label>Provincia</label>
+                <%--<asp:TextBox ID="TbReferente" runat="server" class="w3-input w3-border" placeholder="" ></asp:TextBox>--%>
+                <asp:TextBox ID="tbProvincia" runat="server" class="w3-input w3-border" placeholder="" ></asp:TextBox>
             </div>
         </div>
         
@@ -149,6 +151,13 @@
 
         <div class="round">
             <asp:GridView ID="gv_aziende" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_aziende_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_aziende_PageIndexChanging" PageSize="20">
+                <Columns>
+                    <asp:TemplateField HeaderText="whatsapp">
+                        <ItemTemplate>
+                            <asp:CheckBox runat="server" id="cbwhatsapp" AutoPostBack="true" Checked='false' Enabled='false' OnCheckedChanged="cbwhatsapp_CheckedChanged"/>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
             </asp:GridView>
         </div>
         

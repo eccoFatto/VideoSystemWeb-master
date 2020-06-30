@@ -263,24 +263,6 @@ namespace VideoSystemWeb.REPORT.userControl
                 ricercaFornitori = ricercaFornitori.Replace("@codiceLavorazione", codiceLavorazione);
                 ricercaFornitori = ricercaFornitori.Replace("@qualifica", qualifica);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 esito = new Esito();
 
                 dtRet2 = Base_DAL.GetDatiBySql(ricercaFornitori, ref esito);

@@ -1950,6 +1950,14 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 if (SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione != null)
                 {
+                    //string giornoLavorazione="";
+                    //if (ddl_FiltroGiorniLavorazione.SelectedItem.Value != "")
+                    //{
+                    //    //giornoLavorazione = DateTime.Parse(ddl_FiltroGiorniLavorazione.SelectedItem.Value);// SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(int.Parse(ddl_filtroGiorniLavorazioneDettEcon.SelectedItem.Value));
+                    //}
+
+
+
                     // GESTIONE NOMI FILE TLTIME
                     string nomeFile = "Export_Whatsapp_" + SessionManager.EventoSelezionato.codice_lavoro + ".txt";
                     string pathWhatsapp = ConfigurationManager.AppSettings["PATH_DOCUMENTI_WHATSAPP"] + nomeFile;
@@ -1962,79 +1970,91 @@ namespace VideoSystemWeb.Agenda.userControl
                         List<DatiPianoEsternoLavorazione> pe = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione;
                         foreach (DatiPianoEsternoLavorazione dpe in pe)
                         {
-                            string collaboratoreFornitore = "";
-                            string telefono = "";
-                            string qualifica = "";
-                            string citta = "";
-                            string descrizioneArticoloAssociato = "";
-                            Esito esito = new Esito();
-                            if (dpe.IdCollaboratori != null)
-                            {
-                                Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(dpe.IdCollaboratori.Value, ref esito);
-                                collaboratoreFornitore = coll.Cognome.Trim() + " " + coll.Nome.Trim();
 
-                                // prendo descrizione da datiArticoliLavorazione filtrando per data, idCollaboratore e idLavorazione
-                                DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == coll.Id && x.Data == dpe.Data);
-                                if (articoloAssociato != null)
-                                {
-                                    descrizioneArticoloAssociato = articoloAssociato.Descrizione;
-                                }
-
-                                FiguraProfessionale fp = coll.CreaFiguraProfessionale(descrizioneArticoloAssociato);
-                                //if (fp!=null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
-                                if (fp != null && !string.IsNullOrEmpty(fp.DescrizioneArticoloAssociato)) qualifica = fp.DescrizioneArticoloAssociato;
-                                if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
-                                if (telefono.StartsWith("0039")) telefono = telefono.Substring(4);
-                                if (telefono.StartsWith("+39")) telefono = telefono.Substring(3);
-
-                                if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
-                            }
-                            else if (dpe.IdFornitori != null)
-                            {
-                                Anag_Clienti_Fornitori clienteFornitore = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(dpe.IdFornitori.Value, ref esito);
-                                collaboratoreFornitore = clienteFornitore.RagioneSociale.Trim();
-
-                                // prendo descrizione da datiArticoliLavorazione filtrando per data, idFornitore e idLavorazione
-                                DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == clienteFornitore.Id && x.Data == dpe.Data);
-                                if (articoloAssociato != null)
-                                {
-                                    descrizioneArticoloAssociato = articoloAssociato.Descrizione;
-                                }
-
-                                FiguraProfessionale fp = clienteFornitore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
-                                //if (fp != null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
-                                if (fp != null && !string.IsNullOrEmpty(fp.DescrizioneArticoloAssociato)) qualifica = fp.DescrizioneArticoloAssociato;
-                                if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
-                                if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
-                            }
-
-                            //string riga = "NAME;NUMBER;VARIABLE_1;VARIABLE_2;VARIABLE_3;VARIABLE_4;VARIABLE_5";
                             DateTime dataPe = DateTime.Today;
                             if (dpe.Data != null) dataPe = Convert.ToDateTime(dpe.Data);
 
                             DateTime orarioPe = DateTime.Today;
                             if (dpe.Orario != null) orarioPe = Convert.ToDateTime(dpe.Orario);
 
-                            //riga = collaboratoreFornitore.Replace(";","|") +";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + SessionManager.EventoSelezionato.luogo.Replace(";", "|") +";" + dataPe.ToShortDateString() +";" + orarioPe.ToShortTimeString() +";" + citta.Replace(";","");
 
-                            string capotecnico = ddl_Capotecnico.SelectedItem.Text;
-                            if (SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico != null)
-                            {
-                                int idCT = Convert.ToInt32( SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico);
-                                esito = new Esito();
-                                Entity.Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(idCT,ref esito);
-                                if (esito.Codice == 0 && coll != null)
+                            if (ddl_FiltroGiorniLavorazione.SelectedItem.Value == "" || (DateTime.Parse(ddl_FiltroGiorniLavorazione.SelectedItem.Value)== dataPe)){
+                                string collaboratoreFornitore = "";
+                                string telefono = "";
+                                string qualifica = "";
+                                string citta = "";
+                                string descrizioneArticoloAssociato = "";
+                                Esito esito = new Esito();
+                                if (dpe.IdCollaboratori != null)
                                 {
-                                    capotecnico = coll.Cognome + " " + coll.Nome;
-                                    if (coll.Telefoni!=null && coll.Telefoni.Count > 0) { 
-                                        string tel = coll.Telefoni[0].NumeroCompleto;
-                                        capotecnico += " " + tel;
+                                    Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(dpe.IdCollaboratori.Value, ref esito);
+                                    collaboratoreFornitore = coll.Nome.Trim() + " " + coll.Cognome.Trim();
+
+                                    // prendo descrizione da datiArticoliLavorazione filtrando per data, idCollaboratore e idLavorazione
+                                    DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdCollaboratori == coll.Id && x.Data == dpe.Data);
+                                    if (articoloAssociato != null)
+                                    {
+                                        descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                                    }
+
+                                    FiguraProfessionale fp = coll.CreaFiguraProfessionale(descrizioneArticoloAssociato);
+                                    //if (fp!=null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                                    if (fp != null && !string.IsNullOrEmpty(fp.DescrizioneArticoloAssociato)) qualifica = fp.DescrizioneArticoloAssociato;
+                                    if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
+                                    if (telefono.StartsWith("0039")) telefono = telefono.Substring(4);
+                                    if (telefono.StartsWith("+39")) telefono = telefono.Substring(3);
+
+                                    if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
+                                }
+                                else if (dpe.IdFornitori != null)
+                                {
+                                    Anag_Clienti_Fornitori clienteFornitore = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(dpe.IdFornitori.Value, ref esito);
+                                    collaboratoreFornitore = clienteFornitore.RagioneSociale.Trim();
+
+                                    // prendo descrizione da datiArticoliLavorazione filtrando per data, idFornitore e idLavorazione
+                                    DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == clienteFornitore.Id && x.Data == dpe.Data);
+                                    if (articoloAssociato != null)
+                                    {
+                                        descrizioneArticoloAssociato = articoloAssociato.Descrizione;
+                                    }
+
+                                    FiguraProfessionale fp = clienteFornitore.CreaFiguraProfessionale(descrizioneArticoloAssociato);
+                                    //if (fp != null && !string.IsNullOrEmpty(fp.ElencoQualifiche)) qualifica = fp.ElencoQualifiche;
+                                    if (fp != null && !string.IsNullOrEmpty(fp.DescrizioneArticoloAssociato)) qualifica = fp.DescrizioneArticoloAssociato;
+                                    if (fp != null && !string.IsNullOrEmpty(fp.Telefono)) telefono = fp.Telefono;
+                                    if (fp != null && !string.IsNullOrEmpty(fp.Citta)) citta = fp.Citta;
+                                }
+
+                                //string riga = "NAME;NUMBER;VARIABLE_1;VARIABLE_2;VARIABLE_3;VARIABLE_4;VARIABLE_5";
+
+
+                                //riga = collaboratoreFornitore.Replace(";","|") +";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + SessionManager.EventoSelezionato.luogo.Replace(";", "|") +";" + dataPe.ToShortDateString() +";" + orarioPe.ToShortTimeString() +";" + citta.Replace(";","");
+
+                                string capotecnico = ddl_Capotecnico.SelectedItem.Text;
+                                if (SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico != null)
+                                {
+                                    int idCT = Convert.ToInt32(SessionManager.EventoSelezionato.LavorazioneCorrente.IdCapoTecnico);
+                                    esito = new Esito();
+                                    Entity.Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(idCT, ref esito);
+                                    if (esito.Codice == 0 && coll != null)
+                                    {
+                                        capotecnico = coll.Nome + " " + coll.Cognome;
+                                        if (coll.Telefoni != null && coll.Telefoni.Count > 0)
+                                        {
+                                            string tel = coll.Telefoni[0].NumeroCompleto;
+                                            capotecnico += " " + tel;
+                                        }
                                     }
                                 }
+                                //riga = collaboratoreFornitore.Replace(";", "|") + ";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + SessionManager.EventoSelezionato.lavorazione.Replace(";", "|") + ";" + orarioPe.ToShortTimeString() + ";" + SessionManager.EventoSelezionato.indirizzo.Replace(";", "") + " " + SessionManager.EventoSelezionato.luogo.Replace(";", "") + ";" + capotecnico;
+                                //riga = collaboratoreFornitore.Replace(";", "|") + ";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + SessionManager.EventoSelezionato.lavorazione.Replace(";", "|") + ";" + orarioPe.ToShortTimeString() + ";" + SessionManager.EventoSelezionato.indirizzo.Replace(";", "") + ";" + capotecnico;
+                                //riga = collaboratoreFornitore.Replace(";", "|") + ";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + dataPe.ToShortDateString() + ";" + orarioPe.ToShortTimeString() + ";" + SessionManager.EventoSelezionato.indirizzo.Replace(";", "") + ";" + capotecnico;
+                                riga = collaboratoreFornitore.Replace(";", "|") + ";" + telefono.Replace(";", "") + ";" + dataPe.ToShortDateString() + ";" + SessionManager.EventoSelezionato.lavorazione.Replace(";", "|")  + ";" + orarioPe.ToShortTimeString() + ";" + SessionManager.EventoSelezionato.indirizzo.Replace(";", "") + ";" + capotecnico;
+                                file.WriteLine(riga);
                             }
-                            //riga = collaboratoreFornitore.Replace(";", "|") + ";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + SessionManager.EventoSelezionato.lavorazione.Replace(";", "|") + ";" + orarioPe.ToShortTimeString() + ";" + SessionManager.EventoSelezionato.indirizzo.Replace(";", "") + " " + SessionManager.EventoSelezionato.luogo.Replace(";", "") + ";" + capotecnico;
-                            riga = collaboratoreFornitore.Replace(";", "|") + ";" + telefono.Replace(";", "") + ";" + SessionManager.EventoSelezionato.produzione.Replace(";", "|") + ";" + SessionManager.EventoSelezionato.lavorazione.Replace(";", "|") + ";" + orarioPe.ToShortTimeString() + ";" + SessionManager.EventoSelezionato.indirizzo.Replace(";", "") + ";" + capotecnico;
-                            file.WriteLine(riga);
+
+
+
                         }
                         file.Flush();
                         file.Close();

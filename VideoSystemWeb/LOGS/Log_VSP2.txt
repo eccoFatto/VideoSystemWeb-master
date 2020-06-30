@@ -22380,3 +22380,10 @@ Sintassi non corretta in prossimità della parola chiave 'by'.
 2020-06-25 15:34:26,582 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-06-25 15:38:21,465 [12] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2020-06-25 15:40:21,138 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-06-26 16:07:51,961 [8] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-06-26 16:56:05,867 [46] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-06-26 17:15:02,416 [41] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-06-26 18:39:28,022 [15] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-06-26 19:00:51,660 [10] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-06-26 19:14:01,031 [9] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2020-06-30 10:59:56,700 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

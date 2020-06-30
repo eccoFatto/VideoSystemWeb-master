@@ -69,6 +69,33 @@ namespace VideoSystemWeb.STATISTICHE
         protected global::System.Web.UI.WebControls.TextBox txt_Contratto;
 
         /// <summary>
+        /// Controllo ddlFatturato.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlFatturato;
+
+        /// <summary>
+        /// Controllo txt_PeriodoDa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_PeriodoDa;
+
+        /// <summary>
+        /// Controllo txt_PeriodoA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_PeriodoA;
+
+        /// <summary>
         /// Controllo ddl_Genere.
         /// </summary>
         /// <remarks>
@@ -96,6 +123,15 @@ namespace VideoSystemWeb.STATISTICHE
         protected global::System.Web.UI.WebControls.DropDownList ddl_Sottogruppo;
 
         /// <summary>
+        /// Controllo txt_Fornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Fornitore;
+
+        /// <summary>
         /// Controllo chk_Listino.
         /// </summary>
         /// <remarks>
@@ -121,33 +157,6 @@ namespace VideoSystemWeb.STATISTICHE
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chk_Ricavo;
-
-        /// <summary>
-        /// Controllo ddlFatturato.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlFatturato;
-
-        /// <summary>
-        /// Controllo txt_PeriodoDa.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_PeriodoDa;
-
-        /// <summary>
-        /// Controllo txt_PeriodoA.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_PeriodoA;
 
         /// <summary>
         /// Controllo btnEseguiStatistica.

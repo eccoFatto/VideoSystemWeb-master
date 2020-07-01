@@ -2041,7 +2041,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         Esito esito = new Esito();
                         Anag_Collaboratori coll = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(Convert.ToInt32(idSelezionato), ref esito);
                         if (esito.Codice == 0) { 
-                            htCollaboratoriWhatsapp.Add(idSelezionato, coll.Cognome + " " + coll.Nome + "|" + coll.Telefoni[0].NumeroCompleto);
+                            htCollaboratoriWhatsapp.Add(idSelezionato, coll.Nome + " " + coll.Cognome + "|" + coll.Telefoni[0].NumeroCompleto);
                             //basePage.ShowError("ho selezionato la checkbox " + idSelezionato + " " + coll.Cognome + " " + coll.Nome);
                         }
                         else

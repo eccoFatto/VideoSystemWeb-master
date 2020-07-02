@@ -190,6 +190,11 @@
                         </div>
                         <div class="w3-row-padding" style="position: relative; ">
                             <div class="w3-quarter">
+                                <label>Fornitore</label>
+                                <asp:TextBox ID="txt_Fornitore" runat="server"  Width="100%" class="w3-input w3-border" />
+                            </div>
+
+                            <div class="w3-quarter">
                                 <label>Genere</label>
                                 <asp:DropDownList ID="ddl_Genere" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
                             </div>
@@ -202,11 +207,6 @@
                             <div class="w3-quarter">
                                 <label>Sottogruppo</label>
                                 <asp:DropDownList ID="ddl_Sottogruppo" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
-                            </div>
-
-                            <div class="w3-quarter">
-                                <label>Fornitore</label>
-                                <asp:TextBox ID="txt_Fornitore" runat="server"  Width="100%" class="w3-input w3-border" />
                             </div>
                         </div>
                     </div>

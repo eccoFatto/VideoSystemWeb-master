@@ -248,7 +248,7 @@ namespace VideoSystemWeb.DAL
 
                     #region TUTTO IL RESTO
                                     "UNION " +
-                                    "select distinct 6 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, l.nome gruppo, forn.ragioneSociale fornitore, sum(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso  " +
+                                    "select distinct 6 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, l.nome gruppo, forn.ragioneSociale fornitore, d.prezzo listino, d.fp_lordo  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso  " +
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
@@ -262,7 +262,7 @@ namespace VideoSystemWeb.DAL
                                     "left join anag_clienti_fornitori forn on d.idFornitori = forn.id " +
                                     "left join tipo_gruppo l on l.nome not in ('Collaboratori', 'Diaria') " +
                                     "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo=l.id " + filtriLavorazione + filtriCosti +
-                                    " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, l.nome, forn.ragioneSociale " +
+                                    " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, l.nome, forn.ragioneSociale, d.prezzo, d.fp_lordo " +
                     #endregion
                                     " order by cliente, a.codice_lavoro, progressivo";
 

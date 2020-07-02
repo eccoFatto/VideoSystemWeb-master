@@ -49,22 +49,22 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.TextBox TbPiva;
         
         /// <summary>
-        /// Controllo tbCF.
+        /// Controllo tbComune.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbCF;
+        protected global::System.Web.UI.WebControls.TextBox tbComune;
         
         /// <summary>
-        /// Controllo TbReferente.
+        /// Controllo tbProvincia.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TbReferente;
+        protected global::System.Web.UI.WebControls.TextBox tbProvincia;
         
         /// <summary>
         /// Controllo tbCodiceIdentificativo.

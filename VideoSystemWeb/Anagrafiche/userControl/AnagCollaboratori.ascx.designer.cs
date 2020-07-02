@@ -130,6 +130,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBtnInserisciCollaboratori;
         
         /// <summary>
+        /// Controllo divElencoWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divElencoWhatsapp;
+        
+        /// <summary>
         /// Controllo BtnPulisciCampiRicerca.
         /// </summary>
         /// <remarks>
@@ -166,6 +175,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         protected global::System.Web.UI.WebControls.Button btnInsCollaboratore;
         
         /// <summary>
+        /// Controllo btnApriElencoWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnApriElencoWhatsapp;
+        
+        /// <summary>
         /// Controllo hf_idColl.
         /// </summary>
         /// <remarks>
@@ -191,6 +209,60 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_tabChiamata;
+        
+        /// <summary>
+        /// Controllo upWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel upWhatsapp;
+        
+        /// <summary>
+        /// Controllo pnlWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlWhatsapp;
+        
+        /// <summary>
+        /// Controllo innerContainerWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel innerContainerWhatsapp;
+        
+        /// <summary>
+        /// Controllo lbElencoDestinatariWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ListBox lbElencoDestinatariWhatsapp;
+        
+        /// <summary>
+        /// Controllo btnExportWhatsapp.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExportWhatsapp;
+        
+        /// <summary>
+        /// Controllo btnResetElenco.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnResetElenco;
         
         /// <summary>
         /// Controllo upColl.

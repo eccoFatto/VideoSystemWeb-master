@@ -10,6 +10,8 @@ using System.Web.UI.WebControls;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.BLL.Stampa;
 using VideoSystemWeb.Entity;
+using VideoSystemWeb.DAL;
+using System.Data;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
@@ -2010,6 +2012,47 @@ namespace VideoSystemWeb.Agenda.userControl
                                 {
                                     Anag_Clienti_Fornitori clienteFornitore = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(dpe.IdFornitori.Value, ref esito);
                                     collaboratoreFornitore = clienteFornitore.RagioneSociale.Trim();
+
+                                    bool collaboratoreTrovato = false;
+                                    if (!collaboratoreTrovato && !string.IsNullOrEmpty(clienteFornitore.CodiceFiscale)){
+                                        // CERCO DI ESTRAPOLARE IL NOME SU TAB COLLABORATORI DAL CODICE FISCALE
+                                        string ricercaCollaboratore = "SELECT * FROM anag_collaboratori WHERE ATTIVO = 1 AND codiceFiscale = '" + clienteFornitore.CodiceFiscale.Trim() + "'";
+                                        esito = new Esito();
+                                        DataTable dtRet = Base_DAL.GetDatiBySql(ricercaCollaboratore, ref esito);
+                                        if(esito.Codice==0 && dtRet!=null && dtRet.Rows!=null && dtRet.Rows.Count == 1)
+                                        {
+                                            collaboratoreFornitore = dtRet.Rows[0]["nome"].ToString() + " " + dtRet.Rows[0]["cognome"].ToString();
+                                            collaboratoreTrovato = true;
+                                        }
+                                    }
+                                    if (!collaboratoreTrovato && !string.IsNullOrEmpty(clienteFornitore.PartitaIva))
+                                    {
+                                        // CERCO DI ESTRAPOLARE IL NOME SU TAB COLLABORATORI DALLA PARTITA IVA
+                                        string ricercaCollaboratore = "SELECT * FROM anag_collaboratori WHERE ATTIVO = 1 AND partitaIva = '" + clienteFornitore.PartitaIva.Trim() + "'";
+                                        esito = new Esito();
+                                        DataTable dtRet = Base_DAL.GetDatiBySql(ricercaCollaboratore, ref esito);
+                                        if (esito.Codice == 0 && dtRet != null && dtRet.Rows != null && dtRet.Rows.Count == 1)
+                                        {
+                                            collaboratoreFornitore = dtRet.Rows[0]["nome"].ToString() + " " + dtRet.Rows[0]["cognome"].ToString();
+                                            collaboratoreTrovato = true;
+                                        }
+                                    }
+                                    if (!collaboratoreTrovato && !string.IsNullOrEmpty(clienteFornitore.PartitaIva))
+                                    {
+                                        // CERCO DI ESTRAPOLARE IL NOME SU TAB COLLABORATORI DAL NOME SOCIETA'
+                                        string ricercaCollaboratore = "SELECT * FROM anag_collaboratori WHERE ATTIVO = 1 AND nomeSocieta = '" + clienteFornitore.RagioneSociale.Trim() + "'";
+                                        esito = new Esito();
+                                        DataTable dtRet = Base_DAL.GetDatiBySql(ricercaCollaboratore, ref esito);
+                                        if (esito.Codice == 0 && dtRet != null && dtRet.Rows != null && dtRet.Rows.Count == 1)
+                                        {
+                                            collaboratoreFornitore = dtRet.Rows[0]["nome"].ToString() + " " + dtRet.Rows[0]["cognome"].ToString();
+                                            collaboratoreTrovato = true;
+                                        }
+                                    }
+
+
+
+
 
                                     // prendo descrizione da datiArticoliLavorazione filtrando per data, idFornitore e idLavorazione
                                     DatiArticoliLavorazione articoloAssociato = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.FirstOrDefault(x => x.IdFornitori == clienteFornitore.Id && x.Data == dpe.Data);

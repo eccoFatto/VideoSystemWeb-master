@@ -220,9 +220,16 @@
                             <div id="btnChiudiPopupWhatsapp" class="w3-button w3-green w3-small w3-round" onclick="chiudiPopupWhatsapp();">Chiudi</div>
                         </div>
                     </div>
+                    <label>Elenco Collaboratori Selezionati</label>
                     <div class="round">
-                        <asp:ListBox runat="server" ID="lbElencoDestinatariWhatsapp" Rows="10" Width="100%"></asp:ListBox>
+                        <asp:ListBox runat="server" CssClass="w3-margin" ID="lbElencoDestinatariWhatsapp" Rows="10" Width="90%"></asp:ListBox>
                     </div>
+                    <label>Elenco Offerte disponibili da associare</label>
+                     <div class="round">
+                        <%--<asp:ListBox runat="server" CssClass="w3-margin" ID="lbElencoOfferteDisponibili" Rows="10" Width="90%"></asp:ListBox>--%>
+                         <asp:DropDownList runat="server" CssClass="w3-margin" ID="ddlElencoOfferteDisponibili" Rows="10" Width="90%"></asp:DropDownList>
+                    </div>                   
+                    
                     <asp:Button ID="btnExportWhatsapp" runat="server" class="w3-btn w3-green w3-padding-16 w3-margin-top" Text="Crea File" OnClick="btnExportWhatsapp_Click" />
                     <asp:Button ID="btnResetElenco" runat="server" class="w3-btn w3-red w3-padding-16 w3-margin-top" Text="Azzera Elenco" OnClick="btnResetElenco_Click"  OnClientClick="return confirm('Confermi azzeramento elenco Whatsapp?');" />
                 </div>

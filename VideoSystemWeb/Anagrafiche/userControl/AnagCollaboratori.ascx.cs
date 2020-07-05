@@ -2086,7 +2086,28 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 lbElencoDestinatariWhatsapp.Items.Add(li);
             }
 
-            
+            //RIEMPIO LISTA OFFERTE DISPONIBILI DA ASSOCIARE
+            ddlElencoOfferteDisponibili.Items.Clear();
+
+            ListItem liOfferte = new ListItem("---selezionare un'offerta---", "");
+            ddlElencoOfferteDisponibili.Items.Add(liOfferte);
+            string ricercaOfferte = "select da.* from tab_dati_agenda da " +
+            "left join tipo_Stato ts " +
+            "on da.id_stato = ts.id " +
+            "where ts.descrizione = 'Offerta' " +
+            "and da.data_inizio_impegno >= GETDATE() " +
+            "order by da.data_inizio_impegno";
+            Esito esito = new Esito();
+            DataTable dtRet = Base_DAL.GetDatiBySql(ricercaOfferte, ref esito);
+            if (esito.Codice == 0 && dtRet != null && dtRet.Rows != null && dtRet.Rows.Count > 0)
+            {
+                foreach (DataRow offerta in dtRet.Rows)
+                {
+                    liOfferte = new ListItem(offerta["codice_lavoro"].ToString() + "|" + offerta["produzione"].ToString() + "|" + offerta["lavorazione"].ToString() + "|" + offerta["indirizzo"].ToString() + "|" + offerta["data_inizio_lavorazione"].ToString(), offerta["id"].ToString());
+                    ddlElencoOfferteDisponibili.Items.Add(liOfferte);
+                }
+            }
+
             pnlWhatsapp.Visible = true;
         }
 

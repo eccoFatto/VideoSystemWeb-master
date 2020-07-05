@@ -2103,7 +2103,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 foreach (DataRow offerta in dtRet.Rows)
                 {
-                    liOfferte = new ListItem(offerta["codice_lavoro"].ToString() + "|" + offerta["produzione"].ToString() + "|" + offerta["lavorazione"].ToString() + "|" + offerta["indirizzo"].ToString() + "|" + offerta["data_inizio_lavorazione"].ToString(), offerta["id"].ToString());
+                    liOfferte = new ListItem(offerta["codice_lavoro"].ToString() + "|" + offerta["produzione"].ToString() + "|" + offerta["lavorazione"].ToString() + "|" + offerta["indirizzo"].ToString() + "|" + Convert.ToDateTime(offerta["data_inizio_lavorazione"].ToString()).ToShortDateString(), offerta["id"].ToString());
                     ddlElencoOfferteDisponibili.Items.Add(liOfferte);
                 }
             }
@@ -2119,23 +2119,56 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             string mapPathWhatsapp = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_WHATSAPP"]) + nomeFile;
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(mapPathWhatsapp))
             {
-                // INSERISCO RIGA INTESTAZIONE
-                string riga = "NAME;NUMBER";
-                file.WriteLine(riga);
-                foreach (ListItem item in lbElencoDestinatariWhatsapp.Items)
-                {
-                    string[] arNominativo = item.Text.Split('|');
-                    string numero = "";
-                    string nome = "";
+                string riga = "";
+                
 
-                    if (arNominativo.Length > 1)
+                if (ddlElencoOfferteDisponibili.SelectedItem.Value == "") {
+                    // FILE SENZA DATI OFFERTA
+                    
+                    // INSERISCO RIGA INTESTAZIONE
+                    riga = "NAME;NUMBER";
+                    file.WriteLine(riga);
+                    foreach (ListItem item in lbElencoDestinatariWhatsapp.Items)
                     {
-                        nome = arNominativo[0];
-                        numero = arNominativo[1];
+                        string[] arNominativo = item.Text.Split('|');
+                        string numero = "";
+                        string nome = "";
+
+                        if (arNominativo.Length > 1)
+                        {
+                            nome = arNominativo[0];
+                            numero = arNominativo[1];
+                        }
+
+                        riga = nome + ";" + numero;
+                        file.WriteLine(riga);
                     }
 
-                    riga = nome + ";" + numero;
-                    file.WriteLine(riga);
+                }
+                else
+                {
+                    string[] arDatiOfferta = ddlElencoOfferteDisponibili.SelectedItem.Text.Split('|');
+                    if (arDatiOfferta.Length>0)
+                    {
+                        // liOfferte = new ListItem(offerta["codice_lavoro"].ToString() + "|" + offerta["produzione"].ToString() + "|" + offerta["lavorazione"].ToString() + "|" + offerta["indirizzo"].ToString() + "|" + offerta["data_inizio_lavorazione"].ToString(), offerta["id"].ToString());
+                        riga = "NAME;NUMBER;VARIABLE_1;VARIABLE_2;VARIABLE_3;VARIABLE_4;VARIABLE_5";
+                        file.WriteLine(riga);
+                        foreach (ListItem item in lbElencoDestinatariWhatsapp.Items)
+                        {
+                            string[] arNominativo = item.Text.Split('|');
+                            string numero = "";
+                            string nome = "";
+
+                            if (arNominativo.Length > 1)
+                            {
+                                nome = arNominativo[0];
+                                numero = arNominativo[1];
+                            }
+
+                            riga = nome + ";" + numero + ";" + arDatiOfferta[0].Replace("|","") + ";" + arDatiOfferta[1].Replace("|", "") + ";" + arDatiOfferta[2].Replace("|", "") + ";" + arDatiOfferta[3].Replace("|", "") + ";" + arDatiOfferta[4].Replace("|", "");
+                            file.WriteLine(riga);
+                        }
+                    }
                 }
                 file.Flush();
                 file.Close();

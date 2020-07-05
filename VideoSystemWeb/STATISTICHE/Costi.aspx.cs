@@ -118,7 +118,11 @@ namespace VideoSystemWeb.STATISTICHE
             }
             row.Cells[1].Visible = chk_Listino.Checked;
             row.Cells[2].Visible = chk_Costi.Checked;
-            row.Cells[3].Visible = chk_Ricavo.Checked && ddl_Genere.SelectedValue == "" && ddl_Gruppo.SelectedValue == "" && ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
+            row.Cells[3].Visible = chk_Ricavo.Checked &&
+                                   string.IsNullOrWhiteSpace(txt_Fornitore.Text) &&
+                                   ddl_Genere.SelectedValue == "" && 
+                                   ddl_Gruppo.SelectedValue == "" && 
+                                   ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
 
             row.Cells[4].Visible = false;
         }
@@ -150,7 +154,11 @@ namespace VideoSystemWeb.STATISTICHE
             }
             row.Cells[1].Visible = chk_Listino.Checked;
             row.Cells[2].Visible = chk_Costi.Checked;
-            row.Cells[3].Visible = chk_Ricavo.Checked && ddl_Genere.SelectedValue == "" && ddl_Gruppo.SelectedValue == "" && ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
+            row.Cells[3].Visible = chk_Ricavo.Checked &&
+                                   string.IsNullOrWhiteSpace(txt_Fornitore.Text) &&
+                                   ddl_Genere.SelectedValue == "" && 
+                                   ddl_Gruppo.SelectedValue == "" && 
+                                   ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
 
             row.Cells[4].Visible = false;
         }
@@ -268,7 +276,11 @@ namespace VideoSystemWeb.STATISTICHE
             {
                 e.Row.Cells[9].Visible = chk_Listino.Checked;
                 e.Row.Cells[10].Visible = chk_Costi.Checked;
-                e.Row.Cells[11].Visible = chk_Ricavo.Checked && ddl_Genere.SelectedValue == "" && ddl_Gruppo.SelectedValue == "" && ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
+                e.Row.Cells[11].Visible = chk_Ricavo.Checked &&
+                                          string.IsNullOrWhiteSpace(txt_Fornitore.Text) &&
+                                          ddl_Genere.SelectedValue == "" && 
+                                          ddl_Gruppo.SelectedValue == "" && 
+                                          ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
             }
 
             if (e.Row.RowType == DataControlRowType.DataRow)

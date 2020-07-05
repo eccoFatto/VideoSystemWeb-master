@@ -23,6 +23,7 @@ namespace VideoSystemWeb.Entity
         private bool pregresso;
         private string gruppo;
         private string fornitore;
+        private int progressivo;
 
         public int IdCliente { get => idCliente; set => idCliente = value; }
         public string Cliente { get => cliente; set => cliente = value; }
@@ -70,5 +71,6 @@ namespace VideoSystemWeb.Entity
         public bool Pregresso { get => pregresso; set => pregresso = value; }
         public string Gruppo { get => gruppo; set => gruppo = value; }
         public string Fornitore { get => fornitore; set => fornitore = value; }
+        public int Progressivo { get => progressivo; set => progressivo = value; }
     }
 }

@@ -2103,7 +2103,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 foreach (DataRow offerta in dtRet.Rows)
                 {
-                    liOfferte = new ListItem(offerta["codice_lavoro"].ToString() + "|" + offerta["produzione"].ToString() + "|" + offerta["lavorazione"].ToString() + "|" + offerta["indirizzo"].ToString() + "|" + Convert.ToDateTime(offerta["data_inizio_lavorazione"].ToString()).ToShortDateString(), offerta["id"].ToString());
+                    //liOfferte = new ListItem(offerta["codice_lavoro"].ToString() + "|" + offerta["produzione"].ToString() + "|" + offerta["lavorazione"].ToString() + "|" + offerta["indirizzo"].ToString() + "|" + Convert.ToDateTime(offerta["data_inizio_lavorazione"].ToString()).ToShortDateString(), offerta["id"].ToString());
+                    liOfferte = new ListItem(offerta["produzione"].ToString() + "|" + offerta["lavorazione"].ToString() + "|" + offerta["indirizzo"].ToString() + "|" + Convert.ToDateTime(offerta["data_inizio_lavorazione"].ToString()).ToShortDateString() + "|" + Convert.ToDateTime(offerta["data_fine_lavorazione"].ToString()).ToShortDateString(), offerta["id"].ToString());
                     ddlElencoOfferteDisponibili.Items.Add(liOfferte);
                 }
             }
@@ -2165,7 +2166,13 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                                 numero = arNominativo[1];
                             }
 
-                            riga = nome + ";" + numero + ";" + arDatiOfferta[0].Replace("|","") + ";" + arDatiOfferta[1].Replace("|", "") + ";" + arDatiOfferta[2].Replace("|", "") + ";" + arDatiOfferta[3].Replace("|", "") + ";" + arDatiOfferta[4].Replace("|", "");
+                            string dataDa = arDatiOfferta[3].Replace("|", "");
+                            string dataA = "";
+                            if (!arDatiOfferta[3].Replace("|", "").Equals(arDatiOfferta[4].Replace("|", "")))
+                            {
+                                dataA = arDatiOfferta[4].Replace("|", "");
+                            }
+                            riga = nome + ";" + numero + ";" + arDatiOfferta[0].Replace("|","") + ";" + arDatiOfferta[1].Replace("|", "") + ";" + arDatiOfferta[2].Replace("|", "") + ";" + dataDa + ";" + dataA;
                             file.WriteLine(riga);
                         }
                     }

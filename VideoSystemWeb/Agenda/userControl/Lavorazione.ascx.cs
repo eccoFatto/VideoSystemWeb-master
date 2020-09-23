@@ -625,36 +625,40 @@ namespace VideoSystemWeb.Agenda.userControl
 
             DatiArticoliLavorazione articoloLavorazione = Articoli_BLL.Instance.CaricaArticoloLavorazioneByID(idLavorazione, idArticolo, null, ref esito);
 
-            long maxIdentificatoreOggetto = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Max(x => x.IdentificatoreOggetto);
+            for (int q = 0; q < quantita; q++)
+            {
+                long maxIdentificatoreOggetto = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Max(x => x.IdentificatoreOggetto);
 
-            DatiArticoliLavorazione datiArticoliLav = new DatiArticoliLavorazione();
-            datiArticoliLav.Id = articoloLavorazione.Id;
-            datiArticoliLav.IdentificatoreOggetto = IDGenerator.GetId(datiArticoliLav, out bool firstTime) + maxIdentificatoreOggetto;
-            datiArticoliLav.IdDatiLavorazione = articoloLavorazione.IdDatiLavorazione;
-            datiArticoliLav.IdArtArticoli = articoloLavorazione.IdArtArticoli;
-            datiArticoliLav.IdTipoGenere = articoloLavorazione.IdTipoGenere;
-            datiArticoliLav.IdTipoGruppo = articoloLavorazione.IdTipoGruppo;
-            datiArticoliLav.IdTipoSottogruppo = articoloLavorazione.IdTipoSottogruppo;
-            datiArticoliLav.IdCollaboratori = articoloLavorazione.IdCollaboratori;
-            datiArticoliLav.IdFornitori = articoloLavorazione.IdFornitori;
-            datiArticoliLav.IdTipoPagamento = articoloLavorazione.IdTipoPagamento;
-            datiArticoliLav.Descrizione = articoloLavorazione.Descrizione;
-            datiArticoliLav.DescrizioneLunga = articoloLavorazione.DescrizioneLunga;
-            datiArticoliLav.Stampa = articoloLavorazione.Stampa;
-            datiArticoliLav.Prezzo = articoloLavorazione.Prezzo * quantita;
-            datiArticoliLav.Costo = articoloLavorazione.Costo * quantita;
-            datiArticoliLav.Iva = articoloLavorazione.Iva;
-            datiArticoliLav.Data = dataGiornoLav;
-            datiArticoliLav.Tv = articoloLavorazione.Tv;
-            datiArticoliLav.Nota = articoloLavorazione.Nota;
-            datiArticoliLav.FP_netto = articoloLavorazione.FP_netto;
-            datiArticoliLav.FP_lordo = articoloLavorazione.FP_lordo;
-            datiArticoliLav.UsaCostoFP = articoloLavorazione.UsaCostoFP;
-            datiArticoliLav.Consuntivo = false;
+                DatiArticoliLavorazione datiArticoliLav = new DatiArticoliLavorazione();
+                datiArticoliLav.Id = articoloLavorazione.Id;
+                datiArticoliLav.IdentificatoreOggetto = IDGenerator.GetId(datiArticoliLav, out bool firstTime) + maxIdentificatoreOggetto;
+                datiArticoliLav.IdDatiLavorazione = articoloLavorazione.IdDatiLavorazione;
+                datiArticoliLav.IdArtArticoli = articoloLavorazione.IdArtArticoli;
+                datiArticoliLav.IdTipoGenere = articoloLavorazione.IdTipoGenere;
+                datiArticoliLav.IdTipoGruppo = articoloLavorazione.IdTipoGruppo;
+                datiArticoliLav.IdTipoSottogruppo = articoloLavorazione.IdTipoSottogruppo;
+                datiArticoliLav.IdCollaboratori = articoloLavorazione.IdCollaboratori;
+                datiArticoliLav.IdFornitori = articoloLavorazione.IdFornitori;
+                datiArticoliLav.IdTipoPagamento = articoloLavorazione.IdTipoPagamento;
+                datiArticoliLav.Descrizione = articoloLavorazione.Descrizione;
+                datiArticoliLav.DescrizioneLunga = articoloLavorazione.DescrizioneLunga;
+                datiArticoliLav.Stampa = articoloLavorazione.Stampa;
+                datiArticoliLav.Prezzo = articoloLavorazione.Prezzo;// * quantita;
+                datiArticoliLav.Costo = articoloLavorazione.Costo;// * quantita;
+                datiArticoliLav.Iva = articoloLavorazione.Iva;
+                datiArticoliLav.Data = dataGiornoLav;
+                datiArticoliLav.Tv = articoloLavorazione.Tv;
+                datiArticoliLav.Nota = articoloLavorazione.Nota;
+                datiArticoliLav.FP_netto = articoloLavorazione.FP_netto;
+                datiArticoliLav.FP_lordo = articoloLavorazione.FP_lordo;
+                datiArticoliLav.UsaCostoFP = articoloLavorazione.UsaCostoFP;
+                datiArticoliLav.Consuntivo = false;
 
-            datiArticoliLav.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione();
+                datiArticoliLav.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione();
 
-            SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Add(datiArticoliLav);
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Add(datiArticoliLav);
+            }
+
             SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.OrderBy(y => y.Data).ThenByDescending(x => x.Prezzo).ToList();
 
             lbl_selezionareArticolo.Visible = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null || SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0;

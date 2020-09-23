@@ -205,7 +205,7 @@
                         <a href="/STATISTICHE/Costi.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Costi</a>
                     </div>
                 </div>
-
+                <a href="/MAGAZZINO/DocumentiTrasporto.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Documenti di Trasporto</a>
                 <asp:Button runat="server" ID="btnExit" OnClick="btnExit_Click" class="w3-bar-item w3-button w3-right w3-yellow" Text="Esci" />
                 <%--<a href="/Login.aspx" class="w3-bar-item w3-button w3-right" onclick="exitApplication();">Esci</a>--%>
             </div>

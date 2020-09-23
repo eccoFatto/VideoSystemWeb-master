@@ -276,6 +276,7 @@
     <Content Include="Images\logoVSP.png" />
     <Content Include="MAGAZZINO\Attrezzature.aspx" />
     <Content Include="MAGAZZINO\Magazzino.aspx" />
+    <Content Include="MAGAZZINO\DocumentiTrasporto.aspx" />
     <Content Include="messaggioCambioPassword.html" />
     <Content Include="pageError.aspx" />
     <Content Include="Protocollo\Protocollo.aspx" />
@@ -727,6 +728,7 @@
     <Compile Include="BLL\Offerta_BLL.cs" />
     <Compile Include="BLL\Config_BLL.cs" />
     <Compile Include="BLL\AttrezzatureMagazzino_BLL.cs" />
+    <Compile Include="BLL\DocumentiTrasporto_BLL.cs" />
     <Compile Include="BLL\Protocolli_BLL.cs" />
     <Compile Include="BLL\Articoli_BLL.cs" />
     <Compile Include="BLL\Dati_Tender_BLL.cs" />
@@ -774,6 +776,7 @@
     <Compile Include="DAL\Dati_PianoEsterno_Lavorazione_DAL.cs" />
     <Compile Include="DAL\Offerta_DAL.cs" />
     <Compile Include="DAL\AttrezzatureMagazzino_DAL.cs" />
+    <Compile Include="DAL\DocumentiTrasporto_DAL.cs" />
     <Compile Include="DAL\Protocolli_DAL.cs" />
     <Compile Include="DAL\Dati_Tender_DAL.cs" />
     <Compile Include="DAL\Art_Gruppi_Articoli_DAL.cs" />
@@ -822,6 +825,7 @@
     <Compile Include="Entity\DatiBancari.cs" />
     <Compile Include="Entity\NoteOfferta.cs" />
     <Compile Include="Entity\AttrezzatureMagazzino.cs" />
+    <Compile Include="Entity\DocumentiTrasporto.cs" />
     <Compile Include="Entity\StatisticheCosti.cs" />
     <Compile Include="Entity\StatisticheRicavi.cs" />
     <Compile Include="Entity\Utenti.cs" />
@@ -867,6 +871,13 @@
     </Compile>
     <Compile Include="MAGAZZINO\Magazzino.aspx.designer.cs">
       <DependentUpon>Magazzino.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MAGAZZINO\DocumentiTrasporto.aspx.cs">
+      <DependentUpon>DocumentiTrasporto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MAGAZZINO\DocumentiTrasporto.aspx.designer.cs">
+      <DependentUpon>DocumentiTrasporto.aspx</DependentUpon>
     </Compile>
     <Compile Include="pageError.aspx.cs">
       <DependentUpon>pageError.aspx</DependentUpon>

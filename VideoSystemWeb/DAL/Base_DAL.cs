@@ -1035,6 +1035,151 @@ namespace VideoSystemWeb.DAL
 
         }
 
+
+        public static string GetNumeroDocumentoTrasporto(ref Esito esito)
+        {
+            string ret = "";
+            try
+            {
+                string queryVerificaPresenzaDocumentoTrasportoAnno = "select isnull(max(numero_documento_trasporto),'0') as numTras from tab_documento_trasportoa where anno_documento=" + DateTime.Today.Year.ToString();
+                DataTable dtDocumentiTrasporto = Base_DAL.GetDatiBySql(queryVerificaPresenzaDocumentoTrasportoAnno, ref esito);
+                int newNumDocTrasp = 0;
+                if (dtDocumentiTrasporto.Rows[0]["numTras"].ToString() == "0")
+                {
+                    newNumDocTrasp = 1;
+                    // INSERISCO NUOVO ANNO E NUMERO_DOCUMENTO_TRASPORTO = 1 E RESTITUISCO 20200001
+
+                    using (SqlConnection con = new SqlConnection(sqlConstr))
+                    {
+                        using (SqlCommand StoreProc = new SqlCommand("InsertProgressivoDocumentoTrasporto"))
+                        {
+                            using (SqlDataAdapter sda = new SqlDataAdapter())
+                            {
+                                StoreProc.Connection = con;
+                                sda.SelectCommand = StoreProc;
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+
+                                SqlParameter anno_documento = new SqlParameter("@anno_documento", DateTime.Today.Year);
+                                anno_documento.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(anno_documento);
+
+                                SqlParameter numero_documento_trasporto = new SqlParameter("@numero_documento_trasporto", newNumDocTrasp);
+                                numero_documento_trasporto.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(numero_documento_trasporto);
+
+                                StoreProc.Connection.Open();
+
+                                StoreProc.ExecuteNonQuery();
+
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    newNumDocTrasp = Convert.ToInt16(dtDocumentiTrasporto.Rows[0]["numTras"].ToString()) + 1;
+                    // AGGIORNO RIGA ANNO CON NUMERO DOCUMENTO TRASPORTO + 1
+                    using (SqlConnection con = new SqlConnection(sqlConstr))
+                    {
+                        using (SqlCommand StoreProc = new SqlCommand("UpdateProgressivoDocumentoTrasporto"))
+                        {
+                            using (SqlDataAdapter sda = new SqlDataAdapter())
+                            {
+                                StoreProc.Connection = con;
+                                sda.SelectCommand = StoreProc;
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+
+                                SqlParameter anno = new SqlParameter("@anno", DateTime.Today.Year);
+                                anno.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(anno);
+
+                                SqlParameter anno_documento = new SqlParameter("@anno_documento", DateTime.Today.Year);
+                                anno_documento.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(anno_documento);
+
+                                SqlParameter numero_documento_trasporto = new SqlParameter("@numero_documento_trasporto", newNumDocTrasp);
+                                numero_documento_trasporto.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(numero_documento_trasporto);
+
+                                StoreProc.Connection.Open();
+
+                                StoreProc.ExecuteNonQuery();
+
+                            }
+                        }
+                    }
+                }
+                ret = DateTime.Today.Year.ToString() + newNumDocTrasp.ToString("0000");
+
+            }
+            catch (Exception ex)
+            {
+
+                esito.Descrizione = ex.Message;
+            }
+            return ret;
+        }
+
+        public static Esito ResetDocumentoTrasporto(int anno, int numFatt)
+        {
+            Esito esito = new Esito();
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("resetDocumentoTrasporto"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            SqlParameter anno_documento = new SqlParameter("@anno_documento", SqlDbType.Int);
+                            anno_documento.Direction = ParameterDirection.Input;
+                            anno_documento.Value = anno;
+                            StoreProc.Parameters.Add(anno_documento);
+
+                            SqlParameter numero_documento_trasporto = new SqlParameter("@numero_documento_trasporto", SqlDbType.Int);
+                            numero_documento_trasporto.Direction = ParameterDirection.Input;
+                            numero_documento_trasporto.Value = numFatt;
+                            StoreProc.Parameters.Add(numero_documento_trasporto);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - ResetDocumentoTrasporto " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return esito;
+
+        }
+
+
+
+
+
+
         public static int GetProtocollo(ref Esito esito)
         {
             try

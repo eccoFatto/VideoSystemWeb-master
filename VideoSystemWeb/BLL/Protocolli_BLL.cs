@@ -101,6 +101,25 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
+        public string getNumeroDocumentoTrasporto()
+        {
+            Esito esito = new Esito();
+            string sREt = Base_DAL.GetNumeroDocumentoTrasporto(ref esito);
+
+            return sREt;
+        }
+
+        public Esito resetDocumentoTrasporto(int annoDocumentoTrasporto, int numeroDocumentoTrasporto)
+        {
+            Esito esito = Base_DAL.ResetDocumentoTrasporto(annoDocumentoTrasporto, numeroDocumentoTrasporto);
+
+            return esito;
+        }
+
+
+
+
+
         public Esito resetProcotollo(int protocolloIniziale)
         {
             Esito esito = Base_DAL.ResetProtocollo(protocolloIniziale);

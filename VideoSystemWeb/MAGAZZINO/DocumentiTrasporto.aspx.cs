@@ -11,6 +11,12 @@ using VideoSystemWeb.Entity;
 using VideoSystemWeb.DAL;
 using System.IO;
 using System.Text.RegularExpressions;
+using iText;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iTextSharp;
+
 namespace VideoSystemWeb.Magazzino
 {
     public partial class DocumentiTrasporto : BasePage
@@ -40,19 +46,14 @@ namespace VideoSystemWeb.Magazzino
 
                 Session["NOME_FILE"] = "";
 
-                ddlTipoDocumentoTrasporto.Items.Clear();
-                cmbMod_Tipologia.Items.Clear();
-                ddlTipoDocumentoTrasporto.Items.Add("");
-                CaricaCombo();
+                 CaricaCombo();
 
                 // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                 abilitaBottoni(basePage.AbilitazioneInScrittura());
 
             }
 
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + tbDataLavorazione.ClientID + "', '" + tbDataLavorazioneA.ClientID + "');", true);
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + tbDataDocumentoTrasporto.ClientID + "', '" + tbDataDocumentoTrasportoA.ClientID + "');", true);
-
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + tbDataTrasporto.ClientID + "', '" + tbDataTrasportoA.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
@@ -63,17 +64,11 @@ namespace VideoSystemWeb.Magazzino
             #region TIPO DocumentoTrasporto
             foreach (Tipologica tipologiaDocumentoTrasporto in SessionManager.ListaTipiProtocolli)
             {
-                ListItem item = new ListItem();
-                item.Text = tipologiaDocumentoTrasporto.nome;
-                item.Value = tipologiaDocumentoTrasporto.nome;
-
-                ddlTipoDocumentoTrasporto.Items.Add(item);
-
-                ListItem itemMod = new ListItem();
+                System.Web.UI.WebControls.ListItem itemMod = new System.Web.UI.WebControls.ListItem();
                 itemMod.Text = tipologiaDocumentoTrasporto.nome;
                 itemMod.Value = tipologiaDocumentoTrasporto.id.ToString();
 
-                cmbMod_Tipologia.Items.Add(itemMod);
+                //cmbMod_Tipologia.Items.Add(itemMod);
             }
             #endregion
         }
@@ -102,6 +97,7 @@ namespace VideoSystemWeb.Magazzino
                     btnModificaDocumentoTrasporto.Visible = false;
                     btnEliminaDocumentoTrasporto.Visible = false;
                     btnAnnullaDocumentoTrasporto.Visible = false;
+                    divBtnInserisciAttrezzatura.Visible = false;
                     if (!basePage.AbilitazioneInScrittura())
                     {
                         btnGestisciDocumentoTrasporto.Visible = false;
@@ -110,11 +106,7 @@ namespace VideoSystemWeb.Magazzino
                     {
                         btnGestisciDocumentoTrasporto.Visible = true;
                     }
-                    imgbtnSelectCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCliente.Attributes.Add("disabled", "");
-                    btnAnnullaCaricamento.Visible = false;
-                    fuFileProt.Visible = false;
-                    lblStatus.Visible = fuFileProt.Visible;
 
                     break;
                 case "INSERIMENTO":
@@ -123,12 +115,8 @@ namespace VideoSystemWeb.Magazzino
                     btnEliminaDocumentoTrasporto.Visible = false;
                     btnAnnullaDocumentoTrasporto.Visible = false;
                     btnGestisciDocumentoTrasporto.Visible = false;
-
-                    imgbtnSelectCodLav.Attributes.Remove("disabled");
+                    divBtnInserisciAttrezzatura.Visible = false;
                     imgbtnSelectCliente.Attributes.Remove("disabled");
-                    btnAnnullaCaricamento.Visible = true;
-                    fuFileProt.Visible = true;
-                    lblStatus.Visible = fuFileProt.Visible;
                     break;
                 case "MODIFICA":
                     btnInserisciDocumentoTrasporto.Visible = false;
@@ -136,13 +124,8 @@ namespace VideoSystemWeb.Magazzino
                     btnEliminaDocumentoTrasporto.Visible = true;
                     btnAnnullaDocumentoTrasporto.Visible = true;
                     btnGestisciDocumentoTrasporto.Visible = false;
-
-                    imgbtnSelectCodLav.Attributes.Remove("disabled");
+                    divBtnInserisciAttrezzatura.Visible = true;
                     imgbtnSelectCliente.Attributes.Remove("disabled");
-                    btnAnnullaCaricamento.Visible = true;
-                    fuFileProt.Visible = true;
-                    lblStatus.Visible = fuFileProt.Visible;
-
                     break;
                 case "ANNULLAMENTO":
                     btnInserisciDocumentoTrasporto.Visible = false;
@@ -150,13 +133,8 @@ namespace VideoSystemWeb.Magazzino
                     btnEliminaDocumentoTrasporto.Visible = false;
                     btnAnnullaDocumentoTrasporto.Visible = false;
                     btnGestisciDocumentoTrasporto.Visible = true;
-
-                    imgbtnSelectCodLav.Attributes.Add("disabled", "");
+                    divBtnInserisciAttrezzatura.Visible = false;
                     imgbtnSelectCliente.Attributes.Add("disabled", "");
-                    btnAnnullaCaricamento.Visible = false;
-                    fuFileProt.Visible = false;
-                    lblStatus.Visible = fuFileProt.Visible;
-
                     break;
                 default:
                     btnInserisciDocumentoTrasporto.Visible = false;
@@ -164,12 +142,8 @@ namespace VideoSystemWeb.Magazzino
                     btnEliminaDocumentoTrasporto.Visible = false;
                     btnAnnullaDocumentoTrasporto.Visible = false;
                     btnGestisciDocumentoTrasporto.Visible = true;
-
-                    imgbtnSelectCodLav.Attributes.Add("disabled", "");
+                    divBtnInserisciAttrezzatura.Visible = false;
                     imgbtnSelectCliente.Attributes.Add("disabled", "");
-                    btnAnnullaCaricamento.Visible = false;
-                    fuFileProt.Visible = false;
-                    lblStatus.Visible = fuFileProt.Visible;
                     break;
             }
 
@@ -184,7 +158,7 @@ namespace VideoSystemWeb.Magazzino
             AttivaDisattivaModificaDocumentoTrasporto(false);
             gestisciPulsantiDocumentoTrasporto("INSERIMENTO");
 
-            tbMod_NumeroDocumentoTrasporto.Text = Protocolli_BLL.Instance.getNumeroDocumentoTrasporto();
+            //tbMod_NumeroDocumentoTrasporto.Text = Protocolli_BLL.Instance.getNumeroDocumentoTrasporto();
 
             pnlContainer.Visible = true;
         }
@@ -284,48 +258,34 @@ namespace VideoSystemWeb.Magazzino
         {
             string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_DOCUMENTI_TRASPORTO"];
 
-            queryRicerca = queryRicerca.Replace("@numeroDocumentoTrasporto", tbNumeroDocumentoTrasporto.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@codiceLavoro", tbCodiceLavoro.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@produzione", tbProduzione.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@descrizione", tbDescrizione.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@tipoDocumentoTrasporto", ddlTipoDocumentoTrasporto.SelectedValue.ToString().Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@DocumentoTrasportoRiferimento", tbDocumentoTrasportoRiferimento.Text.Trim().Replace("'","''"));
-            queryRicerca = queryRicerca.Replace("@destinatario", ddlDestinatario.SelectedValue.ToString().Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@numeroDocumentoTrasporto", tbNumeroDocTrasporto.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@causale", tbCausale.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@destinatario", tbDestinatario.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@indirizzo", tbIndirizzo.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@comune", tbComune.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@partitaIva", tbPartitaIva.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@trasportatore", tbTrasportatore.Text.Trim().Replace("'", "''"));
 
             string queryDocumentoTrasportoDataTras = "";
-            if (!string.IsNullOrEmpty(tbDataDocumentoTrasporto.Text))
+            if (!string.IsNullOrEmpty(tbDataTrasporto.Text))
             {
-                DateTime dataDa = Convert.ToDateTime(tbDataDocumentoTrasporto.Text);
+                DateTime dataDa = Convert.ToDateTime(tbDataTrasporto.Text);
                 DateTime dataA = DateTime.Now;
-                queryDocumentoTrasportoDataTras = " and data_DocumentoTrasporto between '@dataDa' and '@DataA' ";
-                if (!string.IsNullOrEmpty(tbDataDocumentoTrasportoA.Text))
+                queryDocumentoTrasportoDataTras = " and dataTrasporto between '@dataDa' and '@DataA' ";
+                if (!string.IsNullOrEmpty(tbDataTrasportoA.Text))
                 {
-                    dataA = Convert.ToDateTime(tbDataDocumentoTrasportoA.Text);
+                    dataA = Convert.ToDateTime(tbDataTrasportoA.Text);
                 }
                 queryDocumentoTrasportoDataTras = queryDocumentoTrasportoDataTras.Replace("@dataDa", dataDa.ToString("yyyy-MM-ddT00:00:00.000"));
                 queryDocumentoTrasportoDataTras = queryDocumentoTrasportoDataTras.Replace("@DataA", dataA.ToString("yyyy-MM-ddT23:59:59.999"));
             }
-            queryRicerca = queryRicerca.Replace("@dataDocumentoTrasporto", queryDocumentoTrasportoDataTras);
+            queryRicerca = queryRicerca.Replace("@dataTrasporto", queryDocumentoTrasportoDataTras);
 
-            string queryDocumentoTrasportoDataLav = "";
-            if (!string.IsNullOrEmpty(tbDataLavorazione.Text))
-            {
-                DateTime dataDa = Convert.ToDateTime(tbDataLavorazione.Text);
-                DateTime dataA = DateTime.Now;
-                queryDocumentoTrasportoDataLav = " and data_inizio_lavorazione between '@dataDa' and '@DataA' ";
-                if (!string.IsNullOrEmpty(tbDataLavorazioneA.Text))
-                {
-                    dataA = Convert.ToDateTime(tbDataLavorazioneA.Text);
-                }
-                queryDocumentoTrasportoDataLav = queryDocumentoTrasportoDataLav.Replace("@dataDa", dataDa.ToString("yyyy-MM-ddT00:00:00.000"));
-                queryDocumentoTrasportoDataLav = queryDocumentoTrasportoDataLav.Replace("@DataA", dataA.ToString("yyyy-MM-ddT00:00:00.000"));
-            }
-            queryRicerca = queryRicerca.Replace("@dataLavorazione", queryDocumentoTrasportoDataLav);
 
             Esito esito = new Esito();
-            DataTable dtProtocolli = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
+            DataTable dtDocumentiTrasporto = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
 
-            Session["TaskTable"] = dtProtocolli;
+            Session["TaskTable"] = dtDocumentiTrasporto;
             gv_documenti_trasporto.DataSource = Session["TaskTable"];
             gv_documenti_trasporto.DataBind();
 
@@ -339,30 +299,19 @@ namespace VideoSystemWeb.Magazzino
             {
 
                 // PRENDO IL PATH DELL'ALLEGATO SE C'E'
-                string pathDocumento = e.Row.Cells[GetColumnIndexByName(e.Row, "Nome File")].Text;
+                //string pathDocumento = "";
+                //ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
+                //if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
+                //{
 
-                string preg = e.Row.Cells[GetColumnIndexByName(e.Row, "Pregresso")].Text;
-
-                ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
-                if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
-                {
-                    string pathRelativo = "";
-                    if (preg=="True" || preg=="Si")
-                    {
-                        pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "");
-                    }
-                    else
-                    {
-                        pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_DocumentoTrasporto"].Replace("~", "");
-                    }
-
-                    string pathCompleto = pathRelativo + pathDocumento;
-                    myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
-                }
-                else
-                {
-                    myButton.Attributes.Add("disabled", "true");
-                }
+                //    string   pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_TRASPORTO"].Replace("~", "");
+                //    string pathCompleto = pathRelativo + pathDocumento;
+                //    myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
+                //}
+                //else
+                //{
+                //    myButton.Attributes.Add("disabled", "true");
+                //}
 
                 // PRENDO L'ID DEL DocumentoTrasporto SELEZIONATO
                 string idDocumentoTrasportoSelezionato = e.Row.Cells[GetColumnIndexByName(e.Row, "id")].Text;
@@ -380,48 +329,47 @@ namespace VideoSystemWeb.Magazzino
 
         private void pulisciCampiDettaglio()
         {
-            tbMod_CodiceLavoro.Text = "";
             tbMod_NumeroDocumentoTrasporto.Text = "";
-            tbMod_DocumentoTrasportoRiferimento.Text = "";
-            tbMod_DataDocumentoTrasporto.Text = "";
-            tbMod_DataLavorazione.Text = "";
-            tbMod_Produzione.Text = "";
-            tbMod_Cliente.Text = "";
-            tbMod_NomeFile.Text = "";
-            tbMod_Lavorazione.Text = "";
-            tbMod_Descrizione.Text = "";
-            cmbMod_Tipologia.SelectedIndex = 0;
-            cmbMod_Destinatario.SelectedIndex = 0;
-            cbMod_Pregresso.Checked = false;
+            tbMod_Cap.Text = "";
+            tbMod_Causale.Text = "";
+            tbMod_Comune.Text = "";
+            tbMod_DataTrasporto.Text = "";
+            tbMod_destinatario.Text = "";
+            tbMod_Indirizzo.Text = "";
+            tbMod_Nazione.Text = "";
+            tbMod_NumeroCivico.Text = "";
+            tbMod_NumeroColli.Text = "";
+            tbMod_PartitaIva.Text = "";
+            tbMod_Peso.Text = "";
+            tbMod_Provincia.Text = "";
+            tbMod_Trasportatore.Text = "";
+            cmbMod_TipoIndirizzo.SelectedIndex = 0;
 
         }
 
         private void AttivaDisattivaModificaDocumentoTrasporto(bool attivaModifica)
         {
-            tbMod_CodiceLavoro.ReadOnly = attivaModifica;
-            //tbMod_CodiceLavoro.ReadOnly = true;
             tbMod_NumeroDocumentoTrasporto.ReadOnly = true;
-            tbMod_DocumentoTrasportoRiferimento.ReadOnly = attivaModifica;
-            tbMod_DataDocumentoTrasporto.ReadOnly = true;
-            tbMod_DataLavorazione.ReadOnly = attivaModifica;
-           // CalendarExtender_DataLavorazione.Enabled = !attivaModifica;
-            tbMod_Produzione.ReadOnly = attivaModifica;
-            //tbMod_Cliente.ReadOnly = attivaModifica;
-            tbMod_Cliente.ReadOnly = true;
-            tbMod_Lavorazione.ReadOnly = attivaModifica;
-            tbMod_Descrizione.ReadOnly = attivaModifica;
-            tbMod_NomeFile.ReadOnly = true;
-            //tbMod_NomeFile.ReadOnly = attivaModifica;
-
+            tbMod_Causale.ReadOnly = attivaModifica;
+            tbMod_Cap.ReadOnly = attivaModifica;
+            tbMod_Comune.ReadOnly = attivaModifica;
+            tbMod_DataTrasporto.ReadOnly = attivaModifica;
+            tbMod_destinatario.ReadOnly = attivaModifica;
+            tbMod_Indirizzo.ReadOnly = attivaModifica;
+            tbMod_Nazione.ReadOnly = attivaModifica;
+            tbMod_NumeroCivico.ReadOnly = attivaModifica;
+            tbMod_NumeroColli.ReadOnly = attivaModifica;
+            tbMod_PartitaIva.ReadOnly = attivaModifica;
+            tbMod_Peso.ReadOnly = attivaModifica;
+            tbMod_Provincia.ReadOnly = attivaModifica;
+            tbMod_Trasportatore.ReadOnly = attivaModifica;
             if (attivaModifica)
             {
-                cmbMod_Tipologia.Attributes.Add("disabled", "");
-                cmbMod_Destinatario.Attributes.Add("disabled", "");
-            }
+                cmbMod_TipoIndirizzo.Attributes.Add("disabled", "");
+           }
             else
             {
-                cmbMod_Tipologia.Attributes.Remove("disabled");
-                cmbMod_Destinatario.Attributes.Remove("disabled");
+                cmbMod_TipoIndirizzo.Attributes.Remove("disabled");
             }
         }
 
@@ -429,8 +377,6 @@ namespace VideoSystemWeb.Magazzino
         {
             Esito esito = new Esito();
             pulisciCampiDettaglio();
-            tbMod_CodiceLavoro.Text = "generico";
-            //btnViewAttachement.Attributes.Add("disabled", "true");
             btnViewAttachement.Enabled = false;
         }
         private void editDocumentoTrasporto()
@@ -448,34 +394,28 @@ namespace VideoSystemWeb.Magazzino
 
                     // RIEMPIO I CAMPI DEL DETTAGLIO DocumentoTrasporto
                     tbMod_NumeroDocumentoTrasporto.Text = documentoTrasporto.NumeroDocumentoTrasporto;
-                    tbMod_DataDocumentoTrasporto.Text = "";
+                    tbMod_DataTrasporto.Text = "";
                     if (documentoTrasporto.DataTrasporto != null)
                     {
-                        tbMod_DataDocumentoTrasporto.Text = ((DateTime)documentoTrasporto.DataTrasporto).ToString("dd/MM/yyyy");
+                        tbMod_DataTrasporto.Text = ((DateTime)documentoTrasporto.DataTrasporto).ToString("dd/MM/yyyy");
                     }
+                    tbMod_Cap.Text = documentoTrasporto.Cap;
+                    tbMod_Causale.Text = documentoTrasporto.Causale;
+                    tbMod_Comune.Text = documentoTrasporto.Comune;
+                    tbMod_destinatario.Text = documentoTrasporto.Destinatario;
+                    tbMod_Indirizzo.Text = documentoTrasporto.Indirizzo;
+                    tbMod_Nazione.Text = documentoTrasporto.Nazione;
+                    tbMod_NumeroCivico.Text = documentoTrasporto.NumeroCivico;
+                    tbMod_NumeroColli.Text = documentoTrasporto.NumeroColli.ToString();
+                    tbMod_PartitaIva.Text = documentoTrasporto.PartitaIva;
+                    tbMod_Peso.Text = documentoTrasporto.Peso;
+                    tbMod_Provincia.Text = documentoTrasporto.Provincia;
+                    tbMod_Trasportatore.Text = documentoTrasporto.Trasportatore;
+                    cmbMod_TipoIndirizzo.Text = documentoTrasporto.TipoIndirizzo;
 
-
-                    //tbMod_NomeFile.Text = DocumentoTrasporto.PathDocumento;
-                    //Session["NOME_FILE"] = DocumentoTrasporto.PathDocumento;
-                    //tbMod_Lavorazione.Text = DocumentoTrasporto.Lavorazione;
-                    //tbMod_Descrizione.Text = documentoTrasporto.Descrizione;
-
-
-                    //if (!string.IsNullOrEmpty(documentoTrasporto.PathDocumento))
-                    //{
-                    //    string pathRelativo = "";
-
-                    //    pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_DocumentoTrasporto"].Replace("~", "");
-                        
-
-                    //    string pathCompleto = pathRelativo + documentoTrasporto.PathDocumento;
-                    //    btnViewAttachement.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
-                    //    btnViewAttachement.Enabled = true;
-                    //}
-                    //else
-                    //{
-                    //    btnViewAttachement.Enabled = false;
-                    //}
+                    List<AttrezzatureTrasporto> listaAttrezzature = documentoTrasporto.AttrezzatureTrasporto;
+                    gv_attrezzature.DataSource = listaAttrezzature;
+                    gv_attrezzature.DataBind();
 
                 }
                 else
@@ -490,15 +430,8 @@ namespace VideoSystemWeb.Magazzino
 
         protected void btnGestisciDocumentoTrasporto_Click(object sender, EventArgs e)
         {
-            if (!cbMod_Pregresso.Checked) {
-                AttivaDisattivaModificaDocumentoTrasporto(false);
-                gestisciPulsantiDocumentoTrasporto("MODIFICA");
-            }
-            else
-            {
-                basePage.ShowWarning("I Protocolli pregressi non sono modificabili!");
-            }
-
+            AttivaDisattivaModificaDocumentoTrasporto(false);
+            gestisciPulsantiDocumentoTrasporto("MODIFICA");
         }
 
         private VideoSystemWeb.Entity.DocumentiTrasporto CreaOggettoDocumentoTrasporto(ref Esito esito)
@@ -512,9 +445,21 @@ namespace VideoSystemWeb.Magazzino
 
             documentoTrasporto.Id = Convert.ToInt64(ViewState["idDocumentoTrasporto"].ToString());
 
-            documentoTrasporto.Destinatario = cmbMod_Destinatario.SelectedValue;
-
-            documentoTrasporto.Peso = "1";
+            documentoTrasporto.Cap = tbMod_Cap.Text.Trim();
+            documentoTrasporto.Causale = tbMod_Causale.Text.Trim();
+            documentoTrasporto.Comune = tbMod_Comune.Text.Trim();
+            documentoTrasporto.DataTrasporto =  Convert.ToDateTime(tbMod_DataTrasporto.Text.Trim());
+            documentoTrasporto.Indirizzo = BasePage.ValidaCampo(tbMod_Indirizzo, "", true, ref esito);
+            documentoTrasporto.Nazione = tbMod_Nazione.Text.Trim();
+            documentoTrasporto.NumeroCivico = tbMod_NumeroCivico.Text.Trim();
+            documentoTrasporto.NumeroColli = Convert.ToInt64(tbMod_NumeroColli.Text.Trim());
+            documentoTrasporto.PartitaIva = tbMod_PartitaIva.Text.Trim();
+            documentoTrasporto.Peso = tbMod_Peso.Text.Trim();
+            documentoTrasporto.Provincia = tbMod_Provincia.Text.Trim();
+            documentoTrasporto.TipoIndirizzo = cmbMod_TipoIndirizzo.Text;
+            documentoTrasporto.Trasportatore = BasePage.ValidaCampo(tbMod_Trasportatore, "", true, ref esito);
+            documentoTrasporto.Destinatario = BasePage.ValidaCampo(tbMod_destinatario, "", true, ref esito);
+            documentoTrasporto.Peso = tbMod_Peso.Text.Trim(); ;
 
             if (string.IsNullOrEmpty(tbMod_NumeroDocumentoTrasporto.Text.Trim()))
             {
@@ -527,60 +472,7 @@ namespace VideoSystemWeb.Magazzino
 
         protected void imgbtnCreateNewCodLav_Click(object sender, ImageClickEventArgs e)
         {
-            tbMod_CodiceLavoro.Text = Protocolli_BLL.Instance.getCodLavFormattato();
-        }
-
-        protected void btnAnnullaCaricamento_Click(object sender, EventArgs e)
-        {
-
-            //fuFileProt.Dispose();
-            if (!string.IsNullOrEmpty(tbMod_NomeFile.Text.Trim()))
-            {
-                //SE ESISTE IL FILE LO CANCELLO
-                try
-                {
-                    File.Delete(tbMod_NomeFile.Text.Trim());
-                    tbMod_NomeFile.Text = "";
-                    Session["NOME_FILE"] = "";
-                }
-                catch (Exception)
-                {
-                }
-                
-            }
-        }
-
-        protected void AsyncFileUpload1_UploadedComplete (object sender, AjaxControlToolkit.AsyncFileUploadEventArgs e)
-        {
-            System.Threading.Thread.Sleep(5000);
-            if (fuFileProt.HasFile)
-            {
-                string nomeFileToSave = DateTime.Now.Ticks.ToString() + "_" + Path.GetFileName(e.filename);
-                //string nomeFileToSave = DateTime.Now.Ticks.ToString() + "_" + Path.GetFileName(e.filename);
-                if (!string.IsNullOrEmpty(tbMod_NumeroDocumentoTrasporto.Text.Trim())){
-                    nomeFileToSave = "DocumentoTrasporto_" + tbMod_NumeroDocumentoTrasporto.Text.Trim() + Path.GetExtension(e.filename);
-                }
-                
-                string strPath = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_DocumentoTrasporto"]) + nomeFileToSave;
-                fuFileProt.SaveAs(strPath);
-                if (File.Exists(strPath))
-                {
-                    Session["NOME_FILE"] = nomeFileToSave;
-                    //tbMod_NomeFile.Text = nomeFileToSave;
-                }
-                else
-                {
-                    Session["NOME_FILE"] = "";
-                    tbMod_NomeFile.Text = "";
-                    basePage.ShowWarning("Attenzione, il file: " + strPath + " non è stato creato!");
-                }
-            }
-        }
-
-        protected void AsyncFileUpload1_UploadedFileError(object sender, AjaxControlToolkit.AsyncFileUploadEventArgs e)
-        {
-            lblStatus.Text = e.statusMessage;
-            lblStatus.Visible = true;
+            //tbMod_CodiceLavoro.Text = Protocolli_BLL.Instance.getCodLavFormattato();
         }
 
         protected void btnChiudiPopup_Click(object sender, EventArgs e)
@@ -590,16 +482,20 @@ namespace VideoSystemWeb.Magazzino
 
         private void NascondiErroriValidazione()
         {
-            tbMod_Cliente.CssClass = tbMod_Cliente.CssClass.Replace("erroreValidazione", "");
-            tbMod_CodiceLavoro.CssClass = tbMod_CodiceLavoro.CssClass.Replace("erroreValidazione", "");
-            tbMod_DataDocumentoTrasporto.CssClass = tbMod_DataDocumentoTrasporto.CssClass.Replace("erroreValidazione", "");
-            tbMod_DataLavorazione.CssClass = tbMod_DataLavorazione.CssClass.Replace("erroreValidazione", "");
-            tbMod_Produzione.CssClass = tbMod_Produzione.CssClass.Replace("erroreValidazione", "");
-            tbMod_Lavorazione.CssClass = tbMod_Lavorazione.CssClass.Replace("erroreValidazione", "");
-            tbMod_Descrizione.CssClass = tbMod_Descrizione.CssClass.Replace("erroreValidazione", "");
-            tbMod_NomeFile.CssClass = tbMod_NomeFile.CssClass.Replace("erroreValidazione", "");
             tbMod_NumeroDocumentoTrasporto.CssClass = tbMod_NumeroDocumentoTrasporto.CssClass.Replace("erroreValidazione", "");
-            tbMod_DocumentoTrasportoRiferimento.CssClass = tbMod_DocumentoTrasportoRiferimento.CssClass.Replace("erroreValidazione", "");
+            tbMod_Causale.CssClass = tbMod_Causale.CssClass.Replace("erroreValidazione", "");
+            tbMod_Cap.CssClass = tbMod_Cap.CssClass.Replace("erroreValidazione", "");
+            tbMod_Comune.CssClass = tbMod_Comune.CssClass.Replace("erroreValidazione", "");
+            tbMod_DataTrasporto.CssClass = tbMod_DataTrasporto.CssClass.Replace("erroreValidazione", "");
+            tbMod_destinatario.CssClass = tbMod_destinatario.CssClass.Replace("erroreValidazione", "");
+            tbMod_Indirizzo.CssClass = tbMod_Indirizzo.CssClass.Replace("erroreValidazione", "");
+            tbMod_Nazione.CssClass = tbMod_Nazione.CssClass.Replace("erroreValidazione", "");
+            tbMod_NumeroCivico.CssClass = tbMod_NumeroCivico.CssClass.Replace("erroreValidazione", "");
+            tbMod_NumeroColli.CssClass = tbMod_NumeroColli.CssClass.Replace("erroreValidazione", "");
+            tbMod_PartitaIva.CssClass = tbMod_PartitaIva.CssClass.Replace("erroreValidazione", "");
+            tbMod_Peso.CssClass = tbMod_Peso.CssClass.Replace("erroreValidazione", "");
+            tbMod_Provincia.CssClass = tbMod_Provincia.CssClass.Replace("erroreValidazione", "");
+            tbMod_Trasportatore.CssClass = tbMod_Trasportatore.CssClass.Replace("erroreValidazione", "");
         }
 
         private void abilitaBottoni(bool utenteAbilitatoInScrittura)
@@ -610,10 +506,8 @@ namespace VideoSystemWeb.Magazzino
                 divBtnInserisciDocumentoTrasporto.Visible = false;
                 btnModificaDocumentoTrasporto.Visible = false;
                 btnAnnullaDocumentoTrasporto.Visible = false;
-                btnAnnullaCaricamento.Visible = false;
                 btnEliminaDocumentoTrasporto.Visible = false;
                 btnGestisciDocumentoTrasporto.Visible = false;
-                fuFileProt.Visible = false;
 
             }
             else
@@ -621,11 +515,8 @@ namespace VideoSystemWeb.Magazzino
                 divBtnInserisciDocumentoTrasporto.Visible = true;
                 btnModificaDocumentoTrasporto.Visible = true;
                 btnAnnullaDocumentoTrasporto.Visible = false;
-                btnAnnullaCaricamento.Visible = true;
-                btnEliminaDocumentoTrasporto.Visible = false;
+                 btnEliminaDocumentoTrasporto.Visible = false;
                 btnGestisciDocumentoTrasporto.Visible = true;
-                fuFileProt.Visible = true;
-
             }
         }
 
@@ -636,109 +527,6 @@ namespace VideoSystemWeb.Magazzino
         protected void btnChiudiPopupClientiServer_Click(object sender, EventArgs e)
         {
             PanelClienti.Visible = false;
-        }
-
-        protected void imgbtnSelectCodLav_Click(object sender, ImageClickEventArgs e)
-        {
-
-        }
-
-        protected void btnChiudiPopupLavorazioniServer_Click(object sender, EventArgs e)
-        {
-            PanelLavorazioni.Visible = false;
-        }
-
-        protected void btnCercaLavorazione_Click(object sender, EventArgs e)
-        {
-            PanelLavorazioni.Visible = true;
-        }
-
-        protected void btnRicercaLavorazioni_Click(object sender, EventArgs e)
-        {
-            string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_LAVORAZIONI"];
-
-            queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_Cliente.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@codiceLavorazione", tbSearch_CodiceLavoro.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@lavorazione", tbSearch_Lavorazione.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@luogo", tbSearch_Luogo.Text.Trim().Replace("'", "''"));
-            queryRicerca = queryRicerca.Replace("@produzione", tbSearch_Produzione.Text.Trim().Replace("'", "''"));
-
-            // SE DATA DA E' VALORIZZATA 
-            if (!string.IsNullOrEmpty(tbSearch_DataInizio.Text.Trim()))
-            {
-                // CONTROLLO SE E' UNA DATA VALIDA
-                try
-                {
-                    DateTime dataPartenza = Convert.ToDateTime(tbSearch_DataInizio.Text.Trim());
-                    // SE DATA DA E' VALIDA CONTROLLO DATA A 
-                    if (!string.IsNullOrEmpty(tbSearch_DataFine.Text.Trim()))
-                    {
-                        // CONTROLLO SE E' UNA DATA VALIDA
-                        try
-                        {
-                            DateTime dataArrivo = Convert.ToDateTime(tbSearch_DataFine.Text.Trim());
-                            // E' UNA DATA VALIDA, FACCIO BETWEEN TRA DATA DA E DATA A 
-                            string sDataPartenza = dataPartenza.ToString("yyyy-MM-ddTHH:mm:ss");
-                            string sDataArrivo = dataArrivo.ToString("yyyy-MM-ddTHH:mm:ss");
-                            queryRicerca = queryRicerca.Replace("@queryRangeDate", " and data_inizio_lavorazione between '" + sDataPartenza + "' and '" + dataArrivo + "' ");
-                        }
-                        catch (Exception)
-                        {
-                            // NON E' UNA DATA VALIDA, FACCIO CONTROLLO SU DATA DA PRECISA
-                            queryRicerca = queryRicerca.Replace("@queryRangeDate", " and convert(varchar, data_inizio_lavorazione, 103) = '" + dataPartenza.ToString("dd/MM/yyyy") + "' ");
-                            
-                        }
-                    }
-                    else
-                    {
-                        // FACCIO CONTROLLO SU DATA PRECISA SE DATA A NON E' VALIDA
-                        queryRicerca = queryRicerca.Replace("@queryRangeDate", " and convert(varchar, data_inizio_lavorazione, 103) = '" + dataPartenza.ToString("dd/MM/yyyy") + "' ");
-                    }
-
-                }
-                catch (Exception)
-                {
-                    // NON E' UNA DATA VALIDA QUINDI TENTO DI FARE LA LIKE CON IL TESTO INSERITO ED IGNORO tbSearch_DataFine
-                    queryRicerca = queryRicerca.Replace("@queryRangeDate", " and (isnull(convert(varchar, data_inizio_lavorazione, 103), '') like '%" + tbSearch_DataInizio.Text.Trim() + "%') ");
-                    
-                }
-            }
-            else
-            {
-                queryRicerca = queryRicerca.Replace("@queryRangeDate", "");
-            }
-            
-            
-            Esito esito = new Esito();
-            DataTable dtLavorazioni = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
-            gvLavorazioni.DataSource = dtLavorazioni;
-            gvLavorazioni.DataBind();
-
-
-        }
-
-        protected void gvLavorazioni_RowDataBound(object sender, GridViewRowEventArgs e)
-        {
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                // PRENDO CODICE LAVORAZIONE E CLIENTE/FORNITORE E LI PASSO ALLA FUNZIONE
-                string codLavSelezionato = e.Row.Cells[2].Text.Replace("&nbsp;", "").Replace("&#224;", "à");
-                string clienteFornitoreSelezionato = e.Row.Cells[3].Text.Replace("&nbsp;", "").Replace("&#224;", "à");
-                string produzioneSelezionata = e.Row.Cells[6].Text.Replace("&nbsp;", "").Replace("&#224;", "à");
-                string lavorazioneSelezionata = e.Row.Cells[7].Text.Replace("&nbsp;", "").Replace("&#224;", "à");
-
-                ImageButton myButtonEdit = e.Row.FindControl("imgSelect") as ImageButton;
-                //myButtonEdit.Attributes.Add("onclick", "associaCodiceLavorazione('" + codLavSelezionato.Replace("&nbsp;","") + "','" + clienteFornitoreSelezionato.Replace("&nbsp;", "") + "');");
-                myButtonEdit.Attributes.Add("onclick", "associaCodiceLavorazione('" + codLavSelezionato + "','" + clienteFornitoreSelezionato + "','" + produzioneSelezionata + "','" + lavorazioneSelezionata + "');");
-            }
-
-            //associaCodiceLavorazione(codLav, cliente)
-        }
-
-        protected void gvLavorazioni_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            gvLavorazioni.PageIndex = e.NewPageIndex;
-            btnRicercaLavorazioni_Click(null, null);
         }
 
         protected void btnRicercaClienti_Click(object sender, EventArgs e)
@@ -795,16 +583,17 @@ namespace VideoSystemWeb.Magazzino
         {
             if (string.IsNullOrEmpty(tbMod_IdCliente.Value) || tbMod_IdCliente.Value.Equals("0"))
             {
-                tbMod_Cliente.Text = tbSearch_RagioneSociale.Text.Trim();
+                tbMod_destinatario.Text = tbSearch_RagioneSociale.Text.Trim();
                 tbMod_IdCliente.Value = null;
                 PanelClienti.Visible = false;
             }
-            else {
+            else
+            {
 
                 switch (ddlSceltaClienteCollaboratore.Text)
                 {
                     case "Cliente":
-                        
+
                         Esito esito = new Esito();
                         Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
                         if (esito.Codice != 0)
@@ -813,7 +602,16 @@ namespace VideoSystemWeb.Magazzino
                         }
                         else
                         {
-                            tbMod_Cliente.Text = cliente.RagioneSociale;
+                            tbMod_destinatario.Text = cliente.RagioneSociale;
+
+                            cmbMod_TipoIndirizzo.Text = cliente.TipoIndirizzoLegale;
+                            tbMod_Indirizzo.Text = cliente.IndirizzoLegale;
+                            tbMod_Cap.Text = cliente.CapLegale;
+                            tbMod_Comune.Text = cliente.ComuneLegale;
+                            tbMod_NumeroCivico.Text = cliente.NumeroCivicoLegale;
+                            tbMod_Provincia.Text = cliente.ProvinciaLegale;
+                            tbMod_PartitaIva.Text = cliente.PartitaIva;
+
                             PanelClienti.Visible = false;
                         }
                         break;
@@ -826,7 +624,16 @@ namespace VideoSystemWeb.Magazzino
                         }
                         else
                         {
-                            tbMod_Cliente.Text = collaboratore.Cognome + " " + collaboratore.Nome;
+                            tbMod_destinatario.Text = collaboratore.Cognome + " " + collaboratore.Nome;
+                            if (collaboratore.Indirizzi.Count > 0) { 
+                                cmbMod_TipoIndirizzo.Text = collaboratore.Indirizzi[0].Tipo;
+                                tbMod_Indirizzo.Text = collaboratore.Indirizzi[0].Indirizzo;
+                                tbMod_Cap.Text = collaboratore.Indirizzi[0].Cap;
+                                tbMod_Comune.Text = collaboratore.Indirizzi[0].Comune;
+                                tbMod_NumeroCivico.Text = collaboratore.Indirizzi[0].NumeroCivico;
+                                tbMod_Provincia.Text = collaboratore.Indirizzi[0].Provincia;
+                            }
+
                             PanelClienti.Visible = false;
                         }
                         break;
@@ -882,13 +689,476 @@ namespace VideoSystemWeb.Magazzino
             return sortDirection;
         }
 
-        protected void BtnPulisciCampiRicerca_Click(object sender, EventArgs e)
+        protected void gvMagazzino_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            // DA CONFIGURAZIONE SCELGO SE VISUALIZZARE SUBITO GLI ULTIMI PROTOCOLLI
-            if (Convert.ToBoolean(ConfigurationManager.AppSettings["VISUALIZZA_ULTIMI_PROTOCOLLI"]))
+            if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                btnRicercaDocumentoTrasporto_Click(null, null);
+                // PRENDO ID,COD_VS, DESCRIZIONE E LI PASSO ALLA FUNZIONE
+                //string idAttrezzaturaSelezionata = e.Row.Cells[1].Text;
+                //string codVsSelezionato = e.Row.Cells[2].Text;
+                //string descrizioneAttrezzaturaSelezionata = e.Row.Cells[3].Text;
             }
+
+        }
+
+        protected void gvMagazzino_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvMagazzino.PageIndex = e.NewPageIndex;
+            btnRicercaMagazzino_Click(null, null);
+
+        }
+
+        protected void btnChiudiPopupMagazzinoServer_Click(object sender, EventArgs e)
+        {
+            PanelMagazzino.Visible = false;
+        }
+
+        protected void btnAssociaMagazzinoServer_Click(object sender, EventArgs e)
+        {
+            PanelMagazzino.Visible = false;
+        }
+
+        protected void btnRicercaMagazzino_Click(object sender, EventArgs e)
+        {
+            string queryRicerca = "";
+
+            queryRicerca = "SELECT ID, COD_VS,DESCRIZIONE + ' ' + MODELLO as DESCRIZIONE FROM mag_attrezzature WHERE descrizione LIKE '%@descrizione%' AND COD_VS LIKE '%@codiceVideoSystem%'";
+            queryRicerca = queryRicerca.Replace("@codiceVideoSystem", tbSearch_CodiceVideosystem.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@descrizione", tbSearch_DescMagazzino.Text.Trim().Replace("'", "''"));
+
+            Esito esito = new Esito();
+            DataTable dtMagazzino = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
+            gvMagazzino.DataSource = dtMagazzino;
+            gvMagazzino.DataBind();
+
+        }
+
+        protected void btnInsAttrezzaturaMagazzino_Click(object sender, EventArgs e)
+        {
+            PanelMagazzino.Visible = true;
+        }
+
+        protected void gv_attrezzature_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+        }
+
+        protected void gv_attrezzature_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+
+        }
+
+        protected void gv_attrezzature_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            switch (e.CommandName)
+            {
+                case "ELIMINA_RIGA":
+                    int id = Convert.ToInt32(e.CommandArgument);
+                    Esito esito = DocumentiTrasporto_BLL.Instance.EliminaAttrezzaturaTrasporto(id);
+                    if (esito.Codice == 0)
+                    {
+
+                        List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(hf_idDocTras.Value));
+                        gv_attrezzature.DataSource = listaAttrezzature;
+                        gv_attrezzature.DataBind();
+
+                    }
+                    else
+                    {
+                        basePage.ShowError(esito.Descrizione);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        protected void imgSelectMagazzino_Click(object sender, ImageClickEventArgs e)
+        {
+            try
+            {
+                int rowIndex = ((sender as ImageButton).NamingContainer as GridViewRow).RowIndex;
+                int id = Convert.ToInt32(gvMagazzino.DataKeys[rowIndex].Values[0]);
+                Esito esito = new Esito();
+                AttrezzatureMagazzino attrezzaturaMagazzino = AttrezzatureMagazzino_BLL.Instance.getAttrezzaturaById(ref esito, id);
+                if (esito.Codice == 0)
+                {
+                    AttrezzatureTrasporto attrezzaturaTrasporto = new AttrezzatureTrasporto();
+                    attrezzaturaTrasporto.Cod_vs = attrezzaturaMagazzino.Cod_vs;
+                    attrezzaturaTrasporto.Descrizione = attrezzaturaMagazzino.Descrizione + " " + attrezzaturaMagazzino.Modello;
+                    attrezzaturaTrasporto.IdMagAttrezzature = attrezzaturaMagazzino.Id;
+                    attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(hf_idDocTras.Value);
+                    attrezzaturaTrasporto.Quantita = Convert.ToInt32(tbIns_Quantita.Text.Trim());
+                    int idAttrezzaturaTrasportoNew = DocumentiTrasporto_BLL.Instance.CreaAttrezzaturaTrasporto(attrezzaturaTrasporto, ref esito);
+                    if (esito.Codice == 0)
+                    {
+                        List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(hf_idDocTras.Value));
+                        gv_attrezzature.DataSource = listaAttrezzature;
+                        gv_attrezzature.DataBind();
+                        PanelMagazzino.Visible = false;
+                    }
+                    else
+                    {
+                        basePage.ShowError(esito.Descrizione);
+                    }
+                }
+                else
+                {
+                    basePage.ShowError(esito.Descrizione);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                basePage.ShowError(ex.Message);
+            }
+        }
+
+        protected void btnInsertMagazzino_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Esito esito = new Esito();
+                AttrezzatureTrasporto attrezzaturaTrasporto = new AttrezzatureTrasporto();
+                attrezzaturaTrasporto.Cod_vs = tbSearch_CodiceVideosystem.Text;
+                attrezzaturaTrasporto.Descrizione = tbSearch_DescMagazzino.Text;
+                attrezzaturaTrasporto.IdMagAttrezzature = 0;
+                attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(hf_idDocTras.Value);
+                attrezzaturaTrasporto.Quantita = Convert.ToInt32(tbIns_Quantita.Text.Trim());
+                int idAttrezzaturaTrasportoNew = DocumentiTrasporto_BLL.Instance.CreaAttrezzaturaTrasporto(attrezzaturaTrasporto, ref esito);
+                if (esito.Codice == 0)
+                {
+                    List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(hf_idDocTras.Value));
+                    gv_attrezzature.DataSource = listaAttrezzature;
+                    gv_attrezzature.DataBind();
+                    PanelMagazzino.Visible = false;
+                }
+                else
+                {
+                    basePage.ShowError(esito.Descrizione);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                basePage.ShowError(ex.Message);
+            }
+        }
+
+
+        private void stampaDocumentoTrasporto(int idDocumentoTrasporto)
+        {
+            try
+            {
+                Esito esito = new Esito();
+
+                Entity.DocumentiTrasporto documentoTrasporto = DocumentiTrasporto_BLL.Instance.getDocumentoTrasportoById(ref esito,idDocumentoTrasporto);
+
+                if (esito.Codice == 0 && documentoTrasporto.AttrezzatureTrasporto != null && documentoTrasporto.AttrezzatureTrasporto.Count > 0)
+                {
+                    // LEGGO I PARAMETRI DI VS
+                    Config cfAppo = Config_BLL.Instance.getConfig(ref esito, "PARTITA_IVA");
+                    string pIvaVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "DENOMINAZIONE");
+                    string denominazioneVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "TOPONIMO");
+                    string toponimoVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "INDIRIZZO");
+                    string indirizzoVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "CIVICO");
+                    string civicoVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "CAP");
+                    string capVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "CITTA");
+                    string cittaVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "PROVINCIA");
+                    string provinciaVs = cfAppo.valore;
+                    cfAppo = Config_BLL.Instance.getConfig(ref esito, "EMAIL");
+                    string emailVs = cfAppo.valore;
+
+                    // export SU PDF
+
+                    string nomeFile = "DocumentoTrasporto_" + documentoTrasporto.NumeroDocumentoTrasporto + ".pdf";
+                    string pathReport = ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"] + nomeFile;
+                    string mapPathReport = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"]) + nomeFile;
+
+                    //string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
+                    iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/logoVSP_trim.png"));
+                    iText.IO.Image.ImageData imageDNV = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/DNV_2008_ITA2.jpg"));
+
+
+                    PdfWriter wr = new PdfWriter(mapPathReport);
+                    PdfDocument doc = new PdfDocument(wr);
+                    doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
+                    //Document document = new Document(doc);
+                    Document document = new Document(doc, iText.Kernel.Geom.PageSize.A4, false);
+
+                    document.SetMargins(260, 30, 150, 30);
+
+                    Paragraph pSpazio = new Paragraph(" ");
+                    document.Add(pSpazio);
+
+
+                    //iText.Kernel.Colors.Color coloreIntestazioni = new iText.Kernel.Colors.DeviceRgb(0, 225, 0);
+                    // COLORE BLU VIDEOSYSTEM
+                    iText.Kernel.Colors.Color coloreIntestazioni = new iText.Kernel.Colors.DeviceRgb(33, 150, 243);
+
+
+                    // CREAZIONE GRIGLIA
+                    iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 20, 60, 20 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
+                    Paragraph pGriglia;
+                    Cell cellaGriglia;
+
+                    // DETTAGLIO DOCUMENTO
+                    pGriglia = new Paragraph("DOCUMENTO DI TRASPORTO nr " + documentoTrasporto.NumeroDocumentoTrasporto + " del " + documentoTrasporto.DataTrasporto.ToShortDateString()).SetFontSize(10).SetBold();
+                    cellaGriglia = new iText.Layout.Element.Cell(1, 3).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                    cellaGriglia.Add(pGriglia);
+                    tbGrigla.AddHeaderCell(cellaGriglia);
+
+
+                    // INTESTAZIONE CAMPI GRIGLIA ATTREZZATURE
+                    pGriglia = new Paragraph("Codice").SetFontSize(10);
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetBold();
+                    cellaGriglia.Add(pGriglia);
+                    tbGrigla.AddHeaderCell(cellaGriglia);
+
+                    pGriglia = new Paragraph("Descrizione").SetFontSize(10);
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
+                    cellaGriglia.Add(pGriglia);
+                    tbGrigla.AddHeaderCell(cellaGriglia);
+
+                    pGriglia = new Paragraph("Quantità").SetFontSize(10);
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetBold();
+                    cellaGriglia.Add(pGriglia);
+                    tbGrigla.AddHeaderCell(cellaGriglia);
+
+                    //CICLO LISTA ATTREZZATURE
+                    foreach (AttrezzatureTrasporto attrezzaturaTrasporto in documentoTrasporto.AttrezzatureTrasporto)
+                    {
+
+                        pGriglia = new Paragraph(attrezzaturaTrasporto.Cod_vs).SetFontSize(9);
+                        cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
+                        cellaGriglia.Add(pGriglia);
+                        tbGrigla.AddCell(cellaGriglia);
+
+                        pGriglia = new Paragraph(attrezzaturaTrasporto.Descrizione).SetFontSize(9);
+                        cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
+                        cellaGriglia.Add(pGriglia);
+                        tbGrigla.AddCell(cellaGriglia);
+
+                        pGriglia = new Paragraph(attrezzaturaTrasporto.Quantita.ToString("###")).SetFontSize(9);
+                        cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                        cellaGriglia.Add(pGriglia);
+                        tbGrigla.AddCell(cellaGriglia);
+
+                        
+                    }
+
+                    document.Add(tbGrigla);
+
+                    int n = doc.GetNumberOfPages();
+                    iText.Kernel.Geom.Rectangle pageSize = doc.GetPage(n).GetPageSize();
+
+                    // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
+                    for (int i = 1; i <= n; i++)
+                    {
+                        iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(90, 80).SetFixedPosition(i, 30, 740);
+                        document.Add(image);
+
+                        // CREAZIONE GRIGLIA INFORMAZIONI
+                        iText.Layout.Element.Table tbGriglaInfo = new iText.Layout.Element.Table(new float[] { 70, 230 }).SetWidth(300).SetFixedPosition(i, 30, 620, 300);
+                        Paragraph pGrigliaInfo = new Paragraph(cittaVs).SetFontSize(9).SetBold();
+                        iText.Layout.Element.Cell cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph(documentoTrasporto.DataTrasporto.ToLongDateString()).SetFontSize(9);
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph("Causale:").SetFontSize(9).SetBold();
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph(documentoTrasporto.Causale).SetFontSize(9);
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph("Numero Colli:").SetFontSize(9).SetBold();
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph(documentoTrasporto.NumeroColli.ToString()).SetFontSize(9);
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph("Peso:").SetFontSize(9).SetBold();
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph(documentoTrasporto.Peso).SetFontSize(9);
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph("Trasportatore:").SetFontSize(9).SetBold();
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        pGrigliaInfo = new Paragraph(documentoTrasporto.Trasportatore).SetFontSize(9);
+                        cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaInfo.Add(pGrigliaInfo);
+                        tbGriglaInfo.AddCell(cellaGrigliaInfo);
+
+                        document.Add(tbGriglaInfo);
+
+
+                        // CREAZIONE GRIGLIA DESTINATARIO
+                        iText.Layout.Element.Table tbGriglaDest = new iText.Layout.Element.Table(new float[] { 70, 230 }).SetWidth(300).SetFixedPosition(i, 350, 655, 300);
+                        Paragraph pGrigliaDest = new Paragraph("Spettabile").SetFontSize(9).SetBold();
+                        iText.Layout.Element.Cell cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaDest.Add(pGrigliaDest);
+                        tbGriglaDest.AddCell(cellaGrigliaDest);
+
+                        pGrigliaDest = new Paragraph(documentoTrasporto.Destinatario).SetFontSize(9);
+                        cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaDest.Add(pGrigliaDest);
+                        tbGriglaDest.AddCell(cellaGrigliaDest);
+
+                        // INDIRIZZO DESTINATARIO
+                        pGrigliaDest = new Paragraph("Indirizzo").SetFontSize(9).SetBold();
+                        cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaDest.Add(pGrigliaDest);
+                        tbGriglaDest.AddCell(cellaGrigliaDest);
+
+                        pGrigliaDest = new Paragraph(documentoTrasporto.TipoIndirizzo + " " + documentoTrasporto.Indirizzo + " " + documentoTrasporto.NumeroCivico + Environment.NewLine + documentoTrasporto.Cap + " " + documentoTrasporto.Comune + " " + documentoTrasporto.Provincia).SetFontSize(9);
+                        cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaDest.Add(pGrigliaDest);
+                        tbGriglaDest.AddCell(cellaGrigliaDest);
+
+                        // PARTITA IVA DESTINATARIO
+                        pGrigliaDest = new Paragraph("P.Iva/C.F.").SetFontSize(9).SetBold();
+                        cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaDest.Add(pGrigliaDest);
+                        tbGriglaDest.AddCell(cellaGrigliaDest);
+
+                        string pIvaCF = documentoTrasporto.PartitaIva;
+                        
+                        pGrigliaDest = new Paragraph(pIvaCF).SetFontSize(9);
+                        cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                        cellaGrigliaDest.Add(pGrigliaDest);
+                        tbGriglaDest.AddCell(cellaGrigliaDest);
+
+                        document.Add(tbGriglaDest);
+
+
+
+                        //AGGIUNGO NUM.PAGINA
+                        document.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7),
+                            pageSize.GetWidth() - 60, pageSize.GetHeight() - 20, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+                        //AGGIUNGO FOOTER
+                        document.ShowTextAligned(new Paragraph(denominazioneVs + " P.IVA " + pIvaVs + Environment.NewLine + "Sede legale: " + toponimoVs + " " + indirizzoVs + " " + civicoVs + " - " + capVs + " " + cittaVs + " " + provinciaVs + " e-mail: " + emailVs).SetFontSize(7).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER),
+                            pageSize.GetWidth() / 2, 30, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+
+                        if (i == n)
+                        {
+                            // NELL'ULTIMA PAGINA AGGIUNGO LA GRIGLIA CON LE NOTE E IL TIMBRO
+                            // CREAZIONE GRIGLIA
+                            iText.Layout.Element.Table tbGriglaNoteFooter = new iText.Layout.Element.Table(new float[] { 33, 34, 33 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetFixedPosition(30, 80, 530).SetFixedLayout();
+
+                            // PRIMA RIGA GRIGLIA NOTE FOOTER
+                            Paragraph pGrigliaNoteFooter = new Paragraph("DATA E FIRMA MITTENTE").SetFontSize(9);
+                            iText.Layout.Element.Cell cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
+                            tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
+
+                            pGrigliaNoteFooter = new Paragraph("DATA E FIRMA CORRIERE").SetFontSize(9);
+                            //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1,2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(2);
+                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
+                            tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
+
+                            pGrigliaNoteFooter = new Paragraph("DATA E FIRMA DESTINATARIO").SetFontSize(9);
+                            cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
+                            tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
+
+                            //// SECONDA RIGA GRIGLIA NOTE FOOTER
+                            //pGrigliaNoteFooter = new Paragraph("").SetFontSize(9);
+                            //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            //cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
+                            //tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
+
+                            //pGrigliaNoteFooter = new Paragraph("").SetFontSize(9);
+                            ////cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1,2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(2);
+                            //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 0.7f).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            //cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
+                            //tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
+
+                            //pGrigliaNoteFooter = new Paragraph("").SetFontSize(9);
+                            //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            //cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
+                            //tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
+
+
+                            document.Add(tbGriglaNoteFooter);
+                        }
+
+
+                    }
+
+                    // CHIUDO IL PDF
+                    document.Flush();
+                    document.Close();
+                    wr.Close();
+
+                    btnRicercaDocumentoTrasporto_Click(null, null);
+
+                    // CREO STRINGA PER IL JAVASCRIPT DI VISUALIZZAZIONE
+                    if (System.IO.File.Exists(mapPathReport))
+                    {
+                        Page page = HttpContext.Current.Handler as Page;
+                        ScriptManager.RegisterStartupScript(page, page.GetType(), "apriPdf", script: "window.open('" + pathReport.Replace("~", "") + "')", addScriptTags: true);
+                    }
+                    else
+                    {
+                        esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                        esito.Descrizione = "Il File " + pathReport.Replace("~", "") + " non è stato creato correttamente!";
+                        BasePage p = new BasePage();
+                        p.ShowError(esito.Descrizione);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                BasePage p = new BasePage();
+                p.ShowError(ex.Message + " " + ex.StackTrace);
+            }
+
+        }
+
+        protected void btnViewAttachement_Click(object sender, ImageClickEventArgs e)
+        {
+            int idDocumentoTrasporto = Convert.ToInt32(hf_idDocTras.Value);
+            stampaDocumentoTrasporto(idDocumentoTrasporto);
+        }
+
+        protected void btnOpenDoc_Click(object sender, ImageClickEventArgs e)
+        {
+            int rowIndex = ((sender as ImageButton).NamingContainer as GridViewRow).RowIndex;
+            int idDocumentoTrasporto = Convert.ToInt32(gv_documenti_trasporto.DataKeys[rowIndex].Values[0]);
+            stampaDocumentoTrasporto(idDocumentoTrasporto);
+
         }
     }
 }

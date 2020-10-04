@@ -812,6 +812,7 @@
     <Compile Include="Entity\Anag_Referente_Clienti_Fornitori.cs" />
     <Compile Include="Entity\DatiFiscaliLavorazione.cs" />
     <Compile Include="Entity\DatiAgendaMagazzino.cs" />
+    <Compile Include="Entity\AttrezzatureTrasporto.cs" />
     <Compile Include="Entity\NoteAgendaMagazzino.cs" />
     <Compile Include="Entity\NoteLavorazioneMagazzino.cs" />
     <Compile Include="Entity\DatiLavorazione.cs" />
@@ -1037,6 +1038,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DOCUMENTI\DOCUMENTI_TRASPORTO\" />
     <Folder Include="DOCUMENTI\PREGRESSO\" />
     <Folder Include="DOCUMENTI\PROTOCOLLI\" />
     <Folder Include="DOCUMENTI\REPORT\" />

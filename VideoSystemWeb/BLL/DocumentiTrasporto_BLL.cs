@@ -58,5 +58,24 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
+        public int CreaAttrezzaturaTrasporto(AttrezzatureTrasporto attrezzatura, ref Esito esito)
+        {
+            int iREt = DocumentiTrasporto_DAL.Instance.CreaAttrezzaturaTrasporto(attrezzatura, ref esito);
+            return iREt;
+        }
+
+        public List<AttrezzatureTrasporto> getAttrezzatureTrasportoByIdDocumentoTrasporto(ref Esito esito, Int64 idDocumentoTrasporto)
+        {
+            List<AttrezzatureTrasporto> listaAttrezzatureTrasporto = DocumentiTrasporto_DAL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, idDocumentoTrasporto);
+            return listaAttrezzatureTrasporto;
+        }
+
+        public Esito EliminaAttrezzaturaTrasporto(int idAttrezzaturaTrasporto)
+        {
+            Esito esito = DocumentiTrasporto_DAL.Instance.EliminaAttrezzaturaTrasporto(idAttrezzaturaTrasporto);
+
+            return esito;
+        }
+
     }
 }

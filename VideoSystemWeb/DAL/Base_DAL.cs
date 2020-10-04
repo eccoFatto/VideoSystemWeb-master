@@ -1041,7 +1041,7 @@ namespace VideoSystemWeb.DAL
             string ret = "";
             try
             {
-                string queryVerificaPresenzaDocumentoTrasportoAnno = "select isnull(max(numero_documento_trasporto),'0') as numTras from tab_documento_trasportoa where anno_documento=" + DateTime.Today.Year.ToString();
+                string queryVerificaPresenzaDocumentoTrasportoAnno = "select isnull(max(numero_documento_trasporto),'0') as numTras from tab_documento_trasporto where anno_documento=" + DateTime.Today.Year.ToString();
                 DataTable dtDocumentiTrasporto = Base_DAL.GetDatiBySql(queryVerificaPresenzaDocumentoTrasportoAnno, ref esito);
                 int newNumDocTrasp = 0;
                 if (dtDocumentiTrasporto.Rows[0]["numTras"].ToString() == "0")

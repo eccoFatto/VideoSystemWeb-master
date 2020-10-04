@@ -37,9 +37,10 @@ namespace VideoSystemWeb.Entity
         private string provincia;
         private string nazione;
         private string partitaIva;
-        private int numeroColli;
+        private Int64 numeroColli;
         private string peso;
         private string trasportatore;
+        private List<AttrezzatureTrasporto> attrezzatureTrasporto;
 
 
         public Int64 Id { get => id; set => id = value; }
@@ -55,8 +56,9 @@ namespace VideoSystemWeb.Entity
         public string Provincia { get => provincia; set => provincia = value; }
         public string Nazione { get => nazione; set => nazione = value; }
         public string PartitaIva { get => partitaIva; set => partitaIva = value; }
-        public int NumeroColli { get => numeroColli; set => numeroColli = value; }
+        public Int64 NumeroColli { get => numeroColli; set => numeroColli = value; }
         public string Peso { get => peso; set => peso = value; }
         public string Trasportatore { get => trasportatore; set => trasportatore = value; }
+        public List<AttrezzatureTrasporto> AttrezzatureTrasporto { get => attrezzatureTrasporto; set => attrezzatureTrasporto = value; }
     }
 }

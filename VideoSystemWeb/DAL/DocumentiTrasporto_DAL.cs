@@ -67,8 +67,9 @@ namespace VideoSystemWeb.DAL
                                     documentoTrasporto.Nazione = dt.Rows[0].Field<string>("nazione");
                                     documentoTrasporto.PartitaIva = dt.Rows[0].Field<string>("partitaIva");
                                     documentoTrasporto.Peso = dt.Rows[0].Field<string>("peso");
+                                    documentoTrasporto.NumeroColli = dt.Rows[0].Field<int>("numeroColli");
                                     documentoTrasporto.Trasportatore = dt.Rows[0].Field<string>("trasportatore");
-
+                                    documentoTrasporto.AttrezzatureTrasporto = getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito,documentoTrasporto.Id);
                                 }
                             }
                         }
@@ -348,5 +349,240 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
-     }
+        // ATTREZZATURE TRASPORTO
+
+        public List<AttrezzatureTrasporto> getAttrezzatureTrasportoByIdDocumentoTrasporto(ref Esito esito, Int64 idDocumentoTrasporto)
+        {
+            List<AttrezzatureTrasporto> listaAttrezzatureTrasporto = new List<AttrezzatureTrasporto>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM dati_attrezzature_Trasporto WHERE idDocumentoTrasporto = " + idDocumentoTrasporto.ToString();
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        AttrezzatureTrasporto attrezzaturaTrasporto = new AttrezzatureTrasporto
+                                        {
+                                            Id = riga.Field<int>("id"),
+                                            IdMagAttrezzature = riga.Field<int>("idMagAttrezzature"),
+                                            IdDocumentoTrasporto = riga.Field<int>("idDocumentoTrasporto"),
+                                            Cod_vs = riga.Field<string>("cod_vs"),
+                                            Descrizione = riga.Field<string>("descrizione"),
+                                            Quantita = riga.Field<int>("quantita")
+                                        };
+
+                                        listaAttrezzatureTrasporto.Add(attrezzaturaTrasporto);
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaAttrezzatureTrasporto;
+
+        }
+
+        public Esito AggiornaAttrezzatureTrasporto(AttrezzatureTrasporto attrezzaturaTrasporto)
+        {
+            Anag_Utenti utente = (Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE];
+            Esito esito = new Esito();
+            try
+            {
+                using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
+                {
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand("UpdateAttrezzatureTrasporto"))
+                    {
+                        using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", attrezzaturaTrasporto.Id);
+                            id.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            SqlParameter IdDocumentoTrasporto = new SqlParameter("@IdDocumentoTrasporto", attrezzaturaTrasporto.IdDocumentoTrasporto);
+                            IdDocumentoTrasporto.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(IdDocumentoTrasporto);
+
+                            SqlParameter idMagAttrezzature = new SqlParameter("@idMagAttrezzature", attrezzaturaTrasporto.IdMagAttrezzature);
+                            idMagAttrezzature.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idMagAttrezzature);
+
+                            SqlParameter cod_vs = new SqlParameter("@cod_vs", attrezzaturaTrasporto.Cod_vs);
+                            cod_vs.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(cod_vs);
+
+                            SqlParameter descrizione = new SqlParameter("@cod_vs", attrezzaturaTrasporto.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter quantita = new SqlParameter("@quantita", attrezzaturaTrasporto.Quantita);
+                            quantita.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(quantita);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "DocumentiTrasporto_DAL.cs - AggiornaAttrezzatureTrasporto " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
+        public int CreaAttrezzaturaTrasporto(AttrezzatureTrasporto attrezzaturaTrasporto, ref Esito esito)
+        {
+
+            try
+            {
+                Anag_Utenti utente = (Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE];
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("InsertAttrezzatureTrasporto"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            SqlParameter IdDocumentoTrasporto = new SqlParameter("@IdDocumentoTrasporto", attrezzaturaTrasporto.IdDocumentoTrasporto);
+                            IdDocumentoTrasporto.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(IdDocumentoTrasporto);
+
+                            SqlParameter idMagAttrezzature = new SqlParameter("@idMagAttrezzature", attrezzaturaTrasporto.IdMagAttrezzature);
+                            idMagAttrezzature.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idMagAttrezzature);
+
+                            SqlParameter cod_vs = new SqlParameter("@cod_vs", attrezzaturaTrasporto.Cod_vs);
+                            cod_vs.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(cod_vs);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", attrezzaturaTrasporto.Descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter quantita = new SqlParameter("@quantita", attrezzaturaTrasporto.Quantita);
+                            quantita.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(quantita);
+
+                            StoreProc.Connection.Open();
+
+                            StoreProc.ExecuteNonQuery();
+
+                            int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+
+                            return iReturn;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "DocumentiTrasporto_DAL.cs - CreaAttrezzaturaTrasporto " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return 0;
+        }
+
+        public Esito EliminaAttrezzaturaTrasporto(int idAttrezzaturaTrasporto)
+        {
+            Anag_Utenti utente = (Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE];
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("DeleteAttrezzatureTrasporto"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                            id.Direction = ParameterDirection.Input;
+                            id.Value = idAttrezzaturaTrasporto;
+                            StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "DocumentiTrasporto_DAL.cs - EliminaAttrezzaturaTrasporto " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return esito;
+        }
+
+    }
 }

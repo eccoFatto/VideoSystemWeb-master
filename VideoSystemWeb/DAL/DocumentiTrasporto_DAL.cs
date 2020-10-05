@@ -379,7 +379,8 @@ namespace VideoSystemWeb.DAL
                                             IdDocumentoTrasporto = riga.Field<int>("idDocumentoTrasporto"),
                                             Cod_vs = riga.Field<string>("cod_vs"),
                                             Descrizione = riga.Field<string>("descrizione"),
-                                            Quantita = riga.Field<int>("quantita")
+                                            Quantita = riga.Field<int>("quantita"),
+                                            Seriale = riga.Field<string>("seriale")
                                         };
 
                                         listaAttrezzatureTrasporto.Add(attrezzaturaTrasporto);
@@ -451,6 +452,10 @@ namespace VideoSystemWeb.DAL
                             quantita.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(quantita);
 
+                            SqlParameter seriale = new SqlParameter("@seriale", attrezzaturaTrasporto.Seriale);
+                            seriale.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(seriale);
+
                             StoreProc.Connection.Open();
 
                             int iReturn = StoreProc.ExecuteNonQuery();
@@ -515,6 +520,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter quantita = new SqlParameter("@quantita", attrezzaturaTrasporto.Quantita);
                             quantita.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(quantita);
+
+                            SqlParameter seriale = new SqlParameter("@seriale", attrezzaturaTrasporto.Seriale);
+                            seriale.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(seriale);
 
                             StoreProc.Connection.Open();
 

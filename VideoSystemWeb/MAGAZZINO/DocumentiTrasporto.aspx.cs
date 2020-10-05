@@ -157,7 +157,8 @@ namespace VideoSystemWeb.Magazzino
             editDocumentoTrasportoVuoto();
             AttivaDisattivaModificaDocumentoTrasporto(false);
             gestisciPulsantiDocumentoTrasporto("INSERIMENTO");
-
+            gv_attrezzature.DataSource = null;
+            gv_attrezzature.DataBind();
             //tbMod_NumeroDocumentoTrasporto.Text = Protocolli_BLL.Instance.getNumeroDocumentoTrasporto();
 
             pnlContainer.Visible = true;
@@ -184,6 +185,7 @@ namespace VideoSystemWeb.Magazzino
 
                 if (esito.Codice != Esito.ESITO_OK)
                 {
+                    hf_idDocTras.Value = "";
                     log.Error(esito.Descrizione);
                     basePage.ShowError(esito.Descrizione);
                 }
@@ -416,7 +418,7 @@ namespace VideoSystemWeb.Magazzino
                     List<AttrezzatureTrasporto> listaAttrezzature = documentoTrasporto.AttrezzatureTrasporto;
                     gv_attrezzature.DataSource = listaAttrezzature;
                     gv_attrezzature.DataBind();
-
+                    btnViewAttachement.Enabled = true;
                 }
                 else
                 {
@@ -722,9 +724,10 @@ namespace VideoSystemWeb.Magazzino
         {
             string queryRicerca = "";
 
-            queryRicerca = "SELECT ID, COD_VS,DESCRIZIONE + ' ' + MODELLO as DESCRIZIONE FROM mag_attrezzature WHERE descrizione LIKE '%@descrizione%' AND COD_VS LIKE '%@codiceVideoSystem%'";
+            queryRicerca = "SELECT ID, COD_VS, SERIALE, DESCRIZIONE + ' ' + MODELLO as DESCRIZIONE FROM mag_attrezzature WHERE descrizione LIKE '%@descrizione%' AND COD_VS LIKE '%@codiceVideoSystem%' AND SERIALE LIKE '%@seriale%'";
             queryRicerca = queryRicerca.Replace("@codiceVideoSystem", tbSearch_CodiceVideosystem.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@descrizione", tbSearch_DescMagazzino.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@seriale", tbSearch_Seriale.Text.Trim().Replace("'", "''"));
 
             Esito esito = new Esito();
             DataTable dtMagazzino = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
@@ -758,7 +761,7 @@ namespace VideoSystemWeb.Magazzino
                     if (esito.Codice == 0)
                     {
 
-                        List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(hf_idDocTras.Value));
+                        List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(ViewState["idDocumentoTrasporto"]));
                         gv_attrezzature.DataSource = listaAttrezzature;
                         gv_attrezzature.DataBind();
 
@@ -786,14 +789,16 @@ namespace VideoSystemWeb.Magazzino
                 {
                     AttrezzatureTrasporto attrezzaturaTrasporto = new AttrezzatureTrasporto();
                     attrezzaturaTrasporto.Cod_vs = attrezzaturaMagazzino.Cod_vs;
+                    attrezzaturaTrasporto.Seriale = attrezzaturaMagazzino.Seriale;
                     attrezzaturaTrasporto.Descrizione = attrezzaturaMagazzino.Descrizione + " " + attrezzaturaMagazzino.Modello;
                     attrezzaturaTrasporto.IdMagAttrezzature = attrezzaturaMagazzino.Id;
-                    attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(hf_idDocTras.Value);
+                    //attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(hf_idDocTras.Value);
+                    attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(ViewState["idDocumentoTrasporto"]);
                     attrezzaturaTrasporto.Quantita = Convert.ToInt32(tbIns_Quantita.Text.Trim());
                     int idAttrezzaturaTrasportoNew = DocumentiTrasporto_BLL.Instance.CreaAttrezzaturaTrasporto(attrezzaturaTrasporto, ref esito);
                     if (esito.Codice == 0)
                     {
-                        List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(hf_idDocTras.Value));
+                        List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(ViewState["idDocumentoTrasporto"]));
                         gv_attrezzature.DataSource = listaAttrezzature;
                         gv_attrezzature.DataBind();
                         PanelMagazzino.Visible = false;
@@ -823,12 +828,14 @@ namespace VideoSystemWeb.Magazzino
                 AttrezzatureTrasporto attrezzaturaTrasporto = new AttrezzatureTrasporto();
                 attrezzaturaTrasporto.Cod_vs = tbSearch_CodiceVideosystem.Text;
                 attrezzaturaTrasporto.Descrizione = tbSearch_DescMagazzino.Text;
+                attrezzaturaTrasporto.Seriale = tbSearch_Seriale.Text;
                 attrezzaturaTrasporto.IdMagAttrezzature = 0;
                 attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(hf_idDocTras.Value);
                 attrezzaturaTrasporto.Quantita = Convert.ToInt32(tbIns_Quantita.Text.Trim());
                 int idAttrezzaturaTrasportoNew = DocumentiTrasporto_BLL.Instance.CreaAttrezzaturaTrasporto(attrezzaturaTrasporto, ref esito);
                 if (esito.Codice == 0)
                 {
+                    
                     List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(hf_idDocTras.Value));
                     gv_attrezzature.DataSource = listaAttrezzature;
                     gv_attrezzature.DataBind();
@@ -907,13 +914,13 @@ namespace VideoSystemWeb.Magazzino
 
 
                     // CREAZIONE GRIGLIA
-                    iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 20, 60, 20 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
+                    iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 15, 25, 50, 10 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
                     Paragraph pGriglia;
                     Cell cellaGriglia;
 
                     // DETTAGLIO DOCUMENTO
                     pGriglia = new Paragraph("DOCUMENTO DI TRASPORTO nr " + documentoTrasporto.NumeroDocumentoTrasporto + " del " + documentoTrasporto.DataTrasporto.ToShortDateString()).SetFontSize(10).SetBold();
-                    cellaGriglia = new iText.Layout.Element.Cell(1, 3).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
+                    cellaGriglia = new iText.Layout.Element.Cell(1, 4).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
@@ -921,6 +928,11 @@ namespace VideoSystemWeb.Magazzino
                     // INTESTAZIONE CAMPI GRIGLIA ATTREZZATURE
                     pGriglia = new Paragraph("Codice").SetFontSize(10);
                     cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetBold();
+                    cellaGriglia.Add(pGriglia);
+                    tbGrigla.AddHeaderCell(cellaGriglia);
+
+                    pGriglia = new Paragraph("Seriale").SetFontSize(10);
+                    cellaGriglia = new iText.Layout.Element.Cell().SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorder(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 1, 100)).SetPadding(5).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER).SetBold();
                     cellaGriglia.Add(pGriglia);
                     tbGrigla.AddHeaderCell(cellaGriglia);
 
@@ -939,6 +951,11 @@ namespace VideoSystemWeb.Magazzino
                     {
 
                         pGriglia = new Paragraph(attrezzaturaTrasporto.Cod_vs).SetFontSize(9);
+                        cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
+                        cellaGriglia.Add(pGriglia);
+                        tbGrigla.AddCell(cellaGriglia);
+
+                        pGriglia = new Paragraph(attrezzaturaTrasporto.Seriale).SetFontSize(9);
                         cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
@@ -1149,7 +1166,7 @@ namespace VideoSystemWeb.Magazzino
 
         protected void btnViewAttachement_Click(object sender, ImageClickEventArgs e)
         {
-            int idDocumentoTrasporto = Convert.ToInt32(hf_idDocTras.Value);
+            int idDocumentoTrasporto = Convert.ToInt32(ViewState["idDocumentoTrasporto"]);
             stampaDocumentoTrasporto(idDocumentoTrasporto);
         }
 

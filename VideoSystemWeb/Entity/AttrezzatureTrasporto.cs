@@ -20,6 +20,7 @@ namespace VideoSystemWeb.Entity
         private string cod_vs;
         private string descrizione;
         private int quantita;
+        private string seriale;
 
 
 
@@ -29,5 +30,6 @@ namespace VideoSystemWeb.Entity
         public string Cod_vs { get => cod_vs; set => cod_vs = value; }
         public string Descrizione { get => descrizione; set => descrizione = value; }
         public int Quantita { get => quantita; set => quantita = value; }
+        public string Seriale { get => seriale; set => seriale = value; }
     }
 }

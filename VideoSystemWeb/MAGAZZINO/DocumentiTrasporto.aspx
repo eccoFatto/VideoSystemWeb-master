@@ -100,6 +100,7 @@
         function azzeraCampiRicercaMagazzino() {
             $("#<%=tbSearch_CodiceVideosystem.ClientID%>").val('');
             $("#<%=tbSearch_DescMagazzino.ClientID%>").val('');
+            $("#<%=tbSearch_Seriale.ClientID%>").val('');
             $("#<%=tbIns_Quantita.ClientID%>").val('1');
         }
 
@@ -393,7 +394,8 @@
                                             <asp:BoundField DataField="id" ItemStyle-CssClass="hiddencol" HeaderStyle-CssClass="hiddencol" Visible="false"/>
                         
                                             <asp:BoundField DataField="cod_vs" HeaderText="Codice VS" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Center"/>
-                                            <asp:BoundField DataField="descrizione" HeaderText="Descrizione" HeaderStyle-Width="80%" ItemStyle-HorizontalAlign="Center"/>
+                                            <asp:BoundField DataField="seriale" HeaderText="Seriale" HeaderStyle-Width="30%" ItemStyle-HorizontalAlign="Center"/>
+                                            <asp:BoundField DataField="descrizione" HeaderText="Descrizione" HeaderStyle-Width="50%" ItemStyle-HorizontalAlign="Center"/>
                                             <asp:BoundField DataField="quantita" HeaderText="Quantita" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Center"/>
                     
                                         </Columns>
@@ -504,6 +506,10 @@
                             <asp:TextBox ID="tbSearch_CodiceVideosystem" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
                         </div>
                         <div class="w3-quarter">
+                            <label>Seriale</label>
+                            <asp:TextBox ID="tbSearch_Seriale" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                        </div> 
+                        <div class="w3-quarter">
                             <label>Descrizione</label>
                             <asp:TextBox ID="tbSearch_DescMagazzino" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
                         </div> 
@@ -511,7 +517,15 @@
                             <label>Quantità</label>
                             <asp:TextBox ID="tbIns_Quantita" runat="server" MaxLength="3" class="w3-input w3-border" placeholder="" Text="1"></asp:TextBox>
                             <ajaxToolkit:MaskedEditExtender ID="tbIns_Quantita_MaskedEditExtender" runat="server" TargetControlID="tbIns_Quantita" MaskType="None" Mask="999" ></ajaxToolkit:MaskedEditExtender>
-                        </div>                        
+                        </div>   
+                    </div>
+                    <div class="w3-row-padding w3-padding w3-margin">
+                        <div class="w3-quarter">
+                            &nbsp;
+                        </div>
+                        <div class="w3-half">
+                            &nbsp;
+                        </div>
                         <div class="w3-quarter">
                             <label>&nbsp;</label>
                             <table style="width: 100%;">

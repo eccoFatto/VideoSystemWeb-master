@@ -192,8 +192,9 @@ namespace VideoSystemWeb.Magazzino
                 ShowPopMessage("Inserito DocumentoTrasporto n. " + documentoTrasporto.NumeroDocumentoTrasporto);
 
                 btnEditDocumentoTrasporto_Click(null, null);
-                
-                
+
+                gestisciPulsantiDocumentoTrasporto("MODIFICA");
+
             }
         }
 

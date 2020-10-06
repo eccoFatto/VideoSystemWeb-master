@@ -428,7 +428,7 @@
                     <div class="w3-container w3-padding w3-margin">
                         <!-- RICERCA CLIENTI -->
                         <div class="w3-bar w3-orange w3-round">
-                            <div class="w3-bar-item w3-button w3-orange">Ricerca Clienti\Collaboratori
+                            <div class="w3-bar-item w3-button w3-orange">Ricerca Clienti\Fornitori - Collaboratori
                             </div>
                             <div class="w3-bar-item w3-button w3-orange w3-right">
                                 <div id="btnChiudiPopupClienti" class="w3-button w3-orange w3-small w3-round" onclick="chiudiPopupClienti();">Chiudi</div>
@@ -437,9 +437,9 @@
                     </div>
                     <div class="w3-row-padding w3-padding w3-margin">
                         <div class="w3-half">
-                            <label>Cliente\Collaboratore</label>
+                            <label>Cliente\Fornitore - Collaboratore</label>
                             <asp:DropDownList ID="ddlSceltaClienteCollaboratore" runat="server" Width="100%" class="w3-input w3-border">
-                                <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
+                                <asp:ListItem Value="Cliente" Text="Cliente\Fornitore"></asp:ListItem>
                                 <asp:ListItem Value="Collaboratore" Text="Collaboratore"></asp:ListItem>
                             </asp:DropDownList>
                         </div>

@@ -143,8 +143,12 @@
         <ContentTemplate>
             <div class="w3-row-padding">
                 <div class="w3-quarter">
-                    <label>Numero DocumentoTrasporto</label>
-                    <asp:TextBox ID="tbNumeroDocTrasporto" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    <label>Destinatario</label>
+                    <asp:TextBox ID="tbDestinatario" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                </div>                
+                <div class="w3-quarter">
+                    <label>Causale</label>
+                    <asp:TextBox ID="tbCausale" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
                 <div class="w3-quarter" style="position:relative;">
                     <label>Data Trasporto (Da-A)</label>
@@ -154,14 +158,10 @@
                             <td style="position:relative;"><asp:TextBox ID="tbDataTrasportoA" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox></td>
                         </tr>
                     </table>
-                </div>
+                </div>            
                 <div class="w3-quarter">
-                    <label>Causale</label>
-                    <asp:TextBox ID="tbCausale" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
-                </div>
-                <div class="w3-quarter">
-                    <label>Destinatario</label>
-                    <asp:TextBox ID="tbDestinatario" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                    <label>Numero DocumentoTrasporto</label>
+                    <asp:TextBox ID="tbNumeroDocTrasporto" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
             </div>
             <div class="w3-row-padding">
@@ -191,7 +191,7 @@
                             </td>
                             <td style="width: 40%;">
                                 <div id="divBtnInserisciDocumentoTrasporto" runat="server">
-                                    <div id="clbtnInserisciDocumentoTrasporto" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciDocumentoTrasporto();" >Inserisci</div>
+                                    <div id="clbtnInserisciDocumentoTrasporto" class="w3-btn w3-white w3-border w3-border-red w3-round-large" onclick="inserisciDocumentoTrasporto();" >Nuovo Documento</div>
                                 </div>
 
                             </td>
@@ -283,34 +283,31 @@
                         <div class="w3-container">
                             <p>
                                 <div class="w3-row-padding">
-                                    <div class="w3-quarter">
-                                        <label>Numero Documento Trasporto</label>
-                                        <div class="w3-threequarter">
-                                            <asp:TextBox ID="tbMod_NumeroDocumentoTrasporto" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
-                                            <asp:TextBox ID="tbIdDocumentoTrasportoDaModificare" runat="server" Visible="false"></asp:TextBox>
-                                        </div>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Data Trasporto</label>
-                                        <asp:TextBox ID="tbMod_DataTrasporto" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Causale</label>
-                                        <asp:TextBox ID="tbMod_Causale" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
-                                    </div>
-
-                                    <div class="w3-quarter">
+                                     <div class="w3-quarter">
                                         <label>Destinatario</label>
                                         <div class="w3-row">
                                             <div class="w3-threequarter">
-                                                <asp:TextBox ID="tbMod_destinatario" runat="server" MaxLength="60" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                                <asp:TextBox ID="tbMod_destinatario" runat="server" MaxLength="60" CssClass="w3-input w3-border" placeholder="" Text="" ReadOnly="true"></asp:TextBox>
                                                 <asp:HiddenField runat="server" ID="tbMod_IdCliente" />
                                             </div>
                                             <div class="w3-quarter">
                                                 <asp:ImageButton ID="imgbtnSelectCliente" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round w3-margin-left" Height="40px" Width="40px" ToolTip="Cerca Destinatario" OnClientClick="cercaCliente()" />
                                             </div>
                                         </div>
-
+                                    </div>                                   
+                                    <div class="w3-quarter">
+                                        <label>Data Trasporto</label>
+                                        <asp:TextBox ID="tbMod_DataTrasporto" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Partita iva</label>
+                                        <asp:TextBox ID="tbMod_PartitaIva" runat="server" MaxLength="11" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                    </div>                                    
+                                    <div class="w3-quarter">
+                                        <label>Numero Documento Trasporto</label>
+                                        <asp:TextBox ID="tbMod_NumeroDocumentoTrasporto" runat="server" MaxLength="30" class="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbIdDocumentoTrasportoDaModificare" runat="server" Visible="false"></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_NumeroProtocollo" runat="server" Visible="false"></asp:TextBox>
                                     </div>
                                 </div>
                                 <div class="w3-row-padding">
@@ -357,8 +354,8 @@
 
                                 <div class="w3-row-padding">
                                     <div class="w3-quarter">
-                                        <label>Partita iva</label>
-                                        <asp:TextBox ID="tbMod_PartitaIva" runat="server" MaxLength="11" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                        <label>Causale</label>
+                                        <asp:TextBox ID="tbMod_Causale" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Numero Colli</label>

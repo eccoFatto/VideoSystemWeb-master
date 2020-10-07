@@ -49,7 +49,12 @@ namespace VideoSystemWeb.BLL
 
             return listaProtocolli;
         }
+        public List<Protocolli> getProtocolliByCodLavIdTipoProtocolloNumeroprotocollo(string codiceLavorazione, int IdTipoProtocollo, string numeroProtocollo, ref Esito esito, bool soloAttivi = true)
+        {
+            List<Protocolli> listaProtocolli = Protocolli_DAL.Instance.getProtocolliByCodLavIdTipoProtocolloNumeroprotocollo(codiceLavorazione, IdTipoProtocollo, numeroProtocollo, ref esito, soloAttivi);
 
+            return listaProtocolli;
+        }
 
         public int CreaProtocollo(Protocolli protocollo, ref Esito esito)
         {

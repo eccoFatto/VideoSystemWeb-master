@@ -152,6 +152,65 @@ namespace VideoSystemWeb.DAL
             return listaProtocolli;
         }
 
+        public List<Protocolli> getProtocolliByCodLavIdTipoProtocolloNumeroprotocollo(string codiceLavorazione, int IdTipoProtocollo,string numeroProtocollo, ref Esito esito, bool soloAttivi = true)
+        {
+            List<Protocolli> listaProtocolli = new List<Protocolli>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM dati_protocollo WHERE codice_lavoro = '" + codiceLavorazione.Trim() + "' AND id_tipo_protocollo = " + IdTipoProtocollo.ToString() + " AND numero_protocollo = '" + numeroProtocollo + "'";
+
+                    if (soloAttivi) query += " AND ATTIVO = 1";
+                    query += " ORDER BY codice_lavoro,numero_protocollo";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        Protocolli protocollo = new Protocolli();
+                                        protocollo.Id = riga.Field<int>("id");
+                                        protocollo.Codice_lavoro = riga.Field<string>("codice_lavoro");
+                                        protocollo.Numero_protocollo = riga.Field<string>("numero_protocollo");
+                                        if (!DBNull.Value.Equals(riga["data_protocollo"])) protocollo.Data_protocollo = riga.Field<DateTime?>("data_protocollo");
+                                        protocollo.Cliente = riga.Field<string>("cliente");
+                                        if (!DBNull.Value.Equals(riga["id_cliente"])) protocollo.Id_cliente = riga.Field<int>("id_cliente");
+                                        protocollo.Id_tipo_protocollo = riga.Field<int>("id_tipo_protocollo");
+                                        protocollo.Protocollo_riferimento = riga.Field<string>("protocollo_riferimento");
+                                        protocollo.PathDocumento = riga.Field<string>("pathDocumento");
+                                        protocollo.Descrizione = riga.Field<string>("descrizione");
+                                        protocollo.Lavorazione = riga.Field<string>("lavorazione");
+                                        protocollo.Produzione = riga.Field<string>("produzione");
+                                        if (!DBNull.Value.Equals(riga["data_inizio_lavorazione"])) protocollo.Data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione");
+                                        protocollo.Attivo = riga.Field<bool>("attivo");
+                                        protocollo.Pregresso = riga.Field<bool>("pregresso");
+                                        protocollo.Destinatario = riga.Field<string>("destinatario");
+
+                                        listaProtocolli.Add(protocollo);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaProtocolli;
+        }
+
         public Protocolli getProtocolloById(ref Esito esito, Int64 id)
         {
             Protocolli protocollo = new Protocolli();

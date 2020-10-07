@@ -69,6 +69,7 @@ namespace VideoSystemWeb.DAL
                                     documentoTrasporto.Peso = dt.Rows[0].Field<string>("peso");
                                     documentoTrasporto.NumeroColli = dt.Rows[0].Field<int>("numeroColli");
                                     documentoTrasporto.Trasportatore = dt.Rows[0].Field<string>("trasportatore");
+                                    documentoTrasporto.Numero_protocollo = dt.Rows[0].Field<string>("numero_protocollo");
                                     documentoTrasporto.AttrezzatureTrasporto = getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito,documentoTrasporto.Id);
                                 }
                             }
@@ -173,6 +174,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter trasportatore = new SqlParameter("@trasportatore", documentoTrasporto.Trasportatore);
                             trasportatore.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(trasportatore);
+
+                            SqlParameter numero_protocollo = new SqlParameter("@numero_protocollo", documentoTrasporto.Numero_protocollo);
+                            numero_protocollo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(numero_protocollo);
 
                             StoreProc.Connection.Open();
 
@@ -284,6 +289,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter trasportatore = new SqlParameter("@trasportatore", documentoTrasporto.Trasportatore);
                             trasportatore.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(trasportatore);
+
+                            SqlParameter numero_protocollo = new SqlParameter("@numero_protocollo", documentoTrasporto.Numero_protocollo);
+                            numero_protocollo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(numero_protocollo);
 
                             StoreProc.Connection.Open();
 

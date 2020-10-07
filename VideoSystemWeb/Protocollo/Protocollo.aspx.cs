@@ -940,11 +940,11 @@ namespace VideoSystemWeb.Protocollo
             switch (ddlSceltaClienteCollaboratore.Text)
             {
                 case "Cliente":
-                    queryRicerca = "SELECT ID, RAGIONESOCIALE as [Ragione Sociale] FROM anag_clienti_fornitori WHERE ragioneSociale LIKE '%@ragioneSociale%'";
+                    queryRicerca = "SELECT ID, RAGIONESOCIALE as [Ragione Sociale] FROM anag_clienti_fornitori WHERE attivo = 1 AND ragioneSociale LIKE '%@ragioneSociale%'";
                     queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_RagioneSociale.Text.Trim().Replace("'", "''"));
                     break;
                 case "Collaboratore":
-                    queryRicerca = "SELECT ID, COGNOME + ' ' + NOME as [Ragione Sociale] FROM anag_collaboratori WHERE cognome LIKE '%@ragioneSociale%'";
+                    queryRicerca = "SELECT ID, COGNOME + ' ' + NOME as [Ragione Sociale] FROM anag_collaboratori WHERE attivo = 1 AND cognome LIKE '%@ragioneSociale%'";
                     queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_RagioneSociale.Text.Trim().Replace("'", "''"));
 
                     break;

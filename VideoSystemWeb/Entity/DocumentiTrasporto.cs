@@ -40,6 +40,7 @@ namespace VideoSystemWeb.Entity
         private Int64 numeroColli;
         private string peso;
         private string trasportatore;
+        private string numero_protocollo;
         private List<AttrezzatureTrasporto> attrezzatureTrasporto;
 
 
@@ -60,5 +61,6 @@ namespace VideoSystemWeb.Entity
         public string Peso { get => peso; set => peso = value; }
         public string Trasportatore { get => trasportatore; set => trasportatore = value; }
         public List<AttrezzatureTrasporto> AttrezzatureTrasporto { get => attrezzatureTrasporto; set => attrezzatureTrasporto = value; }
+        public string Numero_protocollo { get => numero_protocollo; set => numero_protocollo = value; }
     }
 }

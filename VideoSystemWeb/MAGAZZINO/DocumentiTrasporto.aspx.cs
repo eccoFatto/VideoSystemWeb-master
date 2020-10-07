@@ -50,7 +50,7 @@ namespace VideoSystemWeb.Magazzino
 
                 // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                 abilitaBottoni(basePage.AbilitazioneInScrittura());
-
+                btnRicercaDocumentoTrasporto_Click(null, null);
             }
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + tbDataTrasporto.ClientID + "', '" + tbDataTrasportoA.ClientID + "');", true);
@@ -189,7 +189,8 @@ namespace VideoSystemWeb.Magazzino
                     log.Error(esito.Descrizione);
                     basePage.ShowError(esito.Descrizione);
                 }
-                ShowPopMessage("Inserito DocumentoTrasporto n. " + documentoTrasporto.NumeroDocumentoTrasporto);
+                //ShowPopMessage("Inserito DocumentoTrasporto n. " + documentoTrasporto.NumeroDocumentoTrasporto);
+                ShowSuccess("Inserito DocumentoTrasporto n. " + documentoTrasporto.NumeroDocumentoTrasporto + " Prot: " + documentoTrasporto.Numero_protocollo);
 
                 btnEditDocumentoTrasporto_Click(null, null);
 
@@ -333,6 +334,7 @@ namespace VideoSystemWeb.Magazzino
         private void pulisciCampiDettaglio()
         {
             tbMod_NumeroDocumentoTrasporto.Text = "";
+            tbMod_NumeroProtocollo.Text = "";
             tbMod_Cap.Text = "";
             tbMod_Causale.Text = "";
             tbMod_Comune.Text = "";
@@ -354,26 +356,37 @@ namespace VideoSystemWeb.Magazzino
         {
             tbMod_NumeroDocumentoTrasporto.ReadOnly = true;
             tbMod_Causale.ReadOnly = attivaModifica;
-            tbMod_Cap.ReadOnly = attivaModifica;
-            tbMod_Comune.ReadOnly = attivaModifica;
+            //tbMod_Cap.ReadOnly = attivaModifica;
+            //tbMod_Comune.ReadOnly = attivaModifica;
             tbMod_DataTrasporto.ReadOnly = attivaModifica;
-            tbMod_destinatario.ReadOnly = attivaModifica;
-            tbMod_Indirizzo.ReadOnly = attivaModifica;
-            tbMod_Nazione.ReadOnly = attivaModifica;
-            tbMod_NumeroCivico.ReadOnly = attivaModifica;
+            //tbMod_destinatario.ReadOnly = attivaModifica;
+            //tbMod_Indirizzo.ReadOnly = attivaModifica;
+            //tbMod_Nazione.ReadOnly = attivaModifica;
+            //tbMod_NumeroCivico.ReadOnly = attivaModifica;
             tbMod_NumeroColli.ReadOnly = attivaModifica;
-            tbMod_PartitaIva.ReadOnly = attivaModifica;
+            //tbMod_PartitaIva.ReadOnly = attivaModifica;
             tbMod_Peso.ReadOnly = attivaModifica;
-            tbMod_Provincia.ReadOnly = attivaModifica;
+            //tbMod_Provincia.ReadOnly = attivaModifica;
             tbMod_Trasportatore.ReadOnly = attivaModifica;
-            if (attivaModifica)
-            {
-                cmbMod_TipoIndirizzo.Attributes.Add("disabled", "");
-           }
-            else
-            {
-                cmbMod_TipoIndirizzo.Attributes.Remove("disabled");
-            }
+
+            tbMod_Cap.ReadOnly = true;
+            tbMod_Comune.ReadOnly = true;
+            tbMod_destinatario.ReadOnly = true;
+            tbMod_Indirizzo.ReadOnly = true;
+            tbMod_Nazione.ReadOnly = true;
+            tbMod_NumeroCivico.ReadOnly = true;
+            tbMod_PartitaIva.ReadOnly = true;
+            tbMod_Provincia.ReadOnly = true;
+
+            // if (attivaModifica)
+            // {
+            //     cmbMod_TipoIndirizzo.Attributes.Add("disabled", "");
+            //}
+            // else
+            // {
+            //     cmbMod_TipoIndirizzo.Attributes.Remove("disabled");
+            // }
+            cmbMod_TipoIndirizzo.Attributes.Add("disabled", "");
         }
 
         private void editDocumentoTrasportoVuoto()
@@ -397,6 +410,7 @@ namespace VideoSystemWeb.Magazzino
 
                     // RIEMPIO I CAMPI DEL DETTAGLIO DocumentoTrasporto
                     tbMod_NumeroDocumentoTrasporto.Text = documentoTrasporto.NumeroDocumentoTrasporto;
+                    tbMod_NumeroProtocollo.Text = documentoTrasporto.Numero_protocollo;
                     tbMod_DataTrasporto.Text = "";
                     if (documentoTrasporto.DataTrasporto != null)
                     {
@@ -451,7 +465,10 @@ namespace VideoSystemWeb.Magazzino
             documentoTrasporto.Cap = tbMod_Cap.Text.Trim();
             documentoTrasporto.Causale = tbMod_Causale.Text.Trim();
             documentoTrasporto.Comune = tbMod_Comune.Text.Trim();
-            documentoTrasporto.DataTrasporto =  Convert.ToDateTime(tbMod_DataTrasporto.Text.Trim());
+            //documentoTrasporto.DataTrasporto =  Convert.ToDateTime(tbMod_DataTrasporto.Text.Trim());
+            if (!string.IsNullOrEmpty(BasePage.ValidaCampo(tbMod_DataTrasporto, "", true, ref esito))){
+                documentoTrasporto.DataTrasporto = Convert.ToDateTime(tbMod_DataTrasporto.Text.Trim());
+            }
             documentoTrasporto.Indirizzo = BasePage.ValidaCampo(tbMod_Indirizzo, "", true, ref esito);
             documentoTrasporto.Nazione = tbMod_Nazione.Text.Trim();
             documentoTrasporto.NumeroCivico = tbMod_NumeroCivico.Text.Trim();
@@ -470,6 +487,13 @@ namespace VideoSystemWeb.Magazzino
             }
             documentoTrasporto.NumeroDocumentoTrasporto = BasePage.ValidaCampo(tbMod_NumeroDocumentoTrasporto, "", true, ref esito);
 
+            if (string.IsNullOrEmpty(tbMod_NumeroProtocollo.Text.Trim()))
+            {
+                tbMod_NumeroProtocollo.Text = Protocolli_BLL.Instance.getNumeroProtocollo();
+            }
+            documentoTrasporto.Numero_protocollo = tbMod_NumeroProtocollo.Text.Trim();
+
+
             return documentoTrasporto;
         }
 
@@ -481,6 +505,7 @@ namespace VideoSystemWeb.Magazzino
         protected void btnChiudiPopup_Click(object sender, EventArgs e)
         {
             pnlContainer.Visible = false;
+            btnRicercaDocumentoTrasporto_Click(null, null);
         }
 
         private void NascondiErroriValidazione()
@@ -538,11 +563,11 @@ namespace VideoSystemWeb.Magazzino
             switch (ddlSceltaClienteCollaboratore.Text)
             {
                 case "Cliente":
-                    queryRicerca = "SELECT ID, RAGIONESOCIALE as [Ragione Sociale] FROM anag_clienti_fornitori WHERE ragioneSociale LIKE '%@ragioneSociale%'";
+                    queryRicerca = "SELECT ID, RAGIONESOCIALE as [Ragione Sociale] FROM anag_clienti_fornitori WHERE attivo = 1 AND ragioneSociale LIKE '%@ragioneSociale%'";
                     queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_RagioneSociale.Text.Trim().Replace("'", "''"));
                     break;
                 case "Collaboratore":
-                    queryRicerca = "SELECT ID, COGNOME + ' ' + NOME as [Ragione Sociale] FROM anag_collaboratori WHERE cognome LIKE '%@ragioneSociale%'";
+                    queryRicerca = "SELECT ID, COGNOME + ' ' + NOME as [Ragione Sociale] FROM anag_collaboratori WHERE attivo = 1 AND cognome LIKE '%@ragioneSociale%'";
                     queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_RagioneSociale.Text.Trim().Replace("'", "''"));
 
                     break;
@@ -584,67 +609,77 @@ namespace VideoSystemWeb.Magazzino
 
         protected void btnAssociaClienteServer_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(tbMod_IdCliente.Value) || tbMod_IdCliente.Value.Equals("0"))
+            try
             {
-                tbMod_destinatario.Text = tbSearch_RagioneSociale.Text.Trim();
-                tbMod_IdCliente.Value = null;
-                PanelClienti.Visible = false;
-            }
-            else
-            {
-
-                switch (ddlSceltaClienteCollaboratore.Text)
+                if (string.IsNullOrEmpty(tbMod_IdCliente.Value) || tbMod_IdCliente.Value.Equals("0"))
                 {
-                    case "Cliente":
+                    tbMod_destinatario.Text = tbSearch_RagioneSociale.Text.Trim();
+                    tbMod_IdCliente.Value = null;
+                    PanelClienti.Visible = false;
+                }
+                else
+                {
 
-                        Esito esito = new Esito();
-                        Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
-                        if (esito.Codice != 0)
-                        {
-                            ShowError(esito.Descrizione);
-                        }
-                        else
-                        {
-                            tbMod_destinatario.Text = cliente.RagioneSociale;
+                    switch (ddlSceltaClienteCollaboratore.Text)
+                    {
+                        case "Cliente":
 
-                            cmbMod_TipoIndirizzo.Text = cliente.TipoIndirizzoLegale;
-                            tbMod_Indirizzo.Text = cliente.IndirizzoLegale;
-                            tbMod_Cap.Text = cliente.CapLegale;
-                            tbMod_Comune.Text = cliente.ComuneLegale;
-                            tbMod_NumeroCivico.Text = cliente.NumeroCivicoLegale;
-                            tbMod_Provincia.Text = cliente.ProvinciaLegale;
-                            tbMod_PartitaIva.Text = cliente.PartitaIva;
-
-                            PanelClienti.Visible = false;
-                        }
-                        break;
-                    case "Collaboratore":
-                        esito = new Esito();
-                        Anag_Collaboratori collaboratore = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
-                        if (esito.Codice != 0)
-                        {
-                            ShowError(esito.Descrizione);
-                        }
-                        else
-                        {
-                            tbMod_destinatario.Text = collaboratore.Cognome + " " + collaboratore.Nome;
-                            if (collaboratore.Indirizzi.Count > 0) { 
-                                cmbMod_TipoIndirizzo.Text = collaboratore.Indirizzi[0].Tipo;
-                                tbMod_Indirizzo.Text = collaboratore.Indirizzi[0].Indirizzo;
-                                tbMod_Cap.Text = collaboratore.Indirizzi[0].Cap;
-                                tbMod_Comune.Text = collaboratore.Indirizzi[0].Comune;
-                                tbMod_NumeroCivico.Text = collaboratore.Indirizzi[0].NumeroCivico;
-                                tbMod_Provincia.Text = collaboratore.Indirizzi[0].Provincia;
+                            Esito esito = new Esito();
+                            Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
+                            if (esito.Codice != 0)
+                            {
+                                ShowError(esito.Descrizione);
                             }
+                            else
+                            {
+                                tbMod_destinatario.Text = cliente.RagioneSociale;
 
-                            PanelClienti.Visible = false;
-                        }
-                        break;
-                    default:
-                        break;
+                                cmbMod_TipoIndirizzo.Text = cliente.TipoIndirizzoLegale;
+                                tbMod_Indirizzo.Text = cliente.IndirizzoLegale;
+                                tbMod_Cap.Text = cliente.CapLegale;
+                                tbMod_Comune.Text = cliente.ComuneLegale;
+                                tbMod_NumeroCivico.Text = cliente.NumeroCivicoLegale;
+                                tbMod_Provincia.Text = cliente.ProvinciaLegale;
+                                tbMod_PartitaIva.Text = cliente.PartitaIva;
+
+                                PanelClienti.Visible = false;
+                            }
+                            break;
+                        case "Collaboratore":
+                            esito = new Esito();
+                            Anag_Collaboratori collaboratore = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
+                            if (esito.Codice != 0)
+                            {
+                                ShowError(esito.Descrizione);
+                            }
+                            else
+                            {
+                                tbMod_destinatario.Text = collaboratore.Cognome + " " + collaboratore.Nome;
+                                if (collaboratore.Indirizzi.Count > 0)
+                                {
+                                    cmbMod_TipoIndirizzo.Text = collaboratore.Indirizzi[0].Tipo;
+                                    tbMod_Indirizzo.Text = collaboratore.Indirizzi[0].Indirizzo;
+                                    tbMod_Cap.Text = collaboratore.Indirizzi[0].Cap;
+                                    tbMod_Comune.Text = collaboratore.Indirizzi[0].Comune;
+                                    tbMod_NumeroCivico.Text = collaboratore.Indirizzi[0].NumeroCivico;
+                                    tbMod_Provincia.Text = collaboratore.Indirizzi[0].Provincia;
+                                }
+
+                                PanelClienti.Visible = false;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+
                 }
 
+            }
+            catch (Exception ex)
+            {
 
+                ShowError("btnAssociaClienteServer_Click" + Environment.NewLine + ex.Message);
             }
         }
 
@@ -886,11 +921,21 @@ namespace VideoSystemWeb.Magazzino
                     cfAppo = Config_BLL.Instance.getConfig(ref esito, "EMAIL");
                     string emailVs = cfAppo.valore;
 
-                    // export SU PDF
+                    Protocolli protocolloTrasporto = new Protocolli();
+                    int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Documento Trasporto", ref esito).id;
+                    List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocolloNumeroprotocollo("generico", idTipoProtocollo, documentoTrasporto.Numero_protocollo, ref esito, true);
+                    if (listaProtocolli.Count > 0)
+                    {
+                        foreach (Protocolli protocollo in listaProtocolli)
+                        {
+                            protocolloTrasporto = protocollo;
+                        }
+                        listaProtocolli.Clear();
+                    }
 
                     string nomeFile = "DocumentoTrasporto_" + documentoTrasporto.NumeroDocumentoTrasporto + ".pdf";
-                    string pathReport = ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"] + nomeFile;
-                    string mapPathReport = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_REPORT"]) + nomeFile;
+                    string pathReport = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
+                    string mapPathReport = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
                     //string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
                     iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/logoVSP_trim.png"));
@@ -1138,6 +1183,43 @@ namespace VideoSystemWeb.Magazzino
                     document.Flush();
                     document.Close();
                     wr.Close();
+
+                    // SE FILE OK INSERISCO O AGGIORNO PROTOCOLLO DI FATTURA
+                    if (listaProtocolli.Count == 0)
+                    {
+                        //INSERISCO
+                        protocolloTrasporto.Attivo = true;
+                        protocolloTrasporto.Cliente = documentoTrasporto.Destinatario;
+                        protocolloTrasporto.Codice_lavoro = "generico";
+                        protocolloTrasporto.Data_inizio_lavorazione = documentoTrasporto.DataTrasporto;
+                        //protocolloFattura.Data_protocollo = DateTime.Today;
+                        protocolloTrasporto.Data_protocollo = documentoTrasporto.DataTrasporto;
+                        protocolloTrasporto.Descrizione = "Documento di trasporto";
+                        //protocolloTrasporto.Id_cliente = eventoSelezionato.id_cliente;
+                        protocolloTrasporto.Id_tipo_protocollo = idTipoProtocollo;
+                        protocolloTrasporto.Lavorazione = "generico";
+                        protocolloTrasporto.PathDocumento = Path.GetFileName(mapPathReport);
+                        protocolloTrasporto.Produzione = "";
+                        protocolloTrasporto.Protocollo_riferimento = documentoTrasporto.NumeroDocumentoTrasporto;
+                        protocolloTrasporto.Numero_protocollo = documentoTrasporto.Numero_protocollo;
+                        protocolloTrasporto.Pregresso = false;
+                        protocolloTrasporto.Destinatario = "Fornitore";
+
+                        int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloTrasporto, ref esito);
+
+                        ViewState["idProtocollo"] = idProtPianoEsterno;
+
+                    }
+                    else
+                    {
+                        // AGGIORNO
+                        protocolloTrasporto.PathDocumento = Path.GetFileName(mapPathReport);
+                        protocolloTrasporto.Data_protocollo = Convert.ToDateTime(documentoTrasporto.DataTrasporto);
+                        esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloTrasporto);
+
+                        ViewState["idProtocollo"] = protocolloTrasporto.Id;
+
+                    }
 
                     btnRicercaDocumentoTrasporto_Click(null, null);
 

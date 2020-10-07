@@ -31,13 +31,22 @@ namespace VideoSystemWeb.Magazzino {
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
         
         /// <summary>
-        /// Controllo tbNumeroDocTrasporto.
+        /// Controllo tbDestinatario.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbNumeroDocTrasporto;
+        protected global::System.Web.UI.WebControls.TextBox tbDestinatario;
+        
+        /// <summary>
+        /// Controllo tbCausale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbCausale;
         
         /// <summary>
         /// Controllo tbDataTrasporto.
@@ -58,22 +67,13 @@ namespace VideoSystemWeb.Magazzino {
         protected global::System.Web.UI.WebControls.TextBox tbDataTrasportoA;
         
         /// <summary>
-        /// Controllo tbCausale.
+        /// Controllo tbNumeroDocTrasporto.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbCausale;
-        
-        /// <summary>
-        /// Controllo tbDestinatario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbDestinatario;
+        protected global::System.Web.UI.WebControls.TextBox tbNumeroDocTrasporto;
         
         /// <summary>
         /// Controllo tbIndirizzo.
@@ -292,42 +292,6 @@ namespace VideoSystemWeb.Magazzino {
         protected global::System.Web.UI.WebControls.ImageButton btnViewAttachement;
         
         /// <summary>
-        /// Controllo tbMod_NumeroDocumentoTrasporto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_NumeroDocumentoTrasporto;
-        
-        /// <summary>
-        /// Controllo tbIdDocumentoTrasportoDaModificare.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbIdDocumentoTrasportoDaModificare;
-        
-        /// <summary>
-        /// Controllo tbMod_DataTrasporto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_DataTrasporto;
-        
-        /// <summary>
-        /// Controllo tbMod_Causale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_Causale;
-        
-        /// <summary>
         /// Controllo tbMod_destinatario.
         /// </summary>
         /// <remarks>
@@ -353,6 +317,51 @@ namespace VideoSystemWeb.Magazzino {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectCliente;
+        
+        /// <summary>
+        /// Controllo tbMod_DataTrasporto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_DataTrasporto;
+        
+        /// <summary>
+        /// Controllo tbMod_PartitaIva.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_PartitaIva;
+        
+        /// <summary>
+        /// Controllo tbMod_NumeroDocumentoTrasporto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_NumeroDocumentoTrasporto;
+        
+        /// <summary>
+        /// Controllo tbIdDocumentoTrasportoDaModificare.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbIdDocumentoTrasportoDaModificare;
+        
+        /// <summary>
+        /// Controllo tbMod_NumeroProtocollo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_NumeroProtocollo;
         
         /// <summary>
         /// Controllo cmbMod_TipoIndirizzo.
@@ -418,13 +427,13 @@ namespace VideoSystemWeb.Magazzino {
         protected global::System.Web.UI.WebControls.TextBox tbMod_Nazione;
         
         /// <summary>
-        /// Controllo tbMod_PartitaIva.
+        /// Controllo tbMod_Causale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbMod_PartitaIva;
+        protected global::System.Web.UI.WebControls.TextBox tbMod_Causale;
         
         /// <summary>
         /// Controllo tbMod_NumeroColli.

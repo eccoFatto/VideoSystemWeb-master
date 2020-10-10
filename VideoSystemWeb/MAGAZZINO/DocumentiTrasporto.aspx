@@ -215,13 +215,14 @@
                             </ItemTemplate>
                         </asp:TemplateField>
                         
-                        <asp:BoundField DataField="id" HeaderText="id" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="numeroDocumentoTrasporto" HeaderText="numeroDocumentoTrasporto" HeaderStyle-Width="10%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="dataTrasporto" HeaderText="dataTrasporto" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="10%" />
-                        <asp:BoundField DataField="causale" HeaderText="causale" HeaderStyle-Width="20%" />
-                        <asp:BoundField DataField="destinatario" HeaderText="destinatario"  HeaderStyle-Width="22%" />
-                        <asp:BoundField DataField="partitaIva" HeaderText="partitaIva"  HeaderStyle-Width="11%" />
-                        <asp:BoundField DataField="trasportatore" HeaderText="trasportatore" HeaderStyle-Width="22%" />
+                        <asp:BoundField DataField="id" HeaderText="id" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="numeroDocumentoTrasporto" HeaderText="Numero Doc. Trasporto" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="dataTrasporto" HeaderText="Data Trasporto" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Center" />
+                        <asp:BoundField DataField="numero_protocollo" HeaderText="Protocollo" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="causale" HeaderText="Causale" HeaderStyle-Width="20%" ItemStyle-HorizontalAlign="Left" />
+                        <asp:BoundField DataField="destinatario" HeaderText="Destinatario"  HeaderStyle-Width="22%" ItemStyle-HorizontalAlign="Left" />
+                        <asp:BoundField DataField="partitaIva" HeaderText="Partita Iva"  HeaderStyle-Width="11%" ItemStyle-HorizontalAlign="Left" />
+                        <asp:BoundField DataField="trasportatore" HeaderText="Trasportatore" HeaderStyle-Width="22%" ItemStyle-HorizontalAlign="Left" />
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
                             <ItemTemplate>
                                 <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza DocumentoTrasporto" ImageAlign="AbsMiddle" Height="30px" />

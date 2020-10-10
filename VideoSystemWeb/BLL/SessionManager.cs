@@ -150,7 +150,7 @@ namespace VideoSystemWeb.BLL
                 if (HttpContext.Current.Session["listaAnagraficheFornitori"] == null || ((List<Anag_Clienti_Fornitori>)HttpContext.Current.Session["listaAnagraficheFornitori"]).Count() == 0)
                 {
                     Esito esito = new Esito();
-                    HttpContext.Current.Session["listaAnagraficheFornitori"] = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaFornitori(ref esito);
+                    HttpContext.Current.Session["listaAnagraficheFornitori"] = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaFornitori(ref esito, false);
                 }
                 return (List<Anag_Clienti_Fornitori>)HttpContext.Current.Session["listaAnagraficheFornitori"];
             }

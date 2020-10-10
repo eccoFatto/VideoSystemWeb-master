@@ -56,7 +56,7 @@ namespace VideoSystemWeb.BLL
 
         public List<Anag_Collaboratori> getAllCollaboratori(ref Esito esito)
         {
-            return Anag_Collaboratori_DAL.Instance.CaricaListaCollaboratori(ref esito);
+            return Anag_Collaboratori_DAL.Instance.CaricaListaCollaboratori(ref esito,false);
         }
         public Esito RemoveCollaboratore(int idCollaboratore)
         {

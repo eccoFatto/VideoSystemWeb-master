@@ -338,7 +338,7 @@ namespace VideoSystemWeb.Magazzino
             tbMod_Cap.Text = "";
             tbMod_Causale.Text = "";
             tbMod_Comune.Text = "";
-            tbMod_DataTrasporto.Text = "";
+            tbMod_DataTrasporto.Text = DateTime.Today.ToShortDateString();
             tbMod_destinatario.Text = "";
             tbMod_Indirizzo.Text = "";
             tbMod_Nazione.Text = "";
@@ -472,14 +472,19 @@ namespace VideoSystemWeb.Magazzino
             documentoTrasporto.Indirizzo = BasePage.ValidaCampo(tbMod_Indirizzo, "", true, ref esito);
             documentoTrasporto.Nazione = tbMod_Nazione.Text.Trim();
             documentoTrasporto.NumeroCivico = tbMod_NumeroCivico.Text.Trim();
-            documentoTrasporto.NumeroColli = Convert.ToInt64(tbMod_NumeroColli.Text.Trim());
+
+            //documentoTrasporto.NumeroColli = Convert.ToInt64(tbMod_NumeroColli.Text.Trim());
+            string numeroColli = BasePage.ValidaCampo(tbMod_NumeroColli, "1", true, ref esito);
+            if (!string.IsNullOrEmpty(numeroColli))
+            {
+                documentoTrasporto.NumeroColli = Convert.ToInt64(numeroColli);
+            }
             documentoTrasporto.PartitaIva = tbMod_PartitaIva.Text.Trim();
-            documentoTrasporto.Peso = tbMod_Peso.Text.Trim();
             documentoTrasporto.Provincia = tbMod_Provincia.Text.Trim();
             documentoTrasporto.TipoIndirizzo = cmbMod_TipoIndirizzo.Text;
             documentoTrasporto.Trasportatore = BasePage.ValidaCampo(tbMod_Trasportatore, "", true, ref esito);
             documentoTrasporto.Destinatario = BasePage.ValidaCampo(tbMod_destinatario, "", true, ref esito);
-            documentoTrasporto.Peso = tbMod_Peso.Text.Trim(); ;
+            documentoTrasporto.Peso = BasePage.ValidaCampo(tbMod_Peso, "", true, ref esito);
 
             if (string.IsNullOrEmpty(tbMod_NumeroDocumentoTrasporto.Text.Trim()))
             {
@@ -930,7 +935,7 @@ namespace VideoSystemWeb.Magazzino
                         {
                             protocolloTrasporto = protocollo;
                         }
-                        listaProtocolli.Clear();
+                        //listaProtocolli.Clear();
                     }
 
                     string nomeFile = "DocumentoTrasporto_" + documentoTrasporto.NumeroDocumentoTrasporto + ".pdf";
@@ -1201,13 +1206,23 @@ namespace VideoSystemWeb.Magazzino
                         protocolloTrasporto.PathDocumento = Path.GetFileName(mapPathReport);
                         protocolloTrasporto.Produzione = "";
                         protocolloTrasporto.Protocollo_riferimento = documentoTrasporto.NumeroDocumentoTrasporto;
-                        protocolloTrasporto.Numero_protocollo = documentoTrasporto.Numero_protocollo;
+
+                        if (!string.IsNullOrEmpty(documentoTrasporto.Numero_protocollo)) { 
+                            protocolloTrasporto.Numero_protocollo = documentoTrasporto.Numero_protocollo;
+                        }
+                        else
+                        {
+                            // SE NON TROVO IL NUMERO PROTOCOLLO NEL DOCUMENTO DI TRASPORTO (NON DOVREBBE SUCCEDERE!!!) LO CREO E AGGIORNO ANCHE IL DOCUMENTO TRASPORTO
+                            protocolloTrasporto.Numero_protocollo = Protocolli_BLL.Instance.getNumeroProtocollo();
+                            documentoTrasporto.Numero_protocollo = protocolloTrasporto.Numero_protocollo;
+                            esito = DocumentiTrasporto_BLL.Instance.AggiornaDocumentoTrasporto(documentoTrasporto);
+                        }
                         protocolloTrasporto.Pregresso = false;
                         protocolloTrasporto.Destinatario = "Fornitore";
 
-                        int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloTrasporto, ref esito);
+                        int idProtTrasporto = Protocolli_BLL.Instance.CreaProtocollo(protocolloTrasporto, ref esito);
 
-                        ViewState["idProtocollo"] = idProtPianoEsterno;
+                        ViewState["idProtocollo"] = idProtTrasporto;
 
                     }
                     else

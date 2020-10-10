@@ -463,7 +463,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 if (rigaCorrente.IdFornitori != null && rigaCorrente.IdFornitori.HasValue)
                 {
                     FiguraProfessionale figuraProfessionale = SessionManager.ListaCompletaFigProf.FirstOrDefault(x => x.Id == rigaCorrente.IdFornitori && x.Tipo == FORNITORE);
-                    ((Label)e.Row.FindControl("lbl_Riferimento")).Text = figuraProfessionale.NominativoCompleto;
+                    
+                    ((Label)e.Row.FindControl("lbl_Riferimento")).Text = figuraProfessionale !=null? figuraProfessionale.NominativoCompleto : "***FIGURA PROF NON TROVATA ***";
                 }
 
                 if (rigaCorrente.IdTipoPagamento != null && rigaCorrente.IdTipoPagamento.HasValue)

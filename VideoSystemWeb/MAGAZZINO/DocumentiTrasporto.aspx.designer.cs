@@ -445,13 +445,31 @@ namespace VideoSystemWeb.Magazzino {
         protected global::System.Web.UI.WebControls.TextBox tbMod_NumeroColli;
         
         /// <summary>
-        /// Controllo tbInsNumeroColli_MaskedEditExtender.
+        /// Controllo NumericUpDownExtender1.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::AjaxControlToolkit.MaskedEditExtender tbInsNumeroColli_MaskedEditExtender;
+        protected global::AjaxControlToolkit.NumericUpDownExtender NumericUpDownExtender1;
+        
+        /// <summary>
+        /// Controllo btnSu.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSu;
+        
+        /// <summary>
+        /// Controllo btnGiu.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGiu;
         
         /// <summary>
         /// Controllo tbMod_Peso.

@@ -187,7 +187,7 @@
                     <table style="width: 100%;">
                         <tr>
                             <td style="width: 40%;">
-                                <asp:Button ID="btnRicercaDocumentoTrasporto" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaDocumentoTrasporto_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
+                                <asp:Button ID="btnRicercaDocumentoTrasporto" runat="server" CssClass="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaDocumentoTrasporto_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
                             </td>
                             <td style="width: 40%;">
                                 <div id="divBtnInserisciDocumentoTrasporto" runat="server">
@@ -196,7 +196,7 @@
 
                             </td>
                             <td style="width: 20%;">
-                                <asp:Button ID="BtnPulisciCampiRicerca" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicerca();" />
+                                <asp:Button ID="BtnPulisciCampiRicerca" runat="server" CssClass="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicerca();" />
                             </td>
                         </tr>
                     </table>
@@ -360,8 +360,15 @@
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Numero Colli</label>
-                                        <asp:TextBox ID="tbMod_NumeroColli" runat="server" MaxLength="2" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
-                                        <ajaxToolkit:MaskedEditExtender ID="tbInsNumeroColli_MaskedEditExtender" runat="server" TargetControlID="tbMod_NumeroColli" MaskType="None" Mask="99" ></ajaxToolkit:MaskedEditExtender>
+                                        <div class="w3-row">
+                                            <div class="w3-half">
+                                                <asp:TextBox ID="tbMod_NumeroColli" runat="server" MaxLength="2" placeholder="" Text="1" CssClass="w3-input w3-border" ></asp:TextBox>
+                                                <ajaxToolkit:NumericUpDownExtender ID="NumericUpDownExtender1" runat="server" TargetControlID="tbMod_NumeroColli" Minimum="1" Maximum="99" Width="100" TargetButtonDownID="btnGiu" TargetButtonUpID="btnSu" ></ajaxToolkit:NumericUpDownExtender>
+                                            </div>
+                                            <div class="w3-half">
+                                                &nbsp;<asp:Button runat="server" ID="btnSu" Text="+" Width="40px" Height="40px" CssClass="w3-btn w3-white w3-border w3-border-green w3-round-large" />&nbsp;<asp:Button runat="server" ID="btnGiu" Text="-" Width="40px" Height="40px" CssClass="w3-btn w3-white w3-border w3-border-green w3-round-large" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Peso</label>

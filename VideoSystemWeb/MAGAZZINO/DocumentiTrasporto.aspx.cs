@@ -906,6 +906,7 @@ namespace VideoSystemWeb.Magazzino
 
                 if (esito.Codice == 0 && documentoTrasporto.AttrezzatureTrasporto != null && documentoTrasporto.AttrezzatureTrasporto.Count > 0)
                 {
+                    string descrizioneProtocolloDDT = "DDT - ";
                     // LEGGO I PARAMETRI DI VS
                     Config cfAppo = Config_BLL.Instance.getConfig(ref esito, "PARTITA_IVA");
                     string pIvaVs = cfAppo.valore;
@@ -927,7 +928,7 @@ namespace VideoSystemWeb.Magazzino
                     string emailVs = cfAppo.valore;
 
                     Protocolli protocolloTrasporto = new Protocolli();
-                    int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Documento Trasporto", ref esito).id;
+                    int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "DDT", ref esito).id;
                     List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocolloNumeroprotocollo("generico", idTipoProtocollo, documentoTrasporto.Numero_protocollo, ref esito, true);
                     if (listaProtocolli.Count > 0)
                     {
@@ -1000,7 +1001,7 @@ namespace VideoSystemWeb.Magazzino
                     //CICLO LISTA ATTREZZATURE
                     foreach (AttrezzatureTrasporto attrezzaturaTrasporto in documentoTrasporto.AttrezzatureTrasporto)
                     {
-
+                        descrizioneProtocolloDDT += " " + attrezzaturaTrasporto.Descrizione;
                         pGriglia = new Paragraph(attrezzaturaTrasporto.Cod_vs).SetFontSize(9);
                         cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                         cellaGriglia.Add(pGriglia);
@@ -1192,6 +1193,7 @@ namespace VideoSystemWeb.Magazzino
                     // SE FILE OK INSERISCO O AGGIORNO PROTOCOLLO DI FATTURA
                     if (listaProtocolli.Count == 0)
                     {
+
                         //INSERISCO
                         protocolloTrasporto.Attivo = true;
                         protocolloTrasporto.Cliente = documentoTrasporto.Destinatario;
@@ -1199,7 +1201,7 @@ namespace VideoSystemWeb.Magazzino
                         protocolloTrasporto.Data_inizio_lavorazione = documentoTrasporto.DataTrasporto;
                         //protocolloFattura.Data_protocollo = DateTime.Today;
                         protocolloTrasporto.Data_protocollo = documentoTrasporto.DataTrasporto;
-                        protocolloTrasporto.Descrizione = "Documento di trasporto";
+                        protocolloTrasporto.Descrizione = descrizioneProtocolloDDT; // "Documento di trasporto";
                         //protocolloTrasporto.Id_cliente = eventoSelezionato.id_cliente;
                         protocolloTrasporto.Id_tipo_protocollo = idTipoProtocollo;
                         protocolloTrasporto.Lavorazione = "generico";

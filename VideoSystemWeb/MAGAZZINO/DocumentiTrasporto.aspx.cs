@@ -871,7 +871,7 @@ namespace VideoSystemWeb.Magazzino
                 attrezzaturaTrasporto.Descrizione = tbSearch_DescMagazzino.Text;
                 attrezzaturaTrasporto.Seriale = tbSearch_Seriale.Text;
                 attrezzaturaTrasporto.IdMagAttrezzature = 0;
-                attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(hf_idDocTras.Value);
+                attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(ViewState["idDocumentoTrasporto"]);
                 attrezzaturaTrasporto.Quantita = Convert.ToInt32(tbIns_Quantita.Text.Trim());
                 int idAttrezzaturaTrasportoNew = DocumentiTrasporto_BLL.Instance.CreaAttrezzaturaTrasporto(attrezzaturaTrasporto, ref esito);
                 if (esito.Codice == 0)

@@ -877,7 +877,7 @@ namespace VideoSystemWeb.Magazzino
                 if (esito.Codice == 0)
                 {
                     
-                    List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(hf_idDocTras.Value));
+                    List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(ViewState["idDocumentoTrasporto"]));
                     gv_attrezzature.DataSource = listaAttrezzature;
                     gv_attrezzature.DataBind();
                     PanelMagazzino.Visible = false;

@@ -385,7 +385,12 @@ namespace VideoSystemWeb.Agenda.userControl
                             cellaGrigliaDest.Add(pGrigliaDest);
                             tbGriglaDest.AddCell(cellaGrigliaDest);
 
-                            pGrigliaDest = new Paragraph(cliente.TipoIndirizzoOperativo + " " + cliente.IndirizzoOperativo + " " + cliente.NumeroCivicoOperativo + Environment.NewLine + cliente.CapOperativo + " " + cliente.ComuneOperativo + " " + cliente.ProvinciaOperativo).SetFontSize(9);
+                            //pGrigliaDest = new Paragraph(cliente.TipoIndirizzoOperativo + " " + cliente.IndirizzoOperativo + " " + cliente.NumeroCivicoOperativo + Environment.NewLine + cliente.CapOperativo + " " + cliente.ComuneOperativo + " " + cliente.ProvinciaOperativo).SetFontSize(9);
+                            //cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            //cellaGrigliaDest.Add(pGrigliaDest);
+                            //tbGriglaDest.AddCell(cellaGrigliaDest);
+
+                            pGrigliaDest = new Paragraph(cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + Environment.NewLine + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale).SetFontSize(9);
                             cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaDest.Add(pGrigliaDest);
                             tbGriglaDest.AddCell(cellaGrigliaDest);

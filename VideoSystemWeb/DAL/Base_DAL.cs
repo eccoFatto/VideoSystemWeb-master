@@ -1256,82 +1256,86 @@ namespace VideoSystemWeb.DAL
 
         }
 
-        public static int GetCodiceLavorazione(ref Esito esito)
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(sqlConstr))
-                {
-                    using (SqlCommand StoreProc = new SqlCommand("getCodiceLavorazione"))
-                    {
-                        using (SqlDataAdapter sda = new SqlDataAdapter())
-                        {
-                            StoreProc.Connection = con;
-                            sda.SelectCommand = StoreProc;
-                            StoreProc.CommandType = CommandType.StoredProcedure;
-
-                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-                            StoreProc.Connection.Open();
-
-                            StoreProc.ExecuteNonQuery();
-
-                            //int iReturn = (Int32)o;
-                            int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
 
 
-                            return iReturn;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.Descrizione = "Base_DAL.cs - getCodiceLavorazione " + Environment.NewLine + ex.Message;
+        //public static int GetCodiceLavorazione(ref Esito esito)
+        //{
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(sqlConstr))
+        //        {
+        //            using (SqlCommand StoreProc = new SqlCommand("getCodiceLavorazione"))
+        //            {
+        //                using (SqlDataAdapter sda = new SqlDataAdapter())
+        //                {
+        //                    StoreProc.Connection = con;
+        //                    sda.SelectCommand = StoreProc;
+        //                    StoreProc.CommandType = CommandType.StoredProcedure;
 
-                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
-            }
-            return 0;
-        }
+        //                    StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-        public static Esito ResetCodiceLavorazione(int codLavIniziale)
-        {
-            Esito esito = new Esito();
-            try
-            {
-                using (SqlConnection con = new SqlConnection(sqlConstr))
-                {
-                    using (SqlCommand StoreProc = new SqlCommand("resetCodiceLavorazione"))
-                    {
-                        using (SqlDataAdapter sda = new SqlDataAdapter())
-                        {
-                            StoreProc.Connection = con;
-                            sda.SelectCommand = StoreProc;
-                            StoreProc.CommandType = CommandType.StoredProcedure;
+        //                    StoreProc.Connection.Open();
 
-                            SqlParameter codiceLavorazioneIniziale = new SqlParameter("@codiceLavorazioneIniziale", SqlDbType.Int);
-                            codiceLavorazioneIniziale.Direction = ParameterDirection.Input;
-                            codiceLavorazioneIniziale.Value = codLavIniziale;
-                            StoreProc.Parameters.Add(codiceLavorazioneIniziale);
+        //                    StoreProc.ExecuteNonQuery();
 
-                            StoreProc.Connection.Open();
+        //                    //int iReturn = (Int32)o;
+        //                    int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
 
-                            int iReturn = StoreProc.ExecuteNonQuery();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
-                esito.Descrizione = "Base_DAL.cs - resetCodiceLavorazione " + Environment.NewLine + ex.Message;
 
-                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
-            }
+        //                    return iReturn;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+        //        esito.Descrizione = "Base_DAL.cs - getCodiceLavorazione " + Environment.NewLine + ex.Message;
 
-            return esito;
-        }
+        //        log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+        //    }
+        //    return 0;
+        //}
+
+        //public static Esito ResetCodiceLavorazione(int codLavIniziale)
+        //{
+        //    Esito esito = new Esito();
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(sqlConstr))
+        //        {
+        //            using (SqlCommand StoreProc = new SqlCommand("resetCodiceLavorazione"))
+        //            {
+        //                using (SqlDataAdapter sda = new SqlDataAdapter())
+        //                {
+        //                    StoreProc.Connection = con;
+        //                    sda.SelectCommand = StoreProc;
+        //                    StoreProc.CommandType = CommandType.StoredProcedure;
+
+        //                    SqlParameter codiceLavorazioneIniziale = new SqlParameter("@codiceLavorazioneIniziale", SqlDbType.Int);
+        //                    codiceLavorazioneIniziale.Direction = ParameterDirection.Input;
+        //                    codiceLavorazioneIniziale.Value = codLavIniziale;
+        //                    StoreProc.Parameters.Add(codiceLavorazioneIniziale);
+
+        //                    StoreProc.Connection.Open();
+
+        //                    int iReturn = StoreProc.ExecuteNonQuery();
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+        //        esito.Descrizione = "Base_DAL.cs - resetCodiceLavorazione " + Environment.NewLine + ex.Message;
+
+        //        log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+        //    }
+
+        //    return esito;
+        //}
+
+
 
         protected static void CostruisciSP_InsertDatiArticoli(SqlCommand StoreProc, SqlDataAdapter sda, int iDatiAgendaReturn, DatiArticoli datoArticolo)
         {
@@ -2257,6 +2261,163 @@ namespace VideoSystemWeb.DAL
             numOccorrenza.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(numOccorrenza);
         }
+
+        // METODI PER NUOVO CALCOLO CODICE LAVORAZIONE
+
+        public static string GetCodLavNew(ref Esito esito, int year)
+        {
+            string ret = "";
+            try
+            {
+                string queryVerificaPresenzaCodLavAnno = "select isnull(max(numero_lav),'0') as numLav from tab_cod_lav_new where anno_lav=" + year.ToString();
+                DataTable dtCodLav = Base_DAL.GetDatiBySql(queryVerificaPresenzaCodLavAnno, ref esito);
+                int newNumLav = 0;
+                if (dtCodLav.Rows[0]["numLav"].ToString() == "0")
+                {
+                    newNumLav = 1;
+                    // INSERISCO NUOVO ANNO E NUMERO_LAVORAZIONE = 1 E RESTITUISCO 20200001
+
+                    using (SqlConnection con = new SqlConnection(sqlConstr))
+                    {
+                        using (SqlCommand StoreProc = new SqlCommand("InsertProgressivoCodLavNew"))
+                        {
+                            using (SqlDataAdapter sda = new SqlDataAdapter())
+                            {
+                                StoreProc.Connection = con;
+                                sda.SelectCommand = StoreProc;
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+
+                                SqlParameter anno_lavorazione = new SqlParameter("@anno_lav", year);
+                                anno_lavorazione.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(anno_lavorazione);
+
+                                SqlParameter numero_lavorazione = new SqlParameter("@numero_lav", newNumLav);
+                                numero_lavorazione.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(numero_lavorazione);
+
+                                StoreProc.Connection.Open();
+
+                                StoreProc.ExecuteNonQuery();
+
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    newNumLav = Convert.ToInt16(dtCodLav.Rows[0]["numLav"].ToString()) + 1;
+                    // AGGIORNO RIGA ANNO CON NUMERO LAVORAZIONE + 1
+                    using (SqlConnection con = new SqlConnection(sqlConstr))
+                    {
+                        using (SqlCommand StoreProc = new SqlCommand("UpdateProgressivoCodLavNew"))
+                        {
+                            using (SqlDataAdapter sda = new SqlDataAdapter())
+                            {
+                                StoreProc.Connection = con;
+                                sda.SelectCommand = StoreProc;
+                                StoreProc.CommandType = CommandType.StoredProcedure;
+
+                                SqlParameter anno = new SqlParameter("@anno", year);
+                                anno.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(anno);
+
+                                SqlParameter anno_lav = new SqlParameter("@anno_lav", year);
+                                anno_lav.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(anno_lav);
+
+                                SqlParameter numero_lav = new SqlParameter("@numero_lav", newNumLav);
+                                numero_lav.Direction = ParameterDirection.Input;
+                                StoreProc.Parameters.Add(numero_lav);
+
+                                StoreProc.Connection.Open();
+
+                                StoreProc.ExecuteNonQuery();
+
+                            }
+                        }
+                    }
+                }
+
+                ret = ConfigurationManager.AppSettings["CODICE_LAVORAZIONE"];
+                ret = ret.Replace("@anno", year.ToString("0000"));
+                ret = ret.Replace("@codiceLavorazione", newNumLav.ToString(ConfigurationManager.AppSettings["FORMAT_CODICE_LAVORAZIONE"]));
+
+            }
+            catch (Exception ex)
+            {
+
+                esito.Descrizione = ex.Message;
+            }
+            return ret;
+        }
+
+        public static Esito ResetCodLavNew(int anno, int numLav)
+        {
+            Esito esito = new Esito();
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand("resetCodLavNew"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            SqlParameter annoLav = new SqlParameter("@anno_lav", SqlDbType.Int);
+                            annoLav.Direction = ParameterDirection.Input;
+                            annoLav.Value = anno;
+                            StoreProc.Parameters.Add(annoLav);
+
+                            SqlParameter numeroLav = new SqlParameter("@numero_lav", SqlDbType.Int);
+                            numeroLav.Direction = ParameterDirection.Input;
+                            numeroLav.Value = numLav;
+                            StoreProc.Parameters.Add(numeroLav);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - ResetCodLavNew " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return esito;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }

@@ -717,10 +717,12 @@ namespace VideoSystemWeb.Protocollo
             return protocollo;
         }
 
-        protected void imgbtnCreateNewCodLav_Click(object sender, ImageClickEventArgs e)
-        {
-            tbMod_CodiceLavoro.Text = Protocolli_BLL.Instance.getCodLavFormattato();
-        }
+        //protected void imgbtnCreateNewCodLav_Click(object sender, ImageClickEventArgs e)
+        //{
+        //    //tbMod_CodiceLavoro.Text = Protocolli_BLL.Instance.getCodLavFormattato();
+        //    Esito esito = new Esito();
+        //    tbMod_CodiceLavoro.Text = Protocolli_BLL.Instance.getCodiceLavorazioneNew(ref esito,DateTime.Today.Year);
+        //}
 
         protected void btnAnnullaCaricamento_Click(object sender, EventArgs e)
         {

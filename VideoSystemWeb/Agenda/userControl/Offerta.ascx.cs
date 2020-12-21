@@ -577,7 +577,9 @@ namespace VideoSystemWeb.Agenda.userControl
 
             int year = SessionManager.EventoSelezionato.data_inizio_impegno.Year;
 
-            SessionManager.EventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato(year);
+            //SessionManager.EventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato(year);
+            Esito esito = new Esito();
+            SessionManager.EventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodiceLavorazioneNew(ref esito,year);
         }
         #endregion
     }

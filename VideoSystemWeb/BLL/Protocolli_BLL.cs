@@ -151,57 +151,57 @@ namespace VideoSystemWeb.BLL
             return ret;
         }
 
-        public int getCodiceLavorazione(ref Esito esito)
-        {
-            int iREt = Base_DAL.GetCodiceLavorazione(ref esito);
+        //public int getCodiceLavorazione(ref Esito esito)
+        //{
+        //    int iREt = Base_DAL.GetCodiceLavorazione(ref esito);
 
-            return iREt;
-        }
+        //    return iREt;
+        //}
 
-        public Esito resetCodiceLavorazione(int codiceLavorazioneIniziale)
-        {
-            Esito esito = Base_DAL.ResetCodiceLavorazione(codiceLavorazioneIniziale);
+        //public Esito resetCodiceLavorazione(int codiceLavorazioneIniziale)
+        //{
+        //    Esito esito = Base_DAL.ResetCodiceLavorazione(codiceLavorazioneIniziale);
 
-            return esito;
-        }
+        //    return esito;
+        //}
 
-        public string getCodLavFormattato()
-        {
-            string ret = "";
+        //public string getCodLavFormattato()
+        //{
+        //    string ret = "";
 
-            ret = ConfigurationManager.AppSettings["CODICE_LAVORAZIONE"];
-            Esito esito = new Esito();
-            int codLav = getCodiceLavorazione(ref esito);
-            if (esito.Codice == Esito.ESITO_OK)
-            {
-                ret = ret.Replace("@anno", DateTime.Today.Year.ToString("0000"));
-                ret = ret.Replace("@codiceLavorazione", codLav.ToString(ConfigurationManager.AppSettings["FORMAT_CODICE_LAVORAZIONE"]));
-            }
-            else
-            {
-                ret = "";
-            }
-            return ret;
-        }
+        //    ret = ConfigurationManager.AppSettings["CODICE_LAVORAZIONE"];
+        //    Esito esito = new Esito();
+        //    int codLav = getCodiceLavorazione(ref esito);
+        //    if (esito.Codice == Esito.ESITO_OK)
+        //    {
+        //        ret = ret.Replace("@anno", DateTime.Today.Year.ToString("0000"));
+        //        ret = ret.Replace("@codiceLavorazione", codLav.ToString(ConfigurationManager.AppSettings["FORMAT_CODICE_LAVORAZIONE"]));
+        //    }
+        //    else
+        //    {
+        //        ret = "";
+        //    }
+        //    return ret;
+        //}
 
-        public string getCodLavFormattato(int year)
-        {
-            string ret = "";
+        //public string getCodLavFormattato(int year)
+        //{
+        //    string ret = "";
 
-            ret = ConfigurationManager.AppSettings["CODICE_LAVORAZIONE"];
-            Esito esito = new Esito();
-            int codLav = getCodiceLavorazione(ref esito);
-            if (esito.Codice == Esito.ESITO_OK)
-            {
-                ret = ret.Replace("@anno", year.ToString("0000"));
-                ret = ret.Replace("@codiceLavorazione", codLav.ToString(ConfigurationManager.AppSettings["FORMAT_CODICE_LAVORAZIONE"]));
-            }
-            else
-            {
-                ret = "";
-            }
-            return ret;
-        }
+        //    ret = ConfigurationManager.AppSettings["CODICE_LAVORAZIONE"];
+        //    Esito esito = new Esito();
+        //    int codLav = getCodiceLavorazione(ref esito);
+        //    if (esito.Codice == Esito.ESITO_OK)
+        //    {
+        //        ret = ret.Replace("@anno", year.ToString("0000"));
+        //        ret = ret.Replace("@codiceLavorazione", codLav.ToString(ConfigurationManager.AppSettings["FORMAT_CODICE_LAVORAZIONE"]));
+        //    }
+        //    else
+        //    {
+        //        ret = "";
+        //    }
+        //    return ret;
+        //}
 
         public List<string> GetElencoClientiFornitori(ref Esito esito)
         {
@@ -224,5 +224,29 @@ namespace VideoSystemWeb.BLL
 
             return esito;
         }
+
+
+
+
+
+
+
+
+
+
+        public string getCodiceLavorazioneNew(ref Esito esito, int year)
+        {
+            string iREt = Base_DAL.GetCodLavNew(ref esito, year);
+
+            return iREt;
+        }
+
+        public Esito resetCodiceLavorazioneNew(int anno,int codiceLavorazioneIniziale)
+        {
+            Esito esito = Base_DAL.ResetCodLavNew(anno,codiceLavorazioneIniziale);
+
+            return esito;
+        }
+
     }
 }

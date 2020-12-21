@@ -184,6 +184,25 @@ namespace VideoSystemWeb.BLL
             return ret;
         }
 
+        public string getCodLavFormattato(int year)
+        {
+            string ret = "";
+
+            ret = ConfigurationManager.AppSettings["CODICE_LAVORAZIONE"];
+            Esito esito = new Esito();
+            int codLav = getCodiceLavorazione(ref esito);
+            if (esito.Codice == Esito.ESITO_OK)
+            {
+                ret = ret.Replace("@anno", year.ToString("0000"));
+                ret = ret.Replace("@codiceLavorazione", codLav.ToString(ConfigurationManager.AppSettings["FORMAT_CODICE_LAVORAZIONE"]));
+            }
+            else
+            {
+                ret = "";
+            }
+            return ret;
+        }
+
         public List<string> GetElencoClientiFornitori(ref Esito esito)
         {
             return Protocolli_DAL.Instance.GetElencoClientiFornitori(ref esito);

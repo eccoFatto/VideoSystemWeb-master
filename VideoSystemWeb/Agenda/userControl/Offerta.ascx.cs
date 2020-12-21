@@ -574,7 +574,10 @@ namespace VideoSystemWeb.Agenda.userControl
         public void TrasformaInOfferta()
         {
             SessionManager.EventoSelezionato.id_stato = Stato.Instance.STATO_OFFERTA;
-            SessionManager.EventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato();
+
+            int year = SessionManager.EventoSelezionato.data_inizio_impegno.Year;
+
+            SessionManager.EventoSelezionato.codice_lavoro = Protocolli_BLL.Instance.getCodLavFormattato(year);
         }
         #endregion
     }

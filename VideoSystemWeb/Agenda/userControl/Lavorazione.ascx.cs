@@ -1842,41 +1842,51 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void AggiornaTotali()
         {
-            decimal totPrezzo = 0;
-            decimal totCosto = 0;
-            decimal? totLordo = 0;
-            decimal totIva = 0;
-            decimal percRicavo = 0;
+            UtilityLavorazione utilityLavorazione = new UtilityLavorazione(SessionManager.EventoSelezionato);
 
-            if (SessionManager.EventoSelezionato.LavorazioneCorrente != null && SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione != null && SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count > 0)
-            {
-                foreach (DatiArticoliLavorazione art in SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione)
-                {
-                    if (art.UsaCostoFP != null)
-                    {
-                        if ((bool)art.UsaCostoFP)
-                        {
-                            totCosto += art.FP_netto != null ? (decimal)art.FP_netto : 0;
-                        }
-                        else
-                        {
-                            totCosto += (decimal)art.Costo;
-                        }
-                    }
-                    else
-                    {
-                        totCosto += (decimal)art.Costo;
-                    }
-                    totLordo += art.FP_lordo != null ? (decimal)art.FP_lordo : 0;
-                    totPrezzo += art.Prezzo;
-                    totIva += (art.Prezzo * art.Iva / 100);
-                }
+            decimal totPrezzo = utilityLavorazione.totalePrezzo;
+            decimal totCosto = utilityLavorazione.totaleCosto;
+            decimal? totLordo = utilityLavorazione.totaleLordo;
+            decimal totIva = utilityLavorazione.totaleIva;
+            decimal percRicavo = utilityLavorazione.percentualeRicavo;
 
-                if (totPrezzo != 0)
-                {
-                    percRicavo = ((totPrezzo - (decimal)totLordo) / totPrezzo) * 100;
-                }
-            }
+            //decimal totPrezzo = 0;
+            //decimal totCosto = 0;
+            //decimal? totLordo = 0;
+            //decimal totIva = 0;
+            //decimal percRicavo = 0;
+
+            //if (SessionManager.EventoSelezionato.LavorazioneCorrente != null && 
+            //    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione != null && 
+            //    SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count > 0)
+            //{
+            //    foreach (DatiArticoliLavorazione art in SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione)
+            //    {
+            //        if (art.UsaCostoFP != null)
+            //        {
+            //            if ((bool)art.UsaCostoFP)
+            //            {
+            //                totCosto += art.FP_netto != null ? (decimal)art.FP_netto : 0;
+            //            }
+            //            else
+            //            {
+            //                totCosto += (decimal)art.Costo;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            totCosto += (decimal)art.Costo;
+            //        }
+            //        totLordo += art.FP_lordo != null ? (decimal)art.FP_lordo : 0;
+            //        totPrezzo += art.Prezzo;
+            //        totIva += (art.Prezzo * art.Iva / 100);
+            //    }
+
+            //    if (totPrezzo != 0)
+            //    {
+            //        percRicavo = ((totPrezzo - (decimal)totLordo) / totPrezzo) * 100;
+            //    }
+            //}
 
             txt_TotPrezzo.Text = txt_TotPrezzo_lavorazione.Text = string.Format("{0:N2}", totPrezzo);
             txt_TotCosto.Text =  string.Format("{0:N2}", totCosto);
@@ -1884,7 +1894,8 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_TotIva.Text =  string.Format("{0:N2}", totIva);
             txt_PercRicavo.Text = txt_PercRicavo_lavorazione.Text = string.Format("{0:N2}", percRicavo);
 
-            if (percRicavo <= 50)
+            //if (percRicavo <= 50)
+            if (utilityLavorazione.IsMargineInsufficiente)
             {
                 txt_PercRicavo.ForeColor = txt_PercRicavo_lavorazione.ForeColor = Color.Red;
                 txt_PercRicavo.Font.Bold = txt_PercRicavo_lavorazione.Font.Bold = true;

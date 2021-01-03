@@ -180,6 +180,9 @@ namespace VideoSystemWeb.DAL
 
                                                  "CASE WHEN artLav.idTipoPagamento = " + idTipoRitenutaAcconto + " THEN artLav.fp_netto ELSE 0 END as RitenutaAcconto, " +
                                                  "0 as Fattura, " +
+
+                                                 "0 as FatturaLordo, " +
+
                                                  "CASE WHEN (select count(*) from dati_articoli_lavorazione where idCollaboratori = collab.id and data = artLav.data and idArtArticoli = " + idDiaria + ") > 0 THEN 1 ELSE 0 END as Diaria, " +
                                                  "artLav.idTipoPagamento as TipoPagamento, " +
                                                  "tipoPagam.nome as DescrizioneTipoPagamento " +
@@ -223,6 +226,9 @@ namespace VideoSystemWeb.DAL
 
                                              "CASE WHEN artLav.idTipoPagamento = " + idTipoRitenutaAcconto + " THEN artLav.fp_netto ELSE 0 END as RitenutaAcconto, " +
                                              "CASE WHEN artLav.idTipoPagamento = " + idTipoFattura + " THEN artLav.fp_netto ELSE 0 END as Fattura, " +
+
+                                             "CASE WHEN artLav.idTipoPagamento = " + idTipoFattura + " THEN (artLav.fp_netto + (artLav.fp_netto*artLav.Iva/100)) ELSE 0 END as FatturaLordo, " +
+
                                              "CASE WHEN (select count(*) from dati_articoli_lavorazione where idFornitori = clientiFornitori.id and data = artLav.data and idArtArticoli = " + idDiaria + ") > 0 THEN 1 ELSE 0 END as Diaria, " +
                                              "artLav.idTipoPagamento as TipoPagamento, " +
                                              "tipoPagam.nome as DescrizioneTipoPagamento " +

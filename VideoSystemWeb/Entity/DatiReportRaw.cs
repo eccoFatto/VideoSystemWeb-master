@@ -27,6 +27,7 @@ namespace VideoSystemWeb.Entity
         private decimal mista;
         private decimal ritenutaAcconto;
         private decimal fattura;
+        private decimal fatturaLordo;
         private int diaria;
         private int albergo;
 
@@ -53,6 +54,7 @@ namespace VideoSystemWeb.Entity
         public decimal Mista { get => mista; set => mista = value; }
         public decimal RitenutaAcconto { get => ritenutaAcconto; set => ritenutaAcconto = value; }
         public decimal Fattura { get => fattura; set => fattura = value; }
+        public decimal FatturaLordo { get => fatturaLordo; set => fatturaLordo = value; }
         public int Diaria { get => diaria; set => diaria = value; }
         public int Albergo { get => albergo; set => albergo = value; }
         public int TipoPagamento { get => tipoPagamento; set => tipoPagamento = value; }

@@ -123,6 +123,15 @@ namespace VideoSystemWeb.REPORT
         protected global::System.Web.UI.WebControls.Button btnStampa;
 
         /// <summary>
+        /// Controllo lbl_TotGenerale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_TotGenerale;
+
+        /// <summary>
         /// Controllo lbl_TotAssunzione.
         /// </summary>
         /// <remarks>
@@ -159,13 +168,13 @@ namespace VideoSystemWeb.REPORT
         protected global::System.Web.UI.WebControls.Label lbl_TotRitAcconto;
 
         /// <summary>
-        /// Controllo lbl_TotFattura.
+        /// Controllo lbl_TotFatturaLordo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_TotFattura;
+        protected global::System.Web.UI.WebControls.Label lbl_TotFatturaLordo;
 
         /// <summary>
         /// Controllo gv_DatiStampa.

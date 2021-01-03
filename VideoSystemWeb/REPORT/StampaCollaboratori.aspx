@@ -151,37 +151,42 @@
 
             <div class="w3-row-padding" style="position:relative;">
 
-                <div class="w3-threequarter" style="margin-top:10px">
+                <div class="w3" style="margin-top:10px">
 
                     <div class="w3-row w3-padding round ">
                         <div class="w3-row">
                             <b>Totali</b>
                         </div>
-                        <div class="w3-col" style="width:20%;padding-right:5px">
+                        <div class="w3-col" style="width:16%">
+                            <label>Generale</label>
+                            <asp:Label ID="lbl_TotGenerale" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>
+                        <div class="w3-col" style="width:16%;padding-right:5px">
                             <label>Assunzione</label>
                             <asp:Label ID="lbl_TotAssunzione" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
-                       <div class="w3-col" style="width:20%;padding-right:5px">
+                       <div class="w3-col" style="width:16%;padding-right:5px">
                             <label>Mista</label>
                             <asp:Label ID="lbl_TotMista" runat="server" Width="100%" Text="-" ></asp:Label>
                         </div>
-                        <div class="w3-col" style="width:20%;padding-right:5px">
+                        <div class="w3-col" style="width:16%;padding-right:5px">
                             <label>Rimb. Km</label>
                             <asp:Label ID="lbl_TotRimbKm" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
-                        <div class="w3-col" style="width:20%;padding-right:5px">
+                        <div class="w3-col" style="width:16%;padding-right:5px">
                             <label>Ritenuta acconto</label>
                             <asp:Label ID="lbl_TotRitAcconto" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
-                        <div class="w3-col" style="width:20%">
+                        <%--<div class="w3-col" style="width:16%">
                             <label>Fattura</label>
                             <asp:Label ID="lbl_TotFattura" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>--%>
+                        <div class="w3-col" style="width:16%">
+                            <label>Fattura (Lordo)</label>
+                            <asp:Label ID="lbl_TotFatturaLordo" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
                     </div>
                 </div>
-
-                <div class="w3-quarter" style="margin-bottom:10px">&nbsp;</div>
-
             </div>
             <br /><br />
             <div class="round">
@@ -205,7 +210,7 @@
                         <asp:BoundField DataField="Mista" HeaderText="Mista" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="RimborsoKm" HeaderText="Rimb. Km" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="RitenutaAcconto" HeaderText="Ritenuta acconto" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="Fattura" HeaderText="Fattura" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="FatturaLordo" HeaderText="Fattura (lordo)" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <%--<asp:BoundField DataField="Diaria" HeaderText="Diaria" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>--%>
                 
                     </Columns>

@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44370</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -751,6 +752,7 @@
     <Compile Include="BLL\Stampa\BaseStampa.cs" />
     <Compile Include="BLL\Statistiche_BLL.cs" />
     <Compile Include="BLL\Stato.cs" />
+    <Compile Include="BLL\UtilityLavorazione.cs" />
     <Compile Include="BLL\UtilityTipologiche.cs" />
     <Compile Include="CONFIG\gestConfig.aspx.cs">
       <DependentUpon>gestConfig.aspx</DependentUpon>

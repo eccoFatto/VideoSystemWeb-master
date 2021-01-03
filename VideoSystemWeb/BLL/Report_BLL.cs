@@ -195,6 +195,7 @@ namespace VideoSystemWeb.BLL
                 datiReport.Mista = (decimal)riga.Field<int>("Mista");
                 datiReport.RitenutaAcconto = riga.Field<decimal>("RitenutaAcconto");
                 datiReport.Fattura = riga.Field<decimal>("Fattura");
+                datiReport.FatturaLordo = riga.Field<decimal>("FatturaLordo");
                 datiReport.Diaria = riga.Field<int>("Diaria");
                 datiReport.RimborsoKm = riga.Field<decimal>("RimborsoKm");
                 datiReport.TipoPagamento = riga.Field<int>("TipoPagamento");

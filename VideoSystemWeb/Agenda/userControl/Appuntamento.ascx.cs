@@ -274,7 +274,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 }
                 else if (statoEvento == Stato.Instance.STATO_OFFERTA)
                 {
-                    txt_DataInizioLavorazione.Enabled = false;
+                    txt_DataInizioLavorazione.Enabled = true; // false;
                     txt_DataFineLavorazione.Enabled = true;
                     ddl_Risorse.Enabled = true;
                     ddl_Tipologie.Enabled = true;
@@ -291,8 +291,8 @@ namespace VideoSystemWeb.Agenda.userControl
                 else if (statoEvento == Stato.Instance.STATO_LAVORAZIONE)
                 {
                     // panelAppuntamenti.Enabled = false;
-                    txt_DataInizioLavorazione.Enabled =
-                    txt_DataFineLavorazione.Enabled =
+                    txt_DataInizioLavorazione.Enabled = 
+                    txt_DataFineLavorazione.Enabled = 
                     ddl_Risorse.Enabled =
                     ddl_Tipologie.Enabled =
                     ddl_Clienti.Enabled =

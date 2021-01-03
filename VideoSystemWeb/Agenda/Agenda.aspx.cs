@@ -364,11 +364,23 @@ namespace VideoSystemWeb.Agenda
                         DatiAgenda datoAgendaCorrente = Agenda_BLL.Instance.GetDatiAgendaById(ListaDatiAgenda, int.Parse(e.Row.Cells[indiceColonna].Text.Trim()));
                         Tipologica statoCorrente = UtilityTipologiche.getElementByID(SessionManager.ListaStati, datoAgendaCorrente.id_stato, ref esito);
 
+
                         #region COLORE EVENTO
                         string colore;
-                        colore = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "color", ref esito);
+                        string coloreBordo;
+                        colore = coloreBordo = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "color", ref esito);
                         string coloreFont;
                         coloreFont = UtilityTipologiche.getParametroDaTipologica(statoCorrente, "font_color", ref esito);
+                        #endregion
+
+
+                        #region CONTROLLO MARGINE
+                        if (datoAgendaCorrente.id_stato == Stato.Instance.STATO_LAVORAZIONE || datoAgendaCorrente.id_stato == Stato.Instance.STATO_FATTURA)
+                        {
+                            DatiLavorazione lavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(datoAgendaCorrente.id, ref esito);
+                            UtilityLavorazione utilityLavorazione = new UtilityLavorazione(lavorazioneCorrente);
+                            if (utilityLavorazione.IsMargineInsufficiente) coloreBordo = "red";
+                        }
                         #endregion
 
                         e.Row.Cells[indiceColonna].CssClass = "cellaEvento " + risorsa.sottotipo;
@@ -388,7 +400,7 @@ namespace VideoSystemWeb.Agenda
                             Panel mainPanel = new Panel();
                             mainPanel.Controls.Add(new LiteralControl(titoloEvento));
                             mainPanel.CssClass = "round-corners-6px w3-tooltip";
-                            mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + "; color:" + coloreFont);
+                            mainPanel.Attributes.Add("style", "border: 4px dotted " + coloreBordo + "; background-color:" + colore + "; color:" + coloreFont);
 
                             mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
@@ -401,6 +413,7 @@ namespace VideoSystemWeb.Agenda
                                 if (IsViaggioAndata(datoAgendaCorrente, DateTime.Parse(data)))
                                 {
                                     colore = coloreViaggio;
+                                    if (coloreBordo != "red") coloreBordo = coloreViaggio;
                                 }
 
                                 Panel mainPanel = new Panel();
@@ -415,7 +428,7 @@ namespace VideoSystemWeb.Agenda
                                 }
 
                                 mainPanel.CssClass = "round-corners-6px unround-bottom-corners w3-tooltip";
-                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + "; color:" + coloreFont);
+                                mainPanel.Attributes.Add("style", "border: 4px dotted " + coloreBordo + "; border-bottom: 2px solid " + colore + "; background-color:" + colore + "; color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
@@ -426,6 +439,7 @@ namespace VideoSystemWeb.Agenda
                                 if (IsViaggioRitorno(datoAgendaCorrente, DateTime.Parse(data)))
                                 {
                                     colore = coloreViaggio;
+                                    if (coloreBordo != "red") coloreBordo = coloreViaggio;
                                 }
 
                                 Panel mainPanel = new Panel();
@@ -440,7 +454,7 @@ namespace VideoSystemWeb.Agenda
                                 }
 
                                 mainPanel.CssClass = "round-corners-6px unround-top-corners w3-tooltip";
-                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + "; color:" + coloreFont);
+                                mainPanel.Attributes.Add("style", "border: 4px dotted " + coloreBordo + "; border-top: 2px solid " + colore + "; background-color:" + colore + "; color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
 
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
@@ -451,6 +465,7 @@ namespace VideoSystemWeb.Agenda
                                 if (IsViaggioAndata(datoAgendaCorrente, DateTime.Parse(data)) || IsViaggioRitorno(datoAgendaCorrente, DateTime.Parse(data)))
                                 {
                                     colore = coloreViaggio;
+                                    if (coloreBordo != "red") coloreBordo = coloreViaggio;
                                 }
 
                                 Panel mainPanel = new Panel();
@@ -465,7 +480,7 @@ namespace VideoSystemWeb.Agenda
                                 }
 
                                 mainPanel.CssClass = "w3-tooltip";
-                                mainPanel.Attributes.Add("style", "border: 2px solid " + colore + "; background-color:" + colore + "; color:" + coloreFont);
+                                mainPanel.Attributes.Add("style", "height:40px; border: 2px solid " + colore + "; border-left: 4px dotted " + coloreBordo + "; border-right: 4px dotted " + coloreBordo + "; background-color:" + colore + "; color:" + coloreFont);
                                 mainPanel.Controls.Add(AnteprimaEvento(datoAgendaCorrente));
                                 e.Row.Cells[indiceColonna].Controls.Add(mainPanel);
                                 e.Row.Cells[indiceColonna].Attributes.Add("style", "border-top: 0px; border-bottom: 0px; background-color:" + colore + "; color:" + coloreFont);

@@ -53,7 +53,7 @@ namespace VideoSystemWeb.REPORT
             helper.RegisterSummary("RimborsoKm", SummaryOperation.Sum, "NomeCollaboratore");
             helper.RegisterSummary("Assunzione", SummaryOperation.Sum, "NomeCollaboratore");
             helper.RegisterSummary("RitenutaAcconto", SummaryOperation.Sum, "NomeCollaboratore");
-            helper.RegisterSummary("Fattura", SummaryOperation.Sum, "NomeCollaboratore");
+            helper.RegisterSummary("FatturaLordo", SummaryOperation.Sum, "NomeCollaboratore");
             //helper.RegisterSummary("Diaria", SummaryOperation.Sum, "NomeCollaboratore");
 
             //TOTALE
@@ -100,21 +100,32 @@ namespace VideoSystemWeb.REPORT
             {
                 btnStampa.CssClass = btnStampa.CssClass.Replace("w3-disabled", "");
 
-                lbl_TotAssunzione.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Assunzione).ToString()));
-                lbl_TotMista.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Mista).ToString()));
-                lbl_TotRimbKm.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.RimborsoKm).ToString()));
-                lbl_TotRitAcconto.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.RitenutaAcconto).ToString()));
-                lbl_TotFattura.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Fattura).ToString()));
+                decimal totAssunzione = decimal.Parse(listaDatiReport.Sum(x => x.Assunzione).ToString());
+                decimal totMista = decimal.Parse(listaDatiReport.Sum(x => x.Mista).ToString());
+                decimal totRimbKm = decimal.Parse(listaDatiReport.Sum(x => x.RimborsoKm).ToString());
+                decimal totRitAcconto = decimal.Parse(listaDatiReport.Sum(x => x.RitenutaAcconto).ToString());
+                decimal totFatturaLordo = decimal.Parse(listaDatiReport.Sum(x => x.FatturaLordo).ToString());
+                decimal totGenerale = totAssunzione + totMista + totRimbKm + totRitAcconto + totFatturaLordo;
+
+
+                lbl_TotGenerale.Text = string.Format("{0:C}", totGenerale);
+                lbl_TotAssunzione.Text = string.Format("{0:C}", totAssunzione);
+                lbl_TotMista.Text = string.Format("{0:C}", totMista);
+                lbl_TotRimbKm.Text = string.Format("{0:C}", totRimbKm);
+                lbl_TotRitAcconto.Text = string.Format("{0:C}", totRitAcconto);
+                //lbl_TotFattura.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Fattura).ToString()));
+                lbl_TotFatturaLordo.Text = string.Format("{0:C}", totFatturaLordo);
             }
             else
             {
                 btnStampa.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large w3-disabled";
 
+                lbl_TotGenerale.Text = "-";
                 lbl_TotAssunzione.Text = "-";
                 lbl_TotMista.Text = "-";
                 lbl_TotRimbKm.Text = "-";
                 lbl_TotRitAcconto.Text = "-";
-                lbl_TotFattura.Text = "-";
+                lbl_TotFatturaLordo.Text = "-";
             }
         }
 

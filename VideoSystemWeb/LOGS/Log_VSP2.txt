@@ -22457,3 +22457,103 @@ Sintassi non corretta in prossimità della parola chiave 'by'.
 2020-12-30 14:29:40,270 [9] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2020-12-30 14:35:20,834 [4] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2021-01-03 09:00:00,136 [6] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-09 09:48:06,935 [12] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-09 09:52:32,820 [6] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-09 09:55:45,090 [7] ERROR VideoSystemWeb.BLL.Esito - Nicola - Statistiche_DAL.cs - GetStatisticheCosti Il timeout di esecuzione è scaduto. Il periodo di timeout è scaduto prima del completamento dell'operazione oppure il server non risponde.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Statistiche_DAL.GetStatisticheCosti(String filtriLavorazione, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Statistiche_DAL.cs:riga 688
+2021-01-09 09:56:17,625 [13] ERROR VideoSystemWeb.BLL.Esito - Nicola - Statistiche_DAL.cs - GetStatisticheCosti Il timeout di esecuzione è scaduto. Il periodo di timeout è scaduto prima del completamento dell'operazione oppure il server non risponde.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Statistiche_DAL.GetStatisticheCosti(String filtriLavorazione, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Statistiche_DAL.cs:riga 688
+2021-01-09 09:57:28,884 [6] ERROR VideoSystemWeb.BLL.Esito - Nicola - Statistiche_DAL.cs - GetStatisticheCosti Il timeout di esecuzione è scaduto. Il periodo di timeout è scaduto prima del completamento dell'operazione oppure il server non risponde.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Statistiche_DAL.GetStatisticheCosti(String filtriLavorazione, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Statistiche_DAL.cs:riga 688
+2021-01-09 09:58:16,258 [23] ERROR VideoSystemWeb.BLL.Esito - Nicola - Statistiche_DAL.cs - GetStatisticheCosti Il timeout di esecuzione è scaduto. Il periodo di timeout è scaduto prima del completamento dell'operazione oppure il server non risponde.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Statistiche_DAL.GetStatisticheCosti(String filtriLavorazione, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Statistiche_DAL.cs:riga 688
+2021-01-09 11:58:12,779 [10] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-09 11:59:19,442 [12] ERROR VideoSystemWeb.BLL.Esito - Nicola - Statistiche_DAL.cs - GetStatisticheCosti Impossibile eseguire il cast da DBNull.Value al tipo 'System.Boolean'. Utilizzare un tipo nullable.
+   in System.Data.DataRowExtensions.UnboxT`1.ValueField(Object value)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Statistiche_DAL.GetStatisticheCosti(String filtriLavorazione, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Statistiche_DAL.cs:riga 693
+2021-01-09 12:01:03,803 [6] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-09 12:11:24,843 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-09 12:12:16,166 [7] ERROR VideoSystemWeb.BLL.Esito - Nicola - Statistiche_DAL.cs - GetStatisticheCosti Impossibile eseguire il cast da DBNull.Value al tipo 'System.Boolean'. Utilizzare un tipo nullable.
+   in System.Data.DataRowExtensions.UnboxT`1.ValueField(Object value)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Statistiche_DAL.GetStatisticheCosti(String filtriLavorazione, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Statistiche_DAL.cs:riga 726
+2021-01-10 08:33:13,579 [8] ERROR VideoSystemWeb.BLL.Esito - Nicola - Statistiche_DAL.cs - GetStatisticheCosti Impossibile eseguire il cast da DBNull.Value al tipo 'System.Boolean'. Utilizzare un tipo nullable.
+   in System.Data.DataRowExtensions.UnboxT`1.ValueField(Object value)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Statistiche_DAL.GetStatisticheCosti(String filtriLavorazione, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Statistiche_DAL.cs:riga 726
+2021-01-10 08:33:28,281 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-10 08:34:54,353 [18] ERROR VideoSystemWeb.BLL.Esito - Nicola - Statistiche_DAL.cs - GetStatisticheCosti Impossibile eseguire il cast da DBNull.Value al tipo 'System.Boolean'. Utilizzare un tipo nullable.
+   in System.Data.DataRowExtensions.UnboxT`1.ValueField(Object value)
+   in System.Data.DataRowExtensions.Field[T](DataRow row, String columnName)
+   in VideoSystemWeb.DAL.Statistiche_DAL.GetStatisticheCosti(String filtriLavorazione, Esito& esito) in C:\Users\nfoti\Documents\VideoSystemWeb-master\VideoSystemWeb\DAL\Statistiche_DAL.cs:riga 726
+2021-01-10 14:51:35,446 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-10 15:04:52,507 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-10 15:09:58,251 [25] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-10 15:14:35,809 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-10 18:42:27,413 [31] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-01-10 19:14:52,361 [29] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!

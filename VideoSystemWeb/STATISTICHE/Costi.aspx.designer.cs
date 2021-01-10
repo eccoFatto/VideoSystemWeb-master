@@ -168,13 +168,13 @@ namespace VideoSystemWeb.STATISTICHE
         protected global::System.Web.UI.WebControls.Button btnEseguiStatistica;
 
         /// <summary>
-        /// Controllo BtnPulisciCampiRicerca.
+        /// Controllo btnPulisciCampiRicerca.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnPulisciCampiRicerca;
+        protected global::System.Web.UI.WebControls.Button btnPulisciCampiRicerca;
 
         /// <summary>
         /// Controllo gv_statistiche.

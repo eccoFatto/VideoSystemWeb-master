@@ -270,6 +270,13 @@ namespace VideoSystemWeb.STATISTICHE
             gv_statistiche.DataBind();
         }
 
+        
+        protected void btnPulisciCampiRicerca_Click(object sender, EventArgs e)
+        {
+            gv_statistiche.DataSource = null;
+            gv_statistiche.DataBind();
+        }
+
         protected void gv_statistiche_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.Cells.Count > 1)

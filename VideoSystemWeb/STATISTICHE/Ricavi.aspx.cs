@@ -168,6 +168,12 @@ namespace VideoSystemWeb.STATISTICHE
             //ddl_Contratto.Text = listaContratti.Contains(filtroNomeContratto) ? filtroNomeContratto : "";
         }
 
+        protected void btnPulisciCampiRicerca_Click(object sender, EventArgs e)
+        {
+            gv_statistiche.DataSource = null;
+            gv_statistiche.DataBind();
+        }
+
         protected void btnEseguiStatistica_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();

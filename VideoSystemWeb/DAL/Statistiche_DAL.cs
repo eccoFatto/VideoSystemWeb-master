@@ -37,6 +37,7 @@ namespace VideoSystemWeb.DAL
         public List<StatisticheRicavi> GetStatisticheRicavi(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroContratto, bool? fatturato, string dataInizio, string dataFine, ref Esito esito)
         {
             List<StatisticheRicavi> listaStatisticheRicavi = new List<StatisticheRicavi>();
+            HashSet<string> lavorazioniAnomale = new HashSet<string>();
 
             string filtri = string.Empty;
             filtri += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente + "%' ";
@@ -81,24 +82,46 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-                                        StatisticheRicavi statisticheRicavi = new StatisticheRicavi
-                                        {
-                                            IdCliente = riga.Field<int>("id_cliente"),
-                                            Cliente = riga.Field<string>("cliente"),
-                                            NumeroFattura = riga.Field<string>("numeroFattura"),
-                                            Ordine = riga.Field<string>("ordine"),
-                                            CodiceLavoro = riga.Field<string>("codice_lavoro"),
-                                            Data = riga.Field<DateTime?>("data"),
-                                            Lavorazione = riga.Field<string>("lavorazione"),
-                                            Produzione = riga.Field<string>("produzione"),
-                                            Contratto = riga.Field<string>("contratto"),
-                                            Listino = riga.Field<decimal?>("listino"),
-                                            Costo = riga.Field<decimal?>("costo"),
-                                            DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta"),
-                                            Pregresso = riga.Field<bool>("pregresso")
-                                        };
+                                        //StatisticheRicavi statisticheRicavi = new StatisticheRicavi
+                                        //{
+                                        //    IdCliente = riga.Field<int>("id_cliente"),
+                                        //    Cliente = riga.Field<string>("cliente"),
+                                        //    NumeroFattura = riga.Field<string>("numeroFattura"),
+                                        //    Ordine = riga.Field<string>("ordine"),
+                                        //    CodiceLavoro = riga.Field<string>("codice_lavoro"),
+                                        //    Data = riga.Field<DateTime?>("data"),
+                                        //    Lavorazione = riga.Field<string>("lavorazione"),
+                                        //    Produzione = riga.Field<string>("produzione"),
+                                        //    Contratto = riga.Field<string>("contratto"),
+                                        //    Listino = riga.Field<decimal?>("listino"),
+                                        //    Costo = riga.Field<decimal?>("costo"),
+                                        //    DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta"),
+                                        //    Pregresso = riga.Field<bool>("pregresso")
+                                        //};
+                                        try
+                                        { 
+                                        StatisticheRicavi statisticheRicavi = new StatisticheRicavi();
+
+                                        statisticheRicavi.IdCliente = riga.Field<int>("id_cliente");
+                                        statisticheRicavi.Cliente = riga.Field<string>("cliente");
+                                        statisticheRicavi.NumeroFattura = riga.Field<string>("numeroFattura");
+                                        statisticheRicavi.Ordine = riga.Field<string>("ordine");
+                                        statisticheRicavi.CodiceLavoro = riga.Field<string>("codice_lavoro");
+                                        statisticheRicavi.Data = riga.Field<DateTime?>("data");
+                                        statisticheRicavi.Lavorazione = riga.Field<string>("lavorazione");
+                                        statisticheRicavi.Produzione = riga.Field<string>("produzione");
+                                        statisticheRicavi.Contratto = riga.Field<string>("contratto");
+                                        statisticheRicavi.Listino = riga.Field<decimal?>("listino");
+                                        statisticheRicavi.Costo = riga.Field<decimal?>("costo");
+                                        statisticheRicavi.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta");
+                                        statisticheRicavi.Pregresso = riga.Field<bool>("pregresso");
 
                                         listaStatisticheRicavi.Add(statisticheRicavi);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            lavorazioniAnomale.Add(riga.Field<string>("codice_lavoro"));
+                                        }
                                     }
                                 }
                             }
@@ -110,6 +133,16 @@ namespace VideoSystemWeb.DAL
             {
                 esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
                 esito.Descrizione = "Statistiche_DAL.cs - GetStatisticheRicavi " + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+            if (lavorazioniAnomale.Count > 0)
+            {
+                BasePage basePge = new BasePage();
+                string messaggioLavorazioniAnomale = "Alcuni elementi non sono stati visualizzati perché le seguenti lavorazioni presentano anomalie:<ul>";
+                foreach (string lavAnomala in lavorazioniAnomale)
+                {
+                    messaggioLavorazioniAnomale += "<li>" + lavAnomala + "</li>";
+                }
+                basePge.ShowWarning(messaggioLavorazioniAnomale + "</ul>");
             }
 
             return listaStatisticheRicavi;
@@ -669,7 +702,7 @@ namespace VideoSystemWeb.DAL
         public List<StatisticheCosti> GetStatisticheCosti(string filtriLavorazione, ref Esito esito) 
         {
             List<StatisticheCosti> listaStatisticheCosti = new List<StatisticheCosti>();
-
+            HashSet<string> lavorazioniAnomale = new HashSet<string>();
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -688,29 +721,36 @@ namespace VideoSystemWeb.DAL
                                 sda.Fill(dt);
                                 if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
                                 {
+                                    
                                     foreach (DataRow riga in dt.Rows)
                                     {
-                                        StatisticheCosti statisticheCosti = new StatisticheCosti
+                                        try
                                         {
-                                            IdCliente = riga.Field<int>("id_cliente"),
-                                            Cliente = riga.Field<string>("cliente"),
-                                            NumeroFattura = riga.Field<string>("numeroFattura"),
-                                            Ordine = riga.Field<string>("ordine"),
-                                            CodiceLavoro = riga.Field<string>("codice_lavoro"),
-                                            Data = riga.Field<DateTime?>("data"),
-                                            Lavorazione = riga.Field<string>("lavorazione"),
-                                            Produzione = riga.Field<string>("produzione"),
-                                            Contratto = riga.Field<string>("contratto"),
-                                            Listino = riga.Field<decimal?>("listino"),
-                                            Costo = riga.Field<decimal?>("costo"),
-                                            DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta"),
-                                            Pregresso = riga.Field<bool>("pregresso"),
-                                            Gruppo = riga.Field<string>("gruppo"),
-                                            Fornitore = riga.Field<string>("fornitore"),
-                                            Progressivo = riga.Field<int>("progressivo")
-                                        };
+                                            StatisticheCosti statisticheCosti = new StatisticheCosti();
 
-                                        listaStatisticheCosti.Add(statisticheCosti);
+                                            statisticheCosti.IdCliente = riga.Field<int>("id_cliente");
+                                            statisticheCosti.Cliente = riga.Field<string>("cliente");
+                                            statisticheCosti.NumeroFattura = riga.Field<string>("numeroFattura");
+                                            statisticheCosti.Ordine = riga.Field<string>("ordine");
+                                            statisticheCosti.CodiceLavoro = riga.Field<string>("codice_lavoro");
+                                            statisticheCosti.Data = riga.Field<DateTime?>("data");
+                                            statisticheCosti.Lavorazione = riga.Field<string>("lavorazione");
+                                            statisticheCosti.Produzione = riga.Field<string>("produzione");
+                                            statisticheCosti.Contratto = riga.Field<string>("contratto");
+                                            statisticheCosti.Listino = riga.Field<decimal?>("listino");
+                                            statisticheCosti.Costo = riga.Field<decimal?>("costo");
+                                            statisticheCosti.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta");
+                                            statisticheCosti.Pregresso = riga.Field<bool>("pregresso");
+                                            statisticheCosti.Gruppo = riga.Field<string>("gruppo");
+                                            statisticheCosti.Fornitore = riga.Field<string>("fornitore");
+                                            statisticheCosti.Progressivo = riga.Field<int>("progressivo");
+
+                                            listaStatisticheCosti.Add(statisticheCosti);
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            lavorazioniAnomale.Add(riga.Field<string>("codice_lavoro"));
+                                        }
                                     }
                                 }
                             }
@@ -723,7 +763,16 @@ namespace VideoSystemWeb.DAL
                 esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
                 esito.Descrizione = "Statistiche_DAL.cs - GetStatisticheCosti " + ex.Message + Environment.NewLine + ex.StackTrace;
             }
-
+            if (lavorazioniAnomale.Count>0)
+            {
+                BasePage basePge = new BasePage();
+                string messaggioLavorazioniAnomale = "Alcuni elementi non sono stati visualizzati perché le seguenti lavorazioni presentano anomalie:<ul>";
+                foreach (string lavAnomala in lavorazioniAnomale)
+                {
+                    messaggioLavorazioniAnomale += "<li>" + lavAnomala + "</li>";
+                }
+                basePge.ShowWarning(messaggioLavorazioniAnomale + "</ul>");
+            }
             return listaStatisticheCosti;
         }
 

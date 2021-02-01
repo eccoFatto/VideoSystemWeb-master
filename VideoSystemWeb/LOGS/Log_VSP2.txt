@@ -22565,3 +22565,6 @@ Sintassi non corretta in prossimità della parola chiave 'by'.
 2021-01-12 14:50:17,353 [15] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2021-01-12 14:54:11,953 [21] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2021-01-15 14:31:01,558 [6] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-02-01 19:08:50,493 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-02-01 19:25:21,192 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-02-01 19:32:24,271 [5] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!

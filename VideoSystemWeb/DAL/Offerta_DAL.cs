@@ -518,6 +518,7 @@ namespace VideoSystemWeb.DAL
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
                     string query = "select * from tab_dati_agenda where id_stato > 1 " + filtri;
+                    query += " order by data_inizio_lavorazione desc";
                     using (SqlCommand cmd = new SqlCommand(query))
                     {
                         using (SqlDataAdapter sda = new SqlDataAdapter())

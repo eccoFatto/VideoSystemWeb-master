@@ -46,7 +46,25 @@ namespace VideoSystemWeb.Magazzino
 
                 Session["NOME_FILE"] = "";
 
-                 CaricaCombo();
+                CaricaCombo();
+
+
+                ddlTipoCategoria.Items.Clear();
+                ddlTipoCategoria.Items.Add("");
+                foreach (Tipologica tipologiaCategoria in SessionManager.ListaTipiCategorieMagazzino)
+                {
+                    System.Web.UI.WebControls.ListItem item = new System.Web.UI.WebControls.ListItem
+                    {
+                        Text = tipologiaCategoria.nome,
+                        Value = tipologiaCategoria.id.ToString()
+                    };
+
+                    ddlTipoCategoria.Items.Add(item);
+
+                }
+
+                riempiComboSubCategoria(0);
+                riempiComboGruppo(0);
 
                 // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                 abilitaBottoni(basePage.AbilitazioneInScrittura());
@@ -73,6 +91,59 @@ namespace VideoSystemWeb.Magazzino
             #endregion
         }
 
+        private void riempiComboSubCategoria(int idCategoria)
+        {
+            ddlTipoSubCategoria.Items.Clear();
+            ddlTipoSubCategoria.Items.Add("");
+
+            string queryRicercaSubcategoria = "select * from tipo_subcategoria_magazzino where attivo = 1 ";
+            if (idCategoria > 0)
+            {
+                queryRicercaSubcategoria += "and id in (select distinct id_subcategoria from mag_attrezzature where id_categoria=" + idCategoria.ToString() + ") ";
+            }
+            queryRicercaSubcategoria += "order by nome";
+            Esito esito = new Esito();
+            DataTable dtSubCategorie = Base_DAL.GetDatiBySql(queryRicercaSubcategoria, ref esito);
+
+            foreach (DataRow tipologiaSubCategoria in dtSubCategorie.Rows)
+            {
+                System.Web.UI.WebControls.ListItem item = new System.Web.UI.WebControls.ListItem
+                {
+                    Text = tipologiaSubCategoria["nome"].ToString(),
+                    Value = tipologiaSubCategoria["id"].ToString()
+                };
+
+                ddlTipoSubCategoria.Items.Add(item);
+
+            }
+        }
+
+        private void riempiComboGruppo(int idSubCategoria)
+        {
+            ddlTipoGruppoMagazzino.Items.Clear();
+            ddlTipoGruppoMagazzino.Items.Add("");
+
+            string queryRicercaGruppo = "select * from tipo_gruppo_magazzino where attivo = 1 ";
+            if (idSubCategoria > 0)
+            {
+                queryRicercaGruppo += "and id in (select distinct id_gruppo_magazzino from mag_attrezzature where id_subcategoria=" + idSubCategoria.ToString() + ") ";
+            }
+            queryRicercaGruppo += "order by nome";
+            Esito esito = new Esito();
+            DataTable dtGruppi = Base_DAL.GetDatiBySql(queryRicercaGruppo, ref esito);
+
+            foreach (DataRow tipologiaGruppo in dtGruppi.Rows)
+            {
+                System.Web.UI.WebControls.ListItem item = new System.Web.UI.WebControls.ListItem
+                {
+                    Text = tipologiaGruppo["nome"].ToString(),
+                    Value = tipologiaGruppo["id"].ToString()
+                };
+
+                ddlTipoGruppoMagazzino.Items.Add(item);
+
+            }
+        }
         protected void btnEditDocumentoTrasporto_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(hf_idDocTras.Value) || (!string.IsNullOrEmpty((string)ViewState["idDocumentoTrasporto"])))
@@ -763,13 +834,30 @@ namespace VideoSystemWeb.Magazzino
 
         protected void btnRicercaMagazzino_Click(object sender, EventArgs e)
         {
-            string queryRicerca = "";
-
-            queryRicerca = "SELECT ID, COD_VS, SERIALE, DESCRIZIONE + ' ' + MODELLO as DESCRIZIONE FROM mag_attrezzature WHERE descrizione LIKE '%@descrizione%' AND COD_VS LIKE '%@codiceVideoSystem%' AND SERIALE LIKE '%@seriale%'";
-            queryRicerca = queryRicerca.Replace("@codiceVideoSystem", tbSearch_CodiceVideosystem.Text.Trim().Replace("'", "''"));
+            //queryRicerca = "SELECT ID, COD_VS, SERIALE, DESCRIZIONE + ' ' + MODELLO as DESCRIZIONE FROM mag_attrezzature WHERE descrizione LIKE '%@descrizione%' AND COD_VS LIKE '%@codiceVideoSystem%' AND SERIALE LIKE '%@seriale%' @campiTendina ";
+            string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_ATTREZZATURE"];
+            queryRicerca = queryRicerca.Replace("@codiceVS", tbSearch_CodiceVideosystem.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@descrizione", tbSearch_DescMagazzino.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@seriale", tbSearch_Seriale.Text.Trim().Replace("'", "''"));
 
+            queryRicerca = queryRicerca.Replace("@marca", "");
+            queryRicerca = queryRicerca.Replace("@modello", "");
+
+            // SELEZIONO I CAMPI DROPDOWN SE VALORIZZATI
+            string queryRicercaCampiDropDown = "";
+            if (!string.IsNullOrEmpty(ddlTipoCategoria.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and cat.id=" + ddlTipoCategoria.SelectedValue + " ";
+            }
+            if (!string.IsNullOrEmpty(ddlTipoSubCategoria.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and sub.id=" + ddlTipoSubCategoria.SelectedValue + " ";
+            }
+            if (!string.IsNullOrEmpty(ddlTipoGruppoMagazzino.SelectedItem.Text))
+            {
+                queryRicercaCampiDropDown += " and gruppo.id=" + ddlTipoGruppoMagazzino.SelectedValue + " ";
+            }
+            queryRicerca = queryRicerca.Replace("@campiTendina", queryRicercaCampiDropDown.Trim());
             Esito esito = new Esito();
             DataTable dtMagazzino = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gvMagazzino.DataSource = dtMagazzino;
@@ -1276,6 +1364,20 @@ namespace VideoSystemWeb.Magazzino
             int idDocumentoTrasporto = Convert.ToInt32(gv_documenti_trasporto.DataKeys[rowIndex].Values[0]);
             stampaDocumentoTrasporto(idDocumentoTrasporto);
 
+        }
+
+        protected void ddlTipoCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string idCategoria = ddlTipoCategoria.SelectedItem.Value;
+            if (string.IsNullOrEmpty(idCategoria)) idCategoria = "0";
+            riempiComboSubCategoria(Convert.ToInt32(idCategoria));
+        }
+
+        protected void ddlTipoSubCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string idSubCategoria = ddlTipoSubCategoria.SelectedItem.Value;
+            if (string.IsNullOrEmpty(idSubCategoria)) idSubCategoria = "0";
+            riempiComboGruppo(Convert.ToInt32(idSubCategoria));
         }
     }
 }

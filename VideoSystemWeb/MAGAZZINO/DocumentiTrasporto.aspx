@@ -526,10 +526,19 @@
                     </div>
                     <div class="w3-row-padding w3-padding w3-margin">
                         <div class="w3-quarter">
-                            &nbsp;
+                            <label>Categoria</label>
+                            <asp:DropDownList ID="ddlTipoCategoria" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddlTipoCategoria_SelectedIndexChanged">
+                            </asp:DropDownList>
                         </div>
-                        <div class="w3-half">
-                            &nbsp;
+                        <div class="w3-quarter">
+                            <label>Sub Categoria</label>
+                            <asp:DropDownList ID="ddlTipoSubCategoria" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddlTipoSubCategoria_SelectedIndexChanged">
+                            </asp:DropDownList>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>Gruppo</label>
+                            <asp:DropDownList ID="ddlTipoGruppoMagazzino" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
+                            </asp:DropDownList>   
                         </div>
                         <div class="w3-quarter">
                             <label>&nbsp;</label>

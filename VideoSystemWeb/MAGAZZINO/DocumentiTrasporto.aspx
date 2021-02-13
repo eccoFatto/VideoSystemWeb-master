@@ -102,6 +102,9 @@
             $("#<%=tbSearch_DescMagazzino.ClientID%>").val('');
             $("#<%=tbSearch_Seriale.ClientID%>").val('');
             $("#<%=tbIns_Quantita.ClientID%>").val('1');
+            $("#<%=ddlTipoCategoria.ClientID%>").val('');
+            $("#<%=ddlTipoSubCategoria.ClientID%>").val('');
+            $("#<%=ddlTipoGruppoMagazzino.ClientID%>").val('');
         }
 
         function associaCliente(idCli, cliente) {
@@ -561,6 +564,7 @@
 
 
                     <div class="round w3-padding w3-margin">
+                        <asp:Button ID="btnInseMagazzinoSelezionati" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnInseMagazzinoSelezionati_Click" Text="Inserisci Selezionati" />
                         <asp:GridView ID="gvMagazzino" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvMagazzino_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvMagazzino_PageIndexChanging" PageSize="20" DataKeyNames="id">
                             <Columns>
 

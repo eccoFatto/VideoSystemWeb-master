@@ -132,6 +132,9 @@ namespace VideoSystemWeb.Agenda.userControl
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
                 ScriptManager.RegisterStartupScript(Page, GetType(), "apriTabGiusta", script: "openTabEventoLavorazione(event,'" + hf_tabSelezionataLavorazione.Value + "');", addScriptTags: true);
             }
+
+            gv_statistiche.DataSource = null;
+            gv_statistiche.DataBind();
         }
 
 
@@ -526,6 +529,59 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_DataInserimentoMultiplo.Text = SessionManager.EventoSelezionato.data_inizio_impegno.ToString("dd/MM/yyyy");
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriInserimentoMultiplo", script: "javascript: document.getElementById('" + panelInserimentoMultiplo.ClientID + "').style.display='block'", addScriptTags: true);
             RichiediOperazionePopup("UPDATE");
+        }
+
+        protected void btn_VisualizzaCosti_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+
+            string filtroNomeLavorazione = SessionManager.EventoSelezionato.codice_lavoro;
+
+
+            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti("", "", filtroNomeLavorazione, "", "", "", "", null, "", "", "", ref esito);
+
+            if (listaStatisticheCosti.Count == 0)
+            {
+                BasePage basePage = new BasePage();
+                basePage.ShowWarning("Nessuna voce trovata per i parametri immessi");
+            }
+
+            gv_statistiche.DataSource = listaStatisticheCosti;
+            gv_statistiche.DataBind();
+
+            up_grigliaCosti.Visible = true;
+            up_grigliaCosti.Update();
+        }
+
+        protected void gv_statistiche_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+          
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                string pathDocumento = e.Row.Cells[22].Text.Trim();
+                bool pregresso = false;
+                bool.TryParse(e.Row.Cells[23].Text.Trim(), out pregresso);
+
+                ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
+                if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
+                {
+
+                    string pathRelativo = pregresso ? ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "") : ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
+
+
+                    string pathCompleto = pathRelativo + pathDocumento;
+                    myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');return false;");
+                }
+                else
+                {
+                    myButton.Attributes.Add("disabled", "true");
+                }
+            }
+            //e.Row.Cells[12].Visible = false;
+            //e.Row.Cells[13].Visible = false;
+
+            for (int i = 10; i < e.Row.Cells.Count; i++)
+                e.Row.Cells[i].Visible = false;
         }
 
         protected void btn_OkInserimentoMultiplo_Click(object sender, EventArgs e)

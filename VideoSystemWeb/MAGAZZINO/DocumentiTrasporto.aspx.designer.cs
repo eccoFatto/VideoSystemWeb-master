@@ -697,6 +697,33 @@ namespace VideoSystemWeb.Magazzino {
         protected global::AjaxControlToolkit.MaskedEditExtender tbIns_Quantita_MaskedEditExtender;
         
         /// <summary>
+        /// Controllo ddlTipoCategoria.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoCategoria;
+        
+        /// <summary>
+        /// Controllo ddlTipoSubCategoria.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoSubCategoria;
+        
+        /// <summary>
+        /// Controllo ddlTipoGruppoMagazzino.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoGruppoMagazzino;
+        
+        /// <summary>
         /// Controllo btnInsertMagazzino.
         /// </summary>
         /// <remarks>

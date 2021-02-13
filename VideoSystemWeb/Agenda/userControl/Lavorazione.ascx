@@ -311,7 +311,7 @@
 
             <div class="w3-row">&nbsp;</div>
 
-            <div style="height: 15%; margin-top: 8%; width:65%;margin-left:auto;margin-right:auto;font-size:1.3em;">
+            <div style="height: 15%; margin-top: 2%; width:65%;margin-left:auto;margin-right:auto;font-size:1.3em;">
                 <div class="w3-third" style="padding: 5px; ">
                     <label style="margin-bottom: 0.2rem;">Totale listino</label><br />
                     <asp:TextBox ID="txt_TotPrezzo_lavorazione" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
@@ -327,6 +327,55 @@
                     <asp:TextBox ID="txt_PercRicavo_lavorazione" runat="server" CssClass="w3-round" Style="padding: 2px; width: 100%;" Enabled="false"></asp:TextBox>
                 </div>
             </div>
+            <div style="height: 5%;width:65%;margin-left:auto;margin-right:auto;font-size:1.3em;">
+                <div class="w3-third" style="padding: 5px; ">
+                    &nbsp;
+                </div>
+               
+                <div class="w3-third w3-center" style="padding: 5px; ">
+                    <asp:Button ID="btn_VisualizzaCosti" runat="server" Text="Visualizza costi" class=" w3-btn w3-white w3-border w3-border-green w3-round-medium" OnClick="btn_VisualizzaCosti_Click" Style="font-size: smaller; padding: 4px 8px"/>
+                </div>
+                
+                <div class="w3-third" style="padding: 5px; ">
+                     &nbsp;
+                </div>
+            </div>
+
+<!-- GRIGLIA COSTI-->
+            <asp:UpdatePanel ID="up_grigliaCosti" runat="server" UpdateMode="Conditional" style=" height:40%;overflow:auto;width:95%">
+                <ContentTemplate>
+                    <div style="width:95%;margin-left:auto;margin-right:auto;font-size:1.3em;">
+                        <asp:GridView ID="gv_statistiche" runat="server" AutoGenerateColumns="True" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;"
+                            CssClass="grid" AllowPaging="False" EmptyDataRowStyle-HorizontalAlign="Center" OnRowDataBound="gv_statistiche_RowDataBound">
+                            <%--<PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>--%>
+                            <Columns>
+                                <%--<asp:BoundField DataField="Cliente" HeaderText="Cliente" HeaderStyle-Width="10%" />--%>
+
+                                <asp:TemplateField ShowHeader="False" HeaderStyle-Width="3%">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
+                                <asp:BoundField DataField="Gruppo" HeaderText="Gruppo" HeaderStyle-Width="15%" />
+                                <asp:BoundField DataField="Fornitore" HeaderText="Fornitore" HeaderStyle-Width="7%" />
+                                <%--<asp:BoundField DataField="CodiceLavoro" HeaderText="Codice" HeaderStyle-Width="7%" />--%>
+                                <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="7%" />
+                                <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="17%" />
+                                <asp:BoundField DataField="Produzione" HeaderText="Produzione" HeaderStyle-Width="14%" />
+                                <asp:BoundField DataField="Contratto" HeaderText="Contratto" HeaderStyle-Width="8%" />
+                                <asp:BoundField DataField="Listino" HeaderText="Listino" DataFormatString="{0:N2}" HeaderStyle-Width="5%" />
+                                <asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:N2}" HeaderStyle-Width="5%" />
+                                <asp:BoundField DataField="Ricavo" HeaderText="Ricavo" DataFormatString="{0:P2}" HeaderStyle-Width="5%" />
+
+                                <%--<asp:BoundField DataField="DocumentoAllegato" HeaderText="" />
+                                <asp:BoundField DataField="Pregresso" HeaderText="" />--%>
+
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </div>
 
 <!-- DETTAGLIO ECONOMICO -->

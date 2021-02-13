@@ -563,6 +563,13 @@
                     <div class="round w3-padding w3-margin">
                         <asp:GridView ID="gvMagazzino" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvMagazzino_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvMagazzino_PageIndexChanging" PageSize="20" DataKeyNames="id">
                             <Columns>
+
+                                <asp:TemplateField HeaderText="" HeaderStyle-Width="30px">
+                                    <ItemTemplate>
+                                        <asp:CheckBox runat="server" id="cbMultiSelect" AutoPostBack="true" Checked='false' Enabled='true' OnCheckedChanged="cbMultiSelect_CheckedChanged"/>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
                                 <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="imgSelectMagazzino" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Magazzino" ImageAlign="AbsMiddle" Height="30px" OnClick="imgSelectMagazzino_Click" />

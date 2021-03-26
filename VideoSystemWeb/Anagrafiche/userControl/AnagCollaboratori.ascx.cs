@@ -152,6 +152,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             DataTable dtCollaboratori = Base_DAL.GetDatiBySql(queryRicerca,ref esito);
             gv_collaboratori.DataSource = dtCollaboratori;
             gv_collaboratori.DataBind();
+            tbTotElementiGriglia.Text = dtCollaboratori.Rows.Count.ToString("###,##0");
         }
 
         protected void ddlQualifiche_SelectedIndexChanged(object sender, EventArgs e)

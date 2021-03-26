@@ -121,6 +121,15 @@ namespace VideoSystemWeb.Articoli.userControl {
         protected global::System.Web.UI.WebControls.Button BtnPulisciCampiRicerca;
         
         /// <summary>
+        /// Controllo tbTotElementiGriglia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbTotElementiGriglia;
+        
+        /// <summary>
         /// Controllo gv_articoli.
         /// </summary>
         /// <remarks>

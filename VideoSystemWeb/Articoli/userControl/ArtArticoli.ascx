@@ -137,6 +137,14 @@
         </div>   
 
         <div class="round">
+            <div class="w3-container w3-center">
+                <table class="w3-table w3-small" style="width:200px">
+                    <tr>
+                        <th>Tot.Elementi</th>
+                        <th><asp:TextBox runat="server" class="w3-input w3-border" ID="tbTotElementiGriglia" Text="" ReadOnly="true" Height="15px" /></th>
+                    </tr>
+                </table>
+            </div>
             <asp:GridView ID="gv_articoli" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid" OnRowDataBound="gv_articoli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_articoli_PageIndexChanging" PageSize="20">
             </asp:GridView>
         </div>

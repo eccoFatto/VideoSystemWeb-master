@@ -363,7 +363,7 @@ namespace VideoSystemWeb.Magazzino
             Session["TaskTable"] = dtDocumentiTrasporto;
             gv_documenti_trasporto.DataSource = Session["TaskTable"];
             gv_documenti_trasporto.DataBind();
-
+            tbTotElementiGriglia.Text = dtDocumentiTrasporto.Rows.Count.ToString("###,##0");
         }
 
         protected void gv_documenti_trasporto_RowDataBound(object sender, GridViewRowEventArgs e)

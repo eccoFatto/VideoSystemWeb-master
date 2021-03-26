@@ -165,6 +165,14 @@
                 </div>
             </div>
             <div class="round">
+                <div class="w3-container w3-center">
+                    <table class="w3-table w3-small" style="width:200px">
+                        <tr>
+                            <th>Tot.Elementi</th>
+                            <th><asp:TextBox runat="server" class="w3-input w3-border" ID="tbTotElementiGriglia" Text="" ReadOnly="true" Height="15px" /></th>
+                        </tr>
+                    </table>
+                </div>
                 <asp:GridView ID="gv_attrezzature" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_attrezzature_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_attrezzature_PageIndexChanging" PageSize="20" HeaderStyle-HorizontalAlign="Center" RowStyle-HorizontalAlign="Center">
                     <Columns>
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">

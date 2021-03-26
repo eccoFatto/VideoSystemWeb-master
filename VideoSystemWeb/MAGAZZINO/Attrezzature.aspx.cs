@@ -224,6 +224,7 @@ namespace VideoSystemWeb.MAGAZZINO
             gv_attrezzature.DataSource = dtAttrezzature;
             gv_attrezzature.DataBind();
             //gv_attrezzature.Columns[1].Visible = false;
+            tbTotElementiGriglia.Text = dtAttrezzature.Rows.Count.ToString("###,##0");
 
         }
 

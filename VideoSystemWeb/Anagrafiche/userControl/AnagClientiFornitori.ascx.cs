@@ -397,6 +397,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             DataTable dtAziende = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gv_aziende.DataSource = dtAziende;
             gv_aziende.DataBind();
+            tbTotElementiGriglia.Text = dtAziende.Rows.Count.ToString("###,##0");
 
         }
 

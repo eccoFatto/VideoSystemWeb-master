@@ -318,7 +318,7 @@ namespace VideoSystemWeb.Articoli.userControl
             DataTable dtArticoli = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gv_articoli.DataSource = dtArticoli;
             gv_articoli.DataBind();
-
+            tbTotElementiGriglia.Text = dtArticoli.Rows.Count.ToString("###,##0");
         }
 
         protected void gv_articoli_RowDataBound(object sender, GridViewRowEventArgs e)

@@ -238,45 +238,48 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             DatiScadenzario scadenzaSelezionata = PopolaPopupModifica(idScadenzaSelezionata, listaDatiFattura, ref esito); // popolo il popup fuori dallo switch perché mi i valori mi servono pure per l'eliminazione rata
 
-            switch (e.CommandName)
+            if (scadenzaSelezionata != null)
             {
-                case "modifica":
-                    if (scadenzaSelezionata.IsImportoEstinto == "Pagata")
-                    {
-                        btnAcconto.CssClass += " w3-disabled";
-                        btnSaldoTotale.CssClass += " w3-disabled";
+                switch (e.CommandName)
+                {
+                    case "modifica":
+                        if (scadenzaSelezionata.IsImportoEstinto == "Pagata")
+                        {
+                            btnAcconto.CssClass += " w3-disabled";
+                            btnSaldoTotale.CssClass += " w3-disabled";
 
-                        btnAcconto.ToolTip = "La rata risulta saldata. Non è possibile registrare un acconto";
-                        btnSaldoTotale.ToolTip = "La rata risulta saldata. Non è possibile effettuare il saldo";
-                    }
-                    else
-                    {
-                        btnAcconto.CssClass = btnAcconto.CssClass.Replace("w3-disabled", "");
-                        btnSaldoTotale.CssClass += btnSaldoTotale.CssClass.Replace("w3-disabled", "");
+                            btnAcconto.ToolTip = "La rata risulta saldata. Non è possibile registrare un acconto";
+                            btnSaldoTotale.ToolTip = "La rata risulta saldata. Non è possibile effettuare il saldo";
+                        }
+                        else
+                        {
+                            btnAcconto.CssClass = btnAcconto.CssClass.Replace("w3-disabled", "");
+                            btnSaldoTotale.CssClass += btnSaldoTotale.CssClass.Replace("w3-disabled", "");
 
-                        btnAcconto.ToolTip = string.Empty;
-                        btnSaldoTotale.ToolTip = string.Empty;
-                    }
+                            btnAcconto.ToolTip = string.Empty;
+                            btnSaldoTotale.ToolTip = string.Empty;
+                        }
 
-                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaScadenza", script: "javascript: mostraScadenza('" + idScadenzaSelezionata + "');", addScriptTags: true);
+                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaScadenza", script: "javascript: mostraScadenza('" + idScadenzaSelezionata + "');", addScriptTags: true);
 
-                    break;
-                case "elimina":
-                    List<DatiScadenzario> listaFigli = CaricaListaFigli(scadenzaSelezionata);
-                    decimal maxImportoIvaDaVersare = listaFigli.Sum(x => x.ImportoAvereIva + x.ImportoDareIva);
-                    decimal importoScadenzaFigli = maxImportoIvaDaVersare;
+                        break;
+                    case "elimina":
+                        List<DatiScadenzario> listaFigli = CaricaListaFigli(scadenzaSelezionata);
+                        decimal maxImportoIvaDaVersare = listaFigli.Sum(x => x.ImportoAvereIva + x.ImportoDareIva);
+                        decimal importoScadenzaFigli = maxImportoIvaDaVersare;
 
-                    ViewState[VIEWSTATE_TIPOMODIFICA] = TipoModifica.IMPORTO_ZERO;
+                        ViewState[VIEWSTATE_TIPOMODIFICA] = TipoModifica.IMPORTO_ZERO;
 
-                    lblMessaggioPopup.Text = "La scadenza selezionata verrà eliminata.<br/>Tutte le rate precedentemente immesse e legate alla scadenza selezionata verranno sostituite da una rata unica di importo pari a <b>" + importoScadenzaFigli + " €</b>, con scadenza <b>" + ((DateTime)scadenzaSelezionata.DataScadenza).ToString("dd/MM/yyyy") + "</b>"; 
-                    ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriPanelModificaScadenzaConFigli", script: "javascript: document.getElementById('" + panelModificaScadenzaConFigli.ClientID + "').style.display='block'", addScriptTags: true);
+                        lblMessaggioPopup.Text = "La scadenza selezionata verrà eliminata.<br/>Tutte le rate precedentemente immesse e legate alla scadenza selezionata verranno sostituite da una rata unica di importo pari a <b>" + importoScadenzaFigli + " €</b>, con scadenza <b>" + ((DateTime)scadenzaSelezionata.DataScadenza).ToString("dd/MM/yyyy") + "</b>";
+                        ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriPanelModificaScadenzaConFigli", script: "javascript: document.getElementById('" + panelModificaScadenzaConFigli.ClientID + "').style.display='block'", addScriptTags: true);
 
-                    break;
-                case "visualizzaDoc":
-                    int idDatiProtocollo = listaDatiFattura.ElementAt(0).IdDatiProtocollo;
-                    ApriDocumento(idDatiProtocollo);
+                        break;
+                    case "visualizzaDoc":
+                        int idDatiProtocollo = listaDatiFattura.ElementAt(0).IdDatiProtocollo;
+                        ApriDocumento(idDatiProtocollo);
 
-                    break;
+                        break;
+                }
             }
         }
 
@@ -367,53 +370,56 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             DatiScadenzario scadenza = Scadenzario_BLL.Instance.GetDatiScadenzarioById(ref esito, idScadenzaSelezionata);
 
-            decimal importoDocumentoDare = listaDatiFattura.Sum(x => x.ImportoDare);
-            decimal importoDocumentoDareIva = listaDatiFattura.Sum(x => x.ImportoDareIva);
-            decimal importoDocumentoAvere = listaDatiFattura.Sum(x => x.ImportoAvere);
-            decimal importoDocumentoAvereIva = listaDatiFattura.Sum(x => x.ImportoAvereIva);
-
-            if (importoDocumentoDare > 0) // FORNITORE
+            if (scadenza != null)
             {
-                lbl_VersatoRiscosso.Text = "Versato netto";
-                lbl_VersatoRiscossoIVA.Text = lbl_VersatoRiscossoAccontoIVA.Text = "Versato + IVA";
-                ddl_Tipo.SelectedValue = "Fornitore";
 
-                lbl_DataVersamentoRiscossione.Text = "Data versamento";
-                txt_DataVersamentoRiscossione.Text = scadenza.DataVersamento == null ? string.Empty : ((DateTime)scadenza.DataVersamento).ToString("dd/MM/yyyy");
+                decimal importoDocumentoDare = listaDatiFattura.Sum(x => x.ImportoDare);
+                decimal importoDocumentoDareIva = listaDatiFattura.Sum(x => x.ImportoDareIva);
+                decimal importoDocumentoAvere = listaDatiFattura.Sum(x => x.ImportoAvere);
+                decimal importoDocumentoAvereIva = listaDatiFattura.Sum(x => x.ImportoAvereIva);
+
+                if (importoDocumentoDare > 0) // FORNITORE
+                {
+                    lbl_VersatoRiscosso.Text = "Versato netto";
+                    lbl_VersatoRiscossoIVA.Text = lbl_VersatoRiscossoAccontoIVA.Text = "Versato + IVA";
+                    ddl_Tipo.SelectedValue = "Fornitore";
+
+                    lbl_DataVersamentoRiscossione.Text = "Data versamento";
+                    txt_DataVersamentoRiscossione.Text = scadenza.DataVersamento == null ? string.Empty : ((DateTime)scadenza.DataVersamento).ToString("dd/MM/yyyy");
+                }
+                else // CLIENTE
+                {
+                    lbl_VersatoRiscosso.Text = "Riscosso netto";
+                    lbl_VersatoRiscossoIVA.Text = lbl_VersatoRiscossoAccontoIVA.Text = "Riscosso + IVA";
+                    ddl_Tipo.SelectedValue = "Cliente";
+
+                    lbl_DataVersamentoRiscossione.Text = "Data riscossione";
+                    txt_DataVersamentoRiscossione.Text = scadenza.DataRiscossione == null ? string.Empty : ((DateTime)scadenza.DataRiscossione).ToString("dd/MM/yyyy");
+                }
+
+                txt_ClienteFornitore.Text = scadenza.RagioneSocialeClienteFornitore;
+                txt_DataDocumento.Text = scadenza.DataFattura.ToString();// scadenza.DataProtocollo.ToString();
+                txt_NumeroDocumento.Text = scadenza.ProtocolloRiferimento;
+                txt_Imponibile.Text = (scadenza.ImportoDare + scadenza.ImportoAvere).ToString("###,##0.00");
+                txt_ImponibileIva.Text = (scadenza.ImportoDareIva + scadenza.ImportoAvereIva).ToString("###,##0.00");
+
+                decimal versatoOriscosso = scadenza.ImportoVersato + scadenza.ImportoRiscosso;
+                txt_Versato.Text = versatoOriscosso.ToString("###,##0.00");
+
+                decimal versatoOriscossoIva = scadenza.ImportoVersatoIva + scadenza.ImportoRiscossoIva;
+                txt_VersatoIva.Text = versatoOriscossoIva.ToString("###,##0.00");
+
+                txt_IvaModifica.Text = scadenza.Iva.ToString();
+                txt_Totale.Text = ((scadenza.ImportoDare + scadenza.ImportoAvere) - (scadenza.ImportoVersato + scadenza.ImportoRiscosso)).ToString("###,##0.00");
+                txt_IvaModifica.Text = Math.Truncate(scadenza.Iva).ToString();
+                txt_TotaleIva.Text = ((scadenza.ImportoDareIva + scadenza.ImportoAvereIva) - versatoOriscossoIva).ToString("###,##0.00");
+                txt_TotaleDocumento.Text = (importoDocumentoDare + importoDocumentoAvere).ToString("###,##0.00");
+                txt_TotDocumentoIva.Text = (importoDocumentoDareIva + importoDocumentoAvereIva).ToString("###,##0.00");
+                txt_DataProtocolloModifica.Text = scadenza.DataProtocollo != null ? ((DateTime)scadenza.DataProtocollo).ToString("dd/MM/yyyy") : "";
+                txt_ScadenzaDocumento.Text = scadenza.DataScadenza != null ? ((DateTime)scadenza.DataScadenza).ToString("dd/MM/yyyy") : "";
+
+                ddl_BancaModifica.SelectedValue = scadenza.IdTipoBanca.ToString();
             }
-            else // CLIENTE
-            {
-                lbl_VersatoRiscosso.Text = "Riscosso netto";
-                lbl_VersatoRiscossoIVA.Text = lbl_VersatoRiscossoAccontoIVA.Text = "Riscosso + IVA";
-                ddl_Tipo.SelectedValue = "Cliente";
-
-                lbl_DataVersamentoRiscossione.Text = "Data riscossione";
-                txt_DataVersamentoRiscossione.Text = scadenza.DataRiscossione == null ? string.Empty : ((DateTime)scadenza.DataRiscossione).ToString("dd/MM/yyyy");
-            }
-
-            txt_ClienteFornitore.Text = scadenza.RagioneSocialeClienteFornitore;
-            txt_DataDocumento.Text = scadenza.DataFattura.ToString();// scadenza.DataProtocollo.ToString();
-            txt_NumeroDocumento.Text = scadenza.ProtocolloRiferimento;
-            txt_Imponibile.Text = (scadenza.ImportoDare + scadenza.ImportoAvere).ToString("###,##0.00");
-            txt_ImponibileIva.Text = (scadenza.ImportoDareIva + scadenza.ImportoAvereIva).ToString("###,##0.00");
-
-            decimal versatoOriscosso = scadenza.ImportoVersato + scadenza.ImportoRiscosso;
-            txt_Versato.Text = versatoOriscosso.ToString("###,##0.00");
-
-            decimal versatoOriscossoIva = scadenza.ImportoVersatoIva + scadenza.ImportoRiscossoIva;
-            txt_VersatoIva.Text = versatoOriscossoIva.ToString("###,##0.00");
-
-            txt_IvaModifica.Text = scadenza.Iva.ToString();
-            txt_Totale.Text = ((scadenza.ImportoDare + scadenza.ImportoAvere) - (scadenza.ImportoVersato + scadenza.ImportoRiscosso)).ToString("###,##0.00");
-            txt_IvaModifica.Text = Math.Truncate(scadenza.Iva).ToString();
-            txt_TotaleIva.Text = ((scadenza.ImportoDareIva + scadenza.ImportoAvereIva) - versatoOriscossoIva).ToString("###,##0.00"); 
-            txt_TotaleDocumento.Text = (importoDocumentoDare + importoDocumentoAvere).ToString("###,##0.00");
-            txt_TotDocumentoIva.Text = (importoDocumentoDareIva + importoDocumentoAvereIva).ToString("###,##0.00");
-            txt_DataProtocolloModifica.Text = scadenza.DataProtocollo != null ? ((DateTime)scadenza.DataProtocollo).ToString("dd/MM/yyyy") : "";
-            txt_ScadenzaDocumento.Text = scadenza.DataScadenza != null ? ((DateTime)scadenza.DataScadenza).ToString("dd/MM/yyyy") : "";
-
-            ddl_BancaModifica.SelectedValue = scadenza.IdTipoBanca.ToString();
-
             return scadenza;
         }
 

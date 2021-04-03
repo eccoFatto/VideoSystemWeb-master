@@ -291,15 +291,15 @@ namespace VideoSystemWeb.Agenda.userControl
                 else if (statoEvento == Stato.Instance.STATO_LAVORAZIONE)
                 {
                     // panelAppuntamenti.Enabled = false;
-                    txt_DataInizioLavorazione.Enabled = 
-                    txt_DataFineLavorazione.Enabled = 
+                    txt_DataInizioLavorazione.Enabled =
+                    txt_DataFineLavorazione.Enabled =
                     ddl_Risorse.Enabled =
                     ddl_Tipologie.Enabled =
                     ddl_Clienti.Enabled =
                     txt_Produzione.Enabled =
-                    txt_Lavorazione.Enabled =
-                    tb_Nota.Enabled = false;
+                    txt_Lavorazione.Enabled = false;
 
+                    tb_Nota.Enabled = 
                     txt_Indirizzo.Enabled =
                     txt_Luogo.Enabled = 
                     txt_DurataViaggioAndata.Enabled =
@@ -316,9 +316,9 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_Tipologie.Enabled =
                     ddl_Clienti.Enabled =
                     txt_Produzione.Enabled =
-                    txt_Lavorazione.Enabled =
-                    tb_Nota.Enabled = false;
+                    txt_Lavorazione.Enabled = false;
 
+                    tb_Nota.Enabled = 
                     txt_Indirizzo.Enabled =
                     txt_Luogo.Enabled =
                     txt_DurataViaggioAndata.Enabled =

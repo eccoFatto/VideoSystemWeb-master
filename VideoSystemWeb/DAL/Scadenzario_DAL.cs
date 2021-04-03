@@ -620,7 +620,7 @@ namespace VideoSystemWeb.DAL
 
         public DatiScadenzario GetDatiScadenzarioById(ref Esito esito, int id)
         {
-            DatiScadenzario scadenza = new DatiScadenzario();
+            DatiScadenzario scadenza = null;
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -637,6 +637,8 @@ namespace VideoSystemWeb.DAL
                                 sda.Fill(dt);
                                 if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
                                 {
+                                    scadenza = new DatiScadenzario(); 
+
                                     scadenza.Id = dt.Rows[0].Field<int>("id");
                                     scadenza.IdPadre = dt.Rows[0].Field<int?>("idPadre");
                                     scadenza.IdDatiProtocollo = dt.Rows[0].Field<int>("idDatiProtocollo");

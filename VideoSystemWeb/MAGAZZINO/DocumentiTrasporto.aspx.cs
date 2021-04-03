@@ -16,7 +16,7 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iTextSharp;
-
+using System.Collections;
 namespace VideoSystemWeb.Magazzino
 {
     public partial class DocumentiTrasporto : BasePage
@@ -363,7 +363,7 @@ namespace VideoSystemWeb.Magazzino
             Session["TaskTable"] = dtDocumentiTrasporto;
             gv_documenti_trasporto.DataSource = Session["TaskTable"];
             gv_documenti_trasporto.DataBind();
-
+            tbTotElementiGriglia.Text = dtDocumentiTrasporto.Rows.Count.ToString("###,##0");
         }
 
         protected void gv_documenti_trasporto_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -834,6 +834,8 @@ namespace VideoSystemWeb.Magazzino
 
         protected void btnRicercaMagazzino_Click(object sender, EventArgs e)
         {
+            Session[SessionManager.LISTA_ATTREZZATURE_SELEZIONATE_DOC_TRASPORTO] = null;
+            
             //queryRicerca = "SELECT ID, COD_VS, SERIALE, DESCRIZIONE + ' ' + MODELLO as DESCRIZIONE FROM mag_attrezzature WHERE descrizione LIKE '%@descrizione%' AND COD_VS LIKE '%@codiceVideoSystem%' AND SERIALE LIKE '%@seriale%' @campiTendina ";
             string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_ATTREZZATURE"];
             queryRicerca = queryRicerca.Replace("@codiceVS", tbSearch_CodiceVideosystem.Text.Trim().Replace("'", "''"));
@@ -867,6 +869,9 @@ namespace VideoSystemWeb.Magazzino
 
         protected void btnInsAttrezzaturaMagazzino_Click(object sender, EventArgs e)
         {
+            Session[SessionManager.LISTA_ATTREZZATURE_SELEZIONATE_DOC_TRASPORTO] = null;
+            gvMagazzino.DataSource = null;
+            gvMagazzino.DataBind();
             PanelMagazzino.Visible = true;
         }
 
@@ -916,10 +921,19 @@ namespace VideoSystemWeb.Magazzino
                 AttrezzatureMagazzino attrezzaturaMagazzino = AttrezzatureMagazzino_BLL.Instance.getAttrezzaturaById(ref esito, id);
                 if (esito.Codice == 0)
                 {
+                    string codvs = "";
+                    if (!string.IsNullOrEmpty(attrezzaturaMagazzino.Cod_vs)) codvs = attrezzaturaMagazzino.Cod_vs;
+                    string seriale = "";
+                    if (!string.IsNullOrEmpty(attrezzaturaMagazzino.Seriale)) seriale = attrezzaturaMagazzino.Seriale;
+                    string descrizione = "";
+                    if (!string.IsNullOrEmpty(attrezzaturaMagazzino.Descrizione)) descrizione = attrezzaturaMagazzino.Descrizione;
+                    string modello = "";
+                    if (!string.IsNullOrEmpty(attrezzaturaMagazzino.Modello)) modello = attrezzaturaMagazzino.Modello;
+
                     AttrezzatureTrasporto attrezzaturaTrasporto = new AttrezzatureTrasporto();
-                    attrezzaturaTrasporto.Cod_vs = attrezzaturaMagazzino.Cod_vs;
-                    attrezzaturaTrasporto.Seriale = attrezzaturaMagazzino.Seriale;
-                    attrezzaturaTrasporto.Descrizione = attrezzaturaMagazzino.Descrizione + " " + attrezzaturaMagazzino.Modello;
+                    attrezzaturaTrasporto.Cod_vs = codvs;
+                    attrezzaturaTrasporto.Seriale = seriale;
+                    attrezzaturaTrasporto.Descrizione = descrizione + " " + modello;
                     attrezzaturaTrasporto.IdMagAttrezzature = attrezzaturaMagazzino.Id;
                     //attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(hf_idDocTras.Value);
                     attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(ViewState["idDocumentoTrasporto"]);
@@ -1378,6 +1392,121 @@ namespace VideoSystemWeb.Magazzino
             string idSubCategoria = ddlTipoSubCategoria.SelectedItem.Value;
             if (string.IsNullOrEmpty(idSubCategoria)) idSubCategoria = "0";
             riempiComboGruppo(Convert.ToInt32(idSubCategoria));
+        }
+
+        protected void cbMultiSelect_CheckedChanged(object sender, EventArgs e)
+        {
+            Hashtable htAttrezzatureSelezionate = new Hashtable();
+            if (Session[SessionManager.LISTA_ATTREZZATURE_SELEZIONATE_DOC_TRASPORTO] != null) { 
+                htAttrezzatureSelezionate = (Hashtable)Session[SessionManager.LISTA_ATTREZZATURE_SELEZIONATE_DOC_TRASPORTO];
+            }
+            GridViewRow row = (GridViewRow)(((CheckBox)sender).NamingContainer);
+            string idSelezionato = row.Cells[2].Text;
+
+            CheckBox chkSelect = (CheckBox)sender;
+            if (chkSelect.Checked)
+            {
+                try
+                {
+                    if (!htAttrezzatureSelezionate.ContainsKey(idSelezionato))
+                    {
+                        Esito esito = new Esito();
+                        AttrezzatureMagazzino attrezzatura = AttrezzatureMagazzino_BLL.Instance.getAttrezzaturaById(ref esito,Convert.ToInt32(idSelezionato));
+                        if (esito.Codice == 0)
+                        {
+                            htAttrezzatureSelezionate.Add(idSelezionato, attrezzatura.Descrizione + " " + attrezzatura.Cod_vs + "|" + attrezzatura.Modello);
+                            Session[SessionManager.LISTA_ATTREZZATURE_SELEZIONATE_DOC_TRASPORTO] = htAttrezzatureSelezionate;
+                        }
+                        else
+                        {
+                            basePage.ShowError(esito.Descrizione);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    basePage.ShowError(ex.Message);
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    htAttrezzatureSelezionate.Remove(idSelezionato);
+                    Session[SessionManager.LISTA_ATTREZZATURE_SELEZIONATE_DOC_TRASPORTO] = htAttrezzatureSelezionate;
+                }
+                catch (Exception ex)
+                {
+
+                    basePage.ShowError(ex.Message);
+                }
+            }
+
+        }
+
+        protected void btnInseMagazzinoSelezionati_Click(object sender, EventArgs e)
+        {
+            Hashtable htAttrezzatureSelezionate = new Hashtable();
+            if (Session[SessionManager.LISTA_ATTREZZATURE_SELEZIONATE_DOC_TRASPORTO] != null)
+            {
+                Esito esito = new Esito();
+                htAttrezzatureSelezionate = (Hashtable)Session[SessionManager.LISTA_ATTREZZATURE_SELEZIONATE_DOC_TRASPORTO];
+                foreach (DictionaryEntry s in htAttrezzatureSelezionate)
+                {
+                    System.Web.UI.WebControls.ListItem li = new System.Web.UI.WebControls.ListItem(s.Value.ToString(), s.Key.ToString());
+                    try
+                    {
+                        int id = Convert.ToInt32(li.Value);
+                        
+                        AttrezzatureMagazzino attrezzaturaMagazzino = AttrezzatureMagazzino_BLL.Instance.getAttrezzaturaById(ref esito, id);
+                        if (esito.Codice == 0)
+                        {
+
+                            string codvs = "";
+                            if (!string.IsNullOrEmpty(attrezzaturaMagazzino.Cod_vs)) codvs = attrezzaturaMagazzino.Cod_vs;
+                            string seriale = "";
+                            if (!string.IsNullOrEmpty(attrezzaturaMagazzino.Seriale)) seriale = attrezzaturaMagazzino.Seriale;
+                            string descrizione = "";
+                            if (!string.IsNullOrEmpty(attrezzaturaMagazzino.Descrizione)) descrizione = attrezzaturaMagazzino.Descrizione;
+                            string modello = "";
+                            if (!string.IsNullOrEmpty(attrezzaturaMagazzino.Modello)) modello = attrezzaturaMagazzino.Modello;
+
+                            AttrezzatureTrasporto attrezzaturaTrasporto = new AttrezzatureTrasporto();
+                            attrezzaturaTrasporto.Cod_vs = codvs;
+                            attrezzaturaTrasporto.Seriale = seriale;
+                            attrezzaturaTrasporto.Descrizione = descrizione + " " + modello;
+                            attrezzaturaTrasporto.IdMagAttrezzature = attrezzaturaMagazzino.Id;
+                            //attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(hf_idDocTras.Value);
+                            attrezzaturaTrasporto.IdDocumentoTrasporto = Convert.ToInt64(ViewState["idDocumentoTrasporto"]);
+                            attrezzaturaTrasporto.Quantita = Convert.ToInt32(tbIns_Quantita.Text.Trim());
+                            int idAttrezzaturaTrasportoNew = DocumentiTrasporto_BLL.Instance.CreaAttrezzaturaTrasporto(attrezzaturaTrasporto, ref esito);
+                            if (esito.Codice != 0)
+                            {
+                                basePage.ShowError(esito.Descrizione);
+                            }
+                        }
+                        else
+                        {
+                            basePage.ShowError(esito.Descrizione);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        basePage.ShowError(ex.Message);
+                    }
+
+                }
+                if (esito.Codice == 0) { 
+
+                    List<AttrezzatureTrasporto> listaAttrezzature = DocumentiTrasporto_BLL.Instance.getAttrezzatureTrasportoByIdDocumentoTrasporto(ref esito, Convert.ToInt64(ViewState["idDocumentoTrasporto"]));
+                    gv_attrezzature.DataSource = listaAttrezzature;
+                    gv_attrezzature.DataBind();
+                    PanelMagazzino.Visible = false;
+                }
+            }
         }
     }
 }

@@ -35,6 +35,8 @@ namespace VideoSystemWeb.BLL
         public static string LISTA_COLLABORATORI_PER_INVIO_WHATSAPP = "LISTA_COLLABORATORI_PER_INVIO_WHATSAPP";
         public static string LISTA_CLIENTIFORNITORI_PER_INVIO_WHATSAPP = "LISTA_CLIENTIFORNITORI_PER_INVIO_WHATSAPP";
 
+        public static string LISTA_ATTREZZATURE_SELEZIONATE_DOC_TRASPORTO = "LISTA_ATTREZZATURE_SELEZIONATE_DOC_TRASPORTO";
+
         public static DatiAgenda EventoSelezionato
         {
             get

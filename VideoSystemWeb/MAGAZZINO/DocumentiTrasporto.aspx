@@ -102,6 +102,9 @@
             $("#<%=tbSearch_DescMagazzino.ClientID%>").val('');
             $("#<%=tbSearch_Seriale.ClientID%>").val('');
             $("#<%=tbIns_Quantita.ClientID%>").val('1');
+            $("#<%=ddlTipoCategoria.ClientID%>").val('');
+            $("#<%=ddlTipoSubCategoria.ClientID%>").val('');
+            $("#<%=ddlTipoGruppoMagazzino.ClientID%>").val('');
         }
 
         function associaCliente(idCli, cliente) {
@@ -205,6 +208,14 @@
             </div>
 
             <div class="round">
+                <div class="w3-container w3-center">
+                    <table class="w3-table w3-small" style="width:200px">
+                        <tr>
+                            <th>Tot.Elementi</th>
+                            <th><asp:TextBox runat="server" class="w3-input w3-border" ID="tbTotElementiGriglia" Text="" ReadOnly="true" Height="15px" /></th>
+                        </tr>
+                    </table>
+                </div>
                 <asp:GridView ID="gv_documenti_trasporto" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_documenti_trasporto_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_documenti_trasporto_PageIndexChanging" PageSize="20"  AllowSorting="true" OnSorting="gv_documenti_trasporto_Sorting" AutoGenerateColumns="false" DataKeyNames="id">
                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>
                     <Columns>
@@ -561,8 +572,16 @@
 
 
                     <div class="round w3-padding w3-margin">
+                        <asp:Button ID="btnInseMagazzinoSelezionati" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnInseMagazzinoSelezionati_Click" Text="Inserisci Selezionati" />
                         <asp:GridView ID="gvMagazzino" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvMagazzino_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvMagazzino_PageIndexChanging" PageSize="20" DataKeyNames="id">
                             <Columns>
+
+                                <asp:TemplateField HeaderText="" HeaderStyle-Width="30px">
+                                    <ItemTemplate>
+                                        <asp:CheckBox runat="server" id="cbMultiSelect" AutoPostBack="true" Checked='false' Enabled='true' OnCheckedChanged="cbMultiSelect_CheckedChanged"/>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+
                                 <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="imgSelectMagazzino" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Magazzino" ImageAlign="AbsMiddle" Height="30px" OnClick="imgSelectMagazzino_Click" />

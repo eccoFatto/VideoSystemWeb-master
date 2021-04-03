@@ -441,7 +441,7 @@ namespace VideoSystemWeb.Protocollo
             //gv_protocolli.DataSource = dtProtocolli;
             gv_protocolli.DataSource = Session["TaskTable"];
             gv_protocolli.DataBind();
-
+            tbTotElementiGriglia.Text = dtProtocolli.Rows.Count.ToString("###,##0");
         }
 
         protected void gv_protocolli_RowDataBound(object sender, GridViewRowEventArgs e)

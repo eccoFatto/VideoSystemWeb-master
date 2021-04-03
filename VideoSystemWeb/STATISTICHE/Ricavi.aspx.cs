@@ -172,6 +172,7 @@ namespace VideoSystemWeb.STATISTICHE
         {
             gv_statistiche.DataSource = null;
             gv_statistiche.DataBind();
+            tbTotElementiGriglia.Text = 0.ToString("###,##0");
         }
 
         protected void btnEseguiStatistica_Click(object sender, EventArgs e)
@@ -205,6 +206,8 @@ namespace VideoSystemWeb.STATISTICHE
 
             gv_statistiche.DataSource = listaStatisticheRicavi;
             gv_statistiche.DataBind();
+
+            tbTotElementiGriglia.Text = listaStatisticheRicavi.Count.ToString("###,##0");
         }
 
         //protected void btn_aggiornaFiltri_Click(object sender, EventArgs e)

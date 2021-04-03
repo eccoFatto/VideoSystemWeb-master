@@ -268,6 +268,7 @@ namespace VideoSystemWeb.STATISTICHE
 
             gv_statistiche.DataSource = listaStatisticheCosti;
             gv_statistiche.DataBind();
+            tbTotElementiGriglia.Text = listaStatisticheCosti.Count.ToString("###,##0");
         }
 
         
@@ -275,6 +276,7 @@ namespace VideoSystemWeb.STATISTICHE
         {
             gv_statistiche.DataSource = null;
             gv_statistiche.DataBind();
+            tbTotElementiGriglia.Text = 0.ToString("###,##0");
         }
 
         protected void gv_statistiche_RowDataBound(object sender, GridViewRowEventArgs e)

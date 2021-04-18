@@ -73,6 +73,8 @@
             $("#<%=ddlTipoPosizioneMagazzino.ClientID%>").val('');
             $("#<%=tbMarca.ClientID%>").val('');
             $("#<%=tbModello.ClientID%>").val('');
+            $("#<%=tbDataAcquisto.ClientID%>").val('');
+            $("#<%=tbDataAcquistoA.ClientID%>").val('');
 <%--        $("#<%=cbDisponibile.ClientID%>").val('');
             $("#<%=cbGaranzia.ClientID%>").val('');--%>
         }
@@ -119,13 +121,22 @@
 
             </div>
             <div class="w3-row-padding">
-                <div class="w3-half">
+                <div class="w3-third">
                     <label>Marca</label>
                     <asp:TextBox ID="tbMarca" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-                <div class="w3-half">
+                <div class="w3-third">
                     <label>Modello</label>
                     <asp:TextBox ID="tbModello" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                </div>
+                <div class="w3-third" style="position:relative;">
+                    <label>Data Acquisto (Da-A)</label>
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="position:relative;"><asp:TextBox ID="tbDataAcquisto" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox></td>
+                            <td style="position:relative;"><asp:TextBox ID="tbDataAcquistoA" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox></td>
+                        </tr>
+                    </table>
                 </div>
 <%--                <div class="w3-quarter">
                     <label>Garanzia</label><br />

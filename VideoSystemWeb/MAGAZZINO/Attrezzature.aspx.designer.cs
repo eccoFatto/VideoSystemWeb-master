@@ -112,6 +112,24 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.TextBox tbModello;
         
         /// <summary>
+        /// Controllo tbDataAcquisto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbDataAcquisto;
+        
+        /// <summary>
+        /// Controllo tbDataAcquistoA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbDataAcquistoA;
+        
+        /// <summary>
         /// Controllo btnRicercaAttrezzatura.
         /// </summary>
         /// <remarks>

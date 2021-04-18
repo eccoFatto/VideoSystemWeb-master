@@ -122,6 +122,9 @@ namespace VideoSystemWeb.MAGAZZINO
                 }
 
             }
+
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + tbDataAcquisto.ClientID + "', '" + tbDataAcquistoA.ClientID + "');", true);
+
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
 
         }
@@ -213,11 +216,29 @@ namespace VideoSystemWeb.MAGAZZINO
 
 
             queryRicerca = queryRicerca.Replace("@campiTendina", queryRicercaCampiDropDown.Trim());
-            
+
             //queryRicerca = queryRicerca.Replace("@categoria", ddlTipoCategoria.SelectedItem.Text.Trim().Replace("'", "''"));
             //queryRicerca = queryRicerca.Replace("@subcategoria", ddlTipoSubCategoria.SelectedItem.Text.Trim().Replace("'", "''"));
             //queryRicerca = queryRicerca.Replace("@posizione", ddlTipoPosizioneMagazzino.SelectedItem.Text.Trim().Replace("'", "''"));
             //queryRicerca = queryRicerca.Replace("@gruppo", ddlTipoGruppoMagazzino.SelectedItem.Text.Trim().Replace("'", "''"));
+
+
+            string queryRicercaDataAcquisto = "";
+            if (!string.IsNullOrEmpty(tbDataAcquisto.Text))
+            {
+                DateTime dataDa = Convert.ToDateTime(tbDataAcquisto.Text);
+                //DateTime dataA = DateTime.Now;
+                DateTime dataA = dataDa;
+                queryRicercaDataAcquisto = " and data_acquisto between '@dataDa' and '@DataA' ";
+                if (!string.IsNullOrEmpty(tbDataAcquistoA.Text))
+                {
+                    dataA = Convert.ToDateTime(tbDataAcquistoA.Text);
+                }
+                queryRicercaDataAcquisto = queryRicercaDataAcquisto.Replace("@dataDa", dataDa.ToString("yyyy-MM-ddT00:00:00.000"));
+                queryRicercaDataAcquisto = queryRicercaDataAcquisto.Replace("@DataA", dataA.ToString("yyyy-MM-ddT23:59:59.999"));
+            }
+            queryRicerca = queryRicerca.Replace("@dataAcquisto", queryRicercaDataAcquisto);
+
 
             Esito esito = new Esito();
             DataTable dtAttrezzature = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
@@ -657,5 +678,7 @@ namespace VideoSystemWeb.MAGAZZINO
             if (string.IsNullOrEmpty(idSubCategoria)) idSubCategoria = "0";
             riempiComboGruppo(Convert.ToInt32(idSubCategoria));
         }
+
+
     }
 }

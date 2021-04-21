@@ -860,6 +860,9 @@ namespace VideoSystemWeb.Magazzino
                 queryRicercaCampiDropDown += " and gruppo.id=" + ddlTipoGruppoMagazzino.SelectedValue + " ";
             }
             queryRicerca = queryRicerca.Replace("@campiTendina", queryRicercaCampiDropDown.Trim());
+
+            queryRicerca = queryRicerca.Replace("@dataAcquisto", "");
+
             Esito esito = new Esito();
             DataTable dtMagazzino = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
             gvMagazzino.DataSource = dtMagazzino;

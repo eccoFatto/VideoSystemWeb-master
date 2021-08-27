@@ -22595,3 +22595,11 @@ Sintassi non corretta in prossimità della parola chiave 'by'.
 2021-02-13 12:45:31,436 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2021-02-13 12:47:57,064 [7] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
 2021-02-13 13:01:04,142 [8] INFO VideoSystemWeb.Login - UTENTE nicola Loggato!
+2021-08-27 10:43:34,400 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-08-27 10:48:39,614 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-08-27 11:03:40,945 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-08-27 11:11:05,018 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-08-27 11:14:21,803 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-08-27 11:31:20,011 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-08-27 11:35:58,267 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-08-27 11:46:17,294 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

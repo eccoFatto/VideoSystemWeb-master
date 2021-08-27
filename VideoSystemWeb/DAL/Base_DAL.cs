@@ -711,7 +711,8 @@ namespace VideoSystemWeb.DAL
                     nomeSP = "DeleteTipoSottogruppo";
                     break;
                 case EnumTipologiche.TIPO_COLONNE_AGENDA:
-                    nomeSP = "DeleteTipoColonneAgenda";
+                    //nomeSP = "DeleteTipoColonneAgenda";
+                    nomeSP = "RemoveTipoColonneAgenda";
                     break;
                 case EnumTipologiche.TIPO_TENDER:
                     nomeSP = "DeleteTipoTender";

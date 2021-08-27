@@ -440,24 +440,33 @@ namespace VideoSystemWeb.Magazzino
             //tbMod_Provincia.ReadOnly = attivaModifica;
             tbMod_Trasportatore.ReadOnly = attivaModifica;
 
-            tbMod_Cap.ReadOnly = true;
-            tbMod_Comune.ReadOnly = true;
-            tbMod_destinatario.ReadOnly = true;
-            tbMod_Indirizzo.ReadOnly = true;
-            tbMod_Nazione.ReadOnly = true;
-            tbMod_NumeroCivico.ReadOnly = true;
-            tbMod_PartitaIva.ReadOnly = true;
-            tbMod_Provincia.ReadOnly = true;
+            //tbMod_Cap.ReadOnly = true;
+            //tbMod_Comune.ReadOnly = true;
+            //tbMod_destinatario.ReadOnly = true;
+            //tbMod_Indirizzo.ReadOnly = true;
+            //tbMod_Nazione.ReadOnly = true;
+            //tbMod_NumeroCivico.ReadOnly = true;
+            //tbMod_PartitaIva.ReadOnly = true;
+            //tbMod_Provincia.ReadOnly = true;
 
-            // if (attivaModifica)
-            // {
-            //     cmbMod_TipoIndirizzo.Attributes.Add("disabled", "");
-            //}
-            // else
-            // {
-            //     cmbMod_TipoIndirizzo.Attributes.Remove("disabled");
-            // }
-            cmbMod_TipoIndirizzo.Attributes.Add("disabled", "");
+            tbMod_Cap.ReadOnly = attivaModifica;
+            tbMod_Comune.ReadOnly = attivaModifica;
+            
+            tbMod_Indirizzo.ReadOnly = attivaModifica;
+            tbMod_Nazione.ReadOnly = attivaModifica;
+            tbMod_NumeroCivico.ReadOnly = attivaModifica;
+            
+            tbMod_Provincia.ReadOnly = attivaModifica;
+
+            if (attivaModifica)
+            {
+                cmbMod_TipoIndirizzo.Attributes.Add("disabled", "");
+            }
+            else
+            {
+                cmbMod_TipoIndirizzo.Attributes.Remove("disabled");
+            }
+            //cmbMod_TipoIndirizzo.Attributes.Add("disabled", "");
         }
 
         private void editDocumentoTrasportoVuoto()

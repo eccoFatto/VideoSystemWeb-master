@@ -894,7 +894,9 @@ namespace VideoSystemWeb.Magazzino
 
         protected void gv_attrezzature_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
-
+            gv_attrezzature.PageIndex = e.NewPageIndex;
+            btnEditDocumentoTrasporto_Click(null, null);
+            //btnRicercaDocumentoTrasporto_Click(null, null);
         }
 
         protected void gv_attrezzature_RowCommand(object sender, GridViewCommandEventArgs e)

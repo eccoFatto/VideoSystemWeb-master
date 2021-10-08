@@ -265,17 +265,19 @@
                     </div>
                 </div>
                 <br />
-                <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
-                    <a href="/Protocollo/Protocollo.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Protocolli</a>
-                </div>
-                <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
-                    <a href="/Scadenzario/Scadenzario.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Scadenzario</a>
-                </div>
-                <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
-                    <a href="/MAGAZZINO/Attrezzature.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Magazzino</a>
-                </div>
-                <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
-                    <asp:Button runat="server" CssClass="w3-bar-item w3-button w3-green w3-border w3-round" ID="btnStampaGiornata" Text="Collab. per Giornata" OnClick="btnStampaGiornata_Click" style="width: 80%;" OnClientClick="$('.loader').show();" Visible="true" />
+                <div runat="server" id="div_PULSANTISHORTCUT" visible="true">
+                    <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
+                        <a href="/Protocollo/Protocollo.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Protocolli</a>
+                    </div>
+                    <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
+                        <a href="/Scadenzario/Scadenzario.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Scadenzario</a>
+                    </div>
+                    <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
+                        <a href="/MAGAZZINO/Attrezzature.aspx" class="w3-bar-item w3-button w3-green w3-border w3-round" style="width: 80%;" onclick="$('.loader').show();">Magazzino</a>
+                    </div>
+                    <div class="w3-container" style="margin-left: 20px; margin-top:15px; text-align: center">
+                        <asp:Button runat="server" CssClass="w3-bar-item w3-button w3-green w3-border w3-round" ID="btnStampaGiornata" Text="Collab. per Giornata" OnClick="btnStampaGiornata_Click" style="width: 80%;" OnClientClick="$('.loader').show();" Visible="true" />
+                    </div>
                 </div>
             </td>
         </tr>

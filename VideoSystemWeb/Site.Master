@@ -124,7 +124,7 @@
                                 <button class="w3-button w3-yellow" onclick="return false;">Gestione Utenze</button>
                                 <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                                     <a href="/Utente/GestionePassword.aspx" class="w3-bar-item">Password</a>
-                                    <a href="/Utente/GestioneUtenti.aspx" class="w3-bar-item">Utenti</a>
+                                    <div runat="server" id="div_UTENTI" visible="true"><a href="/Utente/GestioneUtenti.aspx" class="w3-bar-item">Utenti</a></div>
                                 </div>
                             </div>
                             
@@ -134,7 +134,7 @@
             </table>
             <div class="w3-bar w3-yellow w3-round w3-margin-bottom">
                 <a href="/Agenda/Agenda.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Agenda</a>
-                <div class="w3-dropdown-hover">
+                <div runat="server" id="div_ANAGRAFICHE" visible="false" class="w3-dropdown-hover">
                     <button class="w3-button w3-yellow" onclick="return false;">Anagrafiche</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                         <a href="/Anagrafiche/AnagCollaboratori.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Collaboratori</a>
@@ -144,7 +144,7 @@
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=CLIENTI/FORNITORI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipologie Clienti/Fornitori</a>
                     </div>
                 </div>
-                <div class="w3-dropdown-hover">
+                <div runat="server" id="div_ARTICOLI" visible="true" class="w3-dropdown-hover">
                     <button class="w3-button w3-yellow" onclick="return false;">Gest.Articoli</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=ARTICOLI" class="w3-bar-item w3-button" onclick="$('.loader').show();">Articoli</a>
@@ -154,15 +154,15 @@
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=SOTTOGRUPPI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Sottogruppi</a>
                     </div>
                 </div>
-                <div class="w3-dropdown-hover">
+                <div runat="server" id="div_PROTOCOLLI" visible="true" class="w3-dropdown-hover">
                     <button class="w3-button w3-yellow" onclick="return false;">Gest. Protocolli</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                         <a href="/Protocollo/Protocollo.aspx" class="w3-bar-item w3-button">Protocolli</a>
                         <a href="/Articoli/GestioneArticoli.aspx?TIPO=PROTOCOLLI" class="w3-bar-item w3-button " onclick="$('.loader').show();">Tipi Protocollo</a>
                     </div>
                 </div>
-                <a href="/Scadenzario/Scadenzario.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Scadenzario</a>
-                <div class="w3-dropdown-hover">
+                <div runat="server" id="div_SCADENZARIO" visible="true"><a href="/Scadenzario/Scadenzario.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Scadenzario</a></div>
+                <div runat="server" id="div_TABELLE" visible="true" class="w3-dropdown-hover">
                     <button class="w3-button w3-yellow" onclick="return false;">Tabelle</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                         <a href="/CONFIG/gestConfig.aspx" class="w3-bar-item w3-button">Configurazione</a>
@@ -174,7 +174,7 @@
                     </div>
                 </div>
 
-                <div class="w3-dropdown-hover">
+                <div runat="server" id="div_REPORT" visible="true" class="w3-dropdown-hover">
                     <button class="w3-button w3-yellow" onclick="return false;">Report</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                         <a href="/REPORT/StampaConsulenteLavoro.aspx" class="w3-bar-item w3-button " onclick="$('.loader').show();">Stampa Consulente del Lavoro</a>
@@ -184,7 +184,7 @@
                     </div>
                 </div>
 
-                <div class="w3-dropdown-hover">
+                <div runat="server" id="div_MAGAZZINO" visible="true" class="w3-dropdown-hover">
                     <button class="w3-button w3-yellow" onclick="return false;">Magazzino</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                         <a href="/MAGAZZINO/Attrezzature.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Gestione Attrezzature</a>
@@ -198,14 +198,14 @@
                     </div>
                 </div>
 
-                <div class="w3-dropdown-hover">
+                <div runat="server" id="div_STATISTICHE" visible="true" class="w3-dropdown-hover">
                     <button class="w3-button w3-yellow" onclick="return false;">Statistiche</button>
                     <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-yellow">
                         <a href="/STATISTICHE/Ricavi.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Ricavi</a>
                         <a href="/STATISTICHE/Costi.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Costi</a>
                     </div>
                 </div>
-                <a href="/MAGAZZINO/DocumentiTrasporto.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Documenti di Trasporto</a>
+                <div runat="server" id="div_DOCUMENTITRASPORTO" visible="true"><a href="/MAGAZZINO/DocumentiTrasporto.aspx" class="w3-bar-item w3-button" onclick="$('.loader').show();">Documenti di Trasporto</a></div>
                 <asp:Button runat="server" ID="btnExit" OnClick="btnExit_Click" class="w3-bar-item w3-button w3-right w3-yellow" Text="Esci" />
                 <%--<a href="/Login.aspx" class="w3-bar-item w3-button w3-right" onclick="exitApplication();">Esci</a>--%>
             </div>

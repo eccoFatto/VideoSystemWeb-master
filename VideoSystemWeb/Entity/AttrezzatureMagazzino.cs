@@ -27,6 +27,7 @@ namespace VideoSystemWeb.Entity
         private int? id_subcategoria;
         private string descrizione;
         private string seriale;
+        private string fornitore;
         private DateTime data_acquisto;
         private bool garanzia;
         private bool disponibile;
@@ -43,6 +44,7 @@ namespace VideoSystemWeb.Entity
         public int? Id_subcategoria { get => id_subcategoria; set => id_subcategoria = value; }
         public string Descrizione { get => descrizione; set => descrizione = value; }
         public string Seriale { get => seriale; set => seriale = value; }
+        public string Fornitore { get => fornitore; set => fornitore = value; }
         public DateTime Data_acquisto { get => data_acquisto; set => data_acquisto = value; }
         public bool Garanzia { get => garanzia; set => garanzia = value; }
         public bool Disponibile { get => disponibile; set => disponibile = value; }

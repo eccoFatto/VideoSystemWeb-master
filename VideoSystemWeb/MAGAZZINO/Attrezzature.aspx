@@ -121,15 +121,19 @@
 
             </div>
             <div class="w3-row-padding">
-                <div class="w3-third">
+                <div class="w3-quarter">
                     <label>Marca</label>
                     <asp:TextBox ID="tbMarca" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-                <div class="w3-third">
+                <div class="w3-quarter">
                     <label>Modello</label>
                     <asp:TextBox ID="tbModello" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
-                <div class="w3-third" style="position:relative;">
+                <div class="w3-quarter">
+                    <label>Fornitore</label>
+                    <asp:TextBox ID="tbFornitore" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                </div>
+                <div class="w3-quarter" style="position:relative;">
                     <label>Data Acquisto (Da-A)</label>
                     <table style="width:100%;">
                         <tr>
@@ -251,10 +255,14 @@
                                     </div>
                                 </div>
                                 <div class="w3-row-padding w3-center w3-text-center">
-                                    <div class="w3-threequarter">
+                                    <div class="w3-half">
                                         <label>Descrizione</label>
                                         <asp:TextBox ID="tbMod_Descrizione" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                         <asp:TextBox ID="tbIdAttrezzaturaDaModificare" runat="server" Visible="false"></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Fornitore</label>
+                                        <asp:TextBox ID="tbMod_Fornitore" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
                                         <label>Data Acquisto</label>

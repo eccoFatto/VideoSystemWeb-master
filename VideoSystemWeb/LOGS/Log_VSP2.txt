@@ -22603,3 +22603,42 @@ Sintassi non corretta in prossimità della parola chiave 'by'.
 2021-08-27 11:31:20,011 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2021-08-27 11:35:58,267 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2021-08-27 11:46:17,294 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-08-31 21:27:14,722 [6] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2021-09-27 16:42:08,992 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-09-27 16:54:39,219 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-09-27 17:00:28,636 [6] ERROR VideoSystemWeb.BLL.Esito - ANONIMO - Utenza/Password non riconosciute!
+2021-09-27 17:00:36,929 [6] INFO VideoSystemWeb.Login - UTENTE Franco Loggato!
+2021-09-27 17:37:38,470 [28] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-09-27 17:38:21,367 [14] ERROR VideoSystemWeb.BLL.Esito - ANONIMO - Utenza/Password non riconosciute!
+2021-09-27 17:38:25,215 [14] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2021-09-27 17:39:18,410 [14] ERROR VideoSystemWeb.BLL.Esito - ANONIMO - Utenza/Password non riconosciute!
+2021-09-27 17:39:22,122 [14] INFO VideoSystemWeb.Login - UTENTE Marco Loggato!
+2021-09-27 17:59:07,026 [6] INFO VideoSystemWeb.Login - UTENTE Franco Loggato!
+2021-09-28 15:57:06,376 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-09-28 15:58:33,447 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-09-28 16:00:32,333 [7] INFO VideoSystemWeb.Login - UTENTE Franco Loggato!
+2021-10-08 22:58:38,317 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-10-08 23:02:38,195 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-10-08 23:03:52,268 [6] ERROR VideoSystemWeb.BLL.Esito - Claudio - Base_DAL.cs - getDatiBySql 
+La colonna 'mag_attrezzature.fornitore' non è valida nell'elenco di selezione perché non è inclusa né in una funzione di aggregazione né nella clausola GROUP BY.
+2021-10-08 23:03:52,283 [6] ERROR VideoSystemWeb.DAL.Base_DAL - La colonna 'mag_attrezzature.fornitore' non è valida nell'elenco di selezione perché non è inclusa né in una funzione di aggregazione né nella clausola GROUP BY.
+   in System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   in System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   in System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   in System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   in System.Data.SqlClient.SqlDataReader.get_MetaData()
+   in System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   in System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   in System.Data.SqlClient.SqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   in System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   in System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   in VideoSystemWeb.DAL.Base_DAL.GetDatiBySql(String querySql, Esito& esito) in C:\Users\claudio.calderai\source\repos\VideoSystemWeb-master2\VideoSystemWeb\DAL\Base_DAL.cs:riga 62
+2021-10-08 23:04:53,607 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-10-08 23:21:34,361 [6] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
+2021-10-08 23:37:58,110 [7] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!

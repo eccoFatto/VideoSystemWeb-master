@@ -190,6 +190,7 @@ namespace VideoSystemWeb.MAGAZZINO
             queryRicerca = queryRicerca.Replace("@marca", tbMarca.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@modello", tbModello.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@seriale", tbSeriale.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@fornitore", tbFornitore.Text.Trim().Replace("'", "''"));
             //queryRicerca = queryRicerca.Replace("@dataAcquisto", tbDataAcquisto.Text.Trim().Replace("'", "''"));
 
             // SELEZIONO I CAMPI DROPDOWN SE VALORIZZATI
@@ -423,6 +424,7 @@ namespace VideoSystemWeb.MAGAZZINO
             tbMod_DataAcquisto.CssClass = tbMod_DataAcquisto.CssClass.Replace("erroreValidazione", "");
             tbMod_Descrizione.CssClass = tbMod_Descrizione.CssClass.Replace("erroreValidazione", "");
             tbMod_Marca.CssClass = tbMod_Marca.CssClass.Replace("erroreValidazione", "");
+            tbMod_Fornitore.CssClass = tbMod_Marca.CssClass.Replace("erroreValidazione", "");
             tbMod_Modello.CssClass = tbMod_Modello.CssClass.Replace("erroreValidazione", "");
             tbMod_Note.CssClass = tbMod_Note.CssClass.Replace("erroreValidazione", "");
             tbMod_Seriale.CssClass = tbMod_Seriale.CssClass.Replace("erroreValidazione", "");
@@ -457,7 +459,7 @@ namespace VideoSystemWeb.MAGAZZINO
                     tbMod_Modello.Text = attrezzatura.Modello;
                     tbMod_Note.Text = attrezzatura.Note;
                     tbMod_Seriale.Text = attrezzatura.Seriale;
-
+                    tbMod_Fornitore.Text = attrezzatura.Fornitore;
                     //TIPI CATEGORIA
                     ListItem trovati = cmbMod_Categoria.Items.FindByValue(attrezzatura.Id_categoria.ToString());
                     if (trovati != null)
@@ -539,6 +541,7 @@ namespace VideoSystemWeb.MAGAZZINO
             tbMod_Modello.Text = "";
             tbMod_Note.Text = "";
             tbMod_Seriale.Text = "";
+            tbMod_Fornitore.Text = "";
             cmbMod_Categoria.SelectedIndex = 0;
             cmbMod_SubCategoria.SelectedIndex = 0;
             cmbMod_Posizione.SelectedIndex = 0;
@@ -558,7 +561,7 @@ namespace VideoSystemWeb.MAGAZZINO
             tbMod_Modello.ReadOnly = attivaModifica;
             tbMod_Note.ReadOnly = attivaModifica;
             tbMod_Seriale.ReadOnly = attivaModifica;
-
+            tbMod_Fornitore.ReadOnly = attivaModifica;
             if (attivaModifica)
             {
                 cmbMod_Categoria.Attributes.Add("disabled", "");
@@ -659,6 +662,7 @@ namespace VideoSystemWeb.MAGAZZINO
             attrezzatura.Marca = BasePage.ValidaCampo(tbMod_Marca, "", true, ref esito);
             attrezzatura.Modello = BasePage.ValidaCampo(tbMod_Modello, "", true, ref esito);
             attrezzatura.Seriale = BasePage.ValidaCampo(tbMod_Seriale, "", false, ref esito);
+            attrezzatura.Fornitore = BasePage.ValidaCampo(tbMod_Fornitore, "", false, ref esito);
             attrezzatura.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
             attrezzatura.Attivo = true;
 

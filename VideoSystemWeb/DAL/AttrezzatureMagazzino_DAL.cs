@@ -68,6 +68,7 @@ namespace VideoSystemWeb.DAL
                                         attrezzature.Modello = riga.Field<string>("modello");
                                         attrezzature.Note = riga.Field<string>("note");
                                         attrezzature.Seriale = riga.Field<string>("seriale");
+                                        attrezzature.Fornitore = riga.Field<string>("fornitore");
                                         attrezzature.Attivo = riga.Field<bool>("attivo");
                                         listaAttrezzature.Add(attrezzature);
                                     }
@@ -119,6 +120,7 @@ namespace VideoSystemWeb.DAL
                                     attrezzatura.Marca = dt.Rows[0].Field<string>("marca");
                                     attrezzatura.Modello = dt.Rows[0].Field<string>("modello");
                                     attrezzatura.Seriale = dt.Rows[0].Field<string>("seriale");
+                                    attrezzatura.Fornitore = dt.Rows[0].Field<string>("fornitore");
                                     attrezzatura.Note = dt.Rows[0].Field<string>("note");
                                     attrezzatura.Attivo = dt.Rows[0].Field<bool>("attivo");
                                 }
@@ -217,6 +219,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter Seriale = new SqlParameter("@seriale", attrezzatura.Seriale);
                             Seriale.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Seriale);
+
+                            SqlParameter Fornitore = new SqlParameter("@fornitore", attrezzatura.Fornitore);
+                            Fornitore.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(Fornitore);
 
                             SqlParameter attivo = new SqlParameter("@attivo", attrezzatura.Attivo);
                             attivo.Direction = ParameterDirection.Input;
@@ -326,6 +332,10 @@ namespace VideoSystemWeb.DAL
                             SqlParameter Seriale = new SqlParameter("@Seriale", attrezzatura.Seriale);
                             Seriale.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(Seriale);
+
+                            SqlParameter Fornitore = new SqlParameter("@Fornitore", attrezzatura.Fornitore);
+                            Fornitore.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(Fornitore);
 
                             SqlParameter attivo = new SqlParameter("@attivo", attrezzatura.Attivo);
                             attivo.Direction = ParameterDirection.Input;

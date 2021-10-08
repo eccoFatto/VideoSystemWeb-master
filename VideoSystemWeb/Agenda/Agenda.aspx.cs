@@ -76,9 +76,26 @@ namespace VideoSystemWeb.Agenda
 
                 divLegenda.Controls.Add(new LiteralControl(CreaLegenda()));
                 divFiltroAgenda.Controls.Add(new LiteralControl(CreaFiltriColonneAgenda()));
+                if (Session[SessionManager.UTENTE] != null)
+                {
+                    Anag_Utenti utenteConnesso = (Anag_Utenti)Session[SessionManager.UTENTE];
+                    // IMPOSTO LA VISIBILITA' DEI MENU
+                    switch (utenteConnesso.tipoUtente)
+                    {
+                        case "VISUALIZZATORE":
+
+                            div_PULSANTISHORTCUT.Visible = false;
+                            break;
+                        default:
+
+                            div_PULSANTISHORTCUT.Visible = true;
+                            break;
+                    }
+                }
             }
             else
             {
+
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento('" + hf_tabSelezionata.Value + "');", addScriptTags: true);
             }

@@ -94,6 +94,15 @@ namespace VideoSystemWeb.Agenda {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFiltroAgenda;
         
         /// <summary>
+        /// Controllo div_PULSANTISHORTCUT.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_PULSANTISHORTCUT;
+        
+        /// <summary>
         /// Controllo btnStampaGiornata.
         /// </summary>
         /// <remarks>

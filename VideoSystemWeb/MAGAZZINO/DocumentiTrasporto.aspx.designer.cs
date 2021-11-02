@@ -229,6 +229,15 @@ namespace VideoSystemWeb.Magazzino {
         protected global::System.Web.UI.WebControls.Button btnAssociaClienteServer;
         
         /// <summary>
+        /// Controllo btnAssociaClienteSecondoIndirizzoServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAssociaClienteSecondoIndirizzoServer;
+        
+        /// <summary>
         /// Controllo btnAssociaMagazzinoServer.
         /// </summary>
         /// <remarks>
@@ -434,6 +443,69 @@ namespace VideoSystemWeb.Magazzino {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Nazione;
+        
+        /// <summary>
+        /// Controllo cmbMod_TipoIndirizzoOperativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_TipoIndirizzoOperativo;
+        
+        /// <summary>
+        /// Controllo tbMod_IndirizzoOperativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_IndirizzoOperativo;
+        
+        /// <summary>
+        /// Controllo tbMod_NumeroCivicoOperativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_NumeroCivicoOperativo;
+        
+        /// <summary>
+        /// Controllo tbMod_CapOperativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_CapOperativo;
+        
+        /// <summary>
+        /// Controllo tbMod_ComuneOperativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_ComuneOperativo;
+        
+        /// <summary>
+        /// Controllo tbMod_ProvinciaOperativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_ProvinciaOperativo;
+        
+        /// <summary>
+        /// Controllo tbMod_NazioneOperativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_NazioneOperativo;
         
         /// <summary>
         /// Controllo tbMod_Causale.
@@ -731,6 +803,15 @@ namespace VideoSystemWeb.Magazzino {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlTipoGruppoMagazzino;
+        
+        /// <summary>
+        /// Controllo tbSearch_Fornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_Fornitore;
         
         /// <summary>
         /// Controllo btnInsertMagazzino.

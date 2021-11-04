@@ -561,7 +561,7 @@ namespace VideoSystemWeb.MAGAZZINO
             tbMod_Modello.ReadOnly = attivaModifica;
             tbMod_Note.ReadOnly = attivaModifica;
             tbMod_Seriale.ReadOnly = attivaModifica;
-            tbMod_Fornitore.ReadOnly = attivaModifica;
+            //tbMod_Fornitore.ReadOnly = attivaModifica;
             if (attivaModifica)
             {
                 cmbMod_Categoria.Attributes.Add("disabled", "");
@@ -598,7 +598,7 @@ namespace VideoSystemWeb.MAGAZZINO
                     {
                         btnGestisciAttrezzatura.Visible = true;
                     }
-
+                    imgbtnSelectFornitore.Attributes.Add("disabled", "");
                     break;
                 case "INSERIMENTO":
                     btnInserisciAttrezzatura.Visible = true;
@@ -606,6 +606,7 @@ namespace VideoSystemWeb.MAGAZZINO
                     btnEliminaAttrezzatura.Visible = false;
                     btnAnnullaAttrezzatura.Visible = false;
                     btnGestisciAttrezzatura.Visible = false;
+                    imgbtnSelectFornitore.Attributes.Remove("disabled");
                     break;
                 case "MODIFICA":
                     btnInserisciAttrezzatura.Visible = false;
@@ -613,7 +614,7 @@ namespace VideoSystemWeb.MAGAZZINO
                     btnEliminaAttrezzatura.Visible = true;
                     btnAnnullaAttrezzatura.Visible = true;
                     btnGestisciAttrezzatura.Visible = false;
-
+                    imgbtnSelectFornitore.Attributes.Remove("disabled");
                     break;
                 case "ANNULLAMENTO":
                     btnInserisciAttrezzatura.Visible = false;
@@ -621,7 +622,7 @@ namespace VideoSystemWeb.MAGAZZINO
                     btnEliminaAttrezzatura.Visible = false;
                     btnAnnullaAttrezzatura.Visible = false;
                     btnGestisciAttrezzatura.Visible = true;
-
+                    imgbtnSelectFornitore.Attributes.Add("disabled", "");
                     break;
                 default:
                     btnInserisciAttrezzatura.Visible = false;
@@ -629,7 +630,7 @@ namespace VideoSystemWeb.MAGAZZINO
                     btnEliminaAttrezzatura.Visible = false;
                     btnAnnullaAttrezzatura.Visible = false;
                     btnGestisciAttrezzatura.Visible = true;
-
+                    imgbtnSelectFornitore.Attributes.Add("disabled", "");
                     break;
             }
 
@@ -683,6 +684,85 @@ namespace VideoSystemWeb.MAGAZZINO
             riempiComboGruppo(Convert.ToInt32(idSubCategoria));
         }
 
+        protected void btnCercaFornitore_Click(object sender, EventArgs e)
+        {
+            PanelFornitori.Visible = true;
+        }
 
+        protected void gvFornitori_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvFornitori.PageIndex = e.NewPageIndex;
+            btnRicercaFornitori_Click(null, null);
+        }
+
+        protected void gvFornitori_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // PRENDO ID E CLIENTE/FORNITORE E LI PASSO ALLA FUNZIONE
+                string idFornitoreSelezionato = e.Row.Cells[1].Text;
+                string fornitoreSelezionato = e.Row.Cells[2].Text;
+                ImageButton myButtonEdit = e.Row.FindControl("imgSelect") as ImageButton;
+                myButtonEdit.Attributes.Add("onclick", "associaFornitore('" + idFornitoreSelezionato.Replace("&nbsp;", "") + "','" + fornitoreSelezionato.Replace("&nbsp;", "") + "');");
+            }
+        }
+
+        protected void btnRicercaFornitori_Click(object sender, EventArgs e)
+        {
+            string queryRicerca = "";
+
+
+            queryRicerca = "SELECT ID, RAGIONESOCIALE as [Ragione Sociale] FROM anag_clienti_fornitori WHERE attivo = 1 AND ragioneSociale LIKE '%@ragioneSociale%'";
+            queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_RagioneSociale.Text.Trim().Replace("'", "''"));
+
+
+            Esito esito = new Esito();
+            DataTable dtFornitori = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
+            gvFornitori.DataSource = dtFornitori;
+            gvFornitori.DataBind();
+        }
+
+        protected void btnChiudiPopupFornitoriServer_Click(object sender, EventArgs e)
+        {
+            PanelFornitori.Visible = false;
+        }
+
+        protected void btnAssociaFornitoreServer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(tbMod_IdFornitore.Value) || tbMod_IdFornitore.Value.Equals("0"))
+                {
+                    tbMod_Fornitore.Text = tbSearch_RagioneSociale.Text.Trim();
+                    tbMod_IdFornitore.Value = null;
+                    PanelFornitori.Visible = false;
+                }
+                else
+                {
+
+
+
+                    Esito esito = new Esito();
+                    Anag_Clienti_Fornitori fornitore = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt32(tbMod_IdFornitore.Value), ref esito);
+                    if (esito.Codice != 0)
+                    {
+                        ShowError(esito.Descrizione);
+                    }
+                    else
+                    {
+                        tbMod_Fornitore.Text = fornitore.RagioneSociale;
+
+                        PanelFornitori.Visible = false;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ShowError("btnAssociaFornitoreServer_Click" + Environment.NewLine + ex.Message);
+            }
+
+        }
     }
 }

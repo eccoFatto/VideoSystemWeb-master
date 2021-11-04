@@ -69,6 +69,7 @@
             $("#<%=ddlTipoSubCategoria.ClientID%>").val('');
             $("#<%=tbDescrizione.ClientID%>").val('');
             $("#<%=tbSeriale.ClientID%>").val('');
+            $("#<%=tbFornitore.ClientID%>").val('');
             $("#<%=ddlTipoGruppoMagazzino.ClientID%>").val('');
             $("#<%=ddlTipoPosizioneMagazzino.ClientID%>").val('');
             $("#<%=tbMarca.ClientID%>").val('');
@@ -77,6 +78,33 @@
             $("#<%=tbDataAcquistoA.ClientID%>").val('');
 <%--        $("#<%=cbDisponibile.ClientID%>").val('');
             $("#<%=cbGaranzia.ClientID%>").val('');--%>
+        }
+                // APRO POPUP RICERCA FORNITORE
+        function cercaFornitore() {
+            $('.loader').show();
+            $("#<%=btnCercaFornitore.ClientID%>").click();
+        }
+        function chiudiPopupFornitori() {
+            $("#<%=btnChiudiPopupFornitoriServer.ClientID%>").click();
+        }
+        function azzeraCampiRicercaFornitori() {
+            $("#<%=tbSearch_RagioneSociale.ClientID%>").val('');
+        }
+
+        function associaFornitore(idForn, fornitore) {
+            var txt1 = $("#<%=tbMod_Fornitore.ClientID%>");
+            var txt2 = $("#<%=tbMod_IdFornitore.ClientID%>");
+            txt1.val(fornitore);
+            txt2.val(idForn);
+            txt1.text = fornitore;
+            txt2.text = idForn;
+            $("#<%=btnAssociaFornitoreServer.ClientID%>").click();
+        }
+
+        function inserisciFornitore() {
+            if (document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value != '') {
+                associaFornitore('', document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value);
+            }
         }
     </script>
     
@@ -207,10 +235,13 @@
     <asp:Button runat="server" ID="btnEditAttrezzatura" Style="display: none" OnClick="btnEditAttrezzatura_Click" />
     <asp:Button runat="server" ID="btnInsAttrezzatura" Style="display: none" OnClick="btnInsAttrezzatura_Click" />
     <asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopupServer_Click" />
+    <asp:Button runat="server" ID="btnChiudiPopupFornitoriServer" Style="display: none" OnClick="btnChiudiPopupFornitoriServer_Click" />
 
     <asp:HiddenField ID="hf_idAttrezzatura" runat="server" EnableViewState="true" />
     <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
     <asp:HiddenField ID="hf_tabChiamata" runat="server" EnableViewState="true" Value="Attrezzatura" />
+    <asp:Button runat="server" ID="btnCercaFornitore" Style="display: none" OnClick="btnCercaFornitore_Click" />
+    <asp:Button runat="server" ID="btnAssociaFornitoreServer" Style="display: none" OnClick="btnAssociaFornitoreServer_Click" />
 
     <asp:UpdatePanel ID="upColl" runat="server">
         <ContentTemplate>
@@ -262,7 +293,16 @@
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Fornitore</label>
-                                        <asp:TextBox ID="tbMod_Fornitore" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+<%--                                        <asp:TextBox ID="tbMod_Fornitore" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>--%>
+                                        <div class="w3-row">
+                                            <div class="w3-threequarter">
+                                                <asp:TextBox ID="tbMod_Fornitore" runat="server" MaxLength="100" CssClass="w3-input w3-border" placeholder="" Text="" ReadOnly="true"></asp:TextBox>
+                                                <asp:HiddenField runat="server" ID="tbMod_IdFornitore" />
+                                            </div>
+                                            <div class="w3-quarter">
+                                                <asp:ImageButton ID="imgbtnSelectFornitore" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round w3-margin-left" Height="40px" Width="40px" ToolTip="Cerca Fornitore" OnClientClick="cercaFornitore()" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="w3-quarter" style="position: relative">
                                         <label>Data Acquisto</label>
@@ -319,6 +359,60 @@
                     </div>
                 </asp:Panel>
             </asp:Panel>
+
+            <!-- POPUP RICERCA FORNITORI -->
+            <asp:Panel runat="server" ID="PanelFornitori" Visible="false">
+                <div class="modalBackground"></div>
+                <asp:Panel runat="server" ID="PanelContFornitori" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                    <br />
+                    <div class="w3-container w3-padding w3-margin">
+                        <!-- RICERCA FORNITORI -->
+                        <div class="w3-bar w3-orange w3-round">
+                            <div class="w3-bar-item w3-button w3-orange">Ricerca Fornitori
+                            </div>
+                            <div class="w3-bar-item w3-button w3-orange w3-right">
+                                <div id="btnChiudiPopupfornitori" class="w3-button w3-orange w3-small w3-round" onclick="chiudiPopupFornitori();">Chiudi</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-row-padding w3-padding w3-margin">
+                        <div class="w3-threequarter">
+                            <label>Ragione Sociale</label>
+                            <asp:TextBox ID="tbSearch_RagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>&nbsp;</label>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td>
+                                        <asp:Button ID="btnInsertFornitore" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClientClick="inserisciFornitore();" Text="Inserisci" />
+                                    </td>
+                                    <td style="width: 50%;">
+                                        <asp:Button ID="btnRicercaFornitori" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaFornitori_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
+                                    </td>
+                                    <td style="width: 50%;">
+                                        <asp:Button ID="btnAzzeraCampiRicercaFornitori" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicercaFornitori();" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="round w3-padding w3-margin">
+                        <asp:GridView ID="gvFornitori" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvFornitori_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvFornitori_PageIndexChanging" PageSize="20">
+                            <Columns>
+                                <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="imgSelect" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Fornitore" ImageAlign="AbsMiddle" Height="30px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                    <br />
+                </asp:Panel>
+            </asp:Panel>
+            <!-- FINE POPUP RICERCA CLIENTI -->
+
         </ContentTemplate>
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="btnInserisciAttrezzatura" EventName="Click" />

@@ -693,7 +693,17 @@ namespace VideoSystemWeb.DAL
             try
             {
                 string filtriRicerca = string.Empty;
-                filtriRicerca += string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
+
+                if (tipoAnagrafica == "BustaPaga")
+                {
+                    int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
+                    filtriRicerca += " and b.id_tipo_protocollo = '" + idTipoProtocollo + "'";
+                }
+                else
+                {
+                    filtriRicerca += string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
+                }
+
                 filtriRicerca += string.IsNullOrWhiteSpace(ragioneSociale) ? "" : " and b.cliente like '%" + ragioneSociale.Trim() + "%'";
                 filtriRicerca += string.IsNullOrWhiteSpace(numeroFattura) ? "" : " and b.protocollo_riferimento like '%" + numeroFattura + "%'";
 
@@ -911,12 +921,29 @@ namespace VideoSystemWeb.DAL
         public List<Protocolli> GetFattureNonInScadenzario(string tipo, ref Esito esito)
         {
             List<Protocolli> listaProtocolli = new List<Protocolli>();
-            int idTipoFattura =  UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
+
+
+            int idTipoProtocollo = 0;
+            string tipoDestinatario = tipo;
+            if (tipo == "BustaPaga")
+            {
+                idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
+                tipoDestinatario = "Fornitore";
+            }
+            else
+            {
+                idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
+            }
+
+
+            //int idTipoProtocollo =  UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
+
+
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "Select * from dati_protocollo where attivo = 1 and id_tipo_protocollo = " + idTipoFattura + " and id not in (select idDatiProtocollo from dati_scadenzario) and (pregresso = 0 or pregresso is NULL) AND destinatario = '" + tipo + "'";
+                    string query = "Select * from dati_protocollo where attivo = 1 and id_tipo_protocollo = " + idTipoProtocollo + " and id not in (select idDatiProtocollo from dati_scadenzario) and (pregresso = 0 or pregresso is NULL) AND destinatario = '" + tipoDestinatario + "'";
 
                     using (SqlCommand cmd = new SqlCommand(query))
                     {

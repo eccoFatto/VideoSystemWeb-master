@@ -211,6 +211,15 @@ namespace VideoSystemWeb.MAGAZZINO {
         protected global::System.Web.UI.WebControls.Button btnChiudiPopupServer;
         
         /// <summary>
+        /// Controllo btnChiudiPopupFornitoriServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnChiudiPopupFornitoriServer;
+        
+        /// <summary>
         /// Controllo hf_idAttrezzatura.
         /// </summary>
         /// <remarks>
@@ -236,6 +245,24 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_tabChiamata;
+        
+        /// <summary>
+        /// Controllo btnCercaFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCercaFornitore;
+        
+        /// <summary>
+        /// Controllo btnAssociaFornitoreServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAssociaFornitoreServer;
         
         /// <summary>
         /// Controllo upColl.
@@ -326,6 +353,24 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Fornitore;
+        
+        /// <summary>
+        /// Controllo tbMod_IdFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField tbMod_IdFornitore;
+        
+        /// <summary>
+        /// Controllo imgbtnSelectFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectFornitore;
         
         /// <summary>
         /// Controllo tbMod_DataAcquisto.
@@ -443,5 +488,68 @@ namespace VideoSystemWeb.MAGAZZINO {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnullaAttrezzatura;
+        
+        /// <summary>
+        /// Controllo PanelFornitori.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelFornitori;
+        
+        /// <summary>
+        /// Controllo PanelContFornitori.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelContFornitori;
+        
+        /// <summary>
+        /// Controllo tbSearch_RagioneSociale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_RagioneSociale;
+        
+        /// <summary>
+        /// Controllo btnInsertFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnInsertFornitore;
+        
+        /// <summary>
+        /// Controllo btnRicercaFornitori.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRicercaFornitori;
+        
+        /// <summary>
+        /// Controllo btnAzzeraCampiRicercaFornitori.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAzzeraCampiRicercaFornitori;
+        
+        /// <summary>
+        /// Controllo gvFornitori.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvFornitori;
     }
 }

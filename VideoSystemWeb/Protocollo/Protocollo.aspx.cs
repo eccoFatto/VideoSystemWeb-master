@@ -294,9 +294,10 @@ namespace VideoSystemWeb.Protocollo
 
 
 
-                if (cmbMod_Tipologia.SelectedItem.Text.ToUpper() == "FATTURA")
+                if (cmbMod_Tipologia.SelectedItem.Text.ToUpper() == "FATTURA" || cmbMod_Tipologia.SelectedItem.Text.ToUpper() == "BUSTA PAGA")
                 {
-                    Response.Redirect("/Scadenzario/Scadenzario.aspx?TIPO=" + cmbMod_Destinatario.SelectedValue + "&ID_PROTOCOLLO=" + iRet + "&NUM_DOC=" + protocollo.Protocollo_riferimento);
+                    string paramIVA = cmbMod_Tipologia.SelectedItem.Text.ToUpper() == "BUSTA PAGA" ? "&IVA=0" : "";
+                    Response.Redirect("/Scadenzario/Scadenzario.aspx?TIPO=" + cmbMod_Destinatario.SelectedValue + "&ID_PROTOCOLLO=" + iRet + "&NUM_DOC=" + protocollo.Protocollo_riferimento + paramIVA);
                 }
                 else
                 {

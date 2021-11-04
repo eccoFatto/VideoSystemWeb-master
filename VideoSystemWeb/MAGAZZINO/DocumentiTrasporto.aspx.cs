@@ -672,10 +672,12 @@ namespace VideoSystemWeb.Magazzino
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 // PRENDO ID E CLIENTE/FORNITORE E LI PASSO ALLA FUNZIONE
-                string idClienteSelezionato = e.Row.Cells[1].Text;
-                string clienteSelezionato = e.Row.Cells[2].Text;
+                string idClienteSelezionato = e.Row.Cells[2].Text;
+                string clienteSelezionato = e.Row.Cells[3].Text;
                 ImageButton myButtonEdit = e.Row.FindControl("imgSelect") as ImageButton;
                 myButtonEdit.Attributes.Add("onclick", "associaCliente('" + idClienteSelezionato.Replace("&nbsp;", "") + "','" + clienteSelezionato.Replace("&nbsp;", "") + "');");
+                ImageButton myButtonEdit2 = e.Row.FindControl("imgSelectSecondoIndirizzo") as ImageButton;
+                myButtonEdit2.Attributes.Add("onclick", "associaClienteSecondoIndirizzo('" + idClienteSelezionato.Replace("&nbsp;", "") + "','" + clienteSelezionato.Replace("&nbsp;", "") + "');");
             }
 
         }
@@ -850,6 +852,8 @@ namespace VideoSystemWeb.Magazzino
             queryRicerca = queryRicerca.Replace("@codiceVS", tbSearch_CodiceVideosystem.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@descrizione", tbSearch_DescMagazzino.Text.Trim().Replace("'", "''"));
             queryRicerca = queryRicerca.Replace("@seriale", tbSearch_Seriale.Text.Trim().Replace("'", "''"));
+            queryRicerca = queryRicerca.Replace("@fornitore", tbSearch_Fornitore.Text.Trim().Replace("'", "''"));
+            
 
             queryRicerca = queryRicerca.Replace("@marca", "");
             queryRicerca = queryRicerca.Replace("@modello", "");
@@ -1521,6 +1525,83 @@ namespace VideoSystemWeb.Magazzino
                     PanelMagazzino.Visible = false;
                 }
             }
+        }
+
+        protected void btnAssociaClienteSecondoIndirizzoServer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(tbMod_IdCliente.Value) || tbMod_IdCliente.Value.Equals("0"))
+                {
+                    tbMod_destinatario.Text = tbSearch_RagioneSociale.Text.Trim();
+                    tbMod_IdCliente.Value = null;
+                    PanelClienti.Visible = false;
+                }
+                else
+                {
+
+                    switch (ddlSceltaClienteCollaboratore.Text)
+                    {
+                        case "Cliente":
+
+                            Esito esito = new Esito();
+                            Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
+                            if (esito.Codice != 0)
+                            {
+                                ShowError(esito.Descrizione);
+                            }
+                            else
+                            {
+                                tbMod_destinatario.Text = cliente.RagioneSociale;
+
+                                cmbMod_TipoIndirizzo.Text = cliente.TipoIndirizzoOperativo;
+                                tbMod_Indirizzo.Text = cliente.IndirizzoOperativo;
+                                tbMod_Cap.Text = cliente.CapOperativo;
+                                tbMod_Comune.Text = cliente.ComuneOperativo;
+                                tbMod_NumeroCivico.Text = cliente.NumeroCivicoOperativo;
+                                tbMod_Provincia.Text = cliente.ProvinciaOperativo;
+                                tbMod_PartitaIva.Text = cliente.PartitaIva;
+
+                                PanelClienti.Visible = false;
+                            }
+                            break;
+                        case "Collaboratore":
+                            esito = new Esito();
+                            Anag_Collaboratori collaboratore = Anag_Collaboratori_BLL.Instance.getCollaboratoreById(Convert.ToInt32(tbMod_IdCliente.Value), ref esito);
+                            if (esito.Codice != 0)
+                            {
+                                ShowError(esito.Descrizione);
+                            }
+                            else
+                            {
+                                tbMod_destinatario.Text = collaboratore.Cognome + " " + collaboratore.Nome;
+                                if (collaboratore.Indirizzi.Count > 0)
+                                {
+                                    cmbMod_TipoIndirizzo.Text = collaboratore.Indirizzi[0].Tipo;
+                                    tbMod_Indirizzo.Text = collaboratore.Indirizzi[0].Indirizzo;
+                                    tbMod_Cap.Text = collaboratore.Indirizzi[0].Cap;
+                                    tbMod_Comune.Text = collaboratore.Indirizzi[0].Comune;
+                                    tbMod_NumeroCivico.Text = collaboratore.Indirizzi[0].NumeroCivico;
+                                    tbMod_Provincia.Text = collaboratore.Indirizzi[0].Provincia;
+                                }
+
+                                PanelClienti.Visible = false;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ShowError("btnAssociaClienteSecondoIndirizzoServer" + Environment.NewLine + ex.Message);
+            }
+
         }
     }
 }

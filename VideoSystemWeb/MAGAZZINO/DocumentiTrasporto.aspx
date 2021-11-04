@@ -117,6 +117,18 @@
             $("#<%=btnAssociaClienteServer.ClientID%>").click();
         }
 
+        function associaClienteSecondoIndirizzo(idCli, cliente) {
+            var txt1 = $("#<%=tbMod_destinatario.ClientID%>");
+            var txt2 = $("#<%=tbMod_IdCliente.ClientID%>");
+            txt1.val(cliente);
+            txt2.val(idCli);
+            txt1.text = cliente;
+            txt2.text = idCli;
+            $("#<%=btnAssociaClienteSecondoIndirizzoServer.ClientID%>").click();
+        }
+        
+
+
         function inserisciCliente() {
             if (document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value != '') {
                 associaCliente('', document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value);
@@ -262,6 +274,8 @@
 
 
     <asp:Button runat="server" ID="btnAssociaClienteServer" Style="display: none" OnClick="btnAssociaClienteServer_Click" />
+    <asp:Button runat="server" ID="btnAssociaClienteSecondoIndirizzoServer" Style="display: none" OnClick="btnAssociaClienteSecondoIndirizzoServer_Click" />
+    
     <asp:Button runat="server" ID="btnAssociaMagazzinoServer" Style="display: none" OnClick="btnAssociaMagazzinoServer_Click" />
 
     <asp:HiddenField ID="hf_idDocTras" runat="server" EnableViewState="true" />
@@ -488,9 +502,14 @@
                     <div class="round w3-padding w3-margin">
                         <asp:GridView ID="gvClienti" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvClienti_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvClienti_PageIndexChanging" PageSize="20">
                             <Columns>
-                                <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
+                                <asp:TemplateField ShowHeader="False" HeaderText="Legale" HeaderStyle-Width="30px">
                                     <ItemTemplate>
-                                        <asp:ImageButton ID="imgSelect" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Destinatario" ImageAlign="AbsMiddle" Height="30px" />
+                                        <asp:ImageButton ID="imgSelect" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Destinatario (indirizzo Legale)" ImageAlign="AbsMiddle" Height="30px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:TemplateField ShowHeader="False" HeaderText="Operativo" HeaderStyle-Width="30px">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="imgSelectSecondoIndirizzo" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Destinatario (indirizzo Operativo)" ImageAlign="AbsMiddle" Height="30px" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -552,6 +571,15 @@
                             </asp:DropDownList>   
                         </div>
                         <div class="w3-quarter">
+                            <label>Fornitore</label>
+                            <asp:TextBox ID="tbSearch_Fornitore" runat="server" MaxLength="100" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                        </div>
+                    </div>
+                    <div class="w3-row-padding w3-padding w3-margin">
+                        <div class="w3-threequarter">
+                            &nbsp;
+                        </div>
+                        <div class="w3-quarter">
                             <label>&nbsp;</label>
                             <table style="width: 100%;">
                                 <tr>
@@ -568,7 +596,6 @@
                             </table>
                         </div>
                     </div>
-                    
 
 
                     <div class="round w3-padding w3-margin">

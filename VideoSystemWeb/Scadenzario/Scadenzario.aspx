@@ -183,7 +183,7 @@
     <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
         <ContentTemplate>
             <div class="w3-row-padding">
-                <div class="w3-quarter">
+                 <div class="w3-quarter">
                     <label>Cliente/Fornitore</label>
                     <asp:TextBox ID="txt_RagioneSociale" runat="server" class="w3-input w3-border" ></asp:TextBox>
 
@@ -203,6 +203,7 @@
                         <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
                         <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
                         <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
+                        <asp:ListItem Value="BustaPaga" Text="Busta paga"></asp:ListItem>
                     </asp:DropDownList>
                 </div>
                 
@@ -210,6 +211,7 @@
                     <label>Numero Fattura</label>
                     <asp:TextBox ID="txt_NumeroFattura" runat="server" MaxLength="20" class="w3-input w3-border" />
                 </div>
+               
                 <div class="w3-quarter">
                     <label>Pagata</label>
                     <asp:DropDownList ID="ddlFatturaPagata" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
@@ -218,7 +220,7 @@
                         <asp:ListItem Value="0" Text="No" Selected/>
                     </asp:DropDownList>
                 </div>
-            </div>
+             </div>
 
             <div class="w3-row-padding" style="position:relative;">
                     <div class="w3-threequarter w3-row-padding">
@@ -461,29 +463,30 @@
                                 </div>
 
                                 <div class="w3-row-padding">
-                                    <div class="w3-quarter">
-                                        <label>Tipo (cliente/fornitore)</label>
+                                    <div class="w3-quarter w3-row-padding">
+                                        <label>Tipo (Cliente/Fornitore)</label>
                                         <asp:DropDownList ID="ddl_Tipo" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddl_Tipo_SelectedIndexChanged" Width="100%" CssClass="w3-input w3-border">
                                             <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
                                             <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
+                                            <asp:ListItem Value="BustaPaga" Text="Busta paga"></asp:ListItem>
                                         </asp:DropDownList>
                                     </div>
-                                    <div class="w3-quarter">
+                                    <div class="w3-quarter w3-row-padding">
                                         <label>Cliente/Fornitore</label>
                                         <asp:TextBox ID="txt_ClienteFornitore" runat="server" Disabled CssClass="w3-input w3-border" Text=""></asp:TextBox>
                                         
                                     </div>
-                                    <div class="w3-quarter" style="position: relative">
+                                    <div class="w3-quarter w3-row-padding" style="position: relative">
                                         <label>Data fattura</label>
                                         <asp:TextBox ID="txt_DataDocumento" runat="server" Disabled MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
-                                    
                                     <div class="w3-quarter">
                                         <label>Numero fattura</label>
                                         <asp:TextBox ID="txt_NumeroDocumento" Disabled runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""/>
                                     </div>
                                     
                                 </div>
+
                                 <div id="div_CampiInserimento" runat="server" class="w3-row-padding" >
                                     <div class="w3-col" style="width:25%">
                                         <label>Importo con IVA</label>

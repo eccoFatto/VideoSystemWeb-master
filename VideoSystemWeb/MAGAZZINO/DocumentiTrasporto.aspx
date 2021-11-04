@@ -338,7 +338,7 @@
                                 </div>
                                 <div class="w3-row-padding">
                                     <div class="w3-quarter">
-                                        <label>Tipo</label>
+                                        <label>Tipo Indirizzo</label>
                                         <asp:DropDownList ID="cmbMod_TipoIndirizzo" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
                                             <asp:ListItem Value="Via">Via</asp:ListItem>
                                             <asp:ListItem Value="Viale">Viale</asp:ListItem>
@@ -377,6 +377,49 @@
                                         <asp:TextBox ID="tbMod_Nazione" runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>
+
+                                <div class="w3-row-padding">
+                                    <div class="w3-quarter">
+                                        <label>Tipo Indirizzo Operativo</label>
+                                        <asp:DropDownList ID="cmbMod_TipoIndirizzoOperativo" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
+                                            <asp:ListItem Value="Via">Via</asp:ListItem>
+                                            <asp:ListItem Value="Viale">Viale</asp:ListItem>
+                                            <asp:ListItem Value="Corso">Corso</asp:ListItem>
+                                            <asp:ListItem Value="Piazza">Piazza</asp:ListItem>
+                                            <asp:ListItem Value="Piazzale">Piazzale</asp:ListItem>
+                                            <asp:ListItem Value="Largo">Largo</asp:ListItem>
+                                            <asp:ListItem Value ="Vicolo">Vicolo</asp:ListItem>
+                                            <asp:ListItem Value ="Altro">Altro</asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div class="w3-half">
+                                        <label>Indirizzo Operativo</label>
+                                        <asp:TextBox ID="tbMod_IndirizzoOperativo" runat="server" MaxLength="60" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Numero Civico</label>
+                                        <asp:TextBox ID="tbMod_NumeroCivicoOperativo" runat="server" MaxLength="10" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                    </div>
+                                </div>
+                                <div class="w3-row-padding">
+                                    <div class="w3-quarter">
+                                        <label>Cap Operativo</label>
+                                        <asp:TextBox ID="tbMod_CapOperativo" runat="server" MaxLength="5" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Comune Operativo</label>
+                                        <asp:TextBox ID="tbMod_ComuneOperativo" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Provincia Operativo</label>
+                                        <asp:TextBox ID="tbMod_ProvinciaOperativo" runat="server" MaxLength="2" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                    </div>
+                                    <div class="w3-quarter">
+                                        <label>Nazione Operativo</label>
+                                        <asp:TextBox ID="tbMod_NazioneOperativo" runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
+                                    </div>
+                                </div>
+
 
                                 <div class="w3-row-padding">
                                     <div class="w3-quarter">
@@ -507,7 +550,7 @@
                                         <asp:ImageButton ID="imgSelect" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Destinatario (indirizzo Legale)" ImageAlign="AbsMiddle" Height="30px" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField ShowHeader="False" HeaderText="Operativo" HeaderStyle-Width="30px">
+                                <asp:TemplateField ShowHeader="False" HeaderText="Operativo" HeaderStyle-Width="30px" Visible="false">
                                     <ItemTemplate>
                                         <asp:ImageButton ID="imgSelectSecondoIndirizzo" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Destinatario (indirizzo Operativo)" ImageAlign="AbsMiddle" Height="30px" />
                                     </ItemTemplate>

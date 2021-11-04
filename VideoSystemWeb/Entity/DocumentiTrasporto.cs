@@ -36,13 +36,21 @@ namespace VideoSystemWeb.Entity
         private string comune;
         private string provincia;
         private string nazione;
+
+        private string tipoIndirizzoOperativo;
+        private string indirizzoOperativo;
+        private string numeroCivicoOperativo;
+        private string capOperativo;
+        private string comuneOperativo;
+        private string provinciaOperativo;
+        private string nazioneOperativo;
+
         private string partitaIva;
         private Int64 numeroColli;
         private string peso;
         private string trasportatore;
         private string numero_protocollo;
         private List<AttrezzatureTrasporto> attrezzatureTrasporto;
-
 
         public Int64 Id { get => id; set => id = value; }
         public string NumeroDocumentoTrasporto { get => numeroDocumentoTrasporto; set => numeroDocumentoTrasporto = value; }
@@ -62,5 +70,12 @@ namespace VideoSystemWeb.Entity
         public string Trasportatore { get => trasportatore; set => trasportatore = value; }
         public List<AttrezzatureTrasporto> AttrezzatureTrasporto { get => attrezzatureTrasporto; set => attrezzatureTrasporto = value; }
         public string Numero_protocollo { get => numero_protocollo; set => numero_protocollo = value; }
+        public string TipoIndirizzoOperativo { get => tipoIndirizzoOperativo; set => tipoIndirizzoOperativo = value; }
+        public string IndirizzoOperativo { get => indirizzoOperativo; set => indirizzoOperativo = value; }
+        public string NumeroCivicoOperativo { get => numeroCivicoOperativo; set => numeroCivicoOperativo = value; }
+        public string CapOperativo { get => capOperativo; set => capOperativo = value; }
+        public string ComuneOperativo { get => comuneOperativo; set => comuneOperativo = value; }
+        public string ProvinciaOperativo { get => provinciaOperativo; set => provinciaOperativo = value; }
+        public string NazioneOperativo { get => nazioneOperativo; set => nazioneOperativo = value; }
     }
 }

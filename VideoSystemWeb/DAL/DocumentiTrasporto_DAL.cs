@@ -58,6 +58,7 @@ namespace VideoSystemWeb.DAL
                                     documentoTrasporto.NumeroDocumentoTrasporto = dt.Rows[0].Field<string>("numeroDocumentoTrasporto");
                                     documentoTrasporto.Causale = dt.Rows[0].Field<string>("causale");
                                     documentoTrasporto.Destinatario = dt.Rows[0].Field<string>("destinatario");
+
                                     documentoTrasporto.TipoIndirizzo = dt.Rows[0].Field<string>("tipoIndirizzo");
                                     documentoTrasporto.Indirizzo = dt.Rows[0].Field<string>("indirizzo");
                                     documentoTrasporto.NumeroCivico = dt.Rows[0].Field<string>("numeroCivico");
@@ -65,6 +66,15 @@ namespace VideoSystemWeb.DAL
                                     documentoTrasporto.Comune = dt.Rows[0].Field<string>("comune");
                                     documentoTrasporto.Provincia = dt.Rows[0].Field<string>("provincia");
                                     documentoTrasporto.Nazione = dt.Rows[0].Field<string>("nazione");
+
+                                    documentoTrasporto.TipoIndirizzoOperativo = dt.Rows[0].Field<string>("tipoIndirizzoOperativo");
+                                    documentoTrasporto.IndirizzoOperativo = dt.Rows[0].Field<string>("indirizzoOperativo");
+                                    documentoTrasporto.NumeroCivicoOperativo = dt.Rows[0].Field<string>("numeroCivicoOperativo");
+                                    documentoTrasporto.CapOperativo = dt.Rows[0].Field<string>("capOperativo");
+                                    documentoTrasporto.ComuneOperativo = dt.Rows[0].Field<string>("comuneOperativo");
+                                    documentoTrasporto.ProvinciaOperativo = dt.Rows[0].Field<string>("provinciaOperativo");
+                                    documentoTrasporto.NazioneOperativo = dt.Rows[0].Field<string>("nazioneOperativo");
+
                                     documentoTrasporto.PartitaIva = dt.Rows[0].Field<string>("partitaIva");
                                     documentoTrasporto.Peso = dt.Rows[0].Field<string>("peso");
                                     documentoTrasporto.NumeroColli = dt.Rows[0].Field<int>("numeroColli");
@@ -158,6 +168,34 @@ namespace VideoSystemWeb.DAL
                             SqlParameter nazione = new SqlParameter("@nazione", documentoTrasporto.Nazione);
                             nazione.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nazione);
+
+                            SqlParameter tipoIndirizzoOperativo = new SqlParameter("@tipoIndirizzoOperativo", documentoTrasporto.TipoIndirizzoOperativo);
+                            tipoIndirizzoOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(tipoIndirizzoOperativo);
+
+                            SqlParameter indirizzoOperativo = new SqlParameter("@indirizzoOperativo", documentoTrasporto.IndirizzoOperativo);
+                            indirizzoOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(indirizzoOperativo);
+
+                            SqlParameter numeroCivicoOperativo = new SqlParameter("@numeroCivicoOperativo", documentoTrasporto.NumeroCivicoOperativo);
+                            numeroCivicoOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(numeroCivicoOperativo);
+
+                            SqlParameter capOperativo = new SqlParameter("@capOperativo", documentoTrasporto.CapOperativo);
+                            capOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(capOperativo);
+
+                            SqlParameter comuneOperativo = new SqlParameter("@comuneOperativo", documentoTrasporto.ComuneOperativo);
+                            comuneOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(comuneOperativo);
+
+                            SqlParameter provinciaOperativo = new SqlParameter("@provinciaOperativo", documentoTrasporto.ProvinciaOperativo);
+                            provinciaOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(provinciaOperativo);
+
+                            SqlParameter nazioneOperativo = new SqlParameter("@nazioneOperativo", documentoTrasporto.NazioneOperativo);
+                            nazioneOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nazioneOperativo);
 
                             SqlParameter partitaIva = new SqlParameter("@partitaIva", documentoTrasporto.PartitaIva);
                             partitaIva.Direction = ParameterDirection.Input;
@@ -273,6 +311,34 @@ namespace VideoSystemWeb.DAL
                             SqlParameter nazione = new SqlParameter("@nazione", documentoTrasporto.Nazione);
                             nazione.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(nazione);
+
+                            SqlParameter tipoIndirizzoOperativo = new SqlParameter("@tipoIndirizzoOperativo", documentoTrasporto.TipoIndirizzoOperativo);
+                            tipoIndirizzoOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(tipoIndirizzoOperativo);
+
+                            SqlParameter indirizzoOperativo = new SqlParameter("@indirizzoOperativo", documentoTrasporto.IndirizzoOperativo);
+                            indirizzoOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(indirizzoOperativo);
+
+                            SqlParameter numeroCivicoOperativo = new SqlParameter("@numeroCivicoOperativo", documentoTrasporto.NumeroCivicoOperativo);
+                            numeroCivicoOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(numeroCivicoOperativo);
+
+                            SqlParameter capOperativo = new SqlParameter("@capOperativo", documentoTrasporto.CapOperativo);
+                            capOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(capOperativo);
+
+                            SqlParameter comuneOperativo = new SqlParameter("@comuneOperativo", documentoTrasporto.ComuneOperativo);
+                            comuneOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(comuneOperativo);
+
+                            SqlParameter provinciaOperativo = new SqlParameter("@provinciaOperativo", documentoTrasporto.ProvinciaOperativo);
+                            provinciaOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(provinciaOperativo);
+
+                            SqlParameter nazioneOperativo = new SqlParameter("@nazioneOperativo", documentoTrasporto.NazioneOperativo);
+                            nazioneOperativo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nazioneOperativo);
 
                             SqlParameter partitaIva = new SqlParameter("@partitaIva", documentoTrasporto.PartitaIva);
                             partitaIva.Direction = ParameterDirection.Input;

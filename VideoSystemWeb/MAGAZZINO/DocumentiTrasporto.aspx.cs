@@ -406,20 +406,28 @@ namespace VideoSystemWeb.Magazzino
         {
             tbMod_NumeroDocumentoTrasporto.Text = "";
             tbMod_NumeroProtocollo.Text = "";
-            tbMod_Cap.Text = "";
             tbMod_Causale.Text = "";
-            tbMod_Comune.Text = "";
             tbMod_DataTrasporto.Text = DateTime.Today.ToShortDateString();
             tbMod_destinatario.Text = "";
-            tbMod_Indirizzo.Text = "";
-            tbMod_Nazione.Text = "";
-            tbMod_NumeroCivico.Text = "";
             tbMod_NumeroColli.Text = "";
             tbMod_PartitaIva.Text = "";
             tbMod_Peso.Text = "";
-            tbMod_Provincia.Text = "";
             tbMod_Trasportatore.Text = "";
+
+            tbMod_Cap.Text = "";
+            tbMod_Comune.Text = "";
+            tbMod_Indirizzo.Text = "";
+            tbMod_Nazione.Text = "";
+            tbMod_NumeroCivico.Text = "";
+            tbMod_Provincia.Text = "";
             cmbMod_TipoIndirizzo.SelectedIndex = 0;
+            tbMod_CapOperativo.Text = "";
+            tbMod_ComuneOperativo.Text = "";
+            tbMod_IndirizzoOperativo.Text = "";
+            tbMod_NazioneOperativo.Text = "";
+            tbMod_NumeroCivicoOperativo.Text = "";
+            tbMod_ProvinciaOperativo.Text = "";
+            cmbMod_TipoIndirizzoOperativo.SelectedIndex = 0;
 
         }
 
@@ -451,22 +459,29 @@ namespace VideoSystemWeb.Magazzino
 
             tbMod_Cap.ReadOnly = attivaModifica;
             tbMod_Comune.ReadOnly = attivaModifica;
-            
             tbMod_Indirizzo.ReadOnly = attivaModifica;
             tbMod_Nazione.ReadOnly = attivaModifica;
             tbMod_NumeroCivico.ReadOnly = attivaModifica;
-            
             tbMod_Provincia.ReadOnly = attivaModifica;
+
+            tbMod_CapOperativo.ReadOnly = attivaModifica;
+            tbMod_ComuneOperativo.ReadOnly = attivaModifica;
+            tbMod_IndirizzoOperativo.ReadOnly = attivaModifica;
+            tbMod_NazioneOperativo.ReadOnly = attivaModifica;
+            tbMod_NumeroCivicoOperativo.ReadOnly = attivaModifica;
+            tbMod_ProvinciaOperativo.ReadOnly = attivaModifica;
 
             if (attivaModifica)
             {
                 cmbMod_TipoIndirizzo.Attributes.Add("disabled", "");
+                cmbMod_TipoIndirizzoOperativo.Attributes.Add("disabled", "");
             }
             else
             {
                 cmbMod_TipoIndirizzo.Attributes.Remove("disabled");
+                cmbMod_TipoIndirizzoOperativo.Attributes.Remove("disabled");
             }
-            //cmbMod_TipoIndirizzo.Attributes.Add("disabled", "");
+
         }
 
         private void editDocumentoTrasportoVuoto()
@@ -496,19 +511,31 @@ namespace VideoSystemWeb.Magazzino
                     {
                         tbMod_DataTrasporto.Text = ((DateTime)documentoTrasporto.DataTrasporto).ToString("dd/MM/yyyy");
                     }
-                    tbMod_Cap.Text = documentoTrasporto.Cap;
-                    tbMod_Causale.Text = documentoTrasporto.Causale;
-                    tbMod_Comune.Text = documentoTrasporto.Comune;
                     tbMod_destinatario.Text = documentoTrasporto.Destinatario;
+                    tbMod_Causale.Text = documentoTrasporto.Causale;
+
+                    tbMod_Cap.Text = documentoTrasporto.Cap;
+                    tbMod_Provincia.Text = documentoTrasporto.Provincia;
+                    tbMod_Comune.Text = documentoTrasporto.Comune;
                     tbMod_Indirizzo.Text = documentoTrasporto.Indirizzo;
                     tbMod_Nazione.Text = documentoTrasporto.Nazione;
                     tbMod_NumeroCivico.Text = documentoTrasporto.NumeroCivico;
+                    cmbMod_TipoIndirizzo.Text = documentoTrasporto.TipoIndirizzo;
+                
+                    tbMod_CapOperativo.Text = documentoTrasporto.CapOperativo;
+                    tbMod_ProvinciaOperativo.Text = documentoTrasporto.ProvinciaOperativo;
+                    tbMod_ComuneOperativo.Text = documentoTrasporto.ComuneOperativo;
+                    tbMod_IndirizzoOperativo.Text = documentoTrasporto.IndirizzoOperativo;
+                    tbMod_NazioneOperativo.Text = documentoTrasporto.NazioneOperativo;
+                    tbMod_NumeroCivicoOperativo.Text = documentoTrasporto.NumeroCivicoOperativo;
+                    cmbMod_TipoIndirizzoOperativo.Text = documentoTrasporto.TipoIndirizzoOperativo;
+
                     tbMod_NumeroColli.Text = documentoTrasporto.NumeroColli.ToString();
                     tbMod_PartitaIva.Text = documentoTrasporto.PartitaIva;
                     tbMod_Peso.Text = documentoTrasporto.Peso;
-                    tbMod_Provincia.Text = documentoTrasporto.Provincia;
+                    
                     tbMod_Trasportatore.Text = documentoTrasporto.Trasportatore;
-                    cmbMod_TipoIndirizzo.Text = documentoTrasporto.TipoIndirizzo;
+                    
 
                     List<AttrezzatureTrasporto> listaAttrezzature = documentoTrasporto.AttrezzatureTrasporto;
                     gv_attrezzature.DataSource = listaAttrezzature;
@@ -542,16 +569,29 @@ namespace VideoSystemWeb.Magazzino
 
             documentoTrasporto.Id = Convert.ToInt64(ViewState["idDocumentoTrasporto"].ToString());
 
-            documentoTrasporto.Cap = tbMod_Cap.Text.Trim();
-            documentoTrasporto.Causale = tbMod_Causale.Text.Trim();
-            documentoTrasporto.Comune = tbMod_Comune.Text.Trim();
+
+
             //documentoTrasporto.DataTrasporto =  Convert.ToDateTime(tbMod_DataTrasporto.Text.Trim());
             if (!string.IsNullOrEmpty(BasePage.ValidaCampo(tbMod_DataTrasporto, "", true, ref esito))){
                 documentoTrasporto.DataTrasporto = Convert.ToDateTime(tbMod_DataTrasporto.Text.Trim());
             }
+            documentoTrasporto.Causale = tbMod_Causale.Text.Trim();
+
             documentoTrasporto.Indirizzo = BasePage.ValidaCampo(tbMod_Indirizzo, "", true, ref esito);
             documentoTrasporto.Nazione = tbMod_Nazione.Text.Trim();
             documentoTrasporto.NumeroCivico = tbMod_NumeroCivico.Text.Trim();
+            documentoTrasporto.Cap = tbMod_Cap.Text.Trim();
+            documentoTrasporto.Comune = tbMod_Comune.Text.Trim();
+            documentoTrasporto.Provincia = tbMod_Provincia.Text.Trim();
+            documentoTrasporto.TipoIndirizzo = cmbMod_TipoIndirizzo.Text;
+
+            documentoTrasporto.IndirizzoOperativo = BasePage.ValidaCampo(tbMod_IndirizzoOperativo, "", true, ref esito);
+            documentoTrasporto.NazioneOperativo = tbMod_NazioneOperativo.Text.Trim();
+            documentoTrasporto.NumeroCivicoOperativo = tbMod_NumeroCivicoOperativo.Text.Trim();
+            documentoTrasporto.CapOperativo = tbMod_CapOperativo.Text.Trim();
+            documentoTrasporto.ComuneOperativo = tbMod_ComuneOperativo.Text.Trim();
+            documentoTrasporto.ProvinciaOperativo = tbMod_ProvinciaOperativo.Text.Trim();
+            documentoTrasporto.TipoIndirizzoOperativo = cmbMod_TipoIndirizzoOperativo.Text;
 
             //documentoTrasporto.NumeroColli = Convert.ToInt64(tbMod_NumeroColli.Text.Trim());
             string numeroColli = BasePage.ValidaCampo(tbMod_NumeroColli, "1", true, ref esito);
@@ -560,8 +600,7 @@ namespace VideoSystemWeb.Magazzino
                 documentoTrasporto.NumeroColli = Convert.ToInt64(numeroColli);
             }
             documentoTrasporto.PartitaIva = tbMod_PartitaIva.Text.Trim();
-            documentoTrasporto.Provincia = tbMod_Provincia.Text.Trim();
-            documentoTrasporto.TipoIndirizzo = cmbMod_TipoIndirizzo.Text;
+
             documentoTrasporto.Trasportatore = BasePage.ValidaCampo(tbMod_Trasportatore, "", true, ref esito);
             documentoTrasporto.Destinatario = BasePage.ValidaCampo(tbMod_destinatario, "", true, ref esito);
             documentoTrasporto.Peso = BasePage.ValidaCampo(tbMod_Peso, "", true, ref esito);
@@ -727,7 +766,16 @@ namespace VideoSystemWeb.Magazzino
                                 tbMod_Comune.Text = cliente.ComuneLegale;
                                 tbMod_NumeroCivico.Text = cliente.NumeroCivicoLegale;
                                 tbMod_Provincia.Text = cliente.ProvinciaLegale;
+
                                 tbMod_PartitaIva.Text = cliente.PartitaIva;
+
+                                cmbMod_TipoIndirizzoOperativo.Text = cliente.TipoIndirizzoOperativo;
+                                tbMod_IndirizzoOperativo.Text = cliente.IndirizzoOperativo;
+                                tbMod_CapOperativo.Text = cliente.CapOperativo;
+                                tbMod_ComuneOperativo.Text = cliente.ComuneOperativo;
+                                tbMod_NumeroCivicoOperativo.Text = cliente.NumeroCivicoOperativo;
+                                tbMod_ProvinciaOperativo.Text = cliente.ProvinciaOperativo;
+                                
 
                                 PanelClienti.Visible = false;
                             }
@@ -750,6 +798,13 @@ namespace VideoSystemWeb.Magazzino
                                     tbMod_Comune.Text = collaboratore.Indirizzi[0].Comune;
                                     tbMod_NumeroCivico.Text = collaboratore.Indirizzi[0].NumeroCivico;
                                     tbMod_Provincia.Text = collaboratore.Indirizzi[0].Provincia;
+
+                                    cmbMod_TipoIndirizzo.Text = collaboratore.Indirizzi[0].Tipo;
+                                    tbMod_Indirizzo.Text = "";
+                                    tbMod_Cap.Text = "";
+                                    tbMod_Comune.Text = "";
+                                    tbMod_NumeroCivico.Text = "";
+                                    tbMod_Provincia.Text = "";
                                 }
 
                                 PanelClienti.Visible = false;
@@ -758,14 +813,10 @@ namespace VideoSystemWeb.Magazzino
                         default:
                             break;
                     }
-
-
                 }
-
             }
             catch (Exception ex)
             {
-
                 ShowError("btnAssociaClienteServer_Click" + Environment.NewLine + ex.Message);
             }
         }
@@ -1234,6 +1285,21 @@ namespace VideoSystemWeb.Magazzino
                         cellaGrigliaDest.Add(pGrigliaDest);
                         tbGriglaDest.AddCell(cellaGrigliaDest);
 
+                        if (!string.IsNullOrEmpty(documentoTrasporto.IndirizzoOperativo) && (!documentoTrasporto.Indirizzo.Equals(documentoTrasporto.IndirizzoOperativo)))
+                        {
+                            // INSERISCO INDIRIZZO OPERATIVO
+                            pGrigliaDest = new Paragraph("Indirizzo Operativo").SetFontSize(9).SetBold();
+                            cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaDest.Add(pGrigliaDest);
+                            tbGriglaDest.AddCell(cellaGrigliaDest);
+
+                            pGrigliaDest = new Paragraph(documentoTrasporto.TipoIndirizzoOperativo + " " + documentoTrasporto.IndirizzoOperativo + " " + documentoTrasporto.NumeroCivicoOperativo + Environment.NewLine + documentoTrasporto.CapOperativo + " " + documentoTrasporto.ComuneOperativo + " " + documentoTrasporto.ProvinciaOperativo).SetFontSize(9);
+                            cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
+                            cellaGrigliaDest.Add(pGrigliaDest);
+                            tbGriglaDest.AddCell(cellaGrigliaDest);
+                        }
+
+
                         // PARTITA IVA DESTINATARIO
                         pGrigliaDest = new Paragraph("P.Iva/C.F.").SetFontSize(9).SetBold();
                         cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
@@ -1560,7 +1626,15 @@ namespace VideoSystemWeb.Magazzino
                                 tbMod_Comune.Text = cliente.ComuneOperativo;
                                 tbMod_NumeroCivico.Text = cliente.NumeroCivicoOperativo;
                                 tbMod_Provincia.Text = cliente.ProvinciaOperativo;
+
                                 tbMod_PartitaIva.Text = cliente.PartitaIva;
+
+                                cmbMod_TipoIndirizzoOperativo.Text = cliente.TipoIndirizzoOperativo;
+                                tbMod_IndirizzoOperativo.Text = "";
+                                tbMod_CapOperativo.Text = "";
+                                tbMod_ComuneOperativo.Text = "";
+                                tbMod_NumeroCivicoOperativo.Text = "";
+                                tbMod_ProvinciaOperativo.Text = "";
 
                                 PanelClienti.Visible = false;
                             }
@@ -1583,6 +1657,13 @@ namespace VideoSystemWeb.Magazzino
                                     tbMod_Comune.Text = collaboratore.Indirizzi[0].Comune;
                                     tbMod_NumeroCivico.Text = collaboratore.Indirizzi[0].NumeroCivico;
                                     tbMod_Provincia.Text = collaboratore.Indirizzi[0].Provincia;
+
+                                    cmbMod_TipoIndirizzoOperativo.Text = collaboratore.Indirizzi[0].Tipo;
+                                    tbMod_IndirizzoOperativo.Text = "";
+                                    tbMod_CapOperativo.Text = "";
+                                    tbMod_ComuneOperativo.Text = "";
+                                    tbMod_NumeroCivicoOperativo.Text = "";
+                                    tbMod_ProvinciaOperativo.Text = "";
                                 }
 
                                 PanelClienti.Visible = false;

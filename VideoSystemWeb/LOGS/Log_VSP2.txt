@@ -22659,3 +22659,4 @@ La colonna 'mag_attrezzature.fornitore' non è valida nell'elenco di selezione pe
 2021-10-30 12:25:19,541 [10] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
 2021-10-30 12:49:26,295 [30] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
 2021-10-30 12:54:43,936 [31] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2021-11-06 11:15:52,771 [7] INFO VideoSystemWeb.Login - UTENTE admin Loggato!

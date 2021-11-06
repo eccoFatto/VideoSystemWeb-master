@@ -80,6 +80,8 @@ namespace VideoSystemWeb.DAL
                                         datiArticoliLavorazione.UsaCostoFP = riga.Field<bool?>("usaCostoFP");
                                         datiArticoliLavorazione.Consuntivo = riga.Field<bool?>("consuntivo");
                                         datiArticoliLavorazione.NumOccorrenza = riga.Field<int>("numOccorrenza");
+                                        datiArticoliLavorazione.Quantita = riga.Field<int>("quantita");
+                                        datiArticoliLavorazione.PrezzoUnitario = riga.Field<decimal>("prezzoUnitario");
 
                                         listaDatiArticoli.Add(datiArticoliLavorazione);
                                     }

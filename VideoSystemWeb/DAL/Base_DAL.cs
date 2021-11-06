@@ -2093,7 +2093,7 @@ namespace VideoSystemWeb.DAL
             {
                 usaCostoFP = new SqlParameter("@usaCostoFP", datoArticoloLavorazione.UsaCostoFP);
             }
-            fp_lordo.Direction = ParameterDirection.Input;
+            usaCostoFP.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(usaCostoFP);
 
             SqlParameter consuntivo = new SqlParameter("@consuntivo", DBNull.Value);
@@ -2101,12 +2101,20 @@ namespace VideoSystemWeb.DAL
             {
                 consuntivo = new SqlParameter("@consuntivo", datoArticoloLavorazione.Consuntivo);
             }
-            fp_lordo.Direction = ParameterDirection.Input;
+            consuntivo.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(consuntivo);
 
             SqlParameter numOccorrenza = new SqlParameter("@numOccorrenza", datoArticoloLavorazione.NumOccorrenza);
-            fp_lordo.Direction = ParameterDirection.Input;
+            numOccorrenza.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(numOccorrenza);
+
+            SqlParameter quantita = new SqlParameter("@quantita", datoArticoloLavorazione.Quantita);
+            quantita.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(quantita);
+
+            SqlParameter prezzoUnitario = new SqlParameter("@prezzoUnitario", datoArticoloLavorazione.PrezzoUnitario);
+            prezzoUnitario.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(prezzoUnitario);
         }
 
         protected static void CostruisciSP_DeleteDatiArticoliLavorazione(SqlCommand StoreProc, SqlDataAdapter sda, int idDatiLavorazione)

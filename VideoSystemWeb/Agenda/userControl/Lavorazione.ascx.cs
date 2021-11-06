@@ -710,8 +710,10 @@ namespace VideoSystemWeb.Agenda.userControl
                 datiArticoliLav.FP_lordo = articoloLavorazione.FP_lordo;
                 datiArticoliLav.UsaCostoFP = articoloLavorazione.UsaCostoFP;
                 datiArticoliLav.Consuntivo = false;
-
                 datiArticoliLav.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione();
+
+                datiArticoliLav.Quantita = articoloLavorazione.Quantita;
+                datiArticoliLav.PrezzoUnitario = articoloLavorazione.PrezzoUnitario;
 
                 SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Add(datiArticoliLav);
             }
@@ -1858,7 +1860,9 @@ namespace VideoSystemWeb.Agenda.userControl
                 Costo = datoArticolo.Costo * quantita,
                 Iva = datoArticolo.Iva,
                 Data = dataGiornoLav,
-                NumOccorrenza = numOccorrenza
+                NumOccorrenza = numOccorrenza,
+                Quantita = quantita,
+                PrezzoUnitario = datoArticolo.Prezzo
             };
 
             datoArticoloLavorazione.IdentificatoreOggetto = IDGenerator.GetId(datoArticoloLavorazione, out bool firstTime);

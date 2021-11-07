@@ -180,6 +180,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         decimal totPrezzo = 0;
                         decimal totIVA = 0;
 
+
                         // CICLO GLI ARTICOLI
                         //foreach (DatiArticoli da in listaDatiArticoli)
                         foreach (DatiArticoliLavorazione da in listaArticoliLavorazione)
@@ -213,20 +214,30 @@ namespace VideoSystemWeb.Agenda.userControl
                             {
                                 pGriglia = new Paragraph(descrizioneLunga).SetFontSize(9);
                             }
-                            
 
+
+                            decimal PrezzoArticolo = da.Prezzo;
+                            decimal totPrezzoUnitario = da.PrezzoUnitario;
+                            int quantita = da.Quantita;
+                            if ((totPrezzoUnitario*quantita)!= PrezzoArticolo)
+                            {
+                                quantita = 1;
+                                totPrezzoUnitario = PrezzoArticolo;
+                            }
 
                             cellaGriglia = new Cell(1, 2).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
 
-                            pGriglia = new Paragraph(da.Prezzo.ToString("###,##0.00")).SetFontSize(9);
+                            //pGriglia = new Paragraph(da.Prezzo.ToString("###,##0.00")).SetFontSize(9);
+                            pGriglia = new Paragraph(totPrezzoUnitario.ToString("###,##0.00")).SetFontSize(9);
                             cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
 
                             //pGriglia = new Paragraph(da.Quantita.ToString("##0")).SetFontSize(9);
-                            pGriglia = new Paragraph(1.ToString("##0")).SetFontSize(9);
+                            //pGriglia = new Paragraph(1.ToString("##0")).SetFontSize(9);
+                            pGriglia = new Paragraph(quantita.ToString("##0")).SetFontSize(9);
                             cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
@@ -237,9 +248,10 @@ namespace VideoSystemWeb.Agenda.userControl
                             tbGrigla.AddCell(cellaGriglia);
 
                             //decimal totale = da.Prezzo * da.Quantita;
-                            decimal totale = da.Prezzo * 1;
+                            //decimal totale = da.Prezzo * 1;
 
-                            pGriglia = new Paragraph(totale.ToString("###,##0.00")).SetFontSize(9);
+                            //pGriglia = new Paragraph(totale.ToString("###,##0.00")).SetFontSize(9);
+                            pGriglia = new Paragraph(PrezzoArticolo.ToString("###,##0.00")).SetFontSize(9);
                             cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                             cellaGriglia.Add(pGriglia);
                             tbGrigla.AddCell(cellaGriglia);
@@ -258,7 +270,13 @@ namespace VideoSystemWeb.Agenda.userControl
                         // NOTE
                         Text first = new Text("Note:").SetFontSize(9).SetBold();
                         //Text second = new Text(Environment.NewLine + "Gli articoli con la dicitura 'Cons' sono da ritenersi a CONSUNTIVO" + Environment.NewLine + noteOfferta.Note.Trim()).SetFontSize(9);
-                        Text second = new Text(Environment.NewLine + noteOfferta.Note.Trim()).SetFontSize(9);
+
+                        string snoteOfferta = "";
+                        if (!string.IsNullOrEmpty(noteOfferta.Note))
+                        {
+                            snoteOfferta = noteOfferta.Note.Trim();
+                        }
+                        Text second = new Text(Environment.NewLine + snoteOfferta).SetFontSize(9);
                         Paragraph paragraphNote = new Paragraph().Add(first).Add(second);
 
                         cellaGriglia = new iText.Layout.Element.Cell(3, 3).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10);

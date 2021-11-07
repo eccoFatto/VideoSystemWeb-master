@@ -363,7 +363,8 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.Iva = int.Parse(txt_Iva.Text);
             articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
             articoloSelezionato.FP_lordo = string.IsNullOrEmpty(txt_FPlordo.Text) ? 0 : decimal.Parse(txt_FPlordo.Text);
-
+            articoloSelezionato.PrezzoUnitario = decimal.Parse(txt_Prezzo.Text);
+            articoloSelezionato.Quantita = 1;
 
             FiguraProfessionale figuraProfessionaleSelezionata = (FiguraProfessionale)ViewState[VIEWSTATE_FP_DETTAGLIOECONOMICO];
 
@@ -409,6 +410,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
 
                     articoloDaModificare.Prezzo = decimal.Parse(txt_Prezzo.Text);
+                    articoloDaModificare.PrezzoUnitario = decimal.Parse(txt_Prezzo.Text);
+                    articoloDaModificare.Quantita = 1;
                     articoloDaModificare.Iva = int.Parse(txt_Iva.Text);
                     articoloDaModificare.Stampa = ddl_Stampa.SelectedValue == "1";
                     articoloDaModificare.FP_lordo = string.IsNullOrEmpty(txt_FPlordo.Text) ? 0 : decimal.Parse(txt_FPlordo.Text);
@@ -1547,6 +1550,9 @@ namespace VideoSystemWeb.Agenda.userControl
                 articoloLavorazioneDiaria.Costo = importoDiaria;
                 articoloLavorazioneDiaria.FP_lordo = importoDiaria;
                 articoloLavorazioneDiaria.Prezzo = articoloDiaria.DefaultPrezzo;
+                articoloLavorazioneDiaria.PrezzoUnitario = articoloDiaria.DefaultPrezzo;
+                articoloLavorazioneDiaria.Quantita = 1;
+
                 articoloLavorazioneDiaria.Consuntivo = false;
                 articoloLavorazioneDiaria.NumOccorrenza = GetNextNumOccorrenzaDatiArticoliLavorazione();
 

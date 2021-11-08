@@ -198,7 +198,7 @@
                 </div>
 
                 <div class="w3-quarter">
-                    <label>Tipo (Cliente/Fornitore)</label>
+                    <label>Tipo (Cliente/Fornitore/Busta Paga)</label>
                     <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
                         <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
                         <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
@@ -464,7 +464,7 @@
 
                                 <div class="w3-row-padding">
                                     <div class="w3-quarter w3-row-padding">
-                                        <label>Tipo (Cliente/Fornitore)</label>
+                                        <label>Tipo (Cliente/Fornitore/Busta Paga)</label>
                                         <asp:DropDownList ID="ddl_Tipo" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddl_Tipo_SelectedIndexChanged" Width="100%" CssClass="w3-input w3-border">
                                             <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
                                             <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>

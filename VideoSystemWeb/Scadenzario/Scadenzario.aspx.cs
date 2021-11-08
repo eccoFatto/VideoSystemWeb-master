@@ -217,7 +217,14 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 ddl_fattura.Items.Add(new ListItem("<seleziona una fattura>", ""));
                 foreach (Protocolli protocollo in listaProtocolloNonInScadenzario)
                 {
-                    ddl_fattura.Items.Add(new ListItem("Protocollo: " + protocollo.Numero_protocollo + " - " + tipoAnagrafica + ": " + protocollo.Cliente + " - Lavorazione: " + protocollo.Lavorazione, protocollo.Id.ToString()));
+                    if(ddl_Tipo.SelectedValue == "BustaPaga")
+                    {
+                        ddl_fattura.Items.Add(new ListItem("Protocollo: " + protocollo.Numero_protocollo + " - " + tipoAnagrafica + ": " + protocollo.Cliente + " - Descrizione: " + protocollo.Descrizione, protocollo.Id.ToString()));
+                    }
+                    else
+                    { 
+                        ddl_fattura.Items.Add(new ListItem("Protocollo: " + protocollo.Numero_protocollo + " - " + tipoAnagrafica + ": " + protocollo.Cliente + " - Lavorazione: " + protocollo.Lavorazione, protocollo.Id.ToString()));
+                    }
                 }
             }
             ddl_fattura.SelectedIndex = 0;

@@ -380,7 +380,7 @@
 
                                 <div class="w3-row-padding">
                                     <div class="w3-quarter">
-                                        <label>Tipo Indirizzo Operativo</label>
+                                        <label>Tipo Indirizzo Spedizione</label>
                                         <asp:DropDownList ID="cmbMod_TipoIndirizzoOperativo" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
                                             <asp:ListItem Value="Via">Via</asp:ListItem>
                                             <asp:ListItem Value="Viale">Viale</asp:ListItem>
@@ -393,7 +393,7 @@
                                         </asp:DropDownList>
                                     </div>
                                     <div class="w3-half">
-                                        <label>Indirizzo Operativo</label>
+                                        <label>Indirizzo Spedizione</label>
                                         <asp:TextBox ID="tbMod_IndirizzoOperativo" runat="server" MaxLength="60" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
@@ -403,19 +403,19 @@
                                 </div>
                                 <div class="w3-row-padding">
                                     <div class="w3-quarter">
-                                        <label>Cap Operativo</label>
+                                        <label>Cap Spedizione</label>
                                         <asp:TextBox ID="tbMod_CapOperativo" runat="server" MaxLength="5" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>Comune Operativo</label>
+                                        <label>Comune Spedizione</label>
                                         <asp:TextBox ID="tbMod_ComuneOperativo" runat="server" MaxLength="50" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>Provincia Operativo</label>
+                                        <label>Provincia Spedizione</label>
                                         <asp:TextBox ID="tbMod_ProvinciaOperativo" runat="server" MaxLength="2" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>Nazione Operativo</label>
+                                        <label>Nazione Spedizione</label>
                                         <asp:TextBox ID="tbMod_NazioneOperativo" runat="server" MaxLength="20" CssClass="w3-input w3-border" placeholder="" Text=""></asp:TextBox>
                                     </div>
                                 </div>

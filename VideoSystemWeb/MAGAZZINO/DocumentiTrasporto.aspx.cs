@@ -1288,7 +1288,7 @@ namespace VideoSystemWeb.Magazzino
                         if (!string.IsNullOrEmpty(documentoTrasporto.IndirizzoOperativo) && (!documentoTrasporto.Indirizzo.Equals(documentoTrasporto.IndirizzoOperativo)))
                         {
                             // INSERISCO INDIRIZZO OPERATIVO
-                            pGrigliaDest = new Paragraph("Indirizzo Operativo").SetFontSize(9).SetBold();
+                            pGrigliaDest = new Paragraph("Indirizzo Spedizione").SetFontSize(9).SetBold();
                             cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaDest.Add(pGrigliaDest);
                             tbGriglaDest.AddCell(cellaGrigliaDest);

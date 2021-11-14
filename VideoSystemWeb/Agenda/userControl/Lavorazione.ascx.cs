@@ -202,6 +202,10 @@ namespace VideoSystemWeb.Agenda.userControl
                     txt_DescrizioneLunga.Text = articoloSelezionato.DescrizioneLunga;
                     txt_Costo.Text = articoloSelezionato.Costo.ToString();
                     txt_Prezzo.Text = articoloSelezionato.Prezzo.ToString();
+
+                    txt_PrezzoUnitario.Text = articoloSelezionato.PrezzoUnitario.ToString();
+                    txt_Quantita.Text = articoloSelezionato.Quantita.ToString();
+
                     txt_Iva.Text = articoloSelezionato.Iva.ToString();
                     ddl_Stampa.SelectedValue = articoloSelezionato.Stampa ? "1" : "0";
                     ddl_FPtipoPagamento.SelectedValue = articoloSelezionato.IdTipoPagamento != null ? articoloSelezionato.IdTipoPagamento.ToString() : "";
@@ -360,11 +364,13 @@ namespace VideoSystemWeb.Agenda.userControl
             }
 
             articoloSelezionato.Prezzo = decimal.Parse(txt_Prezzo.Text);
+
+            articoloSelezionato.PrezzoUnitario = decimal.Parse(txt_PrezzoUnitario.Text);
+            articoloSelezionato.Quantita = int.Parse(txt_Quantita.Text);
+
             articoloSelezionato.Iva = int.Parse(txt_Iva.Text);
             articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
             articoloSelezionato.FP_lordo = string.IsNullOrEmpty(txt_FPlordo.Text) ? 0 : decimal.Parse(txt_FPlordo.Text);
-            articoloSelezionato.PrezzoUnitario = decimal.Parse(txt_Prezzo.Text);
-            articoloSelezionato.Quantita = 1;
 
             FiguraProfessionale figuraProfessionaleSelezionata = (FiguraProfessionale)ViewState[VIEWSTATE_FP_DETTAGLIOECONOMICO];
 
@@ -410,8 +416,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     }
 
                     articoloDaModificare.Prezzo = decimal.Parse(txt_Prezzo.Text);
-                    articoloDaModificare.PrezzoUnitario = decimal.Parse(txt_Prezzo.Text);
-                    articoloDaModificare.Quantita = 1;
+                    articoloDaModificare.PrezzoUnitario = decimal.Parse(txt_PrezzoUnitario.Text);
+                    articoloDaModificare.Quantita = int.Parse(txt_Quantita.Text);
                     articoloDaModificare.Iva = int.Parse(txt_Iva.Text);
                     articoloDaModificare.Stampa = ddl_Stampa.SelectedValue == "1";
                     articoloDaModificare.FP_lordo = string.IsNullOrEmpty(txt_FPlordo.Text) ? 0 : decimal.Parse(txt_FPlordo.Text);
@@ -740,6 +746,10 @@ namespace VideoSystemWeb.Agenda.userControl
             txt_FPtelefono.Text =
             txt_FPnetto.Text =
             txt_FPRimborsoKM.Text =
+
+            txt_Quantita.Text =
+            txt_PrezzoUnitario.Text =
+
             txt_FPlordo.Text = "";
 
             ddl_Stampa.SelectedIndex =
@@ -776,17 +786,28 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 txt_FPnetto.Attributes.Remove("readonly");
                 txt_FPnetto.CssClass = "w3-input w3-border";
+
                 txt_Costo.Attributes.Add("readonly", "readonly");
                 txt_Costo.CssClass = "w3-input w3-border w3-disabled";
-
                 txt_Costo.Text = "";
+
+                txt_Prezzo.Attributes.Add("readonly", "readonly");
+
+                txt_PrezzoUnitario.Attributes.Remove("readonly");
+                txt_Quantita.Attributes.Remove("readonly");
             }
             else
             {
                 txt_FPnetto.Attributes.Add("readonly", "readonly");
                 txt_FPnetto.CssClass = "w3-input w3-border w3-disabled";
-                txt_Costo.Attributes.Remove("readonly");
-                txt_Costo.CssClass = "w3-input w3-border";
+
+                txt_Costo.Attributes.Add("readonly", "readonly");
+                txt_Costo.CssClass = "w3-input w3-border w3-disabled";
+
+                txt_Prezzo.Attributes.Add("readonly", "readonly");
+
+                txt_PrezzoUnitario.Attributes.Add("readonly", "readonly");
+                txt_Quantita.Attributes.Add("readonly", "readonly");
 
                 txt_FPnetto.Text = "";
                 txt_FPRimborsoKM.Text = "";

@@ -258,6 +258,14 @@
             $("#divModificaArticolo").removeClass(" w3-animate-top");
         }
     }
+
+    function calcolaPrezzo() {
+        var prezzoUnitario = $('#<%=txt_PrezzoUnitario.ClientID%>').val().replace(".", "").replace(",", ".");
+        var quantita = $('#<%=txt_Quantita.ClientID%>').val().replace(".", "").replace(",", ".");
+        var prezzo = prezzoUnitario * quantita;
+
+        $('#<%=txt_Prezzo.ClientID%>').val(prezzo.toFixed(2).replace(".", ","));
+    }
 </script>
 
 <asp:HiddenField ID="hf_tabSelezionataLavorazione" runat="server" EnableViewState="true" Value="Lavoraz" />
@@ -511,7 +519,7 @@
                                     <span onclick="document.getElementById('<%= panelModificaArticolo.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
                                 </div>
                                 <div class="w3-col round" style="padding: 5px;">
-                                    <div class="w3-half" style="padding: 5px;">
+                                    <div class="w3-twothird" style="padding: 5px;">
 
 
                                         <div class="w3-col">
@@ -528,26 +536,37 @@
                                         </div>
 
                                         <div class="w3-col">
-                                            <div class="w3-half">
+                                            <div class="w3-twothird">
 
-                                                <div class="w3-third" style="padding: 5px">
+                                                <div class="w3-quarter" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Prezzo</label>
-                                                    <asp:TextBox ID="txt_Prezzo" runat="server" class="w3-input w3-border w3-round-medium" placeholder="Prezzo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                                    <asp:TextBox ID="txt_Prezzo" runat="server" class="w3-input w3-border w3-round-medium" placeholder="Prezzo" Style="padding: 2px;" onkeypress="return onlyNumbers();" DataFormatString="{0:N2}"></asp:TextBox>
                                                 </div>
-                                                <div class="w3-third" style="padding: 5px">
+                                                <div class="w3-quarter" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Costo</label>
-                                                    <asp:TextBox ID="txt_Costo" runat="server" class="w3-input w3-border w3-round-medium" placeholder="Costo" Style="padding: 2px;" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                                    <asp:TextBox ID="txt_Costo" runat="server" class="w3-input w3-border w3-round-medium" placeholder="Costo" Style="padding: 2px;" onkeypress="return onlyNumbers();" DataFormatString="{0:N2}"></asp:TextBox>
                                                 </div>
-                                                <div class="w3-third" style="padding: 5px">
+
+                                                <div class="w3-quarter" style="padding: 5px">
+                                                    <label style="margin-bottom: 0.2rem;">Prezzo Unitario</label>
+                                                    <asp:TextBox ID="txt_PrezzoUnitario" runat="server" class="w3-input w3-border w3-round-medium" placeholder="Prezzo unitario" Style="padding: 2px;" onkeypress="return onlyNumbers();" onkeyup="calcolaPrezzo();" DataFormatString="{0:N2}"></asp:TextBox>
+                                                </div>
+
+                                                <div class="w3-quarter" style="padding: 5px">
+                                                    <label style="margin-bottom: 0.2rem;">Quantità</label>
+                                                    <asp:TextBox ID="txt_Quantita" runat="server" class="w3-input w3-border w3-round-medium" Text="1" Style="padding: 2px;" onkeypress="return onlyNumbers();" onkeyup="calcolaPrezzo();" Width=" 45%"></asp:TextBox>
+                                                </div>
+                                               
+                                            </div>
+                                            <div class="w3-third">
+                                                
+                                                 <div class="w3-third" style="padding: 5px">
                                                    <label style="margin-bottom: 0.2rem;">Consuntivo</label>
                                                     <asp:DropDownList ID="ddl_Consuntivo" runat="server" >
                                                         <asp:ListItem Value="1" Text="SI" />
                                                         <asp:ListItem Value="0" Text="NO" Selected/>
                                                     </asp:DropDownList>
                                                 </div>
-                                            </div>
-                                            <div class="w3-half">
-                                                <div class="w3-third" style="padding: 5px">&nbsp;</div>
 
                                                 <div class="w3-third" style="padding: 5px">
                                                     <label style="margin-bottom: 0.2rem;">Iva</label>
@@ -565,7 +584,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="w3-half" style="padding: 5px">
+                                    <div class="w3-third" style="padding: 5px">
                                         <label style="margin-bottom: 0.2rem;">Descrizione lunga</label>
                                         <asp:TextBox ID="txt_DescrizioneLunga" runat="server" Rows="5" TextMode="MultiLine" class="w3-input w3-border w3-round-medium" MaxLength="100" placeholder="Descrizione lunga" Style="padding: 2px;"></asp:TextBox>
                                     </div>

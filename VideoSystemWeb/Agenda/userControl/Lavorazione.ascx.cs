@@ -806,8 +806,10 @@ namespace VideoSystemWeb.Agenda.userControl
 
                 txt_Prezzo.Attributes.Add("readonly", "readonly");
 
-                txt_PrezzoUnitario.Attributes.Add("readonly", "readonly");
-                txt_Quantita.Attributes.Add("readonly", "readonly");
+                //txt_PrezzoUnitario.Attributes.Add("readonly", "readonly");
+                //txt_Quantita.Attributes.Add("readonly", "readonly");
+                txt_PrezzoUnitario.Attributes.Remove("readonly"); // sempre modificabile
+                txt_Quantita.Attributes.Remove("readonly"); // sempre modificabile
 
                 txt_FPnetto.Text = "";
                 txt_FPRimborsoKM.Text = "";

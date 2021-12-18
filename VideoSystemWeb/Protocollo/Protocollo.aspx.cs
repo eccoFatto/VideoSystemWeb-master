@@ -1023,6 +1023,7 @@ namespace VideoSystemWeb.Protocollo
                         else
                         {
                             tbMod_Cliente.Text = collaboratore.Cognome + " " + collaboratore.Nome;
+                            tbMod_IdCliente.Value = null;
                             PanelClienti.Visible = false;
                         }
                         break;

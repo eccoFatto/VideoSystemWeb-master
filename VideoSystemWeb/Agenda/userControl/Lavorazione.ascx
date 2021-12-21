@@ -621,7 +621,7 @@
                                             <asp:TextBox ID="txt_FPNominativo" class="w3-input w3-border w3-round-medium" runat="server" Style="padding: 2px;" onkeydown="javascript:enterEvent(event);"></asp:TextBox>
                                         </div>
                                         <div class="w3-rest" style="padding: 5px;">
-                                            <asp:Button ID="btn_Cerca" class=" w3-btn w3-white w3-border w3-border-green w3-round-medium" Style="font-size: smaller; padding: 4px 8px; margin-top: 21px;" runat="server" Text="Cerca" OnClick="btn_Cerca_Click"></asp:Button>
+                                            <asp:Button ID="btn_Cerca" class=" w3-btn w3-white w3-border w3-border-green w3-round-medium" Style="font-size: smaller; padding: 4px 8px; margin-top: 21px;" runat="server" Text="Cerca" OnClick="btn_Cerca_Click" OnClientClick="$('.loader').show();"></asp:Button>
                                         </div>
                                     </div>
 

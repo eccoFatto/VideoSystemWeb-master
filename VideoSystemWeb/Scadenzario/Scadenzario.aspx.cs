@@ -201,7 +201,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             Esito esito = new Esito();
             List<Protocolli> listaProtocolloNonInScadenzario = Scadenzario_BLL.Instance.getFattureNonInScadenzario(ddl_Tipo.SelectedValue, ref esito);
-
+            listaProtocolloNonInScadenzario = listaProtocolloNonInScadenzario.OrderBy(x => x.Numero_protocollo).ToList();
 
             txt_Iva.Text = ddl_Tipo.SelectedValue == "BustaPaga" ? "0" : Config_BLL.Instance.getConfig(ref esito, "IVA").Valore;
 

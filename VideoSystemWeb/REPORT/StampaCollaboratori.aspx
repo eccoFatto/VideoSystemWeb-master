@@ -137,7 +137,10 @@
 
                 </div>
 
-                <div class="w3-quarter" style="margin-bottom:10px">&nbsp;</div>
+                <div class="w3-quarter" style="margin-bottom:10px">
+                    <label>Cliente</label>
+                    <asp:TextBox ID="txt_Cliente" runat="server"  Width="100%"  class="w3-input w3-border" ></asp:TextBox>
+                </div>
 
                 <div class="w3-quarter">
                     <div class="w3-half" style="padding-right:10px">

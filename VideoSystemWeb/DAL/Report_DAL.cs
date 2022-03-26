@@ -129,7 +129,7 @@ namespace VideoSystemWeb.DAL
             return dtReturn;
         }
 
-        public DataTable GetDatiReportCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, string lavorazione, string produzione, bool soloFornitori, ref Esito esito)
+        public DataTable GetDatiReportCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, string lavorazione, string produzione, bool soloFornitori, string cliente, ref Esito esito)
         {
             string filtroNominativo = string.Empty;
             string filtroRagioneSociale = string.Empty;
@@ -139,17 +139,10 @@ namespace VideoSystemWeb.DAL
                 filtroRagioneSociale = "clientiFornitori.ragioneSociale like '%" + nominativo + "%' and ";
             }
 
-            string filtroLavorazione = string.Empty;
-            if (!string.IsNullOrEmpty(lavorazione))
-            {
-                filtroLavorazione = "datiAgenda.lavorazione like '%" + lavorazione + "%' and ";
-            }
-
-            string filtroProduzione = string.Empty;
-            if (!string.IsNullOrEmpty(produzione))
-            {
-                filtroProduzione = "datiAgenda.produzione like '%" + produzione + "%' and ";
-            }
+            string filtroLavorazione = string.IsNullOrEmpty(lavorazione) ? string.Empty : "datiAgenda.lavorazione like '%" + lavorazione + "%' and ";
+            string filtroProduzione = string.IsNullOrEmpty(produzione) ? string.Empty : "datiAgenda.produzione like '%" + produzione + "%' and ";
+            string filtroCliente = string.IsNullOrEmpty(cliente) ? string.Empty : "clienti.ragioneSociale like '%" + cliente + "%' and ";
+            string filtroClienteFornitore = string.IsNullOrEmpty(cliente) ? string.Empty : "clientiFornitori.ragioneSociale like '%" + cliente + "%' and "; 
 
             DataTable dtReturn = new DataTable();
             try
@@ -201,6 +194,7 @@ namespace VideoSystemWeb.DAL
                                                  filtroNominativo +
                                                  filtroLavorazione +
                                                  filtroProduzione +
+                                                 filtroCliente + 
                                                  "artLav.idCollaboratori is not null and " +
                                                  "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + " or artLav.idTipoPagamento = " + idTipoRitenutaAcconto + ") and " +
                                                  "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' " +//"' and " +
@@ -244,13 +238,13 @@ namespace VideoSystemWeb.DAL
                                              "clientiFornitori.tipo = 'Tecnici' and " + // serve a discriminare i fornitori che sono anche collaboratori
                                              filtroRagioneSociale +
                                              filtroLavorazione + 
-                                             filtroProduzione + 
+                                             filtroProduzione +
+                                             filtroClienteFornitore +
                                              "artLav.idFornitori is not null and " +
                                              "(artLav.idTipoPagamento is not null) and " +
                                              "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' " +
                                              filtroSoloFornitori + 
                                       "order by Nome, data ";
-
 
 
                     using (SqlCommand cmd = new SqlCommand(querySql))

@@ -105,6 +105,15 @@ namespace VideoSystemWeb.REPORT
         protected global::System.Web.UI.WebControls.TextBox txt_Produzione;
 
         /// <summary>
+        /// Controllo txt_Cliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Cliente;
+
+        /// <summary>
         /// Controllo btnRicerca.
         /// </summary>
         /// <remarks>

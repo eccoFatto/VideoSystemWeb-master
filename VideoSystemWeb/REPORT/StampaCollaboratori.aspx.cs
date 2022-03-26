@@ -86,10 +86,11 @@ namespace VideoSystemWeb.REPORT
             string nominativo = txt_Nominativo.Text;
             string lavorazione = txt_Lavorazione.Text;
             string produzione = txt_Produzione.Text;
+            string cliente = txt_Cliente.Text;
 
             bool soloFornitori = chk_Fornitore.Checked;
 
-            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawCollaboratoriFornitori(dataInizio, dataFine, nominativo, lavorazione, produzione, soloFornitori, ref esito);
+            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawCollaboratoriFornitori(dataInizio, dataFine, nominativo, lavorazione, produzione, soloFornitori, cliente, ref esito);
 
             Report_BLL.Instance.EliminaCollaboratoriImportoZero(ref listaDatiReport);
 
@@ -190,8 +191,9 @@ namespace VideoSystemWeb.REPORT
                 string lavorazione = txt_Lavorazione.Text;
                 string produzione = txt_Produzione.Text;
                 bool soloFornitori = chk_Fornitore.Checked;
+                string cliente = txt_Cliente.Text;
 
-                List<DatiReport> listaDatiReport = Report_BLL.Instance.GetListaDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, lavorazione, produzione, soloFornitori, ref esito);
+                List<DatiReport> listaDatiReport = Report_BLL.Instance.GetListaDatiReportCollaboratoriFornitori(dataInizio, dataFine, nominativo, lavorazione, produzione, soloFornitori, cliente, ref esito);
 
                 Report_BLL.Instance.EliminaCollaboratoriImportoZero(ref listaDatiReport);
 

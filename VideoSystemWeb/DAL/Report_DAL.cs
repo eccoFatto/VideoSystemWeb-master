@@ -141,8 +141,8 @@ namespace VideoSystemWeb.DAL
 
             string filtroLavorazione = string.IsNullOrEmpty(lavorazione) ? string.Empty : "datiAgenda.lavorazione like '%" + lavorazione + "%' and ";
             string filtroProduzione = string.IsNullOrEmpty(produzione) ? string.Empty : "datiAgenda.produzione like '%" + produzione + "%' and ";
-            string filtroCliente = string.IsNullOrEmpty(cliente) ? string.Empty : "clienti.ragioneSociale like '%" + cliente + "%' and ";
-            string filtroClienteFornitore = string.IsNullOrEmpty(cliente) ? string.Empty : "clientiFornitori.ragioneSociale like '%" + cliente + "%' and "; 
+            string filtroCliente = string.IsNullOrEmpty(cliente) ? string.Empty : "(clienti.ragioneSociale like '%" + cliente + "%' or clienti.fornitore = 'true') and ";
+            string filtroClienteFornitore = string.IsNullOrEmpty(cliente) ? string.Empty : "(clientiFornitori.ragioneSociale like '%" + cliente + "%' or clientiFornitori.fornitore = 'true') and "; 
 
             DataTable dtReturn = new DataTable();
             try
@@ -154,6 +154,7 @@ namespace VideoSystemWeb.DAL
 
                     if (!soloFornitori)
                     {
+                        //COLLABORATORI
                         filtroSoloFornitori = " and artLav.idTipoPagamento = " + idTipoFattura + " ";
                         querySql = "select collab.id as ID, " +
                                                  "collab.cognome + ' ' + collab.nome as Nome, " +
@@ -164,7 +165,7 @@ namespace VideoSystemWeb.DAL
                                                  "artLav.data as Data, " +
                                                  "datiAgenda.lavorazione as Lavorazione, " +
                                                  "datiAgenda.produzione as Produzione, " +
-                                                 "clienti.ragioneSociale as Cliente, " +
+                                                 "clienti.ragioneSociale as Cliente, " + //************************
                                                  "artLav.descrizione as Descrizione, " +
                                                  "CASE WHEN artLav.idTipoPagamento = " + idTipoAssunzione + " THEN artLav.fp_netto ELSE 0 END as Assunzione, " +
                                                  "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN 45 ELSE 0 END as Mista, " +
@@ -201,7 +202,7 @@ namespace VideoSystemWeb.DAL
 
                                                  "UNION ";
                     }
-
+                    //CLIENTI FORNITORI
                     querySql += "select clientiFornitori.id as ID, " +
                                              "clientiFornitori.ragioneSociale as Nome, " +
                                              "clientiFornitori.tipoIndirizzoLegale + ' ' + clientiFornitori.indirizzoLegale + ' ' + clientiFornitori.numeroCivicoLegale as Indirizzo, " +
@@ -211,7 +212,7 @@ namespace VideoSystemWeb.DAL
                                              "artLav.data as Data, " +
                                              "datiAgenda.lavorazione as Lavorazione, " +
                                              "datiAgenda.produzione as Produzione, " +
-                                             "clientiFornitori.ragioneSociale as Cliente, " +
+                                             "clientiFornitori.ragioneSociale as Cliente, " + //************************
                                              "artLav.descrizione as Descrizione, " +
                                              "CASE WHEN artLav.idTipoPagamento = " + idTipoAssunzione + " THEN artLav.fp_netto ELSE 0 END as Assunzione, " +
                                              "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN 45 ELSE 0 END as Mista, " +

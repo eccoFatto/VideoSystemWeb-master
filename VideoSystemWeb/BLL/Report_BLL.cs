@@ -220,7 +220,7 @@ namespace VideoSystemWeb.BLL
 
             foreach (string[] elem in somma)
             {
-                if (elem[1] == "0") listaDatiReport.RemoveAll(x => x.IdCollaboratore == int.Parse(elem[0]));
+                if (elem[1] == "0,00") listaDatiReport.RemoveAll(x => x.IdCollaboratore == int.Parse(elem[0]));
             }
         }
 

@@ -141,8 +141,8 @@ namespace VideoSystemWeb.DAL
 
             string filtroLavorazione = string.IsNullOrEmpty(lavorazione) ? string.Empty : "datiAgenda.lavorazione like '%" + lavorazione + "%' and ";
             string filtroProduzione = string.IsNullOrEmpty(produzione) ? string.Empty : "datiAgenda.produzione like '%" + produzione + "%' and ";
-            string filtroCliente = string.IsNullOrEmpty(cliente) ? string.Empty : "(clienti.ragioneSociale like '%" + cliente + "%' or clienti.fornitore = 'true') and ";
-            string filtroClienteFornitore = string.IsNullOrEmpty(cliente) ? string.Empty : "(clientiFornitori.ragioneSociale like '%" + cliente + "%' or clientiFornitori.fornitore = 'true') and "; 
+            string filtroCliente = string.IsNullOrEmpty(cliente) ? string.Empty : "clienti.ragioneSociale like '%" + cliente + "%' and ";// or clienti.fornitore = 'true') and ";
+            string filtroClienteFornitore = string.IsNullOrEmpty(cliente) ? string.Empty : "clientiFornitori2.ragioneSociale like '%" + cliente + "%' and ";// or clientiFornitori.fornitore = 'true') and "; 
 
             DataTable dtReturn = new DataTable();
             try
@@ -166,6 +166,8 @@ namespace VideoSystemWeb.DAL
                                                  "datiAgenda.lavorazione as Lavorazione, " +
                                                  "datiAgenda.produzione as Produzione, " +
                                                  "clienti.ragioneSociale as Cliente, " + //************************
+                                                 //"datiAgenda.id_cliente as Cliente, " +
+
                                                  "artLav.descrizione as Descrizione, " +
                                                  "CASE WHEN artLav.idTipoPagamento = " + idTipoAssunzione + " THEN artLav.fp_netto ELSE 0 END as Assunzione, " +
                                                  "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN 45 ELSE 0 END as Mista, " +
@@ -212,7 +214,9 @@ namespace VideoSystemWeb.DAL
                                              "artLav.data as Data, " +
                                              "datiAgenda.lavorazione as Lavorazione, " +
                                              "datiAgenda.produzione as Produzione, " +
-                                             "clientiFornitori.ragioneSociale as Cliente, " + //************************
+                                             "clientiFornitori2.ragioneSociale as Cliente, " + //************************
+                                             //"datiAgenda.id_cliente as Cliente, " +
+
                                              "artLav.descrizione as Descrizione, " +
                                              "CASE WHEN artLav.idTipoPagamento = " + idTipoAssunzione + " THEN artLav.fp_netto ELSE 0 END as Assunzione, " +
                                              "CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN 45 ELSE 0 END as Mista, " +
@@ -234,6 +238,7 @@ namespace VideoSystemWeb.DAL
                                              "left join tab_dati_agenda datiAgenda on datiAgenda.id = datiLav.idDatiAgenda " +
                                              "left join anag_clienti_fornitori clientiFornitori on clientiFornitori.id=artLav.idFornitori " +
                                              "left join tipo_pagamento tipoPagam on artLav.idTipoPagamento = tipoPagam.id " +
+                                             "left join anag_clienti_fornitori clientiFornitori2 on clientiFornitori2.id=datiAgenda.id_cliente " +
 
                                              "where  " +
                                              "clientiFornitori.tipo = 'Tecnici' and " + // serve a discriminare i fornitori che sono anche collaboratori

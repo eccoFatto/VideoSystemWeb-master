@@ -22778,3 +22778,9 @@ Sintassi non corretta in prossimità di ')'.
 2022-04-02 14:33:29,447 [27] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
 2022-04-02 14:36:47,482 [31] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
 2022-04-02 14:52:46,501 [27] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-04-04 11:10:07,811 [7] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-04-04 11:15:24,425 [11] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-04-04 11:20:15,274 [11] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-04-04 11:22:49,494 [6] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-04-05 15:53:38,651 [6] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-04-05 15:57:56,717 [10] INFO VideoSystemWeb.Login - UTENTE admin Loggato!

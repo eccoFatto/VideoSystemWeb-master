@@ -9,7 +9,7 @@
 
 namespace VideoSystemWeb.REPORT
 {
-
+     
 
     public partial class StampaCollabortori
     {

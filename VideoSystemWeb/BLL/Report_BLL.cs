@@ -118,7 +118,7 @@ namespace VideoSystemWeb.BLL
             return listaReportConsulenteLavoro;
         }
 
-        public List<DatiReport> GetListaDatiReportCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, string lavorazione, string produzione, bool soloFornitori, string cliente, ref Esito esito)
+        public List<DatiReport> GetListaDatiReportCollaboratoriFornitori(DateTime? dataInizio, DateTime? dataFine, string nominativo, string lavorazione, string produzione, bool soloFornitori, string cliente, ref Esito esito)
         {
             List<DatiReport> listaReportCollaboratoriFornitori = new List<DatiReport>();
 
@@ -167,7 +167,7 @@ namespace VideoSystemWeb.BLL
             return listaReportCollaboratoriFornitori;
         }
 
-        public List<DatiReportRaw> GetListaDatiReportRawCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, string lavorazione, string produzione, bool soloFornitori, string cliente, ref Esito esito)
+        public List<DatiReportRaw> GetListaDatiReportRawCollaboratoriFornitori(DateTime? dataInizio, DateTime? dataFine, string nominativo, string lavorazione, string produzione, bool soloFornitori, string cliente, ref Esito esito)
         {
             List<DatiReportRaw> listaReportCollaboratoriFornitori = new List<DatiReportRaw>();
 

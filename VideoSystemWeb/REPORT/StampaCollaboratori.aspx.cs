@@ -81,8 +81,8 @@ namespace VideoSystemWeb.REPORT
         protected void btnRicerca_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
-            DateTime dataInizio = DateTime.Parse(txt_DataInizio.Text);
-            DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
+            DateTime? dataInizio = string.IsNullOrEmpty(txt_DataInizio.Text) ? null : (DateTime?)DateTime.Parse(txt_DataInizio.Text);
+            DateTime? dataFine = string.IsNullOrEmpty(txt_DataFine.Text) ? null : (DateTime?)DateTime.Parse(txt_DataFine.Text);
             string nominativo = txt_Nominativo.Text;
             string lavorazione = txt_Lavorazione.Text;
             string produzione = txt_Produzione.Text;
@@ -185,8 +185,8 @@ namespace VideoSystemWeb.REPORT
             try
             {
                 Esito esito = new Esito();
-                DateTime dataInizio = DateTime.Parse(txt_DataInizio.Text);
-                DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
+                DateTime? dataInizio = string.IsNullOrEmpty(txt_DataInizio.Text) ? null : (DateTime?) DateTime.Parse(txt_DataInizio.Text);
+                DateTime? dataFine = string.IsNullOrEmpty(txt_DataFine.Text) ? null : (DateTime?)DateTime.Parse(txt_DataFine.Text);
                 string nominativo = txt_Nominativo.Text;
                 string lavorazione = txt_Lavorazione.Text;
                 string produzione = txt_Produzione.Text;

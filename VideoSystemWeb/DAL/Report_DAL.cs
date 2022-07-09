@@ -129,10 +129,17 @@ namespace VideoSystemWeb.DAL
             return dtReturn;
         }
 
-        public DataTable GetDatiReportCollaboratoriFornitori(DateTime dataInizio, DateTime dataFine, string nominativo, string lavorazione, string produzione, bool soloFornitori, string cliente, ref Esito esito)
+        public DataTable GetDatiReportCollaboratoriFornitori(DateTime? dataInizio, DateTime? dataFine, string nominativo, string lavorazione, string produzione, bool soloFornitori, string cliente, ref Esito esito)
         {
+            string intervalloDate = string.Empty;
             string filtroNominativo = string.Empty;
             string filtroRagioneSociale = string.Empty;
+
+            if (dataInizio != null && dataFine != null)
+            {
+                intervalloDate = " and artLav.data between '" + ((DateTime)dataInizio).ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + ((DateTime)dataFine).ToString("yyyy-MM-ddT00:00:00.000") + "' ";
+            }
+
             if (!string.IsNullOrEmpty(nominativo))
             {
                 filtroNominativo = "collab.cognome + ' ' + collab.nome like '%" + nominativo + "%' and ";
@@ -199,8 +206,10 @@ namespace VideoSystemWeb.DAL
                                                  filtroProduzione +
                                                  filtroCliente + 
                                                  "artLav.idCollaboratori is not null and " +
-                                                 "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + " or artLav.idTipoPagamento = " + idTipoRitenutaAcconto + ") and " +
-                                                 "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' " +//"' and " +
+                                                 "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + " or artLav.idTipoPagamento = " + idTipoRitenutaAcconto + ") " +
+                                                 
+                                                 //"artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' " +//"' and " +
+                                                 intervalloDate +
 
                                                  "UNION ";
                     }
@@ -247,8 +256,11 @@ namespace VideoSystemWeb.DAL
                                              filtroProduzione +
                                              filtroClienteFornitore +
                                              "artLav.idFornitori is not null and " +
-                                             "(artLav.idTipoPagamento is not null) and " +
-                                             "artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' " +
+                                             "(artLav.idTipoPagamento is not null) " +
+                                             
+                                             //"artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' " +
+                                             intervalloDate +
+
                                              filtroSoloFornitori + 
                                       "order by Nome, data ";
 

@@ -36,9 +36,18 @@
             $("#<%=ddl_Anno.ClientID%>").val(year);
 
             function changeMonthYear(newMonth, newYear) {
-                var lastDay = new Date(newYear, newMonth, 0).getDate();
-                $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
-                $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                if (newMonth == '') {
+                    $("#<%=ddl_Anno.ClientID%>").attr("disabled", "disabled");
+
+                    $("#<%=txt_DataInizio.ClientID%>").val('');
+                    $("#<%=txt_DataFine.ClientID%>").val('');
+                } else {
+                    $("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");
+
+                    var lastDay = new Date(newYear, newMonth, 0).getDate();
+                    $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
+                    $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                }
             }
         });
 
@@ -56,7 +65,7 @@
                 locale: 'it',
                 format: 'DD/MM/YYYY'
             });
-
+            
             // CAMBIO MESE
             $("#<%=ddl_Mese.ClientID%>").change(function () {
                 changeMonthYear($("#<%=ddl_Mese.ClientID%>").val(), $("#<%=ddl_Anno.ClientID%>").val());
@@ -68,9 +77,26 @@
             });
 
             function changeMonthYear(newMonth, newYear) {
-                var lastDay = new Date(newYear, newMonth, 0).getDate();
-                $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
-                $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                if (newMonth == '') {
+                    $("#<%=ddl_Anno.ClientID%>").attr("disabled", "disabled");
+
+                    $("#<%=txt_DataInizio.ClientID%>").val('');
+                    $("#<%=txt_DataFine.ClientID%>").val('');
+                } else {
+                    $("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");
+
+                    var lastDay = new Date(newYear, newMonth, 0).getDate();
+                    $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
+                     $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                 }
+            }
+
+            //DISABILITO COMBO ANNO SE MESE = ''
+            if ($("#<%=ddl_Mese.ClientID%>").val() == '') {
+               
+                $("#<%=ddl_Anno.ClientID%>").attr("disabled", "disabled");
+            } else {
+                $("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");
             }
         });
     </script>
@@ -83,6 +109,7 @@
                     <div class="w3-twothird" style="padding-right:10px">
                         <label>Mese</label>
                         <asp:DropDownList ID="ddl_Mese" runat="server" class="w3-input w3-border">
+                            
                             <asp:ListItem Value="1">Gennaio</asp:ListItem>
                             <asp:ListItem Value="2">Febbraio</asp:ListItem>
                             <asp:ListItem Value="3">Marzo</asp:ListItem>
@@ -95,6 +122,7 @@
                             <asp:ListItem Value="10">Ottobre</asp:ListItem>
                             <asp:ListItem Value="11">Novembre</asp:ListItem>
                             <asp:ListItem Value="12">Dicembre</asp:ListItem>
+                            <asp:ListItem Value=""> </asp:ListItem>
 
                         </asp:DropDownList>
                     </div>

@@ -1849,19 +1849,19 @@ namespace VideoSystemWeb.Agenda.userControl
                 int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
 
                 // solo il personale tecnico viene replicato per ogni giorno di lavorazione
-                if (datoArticolo.IdTipoSottogruppo != idSottogruppoPersonaleTecnico)
+                // modifica richiesta da Oriana il 25/07/2022: solo personale tecnico con stampa = false si moltiplica
+                if (datoArticolo.IdTipoSottogruppo == idSottogruppoPersonaleTecnico && !datoArticolo.Stampa)
                 {
-                    AggiungiDatoArticoloALavorazione(datoArticolo, SessionManager.EventoSelezionato.data_inizio_lavorazione, ref listaDatiArticoliLavorazione, numOccorrenza++, datoArticolo.Quantita);
+                    for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
+                    {               
+                        DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
+                        AggiungiDatoArticoloALavorazione(datoArticolo, dataGiornoLav, ref listaDatiArticoliLavorazione, numOccorrenza, datoArticolo.Quantita);                       
+                    }
+                    numOccorrenza++;
                 }
                 else
                 {
-                    for (int giornoLav = 0; giornoLav < numGiorniLavorazione; giornoLav++)
-                    {
-                        DateTime dataGiornoLav = SessionManager.EventoSelezionato.data_inizio_lavorazione.AddDays(giornoLav);
-
-                        AggiungiDatoArticoloALavorazione(datoArticolo, dataGiornoLav, ref listaDatiArticoliLavorazione, numOccorrenza, datoArticolo.Quantita);
-                    }
-                    numOccorrenza++;
+                    AggiungiDatoArticoloALavorazione(datoArticolo, SessionManager.EventoSelezionato.data_inizio_lavorazione, ref listaDatiArticoliLavorazione, numOccorrenza++, datoArticolo.Quantita);
                 }
             }
             listaDatiArticoliLavorazione = listaDatiArticoliLavorazione.OrderBy(x => x.Data).ThenByDescending(y => y.Costo).ToList<DatiArticoliLavorazione>();

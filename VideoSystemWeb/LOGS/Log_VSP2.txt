@@ -22799,3 +22799,9 @@ Sintassi non corretta in prossimità di ')'.
 2022-07-09 12:29:41,997 [7] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
 2022-07-09 12:31:19,895 [8] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
 2022-07-09 12:56:43,761 [43] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-07-25 15:53:03,917 [7] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-07-25 15:55:39,334 [7] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-07-25 16:02:28,984 [13] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-07-25 16:04:29,190 [6] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-07-25 16:12:21,322 [8] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2022-07-25 16:17:16,742 [8] INFO VideoSystemWeb.Login - UTENTE admin Loggato!

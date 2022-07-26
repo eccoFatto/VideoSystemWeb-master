@@ -78,7 +78,7 @@ namespace VideoSystemWeb.Agenda.userControl
                                 {
                                     //protocolloConsuntivo = listaProtocolli.First();
                                     numeroProtocollo = protocollo.Numero_protocollo;
-                                    numeroProtocollo = protocollo.Protocollo_riferimento;
+                                    //numeroProtocollo = protocollo.Protocollo_riferimento;
                                     protocolloConsuntivo = protocollo;
                                     trovato = true;
                                     break;

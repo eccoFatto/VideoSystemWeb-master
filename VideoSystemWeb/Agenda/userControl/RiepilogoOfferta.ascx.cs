@@ -161,7 +161,7 @@ namespace VideoSystemWeb.Agenda.userControl
                             {
                                 //protocolloOfferta = listaProtocolli.First();
                                 numeroProtocollo = protocollo.Numero_protocollo;
-                                numeroProtocollo = protocollo.Protocollo_riferimento;
+                                //numeroProtocollo = protocollo.Protocollo_riferimento;
                                 protocolloOfferta = protocollo;
                                 trovato = true;
                                 break;

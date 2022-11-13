@@ -614,7 +614,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             try
             {
 
-                if (ViewState["idAzienda"]==null || (string)ViewState["idAzienda"] == "")
+                if (ViewState["idAzienda"]==null || ViewState["idAzienda"].ToString() == "")
                 {
                     ViewState["idAzienda"] = 0;
                 }
@@ -625,6 +625,20 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 azienda.Attivo = true;
                 azienda.Cliente = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Cliente, "true", false, ref esito));
                 azienda.Fornitore = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Fornitore, "true", false, ref esito));
+
+                if(!azienda.Cliente && !azienda.Fornitore)
+                {
+                    if (ViewState["TIPO_AZIENDA"].ToString() == "CLIENTI")
+                    {
+                        azienda.Cliente=true;
+                    }
+                    else
+                    {
+                        azienda.Fornitore = true;
+                    }
+                }
+
+
 
                 azienda.RagioneSociale = BasePage.ValidaCampo(tbMod_RagioneSociale, "", true, ref esito);
                 azienda.CapLegale = BasePage.ValidaCampo(tbMod_CapLegale, "", false, ref esito);
@@ -652,7 +666,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 azienda.ProvinciaLegale = BasePage.ValidaCampo(tbMod_ProvinciaLegale, "", false, ref esito);
                 azienda.ProvinciaOperativo = BasePage.ValidaCampo(tbMod_ProvinciaOperativo, "", false, ref esito);
                 azienda.Telefono = BasePage.ValidaCampo(tbMod_Telefono, "", false, ref esito);
-                azienda.Tipo = cmbMod_TipoAzienda.SelectedValue;
+                //azienda.Tipo = cmbMod_TipoAzienda.SelectedValue;
+                azienda.Tipo = BasePage.ValidaCampo(cmbMod_TipoAzienda, "", true, ref esito);
                 azienda.TipoIndirizzoLegale = cmbMod_TipoIndirizzoLegale.SelectedValue;
                 azienda.TipoIndirizzoOperativo = cmbMod_TipoIndirizzoOperativo.SelectedValue;
                 azienda.WebSite = BasePage.ValidaCampo(tbMod_WebSite, "", false, ref esito);

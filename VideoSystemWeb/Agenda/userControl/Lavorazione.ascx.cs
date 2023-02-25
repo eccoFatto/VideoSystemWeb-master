@@ -1242,13 +1242,19 @@ namespace VideoSystemWeb.Agenda.userControl
         private void ImportaFigProfInPianoEsterno()
         {
             Esito esito = new Esito();
-            int idDiaria = Articoli_BLL.Instance.getDiaria(ref esito).Id;
+
+            //int idDiaria = Articoli_BLL.Instance.getDiaria(ref esito).Id;
+            int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
 
             List<DatiArticoliLavorazione> _listaCollaboratoriFornitori;
             if (SessionManager.EventoSelezionato.LavorazioneCorrente == null ||
                 SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione == null ||
                 SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Count == 0 ||
-                (_listaCollaboratoriFornitori = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => (x.IdCollaboratori != null || x.IdFornitori != null) && x.IdArtArticoli != idDiaria).ToList()).Count() == 0)
+
+                //modifica 25/02/2023: Oriana richiede che venga importato solo il personale tecnico 
+                //(_listaCollaboratoriFornitori = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => (x.IdCollaboratori != null || x.IdFornitori != null) && x.IdArtArticoli != idDiaria).ToList()).Count() == 0)
+                (_listaCollaboratoriFornitori = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => (x.IdCollaboratori != null || x.IdFornitori != null) && x.IdTipoSottogruppo == idSottogruppoPersonaleTecnico).ToList()).Count() == 0)
+
             {
                 basePage.ShowWarning("Nessuna Figura Professionale da importare");
             }

@@ -632,10 +632,11 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void CercaFP()
         {
+
             string tipoFP = ddl_FPtipo.SelectedValue;
             string qualificaFP = ddl_FPqualifica.SelectedItem.Text;
             string cittaFP = txt_FPCitta.Text.ToLower().Trim();
-            string nominativoFP = txt_FPNominativo.Text;
+            string nominativoFP = txt_FPNominativo.Text.ToLower().Trim();
 
             List<FiguraProfessionale> listaFPfiltrata = SessionManager.ListaCompletaFigProf;
 

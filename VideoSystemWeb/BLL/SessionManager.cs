@@ -49,12 +49,14 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["eventoSelezionato"] = value;
             }
         }
+
         public static List<FiguraProfessionale> ListaCompletaFigProf
         {
             get
             {
                 if (HttpContext.Current.Session["listaCompletaFigProf"] == null || ((List<FiguraProfessionale>)HttpContext.Current.Session["listaCompletaFigProf"]).Count() == 0)
                 {
+                    
                     List<FiguraProfessionale> _listaCompletaFigProf = new List<FiguraProfessionale>();
                     foreach (Anag_Collaboratori collaboratore in ListaAnagraficheCollaboratori)
                     {
@@ -112,6 +114,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaCompletaFigProf"] = value;
             }
         }
+
         public static List<Anag_Qualifiche_Collaboratori> ListaQualificheCollaboratori
         {
             get
@@ -145,6 +148,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaAnagraficheCollaboratori"] = value;
             }
         }
+
         public static List<Anag_Clienti_Fornitori> ListaAnagraficheFornitori
         {
             get

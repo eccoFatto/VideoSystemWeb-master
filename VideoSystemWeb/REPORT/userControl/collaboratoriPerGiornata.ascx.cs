@@ -40,25 +40,19 @@ namespace VideoSystemWeb.REPORT.userControl
             DataTable dtRet = new DataTable();
             try
             {
-                string queryRicercaLavorazioniDelGiorno = "select da.codice_lavoro,produzione,lavorazione " +
-                    "from[dbo].[tab_dati_agenda] da " +
-                    "left join tipo_colonne_agenda ca " +
-                    "on da.id_colonne_agenda = ca.id " +
-                    "left join tipo_stato ts " +
-                    "on da.id_stato = ts.id " +
-                    "left join tipo_tipologie tt " +
-                    "on da.id_tipologia = tt.id " +
-                    "left join dati_lavorazione dl " +
-                    "on dl.idDatiAgenda = da.id " +
-                    "left join dati_articoli_lavorazione dal " +
-                    "on dl.id = dal.idDatiLavorazione " +
-                    "left join anag_collaboratori ac " +
-                    "on dal.idCollaboratori = ac.id " +
-                    "where ac.cognome is not null " +
-                    "and dal.descrizione <> 'Diaria' " +
-                    "and data_inizio_impegno <= '@dataElaborazione' and data_fine_impegno >= '@dataElaborazione' " +
-                    "group by da.codice_lavoro,produzione,lavorazione " +
-                    "order by codice_lavoro";
+                string queryRicercaLavorazioniDelGiorno =   "select da.codice_lavoro,produzione,lavorazione " +
+                                                            "from[dbo].[tab_dati_agenda] da " +
+                                                            "left join tipo_colonne_agenda ca on da.id_colonne_agenda = ca.id " +
+                                                            "left join tipo_stato ts on da.id_stato = ts.id " +
+                                                            "left join tipo_tipologie tt on da.id_tipologia = tt.id " +
+                                                            "left join dati_lavorazione dl on dl.idDatiAgenda = da.id " +
+                                                            "left join dati_articoli_lavorazione dal on dl.id = dal.idDatiLavorazione " +
+                                                            "left join anag_collaboratori ac on dal.idCollaboratori = ac.id " +
+                                                            "where ac.cognome is not null " +
+                                                            "and dal.descrizione <> 'Diaria' " +
+                                                            "and data_inizio_impegno <= '@dataElaborazione' and data_fine_impegno >= '@dataElaborazione' " +
+                                                            "group by da.codice_lavoro,produzione,lavorazione " +
+                                                            "order by codice_lavoro";
                 queryRicercaLavorazioniDelGiorno = queryRicercaLavorazioniDelGiorno.Replace("@dataElaborazione", sDataTmp);
                 Esito esito = new Esito();
                 dtRet = Base_DAL.GetDatiBySql(queryRicercaLavorazioniDelGiorno, ref esito);
@@ -76,59 +70,17 @@ namespace VideoSystemWeb.REPORT.userControl
             DataTable dtRet = new DataTable();
             try
             {
-                //string ricercaQualifiche = "select dal.descrizione as qualifica " +
-                //     "from[dbo].[tab_dati_agenda] da " +
-                //     "left join tipo_colonne_agenda ca " +
-                //     "on da.id_colonne_agenda = ca.id " +
-                //     "left join tipo_stato ts " +
-                //     "on da.id_stato = ts.id " +
-                //     "left join tipo_tipologie tt " +
-                //     "on da.id_tipologia = tt.id " +
-                //     "left join dati_lavorazione dl " +
-                //     "on dl.idDatiAgenda = da.id " +
-                //     "left join dati_articoli_lavorazione dal " +
-                //     "on dl.id = dal.idDatiLavorazione " +
-
-                //     "left join anag_collaboratori ac " +
-                //     "on dal.idCollaboratori = ac.id " +
-
-                //     "left join anag_clienti_fornitori acf " +
-                //     "on dal.idFornitori = acf.id " +
-
-
-                //     "where (ac.cognome is not null or acf.ragioneSociale is not null) " +
-                //     "and dal.descrizione <> 'Diaria' " +
-                //     "and data_inizio_impegno <= '@dataElaborazione' and data_fine_impegno >= '@dataElaborazione' " +
-                //     "group by dal.descrizione " +
-                //     "order by dal.descrizione";
-                //ricercaQualifiche = ricercaQualifiche.Replace("@dataElaborazione", sDataTmp);
-
-
-
-
-                //string ricercaQualifiche = "select dal.descrizione as qualifica " +
-                //"from[tab_dati_agenda] da " +
-                //"left join dati_lavorazione dl " +
-                //"on da.id = dl.idDatiAgenda " +
-                //"left join[dbo].[dati_pianoEsterno_lavorazione] dpl " +
-                //"on dl.id = dpl.idDatiLavorazione " +
-                //"left join dati_articoli_lavorazione dal " +
-                //"on dpl.idDatiLavorazione = dal.idDatiLavorazione " +
-                //"where descrizione<>'Diaria' and convert(varchar, dal.data,103) = '@dataElaborazione' " +
-                //"and(dal.idCollaboratori is not null or dal.idFornitori is not null) " +
-                //"group by dal.descrizione " +
-                //"order by dal.descrizione ";
-                //ricercaQualifiche = ricercaQualifiche.Replace("@dataElaborazione", sDataTmp);
+                Esito esito = new Esito();
+                int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
 
                 string ricercaQualifiche = "select dal.descrizione as qualifica from[tab_dati_agenda] da " +
-                "left join dati_lavorazione dl on da.id = dl.idDatiAgenda " +
-                "left join dati_articoli_lavorazione dal on dl.id = dal.idDatiLavorazione " +
-                "where convert(varchar, dal.data,103)= '@dataElaborazione' and dal.descrizione <> 'Diaria' and(dal.idCollaboratori is not null or dal.idFornitori is not null) " +
-                "group by dal.descrizione " +
-                "order by dal.descrizione ";
+                                            "left join dati_lavorazione dl on da.id = dl.idDatiAgenda " +
+                                            "left join dati_articoli_lavorazione dal on dl.id = dal.idDatiLavorazione " +
+                                            //"where convert(varchar, dal.data,103)= '@dataElaborazione' and dal.descrizione <> 'Diaria' and(dal.idCollaboratori is not null or dal.idFornitori is not null) " + // SOLO LE FIGURE PROFESSIONALI
+                                            "where convert(varchar, dal.data,103)= '@dataElaborazione' and dal.idTipoSottogruppo = " + idSottogruppoPersonaleTecnico + " and (dal.idCollaboratori is not null or dal.idFornitori is not null) " +
+                                            "group by dal.descrizione " +
+                                            "order by dal.descrizione ";
                 ricercaQualifiche = ricercaQualifiche.Replace("@dataElaborazione", sDataTmp);
-
-                Esito esito = new Esito();
 
                 dtRet = Base_DAL.GetDatiBySql(ricercaQualifiche, ref esito);
 
@@ -148,86 +100,21 @@ namespace VideoSystemWeb.REPORT.userControl
             DataTable dtRet = new DataTable();
             try
             {
-                //string ricercaCollaboratori = "select ac.cognome + ' ' + ac.nome as nominativo " +
-                //    "from[dbo].[tab_dati_agenda] da " +
-                //    "left join tipo_colonne_agenda ca " +
-                //    "on da.id_colonne_agenda = ca.id " +
-                //    "left join tipo_stato ts " +
-                //    "on da.id_stato = ts.id " +
-                //    "left join tipo_tipologie tt " +
-                //    "on da.id_tipologia = tt.id " +
-                //    "left join dati_lavorazione dl " +
-                //    "on dl.idDatiAgenda = da.id " +
-                //    "left join dati_articoli_lavorazione dal " +
-                //    "on dl.id = dal.idDatiLavorazione " +
-                //    "left join anag_collaboratori ac " +
-                //    "on dal.idCollaboratori = ac.id " +
-                //    "where ac.cognome is not null " +
-                //    "and dal.descrizione <> 'Diaria' " +
-                //    "and data_inizio_impegno <= '@dataElaborazione' and data_fine_impegno >= '@dataElaborazione' " +
-                //    "and codice_lavoro = '@codiceLavorazione' " +
-                //    "and dal.descrizione = '@qualifica' " +
-                //    "group by ac.cognome,ac.nome " +
-                //    "order by ac.cognome,ac.nome";
-
-                //ricercaCollaboratori = ricercaCollaboratori.Replace("@dataElaborazione", sDataTmp);
-                //ricercaCollaboratori = ricercaCollaboratori.Replace("@codiceLavorazione", codiceLavorazione);
-                //ricercaCollaboratori = ricercaCollaboratori.Replace("@qualifica", qualifica);
-
-                //Esito esito = new Esito();
-
-                //dtRet1 = Base_DAL.GetDatiBySql(ricercaCollaboratori, ref esito);
-
-                //string ricercaFornitori = "select acf.ragioneSociale as nominativo " +
-                //    "from[dbo].[tab_dati_agenda] da " +
-                //    "left join tipo_colonne_agenda ca " +
-                //    "on da.id_colonne_agenda = ca.id " +
-                //    "left join tipo_stato ts " +
-                //    "on da.id_stato = ts.id " +
-                //    "left join tipo_tipologie tt " +
-                //    "on da.id_tipologia = tt.id " +
-                //    "left join dati_lavorazione dl " +
-                //    "on dl.idDatiAgenda = da.id " +
-                //    "left join dati_articoli_lavorazione dal " +
-                //    "on dl.id = dal.idDatiLavorazione " +
-                //    "left join anag_clienti_fornitori acf " +
-                //    "on dal.idFornitori = acf.id " +
-                //    "where acf.ragioneSociale is not null " +
-                //    "and dal.descrizione <> 'Diaria' " +
-                //    "and data_inizio_impegno <= '@dataElaborazione' and data_fine_impegno >= '@dataElaborazione' " +
-                //    "and codice_lavoro = '@codiceLavorazione' " +
-                //    "and dal.descrizione = '@qualifica' " +
-                //    "group by acf.ragioneSociale " +
-                //    "order by acf.ragioneSociale";
-
-                //ricercaFornitori = ricercaFornitori.Replace("@dataElaborazione", sDataTmp);
-                //ricercaFornitori = ricercaFornitori.Replace("@codiceLavorazione", codiceLavorazione);
-                //ricercaFornitori = ricercaFornitori.Replace("@qualifica", qualifica);
-
-
-
-
-                string ricercaCollaboratori = "select ac.cognome + ' ' + ac.nome as nominativo " +
-                    "from[dbo].[tab_dati_agenda] da " +
-                    "left join tipo_colonne_agenda ca " +
-                    "on da.id_colonne_agenda = ca.id " +
-                    "left join tipo_stato ts " +
-                    "on da.id_stato = ts.id " +
-                    "left join tipo_tipologie tt " +
-                    "on da.id_tipologia = tt.id " +
-                    "left join dati_lavorazione dl " +
-                    "on dl.idDatiAgenda = da.id " +
-                    "left join dati_articoli_lavorazione dal " +
-                    "on dl.id = dal.idDatiLavorazione " +
-                    "left join anag_collaboratori ac " +
-                    "on dal.idCollaboratori = ac.id " +
-                    "where ac.cognome is not null " +
-                    "and dal.descrizione <> 'Diaria' " +
-                    "and convert(varchar, dal.data,103)= '@dataElaborazione' " +
-                    "and codice_lavoro = '@codiceLavorazione' " +
-                    "and dal.descrizione = '@qualifica' " +
-                    "group by ac.cognome,ac.nome " +
-                    "order by ac.cognome,ac.nome";
+                string ricercaCollaboratori =   "select ac.cognome + ' ' + ac.nome as nominativo " +
+                                                "from[dbo].[tab_dati_agenda] da " +
+                                                "left join tipo_colonne_agenda ca on da.id_colonne_agenda = ca.id " +
+                                                "left join tipo_stato ts on da.id_stato = ts.id " +
+                                                "left join tipo_tipologie tt on da.id_tipologia = tt.id " +
+                                                "left join dati_lavorazione dl on dl.idDatiAgenda = da.id " +
+                                                "left join dati_articoli_lavorazione dal on dl.id = dal.idDatiLavorazione " +
+                                                "left join anag_collaboratori ac on dal.idCollaboratori = ac.id " +
+                                                "where ac.cognome is not null " +
+                                                "and dal.descrizione <> 'Diaria' " +
+                                                "and convert(varchar, dal.data,103)= '@dataElaborazione' " +
+                                                "and codice_lavoro = '@codiceLavorazione' " +
+                                                "and dal.descrizione = '@qualifica' " +
+                                                "group by ac.cognome,ac.nome " +
+                                                "order by ac.cognome,ac.nome";
 
                 ricercaCollaboratori = ricercaCollaboratori.Replace("@dataElaborazione", sDataTmp);
                 ricercaCollaboratori = ricercaCollaboratori.Replace("@codiceLavorazione", codiceLavorazione);
@@ -237,27 +124,21 @@ namespace VideoSystemWeb.REPORT.userControl
 
                 dtRet1 = Base_DAL.GetDatiBySql(ricercaCollaboratori, ref esito);
 
-                string ricercaFornitori = "select acf.ragioneSociale as nominativo  " +
-                    "from[dbo].[tab_dati_agenda] da " +
-                    "left join tipo_colonne_agenda ca " +
-                    "on da.id_colonne_agenda = ca.id " +
-                    "left join tipo_stato ts " +
-                    "on da.id_stato = ts.id " +
-                    "left join tipo_tipologie tt " +
-                    "on da.id_tipologia = tt.id " +
-                    "left join dati_lavorazione dl " +
-                    "on dl.idDatiAgenda = da.id " +
-                    "left join dati_articoli_lavorazione dal " +
-                    "on dl.id = dal.idDatiLavorazione " +
-                    "left join anag_clienti_fornitori acf " +
-                    "on dal.idFornitori = acf.id " +
-                    "where acf.ragioneSociale is not null " +
-                    "and dal.descrizione <> 'Diaria' " +
-                    "and convert(varchar, dal.data,103)= '@dataElaborazione' " +
-                    "and codice_lavoro = '@codiceLavorazione' " +
-                    "and dal.descrizione = '@qualifica' " +
-                    "group by acf.ragioneSociale " +
-                    "order by acf.ragioneSociale";
+                string ricercaFornitori =   "select acf.ragioneSociale as nominativo  " +
+                                            "from[dbo].[tab_dati_agenda] da " +
+                                            "left join tipo_colonne_agenda ca on da.id_colonne_agenda = ca.id " +
+                                            "left join tipo_stato ts on da.id_stato = ts.id " +
+                                            "left join tipo_tipologie tt on da.id_tipologia = tt.id " +
+                                            "left join dati_lavorazione dl on dl.idDatiAgenda = da.id " +
+                                            "left join dati_articoli_lavorazione dal on dl.id = dal.idDatiLavorazione " +
+                                            "left join anag_clienti_fornitori acf on dal.idFornitori = acf.id " +
+                                            "where acf.ragioneSociale is not null " +
+                                            "and dal.descrizione <> 'Diaria' " +
+                                            "and convert(varchar, dal.data,103)= '@dataElaborazione' " +
+                                            "and codice_lavoro = '@codiceLavorazione' " +
+                                            "and dal.descrizione = '@qualifica' " +
+                                            "group by acf.ragioneSociale " +
+                                            "order by acf.ragioneSociale";
 
                 ricercaFornitori = ricercaFornitori.Replace("@dataElaborazione", sDataTmp);
                 ricercaFornitori = ricercaFornitori.Replace("@codiceLavorazione", codiceLavorazione);
@@ -266,7 +147,6 @@ namespace VideoSystemWeb.REPORT.userControl
                 esito = new Esito();
 
                 dtRet2 = Base_DAL.GetDatiBySql(ricercaFornitori, ref esito);
-
 
                 dtRet1.Merge(dtRet2);
 
@@ -277,7 +157,6 @@ namespace VideoSystemWeb.REPORT.userControl
                 {
                     foreach (DataRow rigaCollaboratore in dtRet.Rows)
                     {
-                        //elencoCollaboratori += "," + rigaCollaboratore["nominativo"].ToString();
                         elencoCollaboratori += Environment.NewLine + rigaCollaboratore["nominativo"].ToString();
                     }
                 }
@@ -288,7 +167,6 @@ namespace VideoSystemWeb.REPORT.userControl
                 basePage.ShowError("Errore durante la ricerca dei collaboratori del giorno " + sDataTmp + Environment.NewLine + ex.Message);
             }
 
-            //if (elencoCollaboratori.Length > 2 && elencoCollaboratori.Substring(0, 2).Equals("\r\n")) elencoCollaboratori = elencoCollaboratori.Substring(2, elencoCollaboratori.Length - 2);
             if (elencoCollaboratori.Length > 2 && elencoCollaboratori.Substring(0, 2).Equals(Environment.NewLine)) elencoCollaboratori = elencoCollaboratori.Substring(2, elencoCollaboratori.Length - 2);
 
             return elencoCollaboratori;
@@ -317,7 +195,6 @@ namespace VideoSystemWeb.REPORT.userControl
                 }
                 // TIRO FUORI L'ELENCO DELLE QUALIFICHE PRESENTI
                 string sDataTmp2 = dataTmp.ToString("dd/MM/yyyy");
-                //DataTable dtQualifiche = getQualificheDelGiorno(sDataTmp);
                 DataTable dtQualifiche = getQualificheDelGiorno(sDataTmp2);
                 if (dtQualifiche != null && dtQualifiche.Rows != null && dtQualifiche.Rows.Count > 0)
                 {
@@ -337,24 +214,16 @@ namespace VideoSystemWeb.REPORT.userControl
                             // ESTRAPOLO IL CODICE LAVORAZIONE
                             string codLav = dtLavorazioniDelGiorno.Rows[i]["codice_lavoro"].ToString();
                             // ESTRAPOLO LE FIGURE
-                            //string elencoCollaboratori = getCollaboratoriByCodiceQualifica(sDataTmp, codLav, qualifica);
                             string elencoCollaboratori = getCollaboratoriByCodiceQualifica(sDataTmp2, codLav, qualifica);
                             dr[i + 1] = elencoCollaboratori;
                         }
-                        //for (int i = 1; i < dt.Columns.Count; i++)
-                        //{
-                        //    dr[i] = "qualifiche Lavorazione " + i.ToString();
-                        //}
                         dt.Rows.Add(dr);
 
                     }
                     gv_Collaboratori.DataSource = dt;
                     gv_Collaboratori.DataBind();
                 }
-
-
             }
-
         }
 
         protected void gv_Collaboratori_RowDataBound(object sender, GridViewRowEventArgs e)

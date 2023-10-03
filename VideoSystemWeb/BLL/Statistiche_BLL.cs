@@ -76,7 +76,7 @@ namespace VideoSystemWeb.BLL
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente + "%' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione + "%' ";
             //filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.codice_lavoro = '" + filtroLavorazione + "' ";
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione = '%" + filtroLavorazione + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
 
             if (fatturato != null)

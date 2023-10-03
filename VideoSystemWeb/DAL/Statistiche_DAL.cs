@@ -359,7 +359,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3  and d.prezzo > 0 " + filtriLavorazione +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3  and d.prezzo <> 0 " + filtriLavorazione +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso " +
             #region COLLABORATORI
                                     "UNION " +
@@ -376,7 +376,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
                                     "left join tipo_gruppo k on k.nome = 'Collaboratori' " +
                                     "left join anag_clienti_fornitori forn on d.idFornitori = forn.id " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo = k.id " + filtriLavorazione +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo <>0 and d.idTipoGruppo = k.id " + filtriLavorazione +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, k.nome " +
             #endregion
 
@@ -453,7 +453,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
                                     "left join anag_clienti_fornitori forn on d.idFornitori = forn.id " +
                                     "left join tipo_gruppo l on l.nome not in ('Collaboratori', 'Diaria') " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo=l.id " + filtriLavorazione + 
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo <>0 and d.idTipoGruppo=l.id " + filtriLavorazione + 
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, d.descrizione, forn.ragioneSociale, d.prezzo, d.fp_lordo " +
             #endregion
                                     " order by cliente, a.codice_lavoro, progressivo";
@@ -474,7 +474,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3  and d.prezzo > 0 " + filtriLavorazione +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3  and d.prezzo <> 0 " + filtriLavorazione +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso " +
             #region COLLABORATORI
                                     "UNION " +
@@ -491,7 +491,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
                                     "left join tipo_gruppo k on k.nome = 'Collaboratori' " +
                                     "left join anag_clienti_fornitori forn on d.idFornitori = forn.id " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo = k.id " + filtriLavorazione + filtriCosti +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo <>0 and d.idTipoGruppo = k.id " + filtriLavorazione + filtriCosti +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, k.nome " +
             #endregion
 
@@ -593,7 +593,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
                                     "left join tipo_gruppo k on k.nome = 'Collaboratori' " +
                                     "left join anag_clienti_fornitori forn on d.idFornitori = forn.id " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo = k.id " + filtriLavorazione + filtriCosti +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo <>0 and d.idTipoGruppo = k.id " + filtriLavorazione + filtriCosti +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, k.nome " +
             #endregion
 
@@ -670,7 +670,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
                                     "left join anag_clienti_fornitori forn on d.idFornitori = forn.id " +
                                     "left join tipo_gruppo l on l.nome not in ('Collaboratori', 'Diaria') " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo >0 and d.idTipoGruppo=l.id " + filtriLavorazione + filtriCosti +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3 and d.fp_lordo <>0 and d.idTipoGruppo=l.id " + filtriLavorazione + filtriCosti +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, d.descrizione, forn.ragioneSociale, d.prezzo, d.fp_lordo " +
             #endregion
                                     " order by cliente, a.codice_lavoro, progressivo";
@@ -691,7 +691,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  " +
-                                    "where a.codice_lavoro is not null and a.id_stato >= 3  and d.prezzo > 0 AND a.codice_lavoro in (" + elencoLavorazioni + ") " +
+                                    "where a.codice_lavoro is not null and a.id_stato >= 3  and d.prezzo <> 0 AND a.codice_lavoro in (" + elencoLavorazioni + ") " +
                                     " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso ";
             
 

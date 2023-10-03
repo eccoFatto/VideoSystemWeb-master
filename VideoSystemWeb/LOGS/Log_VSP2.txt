@@ -22827,3 +22827,8 @@ Il timeout di esecuzione è scaduto. Il periodo di timeout è scaduto prima del co
 2022-07-09 15:31:46,513 [5] INFO VideoSystemWeb.Login - UTENTE claudio Loggato!
 2022-07-27 17:08:58,329 [7] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
 2023-02-19 19:59:30,062 [7] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2023-10-03 10:37:24,932 [6] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2023-10-03 10:39:41,621 [21] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2023-10-03 11:13:06,630 [27] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2023-10-03 11:37:14,736 [6] INFO VideoSystemWeb.Login - UTENTE admin Loggato!
+2023-10-03 14:15:52,537 [7] INFO VideoSystemWeb.Login - UTENTE admin Loggato!

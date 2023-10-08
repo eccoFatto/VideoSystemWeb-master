@@ -547,7 +547,7 @@ namespace VideoSystemWeb.Agenda.userControl
             string filtroNomeLavorazione = SessionManager.EventoSelezionato.codice_lavoro;
 
 
-            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti("", "", filtroNomeLavorazione, "", "", "", "", null, "", "", "", ref esito);
+            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti_CodiceLavorazione("", "", filtroNomeLavorazione, "", "", "", "", null, "", "", "", ref esito);
 
             if (listaStatisticheCosti.Count == 0)
             {

@@ -354,7 +354,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente' " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -369,7 +369,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore'  and e.id_cliente = d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -388,7 +388,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore'  and e.id_cliente = d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -446,7 +446,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore'  and e.id_cliente = d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -469,7 +469,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente' " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -484,7 +484,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore'  and e.id_cliente = d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -503,7 +503,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore'  and e.id_cliente = d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -561,7 +561,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore'  and e.id_cliente = d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -586,7 +586,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore'  and e.id_cliente = d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -605,7 +605,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore'  and e.id_cliente = d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -663,7 +663,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore'  and e.id_cliente = d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -686,7 +686,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "left join dati_articoli_lavorazione d on d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente' " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Cliente'  " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     "left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -739,7 +739,7 @@ namespace VideoSystemWeb.DAL
                                             statisticheCosti.Contratto = riga.Field<string>("contratto");
                                             statisticheCosti.Listino = riga.Field<decimal?>("listino");
                                             statisticheCosti.Costo = riga.Field<decimal?>("costo");
-                                            statisticheCosti.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : "";// riga.Field<string>("docOfferta");
+                                            statisticheCosti.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta");
                                             statisticheCosti.Pregresso = riga.Field<bool>("pregresso");
                                             statisticheCosti.Gruppo = riga.Field<string>("gruppo");
                                             statisticheCosti.Fornitore = riga.Field<string>("fornitore");
@@ -813,7 +813,7 @@ namespace VideoSystemWeb.DAL
                                             Contratto = riga.Field<string>("contratto"),
                                             Listino = riga.Field<decimal?>("listino"),
                                             Costo = riga.Field<decimal?>("costo"),
-                                            DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : "",// riga.Field<string>("docOfferta"),
+                                            DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta"),
                                             Pregresso = riga.Field<bool>("pregresso"),
                                             Gruppo = riga.Field<string>("gruppo"),
                                             Fornitore = riga.Field<string>("fornitore"),

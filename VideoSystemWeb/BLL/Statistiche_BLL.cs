@@ -66,23 +66,24 @@ namespace VideoSystemWeb.BLL
         }
 
         
-        //public List<StatisticheCosti> GetStatisticheCosti_NomeLavorazione(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroContratto, string filtroGenere, string filtroGruppo, string filtroSottogruppo, bool? fatturato, string dataInizio, string dataFine, string filtroFornitore, ref Esito esito)
-        public List<StatisticheCosti> GetStatisticheCosti_NomeLavorazione(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroContratto, string filtroGenere, string filtroGruppo, string filtroSottogruppo, string filtroCodiceLavorazione, string dataInizio, string dataFine, string filtroFornitore, ref Esito esito)
+        public List<StatisticheCosti> GetStatisticheCosti_NomeLavorazione(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroContratto, string filtroGenere, string filtroGruppo, string filtroSottogruppo, bool? fatturato, string dataInizio, string dataFine, string filtroFornitore, ref Esito esito)
         {
+            //return Statistiche_DAL.Instance.GetStatisticheCosti(filtriLavorazione, filtriCosti, ref esito); //(filtroCliente, filtroProduzione, filtroLavorazione, filtroContratto, filtroGenere, filtroGruppo, filtroSottogruppo, fatturato, dataInizio, dataFine, filtroFornitore, ref esito);
+
+
             List<StatisticheCosti> listaStatisticheCosti = new List<StatisticheCosti>();
 
             string filtriLavorazione = string.Empty;
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente + "%' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione + "%' ";
+            //filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.codice_lavoro = '" + filtroLavorazione + "' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
 
-            //if (fatturato != null)
-            //{
-            //    filtriLavorazione += (bool)fatturato ? "and e.protocollo_riferimento is not null " : "and e.protocollo_riferimento is null ";
-            //}
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroCodiceLavorazione) ? "" : " AND a.codice_lavoro = '" + filtroCodiceLavorazione + "' ";
-
+            if (fatturato != null)
+            {
+                filtriLavorazione += (bool)fatturato ? "and e.protocollo_riferimento is not null " : "and e.protocollo_riferimento is null ";
+            }
             filtriLavorazione += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND a.data_inizio_lavorazione >= '" + dataInizio.Substring(6) + "-" + dataInizio.Substring(3, 2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'";
             // il filtro dataFine viene eseguito su dataInizioLavorazione, e non su dataFineLavorazione
             filtriLavorazione += string.IsNullOrWhiteSpace(dataFine) ? "" : " AND a.data_inizio_lavorazione <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000'";

@@ -1,17 +1,19 @@
 ﻿//------------------------------------------------------------------------------
 // <generato automaticamente>
-//     Codice generato da uno strumento.
+//     Questo codice è stato generato da uno strumento.
 //
 //     Le modifiche a questo file possono causare un comportamento non corretto e verranno perse se
 //     il codice viene rigenerato. 
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.STATISTICHE {
-    
-    
-    public partial class Costi {
-        
+namespace VideoSystemWeb.STATISTICHE
+{
+
+
+    public partial class Costi
+    {
+
         /// <summary>
         /// Controllo lblStatisticaRicavi.
         /// </summary>
@@ -20,7 +22,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblStatisticaRicavi;
-        
+
         /// <summary>
         /// Controllo UpdatePanelRicerca.
         /// </summary>
@@ -29,7 +31,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
-        
+
         /// <summary>
         /// Controllo txt_Cliente.
         /// </summary>
@@ -38,7 +40,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_Cliente;
-        
+
         /// <summary>
         /// Controllo txt_Produzione.
         /// </summary>
@@ -47,7 +49,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_Produzione;
-        
+
         /// <summary>
         /// Controllo txt_Lavorazione.
         /// </summary>
@@ -56,7 +58,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_Lavorazione;
-        
+
         /// <summary>
         /// Controllo txt_Contratto.
         /// </summary>
@@ -65,16 +67,16 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_Contratto;
-        
+
         /// <summary>
-        /// Controllo ddlFatturato.
+        /// Controllo txt_CodLavorazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlFatturato;
-        
+        protected global::System.Web.UI.WebControls.TextBox txt_CodLavorazione;
+
         /// <summary>
         /// Controllo txt_PeriodoDa.
         /// </summary>
@@ -83,7 +85,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_PeriodoDa;
-        
+
         /// <summary>
         /// Controllo txt_PeriodoA.
         /// </summary>
@@ -92,7 +94,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_PeriodoA;
-        
+
         /// <summary>
         /// Controllo txt_Fornitore.
         /// </summary>
@@ -101,7 +103,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_Fornitore;
-        
+
         /// <summary>
         /// Controllo ddl_Genere.
         /// </summary>
@@ -110,7 +112,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_Genere;
-        
+
         /// <summary>
         /// Controllo ddl_Gruppo.
         /// </summary>
@@ -119,7 +121,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_Gruppo;
-        
+
         /// <summary>
         /// Controllo ddl_Sottogruppo.
         /// </summary>
@@ -128,7 +130,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_Sottogruppo;
-        
+
         /// <summary>
         /// Controllo chk_Listino.
         /// </summary>
@@ -137,7 +139,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chk_Listino;
-        
+
         /// <summary>
         /// Controllo chk_Costi.
         /// </summary>
@@ -146,7 +148,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chk_Costi;
-        
+
         /// <summary>
         /// Controllo chk_Ricavo.
         /// </summary>
@@ -155,7 +157,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chk_Ricavo;
-        
+
         /// <summary>
         /// Controllo btnEseguiStatistica.
         /// </summary>
@@ -164,7 +166,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEseguiStatistica;
-        
+
         /// <summary>
         /// Controllo btnPulisciCampiRicerca.
         /// </summary>
@@ -173,7 +175,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPulisciCampiRicerca;
-        
+
         /// <summary>
         /// Controllo tbTotElementiGriglia.
         /// </summary>
@@ -182,7 +184,7 @@ namespace VideoSystemWeb.STATISTICHE {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbTotElementiGriglia;
-        
+
         /// <summary>
         /// Controllo gv_statistiche.
         /// </summary>

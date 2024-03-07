@@ -244,22 +244,23 @@ namespace VideoSystemWeb.STATISTICHE
             string filtroGruppo = ddl_Gruppo.SelectedValue;
             string filtroSottogruppo = ddl_Sottogruppo.SelectedValue;
 
-            bool? isFatturato;
-            if (string.IsNullOrEmpty(ddlFatturato.SelectedValue))
-            {
-                isFatturato = null;
-            }
-            else
-            {
-                isFatturato = ddlFatturato.SelectedValue == "1";
-            }
+            //bool? isFatturato;
+            //if (string.IsNullOrEmpty(ddlFatturato.SelectedValue))
+            //{
+            //    isFatturato = null;
+            //}
+            //else
+            //{
+            //    isFatturato = ddlFatturato.SelectedValue == "1";
+            //}
+            string filtroCodiceLavorazione = txt_CodLavorazione.Text;
 
             string dataInizio = txt_PeriodoDa.Text;
             string dataFine = txt_PeriodoA.Text;
 
             string filtroFornitore = txt_Fornitore.Text;
 
-            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti_NomeLavorazione(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, filtroGenere, filtroGruppo, filtroSottogruppo, isFatturato, dataInizio, dataFine, filtroFornitore, ref esito);
+            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti_NomeLavorazione(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, filtroGenere, filtroGruppo, filtroSottogruppo, filtroCodiceLavorazione, dataInizio, dataFine, filtroFornitore, ref esito);
 
             if (listaStatisticheCosti.Count == 0)
             {
@@ -310,6 +311,7 @@ namespace VideoSystemWeb.STATISTICHE
                 }
                 else
                 {
+                    myButton.Visible = false; // non visualizzo nessuna icona
                     myButton.Attributes.Add("disabled", "true");
                 }
             }

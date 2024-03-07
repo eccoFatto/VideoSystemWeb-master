@@ -30,7 +30,10 @@
            <%-- $("#<%=hf_NomeContratto.ClientID%>").val('');
             $("#<%=ddl_Contratto.ClientID%>").val('');--%>
             $("#<%=txt_Contratto.ClientID%>").val('');
-            $("#<%=ddlFatturato.ClientID%>").val('');
+
+            <%--$("#<%=ddlFatturato.ClientID%>").val('');--%>
+            $("#<%=txt_CodLavorazione.ClientID%>").val('');
+
             $("#<%=txt_PeriodoDa.ClientID%>").val('');
             $("#<%=txt_PeriodoA.ClientID%>").val('');
 
@@ -107,7 +110,7 @@
                 $("#<%=ddl_Contratto.ClientID%>").attr("title", $(e.target).text());
             });
         });--%>
-</script>
+    </script>
 
     <label>
         <asp:Label ID="lblStatisticaRicavi" runat="server" Text="STATISTICA COSTI" ForeColor="Teal"></asp:Label></label>
@@ -162,13 +165,18 @@
                                 <asp:TextBox ID="txt_Contratto" runat="server" Width="100%" class="w3-input w3-border " />
                             </div>
 
-                            <div class="w3-col" style="width:11%">
+<%--                            <div class="w3-col" style="width:11%">
                                 <label>Fatturato</label>
                                 <asp:DropDownList ID="ddlFatturato" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
                                     <asp:ListItem Value="" Text="<tutti>" />
                                     <asp:ListItem Value="1" Text="Si" />
                                     <asp:ListItem Value="0" Text="No" />
                                 </asp:DropDownList>
+                            </div>--%>
+
+                            <div class="w3-col" style="width:11%">
+                                <label>Cod. Lavorazione</label>
+                                <asp:TextBox ID="txt_CodLavorazione" runat="server"  class="w3-input w3-border" />
                             </div>
 
                             <div class="w3-col" style="width:13%">

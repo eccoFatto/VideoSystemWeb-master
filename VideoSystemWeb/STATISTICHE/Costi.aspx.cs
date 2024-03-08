@@ -240,26 +240,28 @@ namespace VideoSystemWeb.STATISTICHE
             string filtroNomeLavorazione = txt_Lavorazione.Text;// hf_NomeLavorazione.Value;
             string filtroNomeContratto = txt_Contratto.Text;// hf_NomeContratto.Value;
 
+            string filtroCodLavorazione = txt_CodLavorazione.Text;// hf_NomeLavorazione.Value;
+
             string filtroGenere = ddl_Genere.SelectedValue;
             string filtroGruppo = ddl_Gruppo.SelectedValue;
             string filtroSottogruppo = ddl_Sottogruppo.SelectedValue;
 
-            bool? isFatturato;
-            if (string.IsNullOrEmpty(ddlFatturato.SelectedValue))
-            {
-                isFatturato = null;
-            }
-            else
-            {
-                isFatturato = ddlFatturato.SelectedValue == "1";
-            }
+            //bool? isFatturato;
+            //if (string.IsNullOrEmpty(ddlFatturato.SelectedValue))
+            //{
+            //    isFatturato = null;
+            //}
+            //else
+            //{
+            //    isFatturato = ddlFatturato.SelectedValue == "1";
+            //}
 
             string dataInizio = txt_PeriodoDa.Text;
             string dataFine = txt_PeriodoA.Text;
 
             string filtroFornitore = txt_Fornitore.Text;
 
-            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti_NomeLavorazione(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, filtroGenere, filtroGruppo, filtroSottogruppo, isFatturato, dataInizio, dataFine, filtroFornitore, ref esito);
+            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti_NomeLavorazione(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, filtroGenere, filtroGruppo, filtroSottogruppo, filtroCodLavorazione, dataInizio, dataFine, filtroFornitore, ref esito);
 
             if (listaStatisticheCosti.Count == 0)
             {
@@ -310,6 +312,7 @@ namespace VideoSystemWeb.STATISTICHE
                 }
                 else
                 {
+                    myButton.Visible = false;
                     myButton.Attributes.Add("disabled", "true");
                 }
             }

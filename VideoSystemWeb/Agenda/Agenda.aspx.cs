@@ -64,7 +64,43 @@ namespace VideoSystemWeb.Agenda
             Tipologica viaggio  = UtilityTipologiche.getElementByID(SessionManager.ListaStati, Stato.Instance.STATO_VIAGGIO, ref esito);
             coloreViaggio = UtilityTipologiche.getParametroDaTipologica(viaggio, "color", ref esito);
 
-            if (!IsPostBack)
+
+            if (!string.IsNullOrEmpty(SessionManager.CercaLavorazione_Data))
+            {
+                string data = SessionManager.CercaLavorazione_Data;
+                string id_risorsa = SessionManager.CercaLavorazione_Colonna;
+                DateTime dataPartenza = DateTime.Parse(data);
+                SessionManager.DataSelezionata = dataPartenza;
+
+                ListaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito); //CARICO SOLO EVENTI VISUALIZZATI
+
+                hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
+                gv_scheduler.DataSource = CreateDataTable(dataPartenza);
+                gv_scheduler.DataBind();
+
+                divLegenda.Controls.Add(new LiteralControl(CreaLegenda()));
+                divFiltroAgenda.Controls.Add(new LiteralControl(CreaFiltriColonneAgenda()));
+                if (Session[SessionManager.UTENTE] != null)
+                {
+                    Anag_Utenti utenteConnesso = (Anag_Utenti)Session[SessionManager.UTENTE];
+                    // IMPOSTO LA VISIBILITA' DEI MENU
+                    switch (utenteConnesso.tipoUtente)
+                    {
+                        case "VISUALIZZATORE":
+
+                            div_PULSANTISHORTCUT.Visible = false;
+                            break;
+                        default:
+
+                            div_PULSANTISHORTCUT.Visible = true;
+                            break;
+                    }
+                }
+                
+                SessionManager.CercaLavorazione_Data = SessionManager.CercaLavorazione_Colonna = string.Empty;
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "mostracella('" + data + "', '" + id_risorsa + "');", addScriptTags: true);
+            }
+            else if (!IsPostBack)
             {
                 DateTime dataPartenza = SessionManager.DataSelezionata == null? DateTime.Now : SessionManager.DataSelezionata;
 
@@ -95,7 +131,6 @@ namespace VideoSystemWeb.Agenda
             }
             else
             {
-
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento('" + hf_tabSelezionata.Value + "');", addScriptTags: true);
             }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Web;
+using VideoSystemWeb.Agenda.userControl;
 using VideoSystemWeb.DAL;
 using VideoSystemWeb.Entity;
 
@@ -141,7 +143,75 @@ namespace VideoSystemWeb.BLL
             return Agenda_DAL.Instance.GetTenderImpiegatiInPeriodo(dataInizio, dataFine, idEventoDaControllare,  ref esito);
         }
 
-        
+        public DataTable CercaLavorazione(string numeroProtocollo, string codiceLavoro, string ragioneSociale, string produzione, string lavorazione, string descrizione, string tipoProtocollo, string protocolloRiferimento, string destinatario, string dataProtocolloDa, string dataProtocolloA, string dataLavorazioneDa, string dataLavorazioneA, ref Esito esito)
+        {
+            string queryRicerca = "select distinct agenda.id, agenda.data_inizio_impegno, agenda.data_inizio_lavorazione, agenda.id_colonne_agenda, stato.descrizione, agenda.codice_lavoro as [Cod. Lav.], agenda.produzione, agenda.lavorazione, cliente.ragioneSociale as Cliente " +
+                                    " from  tab_dati_agenda agenda " +
+                                    " left join anag_clienti_fornitori cliente on agenda.id_cliente=cliente.id " +
+                                    " left join dati_protocollo prot   on prot.codice_lavoro = agenda.codice_lavoro " +
+                                    " left join tipo_stato stato on stato.id=agenda.id_stato " +
+                                    " left join tipo_protocollo tipo on prot.id_tipo_protocollo = tipo.id " +
+                                    " where  agenda.id_stato <> 5 " +
+                                    " and agenda.id_stato <> 1 " +
+                                    //" and prot.attivo = 1 " +
+                                    " and (prot.numero_protocollo like '%@numeroProtocollo%' or prot.numero_protocollo is null) " +
+                                    " and (agenda.codice_lavoro like '%@codiceLavoro%' or agenda.codice_lavoro is null) " +
+                                    " and (cliente.ragioneSociale like '%@cliente%' or cliente.ragioneSociale is null) " +    
+                                    " and (agenda.produzione like '%@produzione%' or agenda.produzione is null) " +
+                                    " and (agenda.lavorazione like '%@lavorazione%' or agenda.lavorazione is null) " +        
+                                    " and (prot.descrizione like '%@descrizione%' or prot.descrizione is null) " +
+                                    " and (prot.destinatario like '%@destinatario%' or prot.destinatario is null) " +
+                                    " and (prot.protocollo_riferimento like '%@protocolloRiferimento%' or prot.protocollo_riferimento is null) " +
+                                    " @dataProtocollo " +
+                                    " @dataLavorazione " +
+                                    " and isnull(tipo.nome,'') like '%@tipoProtocollo%'  " +
+                                    " order by agenda.id";
+
+            queryRicerca = queryRicerca.Replace("@numeroProtocollo", numeroProtocollo);
+            queryRicerca = queryRicerca.Replace("@codiceLavoro", codiceLavoro);
+            queryRicerca = queryRicerca.Replace("@cliente", ragioneSociale);
+            queryRicerca = queryRicerca.Replace("@produzione", produzione);
+            queryRicerca = queryRicerca.Replace("@lavorazione", lavorazione);
+            queryRicerca = queryRicerca.Replace("@descrizione", descrizione);
+            queryRicerca = queryRicerca.Replace("@tipoProtocollo", tipoProtocollo);
+            queryRicerca = queryRicerca.Replace("@protocolloRiferimento", protocolloRiferimento);
+            queryRicerca = queryRicerca.Replace("@destinatario", destinatario);
+
+            string queryProtocolloDataProt = "";
+            if (!string.IsNullOrEmpty(dataProtocolloDa))
+            {
+                DateTime dataDa = Convert.ToDateTime(dataProtocolloDa);
+                DateTime dataA = DateTime.Now;
+                queryProtocolloDataProt = " and data_protocollo between '@dataDa' and '@DataA' ";
+                if (!string.IsNullOrEmpty(dataProtocolloA))
+                {
+                    dataA = Convert.ToDateTime(dataProtocolloA);
+                }
+                queryProtocolloDataProt = queryProtocolloDataProt.Replace("@dataDa", dataDa.ToString("yyyy-MM-ddT00:00:00.000"));
+                queryProtocolloDataProt = queryProtocolloDataProt.Replace("@DataA", dataA.ToString("yyyy-MM-ddT23:59:59.999"));
+            }
+            queryRicerca = queryRicerca.Replace("@dataProtocollo", queryProtocolloDataProt);
+
+            string queryProtocolloDataLav = "";
+            if (!string.IsNullOrEmpty(dataLavorazioneDa))
+            {
+                DateTime dataDa = Convert.ToDateTime(dataLavorazioneDa);
+                DateTime dataA = DateTime.Now;
+                queryProtocolloDataLav = " and agenda.data_inizio_lavorazione between '@dataDa' and '@DataA' ";
+                if (!string.IsNullOrEmpty(dataLavorazioneA))
+                {
+                    dataA = Convert.ToDateTime(dataLavorazioneA);
+                }
+                queryProtocolloDataLav = queryProtocolloDataLav.Replace("@dataDa", dataDa.ToString("yyyy-MM-ddT00:00:00.000"));
+                // LA BETWEEN PRENDE PURE IL GIORNO DOPO SE METTI 23:59 e le date non contengono l'orario
+                queryProtocolloDataLav = queryProtocolloDataLav.Replace("@DataA", dataA.ToString("yyyy-MM-ddT00:00:00.000"));
+            }
+            queryRicerca = queryRicerca.Replace("@dataLavorazione", queryProtocolloDataLav);
+
+            DataTable dtProtocolli = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
+
+            return dtProtocolli;
+        }
 
     }
 }

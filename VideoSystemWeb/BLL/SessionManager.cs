@@ -19,6 +19,9 @@ namespace VideoSystemWeb.BLL
         public static string LISTA_CLIENTI_FORNITORI = "listaClientiFornitori";
         public static string DATA_SELEZIONATA = "dataSelezionata";
 
+        public static string CERCA_LAVORAZIONE_DATA = "cercaLavorazione_Data";
+        public static string CERCA_LAVORAZIONE_COLONNA = "cercaLavorazione_Colonna";
+
         // CHIAVI DI TAB_CONFIG
         public static string CFG_IVA = "IVA";
         public static string CFG_IBAN = "IBAN";
@@ -560,6 +563,38 @@ namespace VideoSystemWeb.BLL
             set
             {
                 HttpContext.Current.Session[DATA_SELEZIONATA] = value;
+            }
+        }
+
+        public static string CercaLavorazione_Data
+        {
+            get
+            {
+                if (HttpContext.Current.Session[CERCA_LAVORAZIONE_DATA] == null)
+                {
+                    HttpContext.Current.Session[CERCA_LAVORAZIONE_DATA] = string.Empty;
+                }
+                return HttpContext.Current.Session[CERCA_LAVORAZIONE_DATA].ToString();
+            }
+            set
+            {
+                HttpContext.Current.Session[CERCA_LAVORAZIONE_DATA] = value;
+            }
+        }
+
+        public static string CercaLavorazione_Colonna
+        {
+            get
+            {
+                if (HttpContext.Current.Session[CERCA_LAVORAZIONE_COLONNA] == null)
+                {
+                    HttpContext.Current.Session[CERCA_LAVORAZIONE_COLONNA] = string.Empty;
+                }
+                return HttpContext.Current.Session[CERCA_LAVORAZIONE_COLONNA].ToString();
+            }
+            set
+            {
+                HttpContext.Current.Session[CERCA_LAVORAZIONE_COLONNA] = value;
             }
         }
     }

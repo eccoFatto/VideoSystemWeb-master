@@ -202,6 +202,7 @@
     <Content Include="Articoli\GestioneRaggruppamentiArticoli.aspx" />
     <Content Include="Articoli\userControl\ArtArticoli.ascx" />
     <Content Include="Articoli\userControl\ArtTipologie.ascx" />
+    <Content Include="CercaLavorazione\CercaLavorazione.aspx" />
     <Content Include="CONFIG\gestConfig.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -754,6 +755,13 @@
     <Compile Include="BLL\Stato.cs" />
     <Compile Include="BLL\UtilityLavorazione.cs" />
     <Compile Include="BLL\UtilityTipologiche.cs" />
+    <Compile Include="CercaLavorazione\CercaLavorazione.aspx.cs">
+      <DependentUpon>CercaLavorazione.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CercaLavorazione\CercaLavorazione.aspx.designer.cs">
+      <DependentUpon>CercaLavorazione.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CONFIG\gestConfig.aspx.cs">
       <DependentUpon>gestConfig.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1040,6 +1048,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="CercaLavorazione\userControl\" />
     <Folder Include="DOCUMENTI\DOCUMENTI_TRASPORTO\" />
     <Folder Include="DOCUMENTI\PREGRESSO\" />
     <Folder Include="DOCUMENTI\PROTOCOLLI\" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PdfSharp.Pdf.Filters;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -34,14 +35,18 @@ namespace VideoSystemWeb.CercaLavorazione
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!Page.IsPostBack)
             {
-                Session["NOME_FILE"] = "";
+               // Session["NOME_FILE"] = "";
 
                 ddlTipoProtocollo.Items.Clear();
                 ddlTipoProtocollo.Items.Add("");
                 CaricaCombo();
+
+                if (SessionManager.CercaLavorazione_Risultati != null)
+                {
+                    PopolaFiltri_Risultati();
+                }
             }
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + tbDataLavorazione.ClientID + "', '" + tbDataLavorazioneA.ClientID + "');", true);
@@ -68,24 +73,27 @@ namespace VideoSystemWeb.CercaLavorazione
         protected void btnRicercaLavorazione_Click(object sender, EventArgs e)
         {
             Esito esito = new Esito();
+            FiltriCercaLavorazione filtri = new FiltriCercaLavorazione();
 
-            string numeroProtocollo = tbNumeroProtocollo.Text.Trim().Replace("'", "''");
-            string codiceLavoro = tbCodiceLavoro.Text.Trim().Replace("'", "''");
-            string ragioneSociale = tbRagioneSociale.Text.Trim().Replace("'", "''");
-            string produzione = tbProduzione.Text.Trim().Replace("'", "''");
-            string lavorazione = tbLavorazione.Text.Trim().Replace("'", "''");
-            string descrizione = tbDescrizione.Text.Trim().Replace("'", "''");
-            string tipoProtocollo = ddlTipoProtocollo.SelectedValue.ToString().Trim().Replace("'", "''");
-            string protocolloRiferimento = tbProtocolloRiferimento.Text.Trim().Replace("'", "''");
-            string destinatario = ddlDestinatario.SelectedValue.ToString().Trim().Replace("'", "''");
-            string dataProtocolloDa = tbDataProtocollo.Text;
-            string dataProtocolloA = tbDataProtocolloA.Text;
-            string dataLavorazioneDa = tbDataLavorazione.Text;
-            string dataLavorazioneA = tbDataLavorazioneA.Text;
+            string numeroProtocollo = filtri.NumeroProtocollo = tbNumeroProtocollo.Text.Trim();
+            string codiceLavoro = filtri.CodiceLavoro = tbCodiceLavoro.Text.Trim();
+            string ragioneSociale = filtri.ClienteFornitore = tbRagioneSociale.Text.Trim();
+            string produzione = filtri.Produzione = tbProduzione.Text.Trim();
+            string lavorazione = filtri.Lavorazione = tbLavorazione.Text.Trim();
+            string descrizione = filtri.Descrizione = tbDescrizione.Text.Trim();
+            string tipoProtocollo = filtri.Tipo = ddlTipoProtocollo.SelectedValue;
+            string protocolloRiferimento = filtri.RiferimentoDocumento = tbProtocolloRiferimento.Text.Trim();
+            string destinatario = filtri.Destinatario = ddlDestinatario.SelectedValue;
+            string dataProtocolloDa = filtri.DataProtocollo_Da = tbDataProtocollo.Text;
+            string dataProtocolloA = filtri.DataProtocollo_A = tbDataProtocolloA.Text;
+            string dataLavorazioneDa = filtri.DataLavorazione_Da = tbDataLavorazione.Text;
+            string dataLavorazioneA = filtri.DataLavorazione_A = tbDataLavorazioneA.Text;
 
             DataTable dtLavorazioni = Agenda_BLL.Instance.CercaLavorazione(numeroProtocollo, codiceLavoro, ragioneSociale, produzione, lavorazione, descrizione, tipoProtocollo, protocolloRiferimento, destinatario, dataProtocolloDa, dataProtocolloA, dataLavorazioneDa, dataLavorazioneA, ref esito);
+            SessionManager.CercaLavorazione_Risultati = dtLavorazioni;
+            SessionManager.CercaLavorazione_NumPagina = 1;
+            SessionManager.CercaLavorazione_Filtri = filtri;
 
-            //Session["TaskTable"] = dtLavorazioni;
             gv_protocolli.DataSource = dtLavorazioni;
             gv_protocolli.DataBind();
             tbTotElementiGriglia.Text = dtLavorazioni.Rows.Count.ToString("###,##0");
@@ -127,7 +135,12 @@ namespace VideoSystemWeb.CercaLavorazione
         protected void gv_protocolli_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gv_protocolli.PageIndex = e.NewPageIndex;
-            btnRicercaLavorazione_Click(null, null);
+            SessionManager.CercaLavorazione_NumPagina = e.NewPageIndex;
+            //btnRicercaLavorazione_Click(null, null);
+
+            gv_protocolli.DataSource = SessionManager.CercaLavorazione_Risultati;
+            gv_protocolli.DataBind();
+            tbTotElementiGriglia.Text = SessionManager.CercaLavorazione_Risultati.Rows.Count.ToString("###,##0");
         }
 
         protected void gv_protocolli_Sorting(object sender, GridViewSortEventArgs e)
@@ -174,9 +187,60 @@ namespace VideoSystemWeb.CercaLavorazione
 
         protected void BtnPulisciCampiRicerca_Click(object sender, EventArgs e)
         {
+
+            tbNumeroProtocollo.Text = string.Empty;
+            tbCodiceLavoro.Text = string.Empty;
+            tbRagioneSociale.Text = string.Empty;
+            tbProduzione.Text = string.Empty;
+            tbLavorazione.Text = string.Empty;
+            tbDescrizione.Text = string.Empty;
+            ddlTipoProtocollo.SelectedIndex = 0;
+            tbProtocolloRiferimento.Text = string.Empty;
+            ddlDestinatario.SelectedIndex = 0;
+            tbDataProtocollo.Text = string.Empty;
+            tbDataProtocolloA.Text = string.Empty;
+            tbDataLavorazione.Text = string.Empty;
+            tbDataLavorazioneA.Text = string.Empty;
+
             gv_protocolli.DataSource = null;
             gv_protocolli.DataBind();
             tbTotElementiGriglia.Text = "";
+            SessionManager.CercaLavorazione_Risultati = null;
+            SessionManager.CercaLavorazione_NumPagina = 1;
+            SessionManager.CercaLavorazione_Filtri = null;  
+        }
+
+        private void PopolaFiltri_Risultati()
+        {
+            #region FILTRI
+            FiltriCercaLavorazione filtri = SessionManager.CercaLavorazione_Filtri;
+
+            if (filtri != null) 
+            {
+                tbRagioneSociale.Text = filtri.ClienteFornitore.Trim();
+                tbNumeroProtocollo.Text = filtri.NumeroProtocollo.Trim();
+                tbProtocolloRiferimento.Text = filtri.RiferimentoDocumento.Trim();
+                tbDataLavorazione.Text = filtri.DataLavorazione_Da.Trim();
+                tbDataLavorazioneA.Text = filtri.DataLavorazione_A.Trim();
+
+                tbProduzione.Text = filtri.Produzione.Trim();
+                tbLavorazione.Text = filtri.Lavorazione.Trim();
+                tbDescrizione.Text = filtri.Descrizione.Trim();
+                tbDataProtocollo.Text = filtri.DataProtocollo_Da.Trim();
+                tbDataProtocolloA.Text = filtri.DataProtocollo_A.Trim();
+
+                tbCodiceLavoro.Text = filtri.CodiceLavoro.Trim();
+                ddlDestinatario.SelectedValue = filtri.Destinatario;
+                ddlTipoProtocollo.SelectedValue = filtri.Tipo;
+            }
+            #endregion
+
+            #region RISULTATI
+            gv_protocolli.DataSource = SessionManager.CercaLavorazione_Risultati;
+            gv_protocolli.PageIndex = SessionManager.CercaLavorazione_NumPagina;
+            gv_protocolli.DataBind();
+            tbTotElementiGriglia.Text = SessionManager.CercaLavorazione_Risultati.Rows.Count.ToString("###,##0");
+            #endregion
         }
     }
 }

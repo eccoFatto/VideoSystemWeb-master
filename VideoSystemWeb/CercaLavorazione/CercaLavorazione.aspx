@@ -133,7 +133,7 @@
                     </asp:DropDownList>
                 </div>
                 <div class="w3-quarter">
-                    <label>Tipo</label>
+                    <label>Tipo Protocollo</label>
                     <asp:DropDownList ID="ddlTipoProtocollo" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border">
                     </asp:DropDownList>
                 </div>

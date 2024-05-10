@@ -823,6 +823,7 @@
     <Compile Include="Entity\DatiFiscaliLavorazione.cs" />
     <Compile Include="Entity\DatiAgendaMagazzino.cs" />
     <Compile Include="Entity\AttrezzatureTrasporto.cs" />
+    <Compile Include="Entity\FiltriCercaLavorazione.cs" />
     <Compile Include="Entity\NoteAgendaMagazzino.cs" />
     <Compile Include="Entity\NoteLavorazioneMagazzino.cs" />
     <Compile Include="Entity\DatiLavorazione.cs" />

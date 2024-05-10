@@ -34,7 +34,7 @@ namespace VideoSystemWeb.Agenda
             set
             {
                 ViewState[VIEWSTATE_LISTADATIAGENDA] = value;
-            }
+            } 
         }
 
         public string GetDataSelezionata()

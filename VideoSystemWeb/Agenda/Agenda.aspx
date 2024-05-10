@@ -15,7 +15,7 @@
     <script>
         $(document).ready(function () {
             (function blink() { 
-              $('.blink').fadeOut(800).fadeIn(500, blink); 
+              $('.blink').fadeOut(800).fadeIn(500, blink);  
             })();
 
             $('.calendarAgenda').datetimepicker({

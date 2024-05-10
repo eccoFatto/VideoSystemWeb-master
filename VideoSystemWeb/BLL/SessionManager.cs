@@ -587,7 +587,7 @@ namespace VideoSystemWeb.BLL
             get
             {
                 if (HttpContext.Current.Session[CERCA_LAVORAZIONE_COLONNA] == null)
-                {
+                { 
                     HttpContext.Current.Session[CERCA_LAVORAZIONE_COLONNA] = string.Empty;
                 }
                 return HttpContext.Current.Session[CERCA_LAVORAZIONE_COLONNA].ToString();

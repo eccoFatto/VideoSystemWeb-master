@@ -19,7 +19,7 @@
         });
 
         // APRO POPUP VISUALIZZAZIONE/MODIFICA PROTOCOLLO
-            function apriLavorazione(dataInizioImpegno, idColonneAgenda) {
+            function apriLavorazione(dataInizioImpegno, idColonneAgenda) { 
                 $('.loader').show();
                 $("#<%=hf_dataInizioImpegno.ClientID%>").val(dataInizioImpegno);
                 $("#<%=hf_idColonneAgenda.ClientID%>").val(idColonneAgenda);

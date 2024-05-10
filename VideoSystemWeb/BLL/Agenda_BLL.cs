@@ -178,7 +178,7 @@ namespace VideoSystemWeb.BLL
             queryRicerca = queryRicerca.Replace("@destinatario", destinatario);
 
             string queryProtocolloDataProt = "";
-            if (!string.IsNullOrEmpty(dataProtocolloDa))
+            if (!string.IsNullOrEmpty(dataProtocolloDa)) 
             {
                 DateTime dataDa = Convert.ToDateTime(dataProtocolloDa);
                 DateTime dataA = DateTime.Now;

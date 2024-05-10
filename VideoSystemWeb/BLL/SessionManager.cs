@@ -621,7 +621,7 @@ namespace VideoSystemWeb.BLL
             {
                 if (HttpContext.Current.Session[CERCA_LAVORAZIONE_NUM_PAGINA] == null)
                 {
-                    HttpContext.Current.Session[CERCA_LAVORAZIONE_NUM_PAGINA] = 1;
+                    HttpContext.Current.Session[CERCA_LAVORAZIONE_NUM_PAGINA] = 0;
                 }
                 return (int)HttpContext.Current.Session[CERCA_LAVORAZIONE_NUM_PAGINA];
             }

@@ -177,7 +177,7 @@ namespace VideoSystemWeb.BLL
                                     " @dataProtocollo " +
                                     " @dataLavorazione " +
                                     " and isnull(tipo.nome,'') like '%@tipoProtocollo%'  " +
-                                    " order by agenda.id";
+                                    " order by agenda.data_inizio_lavorazione desc";
 
             queryRicerca = queryRicerca.Replace("@numeroProtocollo", numeroProtocollo);
             queryRicerca = queryRicerca.Replace("@codiceLavoro", codiceLavoro);

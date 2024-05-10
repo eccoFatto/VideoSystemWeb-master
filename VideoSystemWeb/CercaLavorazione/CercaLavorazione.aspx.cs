@@ -91,7 +91,7 @@ namespace VideoSystemWeb.CercaLavorazione
 
             DataTable dtLavorazioni = Agenda_BLL.Instance.CercaLavorazione(numeroProtocollo, codiceLavoro, ragioneSociale, produzione, lavorazione, descrizione, tipoProtocollo, protocolloRiferimento, destinatario, dataProtocolloDa, dataProtocolloA, dataLavorazioneDa, dataLavorazioneA, ref esito);
             SessionManager.CercaLavorazione_Risultati = dtLavorazioni;
-            SessionManager.CercaLavorazione_NumPagina = 1;
+            SessionManager.CercaLavorazione_NumPagina = 0;
             SessionManager.CercaLavorazione_Filtri = filtri;
 
             //Session["TaskTable"] = dtLavorazioni;
@@ -207,7 +207,7 @@ namespace VideoSystemWeb.CercaLavorazione
             gv_protocolli.DataBind();
             tbTotElementiGriglia.Text = "";
             SessionManager.CercaLavorazione_Risultati = null;
-            SessionManager.CercaLavorazione_NumPagina = 1;
+            SessionManager.CercaLavorazione_NumPagina = 0;
             SessionManager.CercaLavorazione_Filtri = null;
         }
 

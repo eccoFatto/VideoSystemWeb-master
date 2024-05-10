@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web;
 using VideoSystemWeb.Entity;
@@ -22,11 +21,6 @@ namespace VideoSystemWeb.BLL
 
         public static string CERCA_LAVORAZIONE_DATA = "cercaLavorazione_Data";
         public static string CERCA_LAVORAZIONE_COLONNA = "cercaLavorazione_Colonna";
-        public static string CERCA_LAVORAZIONE_RISULTATI = "cercaLavorazione_Risultati";
-        public static string CERCA_LAVORAZIONE_NUM_PAGINA = "cercaLavorazione_NumPagina";
-        public static string CERCA_LAVORAZIONE_FILTRI = "cercaLavorazione_Filtri";
-
-
 
         // CHIAVI DI TAB_CONFIG
         public static string CFG_IVA = "IVA";
@@ -601,46 +595,6 @@ namespace VideoSystemWeb.BLL
             set
             {
                 HttpContext.Current.Session[CERCA_LAVORAZIONE_COLONNA] = value;
-            }
-        }
-
-        public static DataTable CercaLavorazione_Risultati
-        {
-            get
-            {
-                return (DataTable)HttpContext.Current.Session[CERCA_LAVORAZIONE_RISULTATI];
-            }
-            set
-            {
-                HttpContext.Current.Session[CERCA_LAVORAZIONE_RISULTATI] = value;
-            }
-        }
-
-        public static int CercaLavorazione_NumPagina
-        {
-            get
-            {
-                if (HttpContext.Current.Session[CERCA_LAVORAZIONE_NUM_PAGINA] == null)
-                {
-                    HttpContext.Current.Session[CERCA_LAVORAZIONE_NUM_PAGINA] = 1;
-                }
-                return (int)HttpContext.Current.Session[CERCA_LAVORAZIONE_NUM_PAGINA];
-            }
-            set
-            {
-                HttpContext.Current.Session[CERCA_LAVORAZIONE_NUM_PAGINA] = value;
-            }
-        }
-
-        public static FiltriCercaLavorazione CercaLavorazione_Filtri
-        {
-            get
-            {
-                return (FiltriCercaLavorazione)HttpContext.Current.Session[CERCA_LAVORAZIONE_FILTRI];
-            }
-            set
-            {
-                HttpContext.Current.Session[CERCA_LAVORAZIONE_FILTRI] = value;
             }
         }
     }

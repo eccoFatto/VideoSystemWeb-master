@@ -1,5 +1,4 @@
-﻿using PdfSharp.Pdf.Filters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -146,16 +145,6 @@ namespace VideoSystemWeb.BLL
 
         public DataTable CercaLavorazione(string numeroProtocollo, string codiceLavoro, string ragioneSociale, string produzione, string lavorazione, string descrizione, string tipoProtocollo, string protocolloRiferimento, string destinatario, string dataProtocolloDa, string dataProtocolloA, string dataLavorazioneDa, string dataLavorazioneA, ref Esito esito)
         {
-            numeroProtocollo = numeroProtocollo.Replace("'", "''");
-            codiceLavoro = codiceLavoro.Replace("'", "''");
-            ragioneSociale = ragioneSociale.Replace("'", "''");
-            produzione = produzione.Replace("'", "''");
-            lavorazione = lavorazione.Replace("'", "''");
-            descrizione = descrizione.Replace("'", "''");
-            tipoProtocollo = tipoProtocollo.Replace("'", "''");
-            protocolloRiferimento = protocolloRiferimento.Replace("'", "''");
-            destinatario = destinatario.Replace("'", "''");
-
             string queryRicerca = "select distinct agenda.id, agenda.data_inizio_impegno, agenda.data_inizio_lavorazione, agenda.id_colonne_agenda, stato.descrizione, agenda.codice_lavoro as [Cod. Lav.], agenda.produzione, agenda.lavorazione, cliente.ragioneSociale as Cliente " +
                                     " from  tab_dati_agenda agenda " +
                                     " left join anag_clienti_fornitori cliente on agenda.id_cliente=cliente.id " +
@@ -163,7 +152,7 @@ namespace VideoSystemWeb.BLL
                                     " left join tipo_stato stato on stato.id=agenda.id_stato " +
                                     " left join tipo_protocollo tipo on prot.id_tipo_protocollo = tipo.id " +
                                     " where  agenda.id_stato <> 5 " +
-                                    " and agenda.id_stato in (3,4) " +
+                                    " and agenda.id_stato <> 1 " +
                                     //" and prot.attivo = 1 " +
                                     " and (prot.numero_protocollo like '%@numeroProtocollo%' or prot.numero_protocollo is null) " +
                                     " and (agenda.codice_lavoro like '%@codiceLavoro%' or agenda.codice_lavoro is null) " +

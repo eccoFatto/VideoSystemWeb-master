@@ -5,6 +5,8 @@ using System.Web;
 using VideoSystemWeb.DAL;
 using VideoSystemWeb.Entity;
 using System.Configuration;
+using VideoSystemWeb.Protocollo;
+
 namespace VideoSystemWeb.BLL
 {
     public class Protocolli_BLL
@@ -225,15 +227,6 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-
-
-
-
-
-
-
-
-
         public string getCodiceLavorazioneNew(ref Esito esito, int year)
         {
             string iREt = Base_DAL.GetCodLavNew(ref esito, year);
@@ -246,6 +239,13 @@ namespace VideoSystemWeb.BLL
             Esito esito = Base_DAL.ResetCodLavNew(anno,codiceLavorazioneIniziale);
 
             return esito;
+        }
+
+        public DateTime? getDataFatturaByCodiceLavoro(string codiceLavoro, ref Esito esito)
+        {
+            DateTime? ret = Protocolli_DAL.Instance.getDataFatturaByCodiceLavoro(codiceLavoro, ref esito);
+            
+            return ret;
         }
 
     }

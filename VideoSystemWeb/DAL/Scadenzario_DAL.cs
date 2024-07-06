@@ -714,8 +714,13 @@ namespace VideoSystemWeb.DAL
                     filtriRicerca += fatturaPagata == "1" ? " and (a.importoAvere = a.importoRiscosso and a.importoDare = a.importoVersato)" : " and (a.importoAvere <> a.importoRiscosso or a.importoDare != a.importoVersato)";
                 }
 
-                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and b.data_inizio_lavorazione >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
-                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and b.data_inizio_lavorazione < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'";
+                //filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and b.data_inizio_lavorazione >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                //filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and b.data_inizio_lavorazione < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'";
+
+                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and b.data_fattura >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and b.data_fattura < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'";
+
+
                 filtriRicerca += string.IsNullOrWhiteSpace(dataScadenzaDa) ? "" : " and a.dataScadenza >= '" + (DateTime.Parse(dataScadenzaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
                 filtriRicerca += string.IsNullOrWhiteSpace(dataScadenzaA) ? "" : " and a.dataScadenza < '" + (DateTime.Parse(dataScadenzaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'";
                 filtriRicerca += string.IsNullOrWhiteSpace(filtroBanca) ? "" : " and a.idTipoBanca = " + filtroBanca;

@@ -76,6 +76,9 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Attivo = riga.Field<bool>("attivo");
                                         protocollo.Pregresso= riga.Field<bool>("pregresso");
                                         protocollo.Destinatario = riga.Field<string>("destinatario");
+
+                                        if (!DBNull.Value.Equals(riga["data_fattura"])) protocollo.Data_fattura = riga.Field<DateTime>("data_fattura");
+
                                         listaProtocolli.Add(protocollo);
                                     }
                                 }
@@ -134,6 +137,8 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Attivo = riga.Field<bool>("attivo");
                                         protocollo.Pregresso = riga.Field<bool>("pregresso");
                                         protocollo.Destinatario = riga.Field<string>("destinatario");
+
+                                        if (!DBNull.Value.Equals(riga["data_fattura"])) protocollo.Data_fattura = riga.Field<DateTime>("data_fattura");
 
                                         listaProtocolli.Add(protocollo);
                                     }
@@ -194,6 +199,8 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Pregresso = riga.Field<bool>("pregresso");
                                         protocollo.Destinatario = riga.Field<string>("destinatario");
 
+                                        if (!DBNull.Value.Equals(riga["data_fattura"])) protocollo.Data_fattura = riga.Field<DateTime>("data_fattura");
+
                                         listaProtocolli.Add(protocollo);
                                     }
                                 }
@@ -247,6 +254,8 @@ namespace VideoSystemWeb.DAL
                                     protocollo.Attivo = dt.Rows[0].Field<bool>("attivo");
                                     protocollo.Pregresso = dt.Rows[0].Field<bool>("pregresso");
                                     protocollo.Destinatario = dt.Rows[0].Field<string>("destinatario");
+
+                                    if (!DBNull.Value.Equals(dt.Rows[0]["data_fattura"])) protocollo.Data_fattura = dt.Rows[0].Field<DateTime>("data_fattura");
 
                                 }
                             }
@@ -307,6 +316,8 @@ namespace VideoSystemWeb.DAL
                                         protocollo.Attivo = riga.Field<bool>("attivo");
                                         protocollo.Pregresso = riga.Field<bool>("pregresso");
                                         protocollo.Destinatario = riga.Field<string>("destinatario");
+
+                                        if (!DBNull.Value.Equals(riga["data_fattura"])) protocollo.Data_fattura = riga.Field<DateTime>("data_fattura");
 
                                         listaProtocolli.Add(protocollo);
                                     }
@@ -419,6 +430,11 @@ namespace VideoSystemWeb.DAL
                             destinatario.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(destinatario);
 
+                            SqlParameter data_fattura = new SqlParameter("@data_fattura", DBNull.Value);
+                            if (protocollo.Data_fattura != null) data_fattura = new SqlParameter("@data_fattura", protocollo.Data_fattura);
+                            data_fattura.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(data_fattura);
+
                             StoreProc.Connection.Open();
 
                             StoreProc.ExecuteNonQuery();
@@ -526,6 +542,11 @@ namespace VideoSystemWeb.DAL
                             SqlParameter destinatario = new SqlParameter("@destinatario", protocollo.Destinatario);
                             destinatario.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(destinatario);
+
+                            SqlParameter data_fattura = new SqlParameter("@data_fattura", DBNull.Value);
+                            if (protocollo.Data_fattura != null) data_fattura = new SqlParameter("@data_fattura", protocollo.Data_fattura);
+                            data_fattura.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(data_fattura);
 
                             StoreProc.Connection.Open();
 
@@ -961,6 +982,48 @@ namespace VideoSystemWeb.DAL
                 esito.Descrizione = "Protocolli_DAL.cs - isultimaFattura " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
             return false;
+        }
+
+        public DateTime? getDataFatturaByCodiceLavoro(string codiceLavoro, ref Esito esito)
+        {
+            DateTime? dataFattura = null;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT data_fattura " +
+                                    "FROM dati_protocollo " +
+                                    "WHERE attivo = 1 " + 
+                                    "AND codice_lavoro = '" + codiceLavoro.Trim() + "' " +
+                                    "AND id_tipo_protocollo = (select id from tipo_protocollo where nome = 'Fattura') " +
+                                    "AND destinatario = 'Cliente'";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    if (!DBNull.Value.Equals(dt.Rows[0]["data_fattura"])) dataFattura = dt.Rows[0].Field<DateTime>("data_fattura");
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return dataFattura;
+
         }
     }
 }

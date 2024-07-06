@@ -44,18 +44,46 @@ namespace VideoSystemWeb.DAL
             filtri += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione + "%' ";
             filtri += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
             filtri += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
+
+            // eliminato campo docFattura in seguito alla segnalazione 02/07/2024 di risultati duplicati 
+            //string campiQuery = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso ";
+            string campiQuery = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, h.pathDocumento 'docOfferta', h.pregresso ";
+
             if (fatturato != null)
             {
-                filtri += (bool)fatturato ? "and e.protocollo_riferimento is not null " : "and e.protocollo_riferimento is null ";
+                if ((bool)fatturato)
+                {
+                    filtri +=  "and e.protocollo_riferimento is not null ";
+
+                    filtri += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND e.data_fattura >= '" + dataInizio.Substring(6) + "-" + dataInizio.Substring(3, 2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'";
+                    filtri += string.IsNullOrWhiteSpace(dataFine) ? "" : " AND e.data_fattura <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000'";
+
+                    // eliminato campo docOfferta in seguito alla segnalazione 02/07/2024 di risultati duplicati 
+                    //campiQuery = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(e.data_fattura) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso ";
+                    campiQuery = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(e.data_fattura) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pregresso ";
+                }
+                else
+                {
+                    filtri += "and e.protocollo_riferimento is null ";
+
+                    filtri += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND a.data_inizio_lavorazione >= '" + dataInizio.Substring(6) + "-" + dataInizio.Substring(3, 2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'";
+                    // il filtro dataFine viene eseguito su dataInizioLavorazione, e non su dataFineLavorazione
+                    filtri += string.IsNullOrWhiteSpace(dataFine) ? "" : " AND a.data_inizio_lavorazione <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000'";
+                }
             }
-            filtri += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND a.data_inizio_lavorazione >= '"+ dataInizio.Substring(6) + "-" + dataInizio.Substring(3,2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'";
-            // il filtro dataFine viene eseguito su dataInizioLavorazione, e non su dataFineLavorazione
-            filtri += string.IsNullOrWhiteSpace(dataFine) ? "" : " AND a.data_inizio_lavorazione <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000'";
+
+            //if (fatturato != null)
+            //{
+            //    filtri += (bool)fatturato ? "and e.protocollo_riferimento is not null " : "and e.protocollo_riferimento is null ";
+            //}
+            //filtri += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND a.data_inizio_lavorazione >= '"+ dataInizio.Substring(6) + "-" + dataInizio.Substring(3,2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'";
+            //// il filtro dataFine viene eseguito su dataInizioLavorazione, e non su dataFineLavorazione
+            //filtri += string.IsNullOrWhiteSpace(dataFine) ? "" : " AND a.data_inizio_lavorazione <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000'";
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso " +
+                    string query =  campiQuery +
                                     "from tab_dati_agenda a " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente " +
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id " +
@@ -82,22 +110,6 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-                                        //StatisticheRicavi statisticheRicavi = new StatisticheRicavi
-                                        //{
-                                        //    IdCliente = riga.Field<int>("id_cliente"),
-                                        //    Cliente = riga.Field<string>("cliente"),
-                                        //    NumeroFattura = riga.Field<string>("numeroFattura"),
-                                        //    Ordine = riga.Field<string>("ordine"),
-                                        //    CodiceLavoro = riga.Field<string>("codice_lavoro"),
-                                        //    Data = riga.Field<DateTime?>("data"),
-                                        //    Lavorazione = riga.Field<string>("lavorazione"),
-                                        //    Produzione = riga.Field<string>("produzione"),
-                                        //    Contratto = riga.Field<string>("contratto"),
-                                        //    Listino = riga.Field<decimal?>("listino"),
-                                        //    Costo = riga.Field<decimal?>("costo"),
-                                        //    DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta"),
-                                        //    Pregresso = riga.Field<bool>("pregresso")
-                                        //};
                                         try
                                         { 
                                         StatisticheRicavi statisticheRicavi = new StatisticheRicavi();
@@ -113,7 +125,8 @@ namespace VideoSystemWeb.DAL
                                         statisticheRicavi.Contratto = riga.Field<string>("contratto");
                                         statisticheRicavi.Listino = riga.Field<decimal?>("listino");
                                         statisticheRicavi.Costo = riga.Field<decimal?>("costo");
-                                        statisticheRicavi.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta");
+                                        //statisticheRicavi.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta");
+                                        statisticheRicavi.DocumentoAllegato = (fatturato != null && (bool)fatturato) ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta");
                                         statisticheRicavi.Pregresso = riga.Field<bool>("pregresso");
 
                                         listaStatisticheRicavi.Add(statisticheRicavi);

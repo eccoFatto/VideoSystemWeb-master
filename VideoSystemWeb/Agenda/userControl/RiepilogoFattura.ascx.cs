@@ -28,7 +28,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 scriptManager.RegisterPostBackControl(this.btnStampaFattura);
             }
         }
-        public Esito popolaPannelloFattura(DatiAgenda eventoSelezionato)
+        public Esito popolaPannelloFattura(DatiAgenda eventoSelezionato, bool aggiornaFattura = false)
         {
             Esito esito = new Esito();
             try
@@ -315,6 +315,10 @@ namespace VideoSystemWeb.Agenda.userControl
                         // AGGIUNGO CONTEGGIO PAGINE E FOOTER PER OGNI PAGINA
                         for (int i = 1; i <= n; i++)
                         {
+                            // PRENDO DATA FATTURA
+                            DateTime? dataFattura = aggiornaFattura ? DateTime.Parse(tbDataProtocollo.Text) : Protocolli_BLL.Instance.getDataFatturaByCodiceLavoro(eventoSelezionato.codice_lavoro, ref esito);
+                            
+
                             // AGGIUNGO LOGO
                             iText.Layout.Element.Image image = new iText.Layout.Element.Image(imageData).ScaleAbsolute(90, 80).SetFixedPosition(i, 30, 740);
                             document.Add(image);
@@ -328,7 +332,10 @@ namespace VideoSystemWeb.Agenda.userControl
                             tbGriglaInfo.AddCell(cellaGrigliaInfo);
 
                             //pGrigliaInfo = new Paragraph(DateTime.Today.ToLongDateString()).SetFontSize(9);
-                            if (string.IsNullOrEmpty(tbDataProtocollo.Text)) tbDataProtocollo.Text = eventoSelezionato.data_inizio_lavorazione.ToShortDateString();
+
+                            //if (string.IsNullOrEmpty(tbDataProtocollo.Text)) tbDataProtocollo.Text = eventoSelezionato.data_inizio_lavorazione.ToShortDateString();
+                            tbDataProtocollo.Text = dataFattura != null ? ((DateTime)dataFattura).ToShortDateString() : eventoSelezionato.data_inizio_lavorazione.ToShortDateString();
+
                             pGrigliaInfo = new Paragraph(Convert.ToDateTime(tbDataProtocollo.Text).ToLongDateString()).SetFontSize(9);
                             cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaInfo.Add(pGrigliaInfo);
@@ -521,6 +528,8 @@ namespace VideoSystemWeb.Agenda.userControl
                                 protocolloFattura.Pregresso = false;
                                 protocolloFattura.Destinatario = "Cliente";
 
+                                protocolloFattura.Data_fattura = Convert.ToDateTime(tbDataProtocollo.Text);
+
                                 int idProtPianoEsterno = Protocolli_BLL.Instance.CreaProtocollo(protocolloFattura, ref esito);
 
                                 ViewState["idProtocollo"] = idProtPianoEsterno;
@@ -531,6 +540,9 @@ namespace VideoSystemWeb.Agenda.userControl
                                 // AGGIORNO
                                 protocolloFattura.PathDocumento = Path.GetFileName(mapPathFattura);
                                 protocolloFattura.Data_protocollo = Convert.ToDateTime(tbDataProtocollo.Text);
+
+                                protocolloFattura.Data_fattura = Convert.ToDateTime(tbDataProtocollo.Text);
+
                                 esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloFattura);
 
                                 ViewState["idProtocollo"] = protocolloFattura.Id;
@@ -601,9 +613,8 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnCreaFattura_Click(object sender, EventArgs e)
         {
-            Esito esito = popolaPannelloFattura(SessionManager.EventoSelezionato);
+            Esito esito = popolaPannelloFattura(SessionManager.EventoSelezionato, true);
 
-            //Esito esito = popolaPannelloFattura(SessionManager.EventoSelezionato);
             if (esito.Codice == Esito.ESITO_OK)
             {
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfFattura.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);

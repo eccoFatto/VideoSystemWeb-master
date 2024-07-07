@@ -16,8 +16,9 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "2.01";
-        public static string dataVersione = "28/04/2024";
+        public static string versione = "2.02";
+        public static string dataVersione = "07/07/2024";
+        // NELL'APP IN PRODUZIONE SI VEDE ANCORA APRILE 2024 PERCHE' HO AGGIORNATO DOPO IL DEPLOY
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static T ValidaCampo<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito)

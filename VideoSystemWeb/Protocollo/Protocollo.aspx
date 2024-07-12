@@ -275,19 +275,19 @@
                     <label>Produzione</label>
                     <asp:TextBox ID="tbProduzione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
 <%--                    <div id="divProduzione" class="dropdown ">
-                        <asp:HiddenField ID="hf_Produzione" runat="server" Value=""/>
-                        <asp:Button ID="ddl_Produzione" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
-                        <ul id="elencoProduzioni" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
-                    </div>--%>
+                            <asp:HiddenField ID="hf_Produzione" runat="server" Value=""/>
+                            <asp:Button ID="ddl_Produzione" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
+                            <ul id="elencoProduzioni" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
+                        </div>--%>
                 </div>
                 <div class="w3-quarter">
                     <label>Lavorazione</label>
                     <asp:TextBox ID="tbLavorazione" runat="server" MaxLength="50" class="w3-input w3-border" placeholder=""></asp:TextBox>
 <%--                    <div id="divLavorazione" class="dropdown ">
-                        <asp:HiddenField ID="hf_Lavorazione" runat="server" Value=""/>
-                        <asp:Button ID="ddl_Lavorazione" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
-                        <ul id="elencoLavorazioni" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
-                    </div>--%>
+                            <asp:HiddenField ID="hf_Lavorazione" runat="server" Value=""/>
+                            <asp:Button ID="ddl_Lavorazione" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
+                            <ul id="elencoLavorazioni" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
+                        </div>--%>
                 </div>
                 
                 <div class="w3-quarter">
@@ -295,7 +295,7 @@
                     <asp:TextBox ID="tbDescrizione" runat="server" MaxLength="200" class="w3-input w3-border" placeholder=""></asp:TextBox>                   
                 </div>
                 <div class="w3-quarter" style="position:relative;">
-                    <label>Data Prot. (Da-A)</label>
+                    <label>Periodo (Da-A)</label>
                     <table style="width:100%;">
                         <tr>
                             <td style="position:relative;"><asp:TextBox ID="tbDataProtocollo" runat="server" MaxLength="10" class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox></td>
@@ -307,10 +307,10 @@
             <div class="w3-row-padding w3-margin-bottom">
                 <div class="w3-quarter">
 <%--                    <div id="divCliente" class="dropdown ">
-                        <asp:HiddenField ID="hf_RagioneSociale" runat="server" Value=""/>
-                        <asp:Button ID="ddl_Cliente" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
-                        <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
-                    </div>--%>
+                            <asp:HiddenField ID="hf_RagioneSociale" runat="server" Value=""/>
+                            <asp:Button ID="ddl_Cliente" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text=""  Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
+                            <ul id="elencoClienti" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px"></ul>
+                        </div>--%>
                     <label>Codice Lavoro</label>
                     <asp:TextBox ID="tbCodiceLavoro" runat="server" MaxLength="20" class="w3-input w3-border" placeholder=""></asp:TextBox>
                 </div>
@@ -362,26 +362,27 @@
                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>
                     <Columns>
 
-                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="25px">
                             <ItemTemplate>
                                 <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Allegato" ImageAlign="AbsMiddle" Height="30px" />
                             </ItemTemplate>
                         </asp:TemplateField>
                         
                         <asp:BoundField DataField="id" HeaderText="id" HeaderStyle-Width="8%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="Cod. Lav." HeaderText="Cod. Lav." HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="Num. Prot." HeaderText="Num. Prot."  HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Data Prot." HeaderText="Data Prot." DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="4%" />
+                        <asp:BoundField DataField="Cod. Lav." HeaderText="Cod. Lav." HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="Num. Prot." HeaderText="Num. Prot."  HeaderStyle-Width="5%" />
+                        <asp:BoundField DataField="Data Prot." HeaderText="Data Prot." DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="5%" />
+                        <asp:BoundField DataField="Data Fatt." HeaderText="Data Fatt." DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="5%" />
                         <asp:BoundField DataField="protocollo_riferimento" HeaderText="Riferimento"  HeaderStyle-Width="4%" />
                         <asp:BoundField DataField="Cliente/Fornitore" HeaderText="Cliente/Fornitore"  HeaderStyle-Width="16%" />
                         <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="13%" />
                         <asp:BoundField DataField="Descrizione" HeaderText="Descrizione" HeaderStyle-Width="15%" />
                         <asp:BoundField DataField="Tipo" HeaderText="Tipo" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Nome File" HeaderText="Nome File" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Destinatario" HeaderText="Destinatario" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Pregresso" HeaderText="Pregresso" HeaderStyle-Width="6%" />
+                        <asp:BoundField DataField="Nome File" HeaderText="Nome File" HeaderStyle-Width="9%" />
+                        <asp:BoundField DataField="Destinatario" HeaderText="Destinatario" HeaderStyle-Width="5%" />
+                        <asp:BoundField DataField="Pregresso" HeaderText="Pregresso" HeaderStyle-Width="4%" />
 
-                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="30px">
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="25px">
                             <ItemTemplate>
                                 <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Visualizza Protocollo" ImageAlign="AbsMiddle" Height="30px" />
                             </ItemTemplate>
@@ -562,12 +563,12 @@
                     </div>
                 </asp:Panel>
             </asp:Panel>
-            <!-- POPUP RICERCA LAVORAZIONI -->
+<!-- POPUP RICERCA LAVORAZIONI -->
             <asp:Panel runat="server" ID="PanelLavorazioni" Visible="false">
                 <div class="modalBackground"></div>
                 <asp:Panel runat="server" ID="Panel3" CssClass="containerPopupStandard round" ScrollBars="Auto">
                     <div class="w3-container">
-                        <!-- RICERCA LAVORAZIONI -->
+<!-- RICERCA LAVORAZIONI -->
                         <div class="w3-bar w3-yellow w3-round">
                             <div class="w3-bar-item w3-button w3-yellow">Ricerca Lavorazioni</div>
                             <div class="w3-bar-item w3-button w3-yellow w3-right">
@@ -634,15 +635,15 @@
                     </div>
                 </asp:Panel>
             </asp:Panel>
-            <!-- FINE POPUP RICERCA LAVORAZIONI -->
+<!-- FINE POPUP RICERCA LAVORAZIONI -->
 
-            <!-- POPUP RICERCA CLIENTI -->
+<!-- POPUP RICERCA CLIENTI -->
             <asp:Panel runat="server" ID="PanelClienti" Visible="false">
                 <div class="modalBackground"></div>
                 <asp:Panel runat="server" ID="PanelContLavorazioni" CssClass="containerPopupStandard round" ScrollBars="Auto">
                     <br />
                     <div class="w3-container w3-padding w3-margin">
-                        <!-- RICERCA CLIENTI -->
+<!-- RICERCA CLIENTI -->
                         <div class="w3-bar w3-orange w3-round">
                             <div class="w3-bar-item w3-button w3-orange">Ricerca Clienti\Collaboratori
                             </div>
@@ -699,7 +700,7 @@
                     <br />
                 </asp:Panel>
             </asp:Panel>
-            <!-- FINE POPUP RICERCA CLIENTI -->
+<!-- FINE POPUP RICERCA CLIENTI -->
 
 
         </ContentTemplate>

@@ -21,6 +21,18 @@ namespace VideoSystemWeb.BLL
         // NELL'APP IN PRODUZIONE SI VEDE ANCORA APRILE 2024 PERCHE' HO AGGIORNATO DOPO IL DEPLOY
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        private void Page_PreInit(object sender, EventArgs e)
+        {
+            Response.AppendHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+            Response.AppendHeader("Pragma", "no-cache"); // HTTP 1.0.
+            Response.AppendHeader("Expires", "0"); // Proxies.
+
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.AppendCacheExtension("must-revalidate");
+            Response.Cache.SetNoStore();
+            Response.Cache.SetExpires(DateTime.Now.AddDays(-1));
+        }
+
         public static T ValidaCampo<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito)
         {
             T result = defaultValue;

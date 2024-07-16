@@ -315,7 +315,8 @@ namespace VideoSystemWeb.DAL
                                         Data_inizio_lavorazione = evento.data_inizio_lavorazione,
                                         Attivo = true, 
                                         Destinatario = "Cliente",
-                                        Pregresso = false
+                                        Pregresso = false,
+                                        Data_fattura = null
                                     };
                                     
                                     CostruisciSP_InsertProtocollo(StoreProc, sda, iDatiAgendaReturn, protocolloOfferta);
@@ -470,7 +471,8 @@ namespace VideoSystemWeb.DAL
                                             Data_inizio_lavorazione = evento.data_inizio_lavorazione,
                                             Attivo = true,
                                             Pregresso = false,
-                                            Destinatario="Cliente"
+                                            Destinatario="Cliente",
+                                            Data_fattura = null
                                         };
 
                                         CostruisciSP_InsertProtocollo(StoreProc, sda, iDatiAgendaReturn, protocolloOfferta);

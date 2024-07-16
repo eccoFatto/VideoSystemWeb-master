@@ -490,6 +490,7 @@ namespace VideoSystemWeb.Protocollo
             cmbMod_Tipologia.SelectedIndex = 0;
             cmbMod_Destinatario.SelectedIndex = 0;
             cbMod_Pregresso.Checked = false;
+            tbMod_DataFattura.Text = "";
 
         }
 
@@ -500,6 +501,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_NumeroProtocollo.ReadOnly = true;
             tbMod_ProtocolloRiferimento.ReadOnly = attivaModifica;
             tbMod_DataProtocollo.ReadOnly = true;
+            tbMod_DataFattura.ReadOnly = true;
             tbMod_DataLavorazione.ReadOnly = attivaModifica;
            // CalendarExtender_DataLavorazione.Enabled = !attivaModifica;
             tbMod_Produzione.ReadOnly = attivaModifica;
@@ -551,6 +553,13 @@ namespace VideoSystemWeb.Protocollo
                     {
                         tbMod_DataProtocollo.Text = ((DateTime)protocollo.Data_protocollo).ToString("dd/MM/yyyy");
                     }
+
+                    tbMod_DataFattura.Text = "";
+                    if (protocollo.Data_fattura != null)
+                    {
+                        tbMod_DataFattura.Text = ((DateTime)protocollo.Data_fattura).ToString("dd/MM/yyyy");
+                    }
+
                     tbMod_DataLavorazione.Text = "";
                     if (protocollo.Data_inizio_lavorazione != null)
                     {
@@ -776,6 +785,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Cliente.CssClass = tbMod_Cliente.CssClass.Replace("erroreValidazione", "");
             tbMod_CodiceLavoro.CssClass = tbMod_CodiceLavoro.CssClass.Replace("erroreValidazione", "");
             tbMod_DataProtocollo.CssClass = tbMod_DataProtocollo.CssClass.Replace("erroreValidazione", "");
+            tbMod_DataFattura.CssClass = tbMod_DataFattura.CssClass.Replace("erroreValidazione", "");
             tbMod_DataLavorazione.CssClass = tbMod_DataLavorazione.CssClass.Replace("erroreValidazione", "");
             tbMod_Produzione.CssClass = tbMod_Produzione.CssClass.Replace("erroreValidazione", "");
             tbMod_Lavorazione.CssClass = tbMod_Lavorazione.CssClass.Replace("erroreValidazione", "");

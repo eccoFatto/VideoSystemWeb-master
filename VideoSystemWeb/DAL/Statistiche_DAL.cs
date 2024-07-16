@@ -71,6 +71,12 @@ namespace VideoSystemWeb.DAL
                     filtri += string.IsNullOrWhiteSpace(dataFine) ? "" : " AND a.data_inizio_lavorazione <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000'";
                 }
             }
+            else // Fatturato = <tutti>
+            {
+                filtri += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND ((e.protocollo_riferimento is null AND a.data_inizio_lavorazione >= '" + dataInizio.Substring(6) + "-" + dataInizio.Substring(3, 2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000') OR (e.protocollo_riferimento is not null AND e.data_fattura >= '" + dataInizio.Substring(6) + "-" + dataInizio.Substring(3, 2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'))";
+                // il filtro dataFine viene eseguito su dataInizioLavorazione, e non su dataFineLavorazione
+                filtri += string.IsNullOrWhiteSpace(dataFine) ? "" : " AND (( e.protocollo_riferimento is null AND a.data_inizio_lavorazione <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000') OR (e.protocollo_riferimento is not null AND e.data_fattura <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000'))";
+            }
 
             //if (fatturato != null)
             //{

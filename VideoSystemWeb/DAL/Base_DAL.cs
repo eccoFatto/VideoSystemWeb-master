@@ -1516,6 +1516,14 @@ namespace VideoSystemWeb.DAL
             SqlParameter destinatario = new SqlParameter("@destinatario", protocollo.Destinatario);
             destinatario.Direction = ParameterDirection.Input;
             StoreProc.Parameters.Add(destinatario);
+
+            SqlParameter data_fattura = new SqlParameter("@data_fattura", DBNull.Value);
+            if (protocollo.Data_fattura != null)
+            {
+                data_fattura = new SqlParameter("@data_fattura", protocollo.Data_fattura);
+            }
+            data_fattura.Direction = ParameterDirection.Input;
+            StoreProc.Parameters.Add(data_fattura);
         }
 
         protected static void CostruisciSP_InsertEvento(DatiAgenda evento, SqlCommand StoreProc, SqlDataAdapter sda)

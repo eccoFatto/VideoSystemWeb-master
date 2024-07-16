@@ -512,7 +512,8 @@
                                         <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" CssClass="w3-input w3-border" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
-                                        <label>&nbsp;</label>
+                                        <label>Data Fattura</label>
+                                        <asp:TextBox ID="tbMod_DataFattura" runat="server" MaxLength="10" CssClass="w3-input w3-border" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                 </div>
 

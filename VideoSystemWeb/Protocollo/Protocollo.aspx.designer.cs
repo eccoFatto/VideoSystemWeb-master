@@ -474,6 +474,15 @@ namespace VideoSystemWeb.Protocollo
         protected global::System.Web.UI.WebControls.TextBox tbMod_DataProtocollo;
 
         /// <summary>
+        /// Controllo tbMod_DataFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMod_DataFattura;
+
+        /// <summary>
         /// Controllo tbMod_Descrizione.
         /// </summary>
         /// <remarks>

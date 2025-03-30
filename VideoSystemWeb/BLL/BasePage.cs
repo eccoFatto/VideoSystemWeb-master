@@ -16,9 +16,9 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "2.03";
-        public static string dataVersione = "15/07/2024";
-        // NELL'APP IN PRODUZIONE SI VEDE ANCORA APRILE 2024 PERCHE' HO AGGIORNATO DOPO IL DEPLOY
+        public static string versione = "2.04";
+        public static string dataVersione = "30/03/2025";
+
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private void Page_PreInit(object sender, EventArgs e)

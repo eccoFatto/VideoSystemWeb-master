@@ -192,21 +192,21 @@
                     <div id="Articolo" class="w3-container w3-border articolo"  style="display:block">
                         <div class="w3-container">
                             <label>Desc. breve</label>
-                            <asp:TextBox ID="tbMod_DescrizioneBreve" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true"  MaxLength="60"></asp:TextBox>
+                            <asp:TextBox ID="tbMod_DescrizioneBreve" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true"  MaxLength="60"></asp:TextBox>
                         </div>
                         <div class="w3-container">
                             <label>Descrizione</label>
-                            <asp:TextBox ID="tbMod_Descrizione" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="10" ></asp:TextBox>
+                            <asp:TextBox ID="tbMod_Descrizione" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="10" ></asp:TextBox>
                         </div>
                                         
                         <div class="w3-row-padding">
                             <div class="w3-half">
                                 <label>Prezzo</label>
-                                <asp:TextBox ID="tbMod_Prezzo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="18"></asp:TextBox>
+                                <asp:TextBox ID="tbMod_Prezzo" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="18"></asp:TextBox>
                             </div>
                             <div class="w3-half">
                                 <label>Costo</label>
-                                <asp:TextBox ID="tbMod_Costo" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="18" ></asp:TextBox>
+                                <asp:TextBox ID="tbMod_Costo" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="18" ></asp:TextBox>
                             </div>
 <%--                            <div class="w3-third">
                                 <label>IVA</label>
@@ -217,21 +217,21 @@
                         <div class="w3-row-padding">
                             <div class="w3-third">
                                 <label>Genere</label>
-                                <asp:DropDownList ID="cmbMod_Genere" runat="server" class="w3-input w3-border" disabled></asp:DropDownList>
+                                <asp:DropDownList ID="cmbMod_Genere" runat="server" CssClass="w3-input w3-border" disabled></asp:DropDownList>
                             </div>
                             <div class="w3-third">
                                 <label>Gruppo</label><br />
-                                <asp:DropDownList ID="cmbMod_Gruppo" runat="server" class="w3-input w3-border" disabled></asp:DropDownList>
+                                <asp:DropDownList ID="cmbMod_Gruppo" runat="server" CssClass="w3-input w3-border" disabled></asp:DropDownList>
                             </div>
                             <div class="w3-third">
                                 <label>Sottogruppo</label><br />
-                                <asp:DropDownList ID="cmbMod_Sottogruppo" runat="server" class="w3-input w3-border" disabled></asp:DropDownList>
+                                <asp:DropDownList ID="cmbMod_Sottogruppo" runat="server" CssClass="w3-input w3-border" disabled></asp:DropDownList>
                             </div>
                         </div>
 
                         <div class="w3-container">
                             <label>Note</label>
-                            <asp:TextBox ID="tbMod_Note" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="1"></asp:TextBox>
+                            <asp:TextBox ID="tbMod_Note" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" TextMode="MultiLine" Rows="1"></asp:TextBox>
                         </div>
 
                         <div class="w3-row-padding">

@@ -33,6 +33,9 @@ namespace VideoSystemWeb.Entity
         private decimal cassa;
         private int idTipoBanca;
 
+        private string destinatario;
+        private int idTipoProtocollo;
+
         public int Id { get => id; set => id = value; }
         public int IdDatiProtocollo { get => idDatiProtocollo; set => idDatiProtocollo = value; }
         public string Banca 
@@ -102,5 +105,7 @@ namespace VideoSystemWeb.Entity
         public decimal ImportoVersatoIva { get => importoVersatoIva; set => importoVersatoIva = value; }
         public decimal ImportoRiscossoIva { get => importoRiscossoIva; set => importoRiscossoIva = value; }
         public DateTime? DataFattura { get => dataFattura; set => dataFattura = value; }
+        public string Destinatario { get => destinatario; set => destinatario = value; }
+        public int IdTipoProtocollo { get => idTipoProtocollo; set => idTipoProtocollo = value; }
     }
 }

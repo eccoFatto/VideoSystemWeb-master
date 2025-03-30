@@ -75,7 +75,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, idDatiProtocollo);
                     ddl_Tipo.SelectedValue = tipo;
                     txt_ClienteFornitore.Text = protocollo.Cliente;
-                    txt_DataDocumento.Text = protocollo.Data_inizio_lavorazione == null ? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_inizio_lavorazione).ToString("dd/MM/yyyy");
+                    txt_DataDocumento.Text = protocollo.Data_fattura == null ? "" : ((DateTime)protocollo.Data_fattura).ToString("dd/MM/yyyy");
                     txt_NumeroDocumento.Text = numeroDocumento;
 
                     txt_ImportoDocumento.Text = importo;
@@ -179,7 +179,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
                 Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, idDatiProtocollo);
                 txt_ClienteFornitore.Text = protocollo.Cliente;
-                txt_DataDocumento.Text = protocollo.Data_inizio_lavorazione == null ? DateTime.Now.ToString("dd/MM/yyyy") : ((DateTime)protocollo.Data_inizio_lavorazione).ToString("dd/MM/yyyy");
+                txt_DataDocumento.Text = protocollo.Data_fattura == null ? "" : ((DateTime)protocollo.Data_fattura).ToString("dd/MM/yyyy");
                 txt_NumeroDocumento.Text = protocollo.Protocollo_riferimento;
             }
             else
@@ -232,7 +232,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
         protected void btnRicercaScadenza_Click(object sender, EventArgs e)
         {
-            
             RicercaScadenze();
         }
 
@@ -247,7 +246,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             List<DatiScadenzario> listaDatiFattura = Scadenzario_BLL.Instance.GetDatiTotaliFatturaByIdDatiScadenzario(idScadenzaSelezionata, ref esito);
 
-            DatiScadenzario scadenzaSelezionata = PopolaPopupModifica(idScadenzaSelezionata, listaDatiFattura, ref esito); // popolo il popup fuori dallo switch perché mi i valori mi servono pure per l'eliminazione rata
+            DatiScadenzario scadenzaSelezionata = PopolaPopupModifica(idScadenzaSelezionata, listaDatiFattura, ref esito); // popolo il popup fuori dallo switch perché i valori mi servono pure per l'eliminazione rata
 
             if (scadenzaSelezionata != null)
             {
@@ -389,11 +388,16 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 decimal importoDocumentoAvere = listaDatiFattura.Sum(x => x.ImportoAvere);
                 decimal importoDocumentoAvereIva = listaDatiFattura.Sum(x => x.ImportoAvereIva);
 
-                if (importoDocumentoDare > 0) // FORNITORE
+                if (importoDocumentoDare > 0) // FORNITORE o BUSTA PAGA
                 {
                     lbl_VersatoRiscosso.Text = "Versato netto";
                     lbl_VersatoRiscossoIVA.Text = lbl_VersatoRiscossoAccontoIVA.Text = "Versato + IVA";
-                    ddl_Tipo.SelectedValue = "Fornitore";
+
+                    int idTipoProtocolloBustaPaga = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
+                    if (scadenza.IdTipoProtocollo == idTipoProtocolloBustaPaga)
+                        ddl_Tipo.SelectedValue = "BustaPaga";
+                    else
+                        ddl_Tipo.SelectedValue = "Fornitore";
 
                     lbl_DataVersamentoRiscossione.Text = "Data versamento";
                     txt_DataVersamentoRiscossione.Text = scadenza.DataVersamento == null ? string.Empty : ((DateTime)scadenza.DataVersamento).ToString("dd/MM/yyyy");
@@ -477,7 +481,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             //ValidaCampo(txt_CadenzaGiorni, 0, true, ref esito);
             ValidaCampo(txt_ClienteFornitore, "", true, ref esito);
-            ValidaCampo(txt_DataDocumento, DateTime.Now, true, ref esito);
+            //ValidaCampo(txt_DataDocumento, DateTime.Now, true, ref esito);
 
             if (ddl_Tipo.SelectedValue.ToUpper() == TIPO_CLIENTE)
             {
@@ -518,8 +522,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_ImportoDocumento.Attributes.Remove("ReadOnly");
                     txt_Iva.Attributes.Remove("disabled");
                     txt_NumeroRate.Attributes.Remove("disabled");
-                    //txt_AnticipoImporto.Attributes.Remove("disabled");
-                    //txt_CadenzaGiorni.Attributes.Remove("disabled");
                     ddl_APartireDa.Attributes.Remove("disabled");
 
                     break;
@@ -533,8 +535,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     txt_ImportoDocumento.Attributes.Add("ReadOnly", "ReadOnly");
                     txt_Iva.Attributes.Add("disabled", "disabled");
                     txt_NumeroRate.Attributes.Add("disabled", "disabled");
-                    //txt_AnticipoImporto.Attributes.Add("disabled", "disabled");
-                    //txt_CadenzaGiorni.Attributes.Add("disabled", "disabled");
                     ddl_APartireDa.Attributes.Add("disabled", "disabled");
 
                     break;
@@ -573,7 +573,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
             txt_ClienteFornitore.CssClass = txt_ClienteFornitore.CssClass.Replace("erroreValidazione", "");
             txt_DataDocumento.CssClass = txt_DataDocumento.CssClass.Replace("erroreValidazione", "");
             txt_ImportoIva.CssClass = txt_ImportoDocumento.CssClass.Replace("erroreValidazione", "");
-            //txt_CadenzaGiorni.CssClass = txt_CadenzaGiorni.CssClass.Replace("erroreValidazione", "");
 
             txt_VersatoIva.CssClass = txt_Versato.CssClass.Replace("erroreValidazione", "");
             txt_IvaModifica.CssClass = txt_IvaModifica.CssClass.Replace("erroreValidazione", "");
@@ -602,8 +601,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
             txt_ImportoDocumento.Text =
             txt_ImportoIva.Text =
             txt_NumeroRate.Text = string.Empty;
-            //txt_AnticipoImporto.Text = 
-            //txt_CadenzaGiorni.Text = string.Empty;
         }
 
         private void PulisciFiltriRicerca()

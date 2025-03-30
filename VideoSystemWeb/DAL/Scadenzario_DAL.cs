@@ -658,10 +658,11 @@ namespace VideoSystemWeb.DAL
                                     scadenza.Iva = dt.Rows[0].Field<decimal>("iva");
                                     scadenza.RagioneSocialeClienteFornitore = dt.Rows[0].Field<string>("cliente");
                                     scadenza.ProtocolloRiferimento = dt.Rows[0].Field<string>("protocollo_riferimento");
-                                    scadenza.DataFattura = dt.Rows[0].Field<DateTime?>("data_inizio_lavorazione");
+                                    scadenza.DataFattura = dt.Rows[0].Field<DateTime?>("data_fattura");
                                     scadenza.DataProtocollo = dt.Rows[0].Field<DateTime?>("data_protocollo");
-                                    
-                                    //scadenza.ImportoTotale = 0;
+                                    scadenza.Destinatario = dt.Rows[0].Field<string>("destinatario");
+                                    scadenza.IdTipoProtocollo = dt.Rows[0].Field<int>("id_tipo_protocollo");
+
                                     scadenza.Cassa = 0;
                                 }
                             }
@@ -713,13 +714,21 @@ namespace VideoSystemWeb.DAL
                 {
                     filtriRicerca += fatturaPagata == "1" ? " and (a.importoAvere = a.importoRiscosso and a.importoDare = a.importoVersato)" : " and (a.importoAvere <> a.importoRiscosso or a.importoDare != a.importoVersato)";
                 }
-
+                #region FILTRO PER DATA LAVORAZIONE
                 //filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and b.data_inizio_lavorazione >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
                 //filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and b.data_inizio_lavorazione < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'";
+                #endregion
 
-                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and b.data_fattura >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
-                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and b.data_fattura < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'";
+                #region FILTRO PER DATA FATTURA
+                //filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and b.data_fattura >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
+                //filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and b.data_fattura < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'";
 
+                #endregion
+
+                #region FILTRO PER DATA FATTURA O DATA LAVORAZIONE
+                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and ((b.data_fattura is not null and b.data_fattura >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "') or (b.data_fattura is null and b.data_inizio_lavorazione >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'))";
+                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and ((b.data_fattura is not null and b.data_fattura < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "') or (b.data_fattura is null and b.data_inizio_lavorazione < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'))";
+                #endregion
 
                 filtriRicerca += string.IsNullOrWhiteSpace(dataScadenzaDa) ? "" : " and a.dataScadenza >= '" + (DateTime.Parse(dataScadenzaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
                 filtriRicerca += string.IsNullOrWhiteSpace(dataScadenzaA) ? "" : " and a.dataScadenza < '" + (DateTime.Parse(dataScadenzaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'";
@@ -765,11 +774,12 @@ namespace VideoSystemWeb.DAL
                                             Note = riga.Field<string>("note"),
                                             Iva = riga.Field<decimal>("iva"),
 
-                                        RagioneSocialeClienteFornitore = riga.Field<string>("cliente"),
+                                            RagioneSocialeClienteFornitore = riga.Field<string>("cliente"),
                                             ProtocolloRiferimento = riga.Field<string>("protocollo_riferimento"),
                                             DataProtocollo = riga.Field<DateTime?>("data_protocollo"),
+                                            Destinatario = riga.Field<string>("destinatario"),
+                                            IdTipoProtocollo = riga.Field<int>("id_tipo_protocollo"),
 
-                                            //ImportoTotale = 0,
                                             Cassa = 0
                                         };
                                         listaDatiScadenzario.Add(scadenza);
@@ -836,6 +846,8 @@ namespace VideoSystemWeb.DAL
                                             RagioneSocialeClienteFornitore = riga.Field<string>("cliente"),
                                             ProtocolloRiferimento = riga.Field<string>("protocollo_riferimento"),
                                             DataProtocollo = riga.Field<DateTime?>("data_protocollo"),
+                                            Destinatario = riga.Field<string>("destinatario"),
+                                            IdTipoProtocollo = riga.Field<int>("id_tipo_protocollo"),
 
                                             //ImportoTotale = 0,
                                             Cassa = 0
@@ -901,11 +913,9 @@ namespace VideoSystemWeb.DAL
                                             Note = riga.Field<string>("note"),
                                             Iva = riga.Field<decimal>("iva"),
 
-                                            //RagioneSocialeClienteFornitore = riga.Field<string>("cliente"),
-                                            //ProtocolloRiferimento = riga.Field<string>("protocollo_riferimento"),
-                                            //DataProtocollo = riga.Field<DateTime?>("data_protocollo"),
+                                            Destinatario = riga.Field<string>("destinatario"),
+                                            IdTipoProtocollo = riga.Field<int>("id_tipo_protocollo"),
 
-                                            //ImportoTotale = 0,
                                             Cassa = 0
                                         };
                                         listaDatiScadenzario.Add(scadenza);
@@ -941,10 +951,6 @@ namespace VideoSystemWeb.DAL
             {
                 idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
             }
-
-
-            //int idTipoProtocollo =  UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
-
 
             try
             {

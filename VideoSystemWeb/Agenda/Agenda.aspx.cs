@@ -233,8 +233,6 @@ namespace VideoSystemWeb.Agenda
                 ShowError(esito.Descrizione);
                 UpdatePopup();
             }
-
-
         }
 
         protected void btnElimina_Click(object sender, EventArgs e)
@@ -255,7 +253,6 @@ namespace VideoSystemWeb.Agenda
                         UpdatePopup();
 
                         ShowSuccess("La lavorazione è stata eliminata e l'evento è stato riportato allo stato Offerta");
-
 
                         ScriptManager.RegisterStartupScript(this, typeof(Page), "passaALavorazione", "openTabEvento('Offerta');", true);
                     }
@@ -312,7 +309,6 @@ namespace VideoSystemWeb.Agenda
             upEvento.Update();
 
             SessionManager.ClearEventoSelezionato();
-
         }
 
         protected void btnOfferta_Click(object sender, EventArgs e)
@@ -815,9 +811,6 @@ namespace VideoSystemWeb.Agenda
 
                     btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnEliminaFattura.Visible = btnMagazzino.Visible = true;
 
-                    //btnRiepilogo.Visible = false;
-                    //btnMagazzino.Visible = false;
-
                     popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_FATTURA);
                     popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_FATTURA);
                 }
@@ -864,7 +857,6 @@ namespace VideoSystemWeb.Agenda
                 popupLavorazione.PopolaLavorazione();
             }
             RiempiCampiIntestazioneEvento();
-            
         }
 
         private void ChiudiPopup()
@@ -1242,7 +1234,6 @@ namespace VideoSystemWeb.Agenda
             catch (Exception ex)
             {
             }
-
         }
 
         protected void btnStampaGiornata_Click(object sender, EventArgs e)

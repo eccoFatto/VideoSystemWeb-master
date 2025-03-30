@@ -167,20 +167,17 @@
         }
 
         function uploadError(sender, args) {
-            //alert('errore ');
             $('.loader').hide();
             document.getElementById('<%=lblStatus.ClientID%>').innerText = 'Errore sul file ' + args.get_fileName() + ' - ' + args.get_errorMessage();
         }
 
         function StartUpload(sender, args) {
-            //alert('start upload');
             $('.loader').show();
             document.getElementById('<%=lblStatus.ClientID%>').innerText = 'Caricamento Iniziato.';
         }
 
         function UploadComplete(sender, args) {
             $('.loader').hide();
-            //alert('Caricamento Completato');
             var filename = args.get_fileName();
             var contentType = args.get_contentType();
             var text = "La dimensione del file " + filename + " è " + args.get_length() + " bytes";
@@ -192,9 +189,6 @@
         }
 
         function associaCodiceLavorazione(codLav, cliente, produzione, lavorazione) {
-
-            //alert(codLav + ' ' + cliente + ' ' + produzione + ' ' + lavorazione);
-
             document.getElementById('<%=tbMod_CodiceLavoro.ClientID%>').value = codLav;
             //document.getElementById('<%=tbMod_Cliente.ClientID%>').value = cliente;
             document.getElementById('<%=tbMod_Produzione.ClientID%>').value = produzione;
@@ -203,9 +197,6 @@
         }
 
         function associaCliente(idCli, cliente) {
-            //alert('ASSOCIA CLIENTE prima - CLIENTE ' +  cliente);
-            //alert('ASSOCIA CLIENTE prima - ID CLIENTE ' +  idCli);
-
             var txt1 = $("#<%=tbMod_Cliente.ClientID%>");
             var txt2 = $("#<%=tbMod_IdCliente.ClientID%>");
             txt1.val(cliente);
@@ -213,13 +204,10 @@
             txt1.text = cliente;
             txt2.text = idCli;
 
-            //alert('ASSOCIA CLIENTE dopo - CLIENTE ' + txt1.text);
-            //alert('ASSOCIA CLIENTE dopo - ID CLIENTE ' + txt2.text);
             $("#<%=btnAssociaClienteServer.ClientID%>").click();
         }
 
         function inserisciCliente() {
-            //alert('' + document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value);
             if (document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value != '') {
                 associaCliente('', document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value);
             }
@@ -359,7 +347,7 @@
                     </table>
                 </div>
                 <asp:GridView ID="gv_protocolli" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_protocolli_RowDataBound" AllowPaging="True" OnPageIndexChanging="gv_protocolli_PageIndexChanging" PageSize="20"  AllowSorting="true" OnSorting="gv_protocolli_Sorting" AutoGenerateColumns="false">
-                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>
+                    <PagerSettings Mode="NumericFirstLast" PageButtonCount="20" FirstPageText="Inizio" LastPageText="Fine"/>
                     <Columns>
 
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="25px">
@@ -424,7 +412,7 @@
                     <br />
 
                     <div class="w3-container">
-                        <!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
+<!-- ELENCO TAB DETTAGLI PROTOCOLLO -->
                         <div class="w3-bar w3-yellow w3-round">
                             <div class="w3-bar-item w3-button w3-yellow" onclick="openDettaglioProtocollo('Protocollo')">Protocollo</div>
                             <div class="w3-bar-item w3-button w3-yellow w3-right">
@@ -435,7 +423,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- TAB PROTOCOLLI -->
+<!-- TAB PROTOCOLLI -->
                     <div id="Protocollo" class="w3-container w3-border prot" style="display: block">
                         <%--<label>Protocolli</label>--%>
                         <div class="w3-container">
@@ -464,7 +452,7 @@
 
                                     <div class="w3-quarter">
                                         <label>Tipo</label>
-                                        <asp:DropDownList ID="cmbMod_Tipologia" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
+                                        <asp:DropDownList ID="cmbMod_Tipologia" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border" OnSelectedIndexChanged="cmbMod_Tipologia_SelectedIndexChanged">
                                         </asp:DropDownList>
                                     </div>
                                 </div>
@@ -501,7 +489,7 @@
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Destinatario</label>
-                                        <asp:DropDownList ID="cmbMod_Destinatario" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border">
+                                        <asp:DropDownList ID="cmbMod_Destinatario" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border" OnSelectedIndexChanged="cmbMod_Destinatario_SelectedIndexChanged">
                                             <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
                                             <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
                                         </asp:DropDownList>
@@ -509,11 +497,11 @@
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Data Prot</label>
-                                        <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" CssClass="w3-input w3-border" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                     <div class="w3-quarter">
                                         <label>Data Fattura</label>
-                                        <asp:TextBox ID="tbMod_DataFattura" runat="server" MaxLength="10" CssClass="w3-input w3-border" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
+                                        <asp:TextBox ID="tbMod_DataFattura" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
                                 </div>
 
@@ -564,11 +552,13 @@
                     </div>
                 </asp:Panel>
             </asp:Panel>
+
 <!-- POPUP RICERCA LAVORAZIONI -->
             <asp:Panel runat="server" ID="PanelLavorazioni" Visible="false">
                 <div class="modalBackground"></div>
                 <asp:Panel runat="server" ID="Panel3" CssClass="containerPopupStandard round" ScrollBars="Auto">
                     <div class="w3-container">
+
 <!-- RICERCA LAVORAZIONI -->
                         <div class="w3-bar w3-yellow w3-round">
                             <div class="w3-bar-item w3-button w3-yellow">Ricerca Lavorazioni</div>
@@ -644,6 +634,7 @@
                 <asp:Panel runat="server" ID="PanelContLavorazioni" CssClass="containerPopupStandard round" ScrollBars="Auto">
                     <br />
                     <div class="w3-container w3-padding w3-margin">
+
 <!-- RICERCA CLIENTI -->
                         <div class="w3-bar w3-orange w3-round">
                             <div class="w3-bar-item w3-button w3-orange">Ricerca Clienti\Collaboratori

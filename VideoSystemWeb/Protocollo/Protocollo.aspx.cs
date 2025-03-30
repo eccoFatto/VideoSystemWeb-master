@@ -16,6 +16,9 @@ namespace VideoSystemWeb.Protocollo
     public partial class Protocollo : BasePage
     {
         BasePage basePage = new BasePage();
+
+        private static int idFattura;
+
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public void ShowPopMessage(string messaggio)
@@ -34,7 +37,10 @@ namespace VideoSystemWeb.Protocollo
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            Esito esito = new Esito();
+            if (idFattura == 0)
+                idFattura = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
+
             if (!Page.IsPostBack)
             {
 
@@ -301,7 +307,6 @@ namespace VideoSystemWeb.Protocollo
                 {
                     btnEditProtocollo_Click(null, null);
                 }
-                
             }
         }
 
@@ -491,26 +496,33 @@ namespace VideoSystemWeb.Protocollo
             cmbMod_Destinatario.SelectedIndex = 0;
             cbMod_Pregresso.Checked = false;
             tbMod_DataFattura.Text = "";
-
         }
 
         private void AttivaDisattivaModificaProtocollo(bool attivaModifica)
         {
             tbMod_CodiceLavoro.ReadOnly = attivaModifica;
-            //tbMod_CodiceLavoro.ReadOnly = true;
             tbMod_NumeroProtocollo.ReadOnly = true;
             tbMod_ProtocolloRiferimento.ReadOnly = attivaModifica;
             tbMod_DataProtocollo.ReadOnly = true;
-            tbMod_DataFattura.ReadOnly = true;
+            tbMod_DataFattura.ReadOnly = (attivaModifica || cmbMod_Destinatario.SelectedValue != "Fornitore" || cmbMod_Tipologia.SelectedValue != idFattura.ToString()); 
             tbMod_DataLavorazione.ReadOnly = attivaModifica;
-           // CalendarExtender_DataLavorazione.Enabled = !attivaModifica;
             tbMod_Produzione.ReadOnly = attivaModifica;
-            //tbMod_Cliente.ReadOnly = attivaModifica;
             tbMod_Cliente.ReadOnly = true;
             tbMod_Lavorazione.ReadOnly = attivaModifica;
             tbMod_Descrizione.ReadOnly = attivaModifica;
             tbMod_NomeFile.ReadOnly = true;
-            //tbMod_NomeFile.ReadOnly = attivaModifica;
+
+            tbMod_CodiceLavoro.Enabled = !attivaModifica;
+            tbMod_NumeroProtocollo.Enabled = false;
+            tbMod_ProtocolloRiferimento.Enabled = !attivaModifica;
+            tbMod_DataProtocollo.Enabled = false;
+            tbMod_DataFattura.Enabled = (!attivaModifica && cmbMod_Destinatario.SelectedValue == "Fornitore" && cmbMod_Tipologia.SelectedValue == idFattura.ToString()); 
+            tbMod_DataLavorazione.Enabled = !attivaModifica;
+            tbMod_Produzione.Enabled = !attivaModifica;
+            tbMod_Cliente.Enabled = false;
+            tbMod_Lavorazione.Enabled = !attivaModifica;
+            tbMod_Descrizione.Enabled = !attivaModifica;
+            tbMod_NomeFile.Enabled = false;
 
             if (attivaModifica)
             {
@@ -529,7 +541,6 @@ namespace VideoSystemWeb.Protocollo
             Esito esito = new Esito();
             pulisciCampiDettaglio();
             tbMod_CodiceLavoro.Text = "generico";
-            //btnViewAttachement.Attributes.Add("disabled", "true");
             btnViewAttachement.Enabled = false;
         }
         private void editProtocollo()
@@ -633,7 +644,6 @@ namespace VideoSystemWeb.Protocollo
                     {
                         btnViewAttachement.Enabled = false;
                     }
-
                 }
                 else
                 {
@@ -642,7 +652,6 @@ namespace VideoSystemWeb.Protocollo
                     Response.Redirect(url, true);
                 }
             }
-
         }
 
         protected void btnGestisciProtocollo_Click(object sender, EventArgs e)
@@ -674,6 +683,7 @@ namespace VideoSystemWeb.Protocollo
                     protocollo.Data_fattura = protocolloDaModificare.Data_fattura;
                 }
             }
+
             protocollo.Id = Convert.ToInt64(ViewState["idProtocollo"].ToString());
 
             protocollo.Id_tipo_protocollo = Convert.ToInt32(cmbMod_Tipologia.SelectedValue);
@@ -690,19 +700,15 @@ namespace VideoSystemWeb.Protocollo
             protocollo.PathDocumento = (string)Session["NOME_FILE"];
             protocollo.Protocollo_riferimento = BasePage.ValidaCampo(tbMod_ProtocolloRiferimento, "", false, ref esito);
             protocollo.Cliente = BasePage.ValidaCampo(tbMod_Cliente, "", false, ref esito);
-            if (string.IsNullOrEmpty(tbMod_IdCliente.Value))
-            {
-                protocollo.Id_cliente = null;
-            }
-            else
-            {
-                protocollo.Id_cliente = Convert.ToInt32(tbMod_IdCliente.Value);
-            }
+            
+            protocollo.Id_cliente = string.IsNullOrEmpty(tbMod_IdCliente.Value) ? (int?)null : Convert.ToInt32(tbMod_IdCliente.Value);
+
             protocollo.Produzione = BasePage.ValidaCampo(tbMod_Produzione, "", false, ref esito);
             protocollo.Data_inizio_lavorazione = BasePage.ValidaCampo(tbMod_DataLavorazione, DateTime.Now, true, ref esito);
             protocollo.Codice_lavoro = BasePage.ValidaCampo(tbMod_CodiceLavoro, "", false, ref esito);
             protocollo.Lavorazione = BasePage.ValidaCampo(tbMod_Lavorazione, "", true, ref esito);
             protocollo.Descrizione = BasePage.ValidaCampo(tbMod_Descrizione, "", true, ref esito);
+            protocollo.Data_fattura = string.IsNullOrEmpty(tbMod_DataFattura.Text) ? (DateTime?)null : DateTime.Parse(tbMod_DataFattura.Text);
             protocollo.Attivo = true;
 
             return protocollo;
@@ -710,7 +716,6 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnAnnullaCaricamento_Click(object sender, EventArgs e)
         {
-
             //fuFileProt.Dispose();
             if (!string.IsNullOrEmpty(tbMod_NomeFile.Text.Trim()))
             {
@@ -724,7 +729,6 @@ namespace VideoSystemWeb.Protocollo
                 catch (Exception)
                 {
                 }
-                
             }
         }
 
@@ -739,11 +743,10 @@ namespace VideoSystemWeb.Protocollo
                 }
 
                 // Se si sta protocollando una fattura il nome file non deve essere modificato
-                if (cmbMod_Destinatario.SelectedValue == "Cliente" && cmbMod_Tipologia.SelectedValue == "4")
+                if (cmbMod_Destinatario.SelectedValue == "Cliente" && cmbMod_Tipologia.SelectedValue == idFattura.ToString())
                 {
                     nomeFileToSave = tbMod_NomeFile.Text;
                 }
-
 
                 try
                 {
@@ -1032,6 +1035,7 @@ namespace VideoSystemWeb.Protocollo
                 gv_protocolli.DataBind();
             }
         }
+       
         private string GetSortDirection(string column)
         {
             // By default, set the sort direction to ascending.
@@ -1067,6 +1071,55 @@ namespace VideoSystemWeb.Protocollo
             if (Convert.ToBoolean(ConfigurationManager.AppSettings["VISUALIZZA_ULTIMI_PROTOCOLLI"]))
             {
                 btnRicercaProtocollo_Click(null, null);
+            }
+        }
+
+        protected void cmbMod_Destinatario_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AbilitaDataFattura();
+        }
+
+        protected void cmbMod_Tipologia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AbilitaDataFattura();
+
+            if (cmbMod_Tipologia.SelectedValue != idFattura.ToString())
+                tbMod_DataFattura.Text = "";
+            else
+            {
+                CheckValoreDataFattura();
+            }
+        }
+
+        private void AbilitaDataFattura()
+        {
+            if (cmbMod_Destinatario.SelectedValue == "Fornitore" && cmbMod_Tipologia.SelectedValue == idFattura.ToString()) // data fattura abilitato solo se tipo = fattura e destinatario = fornitore
+            {
+                tbMod_DataFattura.ReadOnly = false;
+                tbMod_DataFattura.Enabled = true;
+            }
+            else
+            {
+                tbMod_DataFattura.ReadOnly = true;
+                tbMod_DataFattura.Enabled = false;
+
+                CheckValoreDataFattura();
+            }
+        }
+
+        private void CheckValoreDataFattura()
+        {
+            string idProtocollo = (string)ViewState["idProtocollo"];
+            if (idProtocollo == "" || cmbMod_Tipologia.SelectedValue != idFattura.ToString())
+            {
+                tbMod_DataFattura.Text = "";
+            }
+            else
+            {
+                Esito esito = new Esito();
+                Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt64(idProtocollo));
+
+                tbMod_DataFattura.Text = protocollo.Data_fattura.HasValue ? ((DateTime)protocollo.Data_fattura).ToString("dd/MM/yyyy") : ""; //setto il valore precedente
             }
         }
     }

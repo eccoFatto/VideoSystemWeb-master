@@ -158,75 +158,6 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        //public void CancellaFigli_CreaDatiScadenzario(List<DatiScadenzario> listaFigliScadenza, DatiScadenzario scadenza, string _acconto, string _accontoIva, string _iva, string _numeroRate, string tipoScadenza, DateTime? dataPartenzaPagamento, int cadenzaGiorni, ref Esito esito)
-        //{
-        //    decimal accontoIva = string.IsNullOrEmpty(_accontoIva) ? 0 : decimal.Parse(_accontoIva);
-        //    decimal ivaDecimal = string.IsNullOrEmpty(_iva) ? 0 : decimal.Parse(_iva);
-        //    decimal acconto = string.IsNullOrEmpty(_acconto) ? 0 : decimal.Parse(_acconto);
-
-        //    int numeroRate = string.IsNullOrEmpty(_numeroRate) ? 1 : int.Parse(_numeroRate);
-
-        //    if (acconto > 0)
-        //    {
-        //        DatiScadenzario scadenzaAcconto = new DatiScadenzario
-        //        {
-        //            IdPadre = null,
-        //            IdDatiProtocollo = scadenza.IdDatiProtocollo,
-        //            IdTipoBanca = scadenza.IdTipoBanca,
-        //            DataScadenza = DateTime.Now,
-        //            ImportoDare = 0,
-        //            ImportoDareIva = 0,
-        //            ImportoVersato = 0,
-        //            ImportoVersatoIva = 0,
-        //            DataVersamento = null,
-        //            ImportoAvere = 0,
-        //            ImportoAvereIva = 0,
-        //            ImportoRiscosso = 0,
-        //            ImportoRiscossoIva = 0,
-        //            DataRiscossione = null,
-        //            Note = scadenza.Note,
-        //            Iva = scadenza.Iva
-        //        };
-
-        //        if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
-        //        {
-        //            scadenzaAcconto.ImportoRiscosso = acconto;
-        //            scadenzaAcconto.ImportoRiscossoIva = accontoIva;
-        //            scadenzaAcconto.DataRiscossione = DateTime.Now;
-        //            scadenzaAcconto.ImportoAvere = acconto;
-        //            scadenzaAcconto.ImportoAvereIva = accontoIva;
-        //        }
-        //        else
-        //        {
-        //            scadenzaAcconto.ImportoVersato = acconto;
-        //            scadenzaAcconto.ImportoVersatoIva = accontoIva;
-        //            scadenzaAcconto.DataVersamento = DateTime.Now;
-        //            scadenzaAcconto.ImportoDare = acconto;
-        //            scadenzaAcconto.ImportoDareIva = accontoIva;
-        //        }
-
-        //        Scadenzario_DAL.Instance.CreaDatiScadenzario(scadenzaAcconto, ref esito); // SCRITTURA ACCONTO
-        //    }
-
-        //    if (tipoScadenza.ToUpper() == TIPO_CLIENTE)
-        //    {
-        //        scadenza.ImportoAvere = (scadenza.ImportoAvere - acconto) / decimal.Parse(numeroRate.ToString());
-        //        scadenza.ImportoAvereIva = (scadenza.ImportoAvereIva - accontoIva) / decimal.Parse(numeroRate.ToString());
-        //    }
-        //    else
-        //    {
-        //        scadenza.ImportoDare = (scadenza.ImportoDare - acconto) / decimal.Parse(numeroRate.ToString());
-        //        scadenza.ImportoDareIva = (scadenza.ImportoDareIva - accontoIva) / decimal.Parse(numeroRate.ToString());
-        //    }
-
-        //    for (int i = 1; i <= numeroRate; i++)
-        //    {
-        //        scadenza.DataScadenza = ((DateTime)dataPartenzaPagamento).AddDays(cadenzaGiorni * i);
-
-        //        Scadenzario_DAL.Instance.CancellaFigli_CreaDatiScadenzario(listaFigliScadenza, scadenza, ref esito);
-        //    }
-        //}
-
             //aggiungere banca e idPadre
         public void CancellaFigli_CreaDatiScadenzario(List<DatiScadenzario> listaFigliScadenza, DatiScadenzario scadenza,  int idTipoBanca, ref Esito esito)
         {
@@ -308,11 +239,9 @@ namespace VideoSystemWeb.BLL
             esito = Scadenzario_DAL.Instance.AggiungiPagamento(scadenzaDaAggiornare, scadenzaDaInserire);
         }
 
-
         public void CancellaFigli_AggiungiPagamento(List<DatiScadenzario> listaFigliScadenza, DatiScadenzario scadenzaDaAggiornare, string tipoScadenza, decimal importoVersato, decimal importoVersatoIva, decimal differenzaImportoIva, decimal iva, DateTime dataScadenza, DateTime dataVersamentoRiscossione, int idTipoBanca, DateTime dataAggiungiPagamento, ref Esito esito)
         {
             decimal differenzaImporto = differenzaImportoIva / (1 + (iva / 100));
-
 
             #region SCADENZA DA AGGIORNARE
             scadenzaDaAggiornare.Iva = iva;
@@ -477,7 +406,6 @@ namespace VideoSystemWeb.BLL
         }
 
         // metodo ricorsivo che restituisce una lista di tutti gli ID dei figli di una data scadenza (compreso l'id della scadenza di partenza) in una lista di scadenze con lo stesso protocollo
-
         public void RicercaFigli(DatiScadenzario scadenzaPadre, List<DatiScadenzario> listaScadenzeStessoProtocollo, ref List<DatiScadenzario> listaFigli)
         {
             listaFigli.Add(scadenzaPadre);

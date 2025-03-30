@@ -456,38 +456,65 @@ namespace VideoSystemWeb.Articoli.userControl
         protected void btnSalva_Click(object sender, EventArgs e)
         {
             // SALVO MODIFICHE ARTICOLO
-            Esito esito = new Esito();
-            Art_Articoli articolo = CreaOggettoSalvataggio(ref esito);
+            Esito esito = ValidazioneSalvataggio();
 
-            if (esito.Codice != Esito.ESITO_OK)
-            {
-                //panelErrore.Style.Remove("display");
-                //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
-                basePage.ShowWarning("Controllare i campi evidenziati");
-            }
-            else
+            if (esito.Codice == Esito.ESITO_OK)
             {
                 NascondiErroriValidazione();
 
-                esito = Art_Articoli_BLL.Instance.AggiornaArticolo(articolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
-
+                Art_Articoli articolo = CreaOggettoSalvataggio(ref esito);
 
                 if (esito.Codice != Esito.ESITO_OK)
                 {
-                    //panelErrore.Style.Remove("display");
-                    //lbl_MessaggioErrore.Text = esito.descrizione;
                     basePage.ShowError(esito.Descrizione);
-                }
-                EditArticolo_Click(null, null);
-            }
 
+                    // se c'è un errore lascio l'articolo in modifica
+                    AttivaDisattivaModificaArticolo(false);
+                    gestisciPulsantiArticolo("MODIFICA");
+                }
+                else
+                {
+                    esito = Art_Articoli_BLL.Instance.AggiornaArticolo(articolo, ((Anag_Utenti)Session[SessionManager.UTENTE]));
+
+
+                    if (esito.Codice != Esito.ESITO_OK)
+                    {
+                        basePage.ShowError(esito.Descrizione);
+
+                        // se c'è un errore lascio l'articolo in modifica
+                        AttivaDisattivaModificaArticolo(false);
+                        gestisciPulsantiArticolo("MODIFICA");
+                    }
+                    EditArticolo_Click(null, null);
+                }
+            }
+            else
+            {
+                basePage.ShowWarning("Controllare i campi evidenziati");
+
+                // se c'è un errore lascio l'articolo in modifica
+                AttivaDisattivaModificaArticolo(false);
+                gestisciPulsantiArticolo("MODIFICA");
+            }
         }
+
+        private Esito ValidazioneSalvataggio()
+        {
+            Esito esito = new Esito();
+
+            BasePage.ValidaCampo(cmbMod_Genere, "", true, ref esito);
+            BasePage.ValidaCampo(cmbMod_Gruppo, "", true, ref esito);
+            BasePage.ValidaCampo(cmbMod_Sottogruppo, "", true, ref esito);
+            
+            return esito;
+        }
+
+
         private Art_Articoli CreaOggettoSalvataggio(ref Esito esito)
         {
             Art_Articoli articolo = new Art_Articoli();
             try
             {
-
                 if (string.IsNullOrEmpty((string)ViewState["idArticolo"]))
                 {
                     ViewState["idArticolo"] = 0;
@@ -531,8 +558,6 @@ namespace VideoSystemWeb.Articoli.userControl
 
             if (esito.Codice != Esito.ESITO_OK)
             {
-                //panelErrore.Style.Remove("display");
-                //lbl_MessaggioErrore.Text = esito.descrizione;
                 basePage.ShowError(esito.Descrizione);
             }
             else
@@ -550,16 +575,12 @@ namespace VideoSystemWeb.Articoli.userControl
 
                 if (esito.Codice != Esito.ESITO_OK)
                 {
-                    //panelErrore.Style.Remove("display");
-                    //panelErrore.Style.Add("display","block");
-                    //lbl_MessaggioErrore.Text = esito.descrizione;
                     basePage.ShowError(esito.Descrizione);
                 }
                 else
                 {
                     EditArticolo_Click(null, null);
                 }
-                
             }
 
         }
@@ -584,6 +605,10 @@ namespace VideoSystemWeb.Articoli.userControl
             tbMod_Costo.CssClass = tbMod_Costo.CssClass.Replace("erroreValidazione", "");
             tbMod_Prezzo.CssClass = tbMod_Prezzo.CssClass.Replace("erroreValidazione", "");
             tbMod_Note.CssClass = tbMod_Note.CssClass.Replace("erroreValidazione", "");
+
+            cmbMod_Genere.CssClass = cmbMod_Genere.CssClass.Replace("erroreValidazione", "");
+            cmbMod_Gruppo.CssClass = cmbMod_Gruppo.CssClass.Replace("erroreValidazione", "");
+            cmbMod_Sottogruppo.CssClass = cmbMod_Sottogruppo.CssClass.Replace("erroreValidazione", "");
         }
         protected void btnApriGruppi_Click(object sender, EventArgs e)
         {

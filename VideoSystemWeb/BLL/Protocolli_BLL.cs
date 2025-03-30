@@ -123,10 +123,6 @@ namespace VideoSystemWeb.BLL
             return esito;
         }
 
-
-
-
-
         public Esito resetProcotollo(int protocolloIniziale)
         {
             Esito esito = Base_DAL.ResetProtocollo(protocolloIniziale);
@@ -247,6 +243,5 @@ namespace VideoSystemWeb.BLL
             
             return ret;
         }
-
     }
 }

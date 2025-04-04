@@ -273,7 +273,8 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:BoundField DataField="Gruppo" HeaderText="Gruppo" HeaderStyle-Width="15%" />
+                        <asp:BoundField DataField="Gruppo" HeaderText="Gruppo" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="numeroFattura" HeaderText="Num. Fattura" HeaderStyle-Width="7%" />
                         <asp:BoundField DataField="Fornitore" HeaderText="Fornitore" HeaderStyle-Width="7%" />
                         <asp:BoundField DataField="CodiceLavoro" HeaderText="Codice" HeaderStyle-Width="7%" />
                         <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="7%" />

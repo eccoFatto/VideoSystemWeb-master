@@ -699,7 +699,7 @@ namespace VideoSystemWeb.Protocollo
             protocollo.Numero_protocollo = BasePage.ValidaCampo(tbMod_NumeroProtocollo, "", true, ref esito);
             protocollo.PathDocumento = (string)Session["NOME_FILE"];
             protocollo.Protocollo_riferimento = BasePage.ValidaCampo(tbMod_ProtocolloRiferimento, "", false, ref esito);
-            protocollo.Cliente = BasePage.ValidaCampo(tbMod_Cliente, "", false, ref esito);
+            protocollo.Cliente = BasePage.ValidaCampo(tbMod_Cliente, "", true, ref esito);
             
             protocollo.Id_cliente = string.IsNullOrEmpty(tbMod_IdCliente.Value) ? (int?)null : Convert.ToInt32(tbMod_IdCliente.Value);
 

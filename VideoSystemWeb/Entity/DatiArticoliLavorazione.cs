@@ -44,7 +44,7 @@ namespace VideoSystemWeb.Entity
         private bool? usaCostoFP;
         private bool? consuntivo;
         private int numOccorrenza;
-        private int quantita;
+        private decimal quantita;
         private decimal prezzoUnitario;
 
 
@@ -74,7 +74,7 @@ namespace VideoSystemWeb.Entity
         public bool? UsaCostoFP { get => usaCostoFP; set => usaCostoFP = value; }
         public bool? Consuntivo { get => consuntivo; set => consuntivo = value; }
         public int NumOccorrenza { get => numOccorrenza; set => numOccorrenza = value; }
-        public int Quantita { get => quantita; set => quantita = value; }
+        public decimal Quantita { get => quantita; set => quantita = value; }
         public decimal PrezzoUnitario { get => prezzoUnitario; set => prezzoUnitario = value; }
     }
 }

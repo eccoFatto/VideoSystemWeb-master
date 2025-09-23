@@ -366,7 +366,7 @@ namespace VideoSystemWeb.Agenda.userControl
             articoloSelezionato.Prezzo = decimal.Parse(txt_Prezzo.Text);
 
             articoloSelezionato.PrezzoUnitario = decimal.Parse(txt_PrezzoUnitario.Text);
-            articoloSelezionato.Quantita = int.Parse(txt_Quantita.Text);
+            articoloSelezionato.Quantita = decimal.Parse(txt_Quantita.Text);
 
             articoloSelezionato.Iva = int.Parse(txt_Iva.Text);
             articoloSelezionato.Stampa = ddl_Stampa.SelectedValue == "1";
@@ -417,7 +417,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                     articoloDaModificare.Prezzo = decimal.Parse(txt_Prezzo.Text);
                     articoloDaModificare.PrezzoUnitario = decimal.Parse(txt_PrezzoUnitario.Text);
-                    articoloDaModificare.Quantita = int.Parse(txt_Quantita.Text);
+                    articoloDaModificare.Quantita = decimal.Parse(txt_Quantita.Text);
                     articoloDaModificare.Iva = int.Parse(txt_Iva.Text);
                     articoloDaModificare.Stampa = ddl_Stampa.SelectedValue == "1";
                     articoloDaModificare.FP_lordo = string.IsNullOrEmpty(txt_FPlordo.Text) ? 0 : decimal.Parse(txt_FPlordo.Text);

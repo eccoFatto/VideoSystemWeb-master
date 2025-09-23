@@ -218,7 +218,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                             decimal PrezzoArticolo = da.Prezzo;
                             decimal totPrezzoUnitario = da.PrezzoUnitario;
-                            int quantita = da.Quantita;
+                            decimal quantita = da.Quantita;
                             if ((totPrezzoUnitario*quantita)!= PrezzoArticolo)
                             {
                                 quantita = 1;

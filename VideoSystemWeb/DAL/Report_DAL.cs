@@ -139,6 +139,14 @@ namespace VideoSystemWeb.DAL
             {
                 intervalloDate = " and artLav.data between '" + ((DateTime)dataInizio).ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + ((DateTime)dataFine).ToString("yyyy-MM-ddT00:00:00.000") + "' ";
             }
+            else if (dataInizio != null)
+            {
+                intervalloDate = " and artLav.data >= '" + ((DateTime)dataInizio).ToString("yyyy-MM-ddT00:00:00.000") + "' ";
+            }
+            else if (dataFine != null)
+            {
+                intervalloDate = " and artLav.data <= '" + ((DateTime)dataFine).ToString("yyyy-MM-ddT00:00:00.000") + "' ";
+            }
 
             if (!string.IsNullOrEmpty(nominativo))
             {

@@ -225,5 +225,5 @@ namespace VideoSystemWeb.BLL
                                     TIPO_GRUPPO_MAGAZZINO,
                                     TIPO_BANCA}
 
-    public enum EnumSottotipiRisorse {DIPENDENTI, REGIE, EXTRA}
+    public enum EnumSottotipiRisorse {DIPENDENTI, REGIE, EXTRA, EXDIPENDENTI}
 }

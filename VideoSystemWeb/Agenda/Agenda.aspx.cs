@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.BLL.Stampa;
@@ -149,26 +150,23 @@ namespace VideoSystemWeb.Agenda
 
             SessionManager.EventoSelezionato = CreaEventoDaSelezioneAgenda(dataEvento, risorsaEvento);
 
-            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
+            int idStato = SessionManager.EventoSelezionato.id_stato;
+            var tabMapping = new Dictionary<int, string>
             {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Appuntamento');", true);
-            }
-            else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA)
+                { Stato.Instance.STATO_PREVISIONE_IMPEGNO, "Appuntamento" },
+                { Stato.Instance.STATO_OFFERTA, "Offerta" },
+                { Stato.Instance.STATO_LAVORAZIONE, "Lavorazione" },
+                { Stato.Instance.STATO_FATTURA, "Lavorazione" },
+                { Stato.Instance.STATO_SDI, "Lavorazione" }
+            };
+
+            string tab;
+            if (!tabMapping.TryGetValue(idStato, out tab))
             {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Offerta');", true);
+                tab = "Appuntamento"; // default
             }
-            else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
-            {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Lavorazione');", true);
-            }
-            else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
-            {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Lavorazione');", true);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", "openTabEvento('Appuntamento');", true);
-            }
+
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", $"openTabEvento('{tab}');", true);
 
             AbilitaComponentiPopup();
 
@@ -363,7 +361,6 @@ namespace VideoSystemWeb.Agenda
                 popupAppuntamento.PopolaAppuntamento();
                 UpdatePopup();
             }
-            
         }
 
         protected void gv_scheduler_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -393,7 +390,6 @@ namespace VideoSystemWeb.Agenda
             {
                 e.Row.Cells[0].Attributes.Add("class", "first");
 
-                //if ((int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 0 || (int)DateTime.Parse(e.Row.Cells[0].Text).DayOfWeek == 6)
                 if ((int)DateTime.Parse(e.Row.Cells[0].Text.Substring(6)).DayOfWeek == 0 || (int)DateTime.Parse(e.Row.Cells[0].Text.Substring(6)).DayOfWeek == 6)
                 {
                     e.Row.Cells[0].Attributes.Add("class", "first festivo");
@@ -403,7 +399,7 @@ namespace VideoSystemWeb.Agenda
                 {
                     string data = e.Row.Cells[0].Text.Substring(6);
                     ColonneAgenda risorsa = SessionManager.ListaRisorse.ElementAt(indiceColonna - 1);
-                    int id_risorsa = risorsa.id;// ((ColonneAgenda)listaRisorse.ElementAt(indiceColonna - 1)).id;
+                    int id_risorsa = risorsa.id;
 
                     e.Row.Cells[indiceColonna].Attributes.Add("class", risorsa.sottotipo);
 
@@ -423,11 +419,17 @@ namespace VideoSystemWeb.Agenda
 
 
                         #region CONTROLLO MARGINE
-                        if (datoAgendaCorrente.id_stato == Stato.Instance.STATO_LAVORAZIONE || datoAgendaCorrente.id_stato == Stato.Instance.STATO_FATTURA)
+                        var statiLavorazione = new HashSet<int>
+                        {
+                            Stato.Instance.STATO_LAVORAZIONE,
+                            Stato.Instance.STATO_FATTURA,
+                            Stato.Instance.STATO_SDI
+                        };
+
+                        if (statiLavorazione.Contains(datoAgendaCorrente.id_stato))
                         {
                             DatiLavorazione lavorazioneCorrente = Dati_Lavorazione_BLL.Instance.getDatiLavorazioneByIdEvento(datoAgendaCorrente.id, ref esito);
-                            UtilityLavorazione utilityLavorazione = new UtilityLavorazione(lavorazioneCorrente);
-                            if (utilityLavorazione.IsMargineInsufficiente) coloreBordo = "red";
+                            if (new UtilityLavorazione(lavorazioneCorrente).IsMargineInsufficiente) coloreBordo = "red";
                         }
                         #endregion
 
@@ -575,7 +577,7 @@ namespace VideoSystemWeb.Agenda
                 DataRow row = table.NewRow();
                 DateTime dataRiga = data.AddDays(indiceRiga);
 
-                row[0] = dataRiga.ToString("ddd - dd/MM/yyyy",new System.Globalization.CultureInfo("it-IT")); //dataRiga.ToString("dd/MM/yyyy");
+                row[0] = dataRiga.ToString("ddd - dd/MM/yyyy",new System.Globalization.CultureInfo("it-IT")); 
 
                 int indiceColonna = 1;
                 foreach (ColonneAgenda risorsa in SessionManager.ListaRisorse)
@@ -601,7 +603,6 @@ namespace VideoSystemWeb.Agenda
         {
             // METTO IN SESSIONE LA DATA SELEZIONATA
             SessionManager.DataSelezionata = DateTime.ParseExact(hf_valoreData.Value, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-
 
             //CARICO SOLO GLI EVENTI VISUALIZZATI
             Esito esito = new Esito();
@@ -745,117 +746,159 @@ namespace VideoSystemWeb.Agenda
             {
                 sottotipoRisorsa = UtilityTipologiche.getElementByID(SessionManager.ListaRisorse, SessionManager.EventoSelezionato.id_colonne_agenda, ref esito).sottotipo.ToUpper();
 
-                if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
+                var stato = SessionManager.EventoSelezionato.id_stato;
+                var idEvento = SessionManager.EventoSelezionato.id;
+                bool isDipendente = sottotipoRisorsa == EnumSottotipiRisorse.DIPENDENTI.ToString();
+
+                // Disabilita tutto di default
+                void DisabilitaTab(HtmlControl tab)
                 {
-                    tab_Offerta.Attributes["onclick"] = "return false;";
-                    tab_Offerta.Style.Add("cursor", "not-allowed;");
-
-                    tab_Lavorazione.Attributes["onclick"] = "return false;";
-                    tab_Lavorazione.Style.Add("cursor", "not-allowed;");
-
-                    btnOfferta.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
-                    btnLavorazione.Visible = false;
-                    btnElimina.Visible = SessionManager.EventoSelezionato.id != 0;
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnEliminaFattura.Visible = btnMagazzino.Visible = false;
-
-                    popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_PREVISIONE_IMPEGNO);
+                    tab.Attributes["onclick"] = "return false;";
+                    tab.Style["cursor"] = "not-allowed;";
                 }
-                else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA)
+
+                void AbilitaTab(HtmlControl tab, string tabName)
                 {
-                    tab_Offerta.Attributes["onclick"] = "openTabEvento('Offerta');";
-                    tab_Offerta.Style.Remove("cursor");
-
-                    tab_Lavorazione.Attributes["onclick"] = "return false;";
-                    tab_Lavorazione.Style.Add("cursor", "not-allowed;");
-
-                    btnOfferta.Visible = false;
-                    btnRiepilogo.Visible = true;
-                    btnMagazzino.Visible = true;
-                    btnLavorazione.Visible = sottotipoRisorsa != EnumSottotipiRisorse.DIPENDENTI.ToString();
-                    btnElimina.Visible = true;
-                    btnStampaPianoEsterno.Visible = false;
-                    btnStampaConsuntivo.Visible = false;
-                    btnStampaFattura.Visible = false;
-                    btnEliminaFattura.Visible = false;
-
-                    popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
-                    popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_OFFERTA);
+                    tab.Attributes["onclick"] = $"openTabEvento('{tabName}');";
+                    tab.Style.Remove("cursor");
                 }
-                else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE)
+
+                // Stato → comportamento
+                switch (stato)
                 {
-                    tab_Offerta.Attributes["onclick"] = "openTabEvento('Offerta');";
-                    tab_Offerta.Style.Remove("cursor");
+                    case var s when s == Stato.Instance.STATO_PREVISIONE_IMPEGNO:
+                        DisabilitaTab(tab_Offerta);
+                        DisabilitaTab(tab_Lavorazione);
 
-                    tab_Lavorazione.Attributes["onclick"] = "openTabEvento('Lavorazione');";
-                    tab_Lavorazione.Style.Remove("cursor");
+                        btnOfferta.Visible = !isDipendente;
+                        btnLavorazione.Visible = false;
+                        btnElimina.Visible = idEvento != 0;
+                        btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible =
+                            btnStampaFattura.Visible = btnEliminaFattura.Visible = btnMagazzino.Visible = btnVisualizzaFattura.Visible = false;
 
-                    btnOfferta.Visible = false;
-                    btnLavorazione.Visible = false;
-                    btnElimina.Visible = true;
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnEliminaFattura.Visible = btnMagazzino.Visible = true;
+                        popupAppuntamento.AbilitaComponentiPopup(stato);
+                        break;
 
-                    popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
-                    popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_LAVORAZIONE);
-                }
-                else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
-                {
-                    tab_Offerta.Attributes["onclick"] = "openTabEvento('Offerta');";
-                    tab_Offerta.Style.Remove("cursor");
+                    case var s when s == Stato.Instance.STATO_OFFERTA:
+                        AbilitaTab(tab_Offerta, "Offerta");
+                        DisabilitaTab(tab_Lavorazione);
 
-                    tab_Lavorazione.Attributes["onclick"] = "openTabEvento('Lavorazione');";
-                    tab_Lavorazione.Style.Remove("cursor");
+                        btnOfferta.Visible = false;
+                        btnRiepilogo.Visible = true;
+                        btnMagazzino.Visible = true;
+                        btnLavorazione.Visible = !isDipendente;
+                        btnElimina.Visible = true;
+                        btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible =
+                            btnStampaFattura.Visible = btnEliminaFattura.Visible = btnVisualizzaFattura.Visible = false;
 
-                    btnOfferta.Visible = false;
-                    btnLavorazione.Visible = false;
-                    btnElimina.Visible = false;
+                        popupAppuntamento.AbilitaComponentiPopup(stato);
+                        popupOfferta.AbilitaComponentiPopup(stato);
+                        break;
 
-                    btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnStampaFattura.Visible = btnEliminaFattura.Visible = btnMagazzino.Visible = true;
+                    case var s when s == Stato.Instance.STATO_LAVORAZIONE:
+                        AbilitaTab(tab_Offerta, "Offerta");
+                        AbilitaTab(tab_Lavorazione, "Lavorazione");
 
-                    popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_FATTURA);
-                    popupOfferta.AbilitaComponentiPopup(Stato.Instance.STATO_FATTURA);
-                }
-                else if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_RIPOSO)
-                {
-                    tab_Offerta.Attributes["onclick"] = "return false;";
-                    tab_Offerta.Style.Add("cursor", "not-allowed;");
+                        btnOfferta.Visible = false;
+                        btnLavorazione.Visible = false;
+                        btnElimina.Visible = true;
+                        btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible =
+                            btnStampaFattura.Visible = btnEliminaFattura.Visible = btnMagazzino.Visible = true;
+                        btnVisualizzaFattura.Visible = false;
 
-                    tab_Lavorazione.Attributes["onclick"] = "return false;";
-                    tab_Lavorazione.Style.Add("cursor", "not-allowed;");
+                        popupAppuntamento.AbilitaComponentiPopup(stato);
+                        popupOfferta.AbilitaComponentiPopup(stato);
+                        break;
 
-                    btnOfferta.Visible = false;
-                    btnLavorazione.Visible = false;
-                    btnElimina.Visible = SessionManager.EventoSelezionato.id != 0;
-                    btnRiepilogo.Visible = false;
-                    btnMagazzino.Visible = false;
+                    case var s when s == Stato.Instance.STATO_FATTURA:
+                        AbilitaTab(tab_Offerta, "Offerta");
+                        AbilitaTab(tab_Lavorazione, "Lavorazione");
 
-                    popupAppuntamento.AbilitaComponentiPopup(Stato.Instance.STATO_RIPOSO);
+                        btnOfferta.Visible = false;
+                        btnLavorazione.Visible = false;
+                        btnElimina.Visible = false;
+                        btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible =
+                            btnStampaFattura.Visible = btnEliminaFattura.Visible = btnMagazzino.Visible = btnVisualizzaFattura.Visible = true;
+
+                        popupAppuntamento.AbilitaComponentiPopup(stato);
+                        popupOfferta.AbilitaComponentiPopup(stato);
+                        break;
+
+                    case var s when s == Stato.Instance.STATO_SDI:
+                        AbilitaTab(tab_Offerta, "Offerta");
+                        AbilitaTab(tab_Lavorazione, "Lavorazione");
+
+                        btnOfferta.Visible = false;
+                        btnLavorazione.Visible = false;
+                        btnElimina.Visible = false;
+                        btnRiepilogo.Visible = btnStampaPianoEsterno.Visible = btnStampaConsuntivo.Visible = btnMagazzino.Visible = btnVisualizzaFattura.Visible = true;
+                        btnStampaFattura.Visible = btnEliminaFattura.Visible = false;
+
+                        popupAppuntamento.AbilitaComponentiPopup(stato);
+                        popupOfferta.AbilitaComponentiPopup(stato);
+                        break;
+
+                    case var s when s == Stato.Instance.STATO_RIPOSO:
+                        DisabilitaTab(tab_Offerta);
+                        DisabilitaTab(tab_Lavorazione);
+
+                        btnOfferta.Visible = false;
+                        btnLavorazione.Visible = false;
+                        btnElimina.Visible = idEvento != 0;
+                        btnRiepilogo.Visible = btnMagazzino.Visible = btnVisualizzaFattura.Visible = false;
+
+                        popupAppuntamento.AbilitaComponentiPopup(stato);
+                        break;
                 }
             }
         }
 
         private void MostraPopup()
         {
-            
             pnlContainer.Style.Remove("display");
 
-            Esito esito = new Esito();   
-            val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
-            val_CodiceLavoro.Text = string.IsNullOrEmpty(SessionManager.EventoSelezionato.codice_lavoro) ? "-" : SessionManager.EventoSelezionato.codice_lavoro;
+            var evento = SessionManager.EventoSelezionato;
+            var stato = evento.id_stato;
+            var esito = new Esito();
 
+            // Stato
+            val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, stato, ref esito).nome;
+
+            // Codice lavoro
+            val_CodiceLavoro.Text = string.IsNullOrEmpty(evento.codice_lavoro) ? "-" : evento.codice_lavoro;
+
+            // Appuntamento
             popupAppuntamento.ClearAppuntamento();
             popupAppuntamento.PopolaAppuntamento();
 
+            // Offerta
             popupOfferta.ClearOfferta();
-            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_OFFERTA || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
-            {
-                popupOfferta.PopolaOfferta();
-            }
 
-            popupLavorazione.ClearLavorazione();
-            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
+            var statiOfferta = new HashSet<int>
             {
+                Stato.Instance.STATO_OFFERTA,
+                Stato.Instance.STATO_LAVORAZIONE,
+                Stato.Instance.STATO_FATTURA,
+                Stato.Instance.STATO_SDI
+            };
+
+            if (statiOfferta.Contains(stato))
+                popupOfferta.PopolaOfferta();
+
+            // Lavorazione
+            popupLavorazione.ClearLavorazione();
+
+            var statiLavorazione = new HashSet<int>
+            {
+                Stato.Instance.STATO_LAVORAZIONE,
+                Stato.Instance.STATO_FATTURA,
+                Stato.Instance.STATO_SDI
+            };
+
+            if (statiLavorazione.Contains(stato))
                 popupLavorazione.PopolaLavorazione();
-            }
+
+            // Intestazione
             RiempiCampiIntestazioneEvento();
         }
 
@@ -908,7 +951,9 @@ namespace VideoSystemWeb.Agenda
             List<string> listaIdTender = popupAppuntamento.ListaIdTender;
 
             DatiLavorazione datiLavorazione = null;
-            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE || SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA)
+            if (SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_LAVORAZIONE || 
+                SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_FATTURA ||
+                SessionManager.EventoSelezionato.id_stato == Stato.Instance.STATO_SDI)
             {
                 datiLavorazione = popupLavorazione.CreaDatiLavorazione();
             }
@@ -973,25 +1018,6 @@ namespace VideoSystemWeb.Agenda
             Esito esito = popupRiepilogoOfferta.popolaPannelloRiepilogo(SessionManager.EventoSelezionato);
             if (esito.Codice == Esito.ESITO_OK) { 
                 string nomeFile = "Offerta_" + val_CodiceLavoro.Text + ".pdf";
-            
-                //MemoryStream workStream = popupRiepilogoOfferta.GeneraPdf();
-
-                //string pathOfferta = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
-                //string pathPdfSenzaNumeroPagina = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + "tmp_"+nomeFile;
-                //File.WriteAllBytes(pathPdfSenzaNumeroPagina, workStream.ToArray());
-
-                //string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(pathPdfSenzaNumeroPagina, pathOfferta, ref esito);
-
-                //if (File.Exists(pathPdfSenzaNumeroPagina)) File.Delete(pathPdfSenzaNumeroPagina);
-                
-                //if (esito.Codice == Esito.ESITO_OK) { 
-                //    // RIPORTA IL NOME DEL FILE PDF DA VISUALIZZARE SULLA FINESTRA RIEPILOGO
-                //    popupRiepilogoOfferta.associaNomePdf(nomeFileToDisplay);
-                //}
-                //else
-                //{
-                //    ShowError(esito.Descrizione);
-                //}
             }
             else
             {
@@ -1066,11 +1092,6 @@ namespace VideoSystemWeb.Agenda
 
             Esito esito = popupAppuntamento.CreaOggettoSalvataggio(ref _eventoSelezionato);
 
-            //if (esito.Codice != Esito.ESITO_OK)
-            //{
-            //    esito.Descrizione = "Controllare i campi evidenziati";
-
-            //}
             if (esito.Codice == Esito.ESITO_OK)
             { 
                 if (!IsDisponibileDataRisorsa(_eventoSelezionato))
@@ -1207,6 +1228,30 @@ namespace VideoSystemWeb.Agenda
             }
         }
 
+        protected void btnVisualizzaFattura_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+            int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
+            Protocolli protocollo = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(SessionManager.EventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true).FirstOrDefault();
+
+            // PRENDO IL PATH DELL'ALLEGATO SE C'E'
+            string pathDocumento = protocollo.PathDocumento;
+            bool pregresso = protocollo.Pregresso;
+
+            if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
+            {
+                string pathRelativo = "";
+                pathRelativo = pregresso ? ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "") : ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
+
+                string pathCompleto = pathRelativo + pathDocumento;
+
+                
+                string pdfUrl = ResolveUrl(pathCompleto)+ "?t=" + DateTime.Now.Ticks;  // converte in URL valido per il browser; aggiungo parametro per evitare cache
+                string script = $"window.open('{pdfUrl}', '_blank');";
+                ScriptManager.RegisterStartupScript(this, GetType(), "OpenPDF", script, true);
+            }
+        }
+
         protected void btnMagazzino_Click(object sender, EventArgs e)
         {
             try
@@ -1260,7 +1305,7 @@ namespace VideoSystemWeb.Agenda
             List<Protocolli> listaProtocolli = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(SessionManager.EventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true);
 
             
-            if (listaProtocolli.Count > 0)
+            if (listaProtocolli.Any())
             {
                 string numeroFattura = "";
                 int idFattura = 0;

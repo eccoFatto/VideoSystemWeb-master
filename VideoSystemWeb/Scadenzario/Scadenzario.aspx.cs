@@ -365,7 +365,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                     pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
                 }
 
-                string pathCompleto = pathRelativo + protocolloSelezionato.PathDocumento;
+                string pathCompleto = pathRelativo + protocolloSelezionato.PathDocumento + "?t=" + DateTime.Now.Ticks;
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriDocumento", script: "javascript: window.open('" + pathCompleto + "');", addScriptTags: true);
             }
         }

@@ -395,13 +395,14 @@
                         <asp:BoundField DataField="ImportoDareIva" HeaderText="Dare" DataFormatString="{0:N2}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="ImportoVersatoIva" HeaderText="Versato" DataFormatString="{0:N2}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="ProtocolloRiferimento" HeaderText="Documento"  HeaderStyle-Width="12%" />
-                        <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="18%" />
-                        <asp:BoundField DataField="ImportoAvereIva" HeaderText="Avere" DataFormatString="{0:N2}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="ImportoRiscossoIva" HeaderText="Riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="16%" />
+                        <asp:BoundField DataField="ImportoAvereIva" HeaderText="Avere" DataFormatString="{0:N2}" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoRiscossoIva" HeaderText="Riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="DataScadenza" HeaderText="Scadenza" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="IsImportoEstinto" HeaderText="Stato" HeaderStyle-Width="7%" />
-                        <asp:BoundField DataField="Banca" HeaderText="Banca" HeaderStyle-Width="15%" />
+                        <asp:BoundField DataField="Banca" HeaderText="Banca" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="DataPagamento" HeaderText="Pagamento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="ProtocolloRiferimento" HeaderText="Protocollo" HeaderStyle-Width="9%" />
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="5%">
                             <ItemTemplate>
                                 <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/edit.png" ToolTip="Modifica" ImageAlign="AbsMiddle"  CommandName="modifica" CommandArgument='<%#Eval("id")%>'/>

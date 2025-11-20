@@ -2013,7 +2013,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 string pathDocumento = e.Row.Cells[5].Text.Trim();
                 ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;")) {
-                    string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_COLLABORATORI"].Replace("~", "") + pathDocumento;
+                    string pathCompleto = ConfigurationManager.AppSettings["PATH_DOCUMENTI_COLLABORATORI"].Replace("~", "") + pathDocumento + "?t=" + DateTime.Now.Ticks;
                     //string pathCompleto = "/Images/DOCUMENTI/" + pathDocumento;
                     myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
                 }

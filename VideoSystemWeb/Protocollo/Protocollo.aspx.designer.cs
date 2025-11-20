@@ -501,6 +501,24 @@ namespace VideoSystemWeb.Protocollo
         protected global::AjaxControlToolkit.AsyncFileUpload fuFileProt;
 
         /// <summary>
+        /// Controllo lblBloccaFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBloccaFattura;
+
+        /// <summary>
+        /// Controllo chkBloccaFattura.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkBloccaFattura;
+
+        /// <summary>
         /// Controllo btnAnnullaCaricamento.
         /// </summary>
         /// <remarks>

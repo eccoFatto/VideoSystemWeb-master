@@ -546,29 +546,36 @@ namespace VideoSystemWeb.Agenda.userControl
         {
             panelOfferta.Enabled = basePage.AbilitazioneInScrittura();
 
+            //if (basePage.AbilitazioneInScrittura())
+            //{
+            //    if (statoEvento == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
+            //    {
+            //        panelOfferta.Enabled = false;
+            //    }
+            //    else if (statoEvento == Stato.Instance.STATO_OFFERTA)
+            //    {
+            //        panelOfferta.Enabled = true;
+            //    }
+            //    else if (statoEvento == Stato.Instance.STATO_LAVORAZIONE)
+            //    {
+            //        panelOfferta.Enabled = false;
+            //    }
+            //    else if (statoEvento == Stato.Instance.STATO_FATTURA ||
+            //             statoEvento == Stato.Instance.STATO_SDI)
+            //    {
+            //        panelOfferta.Enabled = false;
+            //    }
+            //    else if (statoEvento == Stato.Instance.STATO_RIPOSO)
+            //    {
+            //        panelOfferta.Enabled = false;
+            //    }
+            //}
+
             if (basePage.AbilitazioneInScrittura())
             {
-                if (statoEvento == Stato.Instance.STATO_PREVISIONE_IMPEGNO)
-                {
-                    panelOfferta.Enabled = false;
-                }
-                else if (statoEvento == Stato.Instance.STATO_OFFERTA)
-                {
-                    panelOfferta.Enabled = true;
-                }
-                else if (statoEvento == Stato.Instance.STATO_LAVORAZIONE)
-                {
-                    panelOfferta.Enabled = false;
-                }
-                else if (statoEvento == Stato.Instance.STATO_FATTURA)
-                {
-                    panelOfferta.Enabled = false;
-                }
-                else if (statoEvento == Stato.Instance.STATO_RIPOSO)
-                {
-                    panelOfferta.Enabled = false;
-                }
+                panelOfferta.Enabled = (statoEvento == Stato.Instance.STATO_OFFERTA);
             }
+
         }
 
         public void TrasformaInOfferta()

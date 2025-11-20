@@ -374,7 +374,7 @@ namespace VideoSystemWeb.Agenda.userControl
                             {
                                 // AGGIORNO
                                 protocolloPianoEsterno.PathDocumento = Path.GetFileName(mapPathPianoEsterno);
-                                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloPianoEsterno);
+                                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloPianoEsterno, false, eventoSelezionato.id);
                             }
 
                             //string nomeFileToDisplay = BaseStampa.Instance.AddPageNumber(mapPathPdfSenzaNumeroPagina, mapPianoEsterno, ref esito);

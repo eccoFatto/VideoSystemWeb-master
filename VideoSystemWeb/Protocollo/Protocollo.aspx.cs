@@ -43,55 +43,6 @@ namespace VideoSystemWeb.Protocollo
 
             if (!Page.IsPostBack)
             {
-
-                #region CODICE VETUSTO E SENZA SENSO
-                //Esito esito = new Esito();
-
-                //Session["NOME_FILE"] = "";
-                ////BasePage p = new BasePage();
-                ////Esito esito = basePage.CaricaListeTipologiche();
-
-                ////basePage.listaClientiFornitori = Anag_Clienti_Fornitori_BLL.Instance.CaricaListaAziende(ref esito).Where(x => x.Cliente == true).ToList<Anag_Clienti_Fornitori>();
-                ////ViewState["listaClientiFornitori"] = basePage.listaClientiFornitori;
-                ////basePage.PopolaDDLGenerico(elencoClienti, basePage.listaClientiFornitori);
-
-                //// CARICO LE COMBO
-                //if (string.IsNullOrEmpty(esito.Descrizione))
-                //{
-                //    ddlTipoProtocollo.Items.Clear();
-                //    cmbMod_Tipologia.Items.Clear();
-                //    ddlTipoProtocollo.Items.Add("");
-                //    foreach (Tipologica tipologiaProtocollo in SessionManager.ListaTipiProtocolli)
-                    //{
-                    //    ListItem item = new ListItem();
-                    //    item.Text = tipologiaProtocollo.nome;
-                    //    item.Value = tipologiaProtocollo.nome;
-
-                    //    ddlTipoProtocollo.Items.Add(item);
-
-                    //    ListItem itemMod = new ListItem();
-                    //    itemMod.Text = tipologiaProtocollo.nome;
-                    //    itemMod.Value = tipologiaProtocollo.id.ToString();
-
-                    //    cmbMod_Tipologia.Items.Add(itemMod);
-                    //}
-
-                //    // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                //    abilitaBottoni(basePage.AbilitazioneInScrittura());
-                //    // DA CONFIGURAZIONE SCELGO SE VISUALIZZARE SUBITO GLI ULTIMI PROTOCOLLI
-                //    if (Convert.ToBoolean(ConfigurationManager.AppSettings["VISUALIZZA_ULTIMI_PROTOCOLLI"]))
-                //    {
-                //        btnRicercaProtocollo_Click(null, null);
-                //    }
-                //}
-                //else
-                //{
-                //    Session["ErrorPageText"] = esito.Descrizione;
-                //    string url = String.Format("~/pageError.aspx");
-                //    Response.Redirect(url, true);
-                //}
-                #endregion
-
                 Session["NOME_FILE"] = "";
 
                 ddlTipoProtocollo.Items.Clear();
@@ -106,7 +57,6 @@ namespace VideoSystemWeb.Protocollo
                 {
                     btnRicercaProtocollo_Click(null, null);
                 }
-
             }
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + tbDataLavorazione.ClientID + "', '" + tbDataLavorazioneA.ClientID + "');", true);
@@ -170,6 +120,9 @@ namespace VideoSystemWeb.Protocollo
 
         private void gestisciPulsantiProtocollo(string stato)
         {
+            Esito esito = new Esito();
+            int statoLavorazione = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(tbMod_CodiceLavoro.Text, ref esito).id_stato;
+
             switch (stato)
             {
                 case "VISUALIZZAZIONE":
@@ -178,17 +131,14 @@ namespace VideoSystemWeb.Protocollo
                     btnModificaProtocollo.Visible = false;
                     btnEliminaProtocollo.Visible = false;
                     btnAnnullaProtocollo.Visible = false;
-                    if (!basePage.AbilitazioneInScrittura())
-                    {
-                        btnGestisciProtocollo.Visible = false;
-                    }
-                    else
-                    {
-                        btnGestisciProtocollo.Visible = true;
-                    }
+                  
+                    btnGestisciProtocollo.Visible = basePage.AbilitazioneInScrittura();
+
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCliente.Attributes.Add("disabled", "");
                     btnAnnullaCaricamento.Visible = false;
+                    lblBloccaFattura.Visible = false;
+                    chkBloccaFattura.Visible = false;
                     fuFileProt.Visible = false;
                     lblStatus.Visible = fuFileProt.Visible;
 
@@ -203,6 +153,8 @@ namespace VideoSystemWeb.Protocollo
                     imgbtnSelectCodLav.Attributes.Remove("disabled");
                     imgbtnSelectCliente.Attributes.Remove("disabled");
                     btnAnnullaCaricamento.Visible = true;
+                    lblBloccaFattura.Visible =
+                    chkBloccaFattura.Visible = (statoLavorazione == Stato.Instance.STATO_FATTURA || statoLavorazione == Stato.Instance.STATO_SDI);
                     fuFileProt.Visible = true;
                     lblStatus.Visible = fuFileProt.Visible;
                     break;
@@ -216,6 +168,8 @@ namespace VideoSystemWeb.Protocollo
                     imgbtnSelectCodLav.Attributes.Remove("disabled");
                     imgbtnSelectCliente.Attributes.Remove("disabled");
                     btnAnnullaCaricamento.Visible = true;
+                    lblBloccaFattura.Visible =
+                    chkBloccaFattura.Visible = (statoLavorazione == Stato.Instance.STATO_FATTURA || statoLavorazione == Stato.Instance.STATO_SDI);
                     fuFileProt.Visible = true;
                     lblStatus.Visible = fuFileProt.Visible;
 
@@ -230,6 +184,8 @@ namespace VideoSystemWeb.Protocollo
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCliente.Attributes.Add("disabled", "");
                     btnAnnullaCaricamento.Visible = false;
+                    lblBloccaFattura.Visible = false;
+                    chkBloccaFattura.Visible = false;
                     fuFileProt.Visible = false;
                     lblStatus.Visible = fuFileProt.Visible;
 
@@ -244,11 +200,12 @@ namespace VideoSystemWeb.Protocollo
                     imgbtnSelectCodLav.Attributes.Add("disabled", "");
                     imgbtnSelectCliente.Attributes.Add("disabled", "");
                     btnAnnullaCaricamento.Visible = false;
+                    lblBloccaFattura.Visible = false;
+                    chkBloccaFattura.Visible = false;
                     fuFileProt.Visible = false;
                     lblStatus.Visible = fuFileProt.Visible;
                     break;
             }
-
         }
 
         protected void btnInsProtocollo_Click(object sender, EventArgs e)
@@ -312,7 +269,7 @@ namespace VideoSystemWeb.Protocollo
 
         protected void btnModificaProtocollo_Click(object sender, EventArgs e)
         {
-            // SALVO MODIFICHE PROTOCOLL
+            // SALVO MODIFICHE PROTOCOLLO
             Esito esito = new Esito();
             Protocolli protocollo = CreaOggettoProtocollo(ref esito);
 
@@ -322,7 +279,8 @@ namespace VideoSystemWeb.Protocollo
             }
             else
             {
-                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocollo);
+                int idAgenda = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(tbMod_CodiceLavoro.Text, ref esito).id;
+                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocollo, chkBloccaFattura.Checked, idAgenda);
 
                 if (esito.Codice != Esito.ESITO_OK)
                 {
@@ -341,7 +299,9 @@ namespace VideoSystemWeb.Protocollo
                 Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt64((string)ViewState["idProtocollo"]));
                 if (esito.Codice == 0)
                 {
-                    if(protocollo.Id_tipo_protocollo == Stato.Instance.STATO_FATTURA && protocollo.Pregresso==false && protocollo.Destinatario=="Cliente")
+                    if ((protocollo.Id_tipo_protocollo == Stato.Instance.STATO_FATTURA || protocollo.Id_tipo_protocollo == Stato.Instance.STATO_SDI) && 
+                        protocollo.Pregresso==false && 
+                        protocollo.Destinatario=="Cliente")
                     {
                         ShowError("Il protocollo selezionato è di tipo fattura attiva, eliminarlo dall'apposita procedura in lavorazione.");
                     }
@@ -439,7 +399,6 @@ namespace VideoSystemWeb.Protocollo
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-
                 // PRENDO IL PATH DELL'ALLEGATO SE C'E'
                 string pathDocumento = e.Row.Cells[GetColumnIndexByName(e.Row, "Nome File")].Text;
 
@@ -449,16 +408,9 @@ namespace VideoSystemWeb.Protocollo
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
                 {
                     string pathRelativo = "";
-                    if (preg=="True" || preg=="Si")
-                    {
-                        pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "");
-                    }
-                    else
-                    {
-                        pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
-                    }
+                    pathRelativo = (preg == "True" || preg == "Si") ? ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "") : ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
 
-                    string pathCompleto = pathRelativo + pathDocumento;
+                    string pathCompleto = pathRelativo + pathDocumento + "?t=" + DateTime.Now.Ticks;
                     myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
                 }
                 else
@@ -471,7 +423,6 @@ namespace VideoSystemWeb.Protocollo
                 ImageButton myButtonEdit = e.Row.FindControl("imgEdit") as ImageButton;
                 myButtonEdit.Attributes.Add("onclick", "mostraProtocollo('" + idProtocolloSelezionato + "');");
             }
-
         }
   
         protected void gv_protocolli_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -552,6 +503,7 @@ namespace VideoSystemWeb.Protocollo
             {
                 Session["NOME_FILE"] = "";
                 Entity.Protocolli protocollo = Protocolli_BLL.Instance.getProtocolloById(ref esito, Convert.ToInt64(idProtocollo));
+
                 if (esito.Codice == 0)
                 {
                     pulisciCampiDettaglio();
@@ -592,6 +544,13 @@ namespace VideoSystemWeb.Protocollo
                     tbMod_Lavorazione.Text = protocollo.Lavorazione;
                     tbMod_Descrizione.Text = protocollo.Descrizione;
 
+                    int statoLavorazione = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(protocollo.Codice_lavoro, ref esito).id_stato;
+                    if (esito.Codice == 0)
+                    {
+                        chkBloccaFattura.Checked = statoLavorazione == Stato.Instance.STATO_SDI;
+                        //chkBloccaFattura.Enabled = !(statoLavorazione == Stato.Instance.STATO_SDI);
+                    }
+
                     //TIPI PROTOCOLLO
                     ListItem trovati = cmbMod_Tipologia.Items.FindByValue(protocollo.Id_tipo_protocollo.ToString());
                     if (trovati != null)
@@ -627,16 +586,9 @@ namespace VideoSystemWeb.Protocollo
                     {
                         string pathRelativo = "";
                         // PER IL PREGRESSO IL PATH CAMBIA
-                        if (protocollo.Pregresso)
-                        {
-                            pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "");
-                        }
-                        else
-                        {
-                            pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
-                        }
+                         pathRelativo = protocollo.Pregresso? ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "") : ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
 
-                        string pathCompleto = pathRelativo + protocollo.PathDocumento;
+                        string pathCompleto = pathRelativo + protocollo.PathDocumento + "?t=" + DateTime.Now.Ticks;
                         btnViewAttachement.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
                         btnViewAttachement.Enabled = true;
                     }

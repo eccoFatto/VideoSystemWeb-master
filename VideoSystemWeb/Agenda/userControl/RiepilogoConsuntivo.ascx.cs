@@ -535,7 +535,7 @@ namespace VideoSystemWeb.Agenda.userControl
                             {
                                 // AGGIORNO
                                 protocolloConsuntivo.PathDocumento = Path.GetFileName(mapPathConsuntivo);
-                                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloConsuntivo);
+                                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloConsuntivo, false, eventoSelezionato.id);
                             }
 
                             framePdfConsuntivo.Attributes.Remove("src");

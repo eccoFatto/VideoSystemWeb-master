@@ -1,17 +1,19 @@
 ﻿//------------------------------------------------------------------------------
 // <generato automaticamente>
-//     Codice generato da uno strumento.
+//     Questo codice è stato generato da uno strumento.
 //
 //     Le modifiche a questo file possono causare un comportamento non corretto e verranno perse se
 //     il codice viene rigenerato. 
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.Agenda.userControl {
-    
-    
-    public partial class RiepilogoFattura {
-        
+namespace VideoSystemWeb.Agenda.userControl
+{
+
+
+    public partial class RiepilogoFattura
+    {
+
         /// <summary>
         /// Controllo tbDataProtocollo.
         /// </summary>
@@ -20,7 +22,16 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDataProtocollo;
-        
+
+        /// <summary>
+        /// Controllo ddl_Banca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Banca;
+
         /// <summary>
         /// Controllo btnCreaFattura.
         /// </summary>
@@ -29,7 +40,7 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCreaFattura;
-        
+
         /// <summary>
         /// Controllo btnStampaFattura.
         /// </summary>
@@ -38,7 +49,7 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnStampaFattura;
-        
+
         /// <summary>
         /// Controllo btn_ApriScadenzario.
         /// </summary>
@@ -47,7 +58,7 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_ApriScadenzario;
-        
+
         /// <summary>
         /// Controllo DivFramePdfFattura.
         /// </summary>
@@ -56,7 +67,7 @@ namespace VideoSystemWeb.Agenda.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivFramePdfFattura;
-        
+
         /// <summary>
         /// Controllo framePdfFattura.
         /// </summary>

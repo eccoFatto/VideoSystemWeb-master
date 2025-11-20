@@ -27,6 +27,13 @@ namespace VideoSystemWeb.Agenda.userControl
                 ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
                 scriptManager.RegisterPostBackControl(this.btnStampaFattura);
             }
+            else
+            {
+                foreach (DatiBancari datiBancari in SessionManager.ListaDatiBancari)
+                {
+                    ddl_Banca.Items.Add(new System.Web.UI.WebControls.ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
+                }
+            }
         }
         public Esito popolaPannelloFattura(DatiAgenda eventoSelezionato, bool aggiornaFattura = false)
         {
@@ -331,9 +338,6 @@ namespace VideoSystemWeb.Agenda.userControl
                             cellaGrigliaInfo.Add(pGrigliaInfo);
                             tbGriglaInfo.AddCell(cellaGrigliaInfo);
 
-                            //pGrigliaInfo = new Paragraph(DateTime.Today.ToLongDateString()).SetFontSize(9);
-
-                            //if (string.IsNullOrEmpty(tbDataProtocollo.Text)) tbDataProtocollo.Text = eventoSelezionato.data_inizio_lavorazione.ToShortDateString();
                             tbDataProtocollo.Text = dataFattura != null ? ((DateTime)dataFattura).ToShortDateString() : eventoSelezionato.data_inizio_lavorazione.ToShortDateString();
 
                             pGrigliaInfo = new Paragraph(Convert.ToDateTime(tbDataProtocollo.Text).ToLongDateString()).SetFontSize(9);
@@ -392,11 +396,6 @@ namespace VideoSystemWeb.Agenda.userControl
                             cellaGrigliaDest.Add(pGrigliaDest);
                             tbGriglaDest.AddCell(cellaGrigliaDest);
 
-                            //pGrigliaDest = new Paragraph(cliente.TipoIndirizzoOperativo + " " + cliente.IndirizzoOperativo + " " + cliente.NumeroCivicoOperativo + Environment.NewLine + cliente.CapOperativo + " " + cliente.ComuneOperativo + " " + cliente.ProvinciaOperativo).SetFontSize(9);
-                            //cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                            //cellaGrigliaDest.Add(pGrigliaDest);
-                            //tbGriglaDest.AddCell(cellaGrigliaDest);
-
                             pGrigliaDest = new Paragraph(cliente.TipoIndirizzoLegale + " " + cliente.IndirizzoLegale + " " + cliente.NumeroCivicoLegale + Environment.NewLine + cliente.CapLegale + " " + cliente.ComuneLegale + " " + cliente.ProvinciaLegale).SetFontSize(9);
                             cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                             cellaGrigliaDest.Add(pGrigliaDest);
@@ -417,18 +416,6 @@ namespace VideoSystemWeb.Agenda.userControl
                             tbGriglaDest.AddCell(cellaGrigliaDest);
 
                             document.Add(tbGriglaDest);
-
-
-                            //document.Add(pSpazio);
-                            //document.Add(pSpazio);
-
-                            // CREAZIONE INTESTAZIONE GRIGLIA
-                            //iText.Layout.Element.Table tbGriglaInt = new iText.Layout.Element.Table(new float[] { 80, 50, 200, 80, 20, 20, 80 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedPosition(i, 30, 595, 530); ;
-
-
-
-                            //document.Add(tbGriglaInt);
-
 
                             // AGGIUNGO LOGO DNV
                             iText.Layout.Element.Image logoDnv = new iText.Layout.Element.Image(imageDNV).ScaleAbsolute(40, 40).SetFixedPosition(i, 518, 8);
@@ -453,8 +440,9 @@ namespace VideoSystemWeb.Agenda.userControl
                                 cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                                 tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
-                                pGrigliaNoteFooter = new Paragraph(noteOfferta.Banca).SetFontSize(9);
-                                //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1,2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(2);
+                                //pGrigliaNoteFooter = new Paragraph(noteOfferta.Banca).SetFontSize(9);
+                                pGrigliaNoteFooter = new Paragraph(ddl_Banca.SelectedValue).SetFontSize(9);
+
                                 cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1, 2).SetBackgroundColor(coloreIntestazioni, 0.7f).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                                 
                                 cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
@@ -543,7 +531,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
                                 protocolloFattura.Data_fattura = Convert.ToDateTime(tbDataProtocollo.Text);
 
-                                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloFattura);
+                                esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloFattura, false, eventoSelezionato.id);
 
                                 ViewState["idProtocollo"] = protocolloFattura.Id;
 

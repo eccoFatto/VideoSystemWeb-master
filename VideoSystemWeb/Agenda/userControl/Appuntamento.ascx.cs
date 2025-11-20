@@ -307,7 +307,8 @@ namespace VideoSystemWeb.Agenda.userControl
                     ddl_Risorse.Enabled =
                     check_tender.Enabled = true;
                 }
-                else if (statoEvento == Stato.Instance.STATO_FATTURA)
+                else if (statoEvento == Stato.Instance.STATO_FATTURA || 
+                         statoEvento == Stato.Instance.STATO_SDI)
                 {
                     // panelAppuntamenti.Enabled = false;
                     txt_DataInizioLavorazione.Enabled =

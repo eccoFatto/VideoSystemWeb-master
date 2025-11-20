@@ -139,6 +139,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaQualificheCollaboratori"] = value;
             }
         }
+
         public static List<Anag_Collaboratori> ListaAnagraficheCollaboratori
         {
             get
@@ -174,6 +175,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaAnagraficheFornitori"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiPagamento
         {
             get
@@ -189,6 +191,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiPagamento"] = value;
             }
         }
+
         public static List<Anag_Referente_Clienti_Fornitori> ListaReferenti
         {
             get
@@ -204,6 +207,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaReferenti"] = value;
             }
         }
+
         public static List<GiorniPagamentoFatture> ListaGPF
         {
             get
@@ -220,6 +224,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaGPF"] = value;
             }
         }
+
         public static List<DatiBancari> ListaDatiBancari
         {
             get
@@ -236,6 +241,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaDatiBancari"] = value;
             }
         }
+
         public static List<Tipologica> ListaTender
         {
             get
@@ -251,6 +257,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTender"] = value;
             }
         }
+
         public static List<Tipologica> ListaQualifiche
         {
             get
@@ -266,6 +273,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaQualifiche"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiGeneri
         {
             get
@@ -281,6 +289,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiGeneri"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiGruppi
         {
             get
@@ -296,6 +305,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiGruppi"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiSottogruppi
         {
             get
@@ -311,6 +321,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiSottogruppi"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiProtocolli
         {
             get
@@ -326,6 +337,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiProtocolli"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiUtente
         {
             get
@@ -341,6 +353,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiUtente"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiClientiFornitori
         {
             get
@@ -356,6 +369,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiClientiFornitori"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiTipologie
         {
             get
@@ -371,6 +385,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiTipologie"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiIntervento
         {
             get
@@ -386,6 +401,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiIntervento"] = value;
             }
         }
+
         public static List<ColonneAgenda> ListaRisorse
         {
             get
@@ -401,11 +417,11 @@ namespace VideoSystemWeb.BLL
 
                         if (allineamentoDipendentiInAgenda.Equals("DESTRA"))
                         {
-                            _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo).ToList<ColonneAgenda>();
+                            _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo=="regie").ThenBy(c => c.sottotipo).ToList<ColonneAgenda>();
                         }
                         else
                         {
-                            _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo == "regie").ThenBy(c => c.sottotipo).ToList<ColonneAgenda>();
+                            _listaRisorse = _listaRisorse.OrderBy(c => c.sottotipo == "ex-dipendenti").ThenBy(c => c.sottotipo == "extra").ThenBy(c => c.sottotipo == "regie").ThenBy(c => c.sottotipo).ToList<ColonneAgenda>();
                         }
                     }
                     HttpContext.Current.Session["listaRisorse"] = _listaRisorse;
@@ -417,6 +433,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaRisorse"] = value;
             }
         }
+
         public static List<Tipologica> ListaStati
         {
             get
@@ -432,6 +449,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaStati"] = value;
             }
         }
+
         public static List<Anag_Clienti_Fornitori> ListaClientiFornitori
         {
             get
@@ -465,6 +483,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["ListaTipiCategorieMagazzino"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiSubCategorieMagazzino
         {
             get
@@ -480,6 +499,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["ListaTipiSubCategorieMagazzino"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiPosizioniMagazzino
         {
             get
@@ -495,6 +515,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["ListaTipiPosizioniMagazzino"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiGruppoMagazzino
         {
             get
@@ -510,6 +531,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["ListaTipiGruppoMagazzino"] = value;
             }
         }
+
         public static List<Tipologica> ListaTipiBanca
         {
             get
@@ -525,6 +547,7 @@ namespace VideoSystemWeb.BLL
                 HttpContext.Current.Session["listaTipiBanca"] = value;
             }
         }
+
         public static bool VisualizzazioneAutomaticaPopupErrore
         {
             get

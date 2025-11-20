@@ -43,6 +43,7 @@
                         <asp:ListItem Value="dipendenti">Dipendenti</asp:ListItem>
                         <asp:ListItem Value="regie">Regie</asp:ListItem>
                         <asp:ListItem Value="extra">Extra</asp:ListItem>
+                        <asp:ListItem Value="ex-dipendenti">Ex Dipendenti</asp:ListItem>
                     </asp:DropDownList>
                 </div>
                 <div class="w3-third">

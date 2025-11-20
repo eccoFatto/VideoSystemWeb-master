@@ -641,7 +641,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         {
                             // AGGIORNO
                             protocolloOfferta.PathDocumento = Path.GetFileName(mapPathOfferta);
-                            esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloOfferta);
+                            esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloOfferta, false, eventoSelezionato.id);
                         }
 
                         framePdf.Attributes.Remove("src");

@@ -529,9 +529,9 @@
                                             Width="99%"
                                             class="w3-input w3-border w3-round" />
                                     </div>
-                                    <div class="w3-quarter">
-                                        <label>&nbsp;</label>
-                                        <asp:Button ID="btnAnnullaCaricamento" runat="server" class="w3-input w3-border w3-circle w3-red  w3-center" Width="50px" Text="&times;" ToolTip="Annulla Caricamento File" OnClick="btnAnnullaCaricamento_Click" />
+                                    <div class="w3-quarter" style="margin-top:34px">
+                                        <asp:Label ID="lblBloccaFattura" runat="server" Text="Protocollo SDI " /><asp:CheckBox ID="chkBloccaFattura" runat="server" ToolTip="Sostituisci con fattura SDI"/>
+                                        <asp:Button ID="btnAnnullaCaricamento" runat="server" class="w3-input w3-border w3-circle w3-red  w3-center" Width="50px" Text="&times;" Style="float:right" ToolTip="Annulla Caricamento File" OnClick="btnAnnullaCaricamento_Click" />
                                     </div>
 
                                 </div>

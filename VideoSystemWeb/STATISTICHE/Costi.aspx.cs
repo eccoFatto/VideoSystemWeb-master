@@ -307,7 +307,7 @@ namespace VideoSystemWeb.STATISTICHE
                     string pathRelativo = pregresso ? ConfigurationManager.AppSettings["PATH_DOCUMENTI_PREGRESSO"].Replace("~", "") : ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"].Replace("~", "");
 
 
-                    string pathCompleto = pathRelativo + pathDocumento;
+                    string pathCompleto = pathRelativo + pathDocumento + "?t=" + DateTime.Now.Ticks;
                     myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');return false;");
                 }
                 else

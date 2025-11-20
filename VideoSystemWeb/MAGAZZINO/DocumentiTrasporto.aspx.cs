@@ -372,22 +372,6 @@ namespace VideoSystemWeb.Magazzino
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-
-                // PRENDO IL PATH DELL'ALLEGATO SE C'E'
-                //string pathDocumento = "";
-                //ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
-                //if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
-                //{
-
-                //    string   pathRelativo = ConfigurationManager.AppSettings["PATH_DOCUMENTI_TRASPORTO"].Replace("~", "");
-                //    string pathCompleto = pathRelativo + pathDocumento;
-                //    myButton.Attributes.Add("onclick", "window.open('" + pathCompleto + "');");
-                //}
-                //else
-                //{
-                //    myButton.Attributes.Add("disabled", "true");
-                //}
-
                 // PRENDO L'ID DEL DocumentoTrasporto SELEZIONATO
                 string idDocumentoTrasportoSelezionato = e.Row.Cells[GetColumnIndexByName(e.Row, "id")].Text;
                 ImageButton myButtonEdit = e.Row.FindControl("imgEdit") as ImageButton;
@@ -1107,22 +1091,19 @@ namespace VideoSystemWeb.Magazzino
                         {
                             protocolloTrasporto = protocollo;
                         }
-                        //listaProtocolli.Clear();
                     }
 
                     string nomeFile = "DocumentoTrasporto_" + documentoTrasporto.NumeroDocumentoTrasporto + ".pdf";
                     string pathReport = ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"] + nomeFile;
                     string mapPathReport = MapPath(ConfigurationManager.AppSettings["PATH_DOCUMENTI_PROTOCOLLO"]) + nomeFile;
 
-                    //string prefissoUrl = Request.Url.Scheme + "://" + Request.Url.Authority;
                     iText.IO.Image.ImageData imageData = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/logoVSP_trim.png"));
                     iText.IO.Image.ImageData imageDNV = iText.IO.Image.ImageDataFactory.Create(MapPath("~/Images/DNV_2008_ITA2.jpg"));
-
 
                     PdfWriter wr = new PdfWriter(mapPathReport);
                     PdfDocument doc = new PdfDocument(wr);
                     doc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
-                    //Document document = new Document(doc);
+                    
                     Document document = new Document(doc, iText.Kernel.Geom.PageSize.A4, false);
 
                     document.SetMargins(260, 30, 150, 30);
@@ -1130,11 +1111,8 @@ namespace VideoSystemWeb.Magazzino
                     Paragraph pSpazio = new Paragraph(" ");
                     document.Add(pSpazio);
 
-
-                    //iText.Kernel.Colors.Color coloreIntestazioni = new iText.Kernel.Colors.DeviceRgb(0, 225, 0);
                     // COLORE BLU VIDEOSYSTEM
                     iText.Kernel.Colors.Color coloreIntestazioni = new iText.Kernel.Colors.DeviceRgb(33, 150, 243);
-
 
                     // CREAZIONE GRIGLIA
                     iText.Layout.Element.Table tbGrigla = new iText.Layout.Element.Table(new float[] { 15, 25, 50, 10 }).SetWidth(530).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetFixedLayout();
@@ -1192,8 +1170,6 @@ namespace VideoSystemWeb.Magazzino
                         cellaGriglia = new Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.WHITE, 10).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT);
                         cellaGriglia.Add(pGriglia);
                         tbGrigla.AddCell(cellaGriglia);
-
-                        
                     }
 
                     document.Add(tbGrigla);
@@ -1261,7 +1237,6 @@ namespace VideoSystemWeb.Magazzino
 
                         document.Add(tbGriglaInfo);
 
-
                         // CREAZIONE GRIGLIA DESTINATARIO
                         iText.Layout.Element.Table tbGriglaDest = new iText.Layout.Element.Table(new float[] { 70, 230 }).SetWidth(300).SetFixedPosition(i, 350, 655, 300);
                         Paragraph pGrigliaDest = new Paragraph("Spettabile").SetFontSize(9).SetBold();
@@ -1299,7 +1274,6 @@ namespace VideoSystemWeb.Magazzino
                             tbGriglaDest.AddCell(cellaGrigliaDest);
                         }
 
-
                         // PARTITA IVA DESTINATARIO
                         pGrigliaDest = new Paragraph("P.Iva/C.F.").SetFontSize(9).SetBold();
                         cellaGrigliaDest = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
@@ -1315,11 +1289,10 @@ namespace VideoSystemWeb.Magazzino
 
                         document.Add(tbGriglaDest);
 
-
-
                         //AGGIUNGO NUM.PAGINA
                         document.ShowTextAligned(new Paragraph("pagina " + i.ToString() + " di " + n.ToString()).SetFontSize(7),
                             pageSize.GetWidth() - 60, pageSize.GetHeight() - 20, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
+                        
                         //AGGIUNGO FOOTER
                         document.ShowTextAligned(new Paragraph(denominazioneVs + " P.IVA " + pIvaVs + Environment.NewLine + "Sede legale: " + toponimoVs + " " + indirizzoVs + " " + civicoVs + " - " + capVs + " " + cittaVs + " " + provinciaVs + " e-mail: " + emailVs).SetFontSize(7).SetTextAlignment(iText.Layout.Properties.TextAlignment.CENTER),
                             pageSize.GetWidth() / 2, 30, i, iText.Layout.Properties.TextAlignment.CENTER, iText.Layout.Properties.VerticalAlignment.TOP, 0);
@@ -1347,28 +1320,8 @@ namespace VideoSystemWeb.Magazzino
                             cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
                             tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
 
-                            //// SECONDA RIGA GRIGLIA NOTE FOOTER
-                            //pGrigliaNoteFooter = new Paragraph("").SetFontSize(9);
-                            //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                            //cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                            //tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                            //pGrigliaNoteFooter = new Paragraph("").SetFontSize(9);
-                            ////cellaGrigliaNoteFooter = new iText.Layout.Element.Cell(1,2).SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 10).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(2);
-                            //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 0.7f).SetBorderRight(new iText.Layout.Borders.SolidBorder(iText.Kernel.Colors.ColorConstants.WHITE, 2, 50)).SetBorderTop(iText.Layout.Borders.Border.NO_BORDER).SetBorderLeft(iText.Layout.Borders.Border.NO_BORDER).SetBorderBottom(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                            //cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                            //tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-                            //pGrigliaNoteFooter = new Paragraph("").SetFontSize(9);
-                            //cellaGrigliaNoteFooter = new iText.Layout.Element.Cell().SetBackgroundColor(iText.Kernel.Colors.ColorConstants.LIGHT_GRAY, 0.7f).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
-                            //cellaGrigliaNoteFooter.Add(pGrigliaNoteFooter);
-                            //tbGriglaNoteFooter.AddCell(cellaGrigliaNoteFooter);
-
-
                             document.Add(tbGriglaNoteFooter);
                         }
-
-
                     }
 
                     // CHIUDO IL PDF
@@ -1418,7 +1371,9 @@ namespace VideoSystemWeb.Magazzino
                         // AGGIORNO
                         protocolloTrasporto.PathDocumento = Path.GetFileName(mapPathReport);
                         protocolloTrasporto.Data_protocollo = Convert.ToDateTime(documentoTrasporto.DataTrasporto);
-                        esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloTrasporto);
+
+                        int idAgenda = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(protocolloTrasporto.Codice_lavoro, ref esito).id;
+                        esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocolloTrasporto, false, idAgenda);
 
                         ViewState["idProtocollo"] = protocolloTrasporto.Id;
 

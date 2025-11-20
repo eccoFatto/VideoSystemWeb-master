@@ -365,8 +365,10 @@
                         <asp:Button ID="btnRiepilogo" runat="server" Text="Stampa Offerta" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnRiepilogo_Click" Visible="false" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btnStampaPianoEsterno" runat="server" Text="Stampa Piano Esterno" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaPianoEsterno_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnStampaConsuntivo" runat="server" Text="Stampa Consuntivo" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaConsuntivo_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
-                        <asp:Button ID="btnStampaFattura" runat="server" Text="Stampa Fattura" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaFattura_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
+                        
+                        <asp:Button ID="btnVisualizzaFattura" runat="server" Text="Visualizza Fattura" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnVisualizzaFattura_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
 
+                        <asp:Button ID="btnStampaFattura" runat="server" Text="Stampa Fattura" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnStampaFattura_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnEliminaFattura" runat="server" Text="Elimina Fattura" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnEliminaFattura_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
 
                         <asp:Button ID="btnMagazzino" runat="server" Text="Magazzino" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnMagazzino_Click" OnClientClick="$('.loader').show();" Visible="false" Style="padding: 7px 10px" />

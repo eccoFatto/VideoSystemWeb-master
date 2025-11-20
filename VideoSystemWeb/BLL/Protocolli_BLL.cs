@@ -65,9 +65,9 @@ namespace VideoSystemWeb.BLL
             return iREt;
         }
 
-        public Esito AggiornaProtocollo(Protocolli protocollo)
+        public Esito AggiornaProtocollo(Protocolli protocollo, bool isFatturaSDI, int idAgenda)
         {
-            Esito esito = Protocolli_DAL.Instance.AggiornaProtocollo(protocollo);
+            Esito esito = Protocolli_DAL.Instance.AggiornaProtocollo(protocollo, isFatturaSDI, idAgenda);
 
             return esito;
         }

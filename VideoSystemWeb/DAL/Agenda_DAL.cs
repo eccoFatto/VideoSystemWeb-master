@@ -146,7 +146,7 @@ namespace VideoSystemWeb.DAL
                                         {
                                             id = riga.Field<int>("id"),
                                             id_colonne_agenda = riga.Field<int>("id_colonne_agenda"),
-                                            id_stato = string.IsNullOrEmpty(riga.Field<string>("protocollo_riferimento"))? riga.Field<int>("id_stato") : riga.Field<int>("idFattura"),
+                                            id_stato = CalcolaIDStato(riga.Field<int>("id_stato"), riga.Field<string>("protocollo_riferimento")),//string.IsNullOrEmpty(riga.Field<string>("protocollo_riferimento"))? riga.Field<int>("id_stato") : riga.Field<int>("idFattura"),
                                             data_inizio_lavorazione = riga.Field<DateTime>("data_inizio_lavorazione"),
                                             data_fine_lavorazione = riga.Field<DateTime>("data_fine_lavorazione"),
                                             durata_lavorazione = riga.Field<int>("durata_lavorazione"),
@@ -185,6 +185,17 @@ namespace VideoSystemWeb.DAL
             }
 
             return listaDatiAgenda;
+        }
+
+        private int CalcolaIDStato(int idStato, string protocolloRiferimento)
+        {
+            if (idStato == Stato.Instance.STATO_FATTURA || 
+                idStato == Stato.Instance.STATO_SDI)
+            {
+                return idStato;
+            }
+
+            return protocolloRiferimento == null ? idStato : Stato.Instance.STATO_FATTURA;
         }
 
         // Controllo la disponibilità dei tender nel periodo selezionato, ESCLUDENDO quelli dell'evento corrente
@@ -919,6 +930,76 @@ namespace VideoSystemWeb.DAL
             }
 
             return listaLavorazioni;
+        }
+    
+        public DatiAgenda GetDatiAgendaByCodiceLavoro(string codice_lavoro, ref Esito esito)
+        {
+            DatiAgenda datoAgenda = new DatiAgenda();
+            
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM " + TABELLA_DATI_AGENDA + " a " +
+                                                           " left join " + TABELLA_TIPO_STATO + " b on b.nome = 'fattura'" +
+                                                           " left join " + TABELLA_DATI_PROTOCOLLO + " c on a.codice_lavoro = c.codice_lavoro and b.attivo = 1 and c.attivo=1 and c.id_tipo_protocollo = b.id and c.pregresso = 0 and c.destinatario = 'cliente'" +
+                                                           " WHERE a.codice_lavoro = '" + codice_lavoro+"'"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    
+                                        datoAgenda = new DatiAgenda
+                                        {
+                                            id = dt.Rows[0].Field<int>("id"),
+                                            id_colonne_agenda = dt.Rows[0].Field<int>("id_colonne_agenda"),
+                                            id_stato = CalcolaIDStato(dt.Rows[0].Field<int>("id_stato"), dt.Rows[0].Field<string>("protocollo_riferimento")),//dt.Rows[0].Field<int>("id_stato"),
+                                            data_inizio_lavorazione = dt.Rows[0].Field<DateTime>("data_inizio_lavorazione"),
+                                            data_fine_lavorazione = dt.Rows[0].Field<DateTime>("data_fine_lavorazione"),
+                                            durata_lavorazione = dt.Rows[0].Field<int>("durata_lavorazione"),
+                                            id_tipologia = dt.Rows[0].Field<int?>("id_tipologia"),
+                                            id_cliente = dt.Rows[0].Field<int>("id_cliente"),
+                                            durata_viaggio_andata = dt.Rows[0].Field<int>("durata_viaggio_andata"),
+                                            durata_viaggio_ritorno = dt.Rows[0].Field<int>("durata_viaggio_ritorno"),
+                                            data_inizio_impegno = dt.Rows[0].Field<DateTime>("data_inizio_impegno"),
+                                            data_fine_impegno = dt.Rows[0].Field<DateTime>("data_fine_impegno"),
+                                            impegnoOrario = dt.Rows[0].Field<bool>("impegnoOrario"),
+                                            impegnoOrario_da = dt.Rows[0].Field<string>("impegnoOrario_da"),
+                                            impegnoOrario_a = dt.Rows[0].Field<string>("impegnoOrario_a"),
+                                            produzione = dt.Rows[0].Field<string>("produzione"),
+                                            lavorazione = dt.Rows[0].Field<string>("lavorazione"),
+                                            indirizzo = dt.Rows[0].Field<string>("indirizzo"),
+                                            luogo = dt.Rows[0].Field<string>("luogo"),
+                                            codice_lavoro = dt.Rows[0].Field<string>("codice_lavoro"),
+                                            nota = dt.Rows[0].Field<string>("nota")
+                                        };
+                                }
+                                else
+                                {
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella tabella tab_dati_agenda ";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Agenda_DAL.cs - GetDatiAgendaByCodiceLavoro " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return datoAgenda;
+
         }
     }
 }

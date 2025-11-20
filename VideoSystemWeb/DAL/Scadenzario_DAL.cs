@@ -876,7 +876,7 @@ namespace VideoSystemWeb.DAL
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "select * from dati_scadenzario " +
+                    string query = "select * from dati_scadenzario a left join dati_protocollo b on a.idDatiProtocollo = b.id " +
                                    "where idDatiProtocollo = " + idDatiProtocollo;
 
                     using (SqlCommand cmd = new SqlCommand(query))

@@ -456,7 +456,7 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
-        public Esito AggiornaProtocollo(Protocolli protocollo)
+        public Esito AggiornaProtocollo(Protocolli protocollo, bool isFatturaSDI, int idAgenda)
         {
             Anag_Utenti utente = (Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE];
             Esito esito = new Esito();
@@ -547,6 +547,16 @@ namespace VideoSystemWeb.DAL
                             if (protocollo.Data_fattura != null) data_fattura = new SqlParameter("@data_fattura", protocollo.Data_fattura);
                             data_fattura.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(data_fattura);
+
+                            SqlParameter impostaFatturaSDI = new SqlParameter("@impostaFatturaSDI", isFatturaSDI);
+                            pregresso.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(impostaFatturaSDI);
+
+                            
+                            SqlParameter parId = new SqlParameter("@idAgenda", idAgenda);
+                            pregresso.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(parId);
+                            
 
                             StoreProc.Connection.Open();
 

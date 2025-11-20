@@ -73,5 +73,13 @@ namespace VideoSystemWeb.BLL
                 return (SessionManager.ListaStati.Where(x => x.nome.ToUpper() == "Viaggio / Installazione".ToUpper()).FirstOrDefault()).id;
             }
         }
+
+        public int STATO_SDI
+        { 
+            get
+            {
+                return (SessionManager.ListaStati.Where(x => x.nome.ToUpper() == "Fattura SDI".ToUpper()).FirstOrDefault()).id;
+            }
+        }
     }
 }

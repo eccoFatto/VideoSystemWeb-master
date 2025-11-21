@@ -94,9 +94,9 @@ namespace VideoSystemWeb.BLL
             return listaDatiAgenda.Where(x => x.id == id).FirstOrDefault();
         }
 
-        public DatiAgenda GetDatiAgendaByCodiceLavoro(string codice_lavoro, ref Esito esito)
+        public DatiAgenda GetDatiAgendaByCodiceLavoro(string codice_lavoro, ref Esito esito, bool showWarning = true)
         {
-            return Agenda_DAL.Instance.GetDatiAgendaByCodiceLavoro(codice_lavoro, ref esito);
+            return Agenda_DAL.Instance.GetDatiAgendaByCodiceLavoro(codice_lavoro, ref esito, showWarning);
         }
 
         public DatiAgenda GetDatiAgendaByDataRisorsa(List<DatiAgenda> listaDatiAgenda, DateTime data, int id_risorsa)

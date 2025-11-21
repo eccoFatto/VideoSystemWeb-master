@@ -121,7 +121,7 @@ namespace VideoSystemWeb.Protocollo
         private void gestisciPulsantiProtocollo(string stato)
         {
             Esito esito = new Esito();
-            int statoLavorazione = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(tbMod_CodiceLavoro.Text, ref esito).id_stato;
+            int statoLavorazione = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(tbMod_CodiceLavoro.Text, ref esito, false).id_stato;
 
             switch (stato)
             {
@@ -279,7 +279,7 @@ namespace VideoSystemWeb.Protocollo
             }
             else
             {
-                int idAgenda = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(tbMod_CodiceLavoro.Text, ref esito).id;
+                int idAgenda = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(tbMod_CodiceLavoro.Text, ref esito, false).id;
                 esito = Protocolli_BLL.Instance.AggiornaProtocollo(protocollo, chkBloccaFattura.Checked, idAgenda);
 
                 if (esito.Codice != Esito.ESITO_OK)
@@ -541,10 +541,10 @@ namespace VideoSystemWeb.Protocollo
                     }
                     tbMod_NomeFile.Text = protocollo.PathDocumento;
                     Session["NOME_FILE"] = protocollo.PathDocumento;
-                    tbMod_Lavorazione.Text = protocollo.Lavorazione;
+                    tbMod_Lavorazione.Text = (string.IsNullOrEmpty(protocollo.Lavorazione) && protocollo.Codice_lavoro.ToUpper() == "GENERICO") ? protocollo.Codice_lavoro : protocollo.Lavorazione;
                     tbMod_Descrizione.Text = protocollo.Descrizione;
 
-                    int statoLavorazione = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(protocollo.Codice_lavoro, ref esito).id_stato;
+                    int statoLavorazione = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(protocollo.Codice_lavoro, ref esito, false).id_stato;
                     if (esito.Codice == 0)
                     {
                         chkBloccaFattura.Checked = statoLavorazione == Stato.Instance.STATO_SDI;

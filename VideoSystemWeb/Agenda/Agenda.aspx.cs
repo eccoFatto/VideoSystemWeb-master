@@ -639,7 +639,10 @@ namespace VideoSystemWeb.Agenda
             string check = "";
             foreach (Tipologica colonna in listaSottotipiColonne)
             {
-                check += "<div class='checkbox'><label><input type='checkbox' class='filtroColonna' value='" + colonna.sottotipo + "' checked onchange=\"filtraColonna(this,'" + colonna.sottotipo + "');\">&nbsp;" + colonna.sottotipo + "</label></div>";
+                if (colonna.sottotipo == "ex-dipendenti")
+                    check += "<div class='checkbox'><label><input type='checkbox' class='filtroColonna' value='" + colonna.sottotipo + "' onchange=\"filtraColonna(this,'" + colonna.sottotipo + "');\">&nbsp;" + colonna.sottotipo + "</label></div>";
+                else
+                    check += "<div class='checkbox'><label><input type='checkbox' class='filtroColonna' value='" + colonna.sottotipo + "' checked onchange=\"filtraColonna(this,'" + colonna.sottotipo + "');\">&nbsp;" + colonna.sottotipo + "</label></div>";
             }
 
             return check;

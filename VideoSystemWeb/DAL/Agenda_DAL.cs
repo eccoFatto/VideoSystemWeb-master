@@ -932,7 +932,7 @@ namespace VideoSystemWeb.DAL
             return listaLavorazioni;
         }
     
-        public DatiAgenda GetDatiAgendaByCodiceLavoro(string codice_lavoro, ref Esito esito)
+        public DatiAgenda GetDatiAgendaByCodiceLavoro(string codice_lavoro, ref Esito esito, bool showWarning = true)
         {
             DatiAgenda datoAgenda = new DatiAgenda();
             
@@ -959,7 +959,7 @@ namespace VideoSystemWeb.DAL
                                         {
                                             id = dt.Rows[0].Field<int>("id"),
                                             id_colonne_agenda = dt.Rows[0].Field<int>("id_colonne_agenda"),
-                                            id_stato = CalcolaIDStato(dt.Rows[0].Field<int>("id_stato"), dt.Rows[0].Field<string>("protocollo_riferimento")),//dt.Rows[0].Field<int>("id_stato"),
+                                            id_stato = CalcolaIDStato(dt.Rows[0].Field<int>("id_stato"), dt.Rows[0].Field<string>("protocollo_riferimento")),
                                             data_inizio_lavorazione = dt.Rows[0].Field<DateTime>("data_inizio_lavorazione"),
                                             data_fine_lavorazione = dt.Rows[0].Field<DateTime>("data_fine_lavorazione"),
                                             durata_lavorazione = dt.Rows[0].Field<int>("durata_lavorazione"),
@@ -980,7 +980,7 @@ namespace VideoSystemWeb.DAL
                                             nota = dt.Rows[0].Field<string>("nota")
                                         };
                                 }
-                                else
+                                else if (showWarning)
                                 {
                                     esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
                                     esito.Descrizione = "Nessun dato trovato nella tabella tab_dati_agenda ";

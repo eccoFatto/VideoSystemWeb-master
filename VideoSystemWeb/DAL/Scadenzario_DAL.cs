@@ -663,6 +663,8 @@ namespace VideoSystemWeb.DAL
                                     scadenza.Destinatario = dt.Rows[0].Field<string>("destinatario");
                                     scadenza.IdTipoProtocollo = dt.Rows[0].Field<int>("id_tipo_protocollo");
 
+                                    scadenza.NumeroProtocollo = dt.Rows[0].Field<string>("numero_protocollo");
+
                                     scadenza.Cassa = 0;
                                 }
                             }
@@ -780,6 +782,8 @@ namespace VideoSystemWeb.DAL
                                             Destinatario = riga.Field<string>("destinatario"),
                                             IdTipoProtocollo = riga.Field<int>("id_tipo_protocollo"),
 
+                                            NumeroProtocollo = riga.Field<string>("numero_protocollo"),
+
                                             Cassa = 0
                                         };
                                         listaDatiScadenzario.Add(scadenza);
@@ -848,6 +852,8 @@ namespace VideoSystemWeb.DAL
                                             DataProtocollo = riga.Field<DateTime?>("data_protocollo"),
                                             Destinatario = riga.Field<string>("destinatario"),
                                             IdTipoProtocollo = riga.Field<int>("id_tipo_protocollo"),
+
+                                            NumeroProtocollo = riga.Field<string>("numero_protocollo"),
 
                                             //ImportoTotale = 0,
                                             Cassa = 0

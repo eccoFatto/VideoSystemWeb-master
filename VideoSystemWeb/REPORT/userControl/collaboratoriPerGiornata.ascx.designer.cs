@@ -1,17 +1,19 @@
 ﻿//------------------------------------------------------------------------------
 // <generato automaticamente>
-//     Codice generato da uno strumento.
+//     Questo codice è stato generato da uno strumento.
 //
 //     Le modifiche a questo file possono causare un comportamento non corretto e verranno perse se
 //     il codice viene rigenerato. 
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.REPORT.userControl {
-    
-    
-    public partial class collaboratoriPerGiornata {
-        
+namespace VideoSystemWeb.REPORT.userControl
+{
+
+
+    public partial class collaboratoriPerGiornata
+    {
+
         /// <summary>
         /// Controllo lblCollaboratori.
         /// </summary>
@@ -20,7 +22,7 @@ namespace VideoSystemWeb.REPORT.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblCollaboratori;
-        
+
         /// <summary>
         /// Controllo UpdatePanelRicerca.
         /// </summary>
@@ -29,7 +31,7 @@ namespace VideoSystemWeb.REPORT.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
-        
+
         /// <summary>
         /// Controllo tbDataRicerca.
         /// </summary>
@@ -38,7 +40,7 @@ namespace VideoSystemWeb.REPORT.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDataRicerca;
-        
+
         /// <summary>
         /// Controllo btnRicercaCollaboratori.
         /// </summary>
@@ -47,7 +49,7 @@ namespace VideoSystemWeb.REPORT.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRicercaCollaboratori;
-        
+
         /// <summary>
         /// Controllo gv_Collaboratori.
         /// </summary>

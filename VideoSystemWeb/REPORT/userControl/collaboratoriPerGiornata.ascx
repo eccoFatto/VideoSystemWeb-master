@@ -34,7 +34,7 @@
                 </div>
                 <div class="w3-quarter" style="position:relative;">
                     <label>&nbsp;</label>
-                    <table style="width: 100%;">
+                    <table style="width: 100%;" >
                         <tr>
                             <td style="width: 70%;">
                                 <asp:Button ID="btnRicercaCollaboratori" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaCollaboratori_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
@@ -59,7 +59,7 @@
             </div>
 
             <div class="round">
-                <asp:GridView ID="gv_Collaboratori" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gv_Collaboratori_RowDataBound" AllowPaging="false" OnPageIndexChanging="gv_Collaboratori_PageIndexChanging" PageSize="20"  AllowSorting="false" >
+                <asp:GridView ID="gv_Collaboratori" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="w3-table-all" OnRowDataBound="gv_Collaboratori_RowDataBound" AllowPaging="false" OnPageIndexChanging="gv_Collaboratori_PageIndexChanging" PageSize="20"  AllowSorting="false" >
                     <PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>
                 </asp:GridView>
             </div>

@@ -56,9 +56,7 @@ namespace VideoSystemWeb.Agenda
 
             popupAppuntamento.RichiediOperazionePopup += OperazioniPopup;
             popupOfferta.RichiediOperazionePopup += OperazioniPopup;
-
             popupLavorazione.RichiediOperazionePopup += OperazioniPopup;
-
             popupRiepilogoOfferta.RichiediListaArticoli += GetListaArticoli;
 
             isUtenteAbilitatoInScrittura = AbilitazioneInScrittura();
@@ -79,8 +77,7 @@ namespace VideoSystemWeb.Agenda
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
 
-                divLegenda.Controls.Add(new LiteralControl(CreaLegenda()));
-                divFiltroAgenda.Controls.Add(new LiteralControl(CreaFiltriColonneAgenda()));
+                
                 if (Session[SessionManager.UTENTE] != null)
                 {
                     Anag_Utenti utenteConnesso = (Anag_Utenti)Session[SessionManager.UTENTE];
@@ -111,8 +108,6 @@ namespace VideoSystemWeb.Agenda
                 gv_scheduler.DataSource = CreateDataTable(dataPartenza);
                 gv_scheduler.DataBind();
 
-                divLegenda.Controls.Add(new LiteralControl(CreaLegenda()));
-                divFiltroAgenda.Controls.Add(new LiteralControl(CreaFiltriColonneAgenda()));
                 if (Session[SessionManager.UTENTE] != null)
                 {
                     Anag_Utenti utenteConnesso = (Anag_Utenti)Session[SessionManager.UTENTE];
@@ -135,6 +130,8 @@ namespace VideoSystemWeb.Agenda
                 // SELEZIONO L'ULTIMA TAB SELEZIONATA
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openTabEvento('" + hf_tabSelezionata.Value + "');", addScriptTags: true);
             }
+            divLegenda.Controls.Add(new LiteralControl(CreaLegenda()));
+            divFiltroAgenda.Controls.Add(new LiteralControl(CreaFiltriColonneAgenda()));
         }
 
         #region COMPORTAMENTO ELEMENTI PAGINA

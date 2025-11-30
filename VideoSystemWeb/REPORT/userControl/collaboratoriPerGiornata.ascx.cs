@@ -48,7 +48,8 @@ namespace VideoSystemWeb.REPORT.userControl
                                                             "left join dati_lavorazione dl on dl.idDatiAgenda = da.id " +
                                                             "left join dati_articoli_lavorazione dal on dl.id = dal.idDatiLavorazione " +
                                                             "left join anag_collaboratori ac on dal.idCollaboratori = ac.id " +
-                                                            "where ac.cognome is not null " +
+                                                            "left join anag_clienti_fornitori acf on dal.idFornitori=acf.id " +
+                                                            "where (ac.cognome is not null or acf.ragioneSociale is not null) " + //ac.cognome is not null " +
                                                             "and dal.descrizione <> 'Diaria' " +
                                                             "and data_inizio_impegno <= '@dataElaborazione' and data_fine_impegno >= '@dataElaborazione' " +
                                                             "group by da.codice_lavoro,produzione,lavorazione " +

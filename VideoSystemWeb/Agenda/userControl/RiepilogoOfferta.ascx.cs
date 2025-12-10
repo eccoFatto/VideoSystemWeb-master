@@ -48,33 +48,10 @@ namespace VideoSystemWeb.Agenda.userControl
                 {
                     ddl_Banca.Items.Add(new ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
                 }
-
-
             }
         }
 
         #region COMPORTAMENTO ELEMENTI PAGINA
-        //protected void btnStampa_Click(object sender, EventArgs e)
-        //{
-            
-
-        //    string codiceLavoro = RichiediCodiceLavoro();
-
-        //    string nomeFile = "Offerta_" + codiceLavoro + ".pdf";
-        //    MemoryStream workStream = GeneraPdf();
-
-        //    Response.Clear();
-        //    Response.ClearContent();
-        //    Response.ClearHeaders();
-        //    Response.ContentType = "application/pdf";
-        //    Response.AddHeader("Content-Disposition", "attachment; filename=" + nomeFile);
-        //    Response.AddHeader("Content-Length", workStream.Length.ToString());
-        //    Response.BinaryWrite(workStream.ToArray());
-        //    Response.Flush();
-        //    Response.Close();
-        //    Response.End();
-        //}
-
         protected void btnModificaNote_Click(object sender, EventArgs e)
         {
             DivFramePdf.Visible = false;
@@ -85,7 +62,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
         protected void btnOKModificaNote_Click(object sender, EventArgs e)
         {
-            
             NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
             noteOfferta.Banca = ddl_Banca.SelectedValue;
             noteOfferta.Pagamento = 30; // int.Parse(tbMod_Pagamento.Text); //int.Parse(ComboMod_Pagamento.SelectedValue); 
@@ -95,9 +71,6 @@ namespace VideoSystemWeb.Agenda.userControl
             Offerta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
 
             //RichiediOperazionePopup("SAVE_PDF_OFFERTA");
-
-
-
             //DivFramePdf.Visible = true;
             //framePdf.Visible = true;
             DatiAgenda eventoSel = (DatiAgenda)ViewState["eventoSelezionato"];

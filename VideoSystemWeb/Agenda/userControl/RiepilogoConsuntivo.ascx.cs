@@ -27,9 +27,23 @@ namespace VideoSystemWeb.Agenda.userControl
                 ScriptManager scriptManager = ScriptManager.GetCurrent(this.Page);
                 scriptManager.RegisterPostBackControl(this.btnStampaConsuntivo);
             }
+            else
+            {
+                ComboMod_Pagamento.Items.Clear();
+                foreach (GiorniPagamentoFatture gpf in SessionManager.ListaGPF)
+                {
+                    ComboMod_Pagamento.Items.Add(new System.Web.UI.WebControls.ListItem(gpf.Giorni, gpf.Giorni));
+                }
+
+                foreach (DatiBancari datiBancari in SessionManager.ListaDatiBancari)
+                {
+                    ddl_Banca.Items.Add(new System.Web.UI.WebControls.ListItem(datiBancari.Banca, datiBancari.DatiCompleti));
+                }
+            }
         }
         public Esito popolaPannelloConsuntivo(DatiAgenda eventoSelezionato)
         {
+            ViewState["eventoSelezionato"] = eventoSelezionato;
             Esito esito = new Esito();
             try
             {
@@ -266,6 +280,20 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         // ESTRAPOLO NOTEOFFERTA
                         NoteOfferta noteOfferta = Offerta_BLL.Instance.getNoteOffertaByIdDatiAgenda(eventoSelezionato.id, ref esito);
+
+                        ViewState["NoteOfferta"] = noteOfferta;
+
+                        txt_Consegna.Text = noteOfferta.Consegna;
+                        tbMod_Pagamento.Text = noteOfferta.NotaPagamento.ToString();
+
+                        if (string.IsNullOrEmpty(noteOfferta.Note))
+                        {
+                            txt_Note.Text = "";
+                        }
+                        else
+                        {
+                            txt_Note.Text = noteOfferta.Note.Trim();
+                        }
 
                         // NOTE
                         Text first = new Text("Note:").SetFontSize(9).SetBold();
@@ -573,6 +601,32 @@ namespace VideoSystemWeb.Agenda.userControl
         {
         }
 
+        protected void btnModificaNoteConsuntivo_Click(object sender, EventArgs e)
+        {
+            DivFramePdfConsuntivo.Visible = false;
+            framePdfConsuntivo.Visible = false;
+
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriModificaNote", script: "javascript: document.getElementById('panelModificaNoteConsuntivo').style.display='block'", addScriptTags: true);
+        }
+
+        protected void btnOKModificaNoteConsuntivo_Click(object sender, EventArgs e)
+        {
+            NoteOfferta noteOfferta = (NoteOfferta)ViewState["NoteOfferta"];
+            noteOfferta.Banca = ddl_Banca.SelectedValue;
+            noteOfferta.Pagamento = 30; // int.Parse(tbMod_Pagamento.Text); //int.Parse(ComboMod_Pagamento.SelectedValue); 
+            noteOfferta.NotaPagamento = tbMod_Pagamento.Text.Trim();
+            noteOfferta.Consegna = txt_Consegna.Text;
+            noteOfferta.Note = txt_Note.Text.Trim();
+            Offerta_BLL.Instance.AggiornaNoteOfferta(noteOfferta);
+
+            DatiAgenda eventoSel = (DatiAgenda)ViewState["eventoSelezionato"];
+            Esito esito = popolaPannelloConsuntivo(eventoSel);
+
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaNote", script: "javascript: aggiornaRiepilogo()", addScriptTags: true);
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiModificaNote", script: "javascript: document.getElementById('panelModificaNoteConsuntivo').style.display='none'", addScriptTags: true);
+            // FACCIO REFRESH SUL FRAME CHE VISUALIZZA IL PDF IN MODO DA VEDERE GLI AGGIORNAMENTI IN TEMPO REALE
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "aggiornaFrame", script: "javascript: document.getElementById('" + framePdfConsuntivo.ClientID + "').contentDocument.location.reload(true);", addScriptTags: true);
+        }
 
         #endregion
 

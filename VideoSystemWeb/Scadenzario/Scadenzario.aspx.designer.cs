@@ -60,6 +60,33 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_NumeroFattura;
 
         /// <summary>
+        /// Controllo div_TipoClienteFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_TipoClienteFornitore;
+
+        /// <summary>
+        /// Controllo lbl_TipoClienteFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_TipoClienteFornitore;
+
+        /// <summary>
+        /// Controllo ddl_TipoClienteFornitore.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_TipoClienteFornitore;
+
+        /// <summary>
         /// Controllo ddlFatturaPagata.
         /// </summary>
         /// <remarks>

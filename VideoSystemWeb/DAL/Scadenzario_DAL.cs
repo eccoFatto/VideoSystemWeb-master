@@ -690,6 +690,7 @@ namespace VideoSystemWeb.DAL
                                                            string dataScadenzaDa,
                                                            string dataScadenzaA,
                                                            string filtroBanca,
+                                                           string filtroTipoClienteFornitore,
                                                            ref Esito esito)
         {
             List<DatiScadenzario> listaDatiScadenzario = new List<DatiScadenzario>();
@@ -736,9 +737,11 @@ namespace VideoSystemWeb.DAL
                 filtriRicerca += string.IsNullOrWhiteSpace(dataScadenzaA) ? "" : " and a.dataScadenza < '" + (DateTime.Parse(dataScadenzaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'";
                 filtriRicerca += string.IsNullOrWhiteSpace(filtroBanca) ? "" : " and a.idTipoBanca = " + filtroBanca;
 
+                filtriRicerca += string.IsNullOrWhiteSpace(filtroTipoClienteFornitore) ? "" : " and c.tipo = '" + filtroTipoClienteFornitore + "'";
+
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM dati_scadenzario a left join dati_protocollo b on a.idDatiProtocollo = b.id where 1=1 ";
+                    string query = "SELECT * FROM dati_scadenzario a left join dati_protocollo b on a.idDatiProtocollo = b.id left join anag_clienti_fornitori c on b.id_cliente = c.id where 1=1 ";
                     query += filtriRicerca;
                     query += " order by a.id desc";
 
@@ -803,6 +806,44 @@ namespace VideoSystemWeb.DAL
             return listaDatiScadenzario;
         }
 
+        public List<string> GetTipoClienteFornitore(string clienteFornitore, ref Esito esito)
+        {
+            List<string> listaTipoClienteFornitore = new List<string>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT distinct tipo FROM anag_clienti_fornitori where " + clienteFornitore + " = '1'";
+
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        listaTipoClienteFornitore.Add(riga.Field<string>("tipo"));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Scadenzario_DAL.cs - GetTipoClienteFornitore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return listaTipoClienteFornitore;
+        }
         public List<DatiScadenzario> GetDatiTotaliFatturaByIdDatiScadenzario(int idDatiScadenzario, ref Esito esito)
         {
             List<DatiScadenzario> listaDatiScadenzario = new List<DatiScadenzario>();

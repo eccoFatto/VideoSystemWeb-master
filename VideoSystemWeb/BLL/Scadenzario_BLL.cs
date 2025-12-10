@@ -321,6 +321,7 @@ namespace VideoSystemWeb.BLL
                                                            string dataScadenzaDa,
                                                            string dataScadenzaA,
                                                            string filtroBanca,
+                                                           string filtroTipoClienteFornitore,
                                                            ref Esito esito)
         {
             return Scadenzario_DAL.Instance.GetAllDatiScadenzario(tipoAnagrafica,
@@ -332,7 +333,13 @@ namespace VideoSystemWeb.BLL
                                                                   dataScadenzaDa,
                                                                   dataScadenzaA,
                                                                   filtroBanca,
+                                                                  filtroTipoClienteFornitore,
                                                                   ref esito);
+        }
+
+        public List<string> GetTipoClienteFornitore(string clienteFornitore, ref Esito esito)
+        {
+            return Scadenzario_DAL.Instance.GetTipoClienteFornitore(clienteFornitore, ref esito);
         }
 
         public void DeleteDatiScadenzario(int idDatiScadenzario, ref Esito esito)

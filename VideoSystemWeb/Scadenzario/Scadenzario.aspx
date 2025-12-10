@@ -183,35 +183,33 @@
     <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
         <ContentTemplate>
             <div class="w3-row-padding">
-                 <div class="w3-quarter">
-                    <label>Cliente/Fornitore</label>
-                    <asp:TextBox ID="txt_RagioneSociale" runat="server" class="w3-input w3-border" ></asp:TextBox>
+                <div class="w3-threequarter w3-row-padding">
+                     <div class="w3-quarter">
+                        <label>Cliente/Fornitore</label>
+                        <asp:TextBox ID="txt_RagioneSociale" runat="server" class="w3-input w3-border" ></asp:TextBox>
+                     </div>
 
-                    <%--<div id="divRagioneSociale" class="dropdown ">
-                        <asp:HiddenField ID="hf_RagioneSociale" runat="server" Value="" />
-                        <asp:Button ID="ddl_RagioneSociale" runat="server" AutoPostBack="False" Width="100%" CssClass="w3-input w3-border" data-toggle="dropdown" data-boundary="divClienti" Text="" Style="text-overflow: ellipsis; overflow: hidden; height:37px;background-color: white;text-align:left;" />
-                        <ul id="elencoRagioneSociale" class="dropdown-menu" runat="server" style="max-height: 350px; overflow: auto;padding-top:0px">
-                            <input class="form-control" id="filtroRagioneSociale" type="text" placeholder="Cerca..">
-                        </ul>
-                    </div>--%>
-
-                </div>
-
-                <div class="w3-quarter">
-                    <label>Tipo (Cliente/Fornitore/Busta Paga)</label>
-                    <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
-                        <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
-                        <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
-                        <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
-                        <asp:ListItem Value="BustaPaga" Text="Busta paga"></asp:ListItem>
-                    </asp:DropDownList>
-                </div>
+                    <div class="w3-quarter">
+                        <label>Tipo (Cliente/Fornitore/Busta Paga)</label>
+                        <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddl_TipoAnagrafica_SelectedIndexChanged">
+                            <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
+                            <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
+                            <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
+                            <asp:ListItem Value="BustaPaga" Text="Busta paga"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
                 
-                <div class="w3-quarter">
-                    <label>Numero Fattura</label>
-                    <asp:TextBox ID="txt_NumeroFattura" runat="server" MaxLength="20" class="w3-input w3-border" />
+                    <div class="w3-quarter">
+                        <label>Numero Fattura</label>
+                        <asp:TextBox ID="txt_NumeroFattura" runat="server" MaxLength="20" class="w3-input w3-border" />
+                    </div>
+
+                    <div class="w3-quarter" id="div_TipoClienteFornitore" runat="server" visible="false">
+                        <asp:Label id="lbl_TipoClienteFornitore" runat="server" Text="" style="margin-bottom:0.5rem"/>
+                        <asp:DropDownList ID="ddl_TipoClienteFornitore" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" />
+                    </div>
                 </div>
-               
+
                 <div class="w3-quarter">
                     <label>Pagata</label>
                     <asp:DropDownList ID="ddlFatturaPagata" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">

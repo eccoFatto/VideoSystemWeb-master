@@ -1,7 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RiepilogoConsuntivo.ascx.cs" Inherits="VideoSystemWeb.Agenda.userControl.RiepilogoConsuntivo" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 
-<script>
-</script>
 
 <style>
     .cella {
@@ -13,11 +12,68 @@
     <div class="w3-modal-content  w3-animate-zoom " style="position: fixed; top: 5%; width: 70%; left: 15%; overflow: auto; height: 90%; background-color: transparent">
         <div class="w3-center w3-padding-small" style="position: relative; background-color: white">
             <asp:Button ID="btnStampaConsuntivo" runat="server" Text="Stampa" class="w3-btn w3-white w3-border w3-border-green w3-round-large " Style="font-size: smaller; padding: 4px 8px" OnClick="btnStampaConsuntivo_Click" />
+            <asp:Button ID="btnModificaNote" runat="server" Text="Modifica note" class="w3-btn w3-white w3-border w3-border-orange w3-round-large " Style="font-size: smaller; padding: 4px 8px" OnClick="btnModificaNoteConsuntivo_Click" />
             <button onclick="document.getElementById('modalConsuntivo').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Chiudi</button>
         </div>
 
         <div id="DivFramePdfConsuntivo" runat="server" style=" width:100%; height:90%;" >
             <iframe id="framePdfConsuntivo" runat="server" src="~/Images/logoVSP_trim.png" style=" width:100%; height:100%;"></iframe>
+        </div>
+    </div>
+</div>
+
+<div id="panelModificaNoteConsuntivo" class="w3-modal " style="position: fixed;">
+
+    <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 50%; background-color: white; overflow: auto;">
+        <div class="w3-row-padding">
+            <div class="w3-center">
+                <br>
+                <span onclick="document.getElementById('panelModificaNoteConsuntivo').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+            </div>
+
+            <div class="w3-center">
+                <h3 style="margin-top:-10px;margin-bottom:25px;font-weight:bold">Modifica note Consuntivo</h3>
+            </div>
+
+            <div class="w3-row" style="padding: 5px;">
+
+                <div class="w3-quarter">
+                    <label style="margin-bottom: 0.2rem;">Banca</label>
+                </div>
+                <div class="w3-threequarter">
+                    <asp:DropDownList ID="ddl_Banca" runat="server"></asp:DropDownList>
+                </div>
+            </div>
+            <div class="w3-row" style="padding: 5px;">
+                <div class="w3-quarter">
+                    <label style="margin-bottom: 0.2rem;">Pagamento (GG)</label>
+                </div>
+                <div class="w3-threequarter">
+                    <asp:TextBox ID="tbMod_Pagamento" runat="server"/>    
+                    <ajaxToolkit:ComboBox ID="ComboMod_Pagamento" runat="server" Visible="false"/>
+                </div>
+            </div>
+            <div class="w3-row" style="padding: 5px;">
+                <div class="w3-quarter" style="padding: 5px">
+                    <label style="margin-bottom: 0.2rem;">Consegna</label>
+                </div>
+                <div class="w3-threequarter">
+                    <asp:TextBox ID="txt_Consegna" runat="server" class="w3-input w3-border" placeholder="Consegna" Style="padding: 2px;"></asp:TextBox>
+                </div>
+            </div>
+            <div class="w3-row" style="padding: 5px;">
+                <div class="w3-quarter" style="padding: 5px">
+                    <label style="margin-bottom: 0.2rem;">Note</label>
+                </div>
+                <div class="w3-threequarter">
+                    <asp:TextBox ID="txt_Note" runat="server" CssClass="w3-input w3-border limited-lines" placeholder="Note" Style="padding: 2px;" Rows="6" TextMode="MultiLine"></asp:TextBox>
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-center" style="margin: 10px">
+            <asp:Button ID="btnOKModificaNoteConsuntivo" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOKModificaNoteConsuntivo_Click" />
+            <button onclick="document.getElementById('panelModificaNoteConsuntivo').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
         </div>
     </div>
 </div>

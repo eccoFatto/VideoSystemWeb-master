@@ -20,12 +20,6 @@
         });
 
     });
-    
-<%--    function aggiornaRiepilogo() {
-
-        $("#<%=note.ClientID%>").text($("#<%=txt_Note.ClientID%>").val());
-    }--%>
-
 </script>
 
 <style>
@@ -33,7 +27,6 @@
         padding-top:10px;
         vertical-align:top;
     }
-
 
 </style>
 <div id="modalRiepilogoOfferta" class="w3-modal">
@@ -44,12 +37,10 @@
             <button onclick="document.getElementById('modalRiepilogoOfferta').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 8px 4px">Chiudi</button>
             <asp:CheckBox ID="cbCopriImporti" runat="server" Text="&nbsp;Copri Importi" Checked="false" OnCheckedChanged="cbCopriImporti_CheckedChanged" AutoPostBack="true" class="w3-btn w3-white w3-border w3-border-orange w3-round-large" style="font-size: smaller; padding: 8px 4px" />
         </div>
-        <%--<div id="modalRiepilogoContent" runat="server" style="background-color: white;">--%>
 
-            <div id="DivFramePdf" runat="server" style=" width:100%; height:90%;" >
-                <iframe id="framePdf" runat="server" src="#" style=" width:100%; height:100%;"></iframe>
-            </div>
-        <%--</div>--%>
+        <div id="DivFramePdf" runat="server" style=" width:100%; height:90%;" >
+            <iframe id="framePdf" runat="server" src="#" style=" width:100%; height:100%;"></iframe>
+        </div>
     </div>
 </div>
 
@@ -65,7 +56,7 @@
             </div>
 
             <div class="w3-center">
-                <h3>Modifica note Offerta</h3>
+                <h3 style="margin-top:-10px;margin-bottom:25px;font-weight:bold">Modifica note Offerta</h3>
             </div>
 
             <div class="w3-row" style="padding: 5px;">

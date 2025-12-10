@@ -147,7 +147,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
         private void PopolaGrigliaScadenze()
         {
             Esito esito = new Esito();
-            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", ref esito);
+            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", "", ref esito);
 
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
@@ -228,6 +228,28 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 }
             }
             ddl_fattura.SelectedIndex = 0;
+        }
+
+        protected void ddl_TipoAnagrafica_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ddl_TipoClienteFornitore.Items.Clear();
+
+            string selezione = ddl_TipoAnagrafica.SelectedValue;
+            bool isClienteFornitore = selezione == "Cliente" || selezione == "Fornitore";
+
+            div_TipoClienteFornitore.Visible = isClienteFornitore;
+            lbl_TipoClienteFornitore.Text = "Tipo " + selezione;
+
+            if (isClienteFornitore)
+            {
+                Esito esito = new Esito();
+                List<string> listaTipoClienteFornitore = Scadenzario_BLL.Instance.GetTipoClienteFornitore(selezione, ref esito);
+                ddl_TipoClienteFornitore.Items.Add(new ListItem("", ""));
+                foreach (string clienteFornitore in listaTipoClienteFornitore)
+                {
+                    ddl_TipoClienteFornitore.Items.Add(new ListItem(clienteFornitore, clienteFornitore));
+                }   
+            }
         }
 
         protected void btnRicercaScadenza_Click(object sender, EventArgs e)
@@ -338,6 +360,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                                         txt_DataDa.Text,
                                                                                                         txt_DataA.Text,
                                                                                                         ddl_FiltroBanca.SelectedValue,
+                                                                                                        ddl_TipoClienteFornitore.SelectedValue,
                                                                                                         ref esito);
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;

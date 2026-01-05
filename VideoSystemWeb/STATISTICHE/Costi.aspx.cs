@@ -246,16 +246,6 @@ namespace VideoSystemWeb.STATISTICHE
             string filtroGruppo = ddl_Gruppo.SelectedValue;
             string filtroSottogruppo = ddl_Sottogruppo.SelectedValue;
 
-            //bool? isFatturato;
-            //if (string.IsNullOrEmpty(ddlFatturato.SelectedValue))
-            //{
-            //    isFatturato = null;
-            //}
-            //else
-            //{
-            //    isFatturato = ddlFatturato.SelectedValue == "1";
-            //}
-
             string dataInizio = txt_PeriodoDa.Text;
             string dataFine = txt_PeriodoA.Text;
 

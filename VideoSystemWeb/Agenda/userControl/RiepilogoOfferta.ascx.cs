@@ -459,7 +459,7 @@ namespace VideoSystemWeb.Agenda.userControl
                         cellaGrigliaInfo.Add(pGrigliaInfo);
                         tbGriglaInfo.AddCell(cellaGrigliaInfo);
 
-                        pGrigliaInfo = new iText.Layout.Element.Paragraph(eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy")).SetFontSize(9);
+                        pGrigliaInfo = new iText.Layout.Element.Paragraph(eventoSelezionato.data_inizio_lavorazione.ToString("dd/MM/yyyy")).SetFontSize(10).SetBold();
                         cellaGrigliaInfo = new iText.Layout.Element.Cell().SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetPadding(5);
                         cellaGrigliaInfo.Add(pGrigliaInfo);
                         tbGriglaInfo.AddCell(cellaGrigliaInfo);

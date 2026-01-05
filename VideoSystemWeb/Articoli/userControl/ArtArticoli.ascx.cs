@@ -30,76 +30,64 @@ namespace VideoSystemWeb.Articoli.userControl
                 {
                     lblIntestazionePagina.Text = "ARTICOLI";
 
-                    //BasePage p = new BasePage();
-                    //Esito esito = p.CaricaListeTipologiche();
 
                     // CARICO LE COMBO
-                    //if (string.IsNullOrEmpty(esito.descrizione))
-                    //{
-                        // GENERI
-                        cmbMod_Genere.Items.Clear();
-                        cmbMod_Genere.Items.Add("");
-                        ddlGenere.Items.Clear();
-                        ddlGenere.Items.Add("");
-                        foreach (Tipologica tipologiaGenere in SessionManager.ListaTipiGeneri)
-                        {
-                            ListItem item = new ListItem();
-                            item.Text = tipologiaGenere.nome;
-                            item.Value = tipologiaGenere.id.ToString();
-                            cmbMod_Genere.Items.Add(item);
-                            ddlGenere.Items.Add(item);
-                        }
-                        //GRUPPI
-                        cmbMod_Gruppo.Items.Clear();
-                        cmbMod_Gruppo.Items.Add("");
-                        ddlGruppo.Items.Clear();
-                        ddlGruppo.Items.Add("");
-                        foreach (Tipologica tipologiaGruppo in SessionManager.ListaTipiGruppi)
-                        {
-                            ListItem item = new ListItem();
-                            item.Text = tipologiaGruppo.nome;
-                            item.Value = tipologiaGruppo.id.ToString();
-                            cmbMod_Gruppo.Items.Add(item);
-                            ddlGruppo.Items.Add(item);
-                        }
-                        //SOTTOGRUPPI
-                        cmbMod_Sottogruppo.Items.Clear();
-                        cmbMod_Sottogruppo.Items.Add("");
-                        ddlSottoGruppo.Items.Clear();
-                        ddlSottoGruppo.Items.Add("");
-                        foreach (Tipologica tipologiaSottogruppo in SessionManager.ListaTipiSottogruppi)
-                        {
-                            ListItem item = new ListItem();
-                            item.Text = tipologiaSottogruppo.nome;
-                            item.Value = tipologiaSottogruppo.id.ToString();
-                            cmbMod_Sottogruppo.Items.Add(item);
-                            ddlSottoGruppo.Items.Add(item);
-                        }
 
-                        //GRUPPI ARTICOLI
-                        ddlGruppiDaAggiungere.Items.Clear();
-                        List<Art_Gruppi> listaGruppiMain = Art_Gruppi_BLL.Instance.CaricaListaGruppi(ref esito, true);
-                        foreach (Art_Gruppi gruppoMain in listaGruppiMain)
-                        {
-                            ListItem item = new ListItem();
-                            string stringaVisualizzata = gruppoMain.Nome.Trim().PadRight(50);
-                            if (!string.IsNullOrEmpty(gruppoMain.Descrizione)) stringaVisualizzata += " | " + gruppoMain.Descrizione.Trim();
-                            item.Text = stringaVisualizzata;
-                            item.Value = gruppoMain.Id.ToString();
-                            ddlGruppiDaAggiungere.Items.Add(item);
-                        }
+                    // GENERI
+                    cmbMod_Genere.Items.Clear();
+                    cmbMod_Genere.Items.Add("");
+                    ddlGenere.Items.Clear();
+                    ddlGenere.Items.Add("");
+                    foreach (Tipologica tipologiaGenere in SessionManager.ListaTipiGeneri)
+                    {
+                        ListItem item = new ListItem();
+                        item.Text = tipologiaGenere.nome;
+                        item.Value = tipologiaGenere.id.ToString();
+                        cmbMod_Genere.Items.Add(item);
+                        ddlGenere.Items.Add(item);
+                    }
+                    //GRUPPI
+                    cmbMod_Gruppo.Items.Clear();
+                    cmbMod_Gruppo.Items.Add("");
+                    ddlGruppo.Items.Clear();
+                    ddlGruppo.Items.Add("");
+                    foreach (Tipologica tipologiaGruppo in SessionManager.ListaTipiGruppi)
+                    {
+                        ListItem item = new ListItem();
+                        item.Text = tipologiaGruppo.nome;
+                        item.Value = tipologiaGruppo.id.ToString();
+                        cmbMod_Gruppo.Items.Add(item);
+                        ddlGruppo.Items.Add(item);
+                    }
+                    //SOTTOGRUPPI
+                    cmbMod_Sottogruppo.Items.Clear();
+                    cmbMod_Sottogruppo.Items.Add("");
+                    ddlSottoGruppo.Items.Clear();
+                    ddlSottoGruppo.Items.Add("");
+                    foreach (Tipologica tipologiaSottogruppo in SessionManager.ListaTipiSottogruppi)
+                    {
+                        ListItem item = new ListItem();
+                        item.Text = tipologiaSottogruppo.nome;
+                        item.Value = tipologiaSottogruppo.id.ToString();
+                        cmbMod_Sottogruppo.Items.Add(item);
+                        ddlSottoGruppo.Items.Add(item);
+                    }
+
+                    //GRUPPI ARTICOLI
+                    ddlGruppiDaAggiungere.Items.Clear();
+                    List<Art_Gruppi> listaGruppiMain = Art_Gruppi_BLL.Instance.CaricaListaGruppi(ref esito, true);
+                    foreach (Art_Gruppi gruppoMain in listaGruppiMain)
+                    {
+                        ListItem item = new ListItem();
+                        string stringaVisualizzata = gruppoMain.Nome.Trim().PadRight(50);
+                        if (!string.IsNullOrEmpty(gruppoMain.Descrizione)) stringaVisualizzata += " | " + gruppoMain.Descrizione.Trim();
+                        item.Text = stringaVisualizzata;
+                        item.Value = gruppoMain.Id.ToString();
+                        ddlGruppiDaAggiungere.Items.Add(item);
+                    }
 
                         // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                         abilitaBottoni(basePage.AbilitazioneInScrittura());
-
-                    //}
-                    //else
-                    //{
-                    //    Session["ErrorPageText"] = esito.descrizione;
-                    //    string url = String.Format("~/pageError.aspx");
-                    //    Response.Redirect(url, true);
-                    //}
-
                 }
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioArticolo('" + hf_tabChiamata.Value + "');", addScriptTags: true);
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);

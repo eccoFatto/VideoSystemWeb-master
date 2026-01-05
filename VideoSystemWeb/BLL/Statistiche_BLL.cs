@@ -68,9 +68,6 @@ namespace VideoSystemWeb.BLL
         
         public List<StatisticheCosti> GetStatisticheCosti_NomeLavorazione(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroContratto, string filtroGenere, string filtroGruppo, string filtroSottogruppo, string filtroCodLavorazione, string dataInizio, string dataFine, string filtroFornitore, ref Esito esito)
         {
-            //return Statistiche_DAL.Instance.GetStatisticheCosti(filtriLavorazione, filtriCosti, ref esito); //(filtroCliente, filtroProduzione, filtroLavorazione, filtroContratto, filtroGenere, filtroGruppo, filtroSottogruppo, fatturato, dataInizio, dataFine, filtroFornitore, ref esito);
-
-
             List<StatisticheCosti> listaStatisticheCosti = new List<StatisticheCosti>();
 
             string filtriLavorazione = string.Empty;
@@ -79,15 +76,10 @@ namespace VideoSystemWeb.BLL
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroCodLavorazione) ? "" : " AND a.codice_lavoro = '" + filtroCodLavorazione + "' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
-
-            //if (fatturato != null)
-            //{
-            //    filtriLavorazione += (bool)fatturato ? "and e.protocollo_riferimento is not null " : "and e.protocollo_riferimento is null ";
-            //}
             filtriLavorazione += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND a.data_inizio_lavorazione >= '" + dataInizio.Substring(6) + "-" + dataInizio.Substring(3, 2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'";
+            
             // il filtro dataFine viene eseguito su dataInizioLavorazione, e non su dataFineLavorazione
             filtriLavorazione += string.IsNullOrWhiteSpace(dataFine) ? "" : " AND a.data_inizio_lavorazione <= '" + dataFine.Substring(6) + "-" + dataFine.Substring(3, 2) + "-" + dataFine.Substring(0, 2) + "T00:00:00.000'";
-
 
             string filtriCosti = string.Empty; ; // i filtri seguenti devono essere applicati solo alle categorie costi
 
@@ -95,8 +87,6 @@ namespace VideoSystemWeb.BLL
             filtriCosti += string.IsNullOrWhiteSpace(filtroGruppo) ? "" : " AND d.idTipoGruppo = '" + filtroGruppo + "' ";
             filtriCosti += string.IsNullOrWhiteSpace(filtroSottogruppo) ? "" : " AND d.idTipoSottogruppo = '" + filtroSottogruppo + "' ";
             filtriCosti += string.IsNullOrWhiteSpace(filtroFornitore) ? "" : "AND forn.ragioneSociale like '%" + filtroFornitore + "%' ";
-
-
 
             if (string.IsNullOrEmpty(filtriCosti))
             {
@@ -116,19 +106,14 @@ namespace VideoSystemWeb.BLL
                     }
                     elencoLavorazioni = elencoLavorazioni.Substring(0, elencoLavorazioni.Length - 2);
 
-
                     List<StatisticheCosti> listaStatisticheListino = Statistiche_DAL.Instance.GetStatisticheCostiListino(elencoLavorazioni, ref esito);
-
                     listaStatisticheCosti.AddRange(listaStatisticheListino);
-
                     listaStatisticheCosti = listaStatisticheCosti.OrderBy(x => x.Cliente).ThenBy(y => y.CodiceLavoro).ThenBy(z=>z.Progressivo).ToList();
                 }
             }
 
-
             return listaStatisticheCosti;    
         }
-
 
         public List<StatisticheCosti> GetStatisticheCosti_CodiceLavorazione(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroContratto, string filtroGenere, string filtroGruppo, string filtroSottogruppo, bool? fatturato, string dataInizio, string dataFine, string filtroFornitore, ref Esito esito)
         {

@@ -88,7 +88,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 #endregion
             }
 
-            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataFatturaDa.ClientID + "', '" + txt_DataFatturaA.ClientID + "');", true);
+            //ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataFatturaDa.ClientID + "', '" + txt_DataFatturaA.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataDa.ClientID + "', '" + txt_DataA.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
@@ -104,12 +104,46 @@ namespace VideoSystemWeb.Scadenzario.userControl
             foreach (Tipologica tipologiaBanca in SessionManager.ListaTipiBanca)
             {
                 ddl_Banca.Items.Add(new ListItem(tipologiaBanca.nome, tipologiaBanca.id.ToString()));
-
                 ddl_BancaModifica.Items.Add(new ListItem(tipologiaBanca.nome, tipologiaBanca.id.ToString()));
-
                 ddl_FiltroBanca.Items.Add(new ListItem(tipologiaBanca.nome, tipologiaBanca.id.ToString()));
             }
 
+            #endregion
+
+            #region GENERI
+            ddl_Generi.Items.Clear();
+            ddl_Generi.Items.Add("");
+            foreach (Tipologica tipologiaGenere in SessionManager.ListaTipiGeneri)
+            {
+                ListItem item = new ListItem();
+                item.Text = tipologiaGenere.nome;
+                item.Value = tipologiaGenere.id.ToString();
+                ddl_Generi.Items.Add(item);
+            }
+            #endregion
+
+            #region GRUPPI
+            ddl_Gruppo.Items.Clear();
+            ddl_Gruppo.Items.Add("");
+            foreach (Tipologica tipologiaGruppo in SessionManager.ListaTipiGruppi)
+            {
+                ListItem item = new ListItem();
+                item.Text = tipologiaGruppo.nome;
+                item.Value = tipologiaGruppo.id.ToString();
+                ddl_Gruppo.Items.Add(item);
+            }
+            #endregion
+
+            #region SOTTOGRUPPI
+            ddl_Sottogruppo.Items.Clear();
+            ddl_Sottogruppo.Items.Add("");
+            //foreach (Tipologica tipologiaSottogruppo in SessionManager.ListaTipiSottogruppi)
+            //{
+            //    ListItem item = new ListItem();
+            //    item.Text = tipologiaSottogruppo.nome;
+            //    item.Value = tipologiaSottogruppo.id.ToString();
+            //    ddl_Sottogruppo.Items.Add(item);
+            //}
             #endregion
         }
 
@@ -147,6 +181,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
         private void PopolaGrigliaScadenze()
         {
             Esito esito = new Esito();
+            //List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", ref esito);
+
             List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", "", ref esito);
 
             CalcolaTotali(listaDatiScadenzario);
@@ -230,27 +266,57 @@ namespace VideoSystemWeb.Scadenzario.userControl
             ddl_fattura.SelectedIndex = 0;
         }
 
-        protected void ddl_TipoAnagrafica_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddl_Gruppo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ddl_TipoClienteFornitore.Items.Clear();
+            Esito esito = new Esito();
 
-            string selezione = ddl_TipoAnagrafica.SelectedValue;
-            bool isClienteFornitore = selezione == "Cliente" || selezione == "Fornitore";
+            string idTipoGruppoString = ddl_Gruppo.SelectedValue;
 
-            div_TipoClienteFornitore.Visible = isClienteFornitore;
-            lbl_TipoClienteFornitore.Text = "Tipo " + selezione;
-
-            if (isClienteFornitore)
+            if (!string.IsNullOrEmpty(idTipoGruppoString))
             {
-                Esito esito = new Esito();
-                List<string> listaTipoClienteFornitore = Scadenzario_BLL.Instance.GetTipoClienteFornitore(selezione, ref esito);
-                ddl_TipoClienteFornitore.Items.Add(new ListItem("", ""));
-                foreach (string clienteFornitore in listaTipoClienteFornitore)
+                int idTipoGruppo = int.Parse(idTipoGruppoString);
+
+                ddl_Sottogruppo.Items.Clear();
+                ddl_Sottogruppo.Items.Add("");
+
+                List<Sottogruppo> listaSottogruppiFiltrata = (SessionManager.ListaTipiSottogruppi).Where(x => x.IdTipoGruppo == idTipoGruppo || x.IdTipoGruppo ==null).ToList<Sottogruppo>();
+
+                foreach (Tipologica tipologiaSottogruppo in listaSottogruppiFiltrata)
                 {
-                    ddl_TipoClienteFornitore.Items.Add(new ListItem(clienteFornitore, clienteFornitore));
-                }   
+                    ListItem item = new ListItem();
+                    item.Text = tipologiaSottogruppo.nome;
+                    item.Value = tipologiaSottogruppo.id.ToString();
+                    ddl_Sottogruppo.Items.Add(item);
+                }
+            }
+            else
+            {
+                ddl_Sottogruppo.Items.Clear();
+                ddl_Sottogruppo.Items.Add("");
             }
         }
+
+        //protected void ddl_TipoAnagrafica_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    ddl_TipoClienteFornitore.Items.Clear();
+
+        //    string selezione = ddl_TipoAnagrafica.SelectedValue;
+        //    bool isClienteFornitore = selezione == "Cliente" || selezione == "Fornitore";
+
+        //    div_TipoClienteFornitore.Visible = isClienteFornitore;
+        //    lbl_TipoClienteFornitore.Text = "Tipo " + selezione;
+
+        //    if (isClienteFornitore)
+        //    {
+        //        Esito esito = new Esito();
+        //        List<string> listaTipoClienteFornitore = Scadenzario_BLL.Instance.GetTipoClienteFornitore(selezione, ref esito);
+        //        ddl_TipoClienteFornitore.Items.Add(new ListItem("", ""));
+        //        foreach (string clienteFornitore in listaTipoClienteFornitore)
+        //        {
+        //            ddl_TipoClienteFornitore.Items.Add(new ListItem(clienteFornitore, clienteFornitore));
+        //        }   
+        //    }
+        //}
 
         protected void btnRicercaScadenza_Click(object sender, EventArgs e)
         {
@@ -355,12 +421,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                                         txt_RagioneSociale.Text,
                                                                                                         txt_NumeroFattura.Text,
                                                                                                         ddlFatturaPagata.SelectedValue,
-                                                                                                        txt_DataFatturaDa.Text,
-                                                                                                        txt_DataFatturaA.Text,
+                                                                                                        //txt_DataFatturaDa.Text,
+                                                                                                        //txt_DataFatturaA.Text,
                                                                                                         txt_DataDa.Text,
                                                                                                         txt_DataA.Text,
                                                                                                         ddl_FiltroBanca.SelectedValue,
-                                                                                                        ddl_TipoClienteFornitore.SelectedValue,
+                                                                                                        //ddl_TipoClienteFornitore.SelectedValue,
+                                                                                                        ddl_Generi.SelectedValue,
+                                                                                                        ddl_Gruppo.SelectedValue,
+                                                                                                        ddl_Sottogruppo.SelectedValue,
                                                                                                         ref esito);
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
@@ -633,8 +702,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             txt_RagioneSociale.Text =
             txt_NumeroFattura.Text =
-            txt_DataFatturaDa.Text =
-            txt_DataFatturaA.Text =
+            //txt_DataFatturaDa.Text =
+            //txt_DataFatturaA.Text =
             txt_DataDa.Text =
             txt_DataA.Text = string.Empty;
         }

@@ -201,6 +201,7 @@
     <Content Include="Articoli\GestioneArticoli.aspx" />
     <Content Include="Articoli\GestioneRaggruppamentiArticoli.aspx" />
     <Content Include="Articoli\userControl\ArtArticoli.ascx" />
+    <Content Include="Articoli\userControl\ArtSottogruppi.ascx" />
     <Content Include="Articoli\userControl\ArtTipologie.ascx" />
     <Content Include="CercaLavorazione\CercaLavorazione.aspx" />
     <Content Include="CONFIG\gestConfig.aspx" />
@@ -706,6 +707,13 @@
     <Compile Include="Articoli\userControl\ArtArticoli.ascx.designer.cs">
       <DependentUpon>ArtArticoli.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Articoli\userControl\ArtSottogruppi.ascx.cs">
+      <DependentUpon>ArtSottogruppi.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Articoli\userControl\ArtSottogruppi.ascx.designer.cs">
+      <DependentUpon>ArtSottogruppi.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Articoli\userControl\ArtTipologie.ascx.cs">
       <DependentUpon>ArtTipologie.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -838,6 +846,7 @@
     <Compile Include="Entity\NoteOfferta.cs" />
     <Compile Include="Entity\AttrezzatureMagazzino.cs" />
     <Compile Include="Entity\DocumentiTrasporto.cs" />
+    <Compile Include="Entity\Sottogruppo.cs" />
     <Compile Include="Entity\StatisticheCosti.cs" />
     <Compile Include="Entity\StatisticheRicavi.cs" />
     <Compile Include="Entity\Utenti.cs" />

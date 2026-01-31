@@ -4,18 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using System.Configuration;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
-using VideoSystemWeb.DAL;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Data.SqlClient;
 
 namespace VideoSystemWeb.Articoli.userControl
 {
-    public partial class ArtTipologie : System.Web.UI.UserControl
+    public partial class ArtSottogruppi : System.Web.UI.UserControl
     {
         BasePage basePage = new BasePage();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -36,167 +30,33 @@ namespace VideoSystemWeb.Articoli.userControl
             {
                 if (!Page.IsPostBack)
                 {
-
                     lblTipoArticolo.Text = ViewState["TIPO_ARTICOLO"].ToString();
-                    CaricaTipologia(false);
-
+                    CaricaSottogruppi(false);
                 }
                 ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
             }
         }
 
-        private List<Tipologica> CaricaTipologia(bool clearLista)
+        private List<Sottogruppo> CaricaSottogruppi(bool clearLista)
         {
-            List<Tipologica> lista;
+            List<Sottogruppo> lista;
             Esito esito = new Esito();
-            switch (ViewState["TIPO_ARTICOLO"].ToString())
+            
+            if (clearLista)
             {
-                case "GENERI":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiGeneri.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.Red;
-                    lista = SessionManager.ListaTipiGeneri;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GENERE;
-                    break;
-                case "GRUPPI":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiGruppi.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.Green;
-                    lista = SessionManager.ListaTipiGruppi;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GRUPPO, true, ref esito);
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GRUPPO;
-                    break;
-                //case "SOTTOGRUPPI":
-                //    if (clearLista)
-                //    {
-                //        SessionManager.ListaTipiSottogruppi.Clear();
-                //    }
-                //    lblTipoArticolo.ForeColor = System.Drawing.Color.Blue;
-                //    lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO, true, ref esito);
-                //    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_SOTTOGRUPPO;
-                //    break;
-                case "TENDER":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTender.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.Brown;
-                    //lista = UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TENDER, true, ref esito);
-                    lista = SessionManager.ListaTender;
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_TENDER;
-                    break;
-                case "QUALIFICHE":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaQualifiche.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.Yellow;
-                    lista = SessionManager.ListaQualifiche;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_QUALIFICHE, true, ref esito);
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_QUALIFICHE;
-                    break;
-                case "CLIENTI/FORNITORI":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaClientiFornitori.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.OrangeRed;
-                    lista = SessionManager.ListaTipiClientiFornitori;   //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_CLIENTI_FORNITORI, true, ref esito);
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_CLIENTI_FORNITORI;
-                    break;
-                case "PROTOCOLLI":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiProtocolli.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.Orange;
-                    lista = SessionManager.ListaTipiProtocolli; //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO, true, ref esito);
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_PROTOCOLLO;
-                    break;
-                case "LAVORAZIONI":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiTipologie.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.LightSkyBlue;
-                    lista = SessionManager.ListaTipiTipologie;  //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, true, ref esito);
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_TIPOLOGIE;
-                    break;
-                case "INTERVENTO":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiIntervento.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.BlueViolet;
-                    lista = SessionManager.ListaTipiIntervento;  //UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_TIPOLOGIE, true, ref esito);
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_INTERVENTO;
-                    break;
-                case "CATEGORIE":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiCategorieMagazzino.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.Bisque;
-                    lista = SessionManager.ListaTipiCategorieMagazzino;
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_CATEGORIE_MAGAZZINO;
-                    break;
-                case "SUBCATEGORIE":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiSubCategorieMagazzino.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.BurlyWood;
-                    lista = SessionManager.ListaTipiSubCategorieMagazzino;
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_SUB_CATEGORIE_MAGAZZINO;
-                    break;
-                case "POSIZIONI":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiPosizioniMagazzino.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.Coral;
-                    lista = SessionManager.ListaTipiPosizioniMagazzino;
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_POSIZIONE_MAGAZZINO;
-                    break;
-                case "GRUPPO_MAGAZZINO":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiGruppoMagazzino.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.DarkKhaki;
-                    lista = SessionManager.ListaTipiGruppoMagazzino;
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GRUPPO_MAGAZZINO;
-                    break;
-                case "BANCA":
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiBanca.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.DarkViolet;
-                    lista = SessionManager.ListaTipiBanca;
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_BANCA;
-                    break;
-                default:
-                    if (clearLista)
-                    {
-                        SessionManager.ListaTipiGeneri.Clear();
-                    }
-                    lblTipoArticolo.ForeColor = System.Drawing.Color.Red;
-                    lista = SessionManager.ListaTipiGeneri;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_GENERE, true, ref esito);
-                    ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_GENERE;
-                    break;
+                SessionManager.ListaTipiSottogruppi.Clear();
             }
-
-
+            lblTipoArticolo.ForeColor = System.Drawing.Color.Blue;
+            lista = SessionManager.ListaTipiSottogruppi;// UtilityTipologiche.CaricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO, true, ref esito);
+            ViewState["TABELLA_SELEZIONATA"] = EnumTipologiche.TIPO_SOTTOGRUPPO;
+                    
             BasePage p = new BasePage();
 
             // CARICO LA COMBO
             if (string.IsNullOrEmpty(esito.Descrizione))
             {
                 lbMod_Tipologia.Items.Clear();
-                foreach (Tipologica tipologia in lista)
+                foreach (Sottogruppo tipologia in lista)
                 {
                     ListItem item = new ListItem
                     {
@@ -205,6 +65,18 @@ namespace VideoSystemWeb.Articoli.userControl
                     };
                     lbMod_Tipologia.Items.Add(item);
                 }
+
+                #region GRUPPI
+                ddl_Gruppo.Items.Clear();
+                ddl_Gruppo.Items.Add("");
+                foreach (Tipologica tipologiaGruppo in SessionManager.ListaTipiGruppi)
+                {
+                    ListItem item = new ListItem();
+                    item.Text = tipologiaGruppo.nome;
+                    item.Value = tipologiaGruppo.id.ToString();
+                    ddl_Gruppo.Items.Add(item);
+                }
+                #endregion
 
                 // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                 AbilitaBottoni(p.AbilitazioneInScrittura());
@@ -238,13 +110,14 @@ namespace VideoSystemWeb.Articoli.userControl
         {
             // INSERISCO TIPOLOGIA
             Esito esito = new Esito();
-            Tipologica tipologia = new Tipologica
+            Sottogruppo sottogruppo = new Sottogruppo
             {
                 nome = tbInsNomeTipologia.Text.Trim(),
                 descrizione = tbInsDescrizioneTipologia.Text.Trim(),
                 parametri = tbInsParametriTipologia.Text.Trim(),
                 sottotipo = tbInsSottotipoTipologia.Text.Trim(),
-                attivo = true
+                attivo = true,
+                IdTipoGruppo = int.Parse(ddl_Gruppo.SelectedValue)
             };
 
             if (esito.Codice != Esito.ESITO_OK)
@@ -257,8 +130,8 @@ namespace VideoSystemWeb.Articoli.userControl
             {
                 NascondiErroriValidazione();
 
-                int iRet = UtilityTipologiche.CreaTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], tipologia, ref esito);
-                
+                int iRet = UtilityTipologiche.CreaSottogruppo(sottogruppo, ref esito);
+
                 if (esito.Codice != Esito.ESITO_OK)
                 {
                     //panelErrore.Style.Add("display", "block");
@@ -271,11 +144,12 @@ namespace VideoSystemWeb.Articoli.userControl
                     tbInsDescrizioneTipologia.Text = "1";
                     tbInsParametriTipologia.Text = "";
                     tbInsSottotipoTipologia.Text = "";
-                    List<Tipologica> lista = CaricaTipologia(true);
+                    List<Sottogruppo> lista = CaricaSottogruppi(true);
                     HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
                 }
             }
         }
+
 
         protected void btnEliminaTipologia_Click(object sender, EventArgs e)
         {
@@ -287,12 +161,12 @@ namespace VideoSystemWeb.Articoli.userControl
                 {
                     NascondiErroriValidazione();
                     //esito = UtilityTipologiche.RemoveTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], Convert.ToInt32(tbIdTipologiaDaModificare.Text.Trim()));
-                    esito = UtilityTipologiche.EliminaTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], Convert.ToInt32(tbIdTipologiaDaModificare.Text.Trim()));
+                    esito = UtilityTipologiche.EliminaSottogruppo(Convert.ToInt32(tbIdTipologiaDaModificare.Text.Trim()));
                     if (esito.Codice != Esito.ESITO_OK)
                     {
                         if (esito.Descrizione.IndexOf("conflitto con il vincolo REFERENCE") > -1 || esito.Descrizione.IndexOf("conflicted with the REFERENCE constraint") > -1)
                         {
-                            basePage.ShowWarning("Attenzione, la tipologia selezionata è associata ad altri record, prima di eliminarla è necessario eliminare i record associati");
+                            basePage.ShowWarning("Attenzione, il sottogruppo selezionato è associato ad altri record, prima di eliminarlo è necessario eliminare i record associati");
                         }
                         else
                         {
@@ -306,13 +180,15 @@ namespace VideoSystemWeb.Articoli.userControl
                         tbInsParametriTipologia.Text = "";
                         tbInsSottotipoTipologia.Text = "";
                         tbIdTipologiaDaModificare.Text = "";
+                        ddl_Gruppo.SelectedIndex = 0;
 
                         btnModificaTipologia.Visible = false;
                         btnInserisciTipologia.Visible = true;
                         btnEliminaTipologia.Visible = false;
 
-                        List<Tipologica> lista = CaricaTipologia(true);
+                        List<Sottogruppo> lista = CaricaSottogruppi(true);
                         HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
+
                     }
                 }
                 catch (Exception ex)
@@ -342,7 +218,7 @@ namespace VideoSystemWeb.Articoli.userControl
 
         protected void btnSeleziona_Click(object sender, EventArgs e)
         {
-            //SCARICO LA TIPOLOGIA SELEZIONATO
+            //SCARICO IL SOTTOGRUPPO SELEZIONATO
             if (lbMod_Tipologia.SelectedIndex >= 0)
             {
                 Esito esito = new Esito();
@@ -350,9 +226,9 @@ namespace VideoSystemWeb.Articoli.userControl
                 {
                     NascondiErroriValidazione();
 
-                    string tipologiaSelezionata = lbMod_Tipologia.SelectedValue;
-                    
-                    Tipologica tipologica = UtilityTipologiche.getTipologicaById((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], Convert.ToInt32(tipologiaSelezionata), ref esito);
+                    string sottogruppoSelezionata = lbMod_Tipologia.SelectedValue;
+
+                    Sottogruppo sottogruppo = UtilityTipologiche.GetSottogruppoById(Convert.ToInt32(sottogruppoSelezionata), ref esito);
 
                     if (esito.Codice != Esito.ESITO_OK)
                     {
@@ -365,10 +241,11 @@ namespace VideoSystemWeb.Articoli.userControl
                         btnInserisciTipologia.Visible = false;
                         btnModificaTipologia.Visible = true;
                         btnEliminaTipologia.Visible = true;
-                        tbInsDescrizioneTipologia.Text = tipologica.descrizione;
-                        tbInsNomeTipologia.Text = tipologica.nome;
-                        tbInsParametriTipologia.Text = tipologica.parametri;
-                        tbInsSottotipoTipologia.Text = tipologica.sottotipo;
+                        tbInsDescrizioneTipologia.Text = sottogruppo.descrizione;
+                        tbInsNomeTipologia.Text = sottogruppo.nome;
+                        tbInsParametriTipologia.Text = sottogruppo.parametri;
+                        tbInsSottotipoTipologia.Text = sottogruppo.sottotipo;
+                        ddl_Gruppo.SelectedValue = sottogruppo.IdTipoGruppo.ToString();
                         tbIdTipologiaDaModificare.Text = lbMod_Tipologia.SelectedValue;
                     }
                 }
@@ -398,16 +275,17 @@ namespace VideoSystemWeb.Articoli.userControl
                 {
                     NascondiErroriValidazione();
 
-                    Tipologica nuovaTipologia = new Tipologica
+                    Sottogruppo nuovoSottogruppo = new Sottogruppo
                     {
                         id = Convert.ToInt32(tbIdTipologiaDaModificare.Text),
                         nome = tbInsNomeTipologia.Text.Trim(),
                         descrizione = tbInsDescrizioneTipologia.Text.Trim(),
                         parametri = tbInsParametriTipologia.Text.Trim(),
                         sottotipo = tbInsSottotipoTipologia.Text.Trim(),
-                        attivo = true
+                        attivo = true,
+                        IdTipoGruppo = int.Parse(ddl_Gruppo.SelectedValue)
                     };
-                    esito = UtilityTipologiche.AggiornaTipologia((EnumTipologiche)ViewState["TABELLA_SELEZIONATA"], nuovaTipologia);
+                    esito = UtilityTipologiche.AggiornaSottogruppo(nuovoSottogruppo);
 
                     btnModificaTipologia.Visible = false;
                     btnInserisciTipologia.Visible = true;
@@ -423,9 +301,9 @@ namespace VideoSystemWeb.Articoli.userControl
                         tbInsDescrizioneTipologia.Text = "";
                         tbInsParametriTipologia.Text = "";
                         tbInsSottotipoTipologia.Text = "";
-                        List<Tipologica> lista = CaricaTipologia(true);
+                        ddl_Gruppo.SelectedIndex = 0;
+                        List<Sottogruppo> lista = CaricaSottogruppi(true);
                         HttpContext.Current.Session[ViewState["TABELLA_SELEZIONATA"].ToString()] = lista;
-
                     }
                 }
                 catch (Exception ex)
@@ -455,6 +333,7 @@ namespace VideoSystemWeb.Articoli.userControl
             tbInsParametriTipologia.Text = "";
             tbInsSottotipoTipologia.Text = "";
             tbIdTipologiaDaModificare.Text = "";
+            ddl_Gruppo.SelectedIndex = 0;
 
             btnModificaTipologia.Visible = false;
             btnInserisciTipologia.Visible = true;

@@ -72,17 +72,23 @@ namespace VideoSystemWeb.REPORT.userControl
             try
             {
                 Esito esito = new Esito();
-                int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
-                int idSottogruppoCollaboratori = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori", ref esito).id;
-                int idSottogruppoCollaboratoriFattura = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori a Fattura", ref esito).id;
-                int idSottogruppoCollaboratoriAssunti = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori Assunti", ref esito).id;
+                //int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
+                //int idSottogruppoCollaboratori = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori", ref esito).id;
+                //int idSottogruppoCollaboratoriFattura = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori a Fattura", ref esito).id;
+                //int idSottogruppoCollaboratoriAssunti = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori Assunti", ref esito).id;
+
+                Sottogruppo collaboratoriFattura = SessionManager.ListaTipiSottogruppi.Where(x => x.nome.ToUpper().Trim() == "Collaboratori a Fattura".ToUpper().Trim()).FirstOrDefault();
+                Sottogruppo collaboratoriAssunti = SessionManager.ListaTipiSottogruppi.Where(x => x.nome.ToUpper().Trim() == "Collaboratori Assunti".ToUpper().Trim()).FirstOrDefault();
+
+                int idSottogruppoCollaboratoriFattura = collaboratoriFattura != null ? collaboratoriFattura.id : 0;
+                int idSottogruppoCollaboratoriAssunti = collaboratoriAssunti != null ? collaboratoriAssunti.id : 0;
 
                 string ricercaQualifiche = "select dal.descrizione as qualifica from[tab_dati_agenda] da " +
                                             "left join dati_lavorazione dl on da.id = dl.idDatiAgenda " +
                                             "left join dati_articoli_lavorazione dal on dl.id = dal.idDatiLavorazione " +
                                             //"where convert(varchar, dal.data,103)= '@dataElaborazione' and dal.descrizione <> 'Diaria' and(dal.idCollaboratori is not null or dal.idFornitori is not null) " + // SOLO LE FIGURE PROFESSIONALI
                                             "where convert(varchar, dal.data,103)= '@dataElaborazione' and " + 
-                                            "dal.idTipoSottogruppo in (" + idSottogruppoPersonaleTecnico + ", " + idSottogruppoCollaboratori + ", " + idSottogruppoCollaboratoriFattura + ", " + idSottogruppoCollaboratoriAssunti + ") " +
+                                            "dal.idTipoSottogruppo in (" + idSottogruppoCollaboratoriFattura + ", " + idSottogruppoCollaboratoriAssunti + ") " +
                                             " and (dal.idCollaboratori is not null or dal.idFornitori is not null) " +
                                             "group by dal.descrizione " +
                                             "order by dal.descrizione ";

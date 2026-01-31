@@ -94,7 +94,7 @@
             </div>
             <div class="w3-third">
                 <label>Gruppo</label>
-                <asp:DropDownList ID="ddlGruppo" runat="server" class="w3-input w3-border" ></asp:DropDownList>
+                <asp:DropDownList ID="ddlGruppo" runat="server" class="w3-input w3-border" OnSelectedIndexChanged="ddlGruppo_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
             </div>
             <div class="w3-third">
                 <label>Sottogruppo</label>
@@ -103,18 +103,17 @@
         </div>
 
         <div class="w3-row-padding w3-margin-bottom">
-<%--            <div class="w3-quarter">
-                <label>IVA</label>
-                    <asp:TextBox ID="tbIva" runat="server" class="w3-input w3-border" placeholder="" ></asp:TextBox>
-            </div>--%>
+
             <div class="w3-third">
                 <label>Prezzo</label>
                 <asp:TextBox ID="tbPrezzo" runat="server" MaxLength="16" class="w3-input w3-border" placeholder=""></asp:TextBox>
             </div>
+
             <div class="w3-third">
                 <label>Costo</label>
                 <asp:TextBox ID="TbCosto" runat="server" class="w3-input w3-border" placeholder="" ></asp:TextBox>
             </div>
+
             <div class="w3-third">
                 <label>&nbsp;</label>
                 <table style="width:100%;">
@@ -171,6 +170,7 @@
             <div class="modalBackground"></div>
             <asp:Panel  runat="server" ID="innerContainer" CssClass="containerPopupStandard round" ScrollBars="Auto">
                 <div class="w3-row-padding w3-margin w3-center w3-large w3-amber w3-round" >
+
                     <div class="w3-quarter">
                         GESTIONE ARTICOLI
                     </div>
@@ -208,10 +208,6 @@
                                 <label>Costo</label>
                                 <asp:TextBox ID="tbMod_Costo" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="18" ></asp:TextBox>
                             </div>
-<%--                            <div class="w3-third">
-                                <label>IVA</label>
-                                <asp:TextBox ID="tbMod_IVA" runat="server" class="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="2"></asp:TextBox>
-                            </div>--%>
                         </div>
 
                         <div class="w3-row-padding">
@@ -221,11 +217,11 @@
                             </div>
                             <div class="w3-third">
                                 <label>Gruppo</label><br />
-                                <asp:DropDownList ID="cmbMod_Gruppo" runat="server" CssClass="w3-input w3-border" disabled></asp:DropDownList>
+                                <asp:DropDownList ID="cmbMod_Gruppo" runat="server" CssClass="w3-input w3-border"  OnSelectedIndexChanged="cmbMod_Gruppo_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                             </div>
                             <div class="w3-third">
                                 <label>Sottogruppo</label><br />
-                                <asp:DropDownList ID="cmbMod_Sottogruppo" runat="server" CssClass="w3-input w3-border" disabled></asp:DropDownList>
+                                <asp:DropDownList ID="cmbMod_Sottogruppo" runat="server" CssClass="w3-input w3-border"  ></asp:DropDownList>
                             </div>
                         </div>
 
@@ -240,8 +236,6 @@
                                 <asp:CheckBox ID="cbMod_Stampa" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>
                             </div>
                             <div class="w3-half">
-                                <%--<label>Attivo</label>--%>
-                                <%--<asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>--%>
                                 &nbsp;
                             </div>
                         </div>
@@ -257,7 +251,6 @@
                     <!-- TAB GRUPPI -->
                     <div id="Gruppi" class="w3-container w3-border articolo" style="display:none">
                         <label>Raggruppamenti</label>
-                        <%--<asp:ListBox ID="lbMod_Gruppi" runat="server" class="w3-input w3-border " Rows="3" ></asp:ListBox>--%>
                         <div class="round">
                             <asp:GridView ID="gvMod_Gruppi" AutoGenerateColumns="false" runat="server" style="font-size:10pt; width:100%;position:relative;background-color:#EEF1F7;" CssClass="grid">
                                 <Columns>
@@ -280,7 +273,6 @@
                                     </asp:DropDownList>                                                
                                 </div>
                                 <asp:Button ID="btnInserisciGruppo" runat="server" Text="Inserisci Gruppo" class="w3-panel w3-green w3-border w3-round" OnClick="btnConfermaInserimentoGruppo_Click" OnClientClick="return confirm('Confermi inserimento Gruppo?')" />
-                                <%--<asp:Button ID="btnEliminaGruppo" runat="server" Text="Elimina Gruppo" class="w3-panel w3-green w3-border w3-round"  OnClick="btnEliminaGruppo_Click" OnClientClick="return confirm('Confermi eliminazione Gruppo?')" />--%>
                             </asp:PlaceHolder>
                         </div>
                     </div>
@@ -296,7 +288,6 @@
         <asp:AsyncPostBackTrigger ControlID="btnElimina" EventName="Click" />
         <asp:AsyncPostBackTrigger ControlID="btnAnnulla" EventName="Click" />
         
-        <%--<asp:AsyncPostBackTrigger ControlID="btnEliminaGruppo" EventName="Click" />--%>
         <asp:AsyncPostBackTrigger ControlID="btnInserisciGruppo" EventName="Click" />
     </Triggers>
 </asp:UpdatePanel>

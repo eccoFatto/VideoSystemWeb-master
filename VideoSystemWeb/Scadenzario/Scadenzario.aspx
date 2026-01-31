@@ -85,8 +85,8 @@
             $("#<%=txt_RagioneSociale.ClientID%>").val('');
             $("#<%=txt_NumeroFattura.ClientID%>").val('');
             <%--$("#<%=ddlFatturaPagata.ClientID%>").val('');--%>
-            $("#<%=txt_DataFatturaDa.ClientID%>").val('');
-            $("#<%=txt_DataFatturaA.ClientID%>").val('');
+            <%--$("#<%=txt_DataFatturaDa.ClientID%>").val('');
+            $("#<%=txt_DataFatturaA.ClientID%>").val('');--%>
             $("#<%=txt_DataDa.ClientID%>").val('');
             $("#<%=txt_DataA.ClientID%>").val('');
             $("#<%=ddlFatturaPagata.ClientID%>").val('0');
@@ -184,30 +184,31 @@
         <ContentTemplate>
             <div class="w3-row-padding">
                 <div class="w3-threequarter w3-row-padding">
-                     <div class="w3-quarter">
-                        <label>Cliente/Fornitore</label>
-                        <asp:TextBox ID="txt_RagioneSociale" runat="server" class="w3-input w3-border" ></asp:TextBox>
-                     </div>
-
                     <div class="w3-quarter">
                         <label>Tipo (Cliente/Fornitore/Busta Paga)</label>
-                        <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddl_TipoAnagrafica_SelectedIndexChanged">
+                        <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" >
                             <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
                             <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
                             <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
                             <asp:ListItem Value="BustaPaga" Text="Busta paga"></asp:ListItem>
                         </asp:DropDownList>
                     </div>
-                
-                    <div class="w3-quarter">
-                        <label>Numero Fattura</label>
-                        <asp:TextBox ID="txt_NumeroFattura" runat="server" MaxLength="20" class="w3-input w3-border" />
+
+                    <div class="w3-quarter" id="div_Generi" runat="server" >
+                        <asp:Label id="lbl_Generi" runat="server" Text="Generi" style="margin-bottom:0.5rem"/>
+                        <asp:DropDownList ID="ddl_Generi" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" />
                     </div>
 
-                    <div class="w3-quarter" id="div_TipoClienteFornitore" runat="server" visible="false">
-                        <asp:Label id="lbl_TipoClienteFornitore" runat="server" Text="" style="margin-bottom:0.5rem"/>
-                        <asp:DropDownList ID="ddl_TipoClienteFornitore" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" />
+                    <div class="w3-quarter" id="div_Gruppo" runat="server" >
+                        <asp:Label id="lbl_Gruppo" runat="server" Text="Gruppo" style="margin-bottom:0.5rem"/>
+                        <asp:DropDownList ID="ddl_Gruppo" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" OnSelectedIndexChanged="ddl_Gruppo_SelectedIndexChanged" AutoPostBack="true"/>
                     </div>
+
+                    <div class="w3-quarter" id="div_Sottogruppo" runat="server" >
+                        <asp:Label id="lbl_Sottoruppo" runat="server" Text="Sottogruppo" style="margin-bottom:0.5rem"/>
+                        <asp:DropDownList ID="ddl_Sottogruppo" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" />
+                    </div>
+
                 </div>
 
                 <div class="w3-quarter">
@@ -221,29 +222,40 @@
              </div>
 
             <div class="w3-row-padding" style="position:relative;">
-                    <div class="w3-threequarter w3-row-padding">
-                        <div class="w3-quarter">
+                <div class="w3-threequarter w3-row-padding">
+                    <div class="w3-quarter">
+                       <label>Cliente/Fornitore</label>
+                       <asp:TextBox ID="txt_RagioneSociale" runat="server" class="w3-input w3-border" ></asp:TextBox>
+                    </div>
+
+                    <div class="w3-quarter">
+                        <label>Numero Fattura</label>
+                        <asp:TextBox ID="txt_NumeroFattura" runat="server" MaxLength="20" class="w3-input w3-border" />
+                    </div>
+
+                    
+                       <%-- <div class="w3-quarter">
                             <label>Data fattura da</label>
                             <asp:TextBox ID="txt_DataFatturaDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                         </div>
                         <div class="w3-quarter">
                             <label>Data fattura a</label>
                             <asp:TextBox ID="txt_DataFatturaA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                        </div>
+                        </div>--%>
         
-                        <div class="w3-quarter">
-                            <label>Data scad. da</label>
-                            <asp:TextBox ID="txt_DataDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                        </div>
-                        <div class="w3-quarter">
-                            <label>Data scad. a</label>
-                            <asp:TextBox ID="txt_DataA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                        </div>
+                    <div class="w3-quarter">
+                        <label>Data scad. da</label>
+                        <asp:TextBox ID="txt_DataDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                     </div>
                     <div class="w3-quarter">
-                        <label>Tipologia pagamento</label>
-                        <asp:DropDownList ID="ddl_FiltroBanca" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border"/>
+                        <label>Data scad. a</label>
+                        <asp:TextBox ID="txt_DataA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                     </div>
+                </div>
+                <div class="w3-quarter">
+                    <label>Tipologia pagamento</label>
+                    <asp:DropDownList ID="ddl_FiltroBanca" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border"/>
+                </div>
             </div>
 
 <%--RIQUADRI DEI TOTALI--%>

@@ -2,6 +2,7 @@
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <%@ Register TagPrefix="tipo" TagName="ArtTipo" Src="~/Articoli/userControl/ArtTipologie.ascx" %>
 <%@ Register TagPrefix="art" TagName="ArtArt" Src="~/Articoli/userControl/ArtArticoli.ascx" %>
+<%@ Register TagPrefix="tipo" TagName="ArtSottogruppi" Src="~/Articoli/userControl/ArtSottogruppi.ascx" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <asp:HiddenField ID="HF_TIPO_ARTICOLO" Value="" runat="server" />
@@ -9,6 +10,7 @@
 
         <tipo:ArtTipo id="controlTipo" runat="server" Visible="false"></tipo:ArtTipo>
         <art:ArtArt id="controlArt" runat="server" Visible="false"></art:ArtArt>
+        <tipo:ArtSottogruppi id="controlSottogruppi" runat="server" Visible="false"></tipo:ArtSottogruppi>
 
     </asp:PlaceHolder>
 </asp:Content>

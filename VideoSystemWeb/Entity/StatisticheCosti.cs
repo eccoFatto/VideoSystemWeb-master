@@ -20,7 +20,7 @@ namespace VideoSystemWeb.Entity
         private decimal? costo;
         private decimal ricavo;
         private string documentoAllegato;
-        private bool pregresso;
+        private bool? pregresso;
         private string gruppo;
         private string fornitore;
         private int progressivo;
@@ -68,7 +68,7 @@ namespace VideoSystemWeb.Entity
         }
 
         public string DocumentoAllegato { get => documentoAllegato; set => documentoAllegato = value; }
-        public bool Pregresso { get => pregresso; set => pregresso = value; }
+        public bool? Pregresso { get => pregresso; set => pregresso = value; }
         public string Gruppo { get => gruppo; set => gruppo = value; }
         public string Fornitore { get => fornitore; set => fornitore = value; }
         public int Progressivo { get => progressivo; set => progressivo = value; }

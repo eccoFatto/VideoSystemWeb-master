@@ -155,9 +155,21 @@ namespace VideoSystemWeb.BLL
             return lista;
         }
 
+        public static List<Sottogruppo> CaricaSottogruppi(bool soloElemAttivi, ref Esito esito)
+        {
+            List<Sottogruppo> lista = Base_DAL.CaricaSottogruppi(soloElemAttivi, ref esito);
+            return lista;
+        }
+
         public static Tipologica getTipologicaById(EnumTipologiche eTipo, int idTipologica, ref Esito esito)
         {
             Tipologica tipologica = Base_DAL.GetTipologicaById(eTipo, idTipologica, ref esito);
+            return tipologica;
+        }
+
+        public static Sottogruppo GetSottogruppoById(int idTipologica, ref Esito esito)
+        {
+            Sottogruppo tipologica = Base_DAL.GetSottogruppoById(idTipologica, ref esito);
             return tipologica;
         }
 
@@ -167,15 +179,33 @@ namespace VideoSystemWeb.BLL
             return iRet;
         }
 
+        public static int CreaSottogruppo(Sottogruppo sottogruppo, ref Esito esito)
+        {
+            int iRet = Base_DAL.CreaSottogruppo(sottogruppo, ref esito);
+            return iRet;
+        }
+
         public static Esito AggiornaTipologia(EnumTipologiche tipoTipologica, Tipologica tipologica)
         {
             Esito esito = Base_DAL.AggiornaTipologia(tipoTipologica, tipologica);
             return esito;
         }
 
+        public static Esito AggiornaSottogruppo(Sottogruppo sottogruppo)
+        {
+            Esito esito = Base_DAL.AggiornaSottogruppo(sottogruppo);
+            return esito;
+        }
+
         public static Esito EliminaTipologia(EnumTipologiche tipoTipologica, int idTipologica)
         {
             Esito esito = Base_DAL.EliminaTipologia(tipoTipologica, idTipologica);
+            return esito;
+        }
+
+        public static Esito EliminaSottogruppo(int idSottogruppo)
+        {
+            Esito esito = Base_DAL.EliminaSottogruppo(idSottogruppo);
             return esito;
         }
 
@@ -203,8 +233,6 @@ namespace VideoSystemWeb.BLL
         }
 
     }
-
-
 
     public enum EnumTipologiche { TIPO_COLONNE_AGENDA,
                                     TIPO_QUALIFICHE,

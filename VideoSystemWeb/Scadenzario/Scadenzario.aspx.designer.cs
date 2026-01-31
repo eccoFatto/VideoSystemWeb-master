@@ -33,15 +33,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
 
         /// <summary>
-        /// Controllo txt_RagioneSociale.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_RagioneSociale;
-
-        /// <summary>
         /// Controllo ddl_TipoAnagrafica.
         /// </summary>
         /// <remarks>
@@ -51,40 +42,85 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.DropDownList ddl_TipoAnagrafica;
 
         /// <summary>
-        /// Controllo txt_NumeroFattura.
+        /// Controllo div_Generi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_NumeroFattura;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_Generi;
 
         /// <summary>
-        /// Controllo div_TipoClienteFornitore.
+        /// Controllo lbl_Generi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_TipoClienteFornitore;
+        protected global::System.Web.UI.WebControls.Label lbl_Generi;
 
         /// <summary>
-        /// Controllo lbl_TipoClienteFornitore.
+        /// Controllo ddl_Generi.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_TipoClienteFornitore;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Generi;
 
         /// <summary>
-        /// Controllo ddl_TipoClienteFornitore.
+        /// Controllo div_Gruppo.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_TipoClienteFornitore;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_Gruppo;
+
+        /// <summary>
+        /// Controllo lbl_Gruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Gruppo;
+
+        /// <summary>
+        /// Controllo ddl_Gruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Gruppo;
+
+        /// <summary>
+        /// Controllo div_Sottogruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_Sottogruppo;
+
+        /// <summary>
+        /// Controllo lbl_Sottoruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Sottoruppo;
+
+        /// <summary>
+        /// Controllo ddl_Sottogruppo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Sottogruppo;
 
         /// <summary>
         /// Controllo ddlFatturaPagata.
@@ -96,22 +132,22 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.DropDownList ddlFatturaPagata;
 
         /// <summary>
-        /// Controllo txt_DataFatturaDa.
+        /// Controllo txt_RagioneSociale.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_DataFatturaDa;
+        protected global::System.Web.UI.WebControls.TextBox txt_RagioneSociale;
 
         /// <summary>
-        /// Controllo txt_DataFatturaA.
+        /// Controllo txt_NumeroFattura.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_DataFatturaA;
+        protected global::System.Web.UI.WebControls.TextBox txt_NumeroFattura;
 
         /// <summary>
         /// Controllo txt_DataDa.

@@ -36,6 +36,11 @@ namespace VideoSystemWeb.Articoli
                     //PH.Controls.Add(loadControl);
                     controlArt.Visible = true;
                     break;
+                case "SOTTOGRUPPI":
+                    //loadControl = (ArtArticoli)Page.LoadControl("~/Articoli/userControl/ArtArticoli.ascx");
+                    //PH.Controls.Add(loadControl);
+                    controlSottogruppi.Visible = true;
+                    break;
                 default:
                     //loadControl = this.LoadControl("~/Articoli/userControl/ArtTipologie.ascx"); 
                     //PH.Controls.Add(loadControl);

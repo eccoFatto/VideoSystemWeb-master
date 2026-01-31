@@ -1,6 +1,8 @@
-﻿using System;
+﻿using iText.StyledXmlParser.Jsoup.Nodes;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -9,9 +11,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.BLL.Stampa;
-using VideoSystemWeb.Entity;
 using VideoSystemWeb.DAL;
-using System.Data;
+using VideoSystemWeb.Entity;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
@@ -142,12 +143,7 @@ namespace VideoSystemWeb.Agenda.userControl
         private List<ArticoliGruppi> GetListaPersonaleTecnico()
         {
             Esito esito = new Esito();
-            int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
-            int idSottogruppoCollaboratori = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori", ref esito).id;
-            int idSottogruppoCollaboratoriFattura = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori a Fattura", ref esito).id;
-            int idSottogruppoCollaboratoriAssunti = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori Assunti", ref esito).id;
-
-            List<int> idSottogruppiPersonaleTecnico = new List<int> { idSottogruppoPersonaleTecnico, idSottogruppoCollaboratori, idSottogruppoCollaboratoriFattura, idSottogruppoCollaboratoriAssunti };
+            List<int> idSottogruppiPersonaleTecnico = GetListaIdPersonaleTecnico(ref esito);
 
             List<Art_Articoli> listaArticoliPersonaleTecnico = (Articoli_BLL.Instance.CaricaListaArticoli(ref esito)).Where(x => idSottogruppiPersonaleTecnico.Contains(x.DefaultIdTipoSottogruppo)).ToList<Art_Articoli>();
 
@@ -1248,16 +1244,7 @@ namespace VideoSystemWeb.Agenda.userControl
         private void ImportaFigProfInPianoEsterno()
         {
             Esito esito = new Esito();
-
-            //int idDiaria = Articoli_BLL.Instance.getDiaria(ref esito).Id;
-            
-            int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
-            int idSottogruppoCollaboratori = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori", ref esito).id;
-            int idSottogruppoCollaboratoriFattura = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori a Fattura", ref esito).id;
-            int idSottogruppoCollaboratoriAssunti = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori Assunti", ref esito).id;
-
-            List<int> idSottogruppiPersonaleTecnico = new List<int> { idSottogruppoPersonaleTecnico, idSottogruppoCollaboratori, idSottogruppoCollaboratoriFattura, idSottogruppoCollaboratoriAssunti };
-
+            List<int> idSottogruppiPersonaleTecnico = GetListaIdPersonaleTecnico(ref esito);
 
             List<DatiArticoliLavorazione> _listaCollaboratoriFornitori;
             if (SessionManager.EventoSelezionato.LavorazioneCorrente == null ||
@@ -1444,6 +1431,25 @@ namespace VideoSystemWeb.Agenda.userControl
         #endregion
 
         #region OPERAZIONI COMUNI
+        private List<int> GetListaIdPersonaleTecnico(ref Esito esito)
+        {
+
+           // Tipologica personaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito);
+            //Tipologica collaboratori = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori", ref esito);
+            //Tipologica collaboratoriFattura = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori a Fattura", ref esito);
+            //Tipologica collaboratoriAssunti = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori Assunti", ref esito);
+
+            Sottogruppo collaboratoriFattura = SessionManager.ListaTipiSottogruppi.Where(x => x.nome.ToUpper().Trim() == "Collaboratori a Fattura".ToUpper().Trim()).FirstOrDefault();
+            Sottogruppo collaboratoriAssunti = SessionManager.ListaTipiSottogruppi.Where(x => x.nome.ToUpper().Trim() == "Collaboratori Assunti".ToUpper().Trim()).FirstOrDefault();
+
+            // int idSottogruppoPersonaleTecnico = personaleTecnico != null ? personaleTecnico.id : 0;
+            //int idSottogruppoCollaboratori = collaboratori != null ? collaboratori.id : 0;
+            int idSottogruppoCollaboratoriFattura = collaboratoriFattura != null ? collaboratoriFattura.id : 0;
+            int idSottogruppoCollaboratoriAssunti = collaboratoriAssunti != null ? collaboratoriAssunti.id : 0;
+
+            return new List<int> { idSottogruppoCollaboratoriFattura, idSottogruppoCollaboratoriAssunti };
+        }
+
         private void PopolaCombo()
         {
             Esito esito = new Esito();
@@ -1865,13 +1871,7 @@ namespace VideoSystemWeb.Agenda.userControl
             foreach (DatiArticoli datoArticolo in SessionManager.EventoSelezionato.ListaDatiArticoli)
             {
                 Esito esito = new Esito();
-                int idSottogruppoPersonaleTecnico = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Personale Tecnico", ref esito).id;
-                int idSottogruppoCollaboratori = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori", ref esito).id;
-                int idSottogruppoCollaboratoriFattura = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori a Fattura", ref esito).id;
-                int idSottogruppoCollaboratoriAssunti = UtilityTipologiche.getElementByNome(SessionManager.ListaTipiSottogruppi, "Collaboratori Assunti", ref esito).id;
-
-                List<int> idSottogruppiPersonaleTecnico = new List<int> { idSottogruppoPersonaleTecnico, idSottogruppoCollaboratori, idSottogruppoCollaboratoriFattura, idSottogruppoCollaboratoriAssunti };
-
+                List<int> idSottogruppiPersonaleTecnico = GetListaIdPersonaleTecnico(ref esito);
 
                 // solo il personale tecnico viene replicato per ogni giorno di lavorazione
                 // modifica richiesta da Oriana il 25/07/2022: solo personale tecnico con stampa = false si moltiplica

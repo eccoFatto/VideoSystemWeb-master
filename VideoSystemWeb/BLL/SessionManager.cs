@@ -306,15 +306,17 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        public static List<Tipologica> ListaTipiSottogruppi
+        public static List<Sottogruppo> ListaTipiSottogruppi
         {
             get
             {
-                if (HttpContext.Current.Session["listaTipiSottogruppi"] == null || ((List<Tipologica>)HttpContext.Current.Session["listaTipiSottogruppi"]).Count() == 0)
+                if (HttpContext.Current.Session["listaTipiSottogruppi"] == null || ((List<Sottogruppo>)HttpContext.Current.Session["listaTipiSottogruppi"]).Count() == 0)
                 {
-                    HttpContext.Current.Session["listaTipiSottogruppi"] = UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_SOTTOGRUPPO);
+                    Esito esito = new Esito();
+                    //HttpContext.Current.Session["listaTipiSottogruppi"] = UtilityTipologiche.CaricaSottogruppi(EnumTipologiche.TIPO_SOTTOGRUPPO);
+                    HttpContext.Current.Session["listaTipiSottogruppi"] = UtilityTipologiche.CaricaSottogruppi(true, ref esito);
                 }
-                return (List<Tipologica>)HttpContext.Current.Session["listaTipiSottogruppi"];
+                return (List<Sottogruppo>)HttpContext.Current.Session["listaTipiSottogruppi"];
             }
             set
             {

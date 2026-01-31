@@ -22,12 +22,16 @@ namespace VideoSystemWeb.BLL
         public const int ESITO_KO_ERRORE_GENERICO = 99;
 
         private string _descrizione;
+        private bool mostraMessaggio;
 
-        public Esito()
+        public Esito(bool mostraMessaggio = true)
         {
             this.Codice = ESITO_OK;
             this.Descrizione = string.Empty;
+            this.mostraMessaggio = mostraMessaggio;
         }
+
+        public bool MostraMessaggio { get; set; }
 
         public int Codice { get; set; }
        
@@ -58,7 +62,7 @@ namespace VideoSystemWeb.BLL
 
                     //log.Error(utente.username + " - " + _descrizione);
 
-                    if (SessionManager.VisualizzazioneAutomaticaPopupErrore)
+                    if (SessionManager.VisualizzazioneAutomaticaPopupErrore && mostraMessaggio)
                     {
                        // basePage.ShowError(_descrizione);
 

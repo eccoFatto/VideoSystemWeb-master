@@ -685,12 +685,15 @@ namespace VideoSystemWeb.DAL
                                                            string ragioneSociale, 
                                                            string numeroFattura, 
                                                            string fatturaPagata,
-                                                           string dataFatturaDa, 
-                                                           string dataFatturaA,
+                                                           //string dataFatturaDa, 
+                                                           //string dataFatturaA,
                                                            string dataScadenzaDa,
                                                            string dataScadenzaA,
                                                            string filtroBanca,
-                                                           string filtroTipoClienteFornitore,
+                                                           //string filtroTipoClienteFornitore,
+                                                           string filtroTipoGeneri,
+                                                           string filtroTipoGruppo,
+                                                           string filtroTipoSottogruppo,
                                                            ref Esito esito)
         {
             List<DatiScadenzario> listaDatiScadenzario = new List<DatiScadenzario>();
@@ -729,19 +732,51 @@ namespace VideoSystemWeb.DAL
                 #endregion
 
                 #region FILTRO PER DATA FATTURA O DATA LAVORAZIONE
-                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and ((b.data_fattura is not null and b.data_fattura >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "') or (b.data_fattura is null and b.data_inizio_lavorazione >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'))";
-                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and ((b.data_fattura is not null and b.data_fattura < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "') or (b.data_fattura is null and b.data_inizio_lavorazione < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'))";
+                //filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and ((b.data_fattura is not null and b.data_fattura >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "') or (b.data_fattura is null and b.data_inizio_lavorazione >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'))";
+                //filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and ((b.data_fattura is not null and b.data_fattura < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "') or (b.data_fattura is null and b.data_inizio_lavorazione < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'))";
                 #endregion
 
                 filtriRicerca += string.IsNullOrWhiteSpace(dataScadenzaDa) ? "" : " and a.dataScadenza >= '" + (DateTime.Parse(dataScadenzaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";
                 filtriRicerca += string.IsNullOrWhiteSpace(dataScadenzaA) ? "" : " and a.dataScadenza < '" + (DateTime.Parse(dataScadenzaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'";
                 filtriRicerca += string.IsNullOrWhiteSpace(filtroBanca) ? "" : " and a.idTipoBanca = " + filtroBanca;
 
-                filtriRicerca += string.IsNullOrWhiteSpace(filtroTipoClienteFornitore) ? "" : " and c.tipo = '" + filtroTipoClienteFornitore + "'";
+
+                #region FILTRO PER GENERI, GRUPPO, SOTTOGRUPPO
+                string filtriGenereGruppoSottogruppo1 = string.Empty;
+                string filtriGenereGruppoSottogruppo2 = string.Empty;
+                if (!string.IsNullOrWhiteSpace(filtroTipoGeneri))
+                {
+                    filtriGenereGruppoSottogruppo1 += " AND d1.idTipoGenere = '" + filtroTipoGeneri + "' ";
+                    filtriGenereGruppoSottogruppo2 += " AND d2.idTipoGenere = '" + filtroTipoGeneri + "' ";
+                }
+
+                if (!string.IsNullOrWhiteSpace(filtroTipoGruppo))
+                {
+                    filtriGenereGruppoSottogruppo1 += " AND d1.idTipoGruppo = '" + filtroTipoGruppo + "' ";
+                    filtriGenereGruppoSottogruppo2 += " AND d2.idTipoGruppo = '" + filtroTipoGruppo + "' ";
+                }
+
+                if (!string.IsNullOrWhiteSpace(filtroTipoSottogruppo))
+                {
+                    filtriGenereGruppoSottogruppo1 += " AND d1.idTipoSottogruppo = '" + filtroTipoSottogruppo + "' ";
+                    filtriGenereGruppoSottogruppo2 += " AND d2.idTipoSottogruppo = '" + filtroTipoSottogruppo + "' ";
+                }
+
+                if (!string.IsNullOrEmpty(filtriGenereGruppoSottogruppo1))
+                {
+                    filtriRicerca += " AND((1=1" + filtriGenereGruppoSottogruppo1 + ") OR (1=1" + filtriGenereGruppoSottogruppo2 + "))";
+                }
+
+                #endregion
 
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
-                    string query = "SELECT * FROM dati_scadenzario a left join dati_protocollo b on a.idDatiProtocollo = b.id left join anag_clienti_fornitori c on b.id_cliente = c.id where 1=1 ";
+                    string query = "SELECT distinct a.*, b.* FROM dati_scadenzario a " +
+                                                           " left join dati_protocollo b on a.idDatiProtocollo = b.id " +
+                                                           " left join anag_clienti_fornitori c on b.id_cliente = c.id " +
+                                                           " LEFT JOIN dati_articoli_lavorazione d1  ON c.fornitore = 1 AND d1.idFornitori = c.id AND d1.idcollaboratori IS NULL " + 
+                                                           " LEFT JOIN dati_articoli_lavorazione d2 ON c.cliente = 1 AND d2.idcollaboratori = c.id AND d2.idFornitori IS NULL " +
+                                   " where 1=1 ";
                     query += filtriRicerca;
                     query += " order by a.id desc";
 

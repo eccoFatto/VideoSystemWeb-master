@@ -189,6 +189,62 @@ namespace VideoSystemWeb.DAL
             return listaColonneAgenda;
         }
 
+        public static List<Sottogruppo> CaricaSottogruppi(bool soloElemAttivi, ref Esito esito)
+        {
+            List<Sottogruppo> listaSottogruppi = new List<Sottogruppo>();
+            string soloAttivi = soloElemAttivi ? " WHERE attivo = 1 " : "";
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM tipo_sottogruppo " + soloAttivi + " ORDER BY sottotipo,nome"))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    foreach (DataRow riga in dt.Rows)
+                                    {
+                                        Sottogruppo tipologicaCorrente = new Sottogruppo();
+                                        {
+                                            tipologicaCorrente.id = int.Parse(riga["id"].ToString());
+                                            tipologicaCorrente.nome = riga["nome"].ToString();
+                                            tipologicaCorrente.descrizione = riga["descrizione"].ToString();
+                                            tipologicaCorrente.sottotipo = riga["sottotipo"].ToString();
+                                            tipologicaCorrente.IdTipoGruppo = DBNull.Value.Equals(riga["idTipoGruppo"]) ? null: (int?)int.Parse(riga["idTipoGruppo"].ToString());
+                                            tipologicaCorrente.parametri = riga["parametri"].ToString();
+                                            tipologicaCorrente.attivo = bool.Parse(riga["attivo"].ToString());
+                                        };
+
+                                        listaSottogruppi.Add(tipologicaCorrente);
+                                    }
+                                }
+                                else
+                                {
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella ricerca della tipologica tipo_sottogruppo";
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Base_DAL.cs - CaricaSottogruppi " + Environment.NewLine + ex.StackTrace;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return listaSottogruppi;
+        }
+
         public static Tipologica GetTipologicaById(EnumTipologiche tipoTipologica,int idTipologica, ref Esito esito)
         {
             Tipologica tipologica = new Tipologica();
@@ -220,6 +276,54 @@ namespace VideoSystemWeb.DAL
                                 {
                                     esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
                                     esito.Descrizione = "Nessun dato trovato nella ricerca della tipologica " + tipoTipologica;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = "Base_DAL.cs - getTipologicaById " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return tipologica;
+        }
+
+        public static Sottogruppo GetSottogruppoById(int idSottogruppo, ref Esito esito)
+        {
+            Sottogruppo tipologica = new Sottogruppo();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SELECT * FROM tipo_sottogruppo where id =" + idSottogruppo.ToString()))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count == 1)
+                                {
+                                    tipologica.id = int.Parse(dt.Rows[0]["id"].ToString());
+                                    tipologica.nome = dt.Rows[0]["nome"].ToString();
+                                    tipologica.descrizione = dt.Rows[0]["descrizione"].ToString();
+                                    tipologica.sottotipo = dt.Rows[0]["sottotipo"].ToString();
+                                    tipologica.parametri = dt.Rows[0]["parametri"].ToString();
+                                    tipologica.attivo = bool.Parse(dt.Rows[0]["attivo"].ToString());
+                                    tipologica.IdTipoGruppo = !DBNull.Value.Equals(dt.Rows[0]["idTipoGruppo"].ToString()) ? (int?)int.Parse(dt.Rows[0]["idTipoGruppo"].ToString()) : null;
+
+                                }
+                                else
+                                {
+                                    esito.Codice = Esito.ESITO_KO_ERRORE_NO_RISULTATI;
+                                    esito.Descrizione = "Nessun dato trovato nella ricerca della tipologica tipo_sottogruppo";
                                 }
                             }
                         }
@@ -298,9 +402,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_GRUPPO:
                     nomeSP = "InsertTipoGruppo";
                     break;
-                case EnumTipologiche.TIPO_SOTTOGRUPPO:
-                    nomeSP = "InsertTipoSottogruppo";
-                    break;
+                //case EnumTipologiche.TIPO_SOTTOGRUPPO:
+                //    nomeSP = "InsertTipoSottogruppo";
+                //    break;
                 case EnumTipologiche.TIPO_COLONNE_AGENDA:
                     nomeSP = "InsertTipoColonneAgenda";
                     break;
@@ -414,6 +518,81 @@ namespace VideoSystemWeb.DAL
             return 0;
         }
 
+        public static int CreaSottogruppo(Sottogruppo sottogruppo, ref Esito esito)
+        {
+            string nomeSP = "InsertTipoSottogruppo";
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+            
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand(nomeSP))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            StoreProc.Parameters.Add("@id", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            SqlParameter nome = new SqlParameter("@nome", sottogruppo.nome);
+                            nome.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nome);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", sottogruppo.descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter sottotipo = new SqlParameter("@sottotipo", sottogruppo.sottotipo);
+                            sottotipo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(sottotipo);
+
+                            SqlParameter parametri = new SqlParameter("@parametri", sottogruppo.parametri);
+                            parametri.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(parametri);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", sottogruppo.attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            SqlParameter idTipoGruppo = new SqlParameter("@idTipoGruppo", sottogruppo.IdTipoGruppo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idTipoGruppo);
+
+                            StoreProc.Connection.Open();
+
+                            StoreProc.ExecuteNonQuery();
+
+                            int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
+
+                            return iReturn;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - CreaSottogruppo " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return 0;
+        }
+
         public static int CreaColonneAgenda(ColonneAgenda colonnaAgenda, ref Esito esito)
         {
             string nomeSP = "InsertTipoColonneAgenda";
@@ -504,9 +683,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_GRUPPO:
                     nomeSP = "UpdateTipoGruppo";
                     break;
-                case EnumTipologiche.TIPO_SOTTOGRUPPO:
-                    nomeSP = "UpdateTipoSottogruppo";
-                    break;
+                //case EnumTipologiche.TIPO_SOTTOGRUPPO:
+                //    nomeSP = "UpdateTipoSottogruppo";
+                //    break;
                 case EnumTipologiche.TIPO_COLONNE_AGENDA:
                     nomeSP = "UpdateTipoColonneAgenda";
                     break;
@@ -620,6 +799,82 @@ namespace VideoSystemWeb.DAL
             return esito;
         }
 
+        public static Esito AggiornaSottogruppo(Sottogruppo sottogruppo)
+        {
+            string nomeSP = "UpdateTipoSottogruppo";
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            Esito esito = new Esito();
+            
+            try
+            {
+                using (System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection(sqlConstr))
+                {
+                    using (System.Data.SqlClient.SqlCommand StoreProc = new System.Data.SqlClient.SqlCommand(nomeSP))
+                    {
+                        using (System.Data.SqlClient.SqlDataAdapter sda = new System.Data.SqlClient.SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            System.Data.SqlClient.SqlParameter id = new System.Data.SqlClient.SqlParameter("@id", sottogruppo.id);
+                            id.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            SqlParameter nome = new SqlParameter("@nome", sottogruppo.nome);
+                            nome.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nome);
+
+                            SqlParameter descrizione = new SqlParameter("@descrizione", sottogruppo.descrizione);
+                            descrizione.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(descrizione);
+
+                            SqlParameter sottotipo = new SqlParameter("@sottotipo", sottogruppo.sottotipo);
+                            sottotipo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(sottotipo);
+
+                            SqlParameter parametri = new SqlParameter("@parametri", sottogruppo.parametri);
+                            parametri.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(parametri);
+
+                            SqlParameter attivo = new SqlParameter("@attivo", sottogruppo.attivo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(attivo);
+
+                            SqlParameter idTipoGruppo = new SqlParameter("@idTipoGruppo", sottogruppo.IdTipoGruppo);
+                            attivo.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idTipoGruppo);
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - AggiornaSottogruppo " + Environment.NewLine + ex.Message;
+
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+            
+            return esito;
+        }
+
         public static Esito AggiornaColonneAgenda(ColonneAgenda colonnaAgenda)
         {
             string nomeSP = "UpdateTipoColonneAgenda";
@@ -707,9 +962,9 @@ namespace VideoSystemWeb.DAL
                 case EnumTipologiche.TIPO_GRUPPO:
                     nomeSP = "DeleteTipoGruppo";
                     break;
-                case EnumTipologiche.TIPO_SOTTOGRUPPO:
-                    nomeSP = "DeleteTipoSottogruppo";
-                    break;
+                //case EnumTipologiche.TIPO_SOTTOGRUPPO:
+                //    nomeSP = "DeleteTipoSottogruppo";
+                //    break;
                 case EnumTipologiche.TIPO_COLONNE_AGENDA:
                     //nomeSP = "DeleteTipoColonneAgenda";
                     nomeSP = "RemoveTipoColonneAgenda";
@@ -789,6 +1044,57 @@ namespace VideoSystemWeb.DAL
             {
                 esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
                 esito.Descrizione = "Base_DAL.cs - EliminaTipologia " + Environment.NewLine + ex.Message;
+                
+                log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
+            }
+
+            return esito;
+        }
+
+        public static Esito EliminaSottogruppo(int idSottogruppo)
+        {
+            string nomeSP = "DeleteTipoSottogruppo";
+            Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
+
+            Esito esito = new Esito();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    using (SqlCommand StoreProc = new SqlCommand(nomeSP))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            StoreProc.Connection = con;
+                            sda.SelectCommand = StoreProc;
+                            StoreProc.CommandType = CommandType.StoredProcedure;
+
+                            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+                            id.Direction = ParameterDirection.Input;
+                            id.Value = idSottogruppo;
+                            StoreProc.Parameters.Add(id);
+
+                            // PARAMETRI PER LOG UTENTE
+                            System.Data.SqlClient.SqlParameter idUtente = new SqlParameter("@idUtente", utente.id);
+                            idUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idUtente);
+
+                            System.Data.SqlClient.SqlParameter nomeUtente = new SqlParameter("@nomeUtente", utente.username);
+                            nomeUtente.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(nomeUtente);
+                            // FINE PARAMETRI PER LOG UTENTE
+
+                            StoreProc.Connection.Open();
+
+                            int iReturn = StoreProc.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
+                esito.Descrizione = "Base_DAL.cs - EliminaSottogruppo " + Environment.NewLine + ex.Message;
 
                 log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
             }

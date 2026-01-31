@@ -560,7 +560,7 @@ namespace VideoSystemWeb.DAL
                                             statisticheCosti.Listino = riga.Field<decimal?>("listino");
                                             statisticheCosti.Costo = riga.Field<decimal?>("costo");
                                             statisticheCosti.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : "";// riga.Field<string>("docOfferta");
-                                            statisticheCosti.Pregresso = riga.Field<bool>("pregresso");
+                                            statisticheCosti.Pregresso = riga.Field<bool?>("pregresso");
                                             statisticheCosti.Gruppo = riga.Field<string>("gruppo");
                                             statisticheCosti.Fornitore = riga.Field<string>("fornitore");
                                             statisticheCosti.Progressivo = riga.Field<int>("progressivo");
@@ -620,25 +620,25 @@ namespace VideoSystemWeb.DAL
                                 {
                                     foreach (DataRow riga in dt.Rows)
                                     {
-                                        StatisticheCosti statisticheCosti = new StatisticheCosti
-                                        {
-                                            IdCliente = riga.Field<int>("id_cliente"),
-                                            Cliente = riga.Field<string>("cliente"),
-                                            NumeroFattura = riga.Field<string>("numeroFattura"),
-                                            Ordine = riga.Field<string>("ordine"),
-                                            CodiceLavoro = riga.Field<string>("codice_lavoro"),
-                                            Data = riga.Field<DateTime?>("data"),
-                                            Lavorazione = riga.Field<string>("lavorazione"),
-                                            Produzione = riga.Field<string>("produzione"),
-                                            Contratto = riga.Field<string>("contratto"),
-                                            Listino = riga.Field<decimal?>("listino"),
-                                            Costo = riga.Field<decimal?>("costo"),
-                                            DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : "",// riga.Field<string>("docOfferta"),
-                                            Pregresso = riga.Field<bool>("pregresso"),
-                                            Gruppo = riga.Field<string>("gruppo"),
-                                            Fornitore = riga.Field<string>("fornitore"),
-                                            Progressivo = riga.Field<int>("progressivo")
-                                        };
+                                        StatisticheCosti statisticheCosti = new StatisticheCosti();
+
+                                        statisticheCosti.IdCliente = riga.Field<int>("id_cliente");
+                                        statisticheCosti.Cliente = riga.Field<string>("cliente");
+                                        statisticheCosti.NumeroFattura = riga.Field<string>("numeroFattura");
+                                        statisticheCosti.Ordine = riga.Field<string>("ordine");
+                                        statisticheCosti.CodiceLavoro = riga.Field<string>("codice_lavoro");
+                                        statisticheCosti.Data = riga.Field<DateTime?>("data");
+                                        statisticheCosti.Lavorazione = riga.Field<string>("lavorazione");
+                                        statisticheCosti.Produzione = riga.Field<string>("produzione");
+                                        statisticheCosti.Contratto = riga.Field<string>("contratto");
+                                        statisticheCosti.Listino = riga.Field<decimal?>("listino");
+                                        statisticheCosti.Costo = riga.Field<decimal?>("costo");
+                                        statisticheCosti.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : "";// riga.Field<string>("docOfferta"),
+                                        statisticheCosti.Pregresso = riga.Field<bool?>("pregresso");
+                                        statisticheCosti.Gruppo = riga.Field<string>("gruppo");
+                                        statisticheCosti.Fornitore = riga.Field<string>("fornitore");
+                                        statisticheCosti.Progressivo = riga.Field<int>("progressivo");
+                                        
 
                                         listaStatisticheCosti.Add(statisticheCosti);
                                     }
@@ -694,7 +694,7 @@ namespace VideoSystemWeb.DAL
                                             Listino = riga.Field<decimal?>("listino"),
                                             Costo = riga.Field<decimal?>("costo"),
                                             DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta"),
-                                            Pregresso = riga.Field<bool>("pregresso"),
+                                            Pregresso = riga.Field<bool?>("pregresso"),
                                             Gruppo = riga.Field<string>("gruppo"),
                                             Fornitore = riga.Field<string>("fornitore"),
                                             Progressivo = riga.Field<int>("progressivo")

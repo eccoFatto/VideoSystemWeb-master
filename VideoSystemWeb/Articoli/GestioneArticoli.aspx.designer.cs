@@ -1,17 +1,19 @@
 ﻿//------------------------------------------------------------------------------
 // <generato automaticamente>
-//     Codice generato da uno strumento.
+//     Questo codice è stato generato da uno strumento.
 //
 //     Le modifiche a questo file possono causare un comportamento non corretto e verranno perse se
 //     il codice viene rigenerato. 
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.Articoli {
-    
-    
-    public partial class GestioneArticoli {
-        
+namespace VideoSystemWeb.Articoli
+{
+
+
+    public partial class GestioneArticoli
+    {
+
         /// <summary>
         /// Controllo HF_TIPO_ARTICOLO.
         /// </summary>
@@ -20,7 +22,7 @@ namespace VideoSystemWeb.Articoli {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField HF_TIPO_ARTICOLO;
-        
+
         /// <summary>
         /// Controllo PH.
         /// </summary>
@@ -29,7 +31,7 @@ namespace VideoSystemWeb.Articoli {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder PH;
-        
+
         /// <summary>
         /// Controllo controlTipo.
         /// </summary>
@@ -38,7 +40,7 @@ namespace VideoSystemWeb.Articoli {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Articoli.userControl.ArtTipologie controlTipo;
-        
+
         /// <summary>
         /// Controllo controlArt.
         /// </summary>
@@ -47,5 +49,14 @@ namespace VideoSystemWeb.Articoli {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::VideoSystemWeb.Articoli.userControl.ArtArticoli controlArt;
+
+        /// <summary>
+        /// Controllo controlSottogruppi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::VideoSystemWeb.Articoli.userControl.ArtSottogruppi controlSottogruppi;
     }
 }

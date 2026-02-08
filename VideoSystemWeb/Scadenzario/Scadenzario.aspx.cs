@@ -88,7 +88,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                 #endregion
             }
 
-            //ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataFatturaDa.ClientID + "', '" + txt_DataFatturaA.ClientID + "');", true);
+            ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_DataFatturaDa.ClientID + "', '" + txt_DataFatturaA.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate2", "controlloCoerenzaDate('" + txt_DataDa.ClientID + "', '" + txt_DataA.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
@@ -183,7 +183,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
             //List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", ref esito);
 
-            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", "", ref esito);
+            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", "", "", "", ref esito);
 
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
@@ -421,8 +421,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                                         txt_RagioneSociale.Text,
                                                                                                         txt_NumeroFattura.Text,
                                                                                                         ddlFatturaPagata.SelectedValue,
-                                                                                                        //txt_DataFatturaDa.Text,
-                                                                                                        //txt_DataFatturaA.Text,
+                                                                                                        txt_DataFatturaDa.Text,
+                                                                                                        txt_DataFatturaA.Text,
                                                                                                         txt_DataDa.Text,
                                                                                                         txt_DataA.Text,
                                                                                                         ddl_FiltroBanca.SelectedValue,
@@ -702,8 +702,8 @@ namespace VideoSystemWeb.Scadenzario.userControl
 
             txt_RagioneSociale.Text =
             txt_NumeroFattura.Text =
-            //txt_DataFatturaDa.Text =
-            //txt_DataFatturaA.Text =
+            txt_DataFatturaDa.Text =
+            txt_DataFatturaA.Text =
             txt_DataDa.Text =
             txt_DataA.Text = string.Empty;
         }

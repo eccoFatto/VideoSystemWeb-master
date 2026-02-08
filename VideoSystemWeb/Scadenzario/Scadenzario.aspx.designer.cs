@@ -150,6 +150,24 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_NumeroFattura;
 
         /// <summary>
+        /// Controllo txt_DataFatturaDa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_DataFatturaDa;
+
+        /// <summary>
+        /// Controllo txt_DataFatturaA.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_DataFatturaA;
+
+        /// <summary>
         /// Controllo txt_DataDa.
         /// </summary>
         /// <remarks>

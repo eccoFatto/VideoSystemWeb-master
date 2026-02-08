@@ -234,14 +234,14 @@
                     </div>
 
                     
-                       <%-- <div class="w3-quarter">
-                            <label>Data fattura da</label>
-                            <asp:TextBox ID="txt_DataFatturaDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                        </div>
-                        <div class="w3-quarter">
-                            <label>Data fattura a</label>
-                            <asp:TextBox ID="txt_DataFatturaA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                        </div>--%>
+                    <div class="w3-quarter">
+                        <label>Data fattura da</label>
+                        <asp:TextBox ID="txt_DataFatturaDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                    </div>
+                    <div class="w3-quarter">
+                        <label>Data fattura a</label>
+                        <asp:TextBox ID="txt_DataFatturaA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                    </div>
         
                     <div class="w3-quarter">
                         <label>Data scad. da</label>
@@ -252,11 +252,13 @@
                         <asp:TextBox ID="txt_DataA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                     </div>
                 </div>
+
                 <div class="w3-quarter">
                     <label>Tipologia pagamento</label>
                     <asp:DropDownList ID="ddl_FiltroBanca" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border"/>
                 </div>
             </div>
+
 
 <%--RIQUADRI DEI TOTALI--%>
             <div class="w3-row-padding w3-margin-bottom w3-margin-top">

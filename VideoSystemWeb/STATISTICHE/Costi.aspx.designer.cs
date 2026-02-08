@@ -24,15 +24,6 @@ namespace VideoSystemWeb.STATISTICHE
         protected global::System.Web.UI.WebControls.Label lblStatisticaRicavi;
 
         /// <summary>
-        /// Controllo UpdatePanelRicerca.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
-
-        /// <summary>
         /// Controllo txt_Cliente.
         /// </summary>
         /// <remarks>

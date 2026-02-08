@@ -17,6 +17,7 @@ namespace VideoSystemWeb.STATISTICHE
         {
             if (!IsPostBack)
             {
+        
                 CaricaCombo();
             }
 
@@ -207,7 +208,7 @@ namespace VideoSystemWeb.STATISTICHE
             //ddl_Contratto.Text = listaContratti.Contains(filtroNomeContratto) ? filtroNomeContratto : "";
 
             #region GENERE
-            ddl_Genere.Items.Add(new ListItem("<tutti>", ""));
+            ddl_Genere.Items.Add(new ListItem("", ""));
             foreach (Tipologica tipoGenere in SessionManager.ListaTipiGeneri)
             {
                 ddl_Genere.Items.Add(new ListItem(tipoGenere.nome, tipoGenere.id.ToString()));
@@ -215,7 +216,7 @@ namespace VideoSystemWeb.STATISTICHE
             #endregion
 
             #region GRUPPO
-            ddl_Gruppo.Items.Add(new ListItem("<tutti>", ""));
+            ddl_Gruppo.Items.Add(new ListItem("", ""));
             foreach (Tipologica tipoGruppi in SessionManager.ListaTipiGruppi)
             {
                 ddl_Gruppo.Items.Add(new ListItem(tipoGruppi.nome, tipoGruppi.id.ToString()));
@@ -223,11 +224,11 @@ namespace VideoSystemWeb.STATISTICHE
             #endregion
 
             #region SOTTOGRUPPO
-            ddl_Sottogruppo.Items.Add(new ListItem("<tutti>", ""));
-            foreach (Tipologica tipoSottogruppi in SessionManager.ListaTipiSottogruppi)
-            {
-                ddl_Sottogruppo.Items.Add(new ListItem(tipoSottogruppi.nome, tipoSottogruppi.id.ToString()));
-            }
+            ddl_Sottogruppo.Items.Add(new ListItem("", ""));
+            //foreach (Tipologica tipoSottogruppi in SessionManager.ListaTipiSottogruppi)
+            //{
+            //    ddl_Sottogruppo.Items.Add(new ListItem(tipoSottogruppi.nome, tipoSottogruppi.id.ToString()));
+            //}
             #endregion
         }
 
@@ -308,6 +309,49 @@ namespace VideoSystemWeb.STATISTICHE
             }
             e.Row.Cells[13].Visible = false;
             e.Row.Cells[14].Visible = false;
+        }
+
+        protected void ddlGruppo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            try
+            {
+                CaricaSottogruppiInBaseAlGruppo(ddl_Gruppo, ddl_Sottogruppo);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        private void CaricaSottogruppiInBaseAlGruppo(DropDownList listaGruppo, DropDownList listaSottogruppo)
+        {
+            Esito esito = new Esito();
+
+            string idTipoGruppoString = listaGruppo.SelectedValue;
+
+            if (!string.IsNullOrEmpty(idTipoGruppoString))
+            {
+                int idTipoGruppo = int.Parse(idTipoGruppoString);
+
+                listaSottogruppo.Items.Clear();
+                listaSottogruppo.Items.Add("");
+
+                List<Sottogruppo> listaSottogruppiFiltrata = (SessionManager.ListaTipiSottogruppi).Where(x => x.IdTipoGruppo == idTipoGruppo || x.IdTipoGruppo == null).ToList<Sottogruppo>();
+
+                foreach (Tipologica tipologiaSottogruppo in listaSottogruppiFiltrata)
+                {
+                    ListItem item = new ListItem();
+                    item.Text = tipologiaSottogruppo.nome;
+                    item.Value = tipologiaSottogruppo.id.ToString();
+                    listaSottogruppo.Items.Add(item);
+                }
+            }
+            else
+            {
+                listaSottogruppo.Items.Clear();
+                listaSottogruppo.Items.Add("");
+            }
         }
     }
 }

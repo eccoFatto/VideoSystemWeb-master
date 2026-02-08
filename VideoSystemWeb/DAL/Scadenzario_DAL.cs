@@ -685,8 +685,8 @@ namespace VideoSystemWeb.DAL
                                                            string ragioneSociale, 
                                                            string numeroFattura, 
                                                            string fatturaPagata,
-                                                           //string dataFatturaDa, 
-                                                           //string dataFatturaA,
+                                                           string dataFatturaDa, 
+                                                           string dataFatturaA,
                                                            string dataScadenzaDa,
                                                            string dataScadenzaA,
                                                            string filtroBanca,
@@ -732,8 +732,8 @@ namespace VideoSystemWeb.DAL
                 #endregion
 
                 #region FILTRO PER DATA FATTURA O DATA LAVORAZIONE
-                //filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and ((b.data_fattura is not null and b.data_fattura >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "') or (b.data_fattura is null and b.data_inizio_lavorazione >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'))";
-                //filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and ((b.data_fattura is not null and b.data_fattura < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "') or (b.data_fattura is null and b.data_inizio_lavorazione < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'))";
+                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaDa) ? "" : " and ((b.data_fattura is not null and b.data_fattura >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "') or (b.data_fattura is null and b.data_inizio_lavorazione >= '" + (DateTime.Parse(dataFatturaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'))";
+                filtriRicerca += string.IsNullOrWhiteSpace(dataFatturaA) ? "" : " and ((b.data_fattura is not null and b.data_fattura < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "') or (b.data_fattura is null and b.data_inizio_lavorazione < '" + (DateTime.Parse(dataFatturaA)).ToString("yyyy-MM-ddT23:59:59.999") + "'))";
                 #endregion
 
                 filtriRicerca += string.IsNullOrWhiteSpace(dataScadenzaDa) ? "" : " and a.dataScadenza >= '" + (DateTime.Parse(dataScadenzaDa)).ToString("yyyy-MM-ddT00:00:00.000") + "'";

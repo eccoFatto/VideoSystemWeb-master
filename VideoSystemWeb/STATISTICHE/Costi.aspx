@@ -115,8 +115,8 @@
     <label>
         <asp:Label ID="lblStatisticaRicavi" runat="server" Text="STATISTICA COSTI" ForeColor="Teal"></asp:Label></label>
 
-    <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
-        <ContentTemplate>
+<%--    <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
+        <ContentTemplate>--%>
             <div class="w3-row">
                 <div class="w3-col" style="width:88%">
 <!-- FILTRI LAVORAZIONE-->
@@ -206,7 +206,7 @@
 
                             <div class="w3-quarter">
                                 <label>Gruppo</label>
-                                <asp:DropDownList ID="ddl_Gruppo" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
+                                <asp:DropDownList ID="ddl_Gruppo" runat="server"  Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddlGruppo_SelectedIndexChanged" AutoPostBack="true"/>
                             </div>
 
                             <div class="w3-quarter">
@@ -274,6 +274,7 @@
                         </asp:TemplateField>
 
                         <asp:BoundField DataField="Gruppo" HeaderText="Gruppo" HeaderStyle-Width="8%" />
+                        <asp:BoundField DataField="Sottogruppo" HeaderText="Sottogruppo" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="numeroFattura" HeaderText="Num. Fattura" HeaderStyle-Width="7%" />
                         <asp:BoundField DataField="Fornitore" HeaderText="Fornitore" HeaderStyle-Width="7%" />
                         <asp:BoundField DataField="CodiceLavoro" HeaderText="Codice" HeaderStyle-Width="7%" />
@@ -291,6 +292,6 @@
                     </Columns>
                 </asp:GridView>
             </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+<%--        </ContentTemplate>
+    </asp:UpdatePanel>--%>
 </asp:Content>

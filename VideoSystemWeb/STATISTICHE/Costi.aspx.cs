@@ -276,9 +276,9 @@ namespace VideoSystemWeb.STATISTICHE
         {
             if (e.Row.Cells.Count > 1)
             {
-                e.Row.Cells[10].Visible = chk_Listino.Checked;
-                e.Row.Cells[11].Visible = chk_Costi.Checked;
-                e.Row.Cells[12].Visible = chk_Ricavo.Checked &&
+                e.Row.Cells[11].Visible = chk_Listino.Checked;
+                e.Row.Cells[12].Visible = chk_Costi.Checked;
+                e.Row.Cells[13].Visible = chk_Ricavo.Checked &&
                                           string.IsNullOrWhiteSpace(txt_Fornitore.Text) &&
                                           ddl_Genere.SelectedValue == "" && 
                                           ddl_Gruppo.SelectedValue == "" && 
@@ -287,9 +287,9 @@ namespace VideoSystemWeb.STATISTICHE
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string pathDocumento = e.Row.Cells[13].Text.Trim();
+                string pathDocumento = e.Row.Cells[14].Text.Trim();
                 bool pregresso = false;
-                bool.TryParse(e.Row.Cells[14].Text.Trim(), out pregresso);
+                bool.TryParse(e.Row.Cells[15].Text.Trim(), out pregresso);
 
                 ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
@@ -307,8 +307,8 @@ namespace VideoSystemWeb.STATISTICHE
                     myButton.Attributes.Add("disabled", "true");
                 }
             }
-            e.Row.Cells[13].Visible = false;
             e.Row.Cells[14].Visible = false;
+            e.Row.Cells[15].Visible = false;
         }
 
         protected void ddlGruppo_SelectedIndexChanged(object sender, EventArgs e)

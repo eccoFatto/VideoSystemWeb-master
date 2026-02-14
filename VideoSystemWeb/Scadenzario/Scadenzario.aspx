@@ -85,8 +85,8 @@
             $("#<%=txt_RagioneSociale.ClientID%>").val('');
             $("#<%=txt_NumeroFattura.ClientID%>").val('');
             <%--$("#<%=ddlFatturaPagata.ClientID%>").val('');--%>
-            <%--$("#<%=txt_DataFatturaDa.ClientID%>").val('');
-            $("#<%=txt_DataFatturaA.ClientID%>").val('');--%>
+            $("#<%=txt_DataFatturaDa.ClientID%>").val('');
+            $("#<%=txt_DataFatturaA.ClientID%>").val('');
             $("#<%=txt_DataDa.ClientID%>").val('');
             $("#<%=txt_DataA.ClientID%>").val('');
             $("#<%=ddlFatturaPagata.ClientID%>").val('0');

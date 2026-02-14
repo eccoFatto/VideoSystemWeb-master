@@ -1232,7 +1232,7 @@ namespace VideoSystemWeb.Agenda
         {
             Esito esito = new Esito();
             int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Fattura", ref esito).id;
-            Protocolli protocollo = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(SessionManager.EventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true).FirstOrDefault();
+            Protocolli protocollo = Protocolli_BLL.Instance.getProtocolliByCodLavIdTipoProtocollo(SessionManager.EventoSelezionato.codice_lavoro, idTipoProtocollo, ref esito, true).Where(x=>x.Destinatario == "Cliente").FirstOrDefault();
 
             // PRENDO IL PATH DELL'ALLEGATO SE C'E'
             string pathDocumento = protocollo.PathDocumento;

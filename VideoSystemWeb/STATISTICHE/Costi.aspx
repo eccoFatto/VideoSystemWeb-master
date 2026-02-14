@@ -267,24 +267,24 @@
                     <Columns>
                         <asp:BoundField DataField="Cliente" HeaderText="Cliente" HeaderStyle-Width="10%" />
 
-                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="3%">
+                        <asp:TemplateField ShowHeader="False" HeaderStyle-Width="2%">
                             <ItemTemplate>
                                 <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" />
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <asp:BoundField DataField="Gruppo" HeaderText="Gruppo" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Sottogruppo" HeaderText="Sottogruppo" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="numeroFattura" HeaderText="Num. Fattura" HeaderStyle-Width="7%" />
-                        <asp:BoundField DataField="Fornitore" HeaderText="Fornitore" HeaderStyle-Width="7%" />
+                        <asp:BoundField DataField="Gruppo" HeaderText="Gruppo" HeaderStyle-Width="7%" />
+                        <asp:BoundField DataField="Sottogruppo" HeaderText="Sottogruppo" HeaderStyle-Width="9%" />
+                        <asp:BoundField DataField="numeroFattura" HeaderText="Num. Fattura" HeaderStyle-Width="6%" />
+                        <asp:BoundField DataField="Fornitore" HeaderText="Fornitore" HeaderStyle-Width="13%" />
                         <asp:BoundField DataField="CodiceLavoro" HeaderText="Codice" HeaderStyle-Width="7%" />
-                        <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="7%" />
+                        <asp:BoundField DataField="Data" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="5%" />
                         <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="17%" />
                         <asp:BoundField DataField="Produzione" HeaderText="Produzione" HeaderStyle-Width="14%" />
                         <asp:BoundField DataField="Contratto" HeaderText="Contratto" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Listino" HeaderText="Listino" DataFormatString="{0:N2}" HeaderStyle-Width="5%" />
-                        <asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:N2}" HeaderStyle-Width="5%" />
-                        <asp:BoundField DataField="Ricavo" HeaderText="Ricavo" DataFormatString="{0:P2}" HeaderStyle-Width="5%" />
+                        <asp:BoundField DataField="Listino" HeaderText="Listino" DataFormatString="{0:N2}" HeaderStyle-Width="4%" />
+                        <asp:BoundField DataField="Costo" HeaderText="Costo" DataFormatString="{0:N2}" HeaderStyle-Width="4%" />
+                        <asp:BoundField DataField="Ricavo" HeaderText="Ricavo" DataFormatString="{0:P2}" HeaderStyle-Width="4%" />
 
                         <asp:BoundField DataField="DocumentoAllegato" HeaderText="" />
                         <asp:BoundField DataField="Pregresso" HeaderText="" />

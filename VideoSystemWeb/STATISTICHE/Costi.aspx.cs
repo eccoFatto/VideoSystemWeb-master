@@ -30,7 +30,6 @@ namespace VideoSystemWeb.STATISTICHE
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
-
         private void GestioneRaggruppamentoRighe()
         {
             GridViewHelper helper = new GridViewHelper(this.gv_statistiche);
@@ -66,6 +65,7 @@ namespace VideoSystemWeb.STATISTICHE
             helper.GroupHeader += new GroupEvent(Helper_GroupHeader);
             helper.GroupSummary += new GroupEvent(Helper_GroupSummary);
             helper.GeneralSummary += new FooterEvent(Helper_GeneralSummary);
+            
         }
 
         private void Helper_GroupHeader(string groupName, object[] values, GridViewRow row)
@@ -258,18 +258,35 @@ namespace VideoSystemWeb.STATISTICHE
             {
                 ShowWarning("Nessuna voce trovata per i parametri immessi");
             }
+            else
+            {
+                decimal? totaleListino = listaStatisticheCosti.Sum(x => x.Listino);
+                decimal? totaleCosto = listaStatisticheCosti.Sum(x => x.Costo);
+                decimal? totaleRicavo = (totaleListino - totaleCosto) / totaleListino;
 
+                
+                tbTotElementiGriglia.Text = listaStatisticheCosti.Count.ToString("###,##0");
+
+                lbl_TotaleListino.Text = string.Format("{0:N2}", totaleListino);
+                lbl_TotaleCosto.Text = string.Format("{0:N2}", totaleCosto);
+                lbl_TotaleRicavo.Text = string.Format("{0:P2}", totaleRicavo);
+                colonnaRicavo.Visible = chk_Ricavo.Checked &&
+                                           string.IsNullOrWhiteSpace(txt_Fornitore.Text) &&
+                                           ddl_Genere.SelectedValue == "" &&
+                                           ddl_Gruppo.SelectedValue == "" &&
+                                           ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
+                rigaTotali.Visible = true;
+            }
             gv_statistiche.DataSource = listaStatisticheCosti;
             gv_statistiche.DataBind();
-            tbTotElementiGriglia.Text = listaStatisticheCosti.Count.ToString("###,##0");
         }
-
-        
+         
         protected void btnPulisciCampiRicerca_Click(object sender, EventArgs e)
         {
             gv_statistiche.DataSource = null;
             gv_statistiche.DataBind();
             tbTotElementiGriglia.Text = 0.ToString("###,##0");
+            rigaTotali.Visible = false;
         }
 
         protected void gv_statistiche_RowDataBound(object sender, GridViewRowEventArgs e)

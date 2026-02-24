@@ -105,6 +105,15 @@ namespace VideoSystemWeb.STATISTICHE
         protected global::System.Web.UI.WebControls.DropDownList ddl_Genere;
 
         /// <summary>
+        /// Controllo UpdatePanelRicerca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
+
+        /// <summary>
         /// Controllo ddl_Gruppo.
         /// </summary>
         /// <remarks>
@@ -175,6 +184,51 @@ namespace VideoSystemWeb.STATISTICHE
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbTotElementiGriglia;
+
+        /// <summary>
+        /// Controllo rigaTotali.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rigaTotali;
+
+        /// <summary>
+        /// Controllo lbl_TotaleListino.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_TotaleListino;
+
+        /// <summary>
+        /// Controllo lbl_TotaleCosto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_TotaleCosto;
+
+        /// <summary>
+        /// Controllo colonnaRicavo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell colonnaRicavo;
+
+        /// <summary>
+        /// Controllo lbl_TotaleRicavo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_TotaleRicavo;
 
         /// <summary>
         /// Controllo gv_statistiche.

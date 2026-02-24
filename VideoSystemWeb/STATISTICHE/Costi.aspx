@@ -203,16 +203,19 @@
                                 <label>Genere</label>
                                 <asp:DropDownList ID="ddl_Genere" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
                             </div>
+                            <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
+                                <ContentTemplate>
+                                    <div class="w3-quarter" style="padding:0px 8px">
+                                        <label>Gruppo</label>
+                                        <asp:DropDownList ID="ddl_Gruppo" runat="server"  Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddlGruppo_SelectedIndexChanged" AutoPostBack="true"/>
+                                    </div>
 
-                            <div class="w3-quarter">
-                                <label>Gruppo</label>
-                                <asp:DropDownList ID="ddl_Gruppo" runat="server"  Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddlGruppo_SelectedIndexChanged" AutoPostBack="true"/>
-                            </div>
-
-                            <div class="w3-quarter">
-                                <label>Sottogruppo</label>
-                                <asp:DropDownList ID="ddl_Sottogruppo" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
-                            </div>
+                                    <div class="w3-quarter" style="padding:0px 8px">
+                                        <label>Sottogruppo</label>
+                                        <asp:DropDownList ID="ddl_Sottogruppo" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
+                                    </div>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
                         </div>
                     </div>
                 </div>
@@ -261,8 +264,20 @@
                         </tr>
                     </table>
                 </div>
+
+                <div id="rigaTotali" runat="server" visible="false" class="w3-container w3-center" style="font-size: 10pt; width: 100%; position: relative; background-color: #808080; padding:0px;">
+                    <table class="w3-table w3-small"  CssClass="grid">
+                        <tr>
+                            <th Width="80%" style="text-align:right">Totale</th>
+                            <th Width="4%"><asp:label runat="server"  ID="lbl_TotaleListino" Text="" ReadOnly="true" Height="15px" /></th>
+                            <th Width="4%"><asp:label runat="server"  ID="lbl_TotaleCosto" Text="" ReadOnly="true" Height="15px" /></th>
+                            <th Width="4%" runat="server" id="colonnaRicavo"><asp:label runat="server"  ID="lbl_TotaleRicavo" Text="" ReadOnly="true" Height="15px" /></th>
+                        </tr>
+                    </table>
+                </div>
+
                 <asp:GridView ID="gv_statistiche" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;"
-                    CssClass="grid" AllowPaging="False" EmptyDataRowStyle-HorizontalAlign="Center" OnRowDataBound="gv_statistiche_RowDataBound">
+                    CssClass="grid" AllowPaging="False" EmptyDataRowStyle-HorizontalAlign="Center" OnRowDataBound="gv_statistiche_RowDataBound" >
                     <%--<PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>--%>
                     <Columns>
                         <asp:BoundField DataField="Cliente" HeaderText="Cliente" HeaderStyle-Width="10%" />

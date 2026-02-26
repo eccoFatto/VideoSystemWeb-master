@@ -166,47 +166,6 @@ namespace VideoSystemWeb.STATISTICHE
 
         private void CaricaCombo()
         {
-            //gv_statistiche.DataSource = null;
-            //gv_statistiche.DataBind();
-
-
-            //Esito esito = new Esito();
-            //string filtroNomeCliente = hf_NomeCliente.Value;
-            //string filtroNomeProduzione = hf_NomeProduzione.Value;
-            //string filtroNomeLavorazione = hf_NomeLavorazione.Value;
-            //string filtroNomeContratto = hf_NomeContratto.Value;
-
-            //List<StatisticheRicavi> listaStatisticheRicavi = Statistiche_BLL.Instance.GetStatisticheRicavi(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, null, null, null, ref esito);
-
-            //#region CLIENTE 
-            //List<string> listaClienti = listaStatisticheRicavi.Select(item => item.Cliente).Distinct().ToList();
-            //elencoClienti.InnerHtml = string.Empty;
-            //PopolaDDLGenerico(elencoClienti, listaClienti, "filtroCliente");
-            //#endregion
-
-            //#region PRODUZIONE 
-            //List<string> listaProduzioni = listaStatisticheRicavi.Select(item => item.Produzione).Distinct().ToList();
-            //elencoProduzioni.InnerHtml = string.Empty;
-            //PopolaDDLGenerico(elencoProduzioni, listaProduzioni, "filtroProduzione");
-            //#endregion
-
-            //#region LAVORAZIONE
-            //List<string> listaLavorazioni = listaStatisticheRicavi.Select(item => item.Lavorazione).Distinct().ToList();
-            //elencoLavorazioni.InnerHtml = string.Empty;
-            //PopolaDDLGenerico(elencoLavorazioni, listaLavorazioni, "filtroLavorazione");
-            //#endregion
-
-            //#region CONTRATTI 
-            //List<string> listaContratti = listaStatisticheRicavi.Select(item => item.Contratto).Distinct().ToList();
-            //elencoContratti.InnerHtml = string.Empty;
-            //PopolaDDLGenerico(elencoContratti, listaContratti, "filtroContratto");
-            //#endregion
-
-            //ddl_Cliente.Text = listaClienti.Contains(filtroNomeCliente) ? filtroNomeCliente : "";
-            //ddl_Produzione.Text = listaProduzioni.Contains(filtroNomeProduzione) ? filtroNomeProduzione : "";
-            //ddl_Lavorazione.Text = listaLavorazioni.Contains(filtroNomeLavorazione) ? filtroNomeLavorazione : "";
-            //ddl_Contratto.Text = listaContratti.Contains(filtroNomeContratto) ? filtroNomeContratto : "";
-
             #region GENERE
             ddl_Genere.Items.Add(new ListItem("", ""));
             foreach (Tipologica tipoGenere in SessionManager.ListaTipiGeneri)
@@ -264,9 +223,6 @@ namespace VideoSystemWeb.STATISTICHE
                 decimal? totaleCosto = listaStatisticheCosti.Sum(x => x.Costo);
                 decimal? totaleRicavo = (totaleListino - totaleCosto) / totaleListino;
 
-                
-                tbTotElementiGriglia.Text = listaStatisticheCosti.Count.ToString("###,##0");
-
                 lbl_TotaleListino.Text = string.Format("{0:N2}", totaleListino);
                 lbl_TotaleCosto.Text = string.Format("{0:N2}", totaleCosto);
                 lbl_TotaleRicavo.Text = string.Format("{0:P2}", totaleRicavo);
@@ -277,6 +233,7 @@ namespace VideoSystemWeb.STATISTICHE
                                            ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
                 rigaTotali.Visible = true;
             }
+            tbTotElementiGriglia.Text = listaStatisticheCosti.Count.ToString("###,##0");
             gv_statistiche.DataSource = listaStatisticheCosti;
             gv_statistiche.DataBind();
         }

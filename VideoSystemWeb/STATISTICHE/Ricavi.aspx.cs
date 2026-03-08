@@ -203,11 +203,26 @@ namespace VideoSystemWeb.STATISTICHE
             {
                 ShowWarning("Nessuna voce trovata per i parametri immessi");
             }
+            else
+            {
+                decimal? totaleListino = listaStatisticheRicavi.Sum(x => x.Listino);
+                decimal? totaleCosto = listaStatisticheRicavi.Sum(x => x.Costo);
+                decimal? totaleRicavo = (totaleListino - totaleCosto) / totaleListino;
 
-            gv_statistiche.DataSource = listaStatisticheRicavi;
-            gv_statistiche.DataBind();
+                lbl_TotaleListino.Text = string.Format("{0:N2}", totaleListino);
+                lbl_TotaleCosto.Text = string.Format("{0:N2}", totaleCosto);
+                lbl_TotaleRicavo.Text = string.Format("{0:P2}", totaleRicavo);
+
+                colonnaListino.Visible = chk_Listino.Checked;
+                colonnaCosto.Visible = chk_Costi.Checked;
+                colonnaRicavo.Visible = chk_Ricavo.Checked;
+
+                rigaTotali.Visible = chk_Listino.Checked || chk_Costi.Checked || chk_Ricavo.Checked;
+            }
 
             tbTotElementiGriglia.Text = listaStatisticheRicavi.Count.ToString("###,##0");
+            gv_statistiche.DataSource = listaStatisticheRicavi;
+            gv_statistiche.DataBind();
         }
 
         //protected void btn_aggiornaFiltri_Click(object sender, EventArgs e)

@@ -226,12 +226,16 @@ namespace VideoSystemWeb.STATISTICHE
                 lbl_TotaleListino.Text = string.Format("{0:N2}", totaleListino);
                 lbl_TotaleCosto.Text = string.Format("{0:N2}", totaleCosto);
                 lbl_TotaleRicavo.Text = string.Format("{0:P2}", totaleRicavo);
+
+                colonnaListino.Visible = chk_Listino.Checked;
+                colonnaCosto.Visible = chk_Costi.Checked;
                 colonnaRicavo.Visible = chk_Ricavo.Checked &&
                                            string.IsNullOrWhiteSpace(txt_Fornitore.Text) &&
                                            ddl_Genere.SelectedValue == "" &&
                                            ddl_Gruppo.SelectedValue == "" &&
                                            ddl_Sottogruppo.SelectedValue == ""; // se questi filtri sono selezionati non mostro il margine, che darebbe un valore errato
-                rigaTotali.Visible = true;
+
+                rigaTotali.Visible = chk_Listino.Checked || chk_Costi.Checked || chk_Ricavo.Checked;
             }
             tbTotElementiGriglia.Text = listaStatisticheCosti.Count.ToString("###,##0");
             gv_statistiche.DataSource = listaStatisticheCosti;

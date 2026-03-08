@@ -269,8 +269,8 @@
                     <table class="w3-table w3-small"  CssClass="grid">
                         <tr>
                             <th Width="80%" style="text-align:right">Totale</th>
-                            <th Width="4%"><asp:label runat="server"  ID="lbl_TotaleListino" Text="" ReadOnly="true" Height="15px" /></th>
-                            <th Width="4%"><asp:label runat="server"  ID="lbl_TotaleCosto" Text="" ReadOnly="true" Height="15px" /></th>
+                            <th Width="4%" runat="server" id="colonnaListino"><asp:label runat="server"  ID="lbl_TotaleListino" Text="" ReadOnly="true" Height="15px" /></th>
+                            <th Width="4%" runat="server" id="colonnaCosto"><asp:label runat="server"  ID="lbl_TotaleCosto" Text="" ReadOnly="true" Height="15px" /></th>
                             <th Width="4%" runat="server" id="colonnaRicavo"><asp:label runat="server"  ID="lbl_TotaleRicavo" Text="" ReadOnly="true" Height="15px" /></th>
                         </tr>
                     </table>

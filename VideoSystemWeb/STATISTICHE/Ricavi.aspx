@@ -220,6 +220,18 @@
                         </tr>
                     </table>
                 </div>
+
+                <div id="rigaTotali" runat="server" visible="false" class="w3-container w3-center" style="font-size: 10pt; width: 100%; position: relative; background-color: #808080; padding:0px;">
+                    <table class="w3-table w3-small"  CssClass="grid">
+                        <tr>
+                            <th Width="77%" style="text-align:right">Totale</th>
+                            <th Width="7%" runat="server" id="colonnaListino"><asp:label runat="server"  ID="lbl_TotaleListino" Text="" ReadOnly="true" Height="15px" /></th>
+                            <th Width="7%" runat="server" id="colonnaCosto"><asp:label runat="server"  ID="lbl_TotaleCosto" Text="" ReadOnly="true" Height="15px" /></th>
+                            <th Width="7%" runat="server" id="colonnaRicavo"><asp:label runat="server"  ID="lbl_TotaleRicavo" Text="" ReadOnly="true" Height="15px" /></th>
+                        </tr>
+                    </table>
+                </div>
+
                 <asp:GridView ID="gv_statistiche" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" 
                     CssClass="grid" AllowPaging="False"  EmptyDataRowStyle-HorizontalAlign="Center" OnRowDataBound="gv_statistiche_RowDataBound" >
                     <%--<PagerSettings Mode="NumericFirstLast" PageButtonCount="10" FirstPageText="Inizio" LastPageText="Fine"/>--%>

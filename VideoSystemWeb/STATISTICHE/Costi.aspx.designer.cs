@@ -195,6 +195,15 @@ namespace VideoSystemWeb.STATISTICHE
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl rigaTotali;
 
         /// <summary>
+        /// Controllo colonnaListino.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell colonnaListino;
+
+        /// <summary>
         /// Controllo lbl_TotaleListino.
         /// </summary>
         /// <remarks>
@@ -202,6 +211,15 @@ namespace VideoSystemWeb.STATISTICHE
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_TotaleListino;
+
+        /// <summary>
+        /// Controllo colonnaCosto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell colonnaCosto;
 
         /// <summary>
         /// Controllo lbl_TotaleCosto.

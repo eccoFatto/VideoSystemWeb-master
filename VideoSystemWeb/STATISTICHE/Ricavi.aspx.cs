@@ -22,8 +22,6 @@ namespace VideoSystemWeb.STATISTICHE
                 ddlFatturato.SelectedIndex = 1;
             }
 
-            
-
             #region GRIGLIA CON RAGGRUPPAMENTO RIGHE
             GestioneRaggruppamentoRighe();
 
@@ -32,7 +30,6 @@ namespace VideoSystemWeb.STATISTICHE
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_PeriodoDa.ClientID + "', '" + txt_PeriodoA.ClientID + "');", true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
-
 
         private void GestioneRaggruppamentoRighe()
         {
@@ -53,7 +50,6 @@ namespace VideoSystemWeb.STATISTICHE
             helper.RegisterSummary("Costo", SummaryOperation.Sum);
             helper.RegisterSummary("Ricavo", SummaryOperation.Count);
         }
-
 
         private void Helper_GroupHeader(string groupName, object[] values, GridViewRow row)
         {

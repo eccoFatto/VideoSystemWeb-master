@@ -291,7 +291,6 @@ namespace VideoSystemWeb.STATISTICHE
 
         protected void ddlGruppo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
             try
             {
                 CaricaSottogruppiInBaseAlGruppo(ddl_Gruppo, ddl_Sottogruppo);

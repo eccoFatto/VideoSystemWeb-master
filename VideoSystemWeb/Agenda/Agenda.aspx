@@ -112,7 +112,6 @@
                 velocita = 300;
             }
 
-
             $("#<%=hf_tabSelezionata.ClientID%>").val(tipoName);
 
             var i, x, tablinks;
@@ -128,9 +127,7 @@
             //evt.currentTarget.className += " w3-red";
 
             var nomeElemento = '';
-
             var statoCorrente = $("#<%=val_Stato.ClientID%>").text();
-            
 
             if (tipoName == 'Appuntamento') {
                 nomeElemento = '<%=tab_Appuntamento.ClientID%>';

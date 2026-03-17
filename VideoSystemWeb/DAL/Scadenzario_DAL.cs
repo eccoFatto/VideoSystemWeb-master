@@ -708,9 +708,9 @@ namespace VideoSystemWeb.DAL
                 }
                 else
                 {
-                    int idTipoProtocolloBustaPaga = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
+                    //int idTipoProtocolloBustaPaga = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
                     filtriRicerca +=  string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
-                    filtriRicerca += " and b.id_tipo_protocollo <> '" + idTipoProtocolloBustaPaga + "' ";
+                   // filtriRicerca += " and b.id_tipo_protocollo <> '" + idTipoProtocolloBustaPaga + "' ";
                 }
 
                 filtriRicerca += string.IsNullOrWhiteSpace(ragioneSociale) ? "" : " and b.cliente like '%" + ragioneSociale.Trim() + "%'";

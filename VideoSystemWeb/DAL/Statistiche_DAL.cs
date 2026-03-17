@@ -48,7 +48,7 @@ namespace VideoSystemWeb.DAL
 
             // eliminato campo docFattura in seguito alla segnalazione 02/07/2024 di risultati duplicati 
             //string campiQuery = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso ";
-            string campiQuery = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_netto)  costo, f.descrizione contratto, h.pathDocumento 'docOfferta', h.pregresso ";
+            string campiQuery = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, h.pathDocumento 'docOfferta', h.pregresso ";
 
             if (fatturato != null)
             {
@@ -61,7 +61,7 @@ namespace VideoSystemWeb.DAL
 
                     // eliminato campo docOfferta in seguito alla segnalazione 02/07/2024 di risultati duplicati 
                     //campiQuery = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(e.data_fattura) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso ";
-                    campiQuery = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(e.data_fattura) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_netto)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pregresso ";
+                    campiQuery = "select distinct a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(e.data_fattura) data, a.lavorazione, a.produzione, SUM(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pregresso ";
                 }
                 else
                 {

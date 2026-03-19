@@ -701,16 +701,20 @@ namespace VideoSystemWeb.DAL
             {
                 string filtriRicerca = string.Empty;
 
-                if (tipoAnagrafica == "BustaPaga")
+                if (tipoAnagrafica == "BustaPaga") // BUSTA PAGA
                 {
                     int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
                     filtriRicerca += " and b.id_tipo_protocollo = '" + idTipoProtocollo + "' ";
                 }
-                else
+                else if (tipoAnagrafica == "") // TUTTI
                 {
-                    //int idTipoProtocolloBustaPaga = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
-                    filtriRicerca +=  string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
-                   // filtriRicerca += " and b.id_tipo_protocollo <> '" + idTipoProtocolloBustaPaga + "' ";
+                    filtriRicerca += string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
+                }
+                else //CLIENTE E FORNITORE
+                {
+                    int idTipoProtocolloBustaPaga = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
+                    filtriRicerca += string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
+                    filtriRicerca += " and b.id_tipo_protocollo <> '" + idTipoProtocolloBustaPaga + "' ";
                 }
 
                 filtriRicerca += string.IsNullOrWhiteSpace(ragioneSociale) ? "" : " and b.cliente like '%" + ragioneSociale.Trim() + "%'";

@@ -179,8 +179,8 @@ namespace VideoSystemWeb.BLL
                 datiReport.IdCollaboratore = riga.Field<int>("ID");
                 datiReport.NomeCollaboratore = riga.Field<string>("Nome");
                 datiReport.QualificaCollaboratore = riga.Field<string>("Descrizione");
-                datiReport.IndirizzoCollaboratore = riga.Field<string>("Indirizzo");
-                datiReport.CittaCollaboratore = riga.Field<string>("Citta");
+                datiReport.IndirizzoCollaboratore = riga.Field<string>("Indirizzo") == null ? "" : riga.Field<string>("Indirizzo");
+                datiReport.CittaCollaboratore = riga.Field<string>("Citta") == null ? "" : riga.Field<string>("Citta");
                 datiReport.TelefonoCollaboratore = riga.Field<string>("Telefono") == null ? "": riga.Field<string>("Telefono");
                 //datiReport.CellulareCollaboratore = riga.Field<string>("");
                 //datiReport.IscrizioneCollaboratore = riga.Field<string>("");

@@ -221,7 +221,7 @@ namespace VideoSystemWeb.STATISTICHE
             {
                 decimal? totaleListino = listaStatisticheCosti.Sum(x => x.Listino);
                 decimal? totaleCosto = listaStatisticheCosti.Sum(x => x.Costo);
-                decimal? totaleRicavo = (totaleListino - totaleCosto) / totaleListino;
+                decimal? totaleRicavo = totaleListino != 0 ? (totaleListino - totaleCosto) / totaleListino : 0;
 
                 lbl_TotaleListino.Text = string.Format("{0:N2}", totaleListino);
                 lbl_TotaleCosto.Text = string.Format("{0:N2}", totaleCosto);

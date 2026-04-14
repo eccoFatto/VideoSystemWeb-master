@@ -476,7 +476,7 @@ namespace VideoSystemWeb.DAL
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
-                                    "LEFT JOIN (SELECT idDatiLavorazione, fp_netto AS costo, idFornitori, idTipoSottogruppo, idCollaboratori, id, idTipoGruppo, data FROM dati_articoli_lavorazione ) d ON d.idDatiLavorazione = c.id " +
+                                    "LEFT JOIN (SELECT idDatiLavorazione, fp_netto AS costo, idFornitori, idTipoSottogruppo, idCollaboratori, id, idTipoGruppo, idTipoGenere, data FROM dati_articoli_lavorazione ) d ON d.idDatiLavorazione = c.id " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
                                     "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
@@ -498,7 +498,7 @@ namespace VideoSystemWeb.DAL
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
-                                    "LEFT JOIN (SELECT idDatiLavorazione, fp_netto AS costo, idFornitori, idTipoSottogruppo,idCollaboratori, id, idTipoGruppo, data FROM dati_articoli_lavorazione) d ON d.idDatiLavorazione = c.id " +
+                                    "LEFT JOIN (SELECT idDatiLavorazione, fp_netto AS costo, idFornitori, idTipoSottogruppo,idCollaboratori, id, idTipoGruppo, idTipoGenere, data FROM dati_articoli_lavorazione) d ON d.idDatiLavorazione = c.id " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
                                     "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
@@ -520,7 +520,7 @@ namespace VideoSystemWeb.DAL
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
-                                    "LEFT JOIN (SELECT idDatiLavorazione, fp_lordo AS costo, idFornitori,idCollaboratori, idTipoGruppo, idTipoSottoGruppo, id, data  FROM dati_articoli_lavorazione ) d ON d.idDatiLavorazione = c.id  " +
+                                    "LEFT JOIN (SELECT idDatiLavorazione, fp_lordo AS costo, idFornitori,idCollaboratori, idTipoGruppo, idTipoSottoGruppo, id, idTipoGenere, data  FROM dati_articoli_lavorazione ) d ON d.idDatiLavorazione = c.id  " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
                                     "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
@@ -582,7 +582,7 @@ namespace VideoSystemWeb.DAL
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
-                                    "LEFT JOIN (SELECT idDatiLavorazione, sum(fp_netto) AS costo, idFornitori,idTipoGruppo,idTipoSottogruppo, idCollaboratori FROM dati_articoli_lavorazione GROUP BY idDatiLavorazione, idFornitori,idTipoGruppo,idTipoSottogruppo, idCollaboratori) d ON d.idDatiLavorazione = c.id " +
+                                    "LEFT JOIN (SELECT idDatiLavorazione, sum(fp_netto) AS costo, idFornitori,idTipoGruppo,idTipoSottogruppo, idTipoGenere, idCollaboratori FROM dati_articoli_lavorazione GROUP BY idDatiLavorazione, idFornitori,idTipoGruppo,idTipoSottogruppo, idCollaboratori, idTipoGenere) d ON d.idDatiLavorazione = c.id " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
                                     "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori " +
                                     "left join tipo_protocollo i on  i.nome = 'Contratto'  " +
@@ -755,14 +755,16 @@ namespace VideoSystemWeb.DAL
                                         statisticheCosti.Listino = riga.Field<decimal?>("listino");
                                         statisticheCosti.Costo = riga.Field<decimal?>("costo");
 
-                                        if (statisticheCosti.Progressivo == 1)
-                                        {
-                                            statisticheCosti.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta");
-                                        }
-                                        else
-                                        {
-                                            statisticheCosti.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : "";// riga.Field<string>("docOfferta"),
-                                        }
+                                        //if (statisticheCosti.Progressivo == 1)
+                                        //{
+                                        //    statisticheCosti.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta");
+                                        //}
+                                        //else
+                                        //{
+                                        //    statisticheCosti.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : "";// riga.Field<string>("docOfferta"),
+                                        //}
+
+                                        statisticheCosti.DocumentoAllegato = riga.Field<string>("documento");
 
                                         statisticheCosti.Pregresso = riga.Field<bool?>("pregresso");
                                         statisticheCosti.Gruppo = riga.Field<string>("gruppo") ?? "";
@@ -822,7 +824,7 @@ namespace VideoSystemWeb.DAL
                                         statisticheCosti.Contratto = riga.Field<string>("contratto");
                                         statisticheCosti.Listino = riga.Field<decimal?>("listino");
                                         statisticheCosti.Costo = riga.Field<decimal?>("costo");
-                                        statisticheCosti.DocumentoAllegato = riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta");
+                                        statisticheCosti.DocumentoAllegato = riga.Field<string>("documento"); //riga.Field<string>("docFattura") != null ? riga.Field<string>("docFattura") : riga.Field<string>("docOfferta");
                                         statisticheCosti.Pregresso = riga.Field<bool?>("pregresso");
                                         statisticheCosti.Gruppo = riga.Field<string>("gruppo") ?? "";
                                         statisticheCosti.Sottogruppo = riga.Field<string>("sottogruppo") ?? "";

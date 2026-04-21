@@ -67,8 +67,9 @@
             //alert('tutto ok');
         }
     </script>
-    <%--<iframe src="<%=Page.ResolveClientUrl("~/StretchSession.aspx")%>" width="0" height="0" style="display:none;" />--%>
+
     <div class="loader"></div>
+    
     <form runat="server" autocomplete="off" enctype="multipart/form-data">
         <div id="modalError" class="w3-modal" style="z-index:10000">
             <div class="w3-modal-content w3-animate-top w3-card-4">

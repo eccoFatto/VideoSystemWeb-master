@@ -184,10 +184,10 @@ namespace VideoSystemWeb.STATISTICHE
 
             #region SOTTOGRUPPO
             ddl_Sottogruppo.Items.Add(new ListItem("", ""));
-            //foreach (Tipologica tipoSottogruppi in SessionManager.ListaTipiSottogruppi)
-            //{
-            //    ddl_Sottogruppo.Items.Add(new ListItem(tipoSottogruppi.nome, tipoSottogruppi.id.ToString()));
-            //}
+            foreach (Tipologica tipologiaSottogruppo in SessionManager.ListaTipiSottogruppi)
+            {
+                ddl_Sottogruppo.Items.Add(new ListItem(tipologiaSottogruppo.nome, tipologiaSottogruppo.id.ToString()));
+            }
             #endregion
         }
 
@@ -307,27 +307,22 @@ namespace VideoSystemWeb.STATISTICHE
 
             string idTipoGruppoString = listaGruppo.SelectedValue;
 
+            listaSottogruppo.Items.Clear();
+            listaSottogruppo.Items.Add("");
+            List<Sottogruppo> listaSottogruppiFiltrata = SessionManager.ListaTipiSottogruppi;
+
             if (!string.IsNullOrEmpty(idTipoGruppoString))
             {
                 int idTipoGruppo = int.Parse(idTipoGruppoString);
-
-                listaSottogruppo.Items.Clear();
-                listaSottogruppo.Items.Add("");
-
-                List<Sottogruppo> listaSottogruppiFiltrata = (SessionManager.ListaTipiSottogruppi).Where(x => x.IdTipoGruppo == idTipoGruppo || x.IdTipoGruppo == null).ToList<Sottogruppo>();
-
-                foreach (Tipologica tipologiaSottogruppo in listaSottogruppiFiltrata)
-                {
-                    ListItem item = new ListItem();
-                    item.Text = tipologiaSottogruppo.nome;
-                    item.Value = tipologiaSottogruppo.id.ToString();
-                    listaSottogruppo.Items.Add(item);
-                }
+                listaSottogruppiFiltrata = listaSottogruppiFiltrata.Where(x => x.IdTipoGruppo == idTipoGruppo || x.IdTipoGruppo == null).ToList<Sottogruppo>();
             }
-            else
+
+            foreach (Tipologica tipologiaSottogruppo in listaSottogruppiFiltrata)
             {
-                listaSottogruppo.Items.Clear();
-                listaSottogruppo.Items.Add("");
+                ListItem item = new ListItem();
+                item.Text = tipologiaSottogruppo.nome;
+                item.Value = tipologiaSottogruppo.id.ToString();
+                listaSottogruppo.Items.Add(item);
             }
         }
     }

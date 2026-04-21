@@ -215,8 +215,63 @@ namespace VideoSystemWeb.DAL
                                                  filtroCliente + 
                                                  "artLav.idCollaboratori is not null and " +
                                                  "(artLav.idTipoPagamento = " + idTipoAssunzione + " or artLav.idTipoPagamento = " + idTipoMista + " or artLav.idTipoPagamento = " + idTipoRitenutaAcconto + ") " +
-                                                 
-                                                 //"artLav.data between '" + dataInizio.ToString("yyyy-MM-ddT00:00:00.000") + "' and '" + dataFine.ToString("yyyy-MM-ddT00:00:00.000") + "' " +//"' and " +
+
+                                                 //*********************************
+                                                 " and (artLav.idTipoGruppo != 6 or artLav.idTipoSottogruppo != 29) " + // FILTRO RIMBORSO KM
+
+                                                 intervalloDate +
+
+                                                 "UNION ";
+
+
+
+
+
+                        //*********************************
+                        //***PROVA RIMBORSO KM
+
+                        querySql += "select collab.id as ID, " +
+                                                 "collab.cognome + ' ' + collab.nome as Nome, " +
+                                                 "indColl.tipo + ' ' + indColl.indirizzo + ' ' + indColl.numeroCivico as Indirizzo, " +
+                                                 "indColl.comune + ' (' + indColl.provincia + ')' as Citta, " +
+                                                 "telColl.naz_pref + telColl.numero as Telefono, " +
+                                                 "collab.codiceFiscale as CodiceFiscale, " +
+                                                 "artLav.data as Data, " +
+                                                 "datiAgenda.lavorazione as Lavorazione, " +
+                                                 "datiAgenda.produzione as Produzione, " +
+                                                 "clienti.ragioneSociale as Cliente, " + 
+                                                 "artLav.descrizione as Descrizione, " +
+
+                                                 "0 as Assunzione, " +
+                                                 "0 as Mista, " +
+                                                 "artLav.fp_netto as RimborsoKm, " +
+                                                 "0 as RitenutaAcconto, " +
+
+                                                 "0 as Fattura, " +
+                                                 "0 as FatturaLordo, " +
+
+                                                 "CASE WHEN (select count(*) from dati_articoli_lavorazione where idCollaboratori = collab.id and data = artLav.data and idArtArticoli = " + idDiaria + ") > 0 THEN 1 ELSE 0 END as Diaria, " +
+                                                 "artLav.idTipoPagamento as TipoPagamento, " +
+                                                 "tipoPagam.nome as DescrizioneTipoPagamento " +
+
+                                                 "from  " +
+                                                 "dati_articoli_lavorazione artLav " +
+                                                 "left join dati_lavorazione datiLav on datiLav.id = artLav.idDatiLavorazione " +
+                                                 "left join tab_dati_agenda datiAgenda on datiAgenda.id = datiLav.idDatiAgenda " +
+                                                 "left join anag_collaboratori collab on collab.id=artLav.idCollaboratori " +
+                                                 "left join anag_indirizzi_collaboratori indColl on indColl.id = (select top 1 id from anag_indirizzi_collaboratori where id_collaboratore = collab.id ) " +
+                                                 "left join anag_telefoni_collaboratori telColl on telColl.id = (select top 1 id from anag_telefoni_collaboratori where id_collaboratore = collab.id ) " +
+                                                 "left join anag_clienti_fornitori clienti on clienti.id = datiAgenda.id_cliente " +
+                                                 "left join tipo_pagamento tipoPagam on artLav.idTipoPagamento = tipoPagam.id " +
+
+                                                 "where  " +
+                                                 filtroNominativo +
+                                                 filtroLavorazione +
+                                                 filtroProduzione +
+                                                 filtroCliente +
+                                                 "artLav.idCollaboratori is not null and " +
+                                                 "(artLav.idTipoGruppo = 6 and artLav.idTipoSottogruppo = 29) " + // FILTRO RIMBORSO KM
+
                                                  intervalloDate +
 
                                                  "UNION ";

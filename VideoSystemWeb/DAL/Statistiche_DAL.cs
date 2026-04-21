@@ -173,7 +173,7 @@ namespace VideoSystemWeb.DAL
         {
             //NELLA PRIMA QUERY SOLO I PREZZO DI LISTINO, NELLE ALTRE SOLTANTO I COSTI
             //string query = "select distinct 1 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, '' gruppo, '' sottogruppo, '' fornitore, sum(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso " +
-            string query = "select distinct 1 progressivo, 0, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, '' gruppo, '' sottogruppo, '' fornitore, d.prezzo listino, 0.00  costo, f.descrizione contratto, COALESCE(e.pathDocumento,h.pathDocumento) AS documento, h.pregresso " +
+            string query = "select top(1) 1 progressivo, 0, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, '' gruppo, '' sottogruppo, '' fornitore, d.prezzo listino, 0.00  costo, f.descrizione contratto, COALESCE(e.pathDocumento,h.pathDocumento) AS documento, h.pregresso " +
                                     
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
@@ -606,7 +606,7 @@ namespace VideoSystemWeb.DAL
         {
             // SOLO IL PREZZO DI LISTINO
             //string query = "select distinct 1 progressivo, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, '' gruppo, '' sottogruppo, '' fornitore, sum(d.prezzo) listino, sum(d.fp_lordo)  costo, f.descrizione contratto, e.pathDocumento 'docFattura', h.pathDocumento 'docOfferta', h.pregresso " +
-            string query = "select distinct 1 progressivo, 0, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, '' gruppo, '' sottogruppo, '' fornitore, d.prezzo listino, 0.00  costo, f.descrizione contratto, COALESCE(e.pathDocumento,h.pathDocumento) AS documento, h.pregresso " +
+            string query = "select top(1) 1 progressivo, 0, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, min(a.data_inizio_lavorazione) data, a.lavorazione, a.produzione, '' gruppo, '' sottogruppo, '' fornitore, d.prezzo listino, 0.00  costo, f.descrizione contratto, COALESCE(e.pathDocumento,h.pathDocumento) AS documento, h.pregresso " +
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
@@ -618,7 +618,8 @@ namespace VideoSystemWeb.DAL
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
                                     "left join dati_protocollo h on h.codice_lavoro = a.codice_lavoro and h.id_tipo_protocollo = j.id and h.destinatario = 'Cliente'  and h.attivo = 1 " +
                                     "where a.codice_lavoro is not null and a.id_stato >= 3  and d.prezzo <> 0 AND a.codice_lavoro in (" + elencoLavorazioni + ") " +
-                                    " group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, d.prezzo ";
+                                    "group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, d.prezzo ";
+                                    
             
 
             return query;

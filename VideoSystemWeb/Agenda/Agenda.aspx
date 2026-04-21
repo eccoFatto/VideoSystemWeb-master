@@ -333,8 +333,6 @@
                                                 <asp:Label ID="val_CodiceLavoro" runat="server"></asp:Label>
                                             </div>
 
-
-
                                         </div>
                                         <div class="w3-rest">
                                             <asp:Image ID="mostraAgenda" runat="server" ImageUrl="~/Images/agenda.png" ToolTip="Mostra agenda"/>
@@ -373,7 +371,7 @@
                         <asp:Button ID="btnElencoLavoratoriPerGiornata" runat="server" Text="Collab. impegnati" class=" w3-btn w3-white w3-border w3-border-cyan w3-round-large" OnClick="btnElencoLavoratoriPerGiornata_Click" OnClientClick="$('.loader').show();" Visible="true" Style="padding: 7px 10px" />
 
                         <asp:Button ID="btnSalva" runat="server" Text="Salva" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnSalva_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
-                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-yellow w3-round-large" OnClick="btn_chiudi_Click"  Style="padding: 7px 10px" />
+                        <asp:Button ID="btn_chiudi" runat="server" Text="Chiudi" class="w3-btn w3-white w3-border w3-border-yellow w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
 
                         <%--<asp:HiddenField ID="hf_Salvataggio" runat="server" />--%>
 
@@ -381,7 +379,7 @@
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();$('.loader').show();" OnClick="btnLavorazione_Click" Visible="false" Style="padding: 7px 10px" />
                     
-                        <asp:Button ID="btn_annulla" runat="server" Text="Annulla" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_annulla_Click"  Style="padding: 7px 10px;" />
+                        <asp:Button ID="btn_annulla" runat="server" Text="Annulla" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px;" />
                     </div>
 
                 </asp:Panel>

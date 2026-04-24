@@ -19,12 +19,12 @@
         });
 
         // APRO POPUP VISUALIZZAZIONE/MODIFICA PROTOCOLLO
-            function apriLavorazione(dataInizioImpegno, idColonneAgenda) { 
-                $('.loader').show();
-                $("#<%=hf_dataInizioImpegno.ClientID%>").val(dataInizioImpegno);
-                $("#<%=hf_idColonneAgenda.ClientID%>").val(idColonneAgenda);
-                 $("#<%=btnVaiALavorazione.ClientID%>").click();
-            }
+        function apriLavorazione(dataInizioImpegno, idColonneAgenda) { 
+            $('.loader').show();
+            $("#<%=hf_dataInizioImpegno.ClientID%>").val(dataInizioImpegno);
+            $("#<%=hf_idColonneAgenda.ClientID%>").val(idColonneAgenda);
+                $("#<%=btnVaiALavorazione.ClientID%>").click();
+        }
 
         // AZZERO TUTTI I CAMPI RICERCA
         function azzeraCampiRicerca() {

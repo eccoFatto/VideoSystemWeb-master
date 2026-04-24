@@ -51,15 +51,6 @@ namespace VideoSystemWeb.STATISTICHE
         protected global::System.Web.UI.WebControls.TextBox txt_Lavorazione;
 
         /// <summary>
-        /// Controllo txt_Contratto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_Contratto;
-
-        /// <summary>
         /// Controllo txt_CodLavorazione.
         /// </summary>
         /// <remarks>
@@ -67,6 +58,24 @@ namespace VideoSystemWeb.STATISTICHE
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_CodLavorazione;
+
+        /// <summary>
+        /// Controllo ddl_Mese.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Mese;
+
+        /// <summary>
+        /// Controllo ddl_Anno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Anno;
 
         /// <summary>
         /// Controllo txt_PeriodoDa.
@@ -256,5 +265,23 @@ namespace VideoSystemWeb.STATISTICHE
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_statistiche;
+
+        /// <summary>
+        /// Controllo hf_codiceLavoro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hf_codiceLavoro;
+
+        /// <summary>
+        /// Controllo btnVaiALavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnVaiALavorazione;
     }
 }

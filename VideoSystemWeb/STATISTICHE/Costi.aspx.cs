@@ -17,13 +17,11 @@ namespace VideoSystemWeb.STATISTICHE
         {
             if (!IsPostBack)
             {
-        
                 CaricaCombo();
             }
 
             #region GRIGLIA CON RAGGRUPPAMENTO RIGHE
             GestioneRaggruppamentoRighe();
-
             #endregion
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "coerenzaDate", "controlloCoerenzaDate('" + txt_PeriodoDa.ClientID + "', '" + txt_PeriodoA.ClientID + "');", true);
@@ -35,15 +33,16 @@ namespace VideoSystemWeb.STATISTICHE
             GridViewHelper helper = new GridViewHelper(this.gv_statistiche);
 
             #region RAGGRUPPAMENTO
-            string[] colonneRaggruppate = new string[2];
+            string[] colonneRaggruppate = new string[3];
             colonneRaggruppate[0] = "Cliente";
             colonneRaggruppate[1] = "CodiceLavoro";
+            colonneRaggruppate[2] = "Lavorazione";
             helper.RegisterGroup(colonneRaggruppate, true, true);
 
             //SUBTOTALE
-            helper.RegisterSummary("Listino", SummaryOperation.Sum, "Cliente+CodiceLavoro");
-            helper.RegisterSummary("Costo", SummaryOperation.Sum, "Cliente+CodiceLavoro");
-            helper.RegisterSummary("Ricavo", SummaryOperation.Count, "Cliente+CodiceLavoro");
+            helper.RegisterSummary("Listino", SummaryOperation.Sum, "Cliente+CodiceLavoro+Lavorazione");
+            helper.RegisterSummary("Costo", SummaryOperation.Sum, "Cliente+CodiceLavoro+Lavorazione");
+            helper.RegisterSummary("Ricavo", SummaryOperation.Count, "Cliente+CodiceLavoro+Lavorazione");
             #endregion
 
             #region SOTTOGRUPPO
@@ -65,7 +64,6 @@ namespace VideoSystemWeb.STATISTICHE
             helper.GroupHeader += new GroupEvent(Helper_GroupHeader);
             helper.GroupSummary += new GroupEvent(Helper_GroupSummary);
             helper.GeneralSummary += new FooterEvent(Helper_GeneralSummary);
-            
         }
 
         private void Helper_GroupHeader(string groupName, object[] values, GridViewRow row)
@@ -84,12 +82,16 @@ namespace VideoSystemWeb.STATISTICHE
             else //raggruppamento
             {
                 string titolo = row.Cells[0].Text;
-                string cliente = titolo.Substring(0, titolo.LastIndexOf(" - "));
-                string codiceLavorazione = titolo.Substring(titolo.LastIndexOf(" - ")+3);
+                string clienteCodiceLavorazione = titolo.Substring(0, titolo.LastIndexOf(" * "));
+
+                string cliente = clienteCodiceLavorazione.Substring(0, clienteCodiceLavorazione.LastIndexOf(" * "));
+                string codiceLavorazione = clienteCodiceLavorazione.Substring(clienteCodiceLavorazione.LastIndexOf(" * ") + 3);
+                string lavorazione = titolo.Substring(titolo.LastIndexOf(" * ") + 3);
 
                 row.BackColor = Color.FromArgb(0, 64, 128);
                 row.ForeColor = Color.White;
-                row.Cells[0].Text = "&nbsp;&nbsp;<b>Cliente:&nbsp;" + cliente + "&nbsp;-&nbsp;Codice lavorazione:&nbsp;" + codiceLavorazione + "</b>";
+                //row.Cells[0].Text = "&nbsp;&nbsp;<b>Cliente:&nbsp;" + cliente + "&nbsp;-&nbsp;Codice lavorazione:&nbsp;" + codiceLavorazione + "</b>";
+                row.Cells[0].Text = "&nbsp;&nbsp;<b>Cliente:&nbsp;" + cliente + "&nbsp;-&nbsp;Codice lavorazione:&nbsp;" + codiceLavorazione + "&nbsp;-&nbsp;Lavorazione:&nbsp;" + lavorazione + "</b>";
             }
         }
 
@@ -189,6 +191,13 @@ namespace VideoSystemWeb.STATISTICHE
                 ddl_Sottogruppo.Items.Add(new ListItem(tipologiaSottogruppo.nome, tipologiaSottogruppo.id.ToString()));
             }
             #endregion
+
+            #region ANNO
+            for (var i = DateTime.Now.Year; i >= DateTime.Now.Year - 10; i--)
+            {
+                ddl_Anno.Items.Add(new ListItem(i.ToString(), i.ToString()));
+            }
+            #endregion
         }
 
         protected void btnEseguiStatistica_Click(object sender, EventArgs e)
@@ -198,7 +207,7 @@ namespace VideoSystemWeb.STATISTICHE
             string filtroNomeCliente = txt_Cliente.Text;// hf_NomeCliente.Value;
             string filtroNomeProduzione = txt_Produzione.Text;// hf_NomeProduzione.Value;
             string filtroNomeLavorazione = txt_Lavorazione.Text;// hf_NomeLavorazione.Value;
-            string filtroNomeContratto = txt_Contratto.Text;// hf_NomeContratto.Value;
+            //string filtroNomeContratto = txt_Contratto.Text;// hf_NomeContratto.Value;
 
             string filtroCodLavorazione = txt_CodLavorazione.Text;// hf_NomeLavorazione.Value;
 
@@ -206,12 +215,17 @@ namespace VideoSystemWeb.STATISTICHE
             string filtroGruppo = ddl_Gruppo.SelectedValue;
             string filtroSottogruppo = ddl_Sottogruppo.SelectedValue;
 
-            string dataInizio = txt_PeriodoDa.Text;
-            string dataFine = txt_PeriodoA.Text;
+            //string dataInizio = txt_PeriodoDa.Text;
+            //string dataFine = txt_PeriodoA.Text;
+
+            DateTime data;
+            string dataInizio = DateTime.TryParse(txt_PeriodoDa.Text, out data) ? data.ToString("dd/MM/yyyy") : "";
+            string dataFine = DateTime.TryParse(txt_PeriodoA.Text, out data) ? data.ToString("dd/MM/yyyy") : "";
+
 
             string filtroFornitore = txt_Fornitore.Text;
 
-            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti_NomeLavorazione(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroNomeContratto, filtroGenere, filtroGruppo, filtroSottogruppo, filtroCodLavorazione, dataInizio, dataFine, filtroFornitore, ref esito);
+            List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti_NomeLavorazione(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroGenere, filtroGruppo, filtroSottogruppo, filtroCodLavorazione, dataInizio, dataFine, filtroFornitore, ref esito);
 
             if (listaStatisticheCosti.Count == 0)
             {
@@ -254,9 +268,9 @@ namespace VideoSystemWeb.STATISTICHE
         {
             if (e.Row.Cells.Count > 1)
             {
-                e.Row.Cells[11].Visible = chk_Listino.Checked;
-                e.Row.Cells[12].Visible = chk_Costi.Checked;
-                e.Row.Cells[13].Visible = chk_Ricavo.Checked &&
+                //e.Row.Cells[11].Visible = chk_Listino.Checked;
+                e.Row.Cells[11].Visible = chk_Costi.Checked;
+                e.Row.Cells[12].Visible = chk_Ricavo.Checked &&
                                           string.IsNullOrWhiteSpace(txt_Fornitore.Text) &&
                                           ddl_Genere.SelectedValue == "" && 
                                           ddl_Gruppo.SelectedValue == "" && 
@@ -265,10 +279,13 @@ namespace VideoSystemWeb.STATISTICHE
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                string pathDocumento = e.Row.Cells[14].Text.Trim();
-                bool pregresso = false;
-                bool.TryParse(e.Row.Cells[15].Text.Trim(), out pregresso);
+                string pathDocumento = e.Row.Cells[13].Text.Trim();
+                string codiceLavoro = e.Row.Cells[15].Text.Trim();
 
+                bool pregresso = false;
+                bool.TryParse(e.Row.Cells[14].Text.Trim(), out pregresso);
+
+                #region ICONA FATTURA
                 ImageButton myButton = e.Row.FindControl("btnOpenDoc") as ImageButton;
                 if (!string.IsNullOrEmpty(pathDocumento) && !pathDocumento.Equals("&nbsp;"))
                 {
@@ -284,8 +301,24 @@ namespace VideoSystemWeb.STATISTICHE
                     myButton.Visible = false;
                     myButton.Attributes.Add("disabled", "true");
                 }
+                #endregion
+
+                #region ICONA LAVORAZIONE
+                ImageButton myLinkLavorazione = e.Row.FindControl("btnLavorazione") as ImageButton;
+                if (!string.IsNullOrEmpty(codiceLavoro) && !codiceLavoro.Equals("0"))
+                {
+                    myLinkLavorazione.Attributes.Add("onclick", "javascript:apriLavorazione('" + codiceLavoro + "');return false;");
+                }
+                else
+                {
+                    myLinkLavorazione.Visible = false;
+                    myLinkLavorazione.Attributes.Add("disabled", "true");
+                }
+                #endregion
             }
+            e.Row.Cells[13].Visible = false;
             e.Row.Cells[14].Visible = false;
+
             e.Row.Cells[15].Visible = false;
         }
 
@@ -324,6 +357,18 @@ namespace VideoSystemWeb.STATISTICHE
                 item.Value = tipologiaSottogruppo.id.ToString();
                 listaSottogruppo.Items.Add(item);
             }
+        }
+
+        protected void btnVaiALavorazione_Click(object sender, EventArgs e)
+        {
+            string codiceLavoro = hf_codiceLavoro.Value;
+            Esito esito = new Esito();
+            DatiAgenda datiAgenda = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(codiceLavoro, ref esito);
+
+            SessionManager.CercaLavorazione_Data = datiAgenda.data_inizio_impegno.ToShortDateString();
+            SessionManager.CercaLavorazione_Colonna = datiAgenda.id_colonne_agenda.ToString();
+
+            Response.Redirect("/Agenda/Agenda");
         }
     }
 }

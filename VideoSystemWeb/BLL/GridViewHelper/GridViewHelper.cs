@@ -538,7 +538,7 @@ public class GridViewHelper
                     groupHeaderText += g.ActualValues[v].ToString();
                     if (g.ActualValues.Length - v > 1)
                     {
-                        groupHeaderText += " - ";
+                        groupHeaderText += " * ";
                     }
                 }
 

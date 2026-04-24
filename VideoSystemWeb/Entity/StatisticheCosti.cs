@@ -25,6 +25,7 @@ namespace VideoSystemWeb.Entity
         private string sottogruppo;
         private string fornitore;
         private int progressivo;
+        private string codiceLavoro2;
 
         public int IdCliente { get => idCliente; set => idCliente = value; }
         public string Cliente { get => cliente; set => cliente = value; }
@@ -74,5 +75,7 @@ namespace VideoSystemWeb.Entity
         public string Sottogruppo { get => sottogruppo; set => sottogruppo = value; }
         public string Fornitore { get => fornitore; set => fornitore = value; }
         public int Progressivo { get => progressivo; set => progressivo = value; }
+
+        public string CodiceLavoro2 { get => codiceLavoro2; set => codiceLavoro2 = value; }
     }
 }

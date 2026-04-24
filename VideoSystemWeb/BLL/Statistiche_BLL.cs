@@ -65,7 +65,7 @@ namespace VideoSystemWeb.BLL
             return Statistiche_DAL.Instance.GetStatisticheRicavi(filtroCliente, filtroProduzione, filtroLavorazione, filtroContratto, fatturato, dataInizio, dataFine, ref esito);
         }
         
-        public List<StatisticheCosti> GetStatisticheCosti_NomeLavorazione(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroContratto, string filtroGenere, string filtroGruppo, string filtroSottogruppo, string filtroCodLavorazione, string dataInizio, string dataFine, string filtroFornitore, ref Esito esito)
+        public List<StatisticheCosti> GetStatisticheCosti_NomeLavorazione(string filtroCliente, string filtroProduzione, string filtroLavorazione, string filtroGenere, string filtroGruppo, string filtroSottogruppo, string filtroCodLavorazione, string dataInizio, string dataFine, string filtroFornitore, ref Esito esito)
         {
             List<StatisticheCosti> listaStatisticheCosti = new List<StatisticheCosti>();
 
@@ -74,7 +74,7 @@ namespace VideoSystemWeb.BLL
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione + "%' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroCodLavorazione) ? "" : " AND a.codice_lavoro = '" + filtroCodLavorazione + "' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
+            //filtriLavorazione += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND a.data_inizio_lavorazione >= '" + dataInizio.Substring(6) + "-" + dataInizio.Substring(3, 2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'";
             
             // il filtro dataFine viene eseguito su dataInizioLavorazione, e non su dataFineLavorazione

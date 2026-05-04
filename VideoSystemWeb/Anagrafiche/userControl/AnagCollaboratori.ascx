@@ -265,7 +265,7 @@
                 </div>
                 <br />--%>
                 <div class="w3-container">
-                    <!-- ELENCO TAB DETTAGLI COLLABORATORE -->
+<!-- ELENCO TAB DETTAGLI COLLABORATORE -->
                     <div class="w3-bar w3-red w3-round">
                         <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Anagrafica')">Anagrafica</div>
                         <div class="w3-bar-item w3-button w3-red" onclick="openDettaglioAnagrafica('Qualifiche')">Qualifiche</div>
@@ -277,7 +277,7 @@
                             <div id="btnChiudiPopup" class="w3-button w3-green w3-small w3-round" onclick="chiudiPopup();">Chiudi</div>
                         </div>
                     </div>
-                    <!-- TAB ANAGRAFICA -->
+<!-- TAB ANAGRAFICA -->
                     <div id="Anagrafica" class="w3-container w3-border collab"  style="display:block">
                     <table style="width:100%">
                         <tr>
@@ -381,24 +381,21 @@
                                 <div class="w3-container">
                                     <h2></h2>
                                     <div class="w3-card-4" style="width:90%">
-                                    <asp:Image ID="imgCollaboratore" runat="server" Width="100%" />
-                                    <div class="w3-container w3-center">
-                                        <p>
-                                            <div onclick="openTab('divUploadImg')" class="w3-button w3-block w3-center-align">
-                                                Carica Immagine</div>
-                                            <div id="divUploadImg" class="w3-container w3-hide">
-                                                <asp:FileUpload ID="fuImg" runat="server" Font-Size="X-Small" class="w3-button w3-yellow w3-round w3-margin" />
-                                                <asp:Button ID="uploadButton" runat="server" class="w3-button w3-yellow w3-round w3-margin" OnClick="CaricaImmagine" Text="Carica Immagine" />
-                                                <p>
-                                                    <asp:Label ID="lblImage" runat="server" Font-Size="XX-Small"></asp:Label>
-                                                </p>
-                                            </div>
+                                        <asp:Image ID="imgCollaboratore" runat="server" Width="100%" style="padding:20px;"/>
+                                        <div class="w3-container w3-center">
                                             <p>
+                                                <div onclick="openTab('divUploadImg')" class="w3-button w3-block w3-center-align"> Carica Immagine</div>
+                                                <div id="divUploadImg" class="w3-container w3-hide">
+                                                    <asp:FileUpload ID="fuImg" runat="server" Font-Size="X-Small" class="w3-button w3-yellow w3-round w3-margin" />
+                                                    <asp:Button ID="uploadButton" runat="server" class="w3-button w3-yellow w3-round w3-margin" OnClick="CaricaImmagine" Text="Carica Immagine" />
+                                                    <p>
+                                                        <asp:Label ID="lblImage" runat="server" Font-Size="XX-Small"></asp:Label>
+                                                    </p>
+                                                </div>
+                                                <p> </p>
+                                                <p> </p>
                                             </p>
-                                            <p>
-                                            </p>
-                                        </p>
-                                    </div>
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -412,7 +409,7 @@
                         <asp:Button ID="btnAnnulla" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnulla_Click" Visible="false"/>
                     </div>
                     </div>
-                    <!-- TAB QUALIFICHE -->
+<!-- TAB QUALIFICHE -->
                     <div id="Qualifiche" class="w3-container w3-border collab" style="display:none">
                         <label>Qualifiche</label>
                         <asp:ListBox ID="lbMod_Qualifiche" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>
@@ -442,7 +439,7 @@
                             </p>
                         </div>
                     </div>
-                    <!-- TAB INDIRIZZI -->
+<!-- TAB INDIRIZZI -->
                     <div id="Indirizzi" class="w3-container w3-border collab" style="display:none">
                         <label>Indirizzi</label>
                         <%--<asp:ListBox ID="lbMod_Indirizzi" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>--%>
@@ -515,7 +512,7 @@
                             </p>
                         </div>
                     </div>
-                    <!-- TAB TELEFONI -->
+<!-- TAB TELEFONI -->
                     <div id="Telefoni" class="w3-container w3-border collab" style="display:none">
                         <label>Telefoni</label>
                         <%--<asp:ListBox ID="lbMod_Telefoni" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3"></asp:ListBox>--%>
@@ -584,7 +581,7 @@
                         </div>
 
                     </div>
-                    <!-- TAB EMAIL -->
+<!-- TAB EMAIL -->
                     <div id="Email" class="w3-container  w3-border collab" style="display:none">
                         <label>E-Mail</label>
                         <%--<asp:ListBox ID="lbMod_Email" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3" Visible="false"></asp:ListBox>--%>
@@ -626,7 +623,7 @@
                             </p>
                         </div>
                     </div>
-                    <!-- TAB DOCUMENTI -->
+<!-- TAB DOCUMENTI -->
                     <div id="Documenti" class="w3-container  w3-border collab" style="display:none">
                         <label>Documenti</label>
                         <%--<asp:ListBox ID="lbMod_Documenti" runat="server" class="w3-input w3-border w3-margin" ReadOnly="true" Width="99%" Rows="3" Visible="false"></asp:ListBox>--%>

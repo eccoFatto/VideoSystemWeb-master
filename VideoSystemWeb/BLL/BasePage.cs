@@ -56,7 +56,7 @@ namespace VideoSystemWeb.BLL
             {
                 campo.CssClass += " erroreValidazione";
                 esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.Descrizione = "Controllare i campi evidenziati";
+                esito.Descrizione = "Controllare i campi evidenziati. ";
             }
             else
             {
@@ -74,7 +74,7 @@ namespace VideoSystemWeb.BLL
                 {
                     campo.CssClass += " erroreValidazione";
                     esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                    esito.Descrizione = "Controllare i campi evidenziati";
+                    esito.Descrizione = "Controllare i campi evidenziati. ";
                 }
             }
 

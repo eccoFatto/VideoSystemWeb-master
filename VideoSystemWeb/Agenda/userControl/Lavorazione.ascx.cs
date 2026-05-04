@@ -34,6 +34,7 @@ namespace VideoSystemWeb.Agenda.userControl
         private const int ID_TIPO_PAGAMENTO_MISTA = 2;
         private const int ID_TIPO_PAGAMENTO_RITENUTA_ACCONTO = 3;
         private const int ID_TIPO_PAGAMENTO_FATTURA = 4;
+        private const int ID_TIPO_PAGAMENTO_RIMBORSO_KM = 5;
         #endregion
 
         #region ELENCO CHIAVI VIEWSTATE

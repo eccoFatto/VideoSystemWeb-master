@@ -24,76 +24,33 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            //if (basePage.AbilitazioneInScrittura())
-            //{
-            // ASSOCIO L'EVENTO DOUBLECLICK ALLE LISTBOX
-            //if (Request["__EVENTARGUMENT"] != null && Request["__EVENTARGUMENT"] == "move")
-            //{
-            //lbMod_Email_DoubleClick();
-            //    //lbMod_Indirizzi_DoubleClick();
-            //    //lbMod_Telefoni_DoubleClick();
-            //    //lbMod_Documenti_DoubleClick();
-            //}
-            //lbMod_Email.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Email, "move"));
-            //lbMod_Indirizzi.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Indirizzi, "move"));
-            //lbMod_Telefoni.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Telefoni, "move"));
-            //lbMod_Documenti.Attributes.Add("ondblclick", Page.ClientScript.GetPostBackEventReference(lbMod_Documenti, "move"));
-            //}
-
-            //string prot = Protocollo_BLL.Instance.getNumeroProtocollo();
-            //Protocollo_BLL.Instance.resetProcotollo(10);
-            //prot = Protocollo_BLL.Instance.getNumeroProtocollo();
-
-            //string codLav = Protocollo_BLL.Instance.getCodLavFormattato();
-            //Protocollo_BLL.Instance.resetCodiceLavorazione(27);
-            //codLav = Protocollo_BLL.Instance.getCodLavFormattato();
-
             if (!Page.IsPostBack)
             {
+                ddlQualifiche.Items.Clear();
+                ddlQualifiche.Items.Add("");
 
-                //log.Info("PAGE AnagCollaboratori");
-                //BasePage p = new BasePage();
-                //Esito esito = p.CaricaListeTipologiche();
+                ddlQualificheDaAggiungere.Items.Clear();
+                foreach (Tipologica qualifica in SessionManager.ListaQualifiche)
+                {
+                    ListItem item = new ListItem();
+                    ListItem itemDaAggiungere = new ListItem();
+                    item.Text = qualifica.nome;
+                    itemDaAggiungere.Text = qualifica.nome;
+                    // metto comunque il nome e non l'id perchè la ricerca sulla tabella anag_qualifiche_collaboratori la faccio sul nome
+                    item.Value = qualifica.nome;
+                    itemDaAggiungere.Value = qualifica.id.ToString();
+                    ddlQualifiche.Items.Add(item);
 
-                //if (string.IsNullOrEmpty(esito.descrizione))
-                //{
-                    ddlQualifiche.Items.Clear();
-                    ddlQualifiche.Items.Add("");
+                    ddlQualificheDaAggiungere.Items.Add(itemDaAggiungere);
+                }
 
-                    ddlQualificheDaAggiungere.Items.Clear();
-                    foreach (Tipologica qualifica in SessionManager.ListaQualifiche)
-                    {
-                        ListItem item = new ListItem();
-                        ListItem itemDaAggiungere = new ListItem();
-                        item.Text = qualifica.nome;
-                        itemDaAggiungere.Text = qualifica.nome;
-                        // metto comunque il nome e non l'id perchè la ricerca sulla tabella anag_qualifiche_collaboratori la faccio sul nome
-                        item.Value = qualifica.nome;
-                        itemDaAggiungere.Value = qualifica.id.ToString();
-                        ddlQualifiche.Items.Add(item);
-
-                        ddlQualificheDaAggiungere.Items.Add(itemDaAggiungere);
-                    }
-
-                    // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
-                    AbilitaBottoni(basePage.AbilitazioneInScrittura());
+                // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
+                AbilitaBottoni(basePage.AbilitazioneInScrittura());
 
 
                 // CREO LA SESSION DEI COLLABORATORI A CUI INVIARE MESSAGGI WHATSAPP
                 Hashtable htCollaboratoriWhatsapp = new Hashtable();
                 Session[SessionManager.LISTA_COLLABORATORI_PER_INVIO_WHATSAPP] = htCollaboratoriWhatsapp;
-
-                //}
-                //else
-                //{
-                //    log.Error(esito.descrizione);
-                //    Session["ErrorPageText"] = esito.descrizione;
-                //    string url = String.Format("~/pageError.aspx");
-                //    Response.Redirect(url, true);
-                //}
-
-
             }
             // SELEZIONO L'ULTIMA TAB SELEZIONATA
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('" + hf_tabChiamata.Value + "');", addScriptTags: true);
@@ -105,7 +62,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             AnnullaModifiche();
             if (!utenteAbilitatoInScrittura)
             {
-                //btnInserisciCollaboratori.Visible = false;
                 divBtnInserisciCollaboratori.Visible = false;
                 btnModifica.Visible = false;
                 btnAnnulla.Visible = false;
@@ -120,7 +76,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
             else
             {
-                //btnInserisciCollaboratori.Visible = true;
                 divBtnInserisciCollaboratori.Visible = true;
                 btnModifica.Visible = true;
                 btnAnnulla.Visible = false;
@@ -200,6 +155,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         // APRO POPUP DETTAGLIO COLLABORATORE
         protected void EditCollaboratore_Click(object sender, EventArgs e)
         {
+            NascondiErroriValidazione();
+
             if (!string.IsNullOrEmpty(hf_idColl.Value) || (!string.IsNullOrEmpty((string)ViewState["idColl"]))) {
                 if (!string.IsNullOrEmpty(hf_idColl.Value)) ViewState["idColl"] = hf_idColl.Value;
                 EditCollaboratore();
@@ -287,9 +244,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             if (esito.Codice != Esito.ESITO_OK)
             {
                 log.Error(esito.Descrizione);
-                //panelErrore.Style.Add("display","block");
-                //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
-                basePage.ShowWarning("Controllare i campi evidenziati!");
+                basePage.ShowWarning(esito.Descrizione);
                 AttivaDisattivaModificaAnagrafica(false);
             }
             else
@@ -301,16 +256,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 if (esito.Codice != Esito.ESITO_OK)
                 {
                     log.Error(esito.Descrizione);
-                    //panelErrore.Style.Remove("display");
-                    //panelErrore.Style.Add("display", "block");
-                    //lbl_MessaggioErrore.Text = esito.descrizione;
                     basePage.ShowError(esito.Descrizione);
 
                 }
                 else
                 {
                     SessionManager.ListaAnagraficheCollaboratori.Clear();
-                    //SessionManager.ListaCittaCollaboratori.Clear();
                     EditCollaboratore_Click(null, null);
                 }
             }
@@ -331,6 +282,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         
         protected void InserisciCollaboratori_Click(object sender, EventArgs e)
         {
+            NascondiErroriValidazione();
+            PulisciCampiDettaglio();
+
             ViewState["idColl"] = "";
             EditCollaboratoreVuoto();
             AttivaDisattivaModificaAnagrafica(false);
@@ -364,32 +318,21 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_Iban.Text = "";
             tbMod_PartitaIva.Text = "";
             cbMod_Assunto.Checked = false;
-            //cbMod_Attivo.Checked = false;
             tbMod_Note.Text = "";
-
             lbMod_Qualifiche.Items.Clear();
             lbMod_Qualifiche.Rows = 1;
 
-            //lbMod_Indirizzi.Items.Clear();
-            //lbMod_Indirizzi.Rows = 1;
-
             gvMod_Indirizzi.DataSource = null;
-
-            //lbMod_Email.Items.Clear();
-            //lbMod_Email.Rows = 1;
+            gvMod_Indirizzi.DataBind();
 
             gvMod_Email.DataSource = null;
-
-            //lbMod_Telefoni.Items.Clear();
-            //lbMod_Telefoni.Rows = 1;
+            gvMod_Email.DataBind();
 
             gvMod_Telefoni.DataSource = null;
-
-            //lbMod_Documenti.Items.Clear();
-            //lbMod_Documenti.Rows = 1;
+            gvMod_Telefoni.DataBind();
 
             gvMod_Documenti.DataSource = null;
-
+            gvMod_Documenti.DataBind();
         }
         // CARICA IMMAGINE COLLABORATORE
         protected void CaricaImmagine(object sender, EventArgs e)
@@ -510,9 +453,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_Note.ReadOnly = attivaModifica;
             tbMod_PartitaIva.ReadOnly = attivaModifica;
             tbMod_ProvinciaNascita.ReadOnly = attivaModifica;
-            //cbMod_Assunto.Enabled = !attivaModifica;
-            //cbMod_Attivo.Enabled = !attivaModifica;
-            //cmbMod_RegioneRiferimento.Enabled
             if (attivaModifica)
             {
                 cmbMod_RegioneRiferimento.Attributes.Add("disabled", "");
@@ -548,14 +488,12 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                     tbMod_ProvinciaNascita.Text = collaboratore.ProvinciaNascita;
                     tbMod_ComuneRiferimento.Text = collaboratore.ComuneRiferimento;
 
-                    //tbMod_DataNascita.Text = collaboratore.DataNascita.ToShortDateString();
                     tbMod_DataNascita.Text = collaboratore.DataNascita.ToString("dd/MM/yyyy");
 
                     tbMod_NomeSocieta.Text = collaboratore.NomeSocieta;
                     tbMod_Iban.Text = collaboratore.Iban !=null? collaboratore.Iban.ToUpper() : "";
                     tbMod_PartitaIva.Text = collaboratore.PartitaIva;
                     cbMod_Assunto.Checked = collaboratore.Assunto;
-                    //cbMod_Attivo.Checked = collaboratore.Attivo;
                     tbMod_Note.Text = collaboratore.Note;
 
                     //REGIONE RIFERIMENTO
@@ -601,8 +539,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                         foreach (Anag_Indirizzi_Collaboratori indirizzo in collaboratore.Indirizzi)
                         {
-                            //ListItem itemIndirizzi = new ListItem(indirizzo.Descrizione + " - " + indirizzo.Tipo + " " + indirizzo.Indirizzo + " " + indirizzo.NumeroCivico + " " + indirizzo.Cap + " " + indirizzo.Comune + " " + indirizzo.Provincia, indirizzo.Id.ToString());
-                            //lbMod_Indirizzi.Items.Add(itemIndirizzi);
                             DataRow dr = dtIndirizzi.NewRow();
                             dr["id"] = indirizzo.Id.ToString();
                             dr["Descrizione"] = indirizzo.Descrizione;
@@ -618,14 +554,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         gvMod_Indirizzi.DataSource = dtIndirizzi;
                         gvMod_Indirizzi.DataBind();
                     }
-                    //if (collaboratore.Indirizzi != null && collaboratore.Indirizzi.Count > 0)
-                    //{
-                    //    lbMod_Indirizzi.Rows = collaboratore.Indirizzi.Count;
-                    //}
-                    //else
                     if (collaboratore.Indirizzi == null || collaboratore.Indirizzi.Count == 0)
                     {
-                        //lbMod_Indirizzi.Rows = 1;
                         gvMod_Indirizzi.DataSource = null;
                     }
 
@@ -638,8 +568,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                         foreach (Anag_Email_Collaboratori email in collaboratore.Email)
                         {
-                            //ListItem itemEmail = new ListItem(email.Descrizione + " - " + email.IndirizzoEmail, email.Id.ToString());
-                            //lbMod_Email.Items.Add(itemEmail);
                             DataRow dr = dtEmail.NewRow();
                             dr["id"] = email.Id.ToString();
                             dr["Descrizione"] = email.Descrizione;
@@ -650,14 +578,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         gvMod_Email.DataSource = dtEmail;
                         gvMod_Email.DataBind();
                     }
-                    //if (collaboratore.Email != null && collaboratore.Email.Count > 0)
-                    //{
-                    //    //lbMod_Email.Rows = collaboratore.Email.Count;
-                    //}
-                    //else
                     if (collaboratore.Email == null || collaboratore.Email.Count == 0)
                     {
-                        //lbMod_Email.Rows = 1;
                         gvMod_Documenti.DataSource = null;
                     }
 
@@ -676,8 +598,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         {
                             string whatsapp = "No";
                             if (telefono.Whatsapp) whatsapp = "Si";
-                            //ListItem itemTelefono = new ListItem(telefono.Descrizione + " - " + telefono.Tipo + " - " + telefono.Pref_int + telefono.Pref_naz + telefono.Numero + " - whatsapp: " + whatsapp, telefono.Id.ToString());
-                            //lbMod_Telefoni.Items.Add(itemTelefono);
                             DataRow dr = dtTelefoni.NewRow();
                             dr["id"] = telefono.Id.ToString();
                             dr["Descrizione"] = telefono.Descrizione;
@@ -693,14 +613,9 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         gvMod_Telefoni.DataSource = dtTelefoni;
                         gvMod_Telefoni.DataBind();
                     }
-                    //if (collaboratore.Telefoni != null && collaboratore.Telefoni.Count > 0)
-                    //{
-                    //    //lbMod_Telefoni.Rows = collaboratore.Telefoni.Count;
-                    //}
-                    //else
+
                     if (collaboratore.Telefoni == null || collaboratore.Telefoni.Count == 0)
                     {
-                        //lbMod_Telefoni.Rows = 1;
                         gvMod_Telefoni.DataSource = null;
                     }
 
@@ -720,8 +635,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
                         foreach (Anag_Documenti_Collaboratori documento in collaboratore.Documenti)
                         {
-                            //ListItem itemDocumento = new ListItem(documento.TipoDocumento + " - " + documento.NumeroDocumento , documento.Id.ToString());
-                            //lbMod_Documenti.Items.Add(itemDocumento);
                             DataRow dr = dtDocumenti.NewRow();
                             dr["id"] = documento.Id.ToString();
                             dr["TipoDocumento"] = documento.TipoDocumento;
@@ -733,14 +646,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                         gvMod_Documenti.DataSource = dtDocumenti;
                         gvMod_Documenti.DataBind();
                     }
-                    //if (collaboratore.Documenti != null && collaboratore.Documenti.Count > 0)
-                    //{
-                    //    lbMod_Documenti.Rows = collaboratore.Documenti.Count;
-                    //}
-                    //else
                     if (collaboratore.Documenti == null || collaboratore.Documenti.Count == 0)
                     {
-                        //lbMod_Documenti.Rows = 1;
                         gvMod_Documenti.DataSource = null;
                     }
 
@@ -774,16 +681,22 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             collaboratore.Id = Convert.ToInt16(ViewState["idColl"].ToString());
 
+
+            if (gvMod_Telefoni.Rows.Count == 0)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.Descrizione = "Inserire un contatto telefonico e controllare eventuali campi evidenziati.";
+            }
+
             collaboratore.Nazione = BasePage.ValidaCampo(tbMod_Nazione, "", false, ref esito);
-            collaboratore.Nome = BasePage.ValidaCampo(tbMod_Nome, "", false, ref esito);
+            collaboratore.Nome = BasePage.ValidaCampo(tbMod_Nome, "", true, ref esito);
             collaboratore.Cognome = BasePage.ValidaCampo(tbMod_Cognome, "", true, ref esito);
             collaboratore.ComuneNascita = BasePage.ValidaCampo(tbMod_ComuneNascita, "", false, ref esito);
-            collaboratore.ComuneRiferimento = BasePage.ValidaCampo(tbMod_ComuneRiferimento, "", false, ref esito);
-            collaboratore.RegioneRiferimento = BasePage.ValidaCampo(cmbMod_RegioneRiferimento, "", false, ref esito);
+            collaboratore.ComuneRiferimento = BasePage.ValidaCampo(tbMod_ComuneRiferimento, "", true, ref esito);
+            collaboratore.RegioneRiferimento = BasePage.ValidaCampo(cmbMod_RegioneRiferimento, "", true, ref esito);
             collaboratore.DataNascita = BasePage.ValidaCampo(tbMod_DataNascita, DateTime.Now, false, ref esito);
             collaboratore.CodiceFiscale = BasePage.ValidaCampo(tbMod_CF, "", true, ref esito);
             collaboratore.Assunto = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Assunto, "false", false, ref esito));
-            //collaboratore.Attivo = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Attivo, "true", false, ref esito));
             collaboratore.Attivo = true;
             collaboratore.NomeSocieta = BasePage.ValidaCampo(tbMod_NomeSocieta, "", false, ref esito);
             collaboratore.Iban = BasePage.ValidaCampo(tbMod_Iban, "", false, ref esito).ToUpper();
@@ -851,6 +764,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_Note.CssClass = tbMod_Note.CssClass.Replace("erroreValidazione", "");
             tbMod_PartitaIva.CssClass = tbMod_PartitaIva.CssClass.Replace("erroreValidazione", "");
             tbMod_ProvinciaNascita.CssClass = tbMod_ProvinciaNascita.CssClass.Replace("erroreValidazione", "");
+            cmbMod_RegioneRiferimento.CssClass = tbMod_ComuneRiferimento.CssClass.Replace("erroreValidazione", "");
         }
 
         protected void btnConfermaInserimento_Click(object sender, EventArgs e)
@@ -863,11 +777,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             if (esito.Codice != Esito.ESITO_OK)
             {
-                //panelErrore.Style.Remove("display");
-                //panelErrore.Style.Add("display", "block");
-                //lbl_MessaggioErrore.Text = "Controllare i campi evidenziati";
                 AttivaDisattivaModificaAnagrafica(false);
-                basePage.ShowWarning("Controllare i campi evidenziati");
+                basePage.ShowWarning(esito.Descrizione);
             }
             else
             {
@@ -885,15 +796,11 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 if (esito.Codice != Esito.ESITO_OK)
                 {
                     log.Error(esito.Descrizione);
-                    //panelErrore.Style.Remove("display");
-                    //panelErrore.Style.Add("display", "block");
-                    //lbl_MessaggioErrore.Text = esito.descrizione;
                     basePage.ShowError(esito.Descrizione);
                 }
                 else
                 {
                     SessionManager.ListaAnagraficheCollaboratori.Clear();
-                    //SessionManager.ListaCittaCollaboratori.Clear();
 
                     EditCollaboratore_Click(null, null);
                 }

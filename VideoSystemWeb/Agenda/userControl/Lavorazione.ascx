@@ -677,8 +677,8 @@
                                                 </div>
 
                                                 <div class="w3-third" style="padding: 5px;">
-                                                    <label style="margin-bottom: 0.2rem;">Rimborso km</label><br />
-                                                    <asp:TextBox ID="txt_FPRimborsoKM" runat="server" class="w3-input w3-border w3-round-medium" disabled placeholder="Rimborso km" Style="padding: 2px;"></asp:TextBox>
+                                                    <label style="margin-bottom: 0.2rem;">Mista</label><br />
+                                                    <asp:TextBox ID="txt_FPRimborsoKM" runat="server" class="w3-input w3-border w3-round-medium" disabled placeholder="Mista" Style="padding: 2px;"></asp:TextBox>
                                                 </div>
 
                                                 <div class="w3-third" style="padding: 5px">

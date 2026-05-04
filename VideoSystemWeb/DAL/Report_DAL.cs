@@ -24,7 +24,7 @@ namespace VideoSystemWeb.DAL
             Esito esito = new Esito();
 
             idTipoAssunzione = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO), "Assunzione", ref esito).id; 
-            idTipoMista = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO), "Mista", ref esito).id; 
+            idTipoMista = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO), "Assunzione mista", ref esito).id; 
             idTipoRitenutaAcconto = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO), "Ritenuta acconto", ref esito).id; 
             idTipoFattura = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO), "Fattura", ref esito).id; 
             idDiaria = Art_Articoli_DAL.Instance.CaricaListaArticoli(ref esito).FirstOrDefault(x => x.DefaultDescrizione.Trim().ToUpper() == "DIARIA").Id;

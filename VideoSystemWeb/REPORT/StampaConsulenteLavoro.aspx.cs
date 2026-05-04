@@ -88,6 +88,9 @@ namespace VideoSystemWeb.REPORT
             gv_DatiStampa.DataSource = listaDatiReport;
             gv_DatiStampa.DataBind();
 
+            //gv_DatiStampaSintetica.DataSource = listaDatiReport;
+            //gv_DatiStampaSintetica.DataBind();
+
 
             if (listaDatiReport.Count > 0)
             {
@@ -137,7 +140,18 @@ namespace VideoSystemWeb.REPORT
             btnRicerca_Click(null, null);
         }
 
+        //protected void gv_DatiStampaSintetica_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        //{
+        //    gv_DatiStampaSintetica.PageIndex = e.NewPageIndex;
+        //    btnRicerca_Click(null, null);
+        //}
+
         protected void gv_DatiStampa_OnSorting(object sender, EventArgs e)
+        {
+            // do something here or do nothing
+        }
+
+        protected void gv_DatiStampaSintetica_OnSorting(object sender, EventArgs e)
         {
             // do something here or do nothing
         }

@@ -268,7 +268,7 @@ namespace VideoSystemWeb.STATISTICHE
         {
             if (e.Row.Cells.Count > 1)
             {
-                //e.Row.Cells[11].Visible = chk_Listino.Checked;
+                e.Row.Cells[10].Visible = chk_Listino.Checked;
                 e.Row.Cells[11].Visible = chk_Costi.Checked;
                 e.Row.Cells[12].Visible = chk_Ricavo.Checked &&
                                           string.IsNullOrWhiteSpace(txt_Fornitore.Text) &&

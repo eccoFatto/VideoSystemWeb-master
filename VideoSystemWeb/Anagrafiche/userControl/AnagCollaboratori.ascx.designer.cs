@@ -1,17 +1,19 @@
 ﻿//------------------------------------------------------------------------------
 // <generato automaticamente>
-//     Codice generato da uno strumento.
+//     Questo codice è stato generato da uno strumento.
 //
 //     Le modifiche a questo file possono causare un comportamento non corretto e verranno perse se
 //     il codice viene rigenerato. 
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.Anagrafiche.userControl {
-    
-    
-    public partial class AnagCollaboratori {
-        
+namespace VideoSystemWeb.Anagrafiche.userControl
+{
+
+
+    public partial class AnagCollaboratori
+    {
+
         /// <summary>
         /// Controllo lblTipoAzienda.
         /// </summary>
@@ -20,7 +22,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTipoAzienda;
-        
+
         /// <summary>
         /// Controllo UpdatePanelRicerca.
         /// </summary>
@@ -29,7 +31,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
-        
+
         /// <summary>
         /// Controllo tbCognome.
         /// </summary>
@@ -38,7 +40,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbCognome;
-        
+
         /// <summary>
         /// Controllo tbNome.
         /// </summary>
@@ -47,7 +49,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbNome;
-        
+
         /// <summary>
         /// Controllo tbCF.
         /// </summary>
@@ -56,7 +58,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbCF;
-        
+
         /// <summary>
         /// Controllo tbCitta.
         /// </summary>
@@ -65,7 +67,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbCitta;
-        
+
         /// <summary>
         /// Controllo ddlQualifiche.
         /// </summary>
@@ -74,7 +76,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlQualifiche;
-        
+
         /// <summary>
         /// Controllo TbSocieta.
         /// </summary>
@@ -83,7 +85,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TbSocieta;
-        
+
         /// <summary>
         /// Controllo TbPiva.
         /// </summary>
@@ -92,7 +94,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TbPiva;
-        
+
         /// <summary>
         /// Controllo TbPiva_MaskedEditExtender.
         /// </summary>
@@ -101,7 +103,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::AjaxControlToolkit.MaskedEditExtender TbPiva_MaskedEditExtender;
-        
+
         /// <summary>
         /// Controllo tbRegione.
         /// </summary>
@@ -110,7 +112,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbRegione;
-        
+
         /// <summary>
         /// Controllo btnRicercaCollaboratori.
         /// </summary>
@@ -119,7 +121,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRicercaCollaboratori;
-        
+
         /// <summary>
         /// Controllo divBtnInserisciCollaboratori.
         /// </summary>
@@ -128,7 +130,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBtnInserisciCollaboratori;
-        
+
         /// <summary>
         /// Controllo divElencoWhatsapp.
         /// </summary>
@@ -137,7 +139,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divElencoWhatsapp;
-        
+
         /// <summary>
         /// Controllo BtnPulisciCampiRicerca.
         /// </summary>
@@ -146,7 +148,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnPulisciCampiRicerca;
-        
+
         /// <summary>
         /// Controllo tbTotElementiGriglia.
         /// </summary>
@@ -155,7 +157,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbTotElementiGriglia;
-        
+
         /// <summary>
         /// Controllo gv_collaboratori.
         /// </summary>
@@ -164,7 +166,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_collaboratori;
-        
+
         /// <summary>
         /// Controllo btnEditCollaboratore.
         /// </summary>
@@ -173,7 +175,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEditCollaboratore;
-        
+
         /// <summary>
         /// Controllo btnInsCollaboratore.
         /// </summary>
@@ -182,7 +184,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInsCollaboratore;
-        
+
         /// <summary>
         /// Controllo btnApriElencoWhatsapp.
         /// </summary>
@@ -191,7 +193,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnApriElencoWhatsapp;
-        
+
         /// <summary>
         /// Controllo hf_idColl.
         /// </summary>
@@ -200,7 +202,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_idColl;
-        
+
         /// <summary>
         /// Controllo hf_tipoOperazione.
         /// </summary>
@@ -209,7 +211,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_tipoOperazione;
-        
+
         /// <summary>
         /// Controllo hf_tabChiamata.
         /// </summary>
@@ -218,7 +220,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hf_tabChiamata;
-        
+
         /// <summary>
         /// Controllo upWhatsapp.
         /// </summary>
@@ -227,7 +229,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upWhatsapp;
-        
+
         /// <summary>
         /// Controllo pnlWhatsapp.
         /// </summary>
@@ -236,7 +238,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlWhatsapp;
-        
+
         /// <summary>
         /// Controllo innerContainerWhatsapp.
         /// </summary>
@@ -245,7 +247,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel innerContainerWhatsapp;
-        
+
         /// <summary>
         /// Controllo lbElencoDestinatariWhatsapp.
         /// </summary>
@@ -254,7 +256,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lbElencoDestinatariWhatsapp;
-        
+
         /// <summary>
         /// Controllo ddlElencoOfferteDisponibili.
         /// </summary>
@@ -263,7 +265,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlElencoOfferteDisponibili;
-        
+
         /// <summary>
         /// Controllo btnExportWhatsapp.
         /// </summary>
@@ -272,7 +274,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnExportWhatsapp;
-        
+
         /// <summary>
         /// Controllo btnResetElenco.
         /// </summary>
@@ -281,7 +283,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnResetElenco;
-        
+
         /// <summary>
         /// Controllo upColl.
         /// </summary>
@@ -290,7 +292,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel upColl;
-        
+
         /// <summary>
         /// Controllo pnlContainer.
         /// </summary>
@@ -299,7 +301,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel pnlContainer;
-        
+
         /// <summary>
         /// Controllo innerContainer.
         /// </summary>
@@ -308,7 +310,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel innerContainer;
-        
+
         /// <summary>
         /// Controllo lblDettaglioModifica.
         /// </summary>
@@ -317,7 +319,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDettaglioModifica;
-        
+
         /// <summary>
         /// Controllo tbMod_Cognome.
         /// </summary>
@@ -326,7 +328,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Cognome;
-        
+
         /// <summary>
         /// Controllo tbMod_Nome.
         /// </summary>
@@ -335,7 +337,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Nome;
-        
+
         /// <summary>
         /// Controllo tbMod_CF.
         /// </summary>
@@ -344,7 +346,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_CF;
-        
+
         /// <summary>
         /// Controllo tbMod_Nazione.
         /// </summary>
@@ -353,7 +355,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Nazione;
-        
+
         /// <summary>
         /// Controllo tbMod_ComuneNascita.
         /// </summary>
@@ -362,7 +364,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_ComuneNascita;
-        
+
         /// <summary>
         /// Controllo tbMod_ProvinciaNascita.
         /// </summary>
@@ -371,7 +373,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_ProvinciaNascita;
-        
+
         /// <summary>
         /// Controllo tbMod_DataNascita.
         /// </summary>
@@ -380,7 +382,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_DataNascita;
-        
+
         /// <summary>
         /// Controllo tbMod_ComuneRiferimento.
         /// </summary>
@@ -389,7 +391,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_ComuneRiferimento;
-        
+
         /// <summary>
         /// Controllo tbMod_PartitaIva.
         /// </summary>
@@ -398,7 +400,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_PartitaIva;
-        
+
         /// <summary>
         /// Controllo tbMod_PartitaIvaMaskedEditExtender1.
         /// </summary>
@@ -407,7 +409,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::AjaxControlToolkit.MaskedEditExtender tbMod_PartitaIvaMaskedEditExtender1;
-        
+
         /// <summary>
         /// Controllo tbMod_NomeSocieta.
         /// </summary>
@@ -416,7 +418,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_NomeSocieta;
-        
+
         /// <summary>
         /// Controllo cmbMod_RegioneRiferimento.
         /// </summary>
@@ -425,7 +427,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cmbMod_RegioneRiferimento;
-        
+
         /// <summary>
         /// Controllo tbMod_Iban.
         /// </summary>
@@ -434,7 +436,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Iban;
-        
+
         /// <summary>
         /// Controllo cbMod_Assunto.
         /// </summary>
@@ -443,7 +445,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox cbMod_Assunto;
-        
+
         /// <summary>
         /// Controllo tbMod_Note.
         /// </summary>
@@ -452,7 +454,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_Note;
-        
+
         /// <summary>
         /// Controllo imgCollaboratore.
         /// </summary>
@@ -461,7 +463,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image imgCollaboratore;
-        
+
         /// <summary>
         /// Controllo fuImg.
         /// </summary>
@@ -470,7 +472,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuImg;
-        
+
         /// <summary>
         /// Controllo uploadButton.
         /// </summary>
@@ -479,7 +481,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button uploadButton;
-        
+
         /// <summary>
         /// Controllo lblImage.
         /// </summary>
@@ -488,7 +490,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblImage;
-        
+
         /// <summary>
         /// Controllo btnModifica.
         /// </summary>
@@ -497,7 +499,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnModifica;
-        
+
         /// <summary>
         /// Controllo btnElimina.
         /// </summary>
@@ -506,7 +508,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnElimina;
-        
+
         /// <summary>
         /// Controllo btnSalva.
         /// </summary>
@@ -515,7 +517,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSalva;
-        
+
         /// <summary>
         /// Controllo btnConfermaInserimento.
         /// </summary>
@@ -524,7 +526,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnConfermaInserimento;
-        
+
         /// <summary>
         /// Controllo btnAnnulla.
         /// </summary>
@@ -533,7 +535,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnulla;
-        
+
         /// <summary>
         /// Controllo lbMod_Qualifiche.
         /// </summary>
@@ -542,7 +544,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lbMod_Qualifiche;
-        
+
         /// <summary>
         /// Controllo btnApriQualifiche.
         /// </summary>
@@ -551,7 +553,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnApriQualifiche;
-        
+
         /// <summary>
         /// Controllo phQualifiche.
         /// </summary>
@@ -560,7 +562,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder phQualifiche;
-        
+
         /// <summary>
         /// Controllo ddlQualificheDaAggiungere.
         /// </summary>
@@ -569,7 +571,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlQualificheDaAggiungere;
-        
+
         /// <summary>
         /// Controllo tbInsPrioritaQualifica.
         /// </summary>
@@ -578,7 +580,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsPrioritaQualifica;
-        
+
         /// <summary>
         /// Controllo tbInsPrioritaQualifica_MaskedEditExtender.
         /// </summary>
@@ -587,7 +589,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::AjaxControlToolkit.MaskedEditExtender tbInsPrioritaQualifica_MaskedEditExtender;
-        
+
         /// <summary>
         /// Controllo btnInserisciQualifica.
         /// </summary>
@@ -596,7 +598,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInserisciQualifica;
-        
+
         /// <summary>
         /// Controllo btnEliminaQualifica.
         /// </summary>
@@ -605,7 +607,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEliminaQualifica;
-        
+
         /// <summary>
         /// Controllo gvMod_Indirizzi.
         /// </summary>
@@ -614,7 +616,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvMod_Indirizzi;
-        
+
         /// <summary>
         /// Controllo btnApriIndirizzi.
         /// </summary>
@@ -623,7 +625,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnApriIndirizzi;
-        
+
         /// <summary>
         /// Controllo phIndirizzi.
         /// </summary>
@@ -632,7 +634,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder phIndirizzi;
-        
+
         /// <summary>
         /// Controllo cmbInsTipoIndirizzo.
         /// </summary>
@@ -641,7 +643,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cmbInsTipoIndirizzo;
-        
+
         /// <summary>
         /// Controllo tbInsIndirizzoIndirizzo.
         /// </summary>
@@ -650,7 +652,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsIndirizzoIndirizzo;
-        
+
         /// <summary>
         /// Controllo tbInsCivicoIndirizzo.
         /// </summary>
@@ -659,7 +661,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsCivicoIndirizzo;
-        
+
         /// <summary>
         /// Controllo tbInsCapIndirizzo.
         /// </summary>
@@ -668,7 +670,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsCapIndirizzo;
-        
+
         /// <summary>
         /// Controllo tbInsComuneIndirizzo.
         /// </summary>
@@ -677,7 +679,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsComuneIndirizzo;
-        
+
         /// <summary>
         /// Controllo tbInsProvinciaIndirizzo.
         /// </summary>
@@ -686,7 +688,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsProvinciaIndirizzo;
-        
+
         /// <summary>
         /// Controllo tbInsDescrizioneIndirizzo.
         /// </summary>
@@ -695,7 +697,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsDescrizioneIndirizzo;
-        
+
         /// <summary>
         /// Controllo tbInsPrioritaIndirizzo.
         /// </summary>
@@ -704,7 +706,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsPrioritaIndirizzo;
-        
+
         /// <summary>
         /// Controllo MaskedEditExtender1.
         /// </summary>
@@ -713,7 +715,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::AjaxControlToolkit.MaskedEditExtender MaskedEditExtender1;
-        
+
         /// <summary>
         /// Controllo tbIdIndirizzoDaModificare.
         /// </summary>
@@ -722,7 +724,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbIdIndirizzoDaModificare;
-        
+
         /// <summary>
         /// Controllo btnInserisciIndirizzo.
         /// </summary>
@@ -731,7 +733,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInserisciIndirizzo;
-        
+
         /// <summary>
         /// Controllo btnModificaIndirizzo.
         /// </summary>
@@ -740,7 +742,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnModificaIndirizzo;
-        
+
         /// <summary>
         /// Controllo btnEliminaIndirizzo.
         /// </summary>
@@ -749,7 +751,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEliminaIndirizzo;
-        
+
         /// <summary>
         /// Controllo btnAnnullaIndirizzo.
         /// </summary>
@@ -758,7 +760,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnullaIndirizzo;
-        
+
         /// <summary>
         /// Controllo gvMod_Telefoni.
         /// </summary>
@@ -767,7 +769,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvMod_Telefoni;
-        
+
         /// <summary>
         /// Controllo btnApriTelefoni.
         /// </summary>
@@ -776,7 +778,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnApriTelefoni;
-        
+
         /// <summary>
         /// Controllo phTelefoni.
         /// </summary>
@@ -785,7 +787,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder phTelefoni;
-        
+
         /// <summary>
         /// Controllo tbInsPrefIntTelefono.
         /// </summary>
@@ -794,7 +796,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsPrefIntTelefono;
-        
+
         /// <summary>
         /// Controllo tbInsPrefNazTelefono.
         /// </summary>
@@ -803,7 +805,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsPrefNazTelefono;
-        
+
         /// <summary>
         /// Controllo tbInsNumeroTelefono.
         /// </summary>
@@ -812,7 +814,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsNumeroTelefono;
-        
+
         /// <summary>
         /// Controllo cmbInsTipoTelefono.
         /// </summary>
@@ -821,7 +823,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cmbInsTipoTelefono;
-        
+
         /// <summary>
         /// Controllo cbInsWhatsappTelefono.
         /// </summary>
@@ -830,7 +832,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox cbInsWhatsappTelefono;
-        
+
         /// <summary>
         /// Controllo tbInsPrioritaTelefono.
         /// </summary>
@@ -839,7 +841,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsPrioritaTelefono;
-        
+
         /// <summary>
         /// Controllo tbInsPrioritaTelefono_MaskedEditExtender.
         /// </summary>
@@ -848,7 +850,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::AjaxControlToolkit.MaskedEditExtender tbInsPrioritaTelefono_MaskedEditExtender;
-        
+
         /// <summary>
         /// Controllo tbInsDescrizioneTelefono.
         /// </summary>
@@ -857,7 +859,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsDescrizioneTelefono;
-        
+
         /// <summary>
         /// Controllo tbIdTelefonoDaModificare.
         /// </summary>
@@ -866,7 +868,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbIdTelefonoDaModificare;
-        
+
         /// <summary>
         /// Controllo btnInserisciTelefono.
         /// </summary>
@@ -875,7 +877,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInserisciTelefono;
-        
+
         /// <summary>
         /// Controllo btnModificaTelefono.
         /// </summary>
@@ -884,7 +886,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnModificaTelefono;
-        
+
         /// <summary>
         /// Controllo btnEliminaTelefono.
         /// </summary>
@@ -893,7 +895,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEliminaTelefono;
-        
+
         /// <summary>
         /// Controllo btnAnnullaTelefono.
         /// </summary>
@@ -902,7 +904,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnullaTelefono;
-        
+
         /// <summary>
         /// Controllo gvMod_Email.
         /// </summary>
@@ -911,7 +913,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvMod_Email;
-        
+
         /// <summary>
         /// Controllo btnApriEmail.
         /// </summary>
@@ -920,7 +922,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnApriEmail;
-        
+
         /// <summary>
         /// Controllo phEmail.
         /// </summary>
@@ -929,7 +931,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder phEmail;
-        
+
         /// <summary>
         /// Controllo tbInsEmail.
         /// </summary>
@@ -938,7 +940,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsEmail;
-        
+
         /// <summary>
         /// Controllo tbInsPrioritaEmail.
         /// </summary>
@@ -947,7 +949,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsPrioritaEmail;
-        
+
         /// <summary>
         /// Controllo tbInsPrioritaEmail_MaskedEditExtender.
         /// </summary>
@@ -956,7 +958,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::AjaxControlToolkit.MaskedEditExtender tbInsPrioritaEmail_MaskedEditExtender;
-        
+
         /// <summary>
         /// Controllo tbInsTipoEmail.
         /// </summary>
@@ -965,7 +967,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsTipoEmail;
-        
+
         /// <summary>
         /// Controllo tbIdEmailDaModificare.
         /// </summary>
@@ -974,7 +976,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbIdEmailDaModificare;
-        
+
         /// <summary>
         /// Controllo btnInserisciEmail.
         /// </summary>
@@ -983,7 +985,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInserisciEmail;
-        
+
         /// <summary>
         /// Controllo btnModificaEmail.
         /// </summary>
@@ -992,7 +994,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnModificaEmail;
-        
+
         /// <summary>
         /// Controllo btnEliminaEmail.
         /// </summary>
@@ -1001,7 +1003,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEliminaEmail;
-        
+
         /// <summary>
         /// Controllo btnAnnullaEmail.
         /// </summary>
@@ -1010,7 +1012,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnullaEmail;
-        
+
         /// <summary>
         /// Controllo gvMod_Documenti.
         /// </summary>
@@ -1019,7 +1021,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvMod_Documenti;
-        
+
         /// <summary>
         /// Controllo btnApriDocumenti.
         /// </summary>
@@ -1028,7 +1030,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnApriDocumenti;
-        
+
         /// <summary>
         /// Controllo phDocumenti.
         /// </summary>
@@ -1037,7 +1039,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder phDocumenti;
-        
+
         /// <summary>
         /// Controllo cmbInsTipoDocumento.
         /// </summary>
@@ -1046,7 +1048,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList cmbInsTipoDocumento;
-        
+
         /// <summary>
         /// Controllo tbInsNumeroDocumento.
         /// </summary>
@@ -1055,7 +1057,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbInsNumeroDocumento;
-        
+
         /// <summary>
         /// Controllo tbIdDocumentoDaModificare.
         /// </summary>
@@ -1064,7 +1066,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbIdDocumentoDaModificare;
-        
+
         /// <summary>
         /// Controllo fuDoc.
         /// </summary>
@@ -1073,7 +1075,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload fuDoc;
-        
+
         /// <summary>
         /// Controllo btnCaricaDocumento.
         /// </summary>
@@ -1082,7 +1084,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCaricaDocumento;
-        
+
         /// <summary>
         /// Controllo lblDoc.
         /// </summary>
@@ -1091,7 +1093,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblDoc;
-        
+
         /// <summary>
         /// Controllo btnInserisciDocumento.
         /// </summary>
@@ -1100,7 +1102,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnInserisciDocumento;
-        
+
         /// <summary>
         /// Controllo btnModificaDocumento.
         /// </summary>
@@ -1109,7 +1111,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnModificaDocumento;
-        
+
         /// <summary>
         /// Controllo btnEliminaDocumento.
         /// </summary>
@@ -1118,7 +1120,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnEliminaDocumento;
-        
+
         /// <summary>
         /// Controllo btnAnnullaDocumento.
         /// </summary>

@@ -675,18 +675,18 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         {
             Anag_Collaboratori collaboratore = new Anag_Collaboratori();
 
-            if (string.IsNullOrEmpty((string)ViewState["idColl"])) {
+            if (string.IsNullOrEmpty(ViewState["idColl"].ToString())) {
                 ViewState["idColl"] = 0;
             }
 
             collaboratore.Id = Convert.ToInt16(ViewState["idColl"].ToString());
 
 
-            if (gvMod_Telefoni.Rows.Count == 0)
-            {
-                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
-                esito.Descrizione = "Inserire un contatto telefonico e controllare eventuali campi evidenziati.";
-            }
+            //if (gvMod_Telefoni.Rows.Count == 0)
+            //{
+            //    esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+            //    esito.Descrizione = "Inserire un contatto telefonico e controllare eventuali campi evidenziati.";
+            //}
 
             collaboratore.Nazione = BasePage.ValidaCampo(tbMod_Nazione, "", false, ref esito);
             collaboratore.Nome = BasePage.ValidaCampo(tbMod_Nome, "", true, ref esito);

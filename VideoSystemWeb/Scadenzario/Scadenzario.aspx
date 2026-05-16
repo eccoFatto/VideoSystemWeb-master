@@ -183,35 +183,33 @@
     <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
         <ContentTemplate>
             <div class="w3-row-padding">
-                <div class="w3-threequarter w3-row-padding">
-                    <div class="w3-quarter">
-                        <label>Tipo (Cliente/Fornitore/Busta Paga)</label>
-                        <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" >
-                            <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
-                            <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
-                            <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
-                            <asp:ListItem Value="BustaPaga" Text="Busta paga"></asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
 
-                    <div class="w3-quarter" id="div_Generi" runat="server" >
-                        <asp:Label id="lbl_Generi" runat="server" Text="Generi" style="margin-bottom:0.5rem"/>
-                        <asp:DropDownList ID="ddl_Generi" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" />
-                    </div>
-
-                    <div class="w3-quarter" id="div_Gruppo" runat="server" >
-                        <asp:Label id="lbl_Gruppo" runat="server" Text="Gruppo" style="margin-bottom:0.5rem"/>
-                        <asp:DropDownList ID="ddl_Gruppo" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" OnSelectedIndexChanged="ddl_Gruppo_SelectedIndexChanged" AutoPostBack="true"/>
-                    </div>
-
-                    <div class="w3-quarter" id="div_Sottogruppo" runat="server" >
-                        <asp:Label id="lbl_Sottoruppo" runat="server" Text="Sottogruppo" style="margin-bottom:0.5rem"/>
-                        <asp:DropDownList ID="ddl_Sottogruppo" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" />
-                    </div>
-
+                <div class="w3-col" style="width:20%">
+                    <label>Tipo (Cliente/Fornitore/Busta Paga)</label>
+                    <asp:DropDownList ID="ddl_TipoAnagrafica" runat="server" AutoPostBack="True" Width="100%" class="w3-input w3-border" >
+                        <asp:ListItem Value="" Text="<tutti>" Selected></asp:ListItem>
+                        <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
+                        <asp:ListItem Value="Fornitore" Text="Fornitore"></asp:ListItem>
+                        <asp:ListItem Value="BustaPaga" Text="Busta paga"></asp:ListItem>
+                    </asp:DropDownList>
                 </div>
 
-                <div class="w3-quarter">
+                <div class="w3-col" style="width:20%" id="div_Generi" runat="server" >
+                    <asp:Label id="lbl_Generi" runat="server" Text="Generi" style="margin-bottom:0.5rem"/>
+                    <asp:DropDownList ID="ddl_Generi" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" />
+                </div>
+
+                <div class="w3-col" style="width:20%" id="div_Gruppo" runat="server" >
+                    <asp:Label id="lbl_Gruppo" runat="server" Text="Gruppo" style="margin-bottom:0.5rem"/>
+                    <asp:DropDownList ID="ddl_Gruppo" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" OnSelectedIndexChanged="ddl_Gruppo_SelectedIndexChanged" AutoPostBack="true"/>
+                </div>
+
+                <div class="w3-col" style="width:20%" id="div_Sottogruppo" runat="server" >
+                    <asp:Label id="lbl_Sottoruppo" runat="server" Text="Sottogruppo" style="margin-bottom:0.5rem"/>
+                    <asp:DropDownList ID="ddl_Sottogruppo" runat="server" MaxLength="20" class="w3-input w3-border" style="margin-top:0.5rem" />
+                </div>
+
+                <div class="w3-col" style="width:20%">
                     <label>Pagata</label>
                     <asp:DropDownList ID="ddlFatturaPagata" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border">
                         <asp:ListItem Value="" Text="<tutti>" />
@@ -222,43 +220,47 @@
              </div>
 
             <div class="w3-row-padding" style="position:relative;">
-                <div class="w3-threequarter w3-row-padding">
-                    <div class="w3-quarter">
-                       <label>Cliente/Fornitore</label>
-                       <asp:TextBox ID="txt_RagioneSociale" runat="server" class="w3-input w3-border" ></asp:TextBox>
-                    </div>
-
-                    <div class="w3-quarter">
-                        <label>Numero Fattura</label>
-                        <asp:TextBox ID="txt_NumeroFattura" runat="server" MaxLength="20" class="w3-input w3-border" />
-                    </div>
-
-                    
-                    <div class="w3-quarter">
-                        <label>Data fattura da</label>
-                        <asp:TextBox ID="txt_DataFatturaDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                    </div>
-                    <div class="w3-quarter">
-                        <label>Data fattura a</label>
-                        <asp:TextBox ID="txt_DataFatturaA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                    </div>
-        
-                    <div class="w3-quarter">
-                        <label>Data scad. da</label>
-                        <asp:TextBox ID="txt_DataDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                    </div>
-                    <div class="w3-quarter">
-                        <label>Data scad. a</label>
-                        <asp:TextBox ID="txt_DataA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                    </div>
+                
+                <div class="w3-col" style="width:20%">
+                    <label>Cliente/Fornitore</label>
+                    <asp:TextBox ID="txt_RagioneSociale" runat="server" class="w3-input w3-border" ></asp:TextBox>
                 </div>
 
-                <div class="w3-quarter">
+                <div class="w3-col" style="width:20%">
+                    <label>Numero Fattura</label>
+                    <asp:TextBox ID="txt_NumeroFattura" runat="server" MaxLength="20" class="w3-input w3-border" />
+                </div>
+                    
+                <div class="w3-col" style="width:20%">
+                    <label>Data fattura da</label>
+                    <asp:TextBox ID="txt_DataFatturaDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                </div>
+                <div class="w3-col" style="width:20%">
+                    <label>Data fattura a</label>
+                    <asp:TextBox ID="txt_DataFatturaA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                </div>
+
+                <div class="w3-col" style="width:20%">
                     <label>Tipologia pagamento</label>
                     <asp:DropDownList ID="ddl_FiltroBanca" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border"/>
                 </div>
             </div>
 
+            <div class="w3-row-padding" style="position:relative;">
+                <div class="w3-col" style="width:20%">
+                     <label>Data scad. da</label>
+                     <asp:TextBox ID="txt_DataDa" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                </div>
+                <div class="w3-col" style="width:20%">
+                     <label>Data scad. a</label>
+                     <asp:TextBox ID="txt_DataA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                </div>
+                 
+                <div class="w3-col" style="width:20%">
+                    <label>Codice Lavorazione</label>
+                    <asp:TextBox ID="txt_CodLavorazione" runat="server" Width="100%" class="w3-input w3-border" ></asp:TextBox>
+                </div>
+            </div>
 
 <%--RIQUADRI DEI TOTALI--%>
             <div class="w3-row-padding w3-margin-bottom w3-margin-top">
@@ -404,17 +406,18 @@
                                 <asp:ImageButton ID="btnOpenDoc" runat="server" CausesValidation="false" Text="Vis." ImageUrl="~/Images/Oxygen-Icons.org-Oxygen-Mimetypes-x-office-contact.ico" ToolTip="Visualizza Documento" ImageAlign="AbsMiddle" Height="30px" CommandName="visualizzaDoc" CommandArgument='<%#Eval("id")%>'/>
                             </ItemTemplate>
                         </asp:TemplateField>
-                        <asp:BoundField DataField="ImportoDareIva" HeaderText="Dare" DataFormatString="{0:N2}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="ImportoVersatoIva" HeaderText="Versato" DataFormatString="{0:N2}" HeaderStyle-Width="6%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="ProtocolloRiferimento" HeaderText="Documento"  HeaderStyle-Width="12%" />
-                        <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="16%" />
+                        <asp:BoundField DataField="ImportoDareIva" HeaderText="Dare" DataFormatString="{0:N2}" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ImportoVersatoIva" HeaderText="Versato" DataFormatString="{0:N2}" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="ProtocolloRiferimento" HeaderText="Documento"  HeaderStyle-Width="11%" />
+                        <asp:BoundField DataField="RagioneSocialeClienteFornitore" HeaderText="Nominativo"  HeaderStyle-Width="17%" />
                         <asp:BoundField DataField="ImportoAvereIva" HeaderText="Avere" DataFormatString="{0:N2}" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="ImportoRiscossoIva" HeaderText="Riscosso" DataFormatString="{0:N2}" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="DataScadenza" HeaderText="Scadenza" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="IsImportoEstinto" HeaderText="Stato" HeaderStyle-Width="7%" />
+                        <asp:BoundField DataField="DataScadenza" HeaderText="Scadenza" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="6%" />
+                        <asp:BoundField DataField="IsImportoEstinto" HeaderText="Stato" HeaderStyle-Width="6%" />
                         <asp:BoundField DataField="Banca" HeaderText="Banca" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="DataPagamento" HeaderText="Pagamento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="NumeroProtocollo" HeaderText="Protocollo" HeaderStyle-Width="9%" />
+                        <asp:BoundField DataField="DataPagamento" HeaderText="Pagamento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="6%" />
+                        <asp:BoundField DataField="NumeroProtocollo" HeaderText="Protocollo" HeaderStyle-Width="7%" />
+                        <asp:BoundField DataField="CodiceLavorazione" HeaderText="Cod. Lavorazione" HeaderStyle-Width="11%" />
                         <asp:TemplateField ShowHeader="False" HeaderStyle-Width="5%">
                             <ItemTemplate>
                                 <asp:ImageButton ID="imgEdit" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/edit.png" ToolTip="Modifica" ImageAlign="AbsMiddle"  CommandName="modifica" CommandArgument='<%#Eval("id")%>'/>

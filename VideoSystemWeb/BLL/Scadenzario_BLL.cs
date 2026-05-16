@@ -325,6 +325,7 @@ namespace VideoSystemWeb.BLL
                                                            string filtroTipoGeneri,
                                                            string filtroTipoGruppo,
                                                            string filtroTipoSottogruppo,
+                                                           string codiceLavorazione,
                                                            ref Esito esito)
         {
             return Scadenzario_DAL.Instance.GetAllDatiScadenzario(tipoAnagrafica,
@@ -340,6 +341,7 @@ namespace VideoSystemWeb.BLL
                                                                   filtroTipoGeneri,
                                                                   filtroTipoGruppo,
                                                                   filtroTipoSottogruppo,
+                                                                  codiceLavorazione,
                                                                   ref esito);
         }
 

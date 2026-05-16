@@ -251,7 +251,9 @@ namespace VideoSystemWeb.STATISTICHE
 
                 rigaTotali.Visible = chk_Listino.Checked || chk_Costi.Checked || chk_Ricavo.Checked;
             }
-            tbTotElementiGriglia.Text = listaStatisticheCosti.Count.ToString("###,##0");
+
+            
+            tbTotElementiGriglia.Text = listaStatisticheCosti.Where(x => x.Listino == 0).ToList().Count.ToString("###,##0"); // prendo solo i valori costo
             gv_statistiche.DataSource = listaStatisticheCosti;
             gv_statistiche.DataBind();
         }

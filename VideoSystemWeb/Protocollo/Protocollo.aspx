@@ -96,6 +96,7 @@
             $("#<%=btnCercaLavorazione.ClientID%>").click();
         }
 
+
         // APRO LE TAB DETTAGLIO PROTOCOLLO
         function openDettaglioProtocollo(tipoName) {
             $("#<%=hf_tabChiamata.ClientID%>").val(tipoName);
@@ -121,6 +122,8 @@
         function chiudiPopupClienti() {
             $("#<%=btnChiudiPopupClientiServer.ClientID%>").click();
         }
+
+        
 
         function chiudiPopupLavorazioni() {
             $("#<%=btnChiudiPopupLavorazioniServer.ClientID%>").click();
@@ -205,7 +208,9 @@
             txt2.text = idCli;
 
             $("#<%=btnAssociaClienteServer.ClientID%>").click();
+
         }
+        
 
         function inserisciCliente() {
             if (document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value != '') {
@@ -216,6 +221,23 @@
         function popupProt(messaggio) {
             document.getElementById('popMessage').style.display = 'block';
             $('#textPopMess').html(messaggio);
+        }
+
+
+        function chiudiPopupAssociaArticolo() {
+            $("#<%=btnChiudiPopupAssociaArticoloServer.ClientID%>").click();
+        }
+
+        function associaArticolo(idElemento) {
+            $("#<%=tbMod_IdElemento.ClientID%>").val(idElemento);
+
+            $("#<%=btnAssociaArticoloServer.ClientID%>").click();
+        }
+
+        function disassociaArticolo() {
+            $("#<%=tbMod_IdElemento.ClientID%>").val('');
+
+            $("#<%=btnAssociaArticoloServer.ClientID%>").click();
         }
     </script>
 
@@ -389,13 +411,17 @@
     <asp:Button runat="server" ID="btnInsProtocollo" Style="display: none" OnClick="btnInsProtocollo_Click" />
     <asp:Button runat="server" ID="btnCercaCliente" Style="display: none" OnClick="btnCercaCliente_Click" />
     <asp:Button runat="server" ID="btnCercaLavorazione" Style="display: none" OnClick="btnCercaLavorazione_Click" />
+    <%--<asp:Button runat="server" ID="btnSelezionaElementi" Style="display: none" OnClick="btnSelezionaElementi_Click" />--%>
 
     <asp:Button runat="server" ID="btnChiudiPopupServer" Style="display: none" OnClick="btnChiudiPopup_Click" />
     <asp:Button runat="server" ID="btnChiudiPopupClientiServer" Style="display: none" OnClick="btnChiudiPopupClientiServer_Click" />
     <asp:Button runat="server" ID="btnChiudiPopupLavorazioniServer" Style="display: none" OnClick="btnChiudiPopupLavorazioniServer_Click" />
+    <asp:Button runat="server" ID="btnChiudiPopupAssociaArticoloServer" Style="display: none" OnClick="btnChiudiPopupAssociaArticoloServer_Click" />
 
 
     <asp:Button runat="server" ID="btnAssociaClienteServer" Style="display: none" OnClick="btnAssociaClienteServer_Click" />
+    <asp:Button runat="server" ID="btnAssociaArticoloServer" Style="display: none" OnClick="btnAssociaArticoloServer_Click" />
+    
 
     <asp:HiddenField ID="hf_idProt" runat="server" EnableViewState="true" />
     <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
@@ -475,7 +501,7 @@
                                     </div>
                                 </div>
                                 <div class="w3-row-padding">
-                                    <div class="w3-quarter">
+                                    <div class="w3-col" style="width:25%">
                                         <label>Cliente/Fornitore</label>
                                         <div class="w3-row">
                                             <div class="w3-threequarter">
@@ -487,7 +513,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="w3-quarter">
+
+
+                                    <div class="w3-col" style="width:25%">
+                                        <label>Associazione Fattura</label>
+                                        <div class="w3-row">
+                                            <div class="w3-col" style="width:70%">
+                                                <asp:TextBox ID="tbAssociaArticolo" runat="server" CssClass="w3-input w3-border" Text=""></asp:TextBox>
+                                                <asp:HiddenField runat="server" ID="tbMod_IdElemento" />
+                                            </div>
+                                           <div class="w3-col" style="width:12%">
+                                                <asp:ImageButton ID="imgbtnSelectArticolo" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round " Height="40px" Width="40px" ToolTip="Associa al documento corrente" OnClick="btnSelezionaArticolo_Click" />
+                                            </div>
+                                            <div class="w3-col" style="width:18%">
+                                                <asp:ImageButton ID="btnCancellaIdArticolo" ImageUrl="~/Images/delete.png" runat="server" class="w3-input w3-round " Height="40px" Width="40px"  ToolTip="Disassocia dal documento corrente" OnClientClick="disassociaArticolo()" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="w3-col" style="width:20%">
                                         <label>Destinatario</label>
                                         <asp:DropDownList ID="cmbMod_Destinatario" runat="server" AutoPostBack="True" Width="100%" CssClass="w3-input w3-border" OnSelectedIndexChanged="cmbMod_Destinatario_SelectedIndexChanged">
                                             <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
@@ -495,11 +539,12 @@
                                         </asp:DropDownList>
                                         <asp:CheckBox ID="cbMod_Pregresso" runat="server" Visible="false" Checked="false" />
                                     </div>
-                                    <div class="w3-quarter">
-                                        <label>Data Prot</label>
+                                    
+                                    <div class="w3-col" style="width:15%">
+                                        <label>Data Protocollo</label>
                                         <asp:TextBox ID="tbMod_DataProtocollo" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
-                                    <div class="w3-quarter">
+                                    <div class="w3-col" style="width:15%">
                                         <label>Data Fattura</label>
                                         <asp:TextBox ID="tbMod_DataFattura" runat="server" MaxLength="10" CssClass="w3-input w3-border calendar" placeholder="GG/MM/AAAA" Text=""></asp:TextBox>
                                     </div>
@@ -535,6 +580,10 @@
                                     </div>
 
                                 </div>
+
+
+
+
                                 <br />
                                 <asp:Label ID="lblStatus" runat="server" Style="font-family: Arial; font-size: small;"></asp:Label>
                                 <br />
@@ -542,7 +591,11 @@
                                     <asp:Button ID="btnGestisciProtocollo" runat="server" Text="Gestisci Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnGestisciProtocollo_Click" />
                                     <asp:Button ID="btnInserisciProtocollo" runat="server" Text="Inserisci Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnInserisciProtocollo_Click" OnClientClick="return confirm('Confermi inserimento Protocollo?')" />
                                     <asp:Button ID="btnModificaProtocollo" runat="server" Text="Modifica Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnModificaProtocollo_Click" OnClientClick="return confirm('Confermi modifica Protocollo?')" Visible="false" />
+                                    
                                     <asp:Button ID="btnEliminaProtocollo" runat="server" Text="Elimina Protocollo" class="w3-panel w3-green w3-border w3-round" OnClick="btnEliminaProtocollo_Click" OnClientClick="return confirm('Confermi eliminazione Protocollo?')" Visible="false" />
+
+                            
+
                                     <asp:Button ID="btnAnnullaProtocollo" runat="server" Text="Annulla" class="w3-panel w3-green w3-border w3-round" OnClick="btnAnnullaProtocollo_Click" />
                                 </div>
                                 <p>
@@ -689,6 +742,57 @@
                             </Columns>
                         </asp:GridView>
                     </div>
+                    <br />
+                </asp:Panel>
+            </asp:Panel>
+<!-- FINE POPUP RICERCA CLIENTI -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- POPUP SELEZIONA ELEMENTO DA ASSOCIARE -->
+            <asp:Panel runat="server" ID="PanelAssociaArticolo" Visible="false">
+                <div class="modalBackground"></div>
+                <asp:Panel runat="server" ID="Panel2" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                    <br />
+                    <div class="w3-container w3-padding w3-margin">
+
+<!-- RICERCA CLIENTI -->
+                        <div class="w3-bar w3-orange w3-round">
+                            <div class="w3-bar-item w3-button w3-orange">Selezionare l'articolo a cui si riferisce il documento
+                            </div>
+                            <div class="w3-bar-item w3-button w3-orange w3-right">
+                                <div id="btnChiudiPopupClienti" class="w3-button w3-orange w3-small w3-round" onclick="chiudiPopupAssociaArticolo();">Chiudi</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="round w3-padding w3-margin">
+                        <asp:GridView ID="gvElementi" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvElementi_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvElementi_PageIndexChanging" PageSize="20" >
+                            <Columns>
+                                <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="imgSelectElemento" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Articolo" ImageAlign="AbsMiddle" Height="30px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+
+                        <asp:Label ID="lbl_nessunArticolo" runat="server" Text="Nella lavorazione non sono presenti articoli associati al cliente/fornitore" Visible="false" />
+                    </div>
+
+                    
+
                     <br />
                 </asp:Panel>
             </asp:Panel>

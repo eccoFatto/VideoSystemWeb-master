@@ -30,11 +30,11 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        public List<DatiReport> GetListaDatiReportConsulenteLavoro(DateTime dataInizio, DateTime dataFine, string nominativo, ref Esito esito)
+        public List<DatiReport> GetListaDatiReportConsulenteLavoro(DateTime dataInizio, DateTime dataFine, string nominativo, string isAssunto, ref Esito esito)
         {
             List<DatiReport> listaReportConsulenteLavoro = new List<DatiReport>();
 
-            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(dataInizio, dataFine, nominativo, ref esito);
+            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(dataInizio, dataFine, nominativo,  isAssunto, ref esito);
             foreach(DataRow riga in dtReportConsulenteLavoro.Rows)
             {
                 DatiReport datiReport = new DatiReport();
@@ -79,11 +79,11 @@ namespace VideoSystemWeb.BLL
             return listaReportConsulenteLavoro;
         }
 
-        public List<DatiReportRaw> GetListaDatiReportRawConsulenteLavoro(DateTime dataInizio, DateTime dataFine, string nominativo, ref Esito esito)
+        public List<DatiReportRaw> GetListaDatiReportRawConsulenteLavoro(DateTime dataInizio, DateTime dataFine, string nominativo, string isAssunto, ref Esito esito)
         {
             List<DatiReportRaw> listaReportConsulenteLavoro = new List<DatiReportRaw>();
 
-            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(dataInizio, dataFine, nominativo, ref esito);
+            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(dataInizio, dataFine, nominativo, isAssunto, ref esito);
             foreach (DataRow riga in dtReportConsulenteLavoro.Rows)
             {
                 DatiReportRaw datiReport = new DatiReportRaw();
@@ -94,18 +94,16 @@ namespace VideoSystemWeb.BLL
                 datiReport.IndirizzoCollaboratore = riga.Field<string>("Indirizzo");
                 datiReport.CittaCollaboratore = riga.Field<string>("Citta");
                 datiReport.TelefonoCollaboratore = riga.Field<string>("Telefono");
-                //datiReport.CellulareCollaboratore = riga.Field<string>("");
-                //datiReport.IscrizioneCollaboratore = riga.Field<string>("");
                 datiReport.CodFiscaleCollaboratore = riga.Field<string>("CodiceFiscale");
-
                 datiReport.DataLavorazione = riga.Field<DateTime>("Data");
                 datiReport.Lavorazione = riga.Field<string>("Lavorazione");
                 datiReport.Produzione = riga.Field<string>("Produzione");
                 datiReport.Cliente = riga.Field<string>("Cliente");
                 datiReport.Descrizione = riga.Field<string>("Descrizione");
                 datiReport.Assunzione = riga.Field<decimal>("Assunzione");
-                datiReport.Mista = (decimal)riga.Field<int>("Mista");
-                datiReport.Diaria = riga.Field<int>("Diaria");
+                datiReport.Mista = (decimal)riga.Field<decimal>("Mista");
+                datiReport.Diaria = riga["Diaria"] != DBNull.Value ? riga.Field<decimal>("Diaria") : 0m;
+
                 datiReport.Albergo = riga.Field<int>("Albergo");
                 datiReport.RimborsoKm = riga.Field<decimal>("RimborsoKm");
                 datiReport.TipoPagamento = riga.Field<int>("TipoPagamento");
@@ -236,6 +234,33 @@ namespace VideoSystemWeb.BLL
             }
 
             listaDatiReport = listaDatiReport_APPO;
+        }
+
+        public List<DatiReportSinteticaRaw> Converti(List<DatiReportRaw> lista, string dataInizio, string dataFine)
+        {
+            return lista
+                .GroupBy(x => x.IdCollaboratore)
+                .Select(g => new DatiReportSinteticaRaw
+                {
+                    IdCollaboratore = g.Key,
+                    NomeCollaboratore = g.First().NomeCollaboratore,
+                    IndirizzoCollaboratore = g.First().IndirizzoCollaboratore,
+                    CittaCollaboratore = g.First().CittaCollaboratore,
+                    TelefonoCollaboratore = g.First().TelefonoCollaboratore,
+                    CodFiscaleCollaboratore = g.First().CodFiscaleCollaboratore,
+                    //Lavorazione = g.First().Lavorazione,
+
+                    IntervalloDate = dataInizio + " - " + dataFine,
+                    //Assunzione = g.Sum(x => x.Assunzione + x.Mista),
+                    //RimborsoKm = g.Sum(x => x.RimborsoKm),
+
+                    Assunzione = g.Sum(x => x.Assunzione),
+                    RimborsoKm = g.Sum(x => x.RimborsoKm + x.Mista),
+
+                    Diaria = g.Sum(x => x.Diaria),
+                    Albergo = g.Sum(x => x.Albergo)
+                })
+                .ToList();
         }
     }
 }

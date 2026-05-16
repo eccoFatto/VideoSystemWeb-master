@@ -258,6 +258,15 @@ namespace VideoSystemWeb.Protocollo
         protected global::System.Web.UI.WebControls.Button btnChiudiPopupLavorazioniServer;
 
         /// <summary>
+        /// Controllo btnChiudiPopupAssociaArticoloServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnChiudiPopupAssociaArticoloServer;
+
+        /// <summary>
         /// Controllo btnAssociaClienteServer.
         /// </summary>
         /// <remarks>
@@ -265,6 +274,15 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAssociaClienteServer;
+
+        /// <summary>
+        /// Controllo btnAssociaArticoloServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAssociaArticoloServer;
 
         /// <summary>
         /// Controllo hf_idProt.
@@ -445,6 +463,42 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectCliente;
+
+        /// <summary>
+        /// Controllo tbAssociaArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbAssociaArticolo;
+
+        /// <summary>
+        /// Controllo tbMod_IdElemento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField tbMod_IdElemento;
+
+        /// <summary>
+        /// Controllo imgbtnSelectArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectArticolo;
+
+        /// <summary>
+        /// Controllo btnCancellaIdArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnCancellaIdArticolo;
 
         /// <summary>
         /// Controllo cmbMod_Destinatario.
@@ -760,5 +814,41 @@ namespace VideoSystemWeb.Protocollo
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvClienti;
+
+        /// <summary>
+        /// Controllo PanelAssociaArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelAssociaArticolo;
+
+        /// <summary>
+        /// Controllo Panel2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel2;
+
+        /// <summary>
+        /// Controllo gvElementi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvElementi;
+
+        /// <summary>
+        /// Controllo lbl_nessunArticolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_nessunArticolo;
     }
 }

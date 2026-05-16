@@ -29,9 +29,16 @@ namespace VideoSystemWeb.BLL
         }
         public int CreaCollaboratore(Anag_Collaboratori collaboratore, ref Esito esito)
         {
+            
             int iREt = Anag_Collaboratori_DAL.Instance.CreaCollaboratore(collaboratore, ref esito);
 
             return iREt;
+        }
+
+        public bool IsCFCollaboratoreEsistente(Anag_Collaboratori collaboratore, ref Esito esito)
+        {
+            Anag_Collaboratori collaboratoreEsistente = Anag_Collaboratori_DAL.Instance.GetCollaboratoreByCF(collaboratore.CodiceFiscale, ref esito);
+            return (esito.Codice == Esito.ESITO_OK && collaboratoreEsistente != null);
         }
 
         public Esito AggiornaCollaboratore(Anag_Collaboratori collaboratore)

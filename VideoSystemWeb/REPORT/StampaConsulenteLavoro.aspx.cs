@@ -1,20 +1,19 @@
-﻿using System;
+﻿using iText;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iTextSharp;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using VideoSystemWeb.Agenda.userControl;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.Entity;
-
-using iText;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using iTextSharp;
-
-using System.Configuration;
 namespace VideoSystemWeb.REPORT
 {
     public partial class StampaConsulenteLavoro : BasePage
@@ -28,11 +27,12 @@ namespace VideoSystemWeb.REPORT
         {
             if (!IsPostBack)
             {
-                btnStampa.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large w3-disabled";
+                //btnStampa.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large w3-disabled";
+                btnSwitchVisualizzazione.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large w3-disabled";
                 CaricaCombo();
             }
 
-            #region GRIGLIA CON RAGGRUPPAMENTO RIGHE
+            #region GRIGLIA CON RAGGRUPPAMENTO RIGHE 
             GridViewHelper helper = new GridViewHelper(this.gv_DatiStampa);
 
             string[] cols = new string[4];
@@ -40,6 +40,7 @@ namespace VideoSystemWeb.REPORT
             cols[1] = "CittaCollaboratore";
             cols[2] = "TelefonoCollaboratore";
             cols[3] = "CodFiscaleCollaboratore";
+            //cols[4] = "Lavorazione";
 
             helper.RegisterGroup("NomeCollaboratore", true, true);
             helper.RegisterGroup(cols, true, true);
@@ -63,6 +64,24 @@ namespace VideoSystemWeb.REPORT
             helper.ApplyGroupSort();
             #endregion
 
+            #region GRIGLIA CON RAGGRUPPAMENTO RIGHE SINTETICA
+            GridViewHelper helperSintetica = new GridViewHelper(this.gv_DatiStampaSintetica);
+
+            string[] colsSintetica = new string[4];
+            colsSintetica[0] = "IndirizzoCollaboratore";
+            colsSintetica[1] = "CittaCollaboratore";
+            colsSintetica[2] = "TelefonoCollaboratore";
+            colsSintetica[3] = "CodFiscaleCollaboratore";
+            //colsSintetica[4] = "Lavorazione";
+
+            helperSintetica.RegisterGroup("NomeCollaboratore", true, true);
+            helperSintetica.RegisterGroup(colsSintetica, true, true);
+            helperSintetica.GroupHeader += new GroupEvent(Helper_GroupHeader);
+            helperSintetica.GroupSummary += new GroupEvent(Helper_GroupSummary);
+
+            helper.ApplyGroupSort();
+            #endregion
+
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
@@ -80,31 +99,34 @@ namespace VideoSystemWeb.REPORT
             DateTime dataInizio = DateTime.Parse(txt_DataInizio.Text);
             DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
             string nominativo = txt_Nominativo.Text;
+            string isAssunto = ddl_Assunzione.SelectedValue;
 
-            
-
-            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawConsulenteLavoro(dataInizio, dataFine, nominativo, ref esito);
+            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawConsulenteLavoro(dataInizio, dataFine, nominativo, isAssunto, ref esito);
 
             gv_DatiStampa.DataSource = listaDatiReport;
             gv_DatiStampa.DataBind();
 
-            //gv_DatiStampaSintetica.DataSource = listaDatiReport;
-            //gv_DatiStampaSintetica.DataBind();
+            List<DatiReportSinteticaRaw> listaDatiReportSintetica = Report_BLL.Instance.Converti(listaDatiReport, dataInizio.ToShortDateString(), dataFine.ToShortDateString());
+
+            gv_DatiStampaSintetica.DataSource = listaDatiReportSintetica;
+            gv_DatiStampaSintetica.DataBind();
 
 
             if (listaDatiReport.Count > 0)
             {
-                btnStampa.CssClass = btnStampa.CssClass.Replace("w3-disabled", "");
+                //btnStampa.CssClass = btnStampa.CssClass.Replace("w3-disabled", "");
+                btnSwitchVisualizzazione.CssClass = btnSwitchVisualizzazione.CssClass.Replace("w3-disabled", "");
 
                 lbl_TotAssunzione.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x=>x.Assunzione).ToString()));
                 lbl_TotMista.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Mista).ToString()));
                 lbl_TotRimbKm.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.RimborsoKm).ToString()));
-                lbl_TotDiaria.Text = listaDatiReport.Sum(x => x.Diaria).ToString();
+                lbl_TotDiaria.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Diaria).ToString()));
                 lbl_TotAlbergo.Text = listaDatiReport.Sum(x => x.Albergo).ToString();
             }
             else
             {
-                btnStampa.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large w3-disabled";
+               // btnStampa.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large w3-disabled";
+                btnSwitchVisualizzazione.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large w3-disabled";
 
                 lbl_TotAssunzione.Text = "-";
                 lbl_TotMista.Text = "-";
@@ -112,26 +134,6 @@ namespace VideoSystemWeb.REPORT
                 lbl_TotDiaria.Text = "-";
                 lbl_TotAlbergo.Text = "-";
             }
-
-            #region VECCHIA GESTIONE
-            //List<DatiFiscaliLavorazione> listaDatiFiscaliLavorazione = new List<DatiFiscaliLavorazione>();
-            //foreach (DatiReport datiReport in listaDatiReport)
-            //{
-            //    listaDatiFiscaliLavorazione.AddRange(datiReport.ListaDatiFiscali);
-            //}
-
-            //gv_DatiStampa.DataSource = listaDatiFiscaliLavorazione;
-            //gv_DatiStampa.DataBind();
-
-            //if (listaDatiFiscaliLavorazione.Count > 0)
-            //{
-            //    btnStampa.CssClass = btnStampa.CssClass.Replace("w3-disabled", "");
-            //}
-            //else
-            //{
-            //    btnStampa.CssClass = "w3-btn w3-white w3-border w3-border-blue w3-round-large w3-disabled";
-            //}
-            #endregion
         }
 
         protected void gv_DatiStampa_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -140,11 +142,11 @@ namespace VideoSystemWeb.REPORT
             btnRicerca_Click(null, null);
         }
 
-        //protected void gv_DatiStampaSintetica_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        //{
-        //    gv_DatiStampaSintetica.PageIndex = e.NewPageIndex;
-        //    btnRicerca_Click(null, null);
-        //}
+        protected void gv_DatiStampaSintetica_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gv_DatiStampaSintetica.PageIndex = e.NewPageIndex;
+            btnRicerca_Click(null, null);
+        }
 
         protected void gv_DatiStampa_OnSorting(object sender, EventArgs e)
         {
@@ -162,12 +164,21 @@ namespace VideoSystemWeb.REPORT
             {
                 row.BackColor = Color.FromArgb(0, 64, 128);
                 row.ForeColor = Color.White;
+
+                row.Cells[0].Text = "&nbsp;&nbsp;<b>" + row.Cells[0].Text + "</b>";
             }
             else
             {
                 row.BackColor = Color.LightGray;
+
+                string titolo = row.Cells[0].Text;
+                string[] titoloSplit = titolo.Split('*');
+
+                //string lavorazione = titoloSplit.Length == 5 ? "&nbsp;-&nbsp;Lavorazione:&nbsp;" + titoloSplit[4] : "";
+                //row.Cells[0].Text = "&nbsp;&nbsp;<b>Indirizzo:&nbsp;" + titoloSplit[0] + "&nbsp;-&nbsp;Città:&nbsp;" + titoloSplit[1] + "&nbsp;-&nbsp;Telefono:&nbsp;" + titoloSplit[2] + "&nbsp;-&nbsp;Codice Fiscale:&nbsp;" + titoloSplit[3]  + lavorazione + "</b>";
+
+                row.Cells[0].Text = "&nbsp;&nbsp;<b>Indirizzo:&nbsp;" + titoloSplit[0] + "&nbsp;-&nbsp;Città:&nbsp;" + titoloSplit[1] + "&nbsp;-&nbsp;Telefono:&nbsp;" + titoloSplit[2] + "&nbsp;-&nbsp;Codice Fiscale:&nbsp;" + titoloSplit[3] + "</b>";
             }
-            row.Cells[0].Text = "&nbsp;&nbsp;<b>" + row.Cells[0].Text + "</b>";
         }
 
         private void Helper_GroupSummary(string groupName, object[] values, GridViewRow row)
@@ -181,17 +192,6 @@ namespace VideoSystemWeb.REPORT
             row.Cells[5].Text = "<b><i>" + row.Cells[5].Text + "</i></b>";
         }
 
-        //private void Helper_GeneralSummary(GridViewRow row)
-        //{
-        //    row.BackColor = Color.Gray;
-        //    row.Cells[0].HorizontalAlign = HorizontalAlign.Right;
-        //    row.Cells[0].Text = "<b>Totale</b>";
-        //    row.Cells[1].Text = "<b>" + row.Cells[1].Text + "</b>";
-        //    row.Cells[2].Text = "<b>" + row.Cells[2].Text + "</b>";
-        //    row.Cells[3].Text = "<b>" + row.Cells[3].Text + "</b>";
-        //    row.Cells[4].Text = "<b>" + row.Cells[4].Text + "</b>";
-        //}
-
         protected void btnStampa_Click(object sender, EventArgs e)
         {
             try
@@ -200,8 +200,9 @@ namespace VideoSystemWeb.REPORT
                 DateTime dataInizio = DateTime.Parse(txt_DataInizio.Text);
                 DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
                 string nominativo = txt_Nominativo.Text;
+                string isAssunto = ddl_Assunzione.SelectedValue;
 
-                List<DatiReport> listaDatiReport = Report_BLL.Instance.GetListaDatiReportConsulenteLavoro(dataInizio, dataFine, nominativo, ref esito);
+                List <DatiReport> listaDatiReport = Report_BLL.Instance.GetListaDatiReportConsulenteLavoro(dataInizio, dataFine, nominativo, isAssunto, ref esito);
                 if (esito.Codice==0 && listaDatiReport!=null && listaDatiReport.Count > 0)
                 {
                     // LEGGO I PARAMETRI DI VS

@@ -257,6 +257,9 @@ namespace VideoSystemWeb.DAL
 
                                     if (!DBNull.Value.Equals(dt.Rows[0]["data_fattura"])) protocollo.Data_fattura = dt.Rows[0].Field<DateTime>("data_fattura");
 
+                                    if (!DBNull.Value.Equals(dt.Rows[0]["id_dati_articoli_lavorazione"])) protocollo.Id_dati_articoli_lavorazione = dt.Rows[0].Field<int>("id_dati_articoli_lavorazione");
+
+
                                 }
                             }
                         }
@@ -435,6 +438,10 @@ namespace VideoSystemWeb.DAL
                             data_fattura.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(data_fattura);
 
+                            SqlParameter parId_dati_articoli_lavorazione = new SqlParameter("@id_dati_articoli_lavorazione", protocollo.Id_dati_articoli_lavorazione);
+                            pregresso.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(parId_dati_articoli_lavorazione);
+
                             StoreProc.Connection.Open();
 
                             StoreProc.ExecuteNonQuery();
@@ -556,7 +563,11 @@ namespace VideoSystemWeb.DAL
                             SqlParameter parId = new SqlParameter("@idAgenda", idAgenda);
                             pregresso.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(parId);
-                            
+
+                            SqlParameter parId_dati_articoli_lavorazione = new SqlParameter("@id_dati_articoli_lavorazione", protocollo.Id_dati_articoli_lavorazione);
+                            pregresso.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(parId_dati_articoli_lavorazione);
+
 
                             StoreProc.Connection.Open();
 

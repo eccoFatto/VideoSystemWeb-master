@@ -664,6 +664,7 @@ namespace VideoSystemWeb.DAL
                                     scadenza.IdTipoProtocollo = dt.Rows[0].Field<int>("id_tipo_protocollo");
 
                                     scadenza.NumeroProtocollo = dt.Rows[0].Field<string>("numero_protocollo");
+                                    scadenza.CodiceLavorazione = dt.Rows[0].Field<string>("codice_lavoro");
 
                                     scadenza.Cassa = 0;
                                 }
@@ -694,6 +695,7 @@ namespace VideoSystemWeb.DAL
                                                            string filtroTipoGeneri,
                                                            string filtroTipoGruppo,
                                                            string filtroTipoSottogruppo,
+                                                           string codiceLavorazione,
                                                            ref Esito esito)
         {
             List<DatiScadenzario> listaDatiScadenzario = new List<DatiScadenzario>();
@@ -701,21 +703,22 @@ namespace VideoSystemWeb.DAL
             {
                 string filtriRicerca = string.Empty;
 
-                if (tipoAnagrafica == "BustaPaga") // BUSTA PAGA
+                switch (tipoAnagrafica)
                 {
-                    int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
-                    filtriRicerca += " and b.id_tipo_protocollo = '" + idTipoProtocollo + "' ";
+                    case "BustaPaga": // BUSTA PAGA
+                        int idTipoProtocollo = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
+                        filtriRicerca += " and b.id_tipo_protocollo = '" + idTipoProtocollo + "' ";
+                        break;
+                    case "": // TUTTI
+                        filtriRicerca += string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
+                        break;
+                    default: //CLIENTE E FORNITORE
+                        int idTipoProtocolloBustaPaga = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
+                        filtriRicerca += string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
+                        filtriRicerca += " and b.id_tipo_protocollo <> '" + idTipoProtocolloBustaPaga + "' ";
+                        break;
                 }
-                else if (tipoAnagrafica == "") // TUTTI
-                {
-                    filtriRicerca += string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
-                }
-                else //CLIENTE E FORNITORE
-                {
-                    int idTipoProtocolloBustaPaga = UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PROTOCOLLO), "Busta Paga", ref esito).id;
-                    filtriRicerca += string.IsNullOrWhiteSpace(tipoAnagrafica) ? "" : " and b.destinatario = '" + tipoAnagrafica + "'";
-                    filtriRicerca += " and b.id_tipo_protocollo <> '" + idTipoProtocolloBustaPaga + "' ";
-                }
+      
 
                 filtriRicerca += string.IsNullOrWhiteSpace(ragioneSociale) ? "" : " and b.cliente like '%" + ragioneSociale.Trim() + "%'";
                 filtriRicerca += string.IsNullOrWhiteSpace(numeroFattura) ? "" : " and b.protocollo_riferimento like '%" + numeroFattura + "%'";
@@ -773,6 +776,10 @@ namespace VideoSystemWeb.DAL
 
                 #endregion
 
+                #region FILTRO PER CODICE LAVORAZIONE
+                filtriRicerca += string.IsNullOrWhiteSpace(codiceLavorazione) ? "" : " and b.codice_lavoro like '%" + codiceLavorazione + "%'";
+                #endregion
+
                 using (SqlConnection con = new SqlConnection(sqlConstr))
                 {
                     string query = "SELECT distinct a.*, b.* FROM dati_scadenzario a " +
@@ -825,6 +832,7 @@ namespace VideoSystemWeb.DAL
                                             IdTipoProtocollo = riga.Field<int>("id_tipo_protocollo"),
 
                                             NumeroProtocollo = riga.Field<string>("numero_protocollo"),
+                                            CodiceLavorazione = riga.Field<string>("codice_lavoro"),
 
                                             Cassa = 0
                                         };
@@ -935,6 +943,8 @@ namespace VideoSystemWeb.DAL
 
                                             NumeroProtocollo = riga.Field<string>("numero_protocollo"),
 
+                                            CodiceLavorazione = riga.Field<string>("codice_lavoro"),
+
                                             //ImportoTotale = 0,
                                             Cassa = 0
                                         };
@@ -1001,6 +1011,8 @@ namespace VideoSystemWeb.DAL
 
                                             Destinatario = riga.Field<string>("destinatario"),
                                             IdTipoProtocollo = riga.Field<int>("id_tipo_protocollo"),
+
+                                            CodiceLavorazione = riga.Field<string>("codice_lavoro"),
 
                                             Cassa = 0
                                         };

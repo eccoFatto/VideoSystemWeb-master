@@ -142,6 +142,9 @@ namespace VideoSystemWeb.Protocollo
                     fuFileProt.Visible = false;
                     lblStatus.Visible = fuFileProt.Visible;
 
+                    imgbtnSelectArticolo.Attributes.Add("disabled", "");
+                    btnCancellaIdArticolo.Attributes.Add("disabled", "");
+
                     break;
                 case "INSERIMENTO":
                     btnInserisciProtocollo.Visible = true;
@@ -157,6 +160,9 @@ namespace VideoSystemWeb.Protocollo
                     chkBloccaFattura.Visible = (statoLavorazione == Stato.Instance.STATO_FATTURA || statoLavorazione == Stato.Instance.STATO_SDI);
                     fuFileProt.Visible = true;
                     lblStatus.Visible = fuFileProt.Visible;
+
+                    imgbtnSelectArticolo.Attributes.Remove("disabled");
+                    btnCancellaIdArticolo.Attributes.Remove("disabled");
                     break;
                 case "MODIFICA":
                     btnInserisciProtocollo.Visible = false;
@@ -173,6 +179,8 @@ namespace VideoSystemWeb.Protocollo
                     fuFileProt.Visible = true;
                     lblStatus.Visible = fuFileProt.Visible;
 
+                    imgbtnSelectArticolo.Attributes.Remove("disabled");
+                    btnCancellaIdArticolo.Attributes.Remove("disabled");
                     break;
                 case "ANNULLAMENTO":
                     btnInserisciProtocollo.Visible = false;
@@ -189,6 +197,9 @@ namespace VideoSystemWeb.Protocollo
                     fuFileProt.Visible = false;
                     lblStatus.Visible = fuFileProt.Visible;
 
+                    imgbtnSelectArticolo.Attributes.Add("disabled", "");
+                    btnCancellaIdArticolo.Attributes.Add("disabled", "");
+
                     break;
                 default:
                     btnInserisciProtocollo.Visible = false;
@@ -204,6 +215,9 @@ namespace VideoSystemWeb.Protocollo
                     chkBloccaFattura.Visible = false;
                     fuFileProt.Visible = false;
                     lblStatus.Visible = fuFileProt.Visible;
+
+                    imgbtnSelectArticolo.Attributes.Add("disabled", "");
+                    btnCancellaIdArticolo.Attributes.Add("disabled", "");
                     break;
             }
         }
@@ -430,6 +444,13 @@ namespace VideoSystemWeb.Protocollo
             gv_protocolli.PageIndex = e.NewPageIndex;
             btnRicercaProtocollo_Click(null, null);
         }
+        
+        protected void gvElementi_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvElementi.PageIndex = e.NewPageIndex;
+            btnSelezionaArticolo_Click(null, null);
+        }
+
 
         private void pulisciCampiDettaglio()
         {
@@ -441,6 +462,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Produzione.Text = "";
             tbMod_Cliente.Text = "";
             tbMod_NomeFile.Text = "";
+            tbAssociaArticolo.Text = "";
             tbMod_Lavorazione.Text = "";
             tbMod_Descrizione.Text = "";
             cmbMod_Tipologia.SelectedIndex = 0;
@@ -462,6 +484,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Lavorazione.ReadOnly = attivaModifica;
             tbMod_Descrizione.ReadOnly = attivaModifica;
             tbMod_NomeFile.ReadOnly = true;
+            tbAssociaArticolo.ReadOnly = true; 
 
             tbMod_CodiceLavoro.Enabled = !attivaModifica;
             tbMod_NumeroProtocollo.Enabled = false;
@@ -474,6 +497,7 @@ namespace VideoSystemWeb.Protocollo
             tbMod_Lavorazione.Enabled = !attivaModifica;
             tbMod_Descrizione.Enabled = !attivaModifica;
             tbMod_NomeFile.Enabled = false;
+            tbAssociaArticolo.Enabled = false;
 
             if (attivaModifica)
             {
@@ -530,19 +554,19 @@ namespace VideoSystemWeb.Protocollo
                     }
                     tbMod_Produzione.Text = protocollo.Produzione;
                     tbMod_ProtocolloRiferimento.Text = protocollo.Protocollo_riferimento;
+                    
                     tbMod_Cliente.Text = protocollo.Cliente;
+                    tbMod_IdCliente.Value = protocollo.Id_cliente != null ? protocollo.Id_cliente.ToString() : "";
 
-                    if (protocollo.Id_cliente != null) { 
-                        tbMod_IdCliente.Value = protocollo.Id_cliente.ToString();
-                    }
-                    else
-                    {
-                        tbMod_IdCliente.Value = "";
-                    }
+
                     tbMod_NomeFile.Text = protocollo.PathDocumento;
                     Session["NOME_FILE"] = protocollo.PathDocumento;
                     tbMod_Lavorazione.Text = (string.IsNullOrEmpty(protocollo.Lavorazione) && protocollo.Codice_lavoro.ToUpper() == "GENERICO") ? protocollo.Codice_lavoro : protocollo.Lavorazione;
                     tbMod_Descrizione.Text = protocollo.Descrizione;
+
+
+                    tbAssociaArticolo.Text = protocollo.Id_dati_articoli_lavorazione.ToString() == "0" ? "" : protocollo.Id_dati_articoli_lavorazione.ToString();
+                    tbMod_IdElemento.Value = protocollo.Id_dati_articoli_lavorazione != null ? protocollo.Id_dati_articoli_lavorazione.ToString() : "";
 
                     int statoLavorazione = Agenda_BLL.Instance.GetDatiAgendaByCodiceLavoro(protocollo.Codice_lavoro, ref esito, false).id_stato;
                     if (esito.Codice == 0)
@@ -652,7 +676,7 @@ namespace VideoSystemWeb.Protocollo
             protocollo.PathDocumento = (string)Session["NOME_FILE"];
             protocollo.Protocollo_riferimento = BasePage.ValidaCampo(tbMod_ProtocolloRiferimento, "", false, ref esito);
             protocollo.Cliente = BasePage.ValidaCampo(tbMod_Cliente, "", true, ref esito);
-            
+
             protocollo.Id_cliente = string.IsNullOrEmpty(tbMod_IdCliente.Value) ? (int?)null : Convert.ToInt32(tbMod_IdCliente.Value);
 
             protocollo.Produzione = BasePage.ValidaCampo(tbMod_Produzione, "", false, ref esito);
@@ -662,6 +686,9 @@ namespace VideoSystemWeb.Protocollo
             protocollo.Descrizione = BasePage.ValidaCampo(tbMod_Descrizione, "", true, ref esito);
             protocollo.Data_fattura = string.IsNullOrEmpty(tbMod_DataFattura.Text) ? (DateTime?)null : DateTime.Parse(tbMod_DataFattura.Text);
             protocollo.Attivo = true;
+
+            int id_dati_articoli_lavorazione;
+            protocollo.Id_dati_articoli_lavorazione = int.TryParse(tbAssociaArticolo.Text, out id_dati_articoli_lavorazione) ? id_dati_articoli_lavorazione : 0;
 
             return protocollo;
         }
@@ -784,6 +811,11 @@ namespace VideoSystemWeb.Protocollo
             PanelClienti.Visible = false;
         }
 
+        protected void btnChiudiPopupAssociaArticoloServer_Click(object sender, EventArgs e)
+        {
+            PanelAssociaArticolo.Visible = false;
+        }
+
         protected void imgbtnSelectCodLav_Click(object sender, ImageClickEventArgs e)
         {
 
@@ -797,6 +829,35 @@ namespace VideoSystemWeb.Protocollo
         protected void btnCercaLavorazione_Click(object sender, EventArgs e)
         {
             PanelLavorazioni.Visible = true;
+        }
+
+        protected void btnSelezionaArticolo_Click(object sender, EventArgs e)
+        {
+            string codiceLavoro = tbMod_CodiceLavoro.Text.Trim();
+            string cliente = tbMod_Cliente.Text.Trim();
+            int? id_cliente = string.IsNullOrEmpty(tbMod_IdCliente.Value) ? (int?)null : Convert.ToInt32(tbMod_IdCliente.Value);
+            string destinatario = cmbMod_Destinatario.SelectedValue;
+
+
+            if (codiceLavoro != string.Empty && codiceLavoro != "generico" && cliente != string.Empty)
+            {
+                string queryRicerca = "SELECT id as ID, descrizione as Descrizione, data as Data, fp_netto as Netto,fp_lordo as Lordo FROM dati_articoli_lavorazione where idDatiLavorazione in (SELECT id FROM dati_lavorazione where iddatiagenda in ( SELECT id FROM tab_dati_agenda where codice_lavoro = '" + codiceLavoro + "' and idFornitori = " + id_cliente + ")) and id not in (select id_dati_articoli_lavorazione from dati_protocollo where id_dati_articoli_lavorazione is not NULL)";
+
+                Esito esito = new Esito();
+                DataTable dtClienti = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
+
+
+                lbl_nessunArticolo.Visible = dtClienti.Rows.Count == 0;
+
+                gvElementi.DataSource = dtClienti;
+                gvElementi.DataBind();
+
+                PanelAssociaArticolo.Visible = true;
+            }
+            else
+            {
+                ShowWarning("Valorizzare il codice lavorazione e il cliente/fornitore");
+            }
         }
 
         protected void btnRicercaLavorazioni_Click(object sender, EventArgs e)
@@ -916,11 +977,24 @@ namespace VideoSystemWeb.Protocollo
             }
         }
 
+        protected void gvElementi_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // PRENDO ID E CLIENTE/FORNITORE E LI PASSO ALLA FUNZIONE
+                string idElementoSelezionato = e.Row.Cells[1].Text;
+                
+                ImageButton myButtonEdit = e.Row.FindControl("imgSelectElemento") as ImageButton;
+                myButtonEdit.Attributes.Add("onclick", "associaArticolo('" + idElementoSelezionato.Replace("&nbsp;", "") + "');");
+            }
+        }
+
         protected void gvClienti_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             gvClienti.PageIndex = e.NewPageIndex;
             btnRicercaClienti_Click(null, null);
         }
+
 
         protected void imgbtnSelectCliente_Click(object sender, ImageClickEventArgs e)
         {
@@ -971,6 +1045,14 @@ namespace VideoSystemWeb.Protocollo
                         break;
                 }
             }
+        }
+
+        
+        protected void btnAssociaArticoloServer_Click(object sender, EventArgs e)
+        {
+            tbAssociaArticolo.Text = tbMod_IdElemento.Value;
+            tbMod_IdElemento.Value = null;
+            PanelAssociaArticolo.Visible = false;
         }
 
         protected void gv_protocolli_Sorting(object sender, GridViewSortEventArgs e)

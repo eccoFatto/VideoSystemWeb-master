@@ -38,6 +38,7 @@ namespace VideoSystemWeb.Entity
         private string destinatario;
 
         private DateTime? data_fattura;
+        private int id_dati_articoli_lavorazione;
 
         public Int64 Id { get => id; set => id = value; }
         public string Codice_lavoro { get => codice_lavoro; set => codice_lavoro = value; }
@@ -57,5 +58,6 @@ namespace VideoSystemWeb.Entity
         public string Destinatario { get => destinatario; set => destinatario = value; }
 
         public DateTime? Data_fattura { get => data_fattura; set => data_fattura = value; }
+        public int Id_dati_articoli_lavorazione { get => id_dati_articoli_lavorazione; set => id_dati_articoli_lavorazione = value; }
     }
 }

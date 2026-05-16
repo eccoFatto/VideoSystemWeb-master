@@ -88,6 +88,66 @@ namespace VideoSystemWeb.DAL
             return collaboratore;
         }
 
+        public Anag_Collaboratori GetCollaboratoreByCF(string cfCollaboratore, ref Esito esito)
+        {
+            Anag_Collaboratori collaboratore = new Anag_Collaboratori();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                {
+                    string query = "SELECT * FROM anag_collaboratori where codiceFiscale = '" + cfCollaboratore.Trim() + "'";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        using (SqlDataAdapter sda = new SqlDataAdapter())
+                        {
+                            cmd.Connection = con;
+                            sda.SelectCommand = cmd;
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
+                                {
+                                    collaboratore.Id = dt.Rows[0].Field<int>("id");
+                                    collaboratore.Cognome = dt.Rows[0].Field<string>("cognome");
+                                    collaboratore.Nome = dt.Rows[0].Field<string>("nome");
+                                    collaboratore.CodiceFiscale = dt.Rows[0].Field<string>("codiceFiscale");
+                                    collaboratore.PathFoto = dt.Rows[0].Field<string>("pathFoto");
+                                    collaboratore.Nazione = dt.Rows[0].Field<string>("nazione");
+                                    collaboratore.ComuneNascita = dt.Rows[0].Field<string>("comuneNascita");
+                                    collaboratore.ProvinciaNascita = dt.Rows[0].Field<string>("provinciaNascita");
+                                    collaboratore.DataNascita = dt.Rows[0]["dataNascita"] != DBNull.Value ? dt.Rows[0].Field<DateTime>("dataNascita") : DateTime.MinValue;
+                                    collaboratore.ComuneRiferimento = dt.Rows[0].Field<string>("comuneRiferimento");
+                                    collaboratore.RegioneRiferimento = dt.Rows[0].Field<string>("regioneRiferimento");
+                                    collaboratore.PartitaIva = dt.Rows[0].Field<string>("partitaIva");
+                                    collaboratore.NomeSocieta = dt.Rows[0].Field<string>("nomeSocieta");
+                                    collaboratore.Iban = dt.Rows[0].Field<string>("iban");
+                                    collaboratore.Assunto = dt.Rows[0].Field<bool>("assunto");
+                                    collaboratore.Note = dt.Rows[0].Field<string>("note");
+                                    collaboratore.Attivo = dt.Rows[0].Field<bool>("attivo");
+                                    collaboratore.Qualifiche = Anag_Qualifiche_Collaboratori_DAL.Instance.getQualificheByIdCollaboratore(ref esito, collaboratore.Id);
+                                    collaboratore.Indirizzi = Anag_Indirizzi_Collaboratori_DAL.Instance.getIndirizziByIdCollaboratore(ref esito, collaboratore.Id);
+                                    collaboratore.Email = Anag_Email_Collaboratori_DAL.Instance.getEmailByIdCollaboratore(ref esito, collaboratore.Id);
+                                    collaboratore.Telefoni = Anag_Telefoni_Collaboratori_DAL.Instance.getTelefoniByIdCollaboratore(ref esito, collaboratore.Id);
+                                    collaboratore.Documenti = Anag_Documenti_Collaboratori_DAL.Instance.getDocumentiByIdCollaboratore(ref esito, collaboratore.Id);
+                                }
+                                else
+                                {
+                                    return null;
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+            return collaboratore;
+        }
+
         public List<Anag_Collaboratori> CaricaListaCollaboratori(ref Esito esito, bool soloAttivi = true)
         {
             List<Anag_Collaboratori> listaCollaboratori = new List<Anag_Collaboratori>();
@@ -187,7 +247,7 @@ namespace VideoSystemWeb.DAL
 
             //Esito esito = new Esito();
             Anag_Utenti utente = ((Anag_Utenti)HttpContext.Current.Session[SessionManager.UTENTE]);
-
+            
             try
             {
                 using (SqlConnection con = new SqlConnection(sqlConstr))
@@ -283,7 +343,6 @@ namespace VideoSystemWeb.DAL
                             // read output value from @NewId
                             int iReturn = Convert.ToInt32(StoreProc.Parameters["@id"].Value);
 
-
                             return iReturn;
                         }
                     }
@@ -294,6 +353,7 @@ namespace VideoSystemWeb.DAL
                 esito.Codice = Esito.ESITO_KO_ERRORE_SCRITTURA_TABELLA;
                 esito.Descrizione = "Anag_Collaboratori_DAL.cs - CreaCollaboratore " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
             }
+            
 
             return 0;
         }

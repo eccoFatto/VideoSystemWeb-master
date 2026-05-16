@@ -70,10 +70,10 @@ namespace VideoSystemWeb.BLL
             List<StatisticheCosti> listaStatisticheCosti = new List<StatisticheCosti>();
 
             string filtriLavorazione = string.Empty;
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente + "%' ";
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione + "%' ";
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroCodLavorazione) ? "" : " AND a.codice_lavoro = '" + filtroCodLavorazione + "' ";
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente.Trim() + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione.Trim() + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroCodLavorazione) ? "" : " AND a.codice_lavoro like '%" + filtroCodLavorazione.Trim() + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.lavorazione like '%" + filtroLavorazione.Trim() + "%' ";
             //filtriLavorazione += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
             filtriLavorazione += string.IsNullOrWhiteSpace(dataInizio) ? "" : " AND a.data_inizio_lavorazione >= '" + dataInizio.Substring(6) + "-" + dataInizio.Substring(3, 2) + "-" + dataInizio.Substring(0, 2) + "T00:00:00.000'";
             
@@ -85,7 +85,7 @@ namespace VideoSystemWeb.BLL
             filtriCosti += string.IsNullOrWhiteSpace(filtroGenere) ? "" : " AND d.idTipoGenere = '" + filtroGenere + "' ";
             filtriCosti += string.IsNullOrWhiteSpace(filtroGruppo) ? "" : " AND d.idTipoGruppo = '" + filtroGruppo + "' ";
             filtriCosti += string.IsNullOrWhiteSpace(filtroSottogruppo) ? "" : " AND d.idTipoSottogruppo = '" + filtroSottogruppo + "' ";
-            filtriCosti += string.IsNullOrWhiteSpace(filtroFornitore) ? "" : "AND (forn.ragioneSociale like '%" + filtroFornitore + "%' OR coll.cognome+' '+coll.nome like '%" + filtroFornitore + "%' OR coll.nomeSocieta like '%" + filtroFornitore + "%' ) ";
+            filtriCosti += string.IsNullOrWhiteSpace(filtroFornitore) ? "" : "AND (forn.ragioneSociale like '%" + filtroFornitore.Trim() + "%' OR coll.cognome+' '+coll.nome like '%" + filtroFornitore.Trim() + "%' OR coll.nomeSocieta like '%" + filtroFornitore + "%' ) ";
 
             if (string.IsNullOrEmpty(filtriCosti))
             {
@@ -119,10 +119,10 @@ namespace VideoSystemWeb.BLL
             List<StatisticheCosti> listaStatisticheCosti = new List<StatisticheCosti>();
 
             string filtriLavorazione = string.Empty;
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente + "%' ";
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione + "%' ";
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.codice_lavoro = '" + filtroLavorazione + "' ";
-            filtriLavorazione += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroCliente) ? "" : " AND b.ragioneSociale like '%" + filtroCliente.Trim() + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroProduzione) ? "" : " AND a.produzione like '%" + filtroProduzione.Trim() + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroLavorazione) ? "" : " AND a.codice_lavoro like '%" + filtroLavorazione.Trim() + "%' ";
+            filtriLavorazione += string.IsNullOrWhiteSpace(filtroContratto) ? "" : " AND f.descrizione like '%" + filtroContratto.Trim() + "%' ";
 
             if (fatturato != null)
             {
@@ -137,7 +137,7 @@ namespace VideoSystemWeb.BLL
             filtriCosti += string.IsNullOrWhiteSpace(filtroGenere) ? "" : " AND d.idTipoGenere = '" + filtroGenere + "' ";
             filtriCosti += string.IsNullOrWhiteSpace(filtroGruppo) ? "" : " AND d.idTipoGruppo = '" + filtroGruppo + "' ";
             filtriCosti += string.IsNullOrWhiteSpace(filtroSottogruppo) ? "" : " AND d.idTipoSottogruppo = '" + filtroSottogruppo + "' ";
-            filtriCosti += string.IsNullOrWhiteSpace(filtroFornitore) ? "" : "AND (forn.ragioneSociale like '%" + filtroFornitore + "%' OR coll.cognome+' '+coll.nome like '%" + filtroFornitore + "%' OR coll.nomeSocieta like '%" + filtroFornitore + "%' ) ";
+            filtriCosti += string.IsNullOrWhiteSpace(filtroFornitore) ? "" : "AND (forn.ragioneSociale like '%" + filtroFornitore.Trim() + "%' OR coll.cognome+' '+coll.nome like '%" + filtroFornitore.Trim() + "%' OR coll.nomeSocieta like '%" + filtroFornitore + "%' ) ";
 
             if (string.IsNullOrEmpty(filtriCosti))
             {

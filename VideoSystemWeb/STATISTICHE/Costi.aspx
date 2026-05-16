@@ -226,7 +226,7 @@
             <div class="w3-container w3-center">
                 <table class="w3-table w3-small" style="width:200px">
                     <tr>
-                        <th>Tot.Elementi</th>
+                        <th>Tot.Elementi costo</th>
                         <th><asp:TextBox runat="server" class="w3-input w3-border" ID="tbTotElementiGriglia" Text="" ReadOnly="true" Height="15px" /></th>
                     </tr>
                 </table>

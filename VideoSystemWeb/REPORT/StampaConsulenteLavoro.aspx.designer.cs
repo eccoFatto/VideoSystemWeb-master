@@ -33,6 +33,15 @@ namespace VideoSystemWeb.REPORT
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
 
         /// <summary>
+        /// Controllo txt_Nominativo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Nominativo;
+
+        /// <summary>
         /// Controllo ddl_Mese.
         /// </summary>
         /// <remarks>
@@ -69,31 +78,13 @@ namespace VideoSystemWeb.REPORT
         protected global::System.Web.UI.WebControls.TextBox txt_DataFine;
 
         /// <summary>
-        /// Controllo txt_Nominativo.
+        /// Controllo ddl_Assunzione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_Nominativo;
-
-        /// <summary>
-        /// Controllo chk_Determinato.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk_Determinato;
-
-        /// <summary>
-        /// Controllo chk_Indeterminato.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chk_Indeterminato;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Assunzione;
 
         /// <summary>
         /// Controllo lbl_TotAssunzione.
@@ -150,13 +141,13 @@ namespace VideoSystemWeb.REPORT
         protected global::System.Web.UI.WebControls.Button btnRicerca;
 
         /// <summary>
-        /// Controllo btnStampa.
+        /// Controllo btnSwitchVisualizzazione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnStampa;
+        protected global::System.Web.UI.WebControls.Button btnSwitchVisualizzazione;
 
         /// <summary>
         /// Controllo gv_DatiStampa.
@@ -166,5 +157,14 @@ namespace VideoSystemWeb.REPORT
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gv_DatiStampa;
+
+        /// <summary>
+        /// Controllo gv_DatiStampaSintetica.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gv_DatiStampaSintetica;
     }
 }

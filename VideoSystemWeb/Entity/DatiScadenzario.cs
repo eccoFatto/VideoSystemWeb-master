@@ -38,6 +38,8 @@ namespace VideoSystemWeb.Entity
 
         private string numeroProtocollo;
 
+        private string codiceLavorazione;
+
         public int Id { get => id; set => id = value; }
         public int IdDatiProtocollo { get => idDatiProtocollo; set => idDatiProtocollo = value; }
         public string Banca 
@@ -109,7 +111,7 @@ namespace VideoSystemWeb.Entity
         public DateTime? DataFattura { get => dataFattura; set => dataFattura = value; }
         public string Destinatario { get => destinatario; set => destinatario = value; }
         public int IdTipoProtocollo { get => idTipoProtocollo; set => idTipoProtocollo = value; }
-
         public string NumeroProtocollo { get => numeroProtocollo; set => numeroProtocollo = value; }
+        public string CodiceLavorazione { get => codiceLavorazione; set => codiceLavorazione = value; }
     }
 }

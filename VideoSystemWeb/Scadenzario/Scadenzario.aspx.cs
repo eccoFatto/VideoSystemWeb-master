@@ -183,7 +183,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
             //List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", ref esito);
 
-            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", "", "", "", ref esito);
+            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", "", "", "", "", ref esito);
 
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
@@ -430,6 +430,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                                         ddl_Generi.SelectedValue,
                                                                                                         ddl_Gruppo.SelectedValue,
                                                                                                         ddl_Sottogruppo.SelectedValue,
+                                                                                                        txt_CodLavorazione.Text,
                                                                                                         ref esito);
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;

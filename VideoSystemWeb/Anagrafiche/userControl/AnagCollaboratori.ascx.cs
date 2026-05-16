@@ -681,7 +681,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
             collaboratore.Id = Convert.ToInt16(ViewState["idColl"].ToString());
 
-
             //if (gvMod_Telefoni.Rows.Count == 0)
             //{
             //    esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
@@ -784,28 +783,39 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             {
                 NascondiErroriValidazione();
 
-                int iRet = Anag_Collaboratori_BLL.Instance.CreaCollaboratore(collaboratore, ref esito);
-                if (iRet > 0)
-                {
-                    // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO
-                    hf_idColl.Value = iRet.ToString();
-                    ViewState["idColl"] = hf_idColl.Value;
-                    hf_tipoOperazione.Value = "VISUALIZZAZIONE";
-                }
-
+                bool isCFCollaboratoreEsistente = Anag_Collaboratori_BLL.Instance.IsCFCollaboratoreEsistente(collaboratore, ref esito);
                 if (esito.Codice != Esito.ESITO_OK)
                 {
                     log.Error(esito.Descrizione);
                     basePage.ShowError(esito.Descrizione);
                 }
+                else if (isCFCollaboratoreEsistente)
+                {
+                    basePage.ShowWarning("Il CF del collaboratore è gia presente");
+                }
                 else
                 {
-                    SessionManager.ListaAnagraficheCollaboratori.Clear();
+                    int iRet = Anag_Collaboratori_BLL.Instance.CreaCollaboratore(collaboratore, ref esito);
+                    if (iRet > 0)
+                    {
+                        // UNA VOLTA INSERITO CORRETTAMENTE PUO' ESSERE MODIFICATO
+                        hf_idColl.Value = iRet.ToString();
+                        ViewState["idColl"] = hf_idColl.Value;
+                        hf_tipoOperazione.Value = "VISUALIZZAZIONE";
+                    }
 
-                    EditCollaboratore_Click(null, null);
+                    if (esito.Codice != Esito.ESITO_OK)
+                    {
+                        log.Error(esito.Descrizione);
+                        basePage.ShowError(esito.Descrizione);
+                    }
+                    else
+                    {
+                        SessionManager.ListaAnagraficheCollaboratori.Clear();
+                        EditCollaboratore_Click(null, null);
+                    }
                 }
             }
-
         }
 
         protected void btnEliminaQualifica_Click(object sender, EventArgs e)

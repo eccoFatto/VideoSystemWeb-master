@@ -76,13 +76,41 @@
                 $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
 
             }
+
+            
+
         });
+
+    //SWITCH VISUALIZZAZIONE GRIGLIA
+    function CambiaVisualizzazione() {
+        if ($("#grigliaSintetica").is(":visible")) {
+            $("#<%=btnSwitchVisualizzazione.ClientID%>").val("Visualizzazione Sintetica");
+
+            $("#grigliaSintetica").hide();
+            $("#grigliaDettagliata").show();
+        }
+        else {
+            $("#<%=btnSwitchVisualizzazione.ClientID%>").val("Visualizzazione Dettagliata");
+
+            $("#grigliaSintetica").show();
+            $("#grigliaDettagliata").hide();
+        }
+  
+    }
+
+    
     </script>
 
-    <label><asp:Label ID="lblStampaConsulente" runat="server" Text="STAMPA CONSULENTE DEL LAVORO" ForeColor="Teal"></asp:Label></label>
+    <label><asp:Label ID="lblStampaConsulente" runat="server" Text="STAMPA COLLABORATORI" ForeColor="Teal"></asp:Label></label>
     <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
         <ContentTemplate>
             <div class="w3-row-padding" style="position:relative;">
+
+                <div class="w3-col" style="width:19%">
+                    <label>Nominativo</label>
+                    <asp:TextBox ID="txt_Nominativo" runat="server" Width="100%"  class="w3-input w3-border" ></asp:TextBox>
+                </div>
+
                 <div class="w3-col" style="width:20%">
                     <div class="w3-twothird" style="padding-right:10px">
                         <label>Mese</label>
@@ -117,24 +145,20 @@
                     <asp:TextBox ID="txt_DataFine" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                 </div>
 
-                <div class="w3-col" style="width:19%">
-                    <label>Nominativo</label>
-                    <asp:TextBox ID="txt_Nominativo" runat="server" Width="100%"  class="w3-input w3-border" ></asp:TextBox>
-                </div>
-
                 <div class="w3-col" style="width:23%">
                     <label>Assunzione</label>
-                    <br />
-                    <div style="padding-top:7px; padding-left:5px;border: solid 1px #ccc">
-                        <asp:CheckBox ID="chk_Determinato" runat="server" Text="&nbsp;T. determinato" />&nbsp;&nbsp;
-                        <asp:CheckBox ID="chk_Indeterminato" runat="server" Text="&nbsp;T. indeterminato"/>
-                    </div>
+                    <asp:DropDownList ID="ddl_Assunzione" runat="server" class="w3-input w3-border">
+                        <asp:ListItem Value="" Text="<Tutti>"/>
+                        <asp:ListItem Value="0" Text="Tempo determinato"/>
+                        <asp:ListItem Value="1" Text="Tempo indeterminato"/>
+                    </asp:DropDownList>
+                        
                 </div>
             </div>
 
             <div class="w3-row-padding" style="position:relative;">
 
-                <div class="w3-col" style="margin-top:10px; width:60%">
+                <div class="w3-col" style="margin-top:10px; width:58%">
 
                     <div class="w3-row w3-padding round ">
                         <div class="w3-row">
@@ -145,7 +169,7 @@
                             <asp:Label ID="lbl_TotAssunzione" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
                        <div class="w3-col" style="padding-right:5px;width:19%">
-                            <label>Mista</label>
+                            <label>Assunzione Mista</label>
                             <asp:Label ID="lbl_TotMista" runat="server" Width="100%" Text="-" ></asp:Label>
                         </div>
                         <div class="w3-col" style="padding-right:5px;width:19%">
@@ -163,19 +187,22 @@
                     </div>
                 </div>
 
-                <div class="w3-col" style="margin-bottom:10px;width:20%">&nbsp;</div>
+                <div class="w3-col" style="margin-bottom:10px;width:19%">&nbsp;</div>
 
-                <div class="w3-col" style="width:20%">
-                    <div class="w3-half" style="padding-right:10px">
+                <div class="w3-col" style="width:23%">
+                    <div class="w3-quarter" style="padding-right:10px">
                         <asp:Button ID="btnRicerca" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" style="position:absolute;top:35px;" OnClick="btnRicerca_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
                     </div>
                     <div class="w3-half" style="padding-right:10px">
-                        <asp:Button ID="btnStampa" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="position:absolute;top:35px;right:100px" OnClientClick="$('.loader').show();" Text="Stampa" OnClick="btnStampa_Click" />
+                        <asp:Button ID="btnSwitchVisualizzazione" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="position:absolute;top:35px;right:15px" Text="Visualizzazione Sintetica" OnClientClick="CambiaVisualizzazione();return false;"  />
                     </div>
+                    <%--<div class="w3-quarter" style="padding-right:10px">
+                        <asp:Button ID="btnStampa" runat="server" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" style="position:absolute;top:35px;right:50px" OnClientClick="$('.loader').show();" Text="Stampa" OnClick="btnStampa_Click" />
+                    </div>--%>
                 </div>
             </div>
             <br /><br />
-            <div class="round">
+            <div id="grigliaDettagliata" class="round">
                 <asp:GridView ID="gv_DatiStampa" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" 
                     CssClass="grid" 
                     EmptyDataText="Nessun dato trovato" EmptyDataRowStyle-HorizontalAlign="Center" OnSorting="gv_DatiStampa_OnSorting">
@@ -186,23 +213,24 @@
                         <asp:BoundField DataField="CittaCollaboratore" HeaderText="CittaCollaboratore"  />
                         <asp:BoundField DataField="TelefonoCollaboratore" HeaderText="TelefonoCollaboratore"  />
                         <asp:BoundField DataField="CodFiscaleCollaboratore" HeaderText="CodFiscaleCollaboratore"  />
+                        
 
                         <asp:BoundField DataField="DataLavorazione" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="25%" />
+                        <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione"  HeaderStyle-Width="15%"/>
                         <asp:BoundField DataField="Produzione" HeaderText="Produzione"  HeaderStyle-Width="21%" />
                         <asp:BoundField DataField="Cliente" HeaderText="Cliente"  HeaderStyle-Width="20%" />
                         <asp:BoundField DataField="Descrizione" HeaderText="Descrizione"  HeaderStyle-Width="15%" />
                         <asp:BoundField DataField="Assunzione" HeaderText="Assunzione" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="Mista" HeaderText="Mista" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
+                        <asp:BoundField DataField="Mista" HeaderText="Assunzione Mista" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
                         <asp:BoundField DataField="RimborsoKm" HeaderText="Rimb. Km" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="Diaria" HeaderText="Diaria" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="Diaria" HeaderText="Diaria" DataFormatString="{0:N2}" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>
                         <asp:BoundField DataField="Albergo" HeaderText="Albergo" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>
                 
                     </Columns>
                 </asp:GridView>
             </div>
 
-            <%--<div class="round">
+            <div id="grigliaSintetica" class="round" style="display:none;">
                 <asp:GridView ID="gv_DatiStampaSintetica" runat="server" AutoGenerateColumns="False" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" 
                     CssClass="grid" 
                     EmptyDataText="Nessun dato trovato" EmptyDataRowStyle-HorizontalAlign="Center" OnSorting="gv_DatiStampaSintetica_OnSorting">
@@ -214,20 +242,14 @@
                         <asp:BoundField DataField="TelefonoCollaboratore" HeaderText="TelefonoCollaboratore"  />
                         <asp:BoundField DataField="CodFiscaleCollaboratore" HeaderText="CodFiscaleCollaboratore"  />
 
-                        <asp:BoundField DataField="DataLavorazione" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
-                        <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione" HeaderStyle-Width="25%" />
-                        <asp:BoundField DataField="Produzione" HeaderText="Produzione"  HeaderStyle-Width="21%" />
-                        <asp:BoundField DataField="Cliente" HeaderText="Cliente"  HeaderStyle-Width="20%" />
-                        <asp:BoundField DataField="Descrizione" HeaderText="Descrizione"  HeaderStyle-Width="15%" />
-                        <asp:BoundField DataField="Assunzione" HeaderText="Assunzione" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="Mista" HeaderText="Mista" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="RimborsoKm" HeaderText="Rimb. Km" DataFormatString="{0:N2}" HeaderStyle-Width="7%" ItemStyle-HorizontalAlign="Right"/>
-                        <asp:BoundField DataField="Diaria" HeaderText="Diaria" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>
+                        <asp:BoundField DataField="IntervalloDate" HeaderText="Periodo"  />
+                        <asp:BoundField DataField="Assunzione" HeaderText="Assunzione" DataFormatString="{0:N2}"  />
+                        <asp:BoundField DataField="RimborsoKm" HeaderText="Rimborso Km" DataFormatString="{0:N2}"  />
+                        <asp:BoundField DataField="Diaria" HeaderText="Diaria"  />
                         <asp:BoundField DataField="Albergo" HeaderText="Albergo" HeaderStyle-Width="5%" ItemStyle-HorizontalAlign="Center"/>
-    
                     </Columns>
                 </asp:GridView>
-            </div>--%>
+            </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

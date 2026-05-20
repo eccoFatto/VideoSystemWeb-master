@@ -156,6 +156,7 @@
                 </div>
             </div>
 
+<!-- GRIGLIA RISULTATI-->
             <div class="w3-row-padding" style="position:relative;">
 
                 <div class="w3-col" style="margin-top:10px; width:58%">
@@ -164,28 +165,35 @@
                         <div class="w3-row">
                             <b>Totali</b>
                         </div>
-                        <div class="w3-col" style="padding-right:2px;width:19%">
+                        <div class="w3-col" style="padding-right:2px;width:17%">
                             <label>Assunzione</label>
                             <asp:Label ID="lbl_TotAssunzione" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
-                       <div class="w3-col" style="padding-right:5px;width:19%">
+                       <div class="w3-col" style="padding-right:5px;width:17%">
                             <label>Assunzione Mista</label>
                             <asp:Label ID="lbl_TotMista" runat="server" Width="100%" Text="-" ></asp:Label>
                         </div>
-                        <div class="w3-col" style="padding-right:5px;width:19%">
+                        <div class="w3-col" style="padding-right:5px;width:17%">
                             <label>Rimb. Km</label>
                             <asp:Label ID="lbl_TotRimbKm" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
-                        <div class="w3-col" style="padding-right:5px;width:19%">
+                        <div class="w3-col" style="padding-right:5px;width:17%">
                             <label>Diaria</label>
                             <asp:Label ID="lbl_TotDiaria" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
-                        <div class="w3-col" style="width:19%">
+                        <div class="w3-col" style="width:17%">
                             <label>Albergo</label>
                             <asp:Label ID="lbl_TotAlbergo" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
+
+                        <div class="w3-col" style="width:15%">
+                            <label>Collaboratori</label>
+                            <asp:Label ID="lbl_TotCollaboratori" runat="server" Width="100%" Text="-"></asp:Label>
+                        </div>
                     </div>
+
                 </div>
+                
 
                 <div class="w3-col" style="margin-bottom:10px;width:19%">&nbsp;</div>
 

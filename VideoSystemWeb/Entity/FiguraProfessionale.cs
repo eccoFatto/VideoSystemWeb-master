@@ -28,6 +28,8 @@ namespace VideoSystemWeb.Entity
         private bool isAssunto;
         private string descrizioneArticoloAssociato;
         private int numOccorrenza;
+
+        private bool isAttivo;
        
         public int Id { get => id; set => id = value; }
         public long IdentificatoreOggetto { get => identificatoreOggetto; set => identificatoreOggetto = value; }
@@ -88,5 +90,7 @@ namespace VideoSystemWeb.Entity
         public bool IsAssunto { get => isAssunto; set => isAssunto = value; }
         public string DescrizioneArticoloAssociato { get => descrizioneArticoloAssociato; set => descrizioneArticoloAssociato = value; }
         public int NumOccorrenza { get => numOccorrenza; set => numOccorrenza = value; }
+
+        public bool IsAttivo{ get => isAttivo; set => isAttivo = value; }
     }
 }

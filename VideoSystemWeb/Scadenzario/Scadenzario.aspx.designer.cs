@@ -24,15 +24,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.Label lblScadenzario;
 
         /// <summary>
-        /// Controllo UpdatePanelRicerca.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
-
-        /// <summary>
         /// Controllo ddl_TipoAnagrafica.
         /// </summary>
         /// <remarks>
@@ -195,6 +186,24 @@ namespace VideoSystemWeb.Scadenzario.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_DataA;
 
         /// <summary>
+        /// Controllo ddl_Mese.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Mese;
+
+        /// <summary>
+        /// Controllo ddl_Anno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Anno;
+
+        /// <summary>
         /// Controllo txt_CodLavorazione.
         /// </summary>
         /// <remarks>
@@ -202,6 +211,15 @@ namespace VideoSystemWeb.Scadenzario.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_CodLavorazione;
+
+        /// <summary>
+        /// Controllo UpdatePanelRicerca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
 
         /// <summary>
         /// Controllo lbl_dare.

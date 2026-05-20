@@ -640,7 +640,7 @@ namespace VideoSystemWeb.Agenda.userControl
             string cittaFP = txt_FPCitta.Text.ToLower().Trim();
             string nominativoFP = txt_FPNominativo.Text.ToLower().Trim();
 
-            List<FiguraProfessionale> listaFPfiltrata = SessionManager.ListaCompletaFigProf;
+            List<FiguraProfessionale> listaFPfiltrata = SessionManager.ListaCompletaFigProf.Where(x=>x.IsAttivo).ToList();
 
             if (tipoFP != "")
             {

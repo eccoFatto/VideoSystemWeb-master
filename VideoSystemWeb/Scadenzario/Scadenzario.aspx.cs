@@ -145,6 +145,13 @@ namespace VideoSystemWeb.Scadenzario.userControl
             //    ddl_Sottogruppo.Items.Add(item);
             //}
             #endregion
+
+            #region ANNO
+            for (var i = DateTime.Now.Year; i >= DateTime.Now.Year - 10; i--)
+            {
+                ddl_Anno.Items.Add(new ListItem(i.ToString(), i.ToString()));
+            }
+            #endregion
         }
 
         private void CalcolaTotali(List<DatiScadenzario> listaScadenzario)

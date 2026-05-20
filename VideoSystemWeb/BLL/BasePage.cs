@@ -81,6 +81,57 @@ namespace VideoSystemWeb.BLL
             return result;
         }
 
+        public static T ValidaCampoCF<T>(WebControl campo, T defaultValue, bool isRequired, ref Esito esito)
+        {
+            T result = defaultValue;
+
+            string valore = "";
+
+            valore = ((TextBox)campo).Text;
+
+            if (isRequired && string.IsNullOrEmpty(valore))
+            {
+                campo.CssClass += " erroreValidazione";
+                esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                esito.Descrizione = "Controllare i campi evidenziati. ";
+            }
+            else
+            {
+                try
+                {
+                    if (!isRequired && string.IsNullOrEmpty(valore))
+                    {
+                        valore = defaultValue.ToString();
+                    }
+
+                    Regex regex;
+                    Match match;
+
+                    regex = new Regex(@"^[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]$", RegexOptions.Compiled, TimeSpan.FromMilliseconds(200));
+                    match = regex.Match(valore.ToUpper());
+                    if (!match.Success)
+                    {
+                        campo.CssClass += " erroreValidazione";
+                        esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                        esito.Descrizione = "Controllare i campi evidenziati. ";
+                    }
+                    else
+                    {
+                        campo.CssClass = campo.CssClass.Replace("erroreValidazione", "");
+                        result = (T)Convert.ChangeType(valore, typeof(T));
+                    }
+                }
+                catch
+                {
+                    campo.CssClass += " erroreValidazione";
+                    esito.Codice = Esito.ESITO_KO_ERRORE_VALIDAZIONE;
+                    esito.Descrizione = "Controllare i campi evidenziati. ";
+                }
+            }
+
+            return result;
+        }
+
         public static T ValidaCampo<T>(WebControl campo, HiddenField campoValore, T defaultValue, bool isRequired, ref Esito esito)
         {
             T result = defaultValue;

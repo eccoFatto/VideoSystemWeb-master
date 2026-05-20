@@ -132,6 +132,15 @@ namespace VideoSystemWeb.REPORT
         protected global::System.Web.UI.WebControls.Label lbl_TotAlbergo;
 
         /// <summary>
+        /// Controllo lbl_TotCollaboratori.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_TotCollaboratori;
+
+        /// <summary>
         /// Controllo btnRicerca.
         /// </summary>
         /// <remarks>

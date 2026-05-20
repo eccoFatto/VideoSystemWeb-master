@@ -82,7 +82,8 @@ namespace VideoSystemWeb.BLL
                                 Qualifiche = collaboratore.Qualifiche,
                                 Tipo = 0,
                                 Nota = collaboratore.Note,
-                                IsAssunto = collaboratore.Assunto
+                                IsAssunto = collaboratore.Assunto,
+                                IsAttivo = collaboratore.Attivo
                             });
 
                         }

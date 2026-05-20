@@ -694,7 +694,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             collaboratore.ComuneRiferimento = BasePage.ValidaCampo(tbMod_ComuneRiferimento, "", true, ref esito);
             collaboratore.RegioneRiferimento = BasePage.ValidaCampo(cmbMod_RegioneRiferimento, "", true, ref esito);
             collaboratore.DataNascita = BasePage.ValidaCampo(tbMod_DataNascita, DateTime.Now, false, ref esito);
-            collaboratore.CodiceFiscale = BasePage.ValidaCampo(tbMod_CF, "", true, ref esito);
+            collaboratore.CodiceFiscale = BasePage.ValidaCampoCF(tbMod_CF, "", true, ref esito);
             collaboratore.Assunto = Convert.ToBoolean(BasePage.ValidaCampo(cbMod_Assunto, "false", false, ref esito));
             collaboratore.Attivo = true;
             collaboratore.NomeSocieta = BasePage.ValidaCampo(tbMod_NomeSocieta, "", false, ref esito);

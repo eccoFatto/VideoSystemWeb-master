@@ -122,6 +122,8 @@ namespace VideoSystemWeb.REPORT
                 lbl_TotRimbKm.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.RimborsoKm).ToString()));
                 lbl_TotDiaria.Text = string.Format("{0:C}", decimal.Parse(listaDatiReport.Sum(x => x.Diaria).ToString()));
                 lbl_TotAlbergo.Text = listaDatiReport.Sum(x => x.Albergo).ToString();
+
+                lbl_TotCollaboratori.Text = listaDatiReportSintetica.Count().ToString();
             }
             else
             {
@@ -133,6 +135,8 @@ namespace VideoSystemWeb.REPORT
                 lbl_TotRimbKm.Text = "-";
                 lbl_TotDiaria.Text = "-";
                 lbl_TotAlbergo.Text = "-";
+
+                lbl_TotCollaboratori.Text = "-";
             }
         }
 

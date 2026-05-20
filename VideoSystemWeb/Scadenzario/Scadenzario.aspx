@@ -46,8 +46,44 @@
                 });
             });
 
+            // CALCOLO DATE PER CALENDARI
+            var d = new Date();
+            var month = d.getMonth() + 1;
+            var year = d.getFullYear();
+            var firstDay = 1;
+            var lastDay = new Date(year, month, 0).getDate();
 
+            // CAMBIO MESE
+            $("#<%=ddl_Mese.ClientID%>").change(function () {
+                changeMonthYear($("#<%=ddl_Mese.ClientID%>").val(), $("#<%=ddl_Anno.ClientID%>").val());
+            });
 
+            //CAMBIO ANNO
+            $("#<%=ddl_Anno.ClientID%>").change(function () {
+                changeMonthYear($("#<%=ddl_Mese.ClientID%>").val(), $("#<%=ddl_Anno.ClientID%>").val());
+            });
+
+            //SETTO CALENDARI
+            var meseSelezionato = $("#<%=ddl_Mese.ClientID%>").val();
+            if (meseSelezionato == '')
+                $("#<%=ddl_Anno.ClientID%>").attr("disabled", "disabled");
+            else
+                $("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");
+
+            function changeMonthYear(newMonth, newYear) {
+                if (newMonth == '') {
+                    $("#<%=ddl_Anno.ClientID%>").attr("disabled", "disabled");
+
+                    $("#<%=txt_DataDa.ClientID%>").val('');
+                    $("#<%=txt_DataA.ClientID%>").val('');
+                } else {
+                    $("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");
+
+                    var lastDay = new Date(newYear, newMonth, 0).getDate();
+                    $("#<%=txt_DataDa.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
+                    $("#<%=txt_DataA.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                }
+            }
         });
 
         // APRO POPUP VISUALIZZAZIONE/MODIFICA SCADENZA
@@ -91,6 +127,11 @@
             $("#<%=txt_DataA.ClientID%>").val('');
             $("#<%=ddlFatturaPagata.ClientID%>").val('0');
             $("#<%=ddl_FiltroBanca.ClientID%>").val('');
+            
+            $("#<%=txt_CodLavorazione.ClientID%>").val('');
+
+            $("#<%=ddl_Mese.ClientID%>").val('');
+            $('#<%=ddl_Anno.ClientID%>').prop('selectedIndex', 0).prop('disabled', true);
         }
 
         function confermaEliminazioneScadenza() {
@@ -180,8 +221,7 @@
     </div>
     <label><asp:Label ID="lblScadenzario" runat="server" Text="SCADENZARIO" ForeColor="Teal"></asp:Label></label>
 
-    <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
-        <ContentTemplate>
+
             <div class="w3-row-padding">
 
                 <div class="w3-col" style="width:20%">
@@ -255,6 +295,32 @@
                      <label>Data scad. a</label>
                      <asp:TextBox ID="txt_DataA" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
                 </div>
+
+                <div class="w3-col" style="width:14%">
+                    <label>Mese</label>
+                    <asp:DropDownList ID="ddl_Mese" runat="server" class="w3-input w3-border">
+        
+                        <asp:ListItem Value=""> </asp:ListItem>
+                        <asp:ListItem Value="1">Gennaio</asp:ListItem>
+                        <asp:ListItem Value="2">Febbraio</asp:ListItem>
+                        <asp:ListItem Value="3">Marzo</asp:ListItem>
+                        <asp:ListItem Value="4">Aprile</asp:ListItem>
+                        <asp:ListItem Value="5">Maggio</asp:ListItem>
+                        <asp:ListItem Value="6">Giugno</asp:ListItem>
+                        <asp:ListItem Value="7">Luglio</asp:ListItem>
+                        <asp:ListItem Value="8">Agosto</asp:ListItem>
+                        <asp:ListItem Value="9">Settembre</asp:ListItem>
+                        <asp:ListItem Value="10">Ottobre</asp:ListItem>
+                        <asp:ListItem Value="11">Novembre</asp:ListItem>
+                        <asp:ListItem Value="12">Dicembre</asp:ListItem>
+
+                    </asp:DropDownList>
+                </div>
+
+                <div class="w3-col" style="width:6%">
+                    <label>Anno</label>
+                    <asp:DropDownList ID="ddl_Anno" runat="server" class="w3-input w3-border" ></asp:DropDownList>
+                </div>
                  
                 <div class="w3-col" style="width:20%">
                     <label>Codice Lavorazione</label>
@@ -263,6 +329,8 @@
             </div>
 
 <%--RIQUADRI DEI TOTALI--%>
+        <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
+        <ContentTemplate>
             <div class="w3-row-padding w3-margin-bottom w3-margin-top">
                 <div class="w3-threequarter" style="font-size:.8em;">
                     <div class="w3-half" style="padding-right:10px;">

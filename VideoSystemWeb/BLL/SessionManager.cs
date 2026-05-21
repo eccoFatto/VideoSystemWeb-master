@@ -105,7 +105,8 @@ namespace VideoSystemWeb.BLL
                                 Telefono = fornitore.Telefono,
                                 Tipo = 1,
                                 Nota = fornitore.Note,
-                                IsAssunto = false
+                                IsAssunto = false,
+                                IsAttivo = fornitore.Attivo
                             });
 
                         }

@@ -106,8 +106,8 @@ namespace VideoSystemWeb.BLL
 
                 datiReport.Albergo = riga.Field<int>("Albergo");
                 datiReport.RimborsoKm = riga.Field<decimal>("RimborsoKm");
-                datiReport.TipoPagamento = riga.Field<int>("TipoPagamento");
-                datiReport.DescrizionePagamento = riga.Field<string>("DescrizioneTipoPagamento");
+                //datiReport.TipoPagamento = riga.Field<int>("TipoPagamento");
+                //datiReport.DescrizionePagamento = riga.Field<string>("DescrizioneTipoPagamento");
 
                 listaReportConsulenteLavoro.Add(datiReport);
 

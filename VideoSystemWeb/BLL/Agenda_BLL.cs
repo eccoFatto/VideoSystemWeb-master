@@ -168,8 +168,7 @@ namespace VideoSystemWeb.BLL
                                     " left join dati_protocollo prot   on prot.codice_lavoro = agenda.codice_lavoro " +
                                     " left join tipo_stato stato on stato.id=agenda.id_stato " +
                                     " left join tipo_protocollo tipo on prot.id_tipo_protocollo = tipo.id " +
-                                    " where  agenda.id_stato <> 5 " +
-                                    " and agenda.id_stato in (3, 4) " +
+                                    " where  agenda.id_stato in (2, 3, 4, 7) " + // offerta, lavorazione, fattura e fattura SDI
                                     //" and prot.attivo = 1 " +
                                     " and (prot.numero_protocollo like '%@numeroProtocollo%' or prot.numero_protocollo is null) " +
                                     " and (agenda.codice_lavoro like '%@codiceLavoro%' or agenda.codice_lavoro is null) " +

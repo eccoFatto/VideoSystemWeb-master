@@ -30,11 +30,11 @@ namespace VideoSystemWeb.BLL
             }
         }
 
-        public List<DatiReport> GetListaDatiReportConsulenteLavoro(DateTime dataInizio, DateTime dataFine, string nominativo, string isAssunto, ref Esito esito)
+        public List<DatiReport> GetListaDatiReportConsulenteLavoro(string cliente, string produzione, string lavorazione, string codiceLavorazione, DateTime dataInizio, DateTime dataFine, string nominativo, string isAssunto, ref Esito esito)
         {
             List<DatiReport> listaReportConsulenteLavoro = new List<DatiReport>();
 
-            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(dataInizio, dataFine, nominativo,  isAssunto, ref esito);
+            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(cliente, produzione, lavorazione, codiceLavorazione, dataInizio, dataFine, nominativo,  isAssunto, ref esito);
             foreach(DataRow riga in dtReportConsulenteLavoro.Rows)
             {
                 DatiReport datiReport = new DatiReport();
@@ -79,11 +79,11 @@ namespace VideoSystemWeb.BLL
             return listaReportConsulenteLavoro;
         }
 
-        public List<DatiReportRaw> GetListaDatiReportRawConsulenteLavoro(DateTime dataInizio, DateTime dataFine, string nominativo, string isAssunto, ref Esito esito)
+        public List<DatiReportRaw> GetListaDatiReportRawConsulenteLavoro(string cliente, string produzione, string lavorazione, string codiceLavorazione, DateTime dataInizio, DateTime dataFine, string nominativo, string isAssunto, ref Esito esito)
         {
             List<DatiReportRaw> listaReportConsulenteLavoro = new List<DatiReportRaw>();
 
-            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(dataInizio, dataFine, nominativo, isAssunto, ref esito);
+            DataTable dtReportConsulenteLavoro = Report_DAL.Instance.GetDatiReportConsulenteLavoro(cliente, produzione, lavorazione, codiceLavorazione, dataInizio, dataFine, nominativo, isAssunto, ref esito);
             foreach (DataRow riga in dtReportConsulenteLavoro.Rows)
             {
                 DatiReportRaw datiReport = new DatiReportRaw();
@@ -110,7 +110,6 @@ namespace VideoSystemWeb.BLL
                 //datiReport.DescrizionePagamento = riga.Field<string>("DescrizioneTipoPagamento");
 
                 listaReportConsulenteLavoro.Add(datiReport);
-
             }
 
             return listaReportConsulenteLavoro;

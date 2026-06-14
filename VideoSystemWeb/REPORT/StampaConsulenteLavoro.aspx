@@ -41,8 +41,6 @@
                 $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
 
             }
-
-            
         });
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
@@ -74,11 +72,7 @@
                 var lastDay = new Date(newYear, newMonth, 0).getDate();
                 $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
                 $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
-
             }
-
-            
-
         });
 
     //SWITCH VISUALIZZAZIONE GRIGLIA
@@ -95,23 +89,45 @@
             $("#grigliaSintetica").show();
             $("#grigliaDettagliata").hide();
         }
-  
     }
-
     
     </script>
 
     <label><asp:Label ID="lblStampaConsulente" runat="server" Text="STAMPA COLLABORATORI" ForeColor="Teal"></asp:Label></label>
     <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
         <ContentTemplate>
-            <div class="w3-row-padding" style="position:relative;">
 
-                <div class="w3-col" style="width:19%">
+ 
+            <div class="w3-row-padding" >
+                <div class="w3-quarter" >
+                    <label>Cliente</label>
+                    <asp:TextBox ID="txt_Cliente" runat="server" Width="100%" class="w3-input w3-border " />
+                </div>
+
+                <div class="w3-quarter">
+                    <label>Produzione</label>
+                    <asp:TextBox ID="txt_Produzione" runat="server" Width="100%" class="w3-input w3-border " />
+                </div>
+
+                <div class="w3-quarter">
+                    <label>Lavorazione</label>
+                    <asp:TextBox ID="txt_Lavorazione" runat="server" Width="100%" class="w3-input w3-border " />
+                </div>
+
+                <div class="w3-quarter">
+                    <label>Cod. Lavorazione</label>
+                    <asp:TextBox ID="txt_CodLavorazione" runat="server" Width="100%" class="w3-input w3-border " />
+                </div>
+            </div>
+            
+            <div class="w3-row-padding" style="position:relative;padding-top:10px;">
+
+                <div class="w3-quarter" >
                     <label>Nominativo</label>
                     <asp:TextBox ID="txt_Nominativo" runat="server" Width="100%"  class="w3-input w3-border" ></asp:TextBox>
                 </div>
 
-                <div class="w3-col" style="width:20%">
+                <div class="w3-quarter" >
                     <div class="w3-twothird" style="padding-right:10px">
                         <label>Mese</label>
                         <asp:DropDownList ID="ddl_Mese" runat="server" class="w3-input w3-border">
@@ -127,25 +143,27 @@
                             <asp:ListItem Value="10">Ottobre</asp:ListItem>
                             <asp:ListItem Value="11">Novembre</asp:ListItem>
                             <asp:ListItem Value="12">Dicembre</asp:ListItem>
-
                         </asp:DropDownList>
                     </div>
+
                     <div class="w3-third">
                         <label>Anno</label>
                         <asp:DropDownList ID="ddl_Anno" runat="server" class="w3-input w3-border"></asp:DropDownList>
                     </div>
                 </div>
 
-                <div class="w3-col" style="width:19%">
-                    <label>Data inizio</label>
-                    <asp:TextBox ID="txt_DataInizio" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
-                </div>
-                <div class="w3-col" style="width:19%">
-                    <label>Data fine</label>
-                    <asp:TextBox ID="txt_DataFine" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                <div class="w3-quarter" >
+                    <div class="w3-half" style="padding-right:5px">
+                        <label>Data inizio</label>
+                        <asp:TextBox ID="txt_DataInizio" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                    </div>
+                    <div class="w3-half" style="padding-left:5px">
+                        <label>Data fine</label>
+                        <asp:TextBox ID="txt_DataFine" runat="server" MaxLength="10" Width="100%"  class="w3-input w3-border calendar" placeholder="GG/MM/AAAA"></asp:TextBox>
+                    </div>
                 </div>
 
-                <div class="w3-col" style="width:23%">
+                <div class="w3-quarter">
                     <label>Assunzione</label>
                     <asp:DropDownList ID="ddl_Assunzione" runat="server" class="w3-input w3-border">
                         <asp:ListItem Value="" Text="<Tutti>"/>
@@ -191,9 +209,7 @@
                             <asp:Label ID="lbl_TotCollaboratori" runat="server" Width="100%" Text="-"></asp:Label>
                         </div>
                     </div>
-
                 </div>
-                
 
                 <div class="w3-col" style="margin-bottom:10px;width:19%">&nbsp;</div>
 
@@ -221,8 +237,6 @@
                         <asp:BoundField DataField="CittaCollaboratore" HeaderText="CittaCollaboratore"  />
                         <asp:BoundField DataField="TelefonoCollaboratore" HeaderText="TelefonoCollaboratore"  />
                         <asp:BoundField DataField="CodFiscaleCollaboratore" HeaderText="CodFiscaleCollaboratore"  />
-                        
-
                         <asp:BoundField DataField="DataLavorazione" HeaderText="Data" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-Width="8%" />
                         <asp:BoundField DataField="Lavorazione" HeaderText="Lavorazione"  HeaderStyle-Width="15%"/>
                         <asp:BoundField DataField="Produzione" HeaderText="Produzione"  HeaderStyle-Width="21%" />
@@ -249,7 +263,6 @@
                         <asp:BoundField DataField="CittaCollaboratore" HeaderText="CittaCollaboratore"  />
                         <asp:BoundField DataField="TelefonoCollaboratore" HeaderText="TelefonoCollaboratore"  />
                         <asp:BoundField DataField="CodFiscaleCollaboratore" HeaderText="CodFiscaleCollaboratore"  />
-
                         <asp:BoundField DataField="IntervalloDate" HeaderText="Periodo"  />
                         <asp:BoundField DataField="Assunzione" HeaderText="Assunzione" DataFormatString="{0:N2}"  />
                         <asp:BoundField DataField="RimborsoKm" HeaderText="Rimborso Km" DataFormatString="{0:N2}"  />

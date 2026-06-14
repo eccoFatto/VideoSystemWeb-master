@@ -54,7 +54,7 @@ namespace VideoSystemWeb.DAL
             return UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO), tipoPagamento, ref esito).id;
         }
 
-        public DataTable GetDatiReportConsulenteLavoro(DateTime dataInizio, DateTime dataFine, string nominativo, string isAssunto, ref Esito esito)
+        public DataTable GetDatiReportConsulenteLavoro(string cliente, string produzione, string lavorazione, string codiceLavorazione, DateTime dataInizio, DateTime dataFine, string nominativo, string isAssunto, ref Esito esito)
         {
             string quotaFissaMisto = Config_BLL.Instance.getConfig(ref esito, "QUOTA_FISSA_PAGAMENTO_MISTO").Valore;
 
@@ -203,20 +203,17 @@ namespace VideoSystemWeb.DAL
 
                         #region VERSIONE 07_06_2026 DOPO SEGNALAZIONE FEDERICO CHIAPPA
 
+                        #region filtri ricerca
+                        string filtroCliente = string.IsNullOrEmpty(cliente)? string.Empty: " and clienti.ragioneSociale LIKE '%" + cliente + "%' ";
+                        string filtroProduzione = string.IsNullOrEmpty(produzione) ? string.Empty : " and datiAgenda.produzione LIKE '%" + produzione + "%' ";
+                        string filtroLavorazione = string.IsNullOrEmpty(lavorazione) ? string.Empty : " and datiAgenda.lavorazione LIKE '%" + lavorazione + "%' ";
+                        string filtroCodiceLavorazione = string.IsNullOrEmpty(codiceLavorazione) ? string.Empty : " and datiAgenda.codice_lavoro LIKE '%" + codiceLavorazione + "%' ";
+
+                        string filtroNominativo = string.IsNullOrEmpty(nominativo) ? string.Empty : " a.Nome LIKE '%" + nominativo + "%' and ";
                         string dataInizioString = dataInizio.ToString("yyyy-MM-ddT00:00:00.000");
                         string dataFineString = dataFine.ToString("yyyy-MM-ddT00:00:00.000");
-
-                        string filtroNominativo = string.Empty;
-                        if (!string.IsNullOrEmpty(nominativo))
-                        {
-                            filtroNominativo = " a.Nome LIKE '%" + nominativo + "%' and ";
-                        }
-
-                        string filtroAssunzione = string.Empty;
-                        if (!string.IsNullOrEmpty(isAssunto))
-                        {
-                            filtroAssunzione = " a.assunto = " + isAssunto + " and ";
-                        }
+                        string filtroAssunzione = string.IsNullOrEmpty(isAssunto)? string.Empty: " a.assunto = " + isAssunto + " and ";
+                        #endregion
 
                         string querySql = "WITH " +
                                             "Base AS ( " +
@@ -261,6 +258,10 @@ namespace VideoSystemWeb.DAL
                                             "         LEFT JOIN anag_clienti_fornitori clienti ON clienti.id = datiAgenda.id_cliente  " +
 
                                             "    WHERE artLav.data BETWEEN '" + dataInizioString + "' AND '" + dataFineString + "' " +
+                                            filtroCliente +
+                                            filtroProduzione +
+                                            filtroLavorazione +
+                                            filtroCodiceLavorazione +
 
                                             "    GROUP BY artLav.idCollaboratori, artLav.data " +
                                             "), " +
@@ -284,7 +285,7 @@ namespace VideoSystemWeb.DAL
                                             "FROM Base b " +
                                             "     JOIN Anagrafica a ON a.id = b.idCollaboratori " +
                                             "     LEFT JOIN Piano p ON p.idCollaboratori = b.idCollaboratori AND p.data = b.data " +
-                                            "     LEFT JOIN Agenda ag ON ag.idCollaboratori = b.idCollaboratori AND ag.data = b.data " +
+                                            "     INNER JOIN Agenda ag ON ag.idCollaboratori = b.idCollaboratori AND ag.data = b.data " +
 
                                             "WHERE " +
                                             filtroNominativo +
@@ -312,8 +313,6 @@ namespace VideoSystemWeb.DAL
 
                     log.Error(ex.Message + Environment.NewLine + ex.StackTrace);
                 }
-
-                
             }
             else
             {

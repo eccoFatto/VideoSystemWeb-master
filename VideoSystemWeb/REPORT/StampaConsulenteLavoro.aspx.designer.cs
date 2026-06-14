@@ -33,6 +33,42 @@ namespace VideoSystemWeb.REPORT
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
 
         /// <summary>
+        /// Controllo txt_Cliente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Cliente;
+
+        /// <summary>
+        /// Controllo txt_Produzione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Produzione;
+
+        /// <summary>
+        /// Controllo txt_Lavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_Lavorazione;
+
+        /// <summary>
+        /// Controllo txt_CodLavorazione.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_CodLavorazione;
+
+        /// <summary>
         /// Controllo txt_Nominativo.
         /// </summary>
         /// <remarks>

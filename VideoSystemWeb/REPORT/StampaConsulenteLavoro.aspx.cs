@@ -1,9 +1,4 @@
-﻿using iText;
-using iText.Kernel.Pdf;
-using iText.Layout;
-using iText.Layout.Element;
-using iTextSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
@@ -32,6 +27,13 @@ namespace VideoSystemWeb.REPORT
                 CaricaCombo();
             }
 
+            GestioneRaggruppamentoRighe();
+
+            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
+        }
+
+        private void GestioneRaggruppamentoRighe()
+        {
             #region GRIGLIA CON RAGGRUPPAMENTO RIGHE 
             GridViewHelper helper = new GridViewHelper(this.gv_DatiStampa);
 
@@ -79,18 +81,42 @@ namespace VideoSystemWeb.REPORT
             helperSintetica.GroupHeader += new GroupEvent(Helper_GroupHeader);
             helperSintetica.GroupSummary += new GroupEvent(Helper_GroupSummary);
 
-            helper.ApplyGroupSort();
+            helperSintetica.ApplyGroupSort();
             #endregion
-
-            ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
 
         private void CaricaCombo()
         {
+            #region ANNO
             for (var i = DateTime.Now.Year; i >=  DateTime.Now.Year - 10; i--)
             {
                 ddl_Anno.Items.Add(new System.Web.UI.WebControls.ListItem(i.ToString(), i.ToString()));
             }
+            #endregion
+
+            #region GENERE
+            ddl_Genere.Items.Add(new ListItem("", ""));
+            foreach (Tipologica tipoGenere in SessionManager.ListaTipiGeneri)
+            {
+                ddl_Genere.Items.Add(new ListItem(tipoGenere.nome, tipoGenere.id.ToString()));
+            }
+            #endregion
+
+            #region GRUPPO
+            ddl_Gruppo.Items.Add(new ListItem("", ""));
+            foreach (Tipologica tipoGruppi in SessionManager.ListaTipiGruppi)
+            {
+                ddl_Gruppo.Items.Add(new ListItem(tipoGruppi.nome, tipoGruppi.id.ToString()));
+            }
+            #endregion
+
+            #region SOTTOGRUPPO
+            ddl_Sottogruppo.Items.Add(new ListItem("", ""));
+            foreach (Tipologica tipologiaSottogruppo in SessionManager.ListaTipiSottogruppi)
+            {
+                ddl_Sottogruppo.Items.Add(new ListItem(tipologiaSottogruppo.nome, tipologiaSottogruppo.id.ToString()));
+            }
+            #endregion
         }
 
         protected void btnRicerca_Click(object sender, EventArgs e)
@@ -102,12 +128,16 @@ namespace VideoSystemWeb.REPORT
             string lavorazione = txt_Lavorazione.Text;
             string codiceLavorazione = txt_CodLavorazione.Text;
 
+            string genere = ddl_Genere.SelectedValue;
+            string gruppo = ddl_Gruppo.SelectedValue;
+            string sottogruppo = ddl_Sottogruppo.SelectedValue;
+
             string nominativo = txt_Nominativo.Text;
             DateTime dataInizio = DateTime.Parse(txt_DataInizio.Text);
             DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
             string isAssunto = ddl_Assunzione.SelectedValue;
 
-            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawConsulenteLavoro(cliente, produzione, lavorazione, codiceLavorazione, dataInizio, dataFine, nominativo, isAssunto, ref esito);
+            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawConsulenteLavoro(cliente, produzione, lavorazione, codiceLavorazione, genere, gruppo, sottogruppo, dataInizio, dataFine, nominativo, isAssunto, ref esito);
 
             gv_DatiStampa.DataSource = listaDatiReport;
             gv_DatiStampa.DataBind();
@@ -142,6 +172,18 @@ namespace VideoSystemWeb.REPORT
                 lbl_TotAlbergo.Text = "-";
 
                 lbl_TotCollaboratori.Text = "-";
+            }
+        }
+
+        protected void ddlGruppo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                CaricaSottogruppiInBaseAlGruppo(ddl_Gruppo, ddl_Sottogruppo);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
             }
         }
 
@@ -200,7 +242,8 @@ namespace VideoSystemWeb.REPORT
             row.Cells[4].Text = "<b><i>" + row.Cells[4].Text + "</i></b>";
             row.Cells[5].Text = "<b><i>" + row.Cells[5].Text + "</i></b>";
         }
-        
+
+
         #region STAMPA (conservare in caso di ripensamenti)
         //protected void btnStampa_Click(object sender, EventArgs e)
         //{

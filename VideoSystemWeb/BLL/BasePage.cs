@@ -511,5 +511,30 @@ namespace VideoSystemWeb.BLL
             }
             return ret;
         }
+
+        protected void CaricaSottogruppiInBaseAlGruppo(DropDownList listaGruppo, DropDownList listaSottogruppo)
+        {
+            Esito esito = new Esito();
+
+            string idTipoGruppoString = listaGruppo.SelectedValue;
+
+            listaSottogruppo.Items.Clear();
+            listaSottogruppo.Items.Add("");
+            List<Sottogruppo> listaSottogruppiFiltrata = SessionManager.ListaTipiSottogruppi;
+
+            if (!string.IsNullOrEmpty(idTipoGruppoString))
+            {
+                int idTipoGruppo = int.Parse(idTipoGruppoString);
+                listaSottogruppiFiltrata = listaSottogruppiFiltrata.Where(x => x.IdTipoGruppo == idTipoGruppo || x.IdTipoGruppo == null).ToList<Sottogruppo>();
+            }
+
+            foreach (Tipologica tipologiaSottogruppo in listaSottogruppiFiltrata)
+            {
+                ListItem item = new ListItem();
+                item.Text = tipologiaSottogruppo.nome;
+                item.Value = tipologiaSottogruppo.id.ToString();
+                listaSottogruppo.Items.Add(item);
+            }
+        }
     }
 }

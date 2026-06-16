@@ -222,7 +222,6 @@ namespace VideoSystemWeb.STATISTICHE
             string dataInizio = DateTime.TryParse(txt_PeriodoDa.Text, out data) ? data.ToString("dd/MM/yyyy") : "";
             string dataFine = DateTime.TryParse(txt_PeriodoA.Text, out data) ? data.ToString("dd/MM/yyyy") : "";
 
-
             string filtroFornitore = txt_Fornitore.Text;
 
             List<StatisticheCosti> listaStatisticheCosti = Statistiche_BLL.Instance.GetStatisticheCosti_NomeLavorazione(filtroNomeCliente, filtroNomeProduzione, filtroNomeLavorazione, filtroGenere, filtroGruppo, filtroSottogruppo, filtroCodLavorazione, dataInizio, dataFine, filtroFornitore, ref esito);
@@ -336,30 +335,30 @@ namespace VideoSystemWeb.STATISTICHE
             }
         }
 
-        private void CaricaSottogruppiInBaseAlGruppo(DropDownList listaGruppo, DropDownList listaSottogruppo)
-        {
-            Esito esito = new Esito();
+        //private void CaricaSottogruppiInBaseAlGruppo(DropDownList listaGruppo, DropDownList listaSottogruppo)
+        //{
+        //    Esito esito = new Esito();
 
-            string idTipoGruppoString = listaGruppo.SelectedValue;
+        //    string idTipoGruppoString = listaGruppo.SelectedValue;
 
-            listaSottogruppo.Items.Clear();
-            listaSottogruppo.Items.Add("");
-            List<Sottogruppo> listaSottogruppiFiltrata = SessionManager.ListaTipiSottogruppi;
+        //    listaSottogruppo.Items.Clear();
+        //    listaSottogruppo.Items.Add("");
+        //    List<Sottogruppo> listaSottogruppiFiltrata = SessionManager.ListaTipiSottogruppi;
 
-            if (!string.IsNullOrEmpty(idTipoGruppoString))
-            {
-                int idTipoGruppo = int.Parse(idTipoGruppoString);
-                listaSottogruppiFiltrata = listaSottogruppiFiltrata.Where(x => x.IdTipoGruppo == idTipoGruppo || x.IdTipoGruppo == null).ToList<Sottogruppo>();
-            }
+        //    if (!string.IsNullOrEmpty(idTipoGruppoString))
+        //    {
+        //        int idTipoGruppo = int.Parse(idTipoGruppoString);
+        //        listaSottogruppiFiltrata = listaSottogruppiFiltrata.Where(x => x.IdTipoGruppo == idTipoGruppo || x.IdTipoGruppo == null).ToList<Sottogruppo>();
+        //    }
 
-            foreach (Tipologica tipologiaSottogruppo in listaSottogruppiFiltrata)
-            {
-                ListItem item = new ListItem();
-                item.Text = tipologiaSottogruppo.nome;
-                item.Value = tipologiaSottogruppo.id.ToString();
-                listaSottogruppo.Items.Add(item);
-            }
-        }
+        //    foreach (Tipologica tipologiaSottogruppo in listaSottogruppiFiltrata)
+        //    {
+        //        ListItem item = new ListItem();
+        //        item.Text = tipologiaSottogruppo.nome;
+        //        item.Value = tipologiaSottogruppo.id.ToString();
+        //        listaSottogruppo.Items.Add(item);
+        //    }
+        //}
 
         protected void btnVaiALavorazione_Click(object sender, EventArgs e)
         {

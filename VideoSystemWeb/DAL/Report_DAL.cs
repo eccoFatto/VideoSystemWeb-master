@@ -54,7 +54,7 @@ namespace VideoSystemWeb.DAL
             return UtilityTipologiche.getElementByNome(UtilityTipologiche.caricaTipologica(EnumTipologiche.TIPO_PAGAMENTO), tipoPagamento, ref esito).id;
         }
 
-        public DataTable GetDatiReportConsulenteLavoro(string cliente, string produzione, string lavorazione, string codiceLavorazione, DateTime dataInizio, DateTime dataFine, string nominativo, string isAssunto, ref Esito esito)
+        public DataTable GetDatiReportConsulenteLavoro(string cliente, string produzione, string lavorazione, string codiceLavorazione, string genere, string gruppo, string sottogruppo, DateTime dataInizio, DateTime dataFine, string nominativo, string isAssunto, ref Esito esito)
         {
             string quotaFissaMisto = Config_BLL.Instance.getConfig(ref esito, "QUOTA_FISSA_PAGAMENTO_MISTO").Valore;
 
@@ -209,6 +209,10 @@ namespace VideoSystemWeb.DAL
                         string filtroLavorazione = string.IsNullOrEmpty(lavorazione) ? string.Empty : " and datiAgenda.lavorazione LIKE '%" + lavorazione + "%' ";
                         string filtroCodiceLavorazione = string.IsNullOrEmpty(codiceLavorazione) ? string.Empty : " and datiAgenda.codice_lavoro LIKE '%" + codiceLavorazione + "%' ";
 
+                        string filtroGenere = string.IsNullOrEmpty(genere) ? string.Empty : " and artLav.idTipoGenere = " + genere;
+                        string filtroGruppo = string.IsNullOrEmpty(gruppo) ? string.Empty : " and artLav.idTipoGruppo = " + gruppo;
+                        string filtroSottogruppo = string.IsNullOrEmpty(sottogruppo) ? string.Empty : " and artLav.idTipoSottogruppo = " + sottogruppo;
+
                         string filtroNominativo = string.IsNullOrEmpty(nominativo) ? string.Empty : " a.Nome LIKE '%" + nominativo + "%' and ";
                         string dataInizioString = dataInizio.ToString("yyyy-MM-ddT00:00:00.000");
                         string dataFineString = dataFine.ToString("yyyy-MM-ddT00:00:00.000");
@@ -230,6 +234,10 @@ namespace VideoSystemWeb.DAL
                                             "    WHERE  " +
                                             "        artLav.idTipoPagamento IN (" + idTipoAssunzione + ", " + idTipoMista + ", " + idTipoRimborsoKm+ ") " +
                                             "        AND artLav.data BETWEEN '" + dataInizioString + "' AND '" + dataFineString + "' " +
+
+                                            filtroGenere +
+                                            filtroGruppo +
+                                            filtroSottogruppo +
 		
                                             "    GROUP BY artLav.idCollaboratori, artLav.data " +
                                             "), " +

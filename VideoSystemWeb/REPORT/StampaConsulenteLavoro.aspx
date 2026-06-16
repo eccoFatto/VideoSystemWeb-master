@@ -94,8 +94,8 @@
     </script>
 
     <label><asp:Label ID="lblStampaConsulente" runat="server" Text="STAMPA COLLABORATORI" ForeColor="Teal"></asp:Label></label>
-    <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
-        <ContentTemplate>
+<%--    <asp:UpdatePanel ID="UpdatePanelRicerca" runat="server">
+        <ContentTemplate>--%>
 
  
             <div class="w3-row-padding" >
@@ -117,6 +117,31 @@
                 <div class="w3-quarter">
                     <label>Cod. Lavorazione</label>
                     <asp:TextBox ID="txt_CodLavorazione" runat="server" Width="100%" class="w3-input w3-border " />
+                </div>
+            </div>
+
+            <div class="w3-row-padding" >
+                <div class="w3-quarter" >
+                    <label>Genere</label>
+                    <asp:DropDownList ID="ddl_Genere" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
+                </div>
+
+                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                    <ContentTemplate>
+                        <div class="w3-quarter" style="padding:0px 8px">
+                            <label>Gruppo</label>
+                            <asp:DropDownList ID="ddl_Gruppo" runat="server"  Width="100%" class="w3-input w3-border" OnSelectedIndexChanged="ddlGruppo_SelectedIndexChanged" AutoPostBack="true"/>
+                        </div>
+
+                        <div class="w3-quarter" style="padding:0px 8px">
+                            <label>Sottogruppo</label>
+                            <asp:DropDownList ID="ddl_Sottogruppo" runat="server" AutoPostBack="False" Width="100%" class="w3-input w3-border" />
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+
+                <div class="w3-quarter">
+                    &nbsp;
                 </div>
             </div>
             
@@ -271,6 +296,6 @@
                     </Columns>
                 </asp:GridView>
             </div>
-        </ContentTemplate>
-    </asp:UpdatePanel>
+<%--        </ContentTemplate>
+    </asp:UpdatePanel>--%>
 </asp:Content>

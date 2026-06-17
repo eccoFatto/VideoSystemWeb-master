@@ -24,6 +24,15 @@ namespace VideoSystemWeb.REPORT
         protected global::System.Web.UI.WebControls.Label lblStampaConsulente;
 
         /// <summary>
+        /// Controllo UpdatePanelRicerca.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
+
+        /// <summary>
         /// Controllo txt_Cliente.
         /// </summary>
         /// <remarks>
@@ -58,42 +67,6 @@ namespace VideoSystemWeb.REPORT
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_CodLavorazione;
-
-        /// <summary>
-        /// Controllo ddl_Genere.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_Genere;
-
-        /// <summary>
-        /// Controllo UpdatePanel1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-
-        /// <summary>
-        /// Controllo ddl_Gruppo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_Gruppo;
-
-        /// <summary>
-        /// Controllo ddl_Sottogruppo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_Sottogruppo;
 
         /// <summary>
         /// Controllo txt_Nominativo.

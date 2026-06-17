@@ -93,30 +93,6 @@ namespace VideoSystemWeb.REPORT
                 ddl_Anno.Items.Add(new System.Web.UI.WebControls.ListItem(i.ToString(), i.ToString()));
             }
             #endregion
-
-            #region GENERE
-            ddl_Genere.Items.Add(new ListItem("", ""));
-            foreach (Tipologica tipoGenere in SessionManager.ListaTipiGeneri)
-            {
-                ddl_Genere.Items.Add(new ListItem(tipoGenere.nome, tipoGenere.id.ToString()));
-            }
-            #endregion
-
-            #region GRUPPO
-            ddl_Gruppo.Items.Add(new ListItem("", ""));
-            foreach (Tipologica tipoGruppi in SessionManager.ListaTipiGruppi)
-            {
-                ddl_Gruppo.Items.Add(new ListItem(tipoGruppi.nome, tipoGruppi.id.ToString()));
-            }
-            #endregion
-
-            #region SOTTOGRUPPO
-            ddl_Sottogruppo.Items.Add(new ListItem("", ""));
-            foreach (Tipologica tipologiaSottogruppo in SessionManager.ListaTipiSottogruppi)
-            {
-                ddl_Sottogruppo.Items.Add(new ListItem(tipologiaSottogruppo.nome, tipologiaSottogruppo.id.ToString()));
-            }
-            #endregion
         }
 
         protected void btnRicerca_Click(object sender, EventArgs e)
@@ -128,16 +104,12 @@ namespace VideoSystemWeb.REPORT
             string lavorazione = txt_Lavorazione.Text;
             string codiceLavorazione = txt_CodLavorazione.Text;
 
-            string genere = ddl_Genere.SelectedValue;
-            string gruppo = ddl_Gruppo.SelectedValue;
-            string sottogruppo = ddl_Sottogruppo.SelectedValue;
-
             string nominativo = txt_Nominativo.Text;
             DateTime dataInizio = DateTime.Parse(txt_DataInizio.Text);
             DateTime dataFine = DateTime.Parse(txt_DataFine.Text);
             string isAssunto = ddl_Assunzione.SelectedValue;
 
-            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawConsulenteLavoro(cliente, produzione, lavorazione, codiceLavorazione, genere, gruppo, sottogruppo, dataInizio, dataFine, nominativo, isAssunto, ref esito);
+            List<DatiReportRaw> listaDatiReport = Report_BLL.Instance.GetListaDatiReportRawConsulenteLavoro(cliente, produzione, lavorazione, codiceLavorazione, dataInizio, dataFine, nominativo, isAssunto, ref esito);
 
             gv_DatiStampa.DataSource = listaDatiReport;
             gv_DatiStampa.DataBind();
@@ -172,18 +144,6 @@ namespace VideoSystemWeb.REPORT
                 lbl_TotAlbergo.Text = "-";
 
                 lbl_TotCollaboratori.Text = "-";
-            }
-        }
-
-        protected void ddlGruppo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                CaricaSottogruppiInBaseAlGruppo(ddl_Gruppo, ddl_Sottogruppo);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.ToString());
             }
         }
 

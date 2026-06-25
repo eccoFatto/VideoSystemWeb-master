@@ -1,17 +1,19 @@
 ﻿//------------------------------------------------------------------------------
 // <generato automaticamente>
-//     Codice generato da uno strumento.
+//     Questo codice è stato generato da uno strumento.
 //
 //     Le modifiche a questo file possono causare un comportamento non corretto e verranno perse se
 //     il codice viene rigenerato. 
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.REPORT {
-    
-    
-    public partial class ReportTLTime {
-        
+namespace VideoSystemWeb.REPORT
+{
+
+
+    public partial class ReportTLTime
+    {
+
         /// <summary>
         /// Controllo lblTLTime.
         /// </summary>
@@ -20,7 +22,7 @@ namespace VideoSystemWeb.REPORT {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblTLTime;
-        
+
         /// <summary>
         /// Controllo UpdatePanelRicerca.
         /// </summary>
@@ -29,7 +31,25 @@ namespace VideoSystemWeb.REPORT {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanelRicerca;
-        
+
+        /// <summary>
+        /// Controllo ddl_Mese.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Mese;
+
+        /// <summary>
+        /// Controllo ddl_Anno.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Anno;
+
         /// <summary>
         /// Controllo tbDataDa.
         /// </summary>
@@ -38,7 +58,7 @@ namespace VideoSystemWeb.REPORT {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDataDa;
-        
+
         /// <summary>
         /// Controllo tbDataA.
         /// </summary>
@@ -47,7 +67,7 @@ namespace VideoSystemWeb.REPORT {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbDataA;
-        
+
         /// <summary>
         /// Controllo btnRicercaTLTime.
         /// </summary>
@@ -56,7 +76,7 @@ namespace VideoSystemWeb.REPORT {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRicercaTLTime;
-        
+
         /// <summary>
         /// Controllo btnCreaFileTLTime.
         /// </summary>
@@ -65,7 +85,7 @@ namespace VideoSystemWeb.REPORT {
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCreaFileTLTime;
-        
+
         /// <summary>
         /// Controllo gv_TLTime.
         /// </summary>

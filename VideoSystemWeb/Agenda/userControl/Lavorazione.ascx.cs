@@ -396,6 +396,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 int numOccorrenza = articoloSelezionato.NumOccorrenza;
 
                 List<DatiArticoliLavorazione> listaArticoliDaModificare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.IdArtArticoli == idArticolo && x.NumOccorrenza == numOccorrenza).ToList<DatiArticoliLavorazione>();
+                //List<DatiArticoliLavorazione> listaArticoliDaModificare = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaArticoliLavorazione.Where(x => x.IdArtArticoli == idArticolo).ToList<DatiArticoliLavorazione>();
 
                 foreach (DatiArticoliLavorazione articoloDaModificare in listaArticoliDaModificare)
                 {

@@ -33,17 +33,31 @@ namespace VideoSystemWeb.REPORT
                 DateTime dataA = DateTime.Today.AddDays(DateTime.DaysInMonth(DateTime.Today.Year,DateTime.Today.Month)-DateTime.Today.Day);
                 tbDataDa.Text = "01/" + DateTime.Today.Month.ToString("00") + "/" + DateTime.Today.Year.ToString("0000");
                 tbDataA.Text = DateTime.DaysInMonth(DateTime.Now.Year,DateTime.Now.Month).ToString("00") + "/" + DateTime.Today.Month.ToString("00") + "/" + DateTime.Today.Year.ToString("0000");
+
+                CaricaCombo();
             }
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
+        }
+
+        private void CaricaCombo()
+        {
+            #region ANNO
+            for (var i = DateTime.Now.Year; i >= DateTime.Now.Year - 10; i--)
+            {
+                ddl_Anno.Items.Add(new System.Web.UI.WebControls.ListItem(i.ToString(), i.ToString()));
+            }
+            #endregion
         }
 
         protected void btnRicercaTLTime_Click(object sender, EventArgs e)
         {
             string queryRicerca = ConfigurationManager.AppSettings["QUERY_SEARCH_TLTIME"];
 
-            string strDataDa = tbDataDa.Text.Trim().Substring(6,4) + "-" + tbDataDa.Text.Trim().Substring(3, 2) + "-" + tbDataDa.Text.Trim().Substring(0,2);
-            string strDataA = tbDataA.Text.Trim().Substring(6, 4) + "-" + tbDataA.Text.Trim().Substring(3, 2) + "-" + tbDataA.Text.Trim().Substring(0, 2);
+            //string strDataDa = tbDataDa.Text.Trim().Substring(6,4) + "-" + tbDataDa.Text.Trim().Substring(3, 2) + "-" + tbDataDa.Text.Trim().Substring(0,2);
+            //string strDataA = tbDataA.Text.Trim().Substring(6, 4) + "-" + tbDataA.Text.Trim().Substring(3, 2) + "-" + tbDataA.Text.Trim().Substring(0, 2);
 
+            string strDataDa = DateTime.Parse(tbDataDa.Text).ToString("yyyy-MM-dd");
+            string strDataA = DateTime.Parse(tbDataA.Text).ToString("yyyy-MM-dd");
 
             queryRicerca = queryRicerca.Replace("@dataDa", strDataDa);
             queryRicerca = queryRicerca.Replace("@dataA", strDataA);

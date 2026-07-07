@@ -384,7 +384,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "LEFT JOIN (SELECT idDatiLavorazione, fp_netto AS costo, idFornitori, idCollaboratori, idTipoSottoGruppo, id, data FROM dati_articoli_lavorazione ) d ON d.idDatiLavorazione = c.id " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori and e.id_dati_articoli_lavorazione=d.id " +
                                     //"left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     //"left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -408,7 +408,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "LEFT JOIN (SELECT idDatiLavorazione, fp_netto AS costo, idFornitori, idCollaboratori, idTipoSottoGruppo, id, data FROM dati_articoli_lavorazione ) d ON d.idDatiLavorazione = c.id " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori and e.id_dati_articoli_lavorazione=d.id " +
                                     //"left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     //"left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -529,7 +529,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "LEFT JOIN (SELECT idDatiLavorazione, fp_netto AS costo, idFornitori, idTipoSottogruppo, idCollaboratori, id, idTipoGruppo, idTipoGenere, data FROM dati_articoli_lavorazione ) d ON d.idDatiLavorazione = c.id " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori and e.id_dati_articoli_lavorazione=d.id " +
                                     //"left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     //"left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +
@@ -553,7 +553,7 @@ namespace VideoSystemWeb.DAL
                                     "left join dati_lavorazione c on c.idDatiAgenda = a.id  " +
                                     "LEFT JOIN (SELECT idDatiLavorazione, fp_netto AS costo, idFornitori, idTipoSottogruppo,idCollaboratori, id, idTipoGruppo, idTipoGenere, data FROM dati_articoli_lavorazione) d ON d.idDatiLavorazione = c.id " +
                                     "left join tipo_protocollo g on  g.nome = 'Fattura'  " +
-                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori " +
+                                    "left join dati_protocollo e on e.codice_lavoro = a.codice_lavoro and e.attivo = 1 and e.id_tipo_protocollo = g.id and destinatario = 'Fornitore' and  e.id_cliente=d.idFornitori and e.id_dati_articoli_lavorazione=d.id " +
                                     //"left join tipo_protocollo i on  i.nome = 'Contratto'  " +
                                     //"left join dati_protocollo f on f.id=c.idContratto and f.id_tipo_protocollo = i.id  " +
                                     "left join tipo_protocollo j on  j.nome = 'Offerta'  " +

@@ -375,7 +375,7 @@ namespace VideoSystemWeb.DAL
             #region COLLABORATORI ASSUNTI
                                     "UNION " +
                                     //"select  2 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE (coll.cognome+' '+coll.nome , forn.ragioneSociale) fornitore, 0.00 listino, d.costo costo, f.descrizione contratto, e.pathDocumento  as documento, h.pregresso  " +
-                                    "select  2 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE (coll.cognome+' '+coll.nome + COALESCE(' (' + NULLIF(LTRIM(RTRIM(coll.nomeSocieta)), '') + ')', ''), forn.ragioneSociale) fornitore, 0.00 listino, d.costo costo, e.pathDocumento  as documento, h.pregresso, '0' as codiceLavoro2   " +
+                                    "select  2 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE (coll.cognome+' '+coll.nome, forn.ragioneSociale) fornitore, 0.00 listino, d.costo costo, e.pathDocumento  as documento, h.pregresso, '0' as codiceLavoro2   " +
 
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
@@ -399,7 +399,7 @@ namespace VideoSystemWeb.DAL
             #region COLLABORATORI A FATTURA
                                     "UNION " +
                                     //"select  3 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE(NULLIF(coll.nomeSocieta, ''),NULLIF(forn.ragioneSociale, ''), NULLIF(coll.cognome, '') + ' ' + NULLIF(coll.nome, '')) fornitore, 0.00 listino, d.costo costo, f.descrizione contratto, e.pathDocumento as documento, h.pregresso  " +
-                                    "select  3 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE(NULLIF(coll.nomeSocieta, ''),NULLIF(forn.ragioneSociale, ''), NULLIF(coll.cognome, '') + ' ' + NULLIF(coll.nome, '')) fornitore, 0.00 listino, d.costo costo, e.pathDocumento as documento, h.pregresso, '0' as codiceLavoro2   " +
+                                    "select  3 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE (coll.cognome+' '+coll.nome + COALESCE(' (' + NULLIF(LTRIM(RTRIM(coll.nomeSocieta)), '') + ')', ''), forn.ragioneSociale) fornitore, 0.00 listino, d.costo costo, e.pathDocumento as documento, h.pregresso, '0' as codiceLavoro2   " +
 
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
@@ -483,7 +483,6 @@ namespace VideoSystemWeb.DAL
             //" group by a.id_cliente, b.ragioneSociale, a.produzione,a.codice_lavoro, a.lavorazione, c.ordine, e.protocollo_riferimento, f.descrizione, e.pathDocumento, h.pathDocumento, h.pregresso, l.nome, k.ragioneSociale " +
             #endregion
             #endregion
-
    
             #region TUTTO IL RESTO
                         "UNION " +
@@ -520,7 +519,7 @@ namespace VideoSystemWeb.DAL
             string query =
             #region COLLABORATORI ASSUNTI
                                     //"select distinct 2 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE (coll.cognome+' '+coll.nome , forn.ragioneSociale) fornitore, 0.00 listino, d.costo costo, f.descrizione contratto, e.pathDocumento as documento, h.pregresso  " +
-                                    "select distinct 2 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE (coll.cognome+' '+coll.nome + COALESCE(' (' + NULLIF(LTRIM(RTRIM(coll.nomeSocieta)), '') + ')', ''), forn.ragioneSociale) fornitore, 0.00 listino, d.costo costo, e.pathDocumento as documento, h.pregresso, '0' as codiceLavoro2   " +
+                                    "select distinct 2 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE (coll.cognome+' '+coll.nome, forn.ragioneSociale) fornitore, 0.00 listino, d.costo costo, e.pathDocumento as documento, h.pregresso, '0' as codiceLavoro2   " +
 
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +
@@ -544,7 +543,7 @@ namespace VideoSystemWeb.DAL
             #region COLLABORATORI A FATTURA
                                     "UNION " +
                                     //"select  3 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE(NULLIF(coll.nomeSocieta, ''),NULLIF(forn.ragioneSociale, ''), NULLIF(coll.cognome, '') + ' ' + NULLIF(coll.nome, '')) fornitore, 0.00 listino, d.costo costo, f.descrizione contratto, e.pathDocumento  as documento, h.pregresso  " +
-                                    "select  3 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE(NULLIF(coll.nomeSocieta, ''),NULLIF(forn.ragioneSociale, ''), NULLIF(coll.cognome, '') + ' ' + NULLIF(coll.nome, '')) fornitore, 0.00 listino, d.costo costo, e.pathDocumento  as documento, h.pregresso, '0' as codiceLavoro2   " +
+                                    "select  3 progressivo, d.id, a.id_cliente, b.ragioneSociale cliente, e.protocollo_riferimento 'numeroFattura', c.ordine, a.codice_lavoro, d.data data, a.lavorazione, a.produzione, 'Collaboratori' gruppo, k.nome sottogruppo, COALESCE (coll.cognome+' '+coll.nome + COALESCE(' (' + NULLIF(LTRIM(RTRIM(coll.nomeSocieta)), '') + ')', ''), forn.ragioneSociale) fornitore, 0.00 listino, d.costo costo, e.pathDocumento  as documento, h.pregresso, '0' as codiceLavoro2   " +
 
                                     "from tab_dati_agenda a  " +
                                     "left join anag_clienti_fornitori b on b.id = a.id_cliente  " +

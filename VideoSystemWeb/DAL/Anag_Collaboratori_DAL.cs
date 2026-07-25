@@ -336,6 +336,10 @@ namespace VideoSystemWeb.DAL
                             attivo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(attivo);
 
+                            SqlParameter idClientiFornitori = new SqlParameter("@id_clienti_fornitori", collaboratore.IdClientiFornitori.HasValue ? (object)collaboratore.IdClientiFornitori.Value : DBNull.Value);
+                            idClientiFornitori.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idClientiFornitori);
+
                             StoreProc.Connection.Open();
 
                             StoreProc.ExecuteNonQuery();
@@ -451,6 +455,10 @@ namespace VideoSystemWeb.DAL
                             System.Data.SqlClient.SqlParameter attivo = new System.Data.SqlClient.SqlParameter("@attivo", collaboratore.Attivo);
                             attivo.Direction = ParameterDirection.Input;
                             StoreProc.Parameters.Add(attivo);
+
+                            SqlParameter idClientiFornitori = new SqlParameter("@id_clienti_fornitori", collaboratore.IdClientiFornitori.HasValue ? (object)collaboratore.IdClientiFornitori.Value : DBNull.Value);
+                            idClientiFornitori.Direction = ParameterDirection.Input;
+                            StoreProc.Parameters.Add(idClientiFornitori);
 
                             StoreProc.Connection.Open();
 

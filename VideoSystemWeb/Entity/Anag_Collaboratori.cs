@@ -7,22 +7,23 @@ using System.Web;
 namespace VideoSystemWeb.Entity
 {
 
-    
-//  [id] [int] IDENTITY(1,1) NOT NULL,
-//  [cognome] [varchar] (50) NOT NULL,
-//  [nome] [varchar] (50) NOT NULL,
-//  [codiceFiscale] [varchar] (16) NOT NULL,
-//  [pathFoto] [varchar] (100) NULL,
-//  [nazione] [varchar] (50) NOT NULL,
-//  [comuneNascita] [varchar] (50) NOT NULL,
-//  [provinciaNascita] [varchar] (2) NOT NULL,
-//  [dataNascita] [datetime] NOT NULL,
-//  [comuneRiferimento] [varchar] (50) NOT NULL,
-//  [partitaIva] [varchar] (11) NULL,
-//  [nomeSocieta] [varchar] (50) NULL,
-//  [assunto] [bit] NOT NULL,
-//  [note] [varchar](max) NULL,
-//  [attivo] [bit] NOT NULL,
+
+    //  [id] [int] IDENTITY(1,1) NOT NULL,
+    //  [cognome] [varchar] (50) NOT NULL,
+    //  [nome] [varchar] (50) NOT NULL,
+    //  [codiceFiscale] [varchar] (16) NOT NULL,
+    //  [pathFoto] [varchar] (100) NULL,
+    //  [nazione] [varchar] (50) NOT NULL,
+    //  [comuneNascita] [varchar] (50) NOT NULL,
+    //  [provinciaNascita] [varchar] (2) NOT NULL,
+    //  [dataNascita] [datetime] NOT NULL,
+    //  [comuneRiferimento] [varchar] (50) NOT NULL,
+    //  [partitaIva] [varchar] (11) NULL,
+    //  [nomeSocieta] [varchar] (50) NULL,
+    //  [assunto] [bit] NOT NULL,
+    //  [note] [varchar](max) NULL,
+    //  [attivo] [bit] NOT NULL,
+    //  [id_clienti_fornitori] [int] NULL,
 
     [Serializable]
     public class Anag_Collaboratori
@@ -45,6 +46,7 @@ namespace VideoSystemWeb.Entity
         private bool assunto;
         private string note;
         private bool attivo;
+        private int? idClientiFornitori;
         private List<Anag_Qualifiche_Collaboratori> qualifiche;
         private List<Anag_Indirizzi_Collaboratori> indirizzi;
         private List<Anag_Email_Collaboratori> email;
@@ -67,6 +69,7 @@ namespace VideoSystemWeb.Entity
         public string Nome { get => nome; set => nome = value; }
         public string Cognome { get => cognome; set => cognome = value; }
         public int Id { get => id; set => id = value; }
+        public int? IdClientiFornitori { get => idClientiFornitori; set => idClientiFornitori = value; }
         public List<Anag_Qualifiche_Collaboratori> Qualifiche { get => qualifiche; set => qualifiche = value; }
         public List<Anag_Indirizzi_Collaboratori> Indirizzi { get => indirizzi; set => indirizzi = value; }
         public List<Anag_Email_Collaboratori> Email { get => email; set => email = value; }

@@ -1,17 +1,19 @@
 ﻿//------------------------------------------------------------------------------
 // <generato automaticamente>
-//     Codice generato da uno strumento.
+//     Questo codice è stato generato da uno strumento.
 //
 //     Le modifiche a questo file possono causare un comportamento non corretto e verranno perse se
 //     il codice viene rigenerato. 
 // </generato automaticamente>
 //------------------------------------------------------------------------------
 
-namespace VideoSystemWeb.Anagrafiche {
-    
-    
-    public partial class AnagCollaboratori {
-        
+namespace VideoSystemWeb.Anagrafiche
+{
+
+
+    public partial class AnagCollaboratori
+    {
+
         /// <summary>
         /// Controllo controlCollab.
         /// </summary>

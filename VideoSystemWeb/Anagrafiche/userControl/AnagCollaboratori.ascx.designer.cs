@@ -195,6 +195,42 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected global::System.Web.UI.WebControls.Button btnApriElencoWhatsapp;
 
         /// <summary>
+        /// Controllo btnCercaSocieta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCercaSocieta;
+
+        /// <summary>
+        /// Controllo btnChiudiPopupSocietaServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnChiudiPopupSocietaServer;
+
+        /// <summary>
+        /// Controllo btnAssociaSocietaServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAssociaSocietaServer;
+
+        /// <summary>
+        /// Controllo btnDisassociaSocietaServer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDisassociaSocietaServer;
+
+        /// <summary>
         /// Controllo hf_idColl.
         /// </summary>
         /// <remarks>
@@ -393,6 +429,15 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected global::System.Web.UI.WebControls.TextBox tbMod_ComuneRiferimento;
 
         /// <summary>
+        /// Controllo cmbMod_RegioneRiferimento.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cmbMod_RegioneRiferimento;
+
+        /// <summary>
         /// Controllo tbMod_PartitaIva.
         /// </summary>
         /// <remarks>
@@ -400,15 +445,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMod_PartitaIva;
-
-        /// <summary>
-        /// Controllo tbMod_PartitaIvaMaskedEditExtender1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generato automaticamente.
-        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-        /// </remarks>
-        protected global::AjaxControlToolkit.MaskedEditExtender tbMod_PartitaIvaMaskedEditExtender1;
 
         /// <summary>
         /// Controllo tbMod_NomeSocieta.
@@ -420,13 +456,31 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         protected global::System.Web.UI.WebControls.TextBox tbMod_NomeSocieta;
 
         /// <summary>
-        /// Controllo cmbMod_RegioneRiferimento.
+        /// Controllo tbMod_IdSocieta.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cmbMod_RegioneRiferimento;
+        protected global::System.Web.UI.WebControls.HiddenField tbMod_IdSocieta;
+
+        /// <summary>
+        /// Controllo imgbtnSelectIdSocieta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton imgbtnSelectIdSocieta;
+
+        /// <summary>
+        /// Controllo btnCancellaIdSocieta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ImageButton btnCancellaIdSocieta;
 
         /// <summary>
         /// Controllo tbMod_Iban.
@@ -1129,5 +1183,59 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAnnullaDocumento;
+
+        /// <summary>
+        /// Controllo PanelSocieta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelSocieta;
+
+        /// <summary>
+        /// Controllo PanelContLavorazioni.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelContLavorazioni;
+
+        /// <summary>
+        /// Controllo tbSearch_RagioneSociale.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbSearch_RagioneSociale;
+
+        /// <summary>
+        /// Controllo btnRicercaSocieta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRicercaSocieta;
+
+        /// <summary>
+        /// Controllo btnAzzeraCampiRicercaSocieta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAzzeraCampiRicercaSocieta;
+
+        /// <summary>
+        /// Controllo gvSocieta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generato automaticamente.
+        /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvSocieta;
     }
 }

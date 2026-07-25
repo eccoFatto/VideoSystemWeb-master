@@ -1,18 +1,19 @@
-﻿using System;
+﻿using AjaxControlToolkit;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Security.Policy;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using System.Configuration;
 using VideoSystemWeb.BLL;
-using VideoSystemWeb.Entity;
 using VideoSystemWeb.DAL;
-using System.IO;
-using System.Text.RegularExpressions;
-using AjaxControlToolkit;
-using System.Collections;
+using VideoSystemWeb.Entity;
 namespace VideoSystemWeb.Anagrafiche.userControl
 {
     public partial class AnagCollaboratori : System.Web.UI.UserControl
@@ -47,7 +48,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 // SE UTENTE ABILITATO ALLE MODIFICHE FACCIO VEDERE I PULSANTI DI MODIFICA
                 AbilitaBottoni(basePage.AbilitazioneInScrittura());
 
-
                 // CREO LA SESSION DEI COLLABORATORI A CUI INVIARE MESSAGGI WHATSAPP
                 Hashtable htCollaboratoriWhatsapp = new Hashtable();
                 Session[SessionManager.LISTA_COLLABORATORI_PER_INVIO_WHATSAPP] = htCollaboratoriWhatsapp;
@@ -56,6 +56,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "apriTabGiusta", script: "openDettaglioAnagrafica('" + hf_tabChiamata.Value + "');", addScriptTags: true);
             ScriptManager.RegisterStartupScript(Page, typeof(Page), "chiudiLoader", script: "$('.loader').hide();", addScriptTags: true);
         }
+        
         // ABILITO I BOTTONI DI MODIFICA IN BASE ALLA TIPOLOGIA DI UTENTE
         private void AbilitaBottoni(bool utenteAbilitatoInScrittura)
         {
@@ -89,6 +90,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 btnApriDocumenti.Visible = true;
             }
         }
+        
         // RICERCA COLLABORATORI
         protected void btnRicercaCollaboratori_Click(object sender, EventArgs e)
         {
@@ -114,6 +116,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
         {
 
         }
+        
         // AGGIORNO LE RIGHE DEL DATAGRID CON LA FUNZIONE DI APERTURA DETTAGLIO
         protected void gv_collaboratori_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -145,6 +148,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
             }
         }
+        
         // GESTIONE PAGINAZIONE GRIGLIA
         protected void gv_collaboratori_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
@@ -166,12 +170,14 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 pnlContainer.Visible = true;
             }
         }
+        
         // GESTIONE PULSANTI MODIFICA COLLABORATORE
         protected void btnModifica_Click(object sender, EventArgs e)
         {
             AttivaDisattivaModificaAnagrafica(false);
             GestisciPulsantiAnagrafica("MODIFICA");
         }
+        
         // DETTAGLIO GESTIONE PULSANTI ANAGRAFICA
         private void GestisciPulsantiAnagrafica(string stato)
         {
@@ -257,7 +263,6 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 {
                     log.Error(esito.Descrizione);
                     basePage.ShowError(esito.Descrizione);
-
                 }
                 else
                 {
@@ -301,6 +306,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             phDocumenti.Visible = false;
 
             pnlContainer.Visible = true;
+            pnlWhatsapp.Visible = false;
         }
 
         private void PulisciCampiDettaglio()
@@ -334,6 +340,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             gvMod_Documenti.DataSource = null;
             gvMod_Documenti.DataBind();
         }
+        
         // CARICA IMMAGINE COLLABORATORE
         protected void CaricaImmagine(object sender, EventArgs e)
         {
@@ -448,20 +455,26 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             tbMod_DataNascita.ReadOnly = attivaModifica;
             tbMod_Nazione.ReadOnly = attivaModifica;
             tbMod_Nome.ReadOnly = attivaModifica;
-            tbMod_NomeSocieta.ReadOnly = attivaModifica;
+            tbMod_NomeSocieta.ReadOnly = true;
             tbMod_Iban.ReadOnly = attivaModifica;
             tbMod_Note.ReadOnly = attivaModifica;
             tbMod_PartitaIva.ReadOnly = attivaModifica;
             tbMod_ProvinciaNascita.ReadOnly = attivaModifica;
+
             if (attivaModifica)
             {
                 cmbMod_RegioneRiferimento.Attributes.Add("disabled", "");
                 cbMod_Assunto.Attributes.Add("disabled", "");
+
+                imgbtnSelectIdSocieta.Attributes.Add("disabled", "");
+                btnCancellaIdSocieta.Attributes.Add("disabled", "");
             }
             else
             {
                 cmbMod_RegioneRiferimento.Attributes.Remove("disabled");
                 cbMod_Assunto.Attributes.Remove("disabled");
+                imgbtnSelectIdSocieta.Attributes.Remove("disabled");
+                btnCancellaIdSocieta.Attributes.Remove("disabled");
             }
         }
 
@@ -702,6 +715,8 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             collaboratore.Note = BasePage.ValidaCampo(tbMod_Note, "", false, ref esito);
             collaboratore.PartitaIva = BasePage.ValidaCampo(tbMod_PartitaIva, "", false, ref esito);
             collaboratore.ProvinciaNascita = BasePage.ValidaCampo(tbMod_ProvinciaNascita, "", false, ref esito);
+
+            collaboratore.IdClientiFornitori = string.IsNullOrWhiteSpace(tbMod_IdSocieta.Value)? (int?)null: (int.TryParse(tbMod_IdSocieta.Value, out var val) ? val : (int?)null);
 
             return collaboratore;
         }
@@ -1689,6 +1704,71 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
         }
 
+        #region GESTIONE SOCIETA'
+        protected void btnCercaSocieta_Click(object sender, EventArgs e)
+        {
+            tbSearch_RagioneSociale.Text = string.Empty;
+            gvSocieta.DataSource = null;
+            gvSocieta.DataBind();
+
+            PanelSocieta.Visible = true;
+        }
+
+        protected void btnChiudiPopupSocietaServer_Click(object sender, EventArgs e)
+        {
+            PanelSocieta.Visible = false;
+        }
+
+        protected void btnAssociaSocietaServer_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+            Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(Convert.ToInt32(tbMod_IdSocieta.Value), ref esito);
+            if (esito.Codice != 0)
+            {
+                basePage.ShowError(esito.Descrizione);
+            }
+            else
+            {
+                tbMod_NomeSocieta.Text = cliente.RagioneSociale;
+                PanelSocieta.Visible = false;
+            }
+        }
+
+        protected void btnDisassociaSocietaServer_Click(object sender, EventArgs e)
+        {
+            tbMod_NomeSocieta.Text = string.Empty;
+            tbMod_IdSocieta.Value = null;
+            PanelSocieta.Visible = false;
+        }
+
+        protected void btnRicercaSocieta_Click(object sender, EventArgs e)
+        {
+            Esito esito = new Esito();
+            DataTable dtSocieta = Anag_Collaboratori_BLL.Instance.RicercaSocieta(tbSearch_RagioneSociale.Text, ref esito);
+
+            gvSocieta.DataSource = dtSocieta;
+            gvSocieta.DataBind();
+        }
+
+        protected void gvSocieta_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // PRENDO ID E CLIENTE/FORNITORE E LI PASSO ALLA FUNZIONE
+                string idSocietaSelezionata = e.Row.Cells[1].Text;
+                string societaSelezionata = e.Row.Cells[2].Text;
+                ImageButton myButtonEdit = e.Row.FindControl("imgSelect") as ImageButton;
+                myButtonEdit.Attributes.Add("onclick", "associaSocieta('" + idSocietaSelezionata.Replace("&nbsp;", "") + "','" + societaSelezionata.Replace("&nbsp;", "") + "');");
+            }
+        }
+
+        protected void gvSocieta_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvSocieta.PageIndex = e.NewPageIndex;
+            btnRicercaSocieta_Click(null, null);
+        }
+        #endregion
+
         protected void gvMod_Telefoni_RigaSelezionata(object sender, EventArgs e)
         {
             //SCARICO IL TELEFONO SE SELEZIONATO
@@ -1749,6 +1829,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
             }
         }
+
         protected void gvMod_Indirizzi_RigaSelezionata(object sender, EventArgs e)
         {
             //SCARICO L'INDIRIZZO SE SELEZIONATO
@@ -1811,6 +1892,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
                 }
             }
         }
+
         protected void gvMod_Email_RigaSelezionata(object sender, EventArgs e)
         {
             //SCARICO LA MAIL SE SELEZIONATA
@@ -1860,6 +1942,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
 
         }
+
         protected void gvMod_Documenti_RigaSelezionata(object sender, EventArgs e)
         {
             //SCARICO IL REFERENTE SE SELEZIONATO
@@ -1922,6 +2005,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
 
 
         }
+
         protected void gvMod_Documenti_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -2028,6 +2112,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
 
             pnlWhatsapp.Visible = true;
+            pnlContainer.Visible = false;
         }
 
         protected void btnExportWhatsapp_Click(object sender, EventArgs e)
@@ -2107,7 +2192,7 @@ namespace VideoSystemWeb.Anagrafiche.userControl
             }
         }
 
-            protected void btnResetElenco_Click(object sender, EventArgs e)
+        protected void btnResetElenco_Click(object sender, EventArgs e)
         {
             Hashtable htCollaboratoriWhatsapp = new Hashtable();
             Session[SessionManager.LISTA_COLLABORATORI_PER_INVIO_WHATSAPP] = htCollaboratoriWhatsapp;

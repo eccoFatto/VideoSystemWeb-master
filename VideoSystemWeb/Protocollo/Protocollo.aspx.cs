@@ -952,7 +952,6 @@ namespace VideoSystemWeb.Protocollo
                 case "Collaboratore":
                     queryRicerca = "SELECT ID, COGNOME + ' ' + NOME as [Ragione Sociale] FROM anag_collaboratori WHERE attivo = 1 AND cognome LIKE '%@ragioneSociale%'";
                     queryRicerca = queryRicerca.Replace("@ragioneSociale", tbSearch_RagioneSociale.Text.Trim().Replace("'", "''"));
-
                     break;
                 default:
                     break;
@@ -994,7 +993,6 @@ namespace VideoSystemWeb.Protocollo
             gvClienti.PageIndex = e.NewPageIndex;
             btnRicercaClienti_Click(null, null);
         }
-
 
         protected void imgbtnSelectCliente_Click(object sender, ImageClickEventArgs e)
         {

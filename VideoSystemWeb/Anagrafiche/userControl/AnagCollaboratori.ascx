@@ -96,6 +96,47 @@
     }
 
 
+
+
+
+    // APRO POPUP RICERCA SOCIETA
+    function cercaSocieta() {
+        $('.loader').show();
+        $("#<%=btnCercaSocieta.ClientID%>").click();
+    }
+
+    function eliminaSocieta() {
+        $("#<%=tbMod_IdSocieta.ClientID%>").val('');
+        $("#<%=tbMod_NomeSocieta.ClientID%>").val('');
+
+        $("#<%=btnDisassociaSocietaServer.ClientID%>").click();
+    }
+
+    <%--function inserisciSocieta() {
+        if (document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value != '') {
+            associaSocieta('', document.getElementById('<%=tbSearch_RagioneSociale.ClientID%>').value);
+        }
+    }--%>
+
+    function azzeraCampiRicercaSocieta() {
+        $("#<%=tbSearch_RagioneSociale.ClientID%>").val('');
+    }
+
+    function chiudiPopupSocieta() {
+        $("#<%=btnChiudiPopupSocietaServer.ClientID%>").click();
+    }
+
+    function associaSocieta(idCli, cliente) {
+        var txt1 = $("#<%=tbMod_NomeSocieta.ClientID%>");
+        var txt2 = $("#<%=tbMod_IdSocieta.ClientID%>");
+        txt1.val(cliente);
+        txt2.val(idCli);
+        txt1.text = cliente;
+        txt2.text = idCli;
+
+        $("#<%=btnAssociaSocietaServer.ClientID%>").click();
+    }
+
 </script>
 <Label class="w3-text-blue"><asp:Label ID="lblTipoAzienda" runat="server" Text="COLLABORATORI"></asp:Label></Label>
 
@@ -208,6 +249,11 @@
 <asp:Button runat="server" ID="btnEditCollaboratore" Style="display: none" OnClick="EditCollaboratore_Click"/>
 <asp:Button runat="server" ID="btnInsCollaboratore" Style="display: none" OnClick="InserisciCollaboratori_Click"/>
 <asp:Button runat="server" ID="btnApriElencoWhatsapp" Style="display: none" OnClick="btnApriElencoWhatsapp_Click"/>
+
+<asp:Button runat="server" ID="btnCercaSocieta" Style="display: none" OnClick="btnCercaSocieta_Click"/>
+<asp:Button runat="server" ID="btnChiudiPopupSocietaServer" Style="display: none" OnClick="btnChiudiPopupSocietaServer_Click" />
+<asp:Button runat="server" ID="btnAssociaSocietaServer" Style="display: none" OnClick="btnAssociaSocietaServer_Click" />
+<asp:Button runat="server" ID="btnDisassociaSocietaServer" Style="display: none" OnClick="btnDisassociaSocietaServer_Click" />
  
 <asp:HiddenField ID="hf_idColl" runat="server" EnableViewState="true" />
 <asp:HiddenField ID="hf_tipoOperazione" runat="server" EnableViewState="true" />
@@ -260,10 +306,7 @@
                         <asp:Label runat="server" ID="lblDettaglioModifica" Text=""></asp:Label>
                     </div>
                 </div>
-<%--                <div class="w3-container w3-center w3-xlarge">
-                    GESTIONE COLLABORATORI
-                </div>
-                <br />--%>
+
                 <div class="w3-container">
 <!-- ELENCO TAB DETTAGLI COLLABORATORE -->
                     <div class="w3-bar w3-red w3-round">
@@ -282,7 +325,7 @@
                     <table style="width:100%">
                         <tr>
                             <td style="width:75%">
-                                <div class="w3-row-padding">
+                                <div class="w3-row-padding w3-margin-bottom w3-margin-top">
                                     <div class="w3-half">
                                         <label>Cognome</label>
                                         <asp:TextBox ID="tbMod_Cognome" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" ></asp:TextBox>
@@ -293,7 +336,7 @@
                                     </div>
                                 </div>
                                         
-                                <div class="w3-row-padding">
+                                <div class="w3-row-padding w3-margin-bottom">
                                     <div class="w3-quarter">
                                         <label>Codice Fiscale</label>
                                         <asp:TextBox ID="tbMod_CF" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="16"></asp:TextBox>
@@ -312,7 +355,7 @@
                                     </div>
                                 </div>
                                         
-                                <div class="w3-row-padding">
+                                <div class="w3-row-padding w3-margin-bottom">
                                     <div class="w3-quarter"  style="position: relative">
                                         <label>Data Nascita</label>
                                         <asp:TextBox ID="tbMod_DataNascita" runat="server" CssClass="w3-input w3-border calendar" placeholder="gg/mm/aaaa" MaxLength="10" ReadOnly="true"></asp:TextBox>
@@ -321,23 +364,10 @@
                                         <label>Comune Riferimento</label>
                                         <asp:TextBox ID="tbMod_ComuneRiferimento" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
                                     </div>
+
                                     <div class="w3-quarter">
-                                        <label>Partita Iva</label>
-                                        <asp:TextBox ID="tbMod_PartitaIva" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="11"></asp:TextBox>
-                                        <ajaxToolkit:MaskedEditExtender ID="tbMod_PartitaIvaMaskedEditExtender1" runat="server" TargetControlID="tbMod_PartitaIva" MaskType="None" Mask="99999999999" ></ajaxToolkit:MaskedEditExtender>
-                                    </div>
-                                    <div class="w3-quarter">
-                                        <label>Società</label>
-                                        <asp:TextBox ID="tbMod_NomeSocieta" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true"></asp:TextBox>
-                                    </div>
-                                </div>
-                                        
-                                <div class="w3-row-padding">
-                                     <div class="w3-third">
-<%--                                        <label>Attivo</label>
-                                        <asp:CheckBox ID="cbMod_Attivo" runat="server" Enabled="false" class="w3-check"></asp:CheckBox>--%>
-                                         <label>Regione Riferimento</label>
-                                        <asp:DropDownList runat="server" ID="cmbMod_RegioneRiferimento" CssClass="w3-input w3-border" disabled>
+                                        <label>Regione Riferimento</label>
+                                        <asp:DropDownList runat="server" ID="cmbMod_RegioneRiferimento" CssClass="w3-input w3-border" >
                                             <asp:ListItem Text="" Value="" />
                                             <asp:ListItem Text="Abruzzo" Value="Abruzzo" />
                                             <asp:ListItem Text="Basilicata" Value="Basilicata" />
@@ -360,12 +390,36 @@
                                             <asp:ListItem Text="Val d'Aosta" Value="Val d'Aosta" />
                                             <asp:ListItem Text="Veneto" Value="Veneto" />
                                         </asp:DropDownList>
-                                    </div>                                   
-                                    <div class="w3-third">
+                                    </div>
+
+                                    <div class="w3-quarter">
+                                        <label>Partita Iva</label>
+                                        <asp:TextBox ID="tbMod_PartitaIva" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="11" onkeypress="return onlyNumbers();"></asp:TextBox>
+                                    </div>
+                                </div>
+                                        
+                                <div class="w3-row-padding w3-margin-bottom">
+                                    <div class="w3-half">
+                                        <label>Società</label>
+                                        <div class="w3-row">
+                                            <div class="w3-col" style="width:80%">
+                                                <asp:TextBox ID="tbMod_NomeSocieta" runat="server" CssClass="w3-input w3-border" ReadOnly="true"></asp:TextBox>
+                                                <asp:HiddenField runat="server" ID="tbMod_IdSocieta" />
+                                            </div>
+                                            <div class="w3-col" style="width:5%;margin-left:8px">
+                                                <asp:ImageButton ID="imgbtnSelectIdSocieta" ImageUrl="~/Images/Search.ico" runat="server" class="w3-input w3-round" Height="40px" Width="40px" ToolTip="Cerca Società" OnClientClick="cercaSocieta()" />
+                                            </div>
+                                            <div class="w3-col" style="width:5%;margin-left:12px">
+                                                <asp:ImageButton ID="btnCancellaIdSocieta" ImageUrl="~/Images/delete.png" runat="server" class="w3-input w3-round" Height="40px" Width="40px" ToolTip="Elimina Società" OnClientClick="eliminaSocieta()" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="w3-quarter">
                                         <label>Iban</label><br />
                                         <asp:TextBox ID="tbMod_Iban" runat="server" CssClass="w3-input w3-border" placeholder="" ReadOnly="true" MaxLength="27" ></asp:TextBox>
                                     </div>
-                                    <div class="w3-third">
+                                    <div class="w3-quarter">
                                         <label>Assunto</label><br />
                                         <asp:CheckBox ID="cbMod_Assunto" runat="server" CssClass="w3-check" disabled></asp:CheckBox>
                                     </div>
@@ -693,6 +747,59 @@
                 </div>
             </asp:Panel>
         </asp:Panel>
+
+
+<!-- POPUP RICERCA SOCIETA' -->
+            <asp:Panel runat="server" ID="PanelSocieta" Visible="false">
+                <div class="modalBackground"></div>
+                <asp:Panel runat="server" ID="PanelContLavorazioni" CssClass="containerPopupStandard round" ScrollBars="Auto">
+                    <br />
+                    <div class="w3-container w3-padding w3-margin">
+<!-- RICERCA SOCIETA' -->
+                        <div class="w3-bar w3-orange w3-round">
+                            <div class="w3-bar-item w3-button w3-orange">Ricerca Società
+                            </div>
+                            <div class="w3-bar-item w3-button w3-orange w3-right">
+                                <div id="btnChiudiPopupSocieta" class="w3-button w3-orange w3-small w3-round" onclick="chiudiPopupSocieta();">Chiudi</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="w3-row-padding w3-padding w3-margin">
+                        <div class="w3-threequarter">
+                            <label>Ragione Sociale</label>
+                            <asp:TextBox ID="tbSearch_RagioneSociale" runat="server" MaxLength="60" class="w3-input w3-border" placeholder=""></asp:TextBox>
+                        </div>
+                        <div class="w3-quarter">
+                            <label>&nbsp;</label>
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="width: 50%;">
+                                        <asp:Button ID="btnRicercaSocieta" runat="server" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnRicercaSocieta_Click" OnClientClick="$('.loader').show();" Text="Ricerca" />
+                                    </td>
+                                    <td style="width: 50%;">
+                                        <asp:Button ID="btnAzzeraCampiRicercaSocieta" runat="server" class="w3-btn w3-circle w3-red" Text="&times;" OnClientClick="azzeraCampiRicercaSocieta();" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="round w3-padding w3-margin">
+                        <asp:GridView ID="gvSocieta" runat="server" Style="font-size: 10pt; width: 100%; position: relative; background-color: #EEF1F7;" CssClass="grid" OnRowDataBound="gvSocieta_RowDataBound" AllowPaging="True" OnPageIndexChanging="gvSocieta_PageIndexChanging" PageSize="20">
+                            <Columns>
+                                <asp:TemplateField ShowHeader="False" HeaderText="Sel." HeaderStyle-Width="30px">
+                                    <ItemTemplate>
+                                        <asp:ImageButton ID="imgSelect" runat="server" CausesValidation="false" Text="Apri" ImageUrl="~/Images/detail-icon.png" ToolTip="Seleziona Cliente" ImageAlign="AbsMiddle" Height="30px" />
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                    </div>
+                    <br />
+                </asp:Panel>
+            </asp:Panel>
+<!-- FINE POPUP RICERCA SOCIETA' -->
+
     </ContentTemplate>
     <Triggers>
         
@@ -708,5 +815,3 @@
         <asp:AsyncPostBackTrigger ControlID="btnInserisciQualifica" EventName="Click" />
     </Triggers>
 </asp:UpdatePanel>
-
-

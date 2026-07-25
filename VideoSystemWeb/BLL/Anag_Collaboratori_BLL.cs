@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using VideoSystemWeb.DAL;
@@ -27,9 +28,9 @@ namespace VideoSystemWeb.BLL
                 return instance;
             }
         }
+        
         public int CreaCollaboratore(Anag_Collaboratori collaboratore, ref Esito esito)
         {
-            
             int iREt = Anag_Collaboratori_DAL.Instance.CreaCollaboratore(collaboratore, ref esito);
 
             return iREt;
@@ -70,5 +71,16 @@ namespace VideoSystemWeb.BLL
             return Anag_Collaboratori_DAL.Instance.RemoveCollaboratore(idCollaboratore);
         }
 
+        public DataTable RicercaSocieta(string ragioneSociale, ref Esito esito)
+        {
+            string queryRicerca = "";
+            ragioneSociale = ragioneSociale.Trim().Replace("'", "''");
+
+            queryRicerca = "SELECT ID, RAGIONESOCIALE as [Ragione Sociale] FROM anag_clienti_fornitori WHERE attivo = 1 AND ragioneSociale LIKE '%" + ragioneSociale +"%'";
+
+            DataTable dtSocieta = Base_DAL.GetDatiBySql(queryRicerca, ref esito);
+
+            return dtSocieta;
+        }
     }
 }

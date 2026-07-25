@@ -169,6 +169,11 @@
             $("#<%=tbSearch_Produzione.ClientID%>").val('');
         }
 
+        function azzeraCampiRicercaClienti() {
+            $("#<%=ddlSceltaClienteCollaboratore.ClientID%>").val('Cliente');
+            $("#<%=tbSearch_RagioneSociale.ClientID%>").val('');
+        }
+
         function uploadError(sender, args) {
             $('.loader').hide();
             document.getElementById('<%=lblStatus.ClientID%>').innerText = 'Errore sul file ' + args.get_fileName() + ' - ' + args.get_errorMessage();
@@ -514,7 +519,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="w3-col" style="width:25%">
                                         <label>Associazione Fattura</label>
                                         <div class="w3-row">
@@ -578,11 +582,7 @@
                                         <asp:Label ID="lblBloccaFattura" runat="server" Text="Protocollo SDI " /><asp:CheckBox ID="chkBloccaFattura" runat="server" ToolTip="Sostituisci con fattura SDI"/>
                                         <asp:Button ID="btnAnnullaCaricamento" runat="server" class="w3-input w3-border w3-circle w3-red  w3-center" Width="50px" Text="&times;" Style="float:right" ToolTip="Annulla Caricamento File" OnClick="btnAnnullaCaricamento_Click" />
                                     </div>
-
                                 </div>
-
-
-
 
                                 <br />
                                 <asp:Label ID="lblStatus" runat="server" Style="font-family: Arial; font-size: small;"></asp:Label>
@@ -687,10 +687,9 @@
                 <asp:Panel runat="server" ID="PanelContLavorazioni" CssClass="containerPopupStandard round" ScrollBars="Auto">
                     <br />
                     <div class="w3-container w3-padding w3-margin">
-
 <!-- RICERCA CLIENTI -->
                         <div class="w3-bar w3-orange w3-round">
-                            <div class="w3-bar-item w3-button w3-orange">Ricerca Clienti\Collaboratori
+                            <div class="w3-bar-item w3-button w3-orange">Ricerca Clienti/Collaboratori
                             </div>
                             <div class="w3-bar-item w3-button w3-orange w3-right">
                                 <div id="btnChiudiPopupClienti" class="w3-button w3-orange w3-small w3-round" onclick="chiudiPopupClienti();">Chiudi</div>
@@ -699,7 +698,7 @@
                     </div>
                     <div class="w3-row-padding w3-padding w3-margin">
                         <div class="w3-half">
-                            <label>Cliente\Collaboratore</label>
+                            <label>Cliente/Collaboratore</label>
                             <asp:DropDownList ID="ddlSceltaClienteCollaboratore" runat="server" Width="100%" class="w3-input w3-border">
                                 <asp:ListItem Value="Cliente" Text="Cliente"></asp:ListItem>
                                 <asp:ListItem Value="Collaboratore" Text="Collaboratore"></asp:ListItem>
@@ -748,18 +747,6 @@
 <!-- FINE POPUP RICERCA CLIENTI -->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- POPUP SELEZIONA ELEMENTO DA ASSOCIARE -->
             <asp:Panel runat="server" ID="PanelAssociaArticolo" Visible="false">
                 <div class="modalBackground"></div>
@@ -767,12 +754,12 @@
                     <br />
                     <div class="w3-container w3-padding w3-margin">
 
-<!-- RICERCA CLIENTI -->
+<!-- RICERCA ELEMENTI -->
                         <div class="w3-bar w3-orange w3-round">
                             <div class="w3-bar-item w3-button w3-orange">Selezionare l'articolo a cui si riferisce il documento
                             </div>
                             <div class="w3-bar-item w3-button w3-orange w3-right">
-                                <div id="btnChiudiPopupClienti" class="w3-button w3-orange w3-small w3-round" onclick="chiudiPopupAssociaArticolo();">Chiudi</div>
+                                <div id="btnChiudiPopupElementi" class="w3-button w3-orange w3-small w3-round" onclick="chiudiPopupAssociaArticolo();">Chiudi</div>
                             </div>
                         </div>
                     </div>
@@ -796,7 +783,7 @@
                     <br />
                 </asp:Panel>
             </asp:Panel>
-<!-- FINE POPUP RICERCA CLIENTI -->
+<!-- FINE POPUP RICERCA ELEMENTI -->
 
 
         </ContentTemplate>

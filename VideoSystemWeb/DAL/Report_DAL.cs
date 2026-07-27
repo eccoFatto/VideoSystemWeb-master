@@ -219,9 +219,9 @@ namespace VideoSystemWeb.DAL
                                             "Base AS ( " +
                                             "    SELECT artLav.idCollaboratori, artLav.data, " +
                                             // 💰 Assunzione
-                                            "          SUM(CASE WHEN artLav.idTipoPagamento = "+ idTipoAssunzione + " THEN artLav.fp_netto  WHEN artLav.idTipoPagamento = 2 THEN " + quotaFissaMisto + "  ELSE 0  END) AS Assunzione, " +
+                                            "          SUM(CASE WHEN artLav.idTipoPagamento = 1 THEN artLav.fp_netto  WHEN artLav.idTipoPagamento = 2 THEN CASE WHEN artLav.fp_netto = 0 THEN 0 ELSE " + quotaFissaMisto + " END  ELSE 0  END) AS Assunzione," +
                                             // 💰 Mista
-                                            "          SUM(CASE WHEN artLav.idTipoPagamento = " + idTipoMista + " THEN artLav.fp_netto - " + quotaFissaMisto + " ELSE 0 END) AS Mista, " +
+                                            "          SUM(CASE WHEN artLav.idTipoPagamento = 2 THEN CASE WHEN artLav.fp_netto = 0 THEN 0 ELSE artLav.fp_netto - " + quotaFissaMisto + " END ELSE 0 END) AS Mista, " +
                                             // 🚗 Rimborso KM
                                             "          SUM(CASE WHEN artLav.idTipoPagamento = " + idTipoRimborsoKm + " THEN artLav.fp_netto ELSE 0 END) AS RimborsoKm " +
 

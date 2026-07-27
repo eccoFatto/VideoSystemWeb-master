@@ -727,6 +727,7 @@
     <Compile Include="BLL\Anag_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Anag_Documenti_Collaboratori_BLL.cs" />
     <Compile Include="BLL\Dati_Agenda_Magazzino_BLL.cs" />
+    <Compile Include="BLL\Gestione_Semaforo_BLL.cs" />
     <Compile Include="BLL\Note_Agenda_Magazzino_BLL.cs" />
     <Compile Include="BLL\Dati_Lavorazione_BLL.cs" />
     <Compile Include="BLL\GridViewHelper\GridViewGroup.cs" />
@@ -789,6 +790,7 @@
     <Compile Include="DAL\Config_DAL.cs" />
     <Compile Include="DAL\Dati_Articoli_Lavorazione_DAL.cs" />
     <Compile Include="DAL\Dati_Agenda_Magazzino_DAL.cs" />
+    <Compile Include="DAL\Gestione_Semaforo_DAL.cs" />
     <Compile Include="DAL\Note_Agenda_Magazzino_DAL.cs" />
     <Compile Include="DAL\Dati_Lavorazione_DAL.cs" />
     <Compile Include="DAL\Dati_PianoEsterno_Lavorazione_DAL.cs" />
@@ -850,6 +852,7 @@
     <Compile Include="Entity\Sottogruppo.cs" />
     <Compile Include="Entity\StatisticheCosti.cs" />
     <Compile Include="Entity\StatisticheRicavi.cs" />
+    <Compile Include="Entity\Tab_Semaforo_Lavorazioni.cs" />
     <Compile Include="Entity\Utenti.cs" />
     <Compile Include="Entity\Protocolli.cs" />
     <Compile Include="Entity\Anag_Telefoni_Collaboratori.cs" />

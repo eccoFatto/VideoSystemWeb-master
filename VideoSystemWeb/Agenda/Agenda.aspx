@@ -379,7 +379,7 @@
                         <asp:Button ID="btnOfferta" runat="server" Text="Trasforma in offerta" class="w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnOfferta_Click" OnClientClick="return confermaCambioStato();$('.loader').show();" Visible="false" Style="padding: 7px 10px" />
                         <asp:Button ID="btnLavorazione" runat="server" Text="Trasforma in lavorazione" class="w3-btn w3-white w3-border w3-border-purple w3-round-large" OnClientClick="return confermaCambioStato();$('.loader').show();" OnClick="btnLavorazione_Click" Visible="false" Style="padding: 7px 10px" />
                     
-                        <asp:Button ID="btn_annulla" runat="server" Text="Annulla" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_chiudi_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px;" />
+                        <asp:Button ID="btn_annulla" runat="server" Text="Annulla" class="w3-btn w3-white w3-border w3-border-red w3-round-large" OnClick="btn_annulla_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px;" />
                     </div>
 
                 </asp:Panel>

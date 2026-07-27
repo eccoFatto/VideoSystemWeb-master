@@ -63,7 +63,6 @@ namespace VideoSystemWeb.Agenda
             Tipologica viaggio  = UtilityTipologiche.getElementByID(SessionManager.ListaStati, Stato.Instance.STATO_VIAGGIO, ref esito);
             coloreViaggio = UtilityTipologiche.getParametroDaTipologica(viaggio, "color", ref esito);
 
-
             if (!string.IsNullOrEmpty(SessionManager.CercaLavorazione_Data))
             {
                 string data = SessionManager.CercaLavorazione_Data;
@@ -147,6 +146,11 @@ namespace VideoSystemWeb.Agenda
 
             SessionManager.EventoSelezionato = CreaEventoDaSelezioneAgenda(dataEvento, risorsaEvento);
 
+            AperturaEventoSelezionato();
+        }
+
+        private void AperturaEventoSelezionato()
+        {
             int idStato = SessionManager.EventoSelezionato.id_stato;
             var tabMapping = new Dictionary<int, string>
             {
@@ -164,9 +168,7 @@ namespace VideoSystemWeb.Agenda
             }
 
             ScriptManager.RegisterStartupScript(this, typeof(Page), "apritab", $"openTabEvento('{tab}');", true);
-
             AbilitaComponentiPopup();
-
             MostraPopup();
         }
 

@@ -226,7 +226,10 @@ namespace VideoSystemWeb.DAL
                                             "          SUM(CASE WHEN artLav.idTipoPagamento = " + idTipoRimborsoKm + " THEN artLav.fp_netto ELSE 0 END) AS RimborsoKm " +
 
                                             "    FROM dati_articoli_lavorazione artLav " +
-	
+                                            "    LEFT JOIN dati_lavorazione datiLav ON datiLav.id = artLav.idDatiLavorazione " +
+                                            "    JOIN tab_dati_agenda datiAgenda ON datiAgenda.id = datiLav.idDatiAgenda and datiAgenda.id_stato >= 3" + // evita che vengano considerate lavorazioni cancellate e tornate in stato 'Offerta'
+
+
                                             "    WHERE  " +
                                             "        artLav.idTipoPagamento IN (" + idTipoAssunzione + ", " + idTipoMista + ", " + idTipoRimborsoKm+ ") " +
                                             "        AND artLav.data BETWEEN '" + dataInizioString + "' AND '" + dataFineString + "' " +

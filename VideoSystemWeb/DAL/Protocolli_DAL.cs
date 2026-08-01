@@ -31,6 +31,7 @@ namespace VideoSystemWeb.DAL
                 return instance;
             }
         }
+        
         public List<Protocolli> getProtocolli(string filtroCliente, string filtroProduzione, string filtroLavorazione, ref Esito esito, bool soloAttivi = true)
         {
             List<Protocolli> listaProtocolli = new List<Protocolli>();

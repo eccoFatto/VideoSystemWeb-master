@@ -223,6 +223,16 @@
         function confermaCambioStato() {
             return confirm("Lo stato dell'evento sta per essere modificato.\n Le modifiche andranno perse se non verrà effettuato il salvataggio");
         }
+
+        function forzaAccessoLavorazioneBloccata(id_utente, username, dataBlocco) {
+            var conferma = confirm("L'evento è attualmente in modifica da parte dell'utente " + username + " dal " + dataBlocco + ".\n\nForzare l'accesso?");
+            if (conferma) {
+                $("#<%=btnForzaBlocco.ClientID%>").click();
+            } else {
+                $("#<%=btnAnnullaAccesso.ClientID%>").click();   
+            }
+           
+        }
     </script>
 
     <link rel='stylesheet' href='/Css/Agenda.css' />
@@ -285,6 +295,8 @@
 
 
     <asp:Button runat="server" ID="btnEditEvent" Style="display: none" OnClick="btnEditEvent_Click" />
+    <asp:Button runat="server" ID="btnForzaBlocco" Style="display: none" OnClick="btnForzaBlocco_Click" />
+    <asp:Button runat="server" ID="btnAnnullaAccesso" Style="display: none" OnClick="btnAnnullaAccesso_Click" />
 
     <asp:UpdatePanel ID="upEvento" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
         <ContentTemplate>

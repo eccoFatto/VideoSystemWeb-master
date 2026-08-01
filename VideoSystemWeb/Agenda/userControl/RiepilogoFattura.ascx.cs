@@ -124,8 +124,6 @@ namespace VideoSystemWeb.Agenda.userControl
 
                         document.SetMargins(245, 30, 110, 30);
 
-
-
                         // ESTRAPOLO IL CLIENTE
                         Anag_Clienti_Fornitori cliente = Anag_Clienti_Fornitori_BLL.Instance.getAziendaById(eventoSelezionato.id_cliente, ref esito);
 

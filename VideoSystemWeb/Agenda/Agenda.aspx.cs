@@ -84,11 +84,9 @@ namespace VideoSystemWeb.Agenda
                     switch (utenteConnesso.tipoUtente)
                     {
                         case "VISUALIZZATORE":
-
                             div_PULSANTISHORTCUT.Visible = false;
                             break;
                         default:
-
                             div_PULSANTISHORTCUT.Visible = true;
                             break;
                     }
@@ -99,30 +97,7 @@ namespace VideoSystemWeb.Agenda
             }
             else if (!IsPostBack)
             {
-                DateTime dataPartenza = SessionManager.DataSelezionata == null? DateTime.Now : SessionManager.DataSelezionata;
-
-                ListaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito); //CARICO SOLO EVENTI VISUALIZZATI
-
-                hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
-                gv_scheduler.DataSource = CreateDataTable(dataPartenza);
-                gv_scheduler.DataBind();
-
-                if (Session[SessionManager.UTENTE] != null)
-                {
-                    Anag_Utenti utenteConnesso = (Anag_Utenti)Session[SessionManager.UTENTE];
-                    // IMPOSTO LA VISIBILITA' DEI MENU
-                    switch (utenteConnesso.tipoUtente)
-                    {
-                        case "VISUALIZZATORE":
-
-                            div_PULSANTISHORTCUT.Visible = false;
-                            break;
-                        default:
-
-                            div_PULSANTISHORTCUT.Visible = true;
-                            break;
-                    }
-                }
+                CreaGrigliaCalendario(ref esito);
             }
             else
             {
@@ -133,12 +108,39 @@ namespace VideoSystemWeb.Agenda
             divFiltroAgenda.Controls.Add(new LiteralControl(CreaFiltriColonneAgenda()));
         }
 
+        private void CreaGrigliaCalendario(ref Esito esito)
+        {
+            DateTime dataPartenza = SessionManager.DataSelezionata == null ? DateTime.Now : SessionManager.DataSelezionata;
+
+            ListaDatiAgenda = Agenda_BLL.Instance.CaricaDatiAgenda(dataPartenza, ref esito); //CARICO SOLO EVENTI VISUALIZZATI
+
+            hf_valoreData.Value = dataPartenza.ToString("dd/MM/yyyy");
+            gv_scheduler.DataSource = CreateDataTable(dataPartenza);
+            gv_scheduler.DataBind();
+
+            if (Session[SessionManager.UTENTE] != null)
+            {
+                Anag_Utenti utenteConnesso = (Anag_Utenti)Session[SessionManager.UTENTE];
+                // IMPOSTO LA VISIBILITA' DEI MENU
+                switch (utenteConnesso.tipoUtente)
+                {
+                    case "VISUALIZZATORE":
+                        div_PULSANTISHORTCUT.Visible = false;
+                        break;
+                    default:
+                        div_PULSANTISHORTCUT.Visible = true;
+                        break;
+                }
+            }
+        }
+
         #region COMPORTAMENTO ELEMENTI PAGINA
         protected void btnsearch_Click(object sender, EventArgs e)
         {
             AggiornaAgenda();
         }
 
+        #region APERTURA EVENTO
         protected void btnEditEvent_Click(object sender, EventArgs e)
         {
             DateTime dataEvento = DateTime.Parse(hf_data.Value);
@@ -146,7 +148,53 @@ namespace VideoSystemWeb.Agenda
 
             SessionManager.EventoSelezionato = CreaEventoDaSelezioneAgenda(dataEvento, risorsaEvento);
 
+            Esito esito = new Esito();
+            if (!Gestione_Semaforo_BLL.Instance.IsAccessoLavorazioneBloccato(SessionManager.EventoSelezionato.id, out Tab_Semaforo_Lavorazioni semaforo, ref esito))
+            {
+                Anag_Utenti utenteConnesso = (Anag_Utenti)Session[SessionManager.UTENTE];
+
+                Tab_Semaforo_Lavorazioni nuovoSemaforo = new Tab_Semaforo_Lavorazioni
+                {
+                    Id_Agenda = SessionManager.EventoSelezionato.id,
+                    Id_Utente = utenteConnesso.id,
+                    Nome_Utente = utenteConnesso.username,
+                    Data_Accesso = DateTime.Now
+                };
+                Gestione_Semaforo_BLL.Instance.InserisciAccessoLavorazione(nuovoSemaforo);
+                AperturaEventoSelezionato();
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(Page, typeof(Page), "forzaBloccoLavorazione", script: "forzaAccessoLavorazioneBloccata('" + semaforo.Id_Utente + "', '" + semaforo.Nome_Utente + "', '" + semaforo.Data_Accesso + "');", addScriptTags: true);
+            }
+        }
+
+        protected void btnForzaBlocco_Click(object sender, EventArgs e)
+        {
+            Anag_Utenti utenteConnesso = (Anag_Utenti)Session[SessionManager.UTENTE];
+            Tab_Semaforo_Lavorazioni nuovoSemaforo = new Tab_Semaforo_Lavorazioni
+            {
+                Id_Agenda = SessionManager.EventoSelezionato.id,
+                Id_Utente = utenteConnesso.id,
+                Nome_Utente = utenteConnesso.username,
+                Data_Accesso = DateTime.Now
+            };
+            Gestione_Semaforo_BLL.Instance.ModificaAccessoLavorazione(nuovoSemaforo);
+
+            // Ricostruisco la griglia che altrimenti conterrebbe solo id_agenda
+            Esito esito = new Esito();
+            CreaGrigliaCalendario(ref esito);
+
             AperturaEventoSelezionato();
+        }
+
+        protected void btnAnnullaAccesso_Click(object sender, EventArgs e)
+        {
+            // Ricostruisco la griglia che altrimenti conterrebbe solo id_agenda
+            Esito esito = new Esito();
+            CreaGrigliaCalendario(ref esito);
+
+            SessionManager.ClearEventoSelezionato();
         }
 
         private void AperturaEventoSelezionato()
@@ -171,6 +219,7 @@ namespace VideoSystemWeb.Agenda
             AbilitaComponentiPopup();
             MostraPopup();
         }
+        #endregion
 
         protected void btnSalva_Click(object sender, EventArgs e)
         {
@@ -273,6 +322,8 @@ namespace VideoSystemWeb.Agenda
 
                 if (esito.Codice == Esito.ESITO_OK)
                 {
+                    Gestione_Semaforo_BLL.Instance.EliminaAccessoLavorazione(SessionManager.EventoSelezionato.id);
+
                     ChiudiPopup();
                     ShowSuccess("Eliminazione eseguita correttamente");
                 }
@@ -290,8 +341,8 @@ namespace VideoSystemWeb.Agenda
             Esito esito = SalvaEvento();
             if (esito.Codice == Esito.ESITO_OK)
             {
+                Gestione_Semaforo_BLL.Instance.EliminaAccessoLavorazione(SessionManager.EventoSelezionato.id);
                 ChiudiPopup();
-                //ShowSuccess("Salvataggio eseguito correttamente");
             }
             else
             {
@@ -302,6 +353,8 @@ namespace VideoSystemWeb.Agenda
         // Chiude l'evento senza salvare
         protected void btn_annulla_Click(object sender, EventArgs e)
         {
+            Gestione_Semaforo_BLL.Instance.EliminaAccessoLavorazione(SessionManager.EventoSelezionato.id);
+
             pnlContainer.Style.Add("display", "none");
             upEvento.Update();
 
@@ -1258,6 +1311,8 @@ namespace VideoSystemWeb.Agenda
         {
             try
             {
+                Gestione_Semaforo_BLL.Instance.EliminaAccessoLavorazione(SessionManager.EventoSelezionato.id);
+
                 int idDatiAgenda = SessionManager.EventoSelezionato.id;
                 Response.Redirect("/MAGAZZINO/Magazzino.aspx?idDatiAgenda=" + idDatiAgenda);
             }

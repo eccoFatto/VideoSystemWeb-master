@@ -30,29 +30,24 @@ namespace VideoSystemWeb.BLL
         }
         #endregion  
 
-        public bool IsAccessoLavorazioneBloccato(ref Tab_Semaforo_Lavorazioni semaforo, ref Esito esito)
+        public bool IsAccessoLavorazioneBloccato(int idAgenda, out Tab_Semaforo_Lavorazioni semaforo, ref Esito esito)
         {
-            return Gestione_Semaforo_DAL.Instance.IsAccessoLavorazioneBloccato(ref semaforo, ref esito);
+            return Gestione_Semaforo_DAL.Instance.IsAccessoLavorazioneBloccato(idAgenda, out semaforo, ref esito);
         }
 
-        public Esito InserisciAccessoLavorazione(ref Tab_Semaforo_Lavorazioni semaforo)
+        public Esito InserisciAccessoLavorazione(Tab_Semaforo_Lavorazioni semaforo)
         {
-            return Gestione_Semaforo_DAL.Instance.InserisciAccessoLavorazione(ref semaforo);
+            return Gestione_Semaforo_DAL.Instance.InserisciAccessoLavorazione(semaforo);
         }
 
-        public Esito ModificaAccessoLavorazione(ref Tab_Semaforo_Lavorazioni semaforo)
+        public Esito ModificaAccessoLavorazione(Tab_Semaforo_Lavorazioni semaforo)
         {
-            return Gestione_Semaforo_DAL.Instance.ModificaAccessoLavorazione(ref semaforo);
+            return Gestione_Semaforo_DAL.Instance.ModificaAccessoLavorazione(semaforo);
         }
 
-        public Esito BloccaAccessoLavorazione(ref Tab_Semaforo_Lavorazioni semaforo)
+        public Esito EliminaAccessoLavorazione(int idAgenda)
         {
-            return Gestione_Semaforo_DAL.Instance.BloccaAccessoLavorazione(ref semaforo);
-        }
-
-        public Esito EliminaAccessoLavorazione(ref Tab_Semaforo_Lavorazioni semaforo)
-        {
-            return Gestione_Semaforo_DAL.Instance.EliminaAccessoLavorazione(ref semaforo);
+            return Gestione_Semaforo_DAL.Instance.EliminaAccessoLavorazione(idAgenda);
         }
     }
 }

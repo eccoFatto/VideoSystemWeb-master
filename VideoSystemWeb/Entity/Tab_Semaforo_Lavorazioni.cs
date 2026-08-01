@@ -22,5 +22,14 @@ namespace VideoSystemWeb.Entity
             Nome_Utente = null;
             Data_Accesso = null;
         }
+
+        public Tab_Semaforo_Lavorazioni(int? idAgenda, int? idUtente, string nomeUtente, DateTime? dataAccesso)
+        {
+            Id = null;
+            Id_Agenda = idAgenda;
+            Id_Utente = idUtente;
+            Nome_Utente = nomeUtente;
+            Data_Accesso = dataAccesso;
+        }
     }
 }

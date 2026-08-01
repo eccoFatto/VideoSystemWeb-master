@@ -13,7 +13,6 @@ namespace VideoSystemWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // lbl_benvenuto.Text = "Bentornato " + ((Anag_Utente)Session[SessionManager.UTENTE]).Nome + " " + ((Anag_Utente)Session[SessionManager.UTENTE]).Cognome;
             try
             {
 
@@ -56,7 +55,6 @@ namespace VideoSystemWeb
                 }
                 else
                 {
-                    //Session["ErrorPageText"] = "TimeOut Sessione";
                     BasePage b = new BasePage();
                     b.ShowError("TimeOut Sessione");
                     string url = String.Format("~/Login.aspx");
@@ -66,18 +64,10 @@ namespace VideoSystemWeb
             }
             catch (Exception ex)
             {
-
                 string eccezione = "Site.Master.cs - Page_Load " + Environment.NewLine + ex.Message + Environment.NewLine + ex.StackTrace;
 
-                //Session["ErrorPageText"] = eccezione;
-                //string url = String.Format("~/pageError.aspx");
-                //Response.Redirect(url, true);
-
-                //BasePage b = new BasePage();
-                //b.ShowError("TimeOut Sessione");
                 string url = String.Format("~/Login.aspx");
                 Response.Redirect(url, true);
-
             }
         }
 

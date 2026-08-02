@@ -13,6 +13,7 @@ using VideoSystemWeb.BLL;
 using VideoSystemWeb.BLL.Stampa;
 using VideoSystemWeb.DAL;
 using VideoSystemWeb.Entity;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace VideoSystemWeb.Agenda.userControl
 {
@@ -1084,10 +1085,11 @@ namespace VideoSystemWeb.Agenda.userControl
                                                                                                     && x.IdFornitori == datiPianoEsternoLavorazione.IdFornitori
                                                                                                     && x.Data == datiPianoEsternoLavorazione.Data);
 
-                if (figuraProfessionale != null && 
-                    (string.IsNullOrEmpty(txt_data_InsGenerale.Text) || 
-                    DateTime.Parse(txt_data_InsGenerale.Text).ToShortDateString() == ((DateTime)figuraProfessionale.Data).ToShortDateString()))
-                {
+                //if (figuraProfessionale != null && 
+                //    (string.IsNullOrEmpty(txt_data_InsGenerale.Text) || 
+                //    DateTime.Parse(txt_data_InsGenerale.Text).ToShortDateString() == ((DateTime)figuraProfessionale.Data).ToShortDateString()))
+                if (figuraProfessionale != null)
+                    {
                     if (importoDiaria > 0) // Aggiungo diaria a listaAricoliLavorazione in dettaglio economico
                     {
                         AggiungiDiariaAListaArticoli(importoDiaria, figuraProfessionale, figuraProfessionale.Data);
@@ -1217,6 +1219,8 @@ namespace VideoSystemWeb.Agenda.userControl
             {
                 ListaFigureProfessionali.Remove(figProfSelezionata);
 
+                SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Where(x => x.NumOccorrenza != figProfSelezionata.NumOccorrenza
+
                 CancellaDiariaDaListaArticoli(figProfSelezionata, figProfSelezionata.Data);
             }
 
@@ -1310,7 +1314,7 @@ namespace VideoSystemWeb.Agenda.userControl
 
         private void ClearPanelInserimentoSelezione()
         {
-            txt_data_InsGenerale.Text =
+            //txt_data_InsGenerale.Text =
             txt_orario_InsGenerale.Text =
             txt_diaria_InsGenerale.Text = "";
 

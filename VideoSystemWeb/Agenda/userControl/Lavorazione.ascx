@@ -949,7 +949,7 @@
                 <div id="panelInserimentoSelezionePianoEsterno" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
                     <asp:UpdatePanel ID="upInserimentoSelezionePianoEsterno" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                         <ContentTemplate>
-                            <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 80%; background-color: white; overflow: auto; min-height:350px;">
+                            <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 61%; background-color: white; overflow: auto; min-height:350px;">
                                 <div class="w3-row-padding">
 
                                     <div class="w3-panel w3-blue w3-center w3-round">
@@ -958,7 +958,7 @@
                                     </div>
                                     <div class="w3-col round" style="padding: 5px;">
 
-                                        <div class="w3-half">
+                                        <%--<div class="w3-half">
                                             <div class="w3-twothird round" style="padding: 5px; background-color: #cccccc;">
                                                 <label style="margin-bottom: 0.2rem;">Filtro data elementi da modificare</label>
                                                 <asp:TextBox ID="txt_data_InsGenerale" runat="server" class="w3-input w3-border calendar" placeholder="Modifiche applicate a tutte le date" Style="padding: 2px;"></asp:TextBox>
@@ -968,35 +968,41 @@
                                                 <label style="margin-bottom: 0.2rem;">Orario convocazione</label>
                                                 <asp:TextBox ID="txt_orario_InsGenerale" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;"></asp:TextBox>
                                             </div>
-                                        </div>
+                                        </div>--%>
                                         
-                                        <div class="w3-half">
-                                            <div class="w3-third" style="padding: 5px">
-                                                <label style="margin-bottom: 0.2rem;">Albergo</label><br />
-                                                <asp:CheckBox ID="chk_albergo_InsGenerale" runat="server" />
-                                            </div>
+                                        <%--<div class="w3-half">--%>
 
-                                            <div class="w3-third" style="padding: 5px">
-                                                <label style="margin-bottom: 0.2rem;">Intervento</label><br />
-                                                <asp:DropDownList ID="ddl_intervento_InsGenerale" runat="server"></asp:DropDownList>
-                                            </div>
+                                        <div class="w3-quarter" style="padding: 5px">
+                                            <label style="margin-bottom: 0.2rem;">Orario convocazione</label>
+                                            <asp:TextBox ID="txt_orario_InsGenerale" runat="server" class="w3-input w3-border time" placeholder="hh:mm" Style="padding: 2px;"></asp:TextBox>
+                                        </div>
 
-                                            <div class="w3-third" style="padding: 5px">
-                                                <div class="w3-col">
-                                                    <label style="margin-bottom: 0.2rem;">Diaria</label>
-                                                    <asp:CheckBox ID="chk_diaria_InsGenerale" runat="server" /><br />
-                                                    <div class="w3-row">
-                                                        <asp:RadioButton ID="diaria15_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="Label1" runat="server" Text="15€" />
-                                                    </div>
-                                                    <div class="w3-row">
-                                                        <asp:RadioButton ID="diaria30_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="Label2" runat="server" Text="30€" />
-                                                    </div>
-                                                    <div class="w3-row">
-                                                        <asp:RadioButton ID="diariaLibera_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px; float: left" /><asp:TextBox ID="txt_diaria_InsGenerale" runat="server" class="w3-input w3-border w3-disabled" Style="padding: 2px; width: 100px" onkeypress="return onlyNumbers();"></asp:TextBox>
-                                                    </div>
+                                        <div class="w3-quarter" style="padding: 5px">
+                                            <label style="margin-bottom: 0.2rem;">Albergo</label><br />
+                                            <asp:CheckBox ID="chk_albergo_InsGenerale" runat="server" />
+                                        </div>
+
+                                        <div class="w3-quarter" style="padding: 5px">
+                                            <label style="margin-bottom: 0.2rem;">Intervento</label><br />
+                                            <asp:DropDownList ID="ddl_intervento_InsGenerale" runat="server"></asp:DropDownList>
+                                        </div>
+
+                                        <div class="w3-quarter" style="padding: 5px">
+                                            <div class="w3-col">
+                                                <label style="margin-bottom: 0.2rem;">Diaria</label>
+                                                <asp:CheckBox ID="chk_diaria_InsGenerale" runat="server" /><br />
+                                                <div class="w3-row">
+                                                    <asp:RadioButton ID="diaria15_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="Label1" runat="server" Text="15€" />
+                                                </div>
+                                                <div class="w3-row">
+                                                    <asp:RadioButton ID="diaria30_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px" /><asp:Label ID="Label2" runat="server" Text="30€" />
+                                                </div>
+                                                <div class="w3-row">
+                                                    <asp:RadioButton ID="diariaLibera_InsGenerale" runat="server" GroupName="radioDiaria" Style="margin: 5px; float: left" /><asp:TextBox ID="txt_diaria_InsGenerale" runat="server" class="w3-input w3-border w3-disabled" Style="padding: 2px; width: 100px" onkeypress="return onlyNumbers();"></asp:TextBox>
                                                 </div>
                                             </div>
                                         </div>
+                                        <%--</div>--%>
                                     </div>
                                 </div>
                                 <br />

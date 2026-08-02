@@ -26,9 +26,10 @@
         }
         // fine
 
-         
+        
 
         Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+            gestisciBottoniSelezione();
 
             // data da assegnare all'articolo selezionato in dett. economico
             $('.calendarArticolo').datetimepicker({
@@ -159,6 +160,8 @@
                 $("#<%=txt_Costo.ClientID%>").val("0");
             });
 
+
+            
         });
     });
 
@@ -267,13 +270,30 @@
 
         $('#<%=txt_Prezzo.ClientID%>').val(prezzo.toFixed(2).replace(".", ","));
     }
+
+    function toggleSelectAll(source) {
+        var grid = document.getElementById('<%= gvFigProfessionali.ClientID %>');
+        var checkboxes = grid.querySelectorAll("input[type='checkbox'][id*='chkDeletePianoEsterno']");
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+
+        gestisciBottoniSelezione();
+    }
+
+    function gestisciBottoniSelezione() {
+        var checked = document.querySelectorAll('.chk-item input:checked').length;
+        var disable = checked === 0;
+
+        document.getElementById('<%= btn_CancellazioneMassivaPianoesterno.ClientID %>').disabled = disable;
+        document.getElementById('<%= btnInserimentoSelezione.ClientID %>').disabled = disable;
+    }
 </script>
 
 <asp:HiddenField ID="hf_tabSelezionataLavorazione" runat="server" EnableViewState="true" Value="Lavoraz" />
 
 <asp:Panel runat="server" ID="panelLavorazione" Style="height: 99%">
-   
-
 
     <div class="w3-container" style="width: 100%; height: 99%; position: relative; padding: 0px;">
 
@@ -804,15 +824,18 @@
 
                                 <asp:BoundField DataField="NominativoCompleto" HeaderText="Personale" HeaderStyle-Width="20%"/>
                                
-                                <asp:TemplateField HeaderText="Seleziona" HeaderStyle-Width="15%">
+                                <asp:TemplateField HeaderStyle-Width="15%">
+                                    <HeaderTemplate>
+                                        <asp:CheckBox ID="chkSelectAll" runat="server" onclick="toggleSelectAll(this);" style="position:relative; top:2px;" CssClass="chk-select-all" />
+                                        &nbsp;Seleziona
+                                    </HeaderTemplate>
                                     <ItemTemplate>
-                                        <asp:CheckBox ID="chkDeletePianoEsterno" runat="server" />
+                                        <asp:CheckBox ID="chkDeletePianoEsterno" runat="server" CssClass="chk-item" onclick="gestisciBottoniSelezione()"/>
                                         <asp:ImageButton ID="imgUp" runat="server" ImageUrl="/Images/arrow-up-icon.png" ToolTip="Sposta su" CommandName="moveUp" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDown" runat="server" ImageUrl="/Images/arrow-down-icon.png" ToolTip="Sposta giù" CommandName="moveDown" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
-                                        <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>'  OnClientClick="$('.loader').show();"/>
+                                        <asp:ImageButton ID="imgEdit" runat="server" ImageUrl="/Images/edit.png" ToolTip="Modifica" CommandName="modifica" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>'  OnClientClick="$('.loader').show();" />
                                         <asp:ImageButton ID="imgNotaspese" runat="server" ImageUrl="/Images/notaSpese.png" ToolTip="Stampa nota spese" CommandName="notaSpese" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' />
                                         <asp:ImageButton ID="imgDelete" runat="server" ImageUrl="/Images/delete.png" ToolTip="Elimina" CommandName="elimina" CommandArgument='<%#Eval("id") + "," + Eval("IdentificatoreOggetto") %>' OnClientClick="return confermaEliminazioneFigProf();" />
-                                        
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
@@ -837,7 +860,7 @@
                     <div class="w3-col " style="padding: 8px; text-align:center">
                         <asp:Button ID="btnImporta" runat="server" Text="Importa" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" OnClick="btnImporta_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                         <asp:Button ID="btn_CancellazioneMassivaPianoesterno" runat="server" Text="Elimina selezione" class=" w3-btn w3-white w3-border w3-border-red w3-round-large"  OnClick="btn_CancellazioneMassivaPianoEsterno_Click"  Style="padding: 7px 10px" OnClientClick="return confermaEliminazioneMassiva();"/>
-                        <asp:Button ID="btnInserimentoGenerale" runat="server" Text="Inserimento generale" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnInserimentoGenerale_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
+                        <asp:Button ID="btnInserimentoSelezione" runat="server" Text="Inserimento selezione" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnInserimentoSelezione_Click" OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                     
                         <asp:Button ID="btnExpWhatsapp" runat="server" Text="Esporta File Whatsapp" class=" w3-btn w3-white w3-border w3-border-blue w3-round-large" OnClick="btnExpWhatsapp_Click"  OnClientClick="$('.loader').show();" Style="padding: 7px 10px" />
                     
@@ -922,16 +945,16 @@
                     </asp:UpdatePanel>
                 </div>
 
-<!-- INSERIMENTO GENERALE -->
-                <div id="panelInserimentoGeneralePianoEsterno" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
-                    <asp:UpdatePanel ID="upInserimentoGeneralePianoEsterno" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
+<!-- INSERIMENTO SELEZIONE -->
+                <div id="panelInserimentoSelezionePianoEsterno" class="w3-modal " style="padding-top: 50px; position: fixed;" runat="server">
+                    <asp:UpdatePanel ID="upInserimentoSelezionePianoEsterno" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="false">
                         <ContentTemplate>
                             <div class="w3-modal-content w3-card-4 w3-animate-top round" style="position: relative; width: 80%; background-color: white; overflow: auto; min-height:350px;">
                                 <div class="w3-row-padding">
 
                                     <div class="w3-panel w3-blue w3-center w3-round">
-                                        <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Inserimento generale</b> </h5>
-                                        <span onclick="document.getElementById('<%= panelInserimentoGeneralePianoEsterno.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
+                                        <h5 class="w3-text-white" style="text-shadow: 1px 1px 0 #444"><b>Inserimento selezione</b> </h5>
+                                        <span onclick="document.getElementById('<%= panelInserimentoSelezionePianoEsterno.ClientID%>').style.display='none'" style="padding: 0px; top: 0px; margin-top: 16px; margin-right: 16px;" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Chiudi">&times;</span>
                                     </div>
                                     <div class="w3-col round" style="padding: 5px;">
 
@@ -980,8 +1003,8 @@
                                 <br />
 
                                 <div class="w3-center" style="margin: 10px; bottom:15px;position:absolute;width:99%;">
-                                    <asp:Button ID="btnOKInserimentoGenerale" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOKInserimentoGenerale_Click" />
-                                    <button onclick="document.getElementById('<%= panelInserimentoGeneralePianoEsterno.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
+                                    <asp:Button ID="btnOKInserimentoSelezione" runat="server" Text="OK" class=" w3-btn w3-white w3-border w3-border-green w3-round-large" Style="font-size: smaller; padding: 4px 8px" OnClick="btnOKInserimentoSelezione_Click" />
+                                    <button onclick="document.getElementById('<%= panelInserimentoSelezionePianoEsterno.ClientID%>').style.display='none'" type="button" class=" w3-btn w3-white w3-border w3-border-red w3-round-large" style="font-size: smaller; padding: 4px 8px">Annulla</button>
                                 </div>
                             </div>
                         </ContentTemplate>

@@ -663,13 +663,13 @@ namespace VideoSystemWeb.Agenda.userControl
         protected global::System.Web.UI.WebControls.Button btn_CancellazioneMassivaPianoesterno;
 
         /// <summary>
-        /// Controllo btnInserimentoGenerale.
+        /// Controllo btnInserimentoSelezione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnInserimentoGenerale;
+        protected global::System.Web.UI.WebControls.Button btnInserimentoSelezione;
 
         /// <summary>
         /// Controllo btnExpWhatsapp.
@@ -834,22 +834,22 @@ namespace VideoSystemWeb.Agenda.userControl
         protected global::System.Web.UI.WebControls.Button btnOKModificaPianoEsterno;
 
         /// <summary>
-        /// Controllo panelInserimentoGeneralePianoEsterno.
+        /// Controllo panelInserimentoSelezionePianoEsterno.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelInserimentoGeneralePianoEsterno;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelInserimentoSelezionePianoEsterno;
 
         /// <summary>
-        /// Controllo upInserimentoGeneralePianoEsterno.
+        /// Controllo upInserimentoSelezionePianoEsterno.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upInserimentoGeneralePianoEsterno;
+        protected global::System.Web.UI.UpdatePanel upInserimentoSelezionePianoEsterno;
 
         /// <summary>
         /// Controllo txt_data_InsGenerale.
@@ -951,13 +951,13 @@ namespace VideoSystemWeb.Agenda.userControl
         protected global::System.Web.UI.WebControls.TextBox txt_diaria_InsGenerale;
 
         /// <summary>
-        /// Controllo btnOKInserimentoGenerale.
+        /// Controllo btnOKInserimentoSelezione.
         /// </summary>
         /// <remarks>
         /// Campo generato automaticamente.
         /// Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOKInserimentoGenerale;
+        protected global::System.Web.UI.WebControls.Button btnOKInserimentoSelezione;
 
         /// <summary>
         /// Controllo panelNotaSpese.

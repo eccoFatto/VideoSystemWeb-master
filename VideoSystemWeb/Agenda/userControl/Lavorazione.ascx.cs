@@ -1220,7 +1220,7 @@ namespace VideoSystemWeb.Agenda.userControl
                 ListaFigureProfessionali.Remove(figProfSelezionata);
 
                 SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione = SessionManager.EventoSelezionato.LavorazioneCorrente.ListaDatiPianoEsternoLavorazione.Where(x => x.NumOccorrenza != figProfSelezionata.NumOccorrenza
-
+                                                                                                                                                                                                          || x.Data != figProfSelezionata.Data).ToList<DatiPianoEsternoLavorazione>();
                 CancellaDiariaDaListaArticoli(figProfSelezionata, figProfSelezionata.Data);
             }
 

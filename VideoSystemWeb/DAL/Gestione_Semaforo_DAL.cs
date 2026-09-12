@@ -71,6 +71,47 @@ namespace VideoSystemWeb.DAL
             return semaforo != null;
         }
 
+        // esclude dal blocco l'utente che ha in carico l'evento 
+        public bool IsAccessoLavorazioneBloccato(int idAgenda, string utente, out Tab_Semaforo_Lavorazioni semaforo, ref Esito esito)
+        {
+            semaforo = null;
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(sqlConstr))
+                using (SqlCommand cmd = new SqlCommand(
+                    @"SELECT TOP(1) id, id_agenda, id_utente, nome_utente, data_accesso FROM tab_semaforo_lavorazioni WHERE id_agenda = @idAgenda AND nome_utente <> @utente", con))
+                {
+                    cmd.Parameters.Add("@idAgenda", SqlDbType.Int).Value = idAgenda;
+                    cmd.Parameters.Add("@utente", SqlDbType.NVarChar, 50).Value = utente;
+
+                    con.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            semaforo = new Tab_Semaforo_Lavorazioni
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("id")),
+                                Id_Agenda = reader.GetInt32(reader.GetOrdinal("id_agenda")),
+                                Id_Utente = reader.GetInt32(reader.GetOrdinal("id_utente")),
+                                Nome_Utente = reader.GetString(reader.GetOrdinal("nome_utente")),
+                                Data_Accesso = reader.GetDateTime(reader.GetOrdinal("data_accesso"))
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                esito.Codice = Esito.ESITO_KO_ERRORE_GENERICO;
+                esito.Descrizione = ex.Message + Environment.NewLine + ex.StackTrace;
+            }
+
+            return semaforo != null;
+        }
+
         public Esito InserisciAccessoLavorazione(Tab_Semaforo_Lavorazioni semaforo)
         {
             Esito esito = new Esito();

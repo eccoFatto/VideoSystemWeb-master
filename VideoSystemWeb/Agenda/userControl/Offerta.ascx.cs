@@ -25,6 +25,12 @@ namespace VideoSystemWeb.Agenda.userControl
         private const string VIEWSTATE_LISTALUOGHI = "listaLuoghi";
         #endregion
 
+        public string CodiceLavoroOfferta
+        {
+            get { return val_CodiceLavoroOfferta.Text; }
+            set { val_CodiceLavoroOfferta.Text = value; }
+        }
+
         List<ArticoliGruppi> ListaArticoliGruppi
         {
             get

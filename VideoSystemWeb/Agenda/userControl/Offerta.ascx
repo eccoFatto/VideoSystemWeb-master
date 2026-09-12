@@ -53,7 +53,10 @@
 
 <asp:Panel runat="server" ID="panelOfferta" Style="height: 100%">
 
-    <div class="w3-container w3-center w3-large" style="height: 5%; margin-bottom: 10px; font-weight:bold">OFFERTA</div>
+    <div class="w3-container w3-center w3-large" style="height: 5%; margin-bottom: 10px; font-weight:bold">
+        <asp:Label ID="lbl_Offerta" runat="server" Text="OFFERTA "></asp:Label>
+        <asp:Label ID="val_CodiceLavoroOfferta" runat="server"></asp:Label>
+    </div>
 
     <div class="w3-row" style="height: 55%; font-size: small;">
         <div class="w3-col" style="height: 80%">

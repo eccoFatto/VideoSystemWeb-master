@@ -30,9 +30,16 @@ namespace VideoSystemWeb.BLL
         }
         #endregion  
 
+
         public bool IsAccessoLavorazioneBloccato(int idAgenda, out Tab_Semaforo_Lavorazioni semaforo, ref Esito esito)
         {
             return Gestione_Semaforo_DAL.Instance.IsAccessoLavorazioneBloccato(idAgenda, out semaforo, ref esito);
+        }
+
+        // esclude dal blocco l'utente che ha in carico l'evento 
+        public bool IsAccessoLavorazioneBloccato(int idAgenda, string utente, out Tab_Semaforo_Lavorazioni semaforo, ref Esito esito)
+        {
+            return Gestione_Semaforo_DAL.Instance.IsAccessoLavorazioneBloccato(idAgenda, utente, out semaforo, ref esito);
         }
 
         public Esito InserisciAccessoLavorazione(Tab_Semaforo_Lavorazioni semaforo)

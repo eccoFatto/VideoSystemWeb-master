@@ -224,14 +224,18 @@
             return confirm("Lo stato dell'evento sta per essere modificato.\n Le modifiche andranno perse se non verrà effettuato il salvataggio");
         }
 
-        function forzaAccessoLavorazioneBloccata(id_utente, username, dataBlocco) {
+        <%--function forzaAccessoLavorazioneBloccata(id_utente, username, dataBlocco) {
             var conferma = confirm("L'evento è attualmente in modifica da parte dell'utente " + username + " dal " + dataBlocco + ".\n\nForzare l'accesso?");
             if (conferma) {
                 $("#<%=btnForzaBlocco.ClientID%>").click();
             } else {
                 $("#<%=btnAnnullaAccesso.ClientID%>").click();   
             }
-           
+        }--%>
+
+        function forzaAccessoLavorazioneBloccata(id_utente, username, dataBlocco) {
+            alert("L'evento è attualmente in modifica da parte dell'utente " + username + " dal " + dataBlocco + ".\n\nL'accesso sarà possibile solo dopo che l'utente avrà terminato la modifica e rilasciato l'evento.");
+            $("#<%=btnAnnullaAccesso.ClientID%>").click();
         }
     </script>
 

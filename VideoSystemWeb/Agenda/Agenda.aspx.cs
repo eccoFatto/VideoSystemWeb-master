@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using VideoSystemWeb.Agenda.userControl;
 using VideoSystemWeb.BLL;
 using VideoSystemWeb.BLL.Stampa;
 using VideoSystemWeb.Entity;
@@ -147,12 +148,12 @@ namespace VideoSystemWeb.Agenda
             int risorsaEvento = int.Parse(hf_risorsa.Value);
 
             SessionManager.EventoSelezionato = CreaEventoDaSelezioneAgenda(dataEvento, risorsaEvento);
+            Anag_Utenti utenteConnesso = (Anag_Utenti)Session[SessionManager.UTENTE];
 
             Esito esito = new Esito();
-            if (!Gestione_Semaforo_BLL.Instance.IsAccessoLavorazioneBloccato(SessionManager.EventoSelezionato.id, out Tab_Semaforo_Lavorazioni semaforo, ref esito))
+            if (!Gestione_Semaforo_BLL.Instance.IsAccessoLavorazioneBloccato(SessionManager.EventoSelezionato.id,  utenteConnesso.username, out Tab_Semaforo_Lavorazioni semaforo, ref esito))
             {
-                Anag_Utenti utenteConnesso = (Anag_Utenti)Session[SessionManager.UTENTE];
-
+                
                 Tab_Semaforo_Lavorazioni nuovoSemaforo = new Tab_Semaforo_Lavorazioni
                 {
                     Id_Agenda = SessionManager.EventoSelezionato.id,
@@ -310,6 +311,7 @@ namespace VideoSystemWeb.Agenda
 
                     val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
                     val_CodiceLavoro.Text = SessionManager.EventoSelezionato.codice_lavoro;
+                    popupOfferta.CodiceLavoroOfferta = SessionManager.EventoSelezionato.codice_lavoro;
                 }
                 else
                 {
@@ -374,6 +376,7 @@ namespace VideoSystemWeb.Agenda
 
                 val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
                 val_CodiceLavoro.Text = SessionManager.EventoSelezionato.codice_lavoro;
+                popupOfferta.CodiceLavoroOfferta = SessionManager.EventoSelezionato.codice_lavoro;
 
                 btnLavorazione.Visible = false;
                 UpdatePopup();
@@ -400,6 +403,7 @@ namespace VideoSystemWeb.Agenda
 
                 val_Stato.Text = UtilityTipologiche.getElementByID(SessionManager.ListaStati, SessionManager.EventoSelezionato.id_stato, ref esito).nome;
                 val_CodiceLavoro.Text = SessionManager.EventoSelezionato.codice_lavoro;
+                popupOfferta.CodiceLavoroOfferta = SessionManager.EventoSelezionato.codice_lavoro;
 
                 RiempiCampiIntestazioneEvento();
 
@@ -921,6 +925,7 @@ namespace VideoSystemWeb.Agenda
 
             // Codice lavoro
             val_CodiceLavoro.Text = string.IsNullOrEmpty(evento.codice_lavoro) ? "-" : evento.codice_lavoro;
+            popupOfferta.CodiceLavoroOfferta = evento.codice_lavoro;
 
             // Appuntamento
             popupAppuntamento.ClearAppuntamento();

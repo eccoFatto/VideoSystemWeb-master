@@ -16,8 +16,8 @@ namespace VideoSystemWeb.BLL
 {
     public class BasePage : System.Web.UI.Page
     {
-        public static string versione = "2.05";
-        public static string dataVersione = "04/04/2025";
+        public static string versione = "2.1.0";
+        public static string dataVersione = "12/09/2026";
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 

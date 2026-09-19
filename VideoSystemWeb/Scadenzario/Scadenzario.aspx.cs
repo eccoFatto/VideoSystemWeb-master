@@ -188,9 +188,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
         private void PopolaGrigliaScadenze()
         {
             Esito esito = new Esito();
-            //List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", ref esito);
-
-            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", "", "", "", "", ref esito);
+            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", "", "", "", "", ref esito).OrderBy(x=> x.DataScadenza).ToList<DatiScadenzario>();
 
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
@@ -438,7 +436,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                                         ddl_Gruppo.SelectedValue,
                                                                                                         ddl_Sottogruppo.SelectedValue,
                                                                                                         txt_CodLavorazione.Text,
-                                                                                                        ref esito);
+                                                                                                        ref esito).OrderBy(x => x.DataScadenza).ToList<DatiScadenzario>(); ;
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
             gv_scadenze.DataBind();

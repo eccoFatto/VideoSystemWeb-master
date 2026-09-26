@@ -422,7 +422,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
             Esito esito = new Esito();
 
             List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario(ddl_TipoAnagrafica.SelectedValue,
-                                                                                                        //hf_RagioneSociale.Value,
                                                                                                         txt_RagioneSociale.Text,
                                                                                                         txt_NumeroFattura.Text,
                                                                                                         ddlFatturaPagata.SelectedValue,
@@ -431,12 +430,14 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                                         txt_DataDa.Text,
                                                                                                         txt_DataA.Text,
                                                                                                         ddl_FiltroBanca.SelectedValue,
-                                                                                                        //ddl_TipoClienteFornitore.SelectedValue,
                                                                                                         ddl_Generi.SelectedValue,
                                                                                                         ddl_Gruppo.SelectedValue,
                                                                                                         ddl_Sottogruppo.SelectedValue,
                                                                                                         txt_CodLavorazione.Text,
-                                                                                                        ref esito).OrderBy(x => x.DataScadenza).ToList<DatiScadenzario>(); ;
+                                                                                                        ref esito).OrderByDescending(x => x.DataScadenza).ToList<DatiScadenzario>();
+            if (ddlFatturaPagata.SelectedValue == "0")
+                listaDatiScadenzario = listaDatiScadenzario.OrderBy(x => x.DataScadenza).ToList<DatiScadenzario>();
+
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
             gv_scadenze.DataBind();

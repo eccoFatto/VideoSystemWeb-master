@@ -117,10 +117,8 @@
         // AZZERO TUTTI I CAMPI RICERCA
         function azzeraCampiRicerca() {
             $("#<%=ddl_TipoAnagrafica.ClientID%>").val('');
-            <%--$("#<%=hf_RagioneSociale.ClientID%>").val('');--%>
             $("#<%=txt_RagioneSociale.ClientID%>").val('');
             $("#<%=txt_NumeroFattura.ClientID%>").val('');
-            <%--$("#<%=ddlFatturaPagata.ClientID%>").val('');--%>
             $("#<%=txt_DataFatturaDa.ClientID%>").val('');
             $("#<%=txt_DataFatturaA.ClientID%>").val('');
             $("#<%=txt_DataDa.ClientID%>").val('');

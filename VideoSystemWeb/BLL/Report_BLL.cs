@@ -91,10 +91,10 @@ namespace VideoSystemWeb.BLL
                 datiReport.IdCollaboratore = riga.Field<int>("ID");
                 datiReport.NomeCollaboratore = riga.Field<string>("Nome");
                 datiReport.QualificaCollaboratore = riga.Field<string>("Descrizione");
-                datiReport.IndirizzoCollaboratore = riga.Field<string>("Indirizzo");
-                datiReport.CittaCollaboratore = riga.Field<string>("Citta");
-                datiReport.TelefonoCollaboratore = riga.Field<string>("Telefono");
-                datiReport.CodFiscaleCollaboratore = riga.Field<string>("CodiceFiscale");
+                datiReport.IndirizzoCollaboratore = string.IsNullOrWhiteSpace(riga.Field<string>("Indirizzo")) ? "-" : riga.Field<string>("Indirizzo");
+                datiReport.CittaCollaboratore = string.IsNullOrWhiteSpace(riga.Field<string>("Citta")) ? "-" : riga.Field<string>("Citta");
+                datiReport.TelefonoCollaboratore = string.IsNullOrWhiteSpace(riga.Field<string>("Telefono")) ? "-" : riga.Field<string>("Telefono");
+                datiReport.CodFiscaleCollaboratore = string.IsNullOrWhiteSpace(riga.Field<string>("CodiceFiscale")) ? "-" : riga.Field<string>("CodiceFiscale");
                 datiReport.DataLavorazione = riga.Field<DateTime>("Data");
                 datiReport.Lavorazione = riga.Field<string>("Lavorazione");
                 datiReport.Produzione = riga.Field<string>("Produzione");

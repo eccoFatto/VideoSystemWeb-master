@@ -402,7 +402,7 @@ namespace VideoSystemWeb.Agenda.userControl
             }
 
             ddl_codiceLavoro_FiltroRecuperaOfferta.Items.Add(new ListItem("<seleziona>", ""));
-            foreach (string codiceLavoro in ListaCodiciLavoro)
+            foreach (string codiceLavoro in ListaCodiciLavoro.OrderByDescending(c => c))
             {
                 ddl_codiceLavoro_FiltroRecuperaOfferta.Items.Add(new ListItem(codiceLavoro, codiceLavoro));
             }

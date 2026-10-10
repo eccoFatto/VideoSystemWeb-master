@@ -188,7 +188,7 @@ namespace VideoSystemWeb.Scadenzario.userControl
         private void PopolaGrigliaScadenze()
         {
             Esito esito = new Esito();
-            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", "", "", "", "", ref esito).OrderBy(x=> x.DataScadenza).ToList<DatiScadenzario>();
+            List<DatiScadenzario> listaDatiScadenzario = Scadenzario_BLL.Instance.GetAllDatiScadenzario("", "", "", "0", "", "", "", "", "", "", "", "", "", ref esito).OrderByDescending(x=> x.DataScadenza).ToList<DatiScadenzario>();
 
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;
@@ -435,8 +435,6 @@ namespace VideoSystemWeb.Scadenzario.userControl
                                                                                                         ddl_Sottogruppo.SelectedValue,
                                                                                                         txt_CodLavorazione.Text,
                                                                                                         ref esito).OrderByDescending(x => x.DataScadenza).ToList<DatiScadenzario>();
-            if (ddlFatturaPagata.SelectedValue == "0")
-                listaDatiScadenzario = listaDatiScadenzario.OrderBy(x => x.DataScadenza).ToList<DatiScadenzario>();
 
             CalcolaTotali(listaDatiScadenzario);
             gv_scadenze.DataSource = listaDatiScadenzario;

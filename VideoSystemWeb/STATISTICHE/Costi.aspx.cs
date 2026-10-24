@@ -193,6 +193,7 @@ namespace VideoSystemWeb.STATISTICHE
             #endregion
 
             #region ANNO
+            ddl_Anno.Items.Add(new ListItem("", ""));
             for (var i = DateTime.Now.Year; i >= DateTime.Now.Year - 10; i--)
             {
                 ddl_Anno.Items.Add(new ListItem(i.ToString(), i.ToString()));

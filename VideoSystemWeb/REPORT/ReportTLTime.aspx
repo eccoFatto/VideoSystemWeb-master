@@ -42,11 +42,34 @@
             $("#<%=ddl_Mese.ClientID%>").val(month);
             $("#<%=ddl_Anno.ClientID%>").val(year);
 
-            function changeMonthYear(newMonth, newYear) {
+            <%--function changeMonthYear(newMonth, newYear) {
                 var lastDay = new Date(newYear, newMonth, 0).getDate();
                 $("#<%=tbDataDa.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
                 $("#<%=tbDataA.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
 
+            }--%>
+            function changeMonthYear(newMonth, newYear) {
+                if (newMonth == '') {
+                    if (newYear == '') {
+                        //$("#<%=ddl_Anno.ClientID%>").attr("disabled", "disabled");
+
+                        $("#<%=tbDataDa.ClientID%>").val('');
+                        $("#<%=tbDataA.ClientID%>").val('');
+                    } else {
+                        $("#<%=tbDataDa.ClientID%>").val("01/01/" + newYear);
+                        $("#<%=tbDataA.ClientID%>").val("31/12/" + newYear);
+                    }
+                } else if (newYear != '') {
+                    //$("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");
+
+                    var lastDay = new Date(newYear, newMonth, 0).getDate();
+                    $("#<%=tbDataDa.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
+                    $("#<%=tbDataA.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                } else {
+                    //$("#<%=ddl_Mese.ClientID%>").val('');
+                    $("#<%=tbDataDa.ClientID%>").val('');
+                    $("#<%=tbDataA.ClientID%>").val('');
+                }
             }
 
             Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
@@ -72,10 +95,33 @@
                     changeMonthYear($("#<%=ddl_Mese.ClientID%>").val(), $("#<%=ddl_Anno.ClientID%>").val());
                 });
 
-                function changeMonthYear(newMonth, newYear) {
+                <%--function changeMonthYear(newMonth, newYear) {
                     var lastDay = new Date(newYear, newMonth, 0).getDate();
                     $("#<%=tbDataDa.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
                     $("#<%=tbDataA.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                }--%>
+                function changeMonthYear(newMonth, newYear) {
+                    if (newMonth == '') {
+                        if (newYear == '') {
+                            //$("#<%=ddl_Anno.ClientID%>").attr("disabled", "disabled");
+
+                            $("#<%=tbDataDa.ClientID%>").val('');
+                            $("#<%=tbDataA.ClientID%>").val('');
+                        } else {
+                            $("#<%=tbDataDa.ClientID%>").val("01/01/" + newYear);
+                            $("#<%=tbDataA.ClientID%>").val("31/12/" + newYear);
+                        }
+                    } else if (newYear != '') {
+                        //$("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");
+
+                        var lastDay = new Date(newYear, newMonth, 0).getDate();
+                        $("#<%=tbDataDa.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
+                        $("#<%=tbDataA.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                    } else {
+                        //$("#<%=ddl_Mese.ClientID%>").val('');
+                        $("#<%=tbDataDa.ClientID%>").val('');
+                        $("#<%=tbDataA.ClientID%>").val('');
+                    }
                 }
             });
         });
@@ -90,6 +136,7 @@
                     <div class="w3-twothird" style="padding-right:10px">
                         <label>Mese</label>
                         <asp:DropDownList ID="ddl_Mese" runat="server" class="w3-input w3-border">
+                            <asp:ListItem Value=""> </asp:ListItem>
                             <asp:ListItem Value="1">Gennaio</asp:ListItem>
                             <asp:ListItem Value="2">Febbraio</asp:ListItem>
                             <asp:ListItem Value="3">Marzo</asp:ListItem>

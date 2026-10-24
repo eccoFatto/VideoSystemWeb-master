@@ -42,6 +42,7 @@ namespace VideoSystemWeb.REPORT
         private void CaricaCombo()
         {
             #region ANNO
+            ddl_Anno.Items.Add(new ListItem("", ""));
             for (var i = DateTime.Now.Year; i >= DateTime.Now.Year - 10; i--)
             {
                 ddl_Anno.Items.Add(new System.Web.UI.WebControls.ListItem(i.ToString(), i.ToString()));

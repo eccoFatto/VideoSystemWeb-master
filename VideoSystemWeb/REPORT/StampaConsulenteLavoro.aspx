@@ -35,11 +35,31 @@
             $("#<%=ddl_Mese.ClientID%>").val(month);
             $("#<%=ddl_Anno.ClientID%>").val(year);
 
-            function changeMonthYear(newMonth, newYear) {
+            <%--function changeMonthYear(newMonth, newYear) {
                 var lastDay = new Date(newYear, newMonth, 0).getDate();
                 $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
                 $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
 
+            }--%>
+
+            function changeMonthYear(newMonth, newYear) {
+                if (newMonth == '') {
+                    if (newYear == '') {
+                        $("#<%=txt_DataInizio.ClientID%>").val('');
+                        $("#<%=txt_DataFine.ClientID%>").val('');
+                    } else {
+                        $("#<%=txt_DataInizio.ClientID%>").val("01/01/" + newYear);
+                        $("#<%=txt_DataFine.ClientID%>").val("31/12/" + newYear);
+                    }
+                } else if (newYear != '') {
+                    var lastDay = new Date(newYear, newMonth, 0).getDate();
+                    $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
+                    $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                } else {
+                    //$("#<%=ddl_Mese.ClientID%>").val('');
+                    $("#<%=txt_DataInizio.ClientID%>").val('');
+                    $("#<%=txt_DataFine.ClientID%>").val('');
+                }
             }
         });
 
@@ -68,10 +88,30 @@
                 changeMonthYear($("#<%=ddl_Mese.ClientID%>").val(), $("#<%=ddl_Anno.ClientID%>").val());
             });
 
-            function changeMonthYear(newMonth, newYear) {
+            <%--function changeMonthYear(newMonth, newYear) {
                 var lastDay = new Date(newYear, newMonth, 0).getDate();
                 $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
                 $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+            }--%>
+
+            function changeMonthYear(newMonth, newYear) {
+                if (newMonth == '') {
+                    if (newYear == '') {
+                        $("#<%=txt_DataInizio.ClientID%>").val('');
+                        $("#<%=txt_DataFine.ClientID%>").val('');
+                    } else {
+                        $("#<%=txt_DataInizio.ClientID%>").val("01/01/" + newYear);
+                        $("#<%=txt_DataFine.ClientID%>").val("31/12/" + newYear);
+                    }
+                } else if (newYear != '') {
+                    var lastDay = new Date(newYear, newMonth, 0).getDate();
+                    $("#<%=txt_DataInizio.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
+                    $("#<%=txt_DataFine.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                } else {
+                    //$("#<%=ddl_Mese.ClientID%>").val('');
+                    $("#<%=txt_DataInizio.ClientID%>").val('');
+                    $("#<%=txt_DataFine.ClientID%>").val('');
+                }
             }
         });
 
@@ -131,6 +171,7 @@
                     <div class="w3-twothird" style="padding-right:10px">
                         <label>Mese</label>
                         <asp:DropDownList ID="ddl_Mese" runat="server" class="w3-input w3-border">
+                            <asp:ListItem Value=""> </asp:ListItem>
                             <asp:ListItem Value="1">Gennaio</asp:ListItem>
                             <asp:ListItem Value="2">Febbraio</asp:ListItem>
                             <asp:ListItem Value="3">Marzo</asp:ListItem>

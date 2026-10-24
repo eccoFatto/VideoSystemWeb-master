@@ -64,24 +64,33 @@
             });
 
             //SETTO CALENDARI
-            var meseSelezionato = $("#<%=ddl_Mese.ClientID%>").val();
+            <%--var meseSelezionato = $("#<%=ddl_Mese.ClientID%>").val();
             if (meseSelezionato == '')
                 $("#<%=ddl_Anno.ClientID%>").attr("disabled", "disabled");
             else
-                $("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");
+                $("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");--%>
 
             function changeMonthYear(newMonth, newYear) {
                 if (newMonth == '') {
-                    $("#<%=ddl_Anno.ClientID%>").attr("disabled", "disabled");
+                    if (newYear == '') {
+                        //$("#<%=ddl_Anno.ClientID%>").attr("disabled", "disabled");
 
-                    $("#<%=txt_DataDa.ClientID%>").val('');
-                    $("#<%=txt_DataA.ClientID%>").val('');
-                } else {
-                    $("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");
+                        $("#<%=txt_DataDa.ClientID%>").val('');
+                        $("#<%=txt_DataA.ClientID%>").val('');
+                    } else {
+                        $("#<%=txt_DataDa.ClientID%>").val("01/01/" + newYear);
+                        $("#<%=txt_DataA.ClientID%>").val("31/12/" + newYear);
+                    }
+                } else if (newYear != '') {
+                    //$("#<%=ddl_Anno.ClientID%>").removeAttr("disabled");
 
                     var lastDay = new Date(newYear, newMonth, 0).getDate();
                     $("#<%=txt_DataDa.ClientID%>").val(firstDay + "/" + newMonth + "/" + newYear);
                     $("#<%=txt_DataA.ClientID%>").val(lastDay + "/" + newMonth + "/" + newYear);
+                } else {
+                    //$("#<%=ddl_Mese.ClientID%>").val('');
+                    $("#<%=txt_DataDa.ClientID%>").val('');
+                    $("#<%=txt_DataA.ClientID%>").val('');
                 }
             }
         });
